@@ -1,0 +1,27 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "0.9",
+	"FriendlyName": "FANTASIA",
+	"Description": "Framework for Advanced Natural Tools and Applications in Social, Interactive Approaches",
+	"Category": "Other",
+	"CreatedBy": "Antonio Origlia",
+	"CreatedByURL": "https://fantasiaplugin.wordpress.com/",
+	"DocsURL": "",
+	"MarketplaceURL": "",
+	"SupportURL": "",
+	"CanContainContent": false,
+	"IsBetaVersion": true,
+	"IsExperimentalVersion": false,
+	"Installed": false,
+	"Modules": [
+		{
+			"Name": "FANTASIA",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	],
+	"WhitelistPlatforms": [
+		"Win64"
+	]
+}
