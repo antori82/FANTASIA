@@ -1,0 +1,974 @@
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\Intermediate\Build\Win64\UE4Editor\Development\FANTASIA\Definitions.FANTASIA.h
+E:/GitLab/FANTASIAPackage/FANTASIA/FANTASIA/HostProject/Plugins/FANTASIA/Source/FANTASIA/Private/AWSPollyComponent.cpp
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\Source\FANTASIA\Public\AWSPollyComponent.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\Source\FANTASIA\Public\FANTASIA.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Public\Engine.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Misc/MonolithicHeaderBoilerplate.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Core.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Misc/MonolithicHeaderBoilerplate.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\GenericPlatform/GenericPlatformNamedPipe.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\HAL/PlatformNamedPipe.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Windows/WindowsPlatformNamedPipe.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\GenericPlatform/GenericPlatformCriticalSection.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\HAL/PlatformFile.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Windows/WindowsPlatformFile.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\HAL/PlatformIncludes.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Misc/MonolithicHeaderBoilerplate.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Misc/MessageDialog.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\ProfilingDebugging/ScopedDebugInfo.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\ProfilingDebugging/ExternalProfiler.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Misc/StringUtility.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Serialization/NameAsStringProxyArchive.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Containers/MRUArray.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Containers/TransArray.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Containers/ArrayBuilder.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Misc/SingleThreadEvent.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\HAL/ThreadManager.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Containers/StaticBitArray.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Containers/MapBuilder.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\HAL/ThreadingBase.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Internationalization/TextLocalizationManagerGlobals.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Internationalization/Culture.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Logging/LogSuppressionInterface.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\HAL/OutputDevices.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Logging/LogScopedVerbosityOverride.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Misc/OutputDeviceNull.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Misc/OutputDeviceMemory.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Misc/OutputDeviceFile.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Misc/OutputDeviceDebug.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Misc/OutputDeviceArchiveWrapper.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Misc/OutputDeviceAnsiError.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Misc/TimeGuard.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Serialization/LargeMemoryWriter.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Serialization/LargeMemoryData.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Serialization/LargeMemoryReader.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Serialization/BufferArchive.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Serialization/ArrayReader.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Serialization/ArrayWriter.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Serialization/BufferWriter.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Misc/WildcardString.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Containers/CircularQueue.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Misc/OutputDeviceHelper.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Misc/ScopedSlowTask.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Misc/CallbackDevice.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Misc/LocalTimestampDirectoryVisitor.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\UObject/BlueprintsObjectVersion.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\UObject/BuildObjectVersion.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\UObject/CoreObjectVersion.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\UObject/EditorObjectVersion.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\UObject/FrameworkObjectVersion.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\UObject/MobileObjectVersion.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\UObject/NetworkingObjectVersion.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\UObject/OnlineObjectVersion.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\UObject/PhysicsObjectVersion.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\UObject/PlatformObjectVersion.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\UObject/SequencerObjectVersion.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\UObject/VRObjectVersion.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Misc/OutputDeviceConsole.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Misc/MonitoredProcess.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\CoreUObject\Public\CoreUObject.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Misc/MonolithicHeaderBoilerplate.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\CoreUObject\Public\UObject/ErrorException.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\CoreUObject\Public\UObject/UObjectAllocator.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\CoreUObject\Public\Misc/TextBuffer.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\CoreUObject\Public\Serialization/PropertyLocalizationDataGathering.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\CoreUObject\Public\UObject/LevelGuids.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\CoreUObject\Public\UObject/MetaData.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\CoreUObject\Public\UObject/ObjectMemoryAnalyzer.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\CoreUObject\Public\UObject/ReferenceChainSearch.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\HAL/ThreadHeartBeat.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\CoreUObject\Public\Internationalization/TextPackageNamespaceUtil.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Internationalization/TextNamespaceUtil.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\CoreUObject\Public\Serialization/ArchiveCountMem.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\CoreUObject\Public\Serialization/ObjectAndNameAsStringProxyArchive.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\CoreUObject\Public\Serialization/ObjectWriter.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\CoreUObject\Public\Serialization/ObjectReader.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\CoreUObject\Public\Serialization/ArchiveShowReferences.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\CoreUObject\Public\Serialization/FindReferencersArchive.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\CoreUObject\Public\Serialization/FindObjectReferencers.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\CoreUObject\Public\Serialization/ArchiveFindCulprit.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\CoreUObject\Public\Serialization/DuplicatedObject.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\CoreUObject\Public\Serialization/DuplicatedDataReader.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\CoreUObject\Public\Serialization/DuplicatedDataWriter.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\CoreUObject\Public\Serialization/ArchiveReplaceObjectRef.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\CoreUObject\Public\Serialization/ArchiveReplaceOrClearExternalReferences.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\CoreUObject\Public\Serialization/ArchiveObjectPropertyMapper.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\CoreUObject\Public\Serialization/ArchiveReferenceMarker.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\CoreUObject\Public\Serialization/ArchiveObjectCrc32.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\CoreUObject\Public\Misc/NotifyHook.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\CoreUObject\Public\Misc/RedirectCollector.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\CoreUObject\Public\UObject/ScriptStackTracker.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\InputCore\Public\InputCore.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\InputCore\Public\InputCoreModule.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\EngineSettings\Public\EngineSettings.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Misc/MonolithicHeaderBoilerplate.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\EngineSettings\Classes\ConsoleSettings.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\EngineSettings\ConsoleSettings.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\EngineSettings\Classes\GameNetworkManagerSettings.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\EngineSettings\GameNetworkManagerSettings.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\EngineSettings\Classes\GameMapsSettings.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\EngineSettings\GameMapsSettings.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\EngineSettings\Classes\GameSessionSettings.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\EngineSettings\GameSessionSettings.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\EngineSettings\Classes\GeneralEngineSettings.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\EngineSettings\GeneralEngineSettings.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\EngineSettings\Classes\GeneralProjectSettings.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\EngineSettings\GeneralProjectSettings.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\EngineSettings\Classes\HudSettings.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\EngineSettings\HudSettings.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Public\PrecomputedLightVolume.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Public\GraphEditAction.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Public\AI/RVOAvoidanceInterface.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\RVOAvoidanceInterface.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Public\AI/NavDataGenerator.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Public\ParticleVertexFactory.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Public\TessellationRendering.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Public\MeshParticleVertexFactory.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Public\ParticleHelper.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Particles/ParticlePerfStats.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Public\Distributions.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Public\ParticleEmitterInstances.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Distributions/DistributionFloat.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Distributions/Distribution.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\Distribution.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\DistributionFloat.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Distributions/DistributionVector.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\DistributionVector.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Particles/Orientation/ParticleModuleOrientationAxisLock.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Particles/Orientation/ParticleModuleOrientationBase.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Particles/ParticleModule.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\ParticleModule.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\ParticleModuleOrientationBase.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\ParticleModuleOrientationAxisLock.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Public\Scalability.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Public\EngineMinimal.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Misc/MonolithicHeaderBoilerplate.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\GameFramework/Character.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\GameFramework/CharacterMovementReplication.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\CharacterMovementReplication.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\GameFramework/RootMotionSource.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\RootMotionSource.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\Character.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\GameFramework/GameModeBase.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/ServerStatReplicator.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\ServerStatReplicator.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\GameModeBase.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Components/CapsuleComponent.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Components/ShapeComponent.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\ShapeComponent.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\CapsuleComponent.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Components/SphereComponent.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\SphereComponent.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Components/BoxComponent.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\BoxComponent.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Components/AudioComponent.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Sound/QuartzSubscription.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\AudioMixer\Public\Quartz/AudioMixerClockHandle.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\AudioMixer\Public\Quartz/QuartzSubsystem.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\AudioMixer\QuartzSubsystem.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\AudioMixer\Public\Quartz/QuartzMetronome.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\AudioMixer\AudioMixerClockHandle.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\AudioMixer\Public\Quartz/AudioMixerQuantizedCommands.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\AudioMixer\Public\Quartz\AudioMixerClock.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\AudioComponent.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Camera/CameraComponent.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\CameraComponent.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\GameFramework/SpringArmComponent.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\SpringArmComponent.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\GameFramework/CharacterMovementComponent.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\AI/Navigation/NavigationAvoidanceTypes.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\NavigationAvoidanceTypes.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\GameFramework/PawnMovementComponent.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\GameFramework/NavMovementComponent.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\AI/Navigation/PathFollowingAgentInterface.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\PathFollowingAgentInterface.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\GameFramework/MovementComponent.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\MovementComponent.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\NavMovementComponent.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\PawnMovementComponent.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Interfaces/NetworkPredictionInterface.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\NetworkPredictionInterface.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\CharacterMovementComponent.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Particles/ParticleEmitter.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\ParticleEmitter.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Particles/ParticleSystemComponent.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Particles/ParticleSystem.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\ParticleSystem.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Particles/Emitter.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\Emitter.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\ParticleSystemComponent.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Components/LightComponent.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Components/LightComponentBase.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\LightComponentBase.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\LightComponent.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Components/PointLightComponent.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Components/LocalLightComponent.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\LocalLightComponent.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\PointLightComponent.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Components/SpotLightComponent.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\SpotLightComponent.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/CollisionProfile.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\CollisionProfile.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Kismet/GameplayStatics.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Kismet/KismetSystemLibrary.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\CoreUObject\Public\UObject/PropertyAccessUtil.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\KismetSystemLibrary.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Sound/DialogueTypes.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\DialogueTypes.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Kismet\GameplayStaticsTypes.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\GameplayStaticsTypes.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\GameplayStatics.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Sound/AmbientSound.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\AmbientSound.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/BlockingVolume.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\BlockingVolume.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\GameFramework/CameraBlockingVolume.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\CameraBlockingVolume.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/CullDistanceVolume.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\CullDistanceVolume.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/LevelStreamingVolume.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\LevelStreamingVolume.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\GameFramework/PhysicsVolume.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\PhysicsVolume.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\GameFramework/DefaultPhysicsVolume.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\DefaultPhysicsVolume.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\GameFramework/KillZVolume.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\KillZVolume.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\GameFramework/PainCausingVolume.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\PainCausingVolume.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Interfaces/Interface_PostProcessVolume.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\Interface_PostProcessVolume.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/PostProcessVolume.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\PostProcessVolume.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/TriggerVolume.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\TriggerVolume.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Camera/CameraActor.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\CameraActor.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/SubsurfaceProfile.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\SubsurfaceProfile.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/DebugCameraController.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\DebugCameraController.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/DecalActor.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\DecalActor.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Public\CanvasItem.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/Font.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/FontImportOptions.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\FontImportOptions.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\SlateCore\Public\Fonts/FontProviderInterface.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\SlateCore\FontProviderInterface.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\Font.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/Canvas.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\Canvas.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\GameFramework/HUD.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\GameFramework/HUDHitBox.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\GameFramework/DebugTextInfo.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\DebugTextInfo.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\HUD.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Atmosphere/AtmosphericFog.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\AtmosphericFog.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/ExponentialHeightFog.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\ExponentialHeightFog.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\GameFramework/GameSession.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\GameSession.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\GameFramework/GameState.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\GameFramework/GameStateBase.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\GameStateBase.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\GameState.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\GameFramework/GameMode.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\GameMode.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\GameFramework/PlayerState.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\PlayerState.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/SkyLight.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\SkyLight.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/LevelBounds.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\LevelBounds.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/LevelScriptActor.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\LevelScriptActor.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/Light.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\Light.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/DirectionalLight.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\DirectionalLight.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/PointLight.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\PointLight.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/SpotLight.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\SpotLight.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/GeneratedMeshAreaLight.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\GeneratedMeshAreaLight.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/NavigationObjectBase.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\NavigationObjectBase.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\GameFramework/PlayerStart.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\PlayerStart.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/PlayerStartPIE.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\PlayerStartPIE.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/Note.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\Note.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\GameFramework/FloatingPawnMovement.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\FloatingPawnMovement.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\GameFramework/DefaultPawn.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\DefaultPawn.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\GameFramework/SpectatorPawn.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\SpectatorPawn.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/ReflectionCapture.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\ReflectionCapture.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/BoxReflectionCapture.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\BoxReflectionCapture.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/PlaneReflectionCapture.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\PlaneReflectionCapture.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/SphereReflectionCapture.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\SphereReflectionCapture.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\PhysicsEngine/RigidBodyBase.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\RigidBodyBase.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\PhysicsEngine/PhysicsConstraintActor.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\PhysicsConstraintActor.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\PhysicsEngine/PhysicsThruster.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\PhysicsThruster.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\PhysicsEngine/RadialForceActor.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\RadialForceActor.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/SceneCapture.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\SceneCapture.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/SceneCapture2D.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\SceneCapture2D.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/SceneCaptureCube.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\SceneCaptureCube.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/StaticMeshActor.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\StaticMeshActor.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/TargetPoint.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\TargetPoint.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\VectorField/VectorFieldVolume.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\VectorFieldVolume.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\GameFramework/SpectatorPawnMovement.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\SpectatorPawnMovement.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\GameFramework/ProjectileMovementComponent.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\ProjectileMovementComponent.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\GameFramework/RotatingMovementComponent.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\RotatingMovementComponent.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Components/PawnNoiseEmitterComponent.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\PawnNoiseEmitterComponent.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\PhysicsEngine/PhysicsHandleComponent.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\PhysicsHandleComponent.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Atmosphere/AtmosphericFogComponent.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\AtmosphericFogComponent.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Components/DecalComponent.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\DecalComponent.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Components/ExponentialHeightFogComponent.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\ExponentialHeightFogComponent.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Components/DirectionalLightComponent.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\DirectionalLightComponent.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Components/SkyLightComponent.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\SkyLightComponent.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Components/PostProcessComponent.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\PostProcessComponent.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Components/ArrowComponent.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\ArrowComponent.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Components/BillboardComponent.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\BillboardComponent.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Components/BrushComponent.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\BrushComponent.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Components/DrawFrustumComponent.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\DrawFrustumComponent.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Debug/DebugDrawService.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\DebugDrawService.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Components/LineBatchComponent.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\LineBatchComponent.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Components/MaterialBillboardComponent.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\MaterialBillboardComponent.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Lightmass/LightmassPrimitiveSettingsObject.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\LightmassPrimitiveSettingsObject.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Components/ModelComponent.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\ModelComponent.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Components/DrawSphereComponent.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\DrawSphereComponent.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Components/TextRenderComponent.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\TextRenderComponent.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Components/VectorFieldComponent.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\VectorFieldComponent.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\PhysicsEngine/RadialForceComponent.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\RadialForceComponent.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Components/ReflectionCaptureComponent.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\ReflectionCaptureComponent.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Components/BoxReflectionCaptureComponent.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\BoxReflectionCaptureComponent.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Components/PlaneReflectionCaptureComponent.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\PlaneReflectionCaptureComponent.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Components/SphereReflectionCaptureComponent.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\SphereReflectionCaptureComponent.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Components/SceneCaptureComponent.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\SceneCaptureComponent.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Components/SceneCaptureComponent2D.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\SceneCaptureComponent2D.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Components/SceneCaptureComponentCube.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\SceneCaptureComponentCube.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Components/TimelineComponent.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\TimelineComponent.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\EditorFramework/AssetImportData.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\AssetImportData.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Camera/CameraAnim.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\CameraAnim.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Camera/CameraAnimInst.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\CameraAnimInst.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Camera/CameraModifier.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\CameraModifier.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Camera/CameraModifier_CameraShake.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\CameraModifier_CameraShake.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\GameFramework/CheatManager.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\CheatManager.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Curves/CurveLinearColor.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\CurveLinearColor.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Curves/CurveVector.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\CurveVector.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/CurveTable.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\CurveTable.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Public\DataTableUtils.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/DataTable.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\DataTable.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Sound/DialogueVoice.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\DialogueVoice.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Sound/DialogueWave.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\DialogueWave.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Distributions/DistributionFloatConstant.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\DistributionFloatConstant.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Distributions/DistributionFloatParameterBase.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\DistributionFloatParameterBase.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Distributions/DistributionFloatParticleParameter.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\DistributionFloatParticleParameter.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Distributions/DistributionFloatConstantCurve.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\DistributionFloatConstantCurve.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Distributions/DistributionFloatUniform.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\DistributionFloatUniform.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Distributions/DistributionFloatUniformCurve.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\DistributionFloatUniformCurve.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Distributions/DistributionVectorConstant.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\DistributionVectorConstant.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Distributions/DistributionVectorParameterBase.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\DistributionVectorParameterBase.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Distributions/DistributionVectorParticleParameter.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\DistributionVectorParticleParameter.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Distributions/DistributionVectorConstantCurve.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\DistributionVectorConstantCurve.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Distributions/DistributionVectorUniform.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\DistributionVectorUniform.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Distributions/DistributionVectorUniformCurve.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\DistributionVectorUniformCurve.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/GameEngine.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\Widgets/SViewport.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime/MovieSceneCapture/Public/MovieSceneCaptureHandle.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\GameEngine.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Exporters/Exporter.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\Exporter.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\GameFramework/GameUserSettings.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\GameUserSettings.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Public\GestureRecognizer.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Public\KeyState.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\GameFramework/PlayerInput.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\PlayerInput.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\GameFramework/InputSettings.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\InputSettings.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/InterpCurveEdSetup.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\InterpCurveEdSetup.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/IntSerialization.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\IntSerialization.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Layers/Layer.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\Layer.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Public\LatentActions.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/LevelStreaming.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\LevelStreaming.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/LevelStreamingAlwaysLoaded.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\LevelStreamingAlwaysLoaded.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/LevelStreamingDynamic.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\LevelStreamingDynamic.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/LevelStreamingPersistent.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\LevelStreamingPersistent.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Lightmass/LightmappedSurfaceCollection.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\LightmappedSurfaceCollection.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\GameFramework/LocalMessage.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\LocalMessage.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\GameFramework/EngineMessage.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\EngineMessage.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Materials/MaterialInstanceConstant.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\MaterialInstanceConstant.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Materials/MaterialParameterCollection.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\MaterialParameterCollection.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Materials/MaterialParameterCollectionInstance.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\MaterialParameterCollectionInstance.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Public\PacketHandlers/StatelessConnectHandlerComponent.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/NetworkSettings.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\NetworkSettings.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/ObjectLibrary.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\ObjectLibrary.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/ObjectReferencer.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\ObjectReferencer.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\GameFramework/OnlineSession.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\OnlineSession.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/PackageMapClient.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Misc/NetworkVersion.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\PackageMapClient.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\PhysicsCore\Public\PhysicalMaterials/PhysicalMaterial.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\PhysicsCore\Public\PhysicsSettingsEnums.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\PhysicsCore\PhysicsSettingsEnums.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\PhysicsCore\PhysicalMaterial.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\PhysicsCore\Public\PhysicalMaterials/PhysicalMaterialPropertyBase.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\PhysicsCore\PhysicalMaterialPropertyBase.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\PhysicsEngine/PhysicsCollisionHandler.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\PhysicsCollisionHandler.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/PlatformInterfaceBase.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\PlatformInterfaceBase.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/CloudStorageBase.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\CloudStorageBase.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/InGameAdManager.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\InGameAdManager.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/MicroTransactionBase.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\MicroTransactionBase.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/TwitterIntegrationBase.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\TwitterIntegrationBase.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/PlatformInterfaceWebResponse.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\PlatformInterfaceWebResponse.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/Polys.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\Polys.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Sound/ReverbEffect.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\ReverbEffect.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\GameFramework/SaveGame.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\SaveGame.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/SCS_Node.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/SimpleConstructionScript.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\SimpleConstructionScript.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\SCS_Node.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/Selection.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\Selection.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/SkeletalMeshSocket.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\SkeletalMeshSocket.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Sound/DialogueSoundWaveProxy.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\DialogueSoundWaveProxy.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Sound/SoundCue.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Sound/SoundNode.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\SoundNode.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\SoundCue.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Sound/SoundMix.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\SoundMix.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/StaticMeshSocket.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\StaticMeshSocket.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Camera/CameraStackTypes.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\CameraStackTypes.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/StreamableManager.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Tests/TextPropertyTestObject.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\TextPropertyTestObject.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/TextureLODSettings.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\TextureLODSettings.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\DeviceProfiles/DeviceProfile.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\DeviceProfile.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\DeviceProfiles/DeviceProfileManager.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\DeviceProfileManager.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/LightMapTexture2D.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\LightMapTexture2D.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/ShadowMapTexture2D.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\ShadowMapTexture2D.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/Texture2DDynamic.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\Texture2DDynamic.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/TextureCube.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\TextureCube.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/TextureRenderTarget.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\TextureRenderTarget.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/TextureRenderTarget2D.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\TextureRenderTarget2D.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/CanvasRenderTarget2D.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\CanvasRenderTarget2D.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/TextureRenderTargetCube.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\TextureRenderTargetCube.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\EditorFramework/ThumbnailInfo.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\ThumbnailInfo.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/TimelineTemplate.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\TimelineTemplate.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\GameFramework/TouchInterface.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\TouchInterface.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/UserDefinedEnum.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\UserDefinedEnum.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/UserDefinedStruct.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\UserDefinedStruct.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Animation/MorphTarget.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\MorphTarget.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Public\SystemSettings.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Public\DrawDebugHelpers.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Public\EngineUtils.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\SlateCore\Public\SlateCore.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Misc/MonolithicHeaderBoilerplate.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\SlateCore\Public\Layout/LayoutUtils.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\SlateCore\Public\Animation/SlateSprings.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\SlateCore\Public\Sound/ISlateSoundDevice.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\SlateCore\Public\Sound/NullSlateSoundDevice.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\SlateCore\Public\Textures/SlateUpdatableTexture.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\SlateCore\Public\Fonts/FontBulkData.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\SlateCore\FontBulkData.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\SlateCore\Public\Fonts/FontMeasure.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\SlateCore\Public\Brushes/SlateBorderBrush.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\SlateCore\Public\Brushes/SlateBoxBrush.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\SlateCore\Public\Brushes/SlateColorBrush.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\SlateCore\Public\Brushes/SlateImageBrush.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\SlateCore\Public\Styling/SlateStyleRegistry.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\SlateCore\Public\Styling/SlateStyle.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\SlateCore\Public\Types/NavigationMetaData.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\SlateCore\Public\Rendering/RenderingPolicy.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\SlateCore\Public\Rendering/SlateDrawBuffer.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\SlateCore\Public\Widgets/SUserWidget.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\SlateBasics.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Misc/MonolithicHeaderBoilerplate.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Json\Public\Json.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Misc/MonolithicHeaderBoilerplate.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\SlateOptMacros.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\Framework/Text/PlatformTextField.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\Framework/Text/Windows/WindowsPlatformTextField.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\Framework/Text/GenericPlatformTextField.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\Framework/Application/IPlatformTextField.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\Framework/Application/NavigationConfig.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\Widgets/SWeakWidget.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\Framework/Text/TextHitPoint.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\Framework/Text/IRunRenderer.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\Framework/Text/ILineHighlighter.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\Framework/Text/ILayoutBlock.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\Framework/Text/DefaultLayoutBlock.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\Framework/Text/WidgetLayoutBlock.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\Framework/Text/ISlateRun.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\Framework/Text/ISlateRunRenderer.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\Framework/Text/ISlateLineHighlighter.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\Framework/Text/SlateTextLayout.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\Framework/Text/SlateTextRun.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\Framework/Text/SlateHyperlinkRun.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\Framework/Text/SlateImageRun.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\Framework/Text/SlateWidgetRun.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\Framework/Text/TextLayoutEngine.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Misc/MonolithicHeaderBoilerplate.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\Widgets/Layout/SFxWidget.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\Widgets/Layout/SSeparator.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\Widgets/Layout/SSpacer.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\Widgets/Layout/SWrapBox.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\SlateCore\Public\Widgets/Images/SImage.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\Widgets/Images/SSpinningImage.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\Widgets/Notifications/SProgressBar.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Slate\SProgressBar.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\Widgets/SCanvas.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\Framework/Text/ITextDecorator.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\Framework/Text/TextDecorators.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\Framework/Text/SlateTextLayoutFactory.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\Widgets/Text/SRichTextBlock.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\Widgets/Layout/SHeader.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\Widgets/Layout/SGridPanel.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\Widgets/Layout/SUniformGridPanel.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\Widgets/Text/ISlateEditableTextWidget.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\Widgets/Text/SMultiLineEditableText.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\Widgets/Input/SMultiLineEditableTextBox.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\Widgets/Input/SEditableText.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\Widgets/Input/SEditableTextBox.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\Widgets/SToolTip.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\Widgets/Layout/SScrollBarTrack.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\Widgets/Layout/SScrollBorder.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\Widgets/Notifications/SErrorText.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\Widgets/Notifications/SErrorHint.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\Widgets/Notifications/SPopUpErrorText.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\Widgets/Views/STileView.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\Widgets/Views/STreeView.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\Widgets/Layout/SScrollBox.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\Widgets/Colors/SColorBlock.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\Widgets/Input/NumericTypeInterface.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Math/BasicMathExpressionEvaluator.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Internationalization/FastDecimalFormat.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\Widgets/Input/SSpinBox.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\limits
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\cfloat
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\climits
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\cwchar
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\cstdio
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\Widgets/Input/SSlider.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\Framework/Docking/LayoutService.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\Source\FANTASIA\Public\FANTASIATypes.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\Intermediate\Build\Win64\UE4Editor\Inc\FANTASIA\FANTASIATypes.generated.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\Source\FANTASIA\Public\AWSPollyThread.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\iostream
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\istream
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\ostream
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\ios
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\xlocnum
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\cmath
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\streambuf
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\xiosbase
+C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt\share.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\system_error
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\cerrno
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\stdexcept
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\xstring
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\iosfwd
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\cstring
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\xmemory
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\cstdint
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\xutility
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\utility
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\xcall_once.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\xerrc.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\xlocale
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\memory
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\xfacet
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\xlocinfo
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\xlocinfo.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt\locale.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/Aws.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/logging/LogLevel.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/Core_EXPORTS.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/SDKConfig.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/memory/stl/AWSString.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/memory/stl/AWSAllocator.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/SDKConfig.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/memory/AWSMemory.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/UnreferencedParam.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/memory/MemorySystemInterface.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\algorithm
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\functional
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\tuple
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\string
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\cctype
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/logging/LogSystemInterface.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/memory/stl/AWSStringStream.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\sstream
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/crypto/Factories.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/Array.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/memory/stl/AWSVector.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\vector
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\cassert
+C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt\assert.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\iterator
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/http/HttpClientFactory.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/http/HttpTypes.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/memory/stl/AWSList.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\list
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/memory/stl/AWSMap.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\map
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\xtree
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\unordered_map
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\xhash
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\xbit_ops.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/memory/stl/AWSStreamFwd.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/monitoring/MonitoringManager.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/client/AWSClient.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/client/CoreErrors.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/AmazonWebServiceResult.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/http/HttpResponse.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/http/HttpRequest.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/http/URI.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/http/Scheme.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/stream/ResponseStream.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/monitoring/HttpClientMetrics.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/crypto/Hash.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/crypto/HashResult.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/auth/AWSAuthSignerProvider.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/monitoring/CoreMetrics.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/PollyClient.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/Polly_EXPORTS.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/PollyErrors.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/client/AWSError.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/xml/XmlSerializer.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/Outcome.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\cassert
+C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt\assert.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/json/JsonSerializer.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/external/cjson/cJSON.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/StringUtils.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/client/ClientConfiguration.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/Region.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/DeleteLexiconResult.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/DescribeVoicesResult.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/Voice.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/Gender.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/VoiceId.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/LanguageCode.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/Engine.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/GetLexiconResult.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/Lexicon.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/LexiconAttributes.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/DateTime.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\chrono
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\ratio
+C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt\time.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\xtimec.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/GetSpeechSynthesisTaskResult.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/SynthesisTask.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/TaskStatus.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/OutputFormat.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/TextType.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/SpeechMarkType.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/ListLexiconsResult.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/LexiconDescription.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/ListSpeechSynthesisTasksResult.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/PutLexiconResult.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/StartSpeechSynthesisTaskResult.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/SynthesizeSpeechResult.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/client/AsyncCallerContext.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\future
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\condition_variable
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\mutex
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\thread
+C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt\process.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt\corecrt_startup.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt\math.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\vcruntime_startup.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\xthreads.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\ppltasks.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\pplwin.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\pplinterface.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\ppltaskscheduler.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\crtdefs.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\pplcancellation_token.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/SynthesizeSpeechRequest.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/PollyRequest.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/AmazonSerializableWebServiceRequest.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/AmazonWebServiceRequest.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/auth/AWSAuthSigner.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/memory/stl/AWSSet.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\set
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/threading/ReaderWriterLock.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/threading/Semaphore.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/crypto/Sha256.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/crypto/Sha256HMAC.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/crypto/HMAC.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/auth/AWSCredentialsProvider.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/internal/AWSHttpResourceClient.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/client/AWSErrorMarshaller.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/auth/AWSCredentials.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/config/AWSProfileConfigLoader.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/client/RetryStrategy.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime/Engine/Classes/Sound/SoundWaveProcedural.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\SoundWaveProcedural.generated.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\Intermediate\Build\Win64\UE4Editor\Inc\FANTASIA\AWSPollyComponent.generated.h
+E:/GitLab/FANTASIAPackage/FANTASIA/FANTASIA/HostProject/Plugins/FANTASIA/Source/FANTASIA/Private/AWSPollyThread.cpp
+E:/GitLab/FANTASIAPackage/FANTASIA/FANTASIA/HostProject/Plugins/FANTASIA/Source/FANTASIA/Private/AzureASRComponent.cpp
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\Source\FANTASIA\Public\AzureASRComponent.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime/Online/Voice/Public/VoiceModule.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Online\Voice\Public\Interfaces/VoiceCapture.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Online\Voice\Public\VoicePackage.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\SignalProcessing\Public\DSP/MultithreadedPatching.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Online\Voice\Public\Interfaces/VoiceCodec.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Online\Voice\Public\VoicePackage.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Public\Net/VoiceConfig.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\SignalProcessing\Public\DSP/EnvelopeFollower.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Sound/AudioSettings.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\AudioSettings.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\AudioMixer\Public\Components/SynthComponent.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\AudioMixer\SynthComponent.generated.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\VoiceConfig.generated.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\Source\FANTASIA\Public\AzureASRThread.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_common.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_common.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\stdbool.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\spxerror.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_error.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_string_helpers.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\codecvt
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\locale
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\xlocbuf
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\xlocmes
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\xlocmon
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\xloctime
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\ctime
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_property_bag.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_smart_handle.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\spxdebug.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt\inttypes.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_properties.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_enums.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_session.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_speech_config.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_speech_config.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_audio_stream_format.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_audio_stream_format.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_audio_stream.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_audio_stream.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_result.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_audio_config.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_audio_config.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_eventargs.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_eventsignal.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_session_eventargs.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_recognizer.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_recognition_result.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_recognition_eventargs.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_recognition_async_recognizer.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_recognizer.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_keyword_recognition_model.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_keyword_recognition_model.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_recognition_base_async_recognizer.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_speech_recognition_result.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_intent_result.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_intent_trigger.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_intent_recognizer.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_translation_result.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_translation_recognizer.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_language_understanding_model.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_factory.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_synthesizer.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_grammar.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_connection.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_activity.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_bot_connector_config.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_speech_bot_connector.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_conversation_transcriber.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_conversation_transcription_result.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_user.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_participant.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_speech_recognition_eventargs.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_speech_recognizer.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_intent_recognition_result.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_intent_recognition_eventargs.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_intent_recognizer.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_intent_trigger.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_language_understanding_model.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_translation_result.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_translation_eventargs.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_speech_translation_config.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_translation_recognizer.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_grammar.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_grammar_phrase.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_phrase_list_grammar.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_session.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_speech_bot_connector.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\array
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_utils.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_bot_connector_activity.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_bot_connector_eventargs.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_bot_connector_config.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_connection.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_connection_eventargs.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_speech_synthesis_result.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_speech_synthesis_eventargs.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_speech_synthesizer.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_conversation_transcriber.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_conversation_transcription_result.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_conversation_transcription_eventargs.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_user.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_participant.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Online\Voice\Public\Voice.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\Intermediate\Build\Win64\UE4Editor\Inc\FANTASIA\AzureASRComponent.generated.h
+E:/GitLab/FANTASIAPackage/FANTASIA/FANTASIA/HostProject/Plugins/FANTASIA/Source/FANTASIA/Private/AzureASRThread.cpp
+E:/GitLab/FANTASIAPackage/FANTASIA/FANTASIA/HostProject/Plugins/FANTASIA/Source/FANTASIA/Private/AzureNLUComponent.cpp
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\Source\FANTASIA\Public\AzureNLUComponent.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\Source\FANTASIA\Public\AzureNLUThread.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\Intermediate\Build\Win64\UE4Editor\Inc\FANTASIA\AzureNLUComponent.generated.h
+E:/GitLab/FANTASIAPackage/FANTASIA/FANTASIA/HostProject/Plugins/FANTASIA/Source/FANTASIA/Private/AzureNLUThread.cpp
+E:/GitLab/FANTASIAPackage/FANTASIA/FANTASIA/HostProject/Plugins/FANTASIA/Source/FANTASIA/Private/AzureTTSComponent.cpp
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\Source\FANTASIA\Public\AzureTTSComponent.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\Source\FANTASIA\Public\AzureTTSThread.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime/Online/HTTP/Public/Http.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Online\HTTP\Public\HttpModule.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Online\HTTP\Public\Interfaces/IHttpRequest.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Online\HTTP\Public\Interfaces/IHttpBase.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Online\HTTP\Public\Interfaces/IHttpResponse.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Online\HTTP\Public\PlatformHttp.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Online\HTTP\Public\Windows/WindowsPlatformHttp.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Online\HTTP\Public\GenericPlatform/GenericPlatformHttp.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime/JsonUtilities/Public/JsonUtilities.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Misc/MonolithicHeaderBoilerplate.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\JsonUtilities\Public\JsonObjectConverter.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\JsonUtilities\Public\JsonObjectWrapper.h
+E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\JsonUtilities\JsonObjectWrapper.generated.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\Intermediate\Build\Win64\UE4Editor\Inc\FANTASIA\AzureTTSComponent.generated.h
+E:/GitLab/FANTASIAPackage/FANTASIA/FANTASIA/HostProject/Plugins/FANTASIA/Source/FANTASIA/Private/AzureTTSThread.cpp
+E:/GitLab/FANTASIAPackage/FANTASIA/FANTASIA/HostProject/Plugins/FANTASIA/Source/FANTASIA/Private/FANTASIA.cpp
+E:/GitLab/FANTASIAPackage/FANTASIA/FANTASIA/HostProject/Plugins/FANTASIA/Source/FANTASIA/Private/Neo4jComponent.cpp
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\Source\FANTASIA\Public\Neo4jComponent.h
+E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\Intermediate\Build\Win64\UE4Editor\Inc\FANTASIA\Neo4jComponent.generated.h

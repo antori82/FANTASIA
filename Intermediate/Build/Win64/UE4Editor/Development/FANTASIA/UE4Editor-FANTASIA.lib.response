@@ -1,0 +1,14 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UE4Editor-FANTASIA.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Intermediate\Build\Win64\UE4Editor\Development\Engine\SharedPCH.Engine.ShadowErrors.h.obj"
+"E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\Intermediate\Build\Win64\UE4Editor\Development\FANTASIA\Module.FANTASIA.cpp.obj"
+"E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\Intermediate\Build\Win64\UE4Editor\Development\FANTASIA\Module.FANTASIA.gen.cpp.obj"
+"E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\Intermediate\Build\Win64\UE4Editor\Development\FANTASIA\Default.rc2.res"
+/OUT:"E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\Intermediate\Build\Win64\UE4Editor\Development\FANTASIA\UE4Editor-FANTASIA.lib"
+/INCLUDE:IMPLEMENT_MODULE_FANTASIA
