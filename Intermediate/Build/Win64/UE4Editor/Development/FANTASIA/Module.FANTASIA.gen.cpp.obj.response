@@ -31,7 +31,7 @@
 /wd4244
 /wd4838
 /I .
-/I E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\Source\FANTASIA\Private
+/I E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\Source\FANTASIA\Private
 /I ..\Intermediate\Build\Win64\UE4Editor\Inc\CoreUObject
 /I Runtime
 /I Runtime\CoreUObject\Public
@@ -239,14 +239,14 @@
 /I ..\Plugins\Runtime\AndroidPermission\Source\AndroidPermission\Public
 /I ..\Intermediate\Build\Win64\UE4Editor\Inc\JsonUtilities
 /I Runtime\JsonUtilities\Public
-/I E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\Intermediate\Build\Win64\UE4Editor\Inc\FANTASIA
-/I E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\Source
-/I E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api
-/I E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api
-/I E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core
-/I E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly
-/I E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\TTS
-/I E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\Source\FANTASIA\Public
+/I E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\Intermediate\Build\Win64\UE4Editor\Inc\FANTASIA
+/I E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\Source
+/I E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api
+/I E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api
+/I E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core
+/I E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly
+/I E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\TTS
+/I E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\Source\FANTASIA\Public
 /I ThirdParty\PhysX3\PxShared\include
 /I ThirdParty\PhysX3\PxShared\include\cudamanager
 /I ThirdParty\PhysX3\PxShared\include\filebuf
@@ -276,12 +276,12 @@
 /I "C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared"
 /I "C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um"
 /I "C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt"
-/FI"E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Intermediate\Build\Win64\UE4Editor\Development\Engine\SharedPCH.Engine.ShadowErrors.h"
-/Yu"E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Intermediate\Build\Win64\UE4Editor\Development\Engine\SharedPCH.Engine.ShadowErrors.h"
-/Fp"E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Intermediate\Build\Win64\UE4Editor\Development\Engine\SharedPCH.Engine.ShadowErrors.h.pch"
-"E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\Intermediate\Build\Win64\UE4Editor\Development\FANTASIA\Module.FANTASIA.gen.cpp"
-/FI"E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\Intermediate\Build\Win64\UE4Editor\Development\FANTASIA\Definitions.FANTASIA.h"
-/Fo"E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\Intermediate\Build\Win64\UE4Editor\Development\FANTASIA\Module.FANTASIA.gen.cpp.obj"
+/FI"E:\GitLab\tmp\FANTASIA\HostProject\Intermediate\Build\Win64\UE4Editor\Development\Engine\SharedPCH.Engine.ShadowErrors.h"
+/Yu"E:\GitLab\tmp\FANTASIA\HostProject\Intermediate\Build\Win64\UE4Editor\Development\Engine\SharedPCH.Engine.ShadowErrors.h"
+/Fp"E:\GitLab\tmp\FANTASIA\HostProject\Intermediate\Build\Win64\UE4Editor\Development\Engine\SharedPCH.Engine.ShadowErrors.h.pch"
+"E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\Intermediate\Build\Win64\UE4Editor\Development\FANTASIA\Module.FANTASIA.gen.cpp"
+/FI"E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\Intermediate\Build\Win64\UE4Editor\Development\FANTASIA\Definitions.FANTASIA.h"
+/Fo"E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\Intermediate\Build\Win64\UE4Editor\Development\FANTASIA\Module.FANTASIA.gen.cpp.obj"
 /TP
 /GR-
 /W4

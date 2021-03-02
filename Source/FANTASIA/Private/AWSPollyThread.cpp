@@ -139,7 +139,7 @@ void AWSPollyThread::Synthesize()
 				{
 					FTTSTimedStruct newStruct;
 
-					newStruct.time = FCString::Atoi(*visemeMatcher.GetCaptureGroup(1));
+					newStruct.time = FCString::Atoi(*marksMatcher.GetCaptureGroup(1));
 					newStruct.data = marksMatcher.GetCaptureGroup(2);
 					newData.notifies.Add(newStruct);
 				}
