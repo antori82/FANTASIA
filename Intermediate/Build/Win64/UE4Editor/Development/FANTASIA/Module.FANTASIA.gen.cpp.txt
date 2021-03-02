@@ -1,9 +1,9 @@
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\Intermediate\Build\Win64\UE4Editor\Development\FANTASIA\Definitions.FANTASIA.h
-E:/GitLab/FANTASIAPackage/FANTASIA/FANTASIA/HostProject/Plugins/FANTASIA/Intermediate/Build/Win64/UE4Editor/Inc/FANTASIA/AWSPollyComponent.gen.cpp
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\Intermediate\Build\Win64\UE4Editor\Development\FANTASIA\Definitions.FANTASIA.h
+E:/GitLab/tmp/FANTASIA/HostProject/Plugins/FANTASIA/Intermediate/Build/Win64/UE4Editor/Inc/FANTASIA/AWSPollyComponent.gen.cpp
 E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\CoreUObject\Public\UObject/GeneratedCppIncludes.h
 E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\CoreUObject\Public\UObject/MetaData.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\Source\FANTASIA/Public/AWSPollyComponent.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\Source\FANTASIA\Public\FANTASIA.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\Source\FANTASIA/Public/AWSPollyComponent.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\Source\FANTASIA\Public\FANTASIA.h
 E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Public\Engine.h
 E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Misc/MonolithicHeaderBoilerplate.h
 E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Core.h
@@ -678,9 +678,9 @@ C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.2
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\cstdio
 E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\Widgets/Input/SSlider.h
 E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Slate\Public\Framework/Docking/LayoutService.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\Source\FANTASIA\Public\FANTASIATypes.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\Intermediate\Build\Win64\UE4Editor\Inc\FANTASIA\FANTASIATypes.generated.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\Source\FANTASIA\Public\AWSPollyThread.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\Source\FANTASIA\Public\FANTASIATypes.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\Intermediate\Build\Win64\UE4Editor\Inc\FANTASIA\FANTASIATypes.generated.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\Source\FANTASIA\Public\AWSPollyThread.h
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\iostream
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\istream
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\ostream
@@ -708,97 +708,97 @@ C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.2
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\xlocinfo
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\xlocinfo.h
 C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt\locale.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/Aws.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/logging/LogLevel.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/Core_EXPORTS.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/SDKConfig.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/memory/stl/AWSString.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/memory/stl/AWSAllocator.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/SDKConfig.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/memory/AWSMemory.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/UnreferencedParam.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/memory/MemorySystemInterface.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/Aws.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/logging/LogLevel.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/Core_EXPORTS.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/SDKConfig.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/memory/stl/AWSString.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/memory/stl/AWSAllocator.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/SDKConfig.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/memory/AWSMemory.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/UnreferencedParam.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/memory/MemorySystemInterface.h
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\algorithm
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\functional
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\tuple
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\string
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\cctype
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/logging/LogSystemInterface.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/memory/stl/AWSStringStream.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/logging/LogSystemInterface.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/memory/stl/AWSStringStream.h
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\sstream
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/crypto/Factories.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/Array.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/memory/stl/AWSVector.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/crypto/Factories.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/Array.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/memory/stl/AWSVector.h
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\vector
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\cassert
 C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt\assert.h
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\iterator
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/http/HttpClientFactory.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/http/HttpTypes.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/memory/stl/AWSList.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/http/HttpClientFactory.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/http/HttpTypes.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/memory/stl/AWSList.h
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\list
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/memory/stl/AWSMap.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/memory/stl/AWSMap.h
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\map
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\xtree
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\unordered_map
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\xhash
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\xbit_ops.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/memory/stl/AWSStreamFwd.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/monitoring/MonitoringManager.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/client/AWSClient.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/client/CoreErrors.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/AmazonWebServiceResult.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/http/HttpResponse.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/http/HttpRequest.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/http/URI.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/http/Scheme.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/stream/ResponseStream.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/monitoring/HttpClientMetrics.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/crypto/Hash.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/crypto/HashResult.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/auth/AWSAuthSignerProvider.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/monitoring/CoreMetrics.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/PollyClient.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/Polly_EXPORTS.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/PollyErrors.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/client/AWSError.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/xml/XmlSerializer.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/Outcome.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/memory/stl/AWSStreamFwd.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/monitoring/MonitoringManager.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/client/AWSClient.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/client/CoreErrors.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/AmazonWebServiceResult.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/http/HttpResponse.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/http/HttpRequest.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/http/URI.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/http/Scheme.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/stream/ResponseStream.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/monitoring/HttpClientMetrics.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/crypto/Hash.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/crypto/HashResult.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/auth/AWSAuthSignerProvider.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/monitoring/CoreMetrics.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/PollyClient.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/Polly_EXPORTS.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/PollyErrors.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/client/AWSError.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/xml/XmlSerializer.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/Outcome.h
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\cassert
 C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt\assert.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/json/JsonSerializer.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/external/cjson/cJSON.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/StringUtils.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/client/ClientConfiguration.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/Region.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/DeleteLexiconResult.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/DescribeVoicesResult.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/Voice.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/Gender.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/VoiceId.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/LanguageCode.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/Engine.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/GetLexiconResult.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/Lexicon.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/LexiconAttributes.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/DateTime.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/json/JsonSerializer.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/external/cjson/cJSON.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/StringUtils.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/client/ClientConfiguration.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/Region.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/DeleteLexiconResult.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/DescribeVoicesResult.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/Voice.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/Gender.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/VoiceId.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/LanguageCode.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/Engine.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/GetLexiconResult.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/Lexicon.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/LexiconAttributes.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/DateTime.h
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\chrono
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\ratio
 C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt\time.h
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\xtimec.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/GetSpeechSynthesisTaskResult.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/SynthesisTask.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/TaskStatus.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/OutputFormat.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/TextType.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/SpeechMarkType.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/ListLexiconsResult.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/LexiconDescription.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/ListSpeechSynthesisTasksResult.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/PutLexiconResult.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/StartSpeechSynthesisTaskResult.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/SynthesizeSpeechResult.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/client/AsyncCallerContext.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/GetSpeechSynthesisTaskResult.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/SynthesisTask.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/TaskStatus.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/OutputFormat.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/TextType.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/SpeechMarkType.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/ListLexiconsResult.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/LexiconDescription.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/ListSpeechSynthesisTasksResult.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/PutLexiconResult.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/StartSpeechSynthesisTaskResult.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/SynthesizeSpeechResult.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/client/AsyncCallerContext.h
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\future
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\condition_variable
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\mutex
@@ -814,29 +814,29 @@ C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.2
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\ppltaskscheduler.h
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\crtdefs.h
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\pplcancellation_token.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/SynthesizeSpeechRequest.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/PollyRequest.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/AmazonSerializableWebServiceRequest.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/AmazonWebServiceRequest.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/auth/AWSAuthSigner.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/memory/stl/AWSSet.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/model/SynthesizeSpeechRequest.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly\aws/polly/PollyRequest.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/AmazonSerializableWebServiceRequest.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/AmazonWebServiceRequest.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/auth/AWSAuthSigner.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/memory/stl/AWSSet.h
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\set
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/threading/ReaderWriterLock.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/threading/Semaphore.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/crypto/Sha256.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/crypto/Sha256HMAC.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/crypto/HMAC.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/auth/AWSCredentialsProvider.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/internal/AWSHttpResourceClient.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/client/AWSErrorMarshaller.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/auth/AWSCredentials.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/config/AWSProfileConfigLoader.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/client/RetryStrategy.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/threading/ReaderWriterLock.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/threading/Semaphore.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/crypto/Sha256.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/crypto/Sha256HMAC.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/utils/crypto/HMAC.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/auth/AWSCredentialsProvider.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/internal/AWSHttpResourceClient.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/client/AWSErrorMarshaller.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/auth/AWSCredentials.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/config/AWSProfileConfigLoader.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core\aws/core/client/RetryStrategy.h
 E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime/Engine/Classes/Sound/SoundWaveProcedural.h
 E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\SoundWaveProcedural.generated.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\Intermediate\Build\Win64\UE4Editor\Inc\FANTASIA\AWSPollyComponent.generated.h
-E:/GitLab/FANTASIAPackage/FANTASIA/FANTASIA/HostProject/Plugins/FANTASIA/Intermediate/Build/Win64/UE4Editor/Inc/FANTASIA/AzureASRComponent.gen.cpp
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\Source\FANTASIA/Public/AzureASRComponent.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\Intermediate\Build\Win64\UE4Editor\Inc\FANTASIA\AWSPollyComponent.generated.h
+E:/GitLab/tmp/FANTASIA/HostProject/Plugins/FANTASIA/Intermediate/Build/Win64/UE4Editor/Inc/FANTASIA/AzureASRComponent.gen.cpp
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\Source\FANTASIA/Public/AzureASRComponent.h
 E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime/Online/Voice/Public/VoiceModule.h
 E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Online\Voice\Public\Interfaces/VoiceCapture.h
 E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Online\Voice\Public\VoicePackage.h
@@ -850,14 +850,14 @@ E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\En
 E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\AudioMixer\Public\Components/SynthComponent.h
 E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\AudioMixer\SynthComponent.generated.h
 E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\VoiceConfig.generated.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\Source\FANTASIA\Public\AzureASRThread.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_common.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_common.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\Source\FANTASIA\Public\AzureASRThread.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_common.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_common.h
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\stdbool.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\spxerror.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_error.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_string_helpers.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\spxerror.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_error.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_string_helpers.h
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\codecvt
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\locale
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\xlocbuf
@@ -865,92 +865,92 @@ C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.2
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\xlocmon
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\xloctime
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\ctime
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_property_bag.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_smart_handle.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\spxdebug.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_property_bag.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_smart_handle.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\spxdebug.h
 C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt\inttypes.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_properties.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_enums.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_session.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_speech_config.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_speech_config.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_audio_stream_format.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_audio_stream_format.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_audio_stream.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_audio_stream.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_result.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_audio_config.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_audio_config.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_eventargs.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_eventsignal.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_session_eventargs.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_recognizer.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_recognition_result.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_recognition_eventargs.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_recognition_async_recognizer.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_recognizer.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_keyword_recognition_model.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_keyword_recognition_model.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_recognition_base_async_recognizer.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_speech_recognition_result.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_intent_result.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_intent_trigger.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_intent_recognizer.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_translation_result.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_translation_recognizer.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_language_understanding_model.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_factory.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_synthesizer.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_grammar.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_connection.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_activity.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_bot_connector_config.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_speech_bot_connector.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_conversation_transcriber.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_conversation_transcription_result.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_user.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_participant.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_speech_recognition_eventargs.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_speech_recognizer.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_intent_recognition_result.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_intent_recognition_eventargs.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_intent_recognizer.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_intent_trigger.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_language_understanding_model.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_translation_result.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_translation_eventargs.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_speech_translation_config.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_translation_recognizer.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_grammar.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_grammar_phrase.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_phrase_list_grammar.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_session.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_speech_bot_connector.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_properties.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_enums.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_session.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_speech_config.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_speech_config.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_audio_stream_format.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_audio_stream_format.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_audio_stream.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_audio_stream.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_result.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_audio_config.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_audio_config.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_eventargs.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_eventsignal.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_session_eventargs.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_recognizer.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_recognition_result.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_recognition_eventargs.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_recognition_async_recognizer.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_recognizer.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_keyword_recognition_model.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_keyword_recognition_model.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_recognition_base_async_recognizer.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_speech_recognition_result.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_intent_result.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_intent_trigger.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_intent_recognizer.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_translation_result.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_translation_recognizer.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_language_understanding_model.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_factory.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_synthesizer.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_grammar.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_connection.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_activity.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_bot_connector_config.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_speech_bot_connector.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_conversation_transcriber.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_conversation_transcription_result.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_user.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api\speechapi_c_participant.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_speech_recognition_eventargs.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_speech_recognizer.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_intent_recognition_result.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_intent_recognition_eventargs.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_intent_recognizer.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_intent_trigger.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_language_understanding_model.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_translation_result.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_translation_eventargs.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_speech_translation_config.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_translation_recognizer.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_grammar.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_grammar_phrase.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_phrase_list_grammar.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_session.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_speech_bot_connector.h
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE\array
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_utils.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_bot_connector_activity.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_bot_connector_eventargs.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_bot_connector_config.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_connection.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_connection_eventargs.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_speech_synthesis_result.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_speech_synthesis_eventargs.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_speech_synthesizer.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_conversation_transcriber.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_conversation_transcription_result.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_conversation_transcription_eventargs.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_user.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_participant.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_utils.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_bot_connector_activity.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_bot_connector_eventargs.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_bot_connector_config.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_connection.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_connection_eventargs.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_speech_synthesis_result.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_speech_synthesis_eventargs.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_speech_synthesizer.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_conversation_transcriber.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_conversation_transcription_result.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_conversation_transcription_eventargs.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_user.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api\speechapi_cxx_participant.h
 E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Online\Voice\Public\Voice.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\Intermediate\Build\Win64\UE4Editor\Inc\FANTASIA\AzureASRComponent.generated.h
-E:/GitLab/FANTASIAPackage/FANTASIA/FANTASIA/HostProject/Plugins/FANTASIA/Intermediate/Build/Win64/UE4Editor/Inc/FANTASIA/AzureNLUComponent.gen.cpp
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\Source\FANTASIA/Public/AzureNLUComponent.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\Source\FANTASIA\Public\AzureNLUThread.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\Intermediate\Build\Win64\UE4Editor\Inc\FANTASIA\AzureNLUComponent.generated.h
-E:/GitLab/FANTASIAPackage/FANTASIA/FANTASIA/HostProject/Plugins/FANTASIA/Intermediate/Build/Win64/UE4Editor/Inc/FANTASIA/AzureTTSComponent.gen.cpp
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\Source\FANTASIA/Public/AzureTTSComponent.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\Source\FANTASIA\Public\AzureTTSThread.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\Intermediate\Build\Win64\UE4Editor\Inc\FANTASIA\AzureASRComponent.generated.h
+E:/GitLab/tmp/FANTASIA/HostProject/Plugins/FANTASIA/Intermediate/Build/Win64/UE4Editor/Inc/FANTASIA/AzureNLUComponent.gen.cpp
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\Source\FANTASIA/Public/AzureNLUComponent.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\Source\FANTASIA\Public\AzureNLUThread.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\Intermediate\Build\Win64\UE4Editor\Inc\FANTASIA\AzureNLUComponent.generated.h
+E:/GitLab/tmp/FANTASIA/HostProject/Plugins/FANTASIA/Intermediate/Build/Win64/UE4Editor/Inc/FANTASIA/AzureTTSComponent.gen.cpp
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\Source\FANTASIA/Public/AzureTTSComponent.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\Source\FANTASIA\Public\AzureTTSThread.h
 E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime/Online/HTTP/Public/Http.h
 E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Online\HTTP\Public\HttpModule.h
 E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Online\HTTP\Public\Interfaces/IHttpRequest.h
@@ -964,9 +964,9 @@ E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Misc/Monolithi
 E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\JsonUtilities\Public\JsonObjectConverter.h
 E:\Programmi\Epic Games\UE_4.26\Engine\Source\Runtime\JsonUtilities\Public\JsonObjectWrapper.h
 E:\Programmi\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\JsonUtilities\JsonObjectWrapper.generated.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\Intermediate\Build\Win64\UE4Editor\Inc\FANTASIA\AzureTTSComponent.generated.h
-E:/GitLab/FANTASIAPackage/FANTASIA/FANTASIA/HostProject/Plugins/FANTASIA/Intermediate/Build/Win64/UE4Editor/Inc/FANTASIA/FANTASIA.init.gen.cpp
-E:/GitLab/FANTASIAPackage/FANTASIA/FANTASIA/HostProject/Plugins/FANTASIA/Intermediate/Build/Win64/UE4Editor/Inc/FANTASIA/FANTASIATypes.gen.cpp
-E:/GitLab/FANTASIAPackage/FANTASIA/FANTASIA/HostProject/Plugins/FANTASIA/Intermediate/Build/Win64/UE4Editor/Inc/FANTASIA/Neo4jComponent.gen.cpp
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\Source\FANTASIA/Public/Neo4jComponent.h
-E:\GitLab\FANTASIAPackage\FANTASIA\FANTASIA\HostProject\Plugins\FANTASIA\Intermediate\Build\Win64\UE4Editor\Inc\FANTASIA\Neo4jComponent.generated.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\Intermediate\Build\Win64\UE4Editor\Inc\FANTASIA\AzureTTSComponent.generated.h
+E:/GitLab/tmp/FANTASIA/HostProject/Plugins/FANTASIA/Intermediate/Build/Win64/UE4Editor/Inc/FANTASIA/FANTASIA.init.gen.cpp
+E:/GitLab/tmp/FANTASIA/HostProject/Plugins/FANTASIA/Intermediate/Build/Win64/UE4Editor/Inc/FANTASIA/FANTASIATypes.gen.cpp
+E:/GitLab/tmp/FANTASIA/HostProject/Plugins/FANTASIA/Intermediate/Build/Win64/UE4Editor/Inc/FANTASIA/Neo4jComponent.gen.cpp
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\Source\FANTASIA/Public/Neo4jComponent.h
+E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\Intermediate\Build\Win64\UE4Editor\Inc\FANTASIA\Neo4jComponent.generated.h
