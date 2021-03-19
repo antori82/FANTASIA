@@ -77,6 +77,13 @@ Antonio Origlia - antonio.origlia [at] unina.it
 
 Project Link: [https://github.com/antori82/FANTASIA](https://github.com/antori82/FANTASIA)
 
+[Wordpress page](https://fantasiaplugin.wordpress.com/)
+
+[Youtube channel](https://www.youtube.com/channel/UChH-PYQw-_IZJM7nYJywevg)
+
+[Unreal Engine Forum discussion page](https://forums.unrealengine.com/community/work-in-progress/1867915-framework-for-advanced-natural-tools-and-applications-with-social-interactive-agents-fantasia) 
+
+
 <!-- ACKNOWLEDGEMENTS -->
 ## Acknowledgements
 Special thanks to the students who contributed to FANTASIA
