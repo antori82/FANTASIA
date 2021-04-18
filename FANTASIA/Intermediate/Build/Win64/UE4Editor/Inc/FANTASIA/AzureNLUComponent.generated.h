@@ -14,7 +14,7 @@ struct FNLUResponse;
 #endif
 #define FANTASIA_AzureNLUComponent_generated_h
 
-#define HostProject_Plugins_FANTASIA_Source_FANTASIA_Public_AzureNLUComponent_h_21_DELEGATE \
+#define Jason_Plugins_FANTASIA_Source_FANTASIA_Public_AzureNLUComponent_h_23_DELEGATE \
 struct _Script_FANTASIA_eventIncomingNLUEvent_Parms \
 { \
 	FNLUResponse NLUResponse; \
@@ -27,18 +27,18 @@ static inline void FIncomingNLUEvent_DelegateWrapper(const FMulticastScriptDeleg
 }
 
 
-#define HostProject_Plugins_FANTASIA_Source_FANTASIA_Public_AzureNLUComponent_h_26_SPARSE_DATA
-#define HostProject_Plugins_FANTASIA_Source_FANTASIA_Public_AzureNLUComponent_h_26_RPC_WRAPPERS \
+#define Jason_Plugins_FANTASIA_Source_FANTASIA_Public_AzureNLUComponent_h_28_SPARSE_DATA
+#define Jason_Plugins_FANTASIA_Source_FANTASIA_Public_AzureNLUComponent_h_28_RPC_WRAPPERS \
  \
 	DECLARE_FUNCTION(execAzureNLUStart);
 
 
-#define HostProject_Plugins_FANTASIA_Source_FANTASIA_Public_AzureNLUComponent_h_26_RPC_WRAPPERS_NO_PURE_DECLS \
+#define Jason_Plugins_FANTASIA_Source_FANTASIA_Public_AzureNLUComponent_h_28_RPC_WRAPPERS_NO_PURE_DECLS \
  \
 	DECLARE_FUNCTION(execAzureNLUStart);
 
 
-#define HostProject_Plugins_FANTASIA_Source_FANTASIA_Public_AzureNLUComponent_h_26_INCLASS_NO_PURE_DECLS \
+#define Jason_Plugins_FANTASIA_Source_FANTASIA_Public_AzureNLUComponent_h_28_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUAzureNLUComponent(); \
 	friend struct Z_Construct_UClass_UAzureNLUComponent_Statics; \
@@ -47,7 +47,7 @@ public: \
 	DECLARE_SERIALIZER(UAzureNLUComponent)
 
 
-#define HostProject_Plugins_FANTASIA_Source_FANTASIA_Public_AzureNLUComponent_h_26_INCLASS \
+#define Jason_Plugins_FANTASIA_Source_FANTASIA_Public_AzureNLUComponent_h_28_INCLASS \
 private: \
 	static void StaticRegisterNativesUAzureNLUComponent(); \
 	friend struct Z_Construct_UClass_UAzureNLUComponent_Statics; \
@@ -56,7 +56,7 @@ public: \
 	DECLARE_SERIALIZER(UAzureNLUComponent)
 
 
-#define HostProject_Plugins_FANTASIA_Source_FANTASIA_Public_AzureNLUComponent_h_26_STANDARD_CONSTRUCTORS \
+#define Jason_Plugins_FANTASIA_Source_FANTASIA_Public_AzureNLUComponent_h_28_STANDARD_CONSTRUCTORS \
 	/** Standard constructor, called after all reflected properties have been initialized */ \
 	NO_API UAzureNLUComponent(const FObjectInitializer& ObjectInitializer); \
 	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(UAzureNLUComponent) \
@@ -69,7 +69,7 @@ private: \
 public:
 
 
-#define HostProject_Plugins_FANTASIA_Source_FANTASIA_Public_AzureNLUComponent_h_26_ENHANCED_CONSTRUCTORS \
+#define Jason_Plugins_FANTASIA_Source_FANTASIA_Public_AzureNLUComponent_h_28_ENHANCED_CONSTRUCTORS \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
 	NO_API UAzureNLUComponent(UAzureNLUComponent&&); \
@@ -80,28 +80,28 @@ DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(UAzureNLUComponent); \
 	DEFINE_DEFAULT_CONSTRUCTOR_CALL(UAzureNLUComponent)
 
 
-#define HostProject_Plugins_FANTASIA_Source_FANTASIA_Public_AzureNLUComponent_h_26_PRIVATE_PROPERTY_OFFSET
-#define HostProject_Plugins_FANTASIA_Source_FANTASIA_Public_AzureNLUComponent_h_23_PROLOG
-#define HostProject_Plugins_FANTASIA_Source_FANTASIA_Public_AzureNLUComponent_h_26_GENERATED_BODY_LEGACY \
+#define Jason_Plugins_FANTASIA_Source_FANTASIA_Public_AzureNLUComponent_h_28_PRIVATE_PROPERTY_OFFSET
+#define Jason_Plugins_FANTASIA_Source_FANTASIA_Public_AzureNLUComponent_h_25_PROLOG
+#define Jason_Plugins_FANTASIA_Source_FANTASIA_Public_AzureNLUComponent_h_28_GENERATED_BODY_LEGACY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	HostProject_Plugins_FANTASIA_Source_FANTASIA_Public_AzureNLUComponent_h_26_PRIVATE_PROPERTY_OFFSET \
-	HostProject_Plugins_FANTASIA_Source_FANTASIA_Public_AzureNLUComponent_h_26_SPARSE_DATA \
-	HostProject_Plugins_FANTASIA_Source_FANTASIA_Public_AzureNLUComponent_h_26_RPC_WRAPPERS \
-	HostProject_Plugins_FANTASIA_Source_FANTASIA_Public_AzureNLUComponent_h_26_INCLASS \
-	HostProject_Plugins_FANTASIA_Source_FANTASIA_Public_AzureNLUComponent_h_26_STANDARD_CONSTRUCTORS \
+	Jason_Plugins_FANTASIA_Source_FANTASIA_Public_AzureNLUComponent_h_28_PRIVATE_PROPERTY_OFFSET \
+	Jason_Plugins_FANTASIA_Source_FANTASIA_Public_AzureNLUComponent_h_28_SPARSE_DATA \
+	Jason_Plugins_FANTASIA_Source_FANTASIA_Public_AzureNLUComponent_h_28_RPC_WRAPPERS \
+	Jason_Plugins_FANTASIA_Source_FANTASIA_Public_AzureNLUComponent_h_28_INCLASS \
+	Jason_Plugins_FANTASIA_Source_FANTASIA_Public_AzureNLUComponent_h_28_STANDARD_CONSTRUCTORS \
 public: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-#define HostProject_Plugins_FANTASIA_Source_FANTASIA_Public_AzureNLUComponent_h_26_GENERATED_BODY \
+#define Jason_Plugins_FANTASIA_Source_FANTASIA_Public_AzureNLUComponent_h_28_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	HostProject_Plugins_FANTASIA_Source_FANTASIA_Public_AzureNLUComponent_h_26_PRIVATE_PROPERTY_OFFSET \
-	HostProject_Plugins_FANTASIA_Source_FANTASIA_Public_AzureNLUComponent_h_26_SPARSE_DATA \
-	HostProject_Plugins_FANTASIA_Source_FANTASIA_Public_AzureNLUComponent_h_26_RPC_WRAPPERS_NO_PURE_DECLS \
-	HostProject_Plugins_FANTASIA_Source_FANTASIA_Public_AzureNLUComponent_h_26_INCLASS_NO_PURE_DECLS \
-	HostProject_Plugins_FANTASIA_Source_FANTASIA_Public_AzureNLUComponent_h_26_ENHANCED_CONSTRUCTORS \
+	Jason_Plugins_FANTASIA_Source_FANTASIA_Public_AzureNLUComponent_h_28_PRIVATE_PROPERTY_OFFSET \
+	Jason_Plugins_FANTASIA_Source_FANTASIA_Public_AzureNLUComponent_h_28_SPARSE_DATA \
+	Jason_Plugins_FANTASIA_Source_FANTASIA_Public_AzureNLUComponent_h_28_RPC_WRAPPERS_NO_PURE_DECLS \
+	Jason_Plugins_FANTASIA_Source_FANTASIA_Public_AzureNLUComponent_h_28_INCLASS_NO_PURE_DECLS \
+	Jason_Plugins_FANTASIA_Source_FANTASIA_Public_AzureNLUComponent_h_28_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
@@ -109,7 +109,7 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 template<> FANTASIA_API UClass* StaticClass<class UAzureNLUComponent>();
 
 #undef CURRENT_FILE_ID
-#define CURRENT_FILE_ID HostProject_Plugins_FANTASIA_Source_FANTASIA_Public_AzureNLUComponent_h
+#define CURRENT_FILE_ID Jason_Plugins_FANTASIA_Source_FANTASIA_Public_AzureNLUComponent_h
 
 
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

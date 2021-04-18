@@ -1,3 +1,5 @@
+// Copyright 1998-2019 Epic Games, Inc. All Rights Reserved.
+
 using UnrealBuildTool;
 using System.IO;
 
@@ -49,7 +51,7 @@ public class FANTASIA : ModuleRules
 			);
 
 		string ModulePath = ModuleDirectory;
-		string ThirdParty = Path.GetFullPath(Path.Combine(ModulePath, "../../ThirdParty"));
+		string ThirdParty = Path.GetFullPath(Path.Combine(ModulePath, "../../ThirdParty/"));
 
 		string LibraryPath = Path.Combine(ThirdParty, "Microsoft.CognitiveServices.Speech.1.5.1", "build", "native", "x64", "Release");
 		string IncludePath1 = Path.Combine(ThirdParty, "Microsoft.CognitiveServices.Speech.1.5.1", "build", "native", "include", "cxx_api");
@@ -68,14 +70,14 @@ public class FANTASIA : ModuleRules
 
 		PublicIncludePaths.AddRange(new string[] { IncludePath1, IncludePath2, IncludePath3, IncludePath4, IncludePath5 });
 
-		RuntimeDependencies.Add(Path.Combine(ThirdParty, "Redist", "aws-c-common.dll"));
-		RuntimeDependencies.Add(Path.Combine(ThirdParty, "Redist", "aws-c-event-stream.dll"));
-		RuntimeDependencies.Add(Path.Combine(ThirdParty, "Redist", "aws-checksums.dll"));
-		RuntimeDependencies.Add(Path.Combine(ThirdParty, "Redist", "aws-cpp-sdk-core.dll"));
-		RuntimeDependencies.Add(Path.Combine(ThirdParty, "Redist", "aws-cpp-sdk-polly.dll"));
-		RuntimeDependencies.Add(Path.Combine(ThirdParty, "Redist", "aws-cpp-sdk-text-to-speech.dll"));
-		RuntimeDependencies.Add(Path.Combine(ThirdParty, "Redist", "Microsoft.CognitiveServices.Speech.core.dll"));
-		RuntimeDependencies.Add(Path.Combine(ThirdParty, "Redist", "Microsoft.CognitiveServices.Speech.extension.kws.dll"));
+		RuntimeDependencies.Add(Path.Combine(ThirdParty, "aws-c-common.dll"));
+		RuntimeDependencies.Add(Path.Combine(ThirdParty, "aws-c-event-stream.dll"));
+		RuntimeDependencies.Add(Path.Combine(ThirdParty, "aws-checksums.dll"));
+		RuntimeDependencies.Add(Path.Combine(ThirdParty, "aws-cpp-sdk-core.dll"));
+		RuntimeDependencies.Add(Path.Combine(ThirdParty, "aws-cpp-sdk-polly.dll"));
+		RuntimeDependencies.Add(Path.Combine(ThirdParty, "aws-cpp-sdk-text-to-speech.dll"));
+		RuntimeDependencies.Add(Path.Combine(ThirdParty, "Microsoft.CognitiveServices.Speech.core.dll"));
+		RuntimeDependencies.Add(Path.Combine(ThirdParty, "Microsoft.CognitiveServices.Speech.extension.kws.dll"));
 
 		DynamicallyLoadedModuleNames.AddRange(
 		new string[]

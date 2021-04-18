@@ -32,10 +32,15 @@ uint32 AzureNLUThread::Run()
 void AzureNLUThread::Stop()
 {
 	StopTaskCounter.Increment();
+	//switch (ASRMode) {
+	//case EAzureASREnum::ASR_CONTINUOUS:
+	//	StopContinuousRecognition();
+	//}
 }
 
 AzureNLUThread* AzureNLUThread::setup(shared_ptr<SpeechConfig> config, shared_ptr<LanguageUnderstandingModel> model)
 {
+	//if (!Runnable && FPlatformProcess::SupportsMultithreading())
 	if (FPlatformProcess::SupportsMultithreading())
 	{
 		Runnable = new AzureNLUThread(config, model);
@@ -53,6 +58,8 @@ void AzureNLUThread::Shutdown()
 {
 	if (Runnable)
 	{
+		//Runnable->EnsureCompletion();
+		//delete Runnable;
 		Runnable = NULL;
 	}
 }
@@ -85,7 +92,6 @@ void AzureNLUThread::StartOneShotRecognition()
 
 	auto result = recognizer->RecognizeOnceAsync().get();
 
-	//TODO: Add better error management
 	if (result->Reason == ResultReason::RecognizedIntent)
 	{
 		TSharedPtr<FJsonValue> JsonValue;
@@ -104,6 +110,26 @@ void AzureNLUThread::StartOneShotRecognition()
 
 			NLUResultAvailable.Broadcast(NLUResponse);
 		}
+	}
+	else if (result->Reason == ResultReason::RecognizedSpeech)
+	{
+		//cout << "RECOGNIZED: Text=" << result->Text << " (intent could not be recognized)" << std::endl;
+	}
+	else if (result->Reason == ResultReason::NoMatch)
+	{
+		//cout << "NOMATCH: Speech could not be recognized." << std::endl;
+	}
+	else if (result->Reason == ResultReason::Canceled)
+	{
+		/*auto cancellation = CancellationDetails::FromResult(result);
+		cout << "CANCELED: Reason=" << (int)cancellation->Reason << std::endl;
+
+		if (cancellation->Reason == CancellationReason::Error)
+		{
+			cout << "CANCELED: ErrorCode=" << (int)cancellation->ErrorCode << std::endl;
+			cout << "CANCELED: ErrorDetails=" << cancellation->ErrorDetails << std::endl;
+			cout << "CANCELED: Did you update the subscription info?" << std::endl;
+		}*/
 	}
 }
 

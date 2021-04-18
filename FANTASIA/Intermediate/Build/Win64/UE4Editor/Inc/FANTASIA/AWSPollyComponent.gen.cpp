@@ -18,7 +18,7 @@ void EmptyLinkFunctionForGeneratedCodeAWSPollyComponent() {}
 	ENGINE_API UClass* Z_Construct_UClass_UActorComponent();
 	UPackage* Z_Construct_UPackage__Script_FANTASIA();
 	FANTASIA_API UScriptStruct* Z_Construct_UScriptStruct_FTTSTimedStruct();
-	ENGINE_API UClass* Z_Construct_UClass_USoundBase_NoRegister();
+	ENGINE_API UClass* Z_Construct_UClass_USoundWaveProcedural_NoRegister();
 	ENGINE_API UClass* Z_Construct_UClass_UAudioComponent_NoRegister();
 	FANTASIA_API UFunction* Z_Construct_UDelegateFunction_FANTASIA_SynthesizedEvent__DelegateSignature();
 	FANTASIA_API UEnum* Z_Construct_UEnum_FANTASIA_TTSVoiceType();
@@ -44,7 +44,7 @@ void EmptyLinkFunctionForGeneratedCodeAWSPollyComponent() {}
 		P_GET_PROPERTY(FStrProperty,Z_Param_id);
 		P_FINISH;
 		P_NATIVE_BEGIN;
-		*(USoundBase**)Z_Param__Result=P_THIS->AWSPollyGetSound(Z_Param_id);
+		*(USoundWaveProcedural**)Z_Param__Result=P_THIS->AWSPollyGetSound(Z_Param_id);
 		P_NATIVE_END;
 	}
 	DEFINE_FUNCTION(UAWSPollyComponent::execAWSPollySynthesize)
@@ -157,7 +157,7 @@ void EmptyLinkFunctionForGeneratedCodeAWSPollyComponent() {}
 		struct AWSPollyComponent_eventAWSPollyGetSound_Parms
 		{
 			FString id;
-			USoundBase* ReturnValue;
+			USoundWaveProcedural* ReturnValue;
 		};
 		static const UE4CodeGen_Private::FStrPropertyParams NewProp_id;
 		static const UE4CodeGen_Private::FObjectPropertyParams NewProp_ReturnValue;
@@ -168,7 +168,7 @@ void EmptyLinkFunctionForGeneratedCodeAWSPollyComponent() {}
 		static const UE4CodeGen_Private::FFunctionParams FuncParams;
 	};
 	const UE4CodeGen_Private::FStrPropertyParams Z_Construct_UFunction_UAWSPollyComponent_AWSPollyGetSound_Statics::NewProp_id = { "id", nullptr, (EPropertyFlags)0x0010000000000080, UE4CodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(AWSPollyComponent_eventAWSPollyGetSound_Parms, id), METADATA_PARAMS(nullptr, 0) };
-	const UE4CodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_UAWSPollyComponent_AWSPollyGetSound_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UE4CodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(AWSPollyComponent_eventAWSPollyGetSound_Parms, ReturnValue), Z_Construct_UClass_USoundBase_NoRegister, METADATA_PARAMS(nullptr, 0) };
+	const UE4CodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_UAWSPollyComponent_AWSPollyGetSound_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UE4CodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(AWSPollyComponent_eventAWSPollyGetSound_Parms, ReturnValue), Z_Construct_UClass_USoundWaveProcedural_NoRegister, METADATA_PARAMS(nullptr, 0) };
 	const UE4CodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UAWSPollyComponent_AWSPollyGetSound_Statics::PropPointers[] = {
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UAWSPollyComponent_AWSPollyGetSound_Statics::NewProp_id,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UAWSPollyComponent_AWSPollyGetSound_Statics::NewProp_ReturnValue,
@@ -286,7 +286,7 @@ void EmptyLinkFunctionForGeneratedCodeAWSPollyComponent() {}
 	const FClassFunctionLinkInfo Z_Construct_UClass_UAWSPollyComponent_Statics::FuncInfo[] = {
 		{ &Z_Construct_UFunction_UAWSPollyComponent_AWSPollyGetLipSync, "AWSPollyGetLipSync" }, // 1351864615
 		{ &Z_Construct_UFunction_UAWSPollyComponent_AWSPollyGetNotifies, "AWSPollyGetNotifies" }, // 1994391926
-		{ &Z_Construct_UFunction_UAWSPollyComponent_AWSPollyGetSound, "AWSPollyGetSound" }, // 3645381385
+		{ &Z_Construct_UFunction_UAWSPollyComponent_AWSPollyGetSound, "AWSPollyGetSound" }, // 3111266339
 		{ &Z_Construct_UFunction_UAWSPollyComponent_AWSPollySynthesize, "AWSPollySynthesize" }, // 2329783264
 	};
 #if WITH_METADATA
@@ -379,7 +379,7 @@ void EmptyLinkFunctionForGeneratedCodeAWSPollyComponent() {}
 		}
 		return OuterClass;
 	}
-	IMPLEMENT_CLASS(UAWSPollyComponent, 65227173);
+	IMPLEMENT_CLASS(UAWSPollyComponent, 429506356);
 	template<> FANTASIA_API UClass* StaticClass<UAWSPollyComponent>()
 	{
 		return UAWSPollyComponent::StaticClass();

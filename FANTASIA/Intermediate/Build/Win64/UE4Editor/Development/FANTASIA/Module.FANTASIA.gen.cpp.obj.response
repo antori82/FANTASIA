@@ -31,7 +31,7 @@
 /wd4244
 /wd4838
 /I .
-/I E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\Source\FANTASIA\Private
+/I D:\Perforce\Jason\Jason\Plugins\FANTASIA\Source\FANTASIA\Private
 /I ..\Intermediate\Build\Win64\UE4Editor\Inc\CoreUObject
 /I Runtime
 /I Runtime\CoreUObject\Public
@@ -239,14 +239,14 @@
 /I ..\Plugins\Runtime\AndroidPermission\Source\AndroidPermission\Public
 /I ..\Intermediate\Build\Win64\UE4Editor\Inc\JsonUtilities
 /I Runtime\JsonUtilities\Public
-/I E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\Intermediate\Build\Win64\UE4Editor\Inc\FANTASIA
-/I E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\Source
-/I E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api
-/I E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api
-/I E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Core
-/I E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\Polly
-/I E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\ThirdParty\AWS\TTS
-/I E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\Source\FANTASIA\Public
+/I D:\Perforce\Jason\Jason\Plugins\FANTASIA\Intermediate\Build\Win64\UE4Editor\Inc\FANTASIA
+/I D:\Perforce\Jason\Jason\Plugins\FANTASIA\Source
+/I D:\Perforce\Jason\Jason\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\cxx_api
+/I D:\Perforce\Jason\Jason\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.5.1\build\native\include\c_api
+/I D:\Perforce\Jason\Jason\Plugins\FANTASIA\ThirdParty\AWS\Core
+/I D:\Perforce\Jason\Jason\Plugins\FANTASIA\ThirdParty\AWS\Polly
+/I D:\Perforce\Jason\Jason\Plugins\FANTASIA\ThirdParty\AWS\TTS
+/I D:\Perforce\Jason\Jason\Plugins\FANTASIA\Source\FANTASIA\Public
 /I ThirdParty\PhysX3\PxShared\include
 /I ThirdParty\PhysX3\PxShared\include\cudamanager
 /I ThirdParty\PhysX3\PxShared\include\filebuf
@@ -270,18 +270,18 @@
 /I ThirdParty\PhysX3\APEX_1.4\shared\general\RenderDebug\public
 /I ThirdParty\PhysX3\APEX_1.4\shared\general\PairFilter\include
 /I ThirdParty\PhysX3\APEX_1.4\shared\internal\include
-/I "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\INCLUDE"
-/I "C:\Program Files (x86)\Windows Kits\NETFXSDK\4.6.2\include\um"
-/I "C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt"
-/I "C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared"
-/I "C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um"
-/I "C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt"
-/FI"E:\GitLab\tmp\FANTASIA\HostProject\Intermediate\Build\Win64\UE4Editor\Development\Engine\SharedPCH.Engine.ShadowErrors.h"
-/Yu"E:\GitLab\tmp\FANTASIA\HostProject\Intermediate\Build\Win64\UE4Editor\Development\Engine\SharedPCH.Engine.ShadowErrors.h"
-/Fp"E:\GitLab\tmp\FANTASIA\HostProject\Intermediate\Build\Win64\UE4Editor\Development\Engine\SharedPCH.Engine.ShadowErrors.h.pch"
-"E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\Intermediate\Build\Win64\UE4Editor\Development\FANTASIA\Module.FANTASIA.gen.cpp"
-/FI"E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\Intermediate\Build\Win64\UE4Editor\Development\FANTASIA\Definitions.FANTASIA.h"
-/Fo"E:\GitLab\tmp\FANTASIA\HostProject\Plugins\FANTASIA\Intermediate\Build\Win64\UE4Editor\Development\FANTASIA\Module.FANTASIA.gen.cpp.obj"
+/I "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\INCLUDE"
+/I "C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um"
+/I "C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\ucrt"
+/I "C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared"
+/I "C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um"
+/I "C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\winrt"
+/FI"D:\Perforce\Jason\Jason\Intermediate\Build\Win64\JasonEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h"
+/Yu"D:\Perforce\Jason\Jason\Intermediate\Build\Win64\JasonEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h"
+/Fp"D:\Perforce\Jason\Jason\Intermediate\Build\Win64\JasonEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h.pch"
+"D:\Perforce\Jason\Jason\Plugins\FANTASIA\Intermediate\Build\Win64\UE4Editor\Development\FANTASIA\Module.FANTASIA.gen.cpp"
+/FI"D:\Perforce\Jason\Jason\Plugins\FANTASIA\Intermediate\Build\Win64\UE4Editor\Development\FANTASIA\Definitions.FANTASIA.h"
+/Fo"D:\Perforce\Jason\Jason\Plugins\FANTASIA\Intermediate\Build\Win64\UE4Editor\Development\FANTASIA\Module.FANTASIA.gen.cpp.obj"
 /TP
 /GR-
 /W4

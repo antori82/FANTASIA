@@ -26,7 +26,7 @@ AWSPollyThread::~AWSPollyThread() {
 
 AWSPollyThread* AWSPollyThread::setup(TTSVoiceType inVoiceType, FString Voice, FString accessKey, FString secretAccessKey, FString ssml, FString id, bool getLipSync)
 {
-	if (FPlatformProcess::SupportsMultithreading())
+	if (!Runnable && FPlatformProcess::SupportsMultithreading())
 	{
 		Runnable = new AWSPollyThread(inVoiceType, Voice, accessKey, secretAccessKey, ssml, id, getLipSync);
 	}
@@ -59,6 +59,8 @@ void AWSPollyThread::Shutdown()
 {
 	if (Runnable)
 	{
+		//Runnable->EnsureCompletion();
+		//delete Runnable;
 		Runnable = NULL;
 	}
 }
@@ -139,7 +141,7 @@ void AWSPollyThread::Synthesize()
 				{
 					FTTSTimedStruct newStruct;
 
-					newStruct.time = FCString::Atoi(*marksMatcher.GetCaptureGroup(1));
+					newStruct.time = FCString::Atoi(*visemeMatcher.GetCaptureGroup(1));
 					newStruct.data = marksMatcher.GetCaptureGroup(2);
 					newData.notifies.Add(newStruct);
 				}

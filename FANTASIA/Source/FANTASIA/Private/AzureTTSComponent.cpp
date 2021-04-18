@@ -27,6 +27,11 @@ void UAzureTTSComponent::BeginPlay()
 void UAzureTTSComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+
+	if (idSynthesisReady != "") {
+		SynthesisReady.Broadcast(idSynthesisReady);
+		idSynthesisReady = "";
+	}
 }
 
 void UAzureTTSComponent::getResult(FTTSData response, FString id)
@@ -35,7 +40,7 @@ void UAzureTTSComponent::getResult(FTTSData response, FString id)
 	handle->Shutdown();
 
 	Buffer.Add(id, response);
-	SynthesisReady.Broadcast(id);
+	idSynthesisReady = id;
 }
 
 void UAzureTTSComponent::AzureTTSSynthesize(FString ssml, FString id)

@@ -1,3 +1,5 @@
+// Fill out your copyright notice in the Description page of Project Settings.
+
 #pragma once
 
 //#include "CoreMinimal.h"
@@ -42,6 +44,7 @@ private:
 	shared_ptr<LanguageUnderstandingModel> model;
 
 	FDelegateHandle NLUResultAvailableHandle;
+	//bool dataSent = false;
 
 	void getResult(FNLUResponse response);
 

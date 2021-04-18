@@ -33,7 +33,7 @@ void EmptyLinkFunctionForGeneratedCodeFANTASIA_init() {}
 				SingletonFuncArray,
 				UE_ARRAY_COUNT(SingletonFuncArray),
 				PKG_CompiledIn | 0x00000000,
-				0xC84D568A,
+				0x30AFE1BE,
 				0xDADAFA1E,
 				METADATA_PARAMS(nullptr, 0)
 			};
