@@ -1,3 +1,5 @@
+// Fill out your copyright notice in the Description page of Project Settings.
+
 #pragma once
 
 #include "FANTASIA.h"
@@ -44,6 +46,8 @@ private:
 	void getResult(FTTSData response, FString id);
 
 	FSynthesizedInternalEvent synthesisReadyInternal;
+
+	FString idSynthesisReady = "";
 
 public:
 

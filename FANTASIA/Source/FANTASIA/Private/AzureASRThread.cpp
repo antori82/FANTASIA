@@ -63,7 +63,7 @@ AzureASRThread* AzureASRThread::setup(shared_ptr<SpeechConfig> config, shared_pt
 
 AzureASRThread* AzureASRThread::setup(shared_ptr<SpeechConfig> config, EAzureASREnum Mode)
 {
-	if (!Runnable && FPlatformProcess::SupportsMultithreading())
+	if (FPlatformProcess::SupportsMultithreading())
 	{
 		Runnable = new AzureASRThread(config, Mode);
 	}
@@ -80,15 +80,18 @@ void AzureASRThread::Shutdown()
 {
 	if (Runnable)
 	{
+		//Runnable->EnsureCompletion();
+		//delete Runnable;
 		Runnable = NULL;
 	}
 }
 
-//TODO: Currently unused. Need to develop better management to avoid leaving channels open.
 void AzureASRThread::StartContinuousRecognition() {
 
+	// promise for synchronization of recognition end.
 	promise<void> recognitionEnd;
 
+	// Subscribes to events.
 	recognizer->Recognizing.Connect([&PartialRecognitionAvailable = PartialRecognitionAvailable](const SpeechRecognitionEventArgs& e)
 		{
 			PartialRecognitionAvailable.Broadcast(e.Result->Text.c_str());

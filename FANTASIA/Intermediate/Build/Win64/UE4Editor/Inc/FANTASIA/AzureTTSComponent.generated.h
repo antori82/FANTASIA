@@ -14,20 +14,20 @@ class USoundBase;
 #endif
 #define FANTASIA_AzureTTSComponent_generated_h
 
-#define HostProject_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_24_SPARSE_DATA
-#define HostProject_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_24_RPC_WRAPPERS \
+#define Jason_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_26_SPARSE_DATA
+#define Jason_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_26_RPC_WRAPPERS \
  \
 	DECLARE_FUNCTION(execAzureTTSGetSound); \
 	DECLARE_FUNCTION(execAzureTTSSynthesize);
 
 
-#define HostProject_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_24_RPC_WRAPPERS_NO_PURE_DECLS \
+#define Jason_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_26_RPC_WRAPPERS_NO_PURE_DECLS \
  \
 	DECLARE_FUNCTION(execAzureTTSGetSound); \
 	DECLARE_FUNCTION(execAzureTTSSynthesize);
 
 
-#define HostProject_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_24_INCLASS_NO_PURE_DECLS \
+#define Jason_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_26_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUAzureTTSComponent(); \
 	friend struct Z_Construct_UClass_UAzureTTSComponent_Statics; \
@@ -36,7 +36,7 @@ public: \
 	DECLARE_SERIALIZER(UAzureTTSComponent)
 
 
-#define HostProject_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_24_INCLASS \
+#define Jason_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_26_INCLASS \
 private: \
 	static void StaticRegisterNativesUAzureTTSComponent(); \
 	friend struct Z_Construct_UClass_UAzureTTSComponent_Statics; \
@@ -45,7 +45,7 @@ public: \
 	DECLARE_SERIALIZER(UAzureTTSComponent)
 
 
-#define HostProject_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_24_STANDARD_CONSTRUCTORS \
+#define Jason_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_26_STANDARD_CONSTRUCTORS \
 	/** Standard constructor, called after all reflected properties have been initialized */ \
 	NO_API UAzureTTSComponent(const FObjectInitializer& ObjectInitializer); \
 	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(UAzureTTSComponent) \
@@ -58,7 +58,7 @@ private: \
 public:
 
 
-#define HostProject_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_24_ENHANCED_CONSTRUCTORS \
+#define Jason_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_26_ENHANCED_CONSTRUCTORS \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
 	NO_API UAzureTTSComponent(UAzureTTSComponent&&); \
@@ -69,28 +69,28 @@ DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(UAzureTTSComponent); \
 	DEFINE_DEFAULT_CONSTRUCTOR_CALL(UAzureTTSComponent)
 
 
-#define HostProject_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_24_PRIVATE_PROPERTY_OFFSET
-#define HostProject_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_21_PROLOG
-#define HostProject_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_24_GENERATED_BODY_LEGACY \
+#define Jason_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_26_PRIVATE_PROPERTY_OFFSET
+#define Jason_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_23_PROLOG
+#define Jason_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_26_GENERATED_BODY_LEGACY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	HostProject_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_24_PRIVATE_PROPERTY_OFFSET \
-	HostProject_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_24_SPARSE_DATA \
-	HostProject_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_24_RPC_WRAPPERS \
-	HostProject_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_24_INCLASS \
-	HostProject_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_24_STANDARD_CONSTRUCTORS \
+	Jason_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_26_PRIVATE_PROPERTY_OFFSET \
+	Jason_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_26_SPARSE_DATA \
+	Jason_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_26_RPC_WRAPPERS \
+	Jason_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_26_INCLASS \
+	Jason_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_26_STANDARD_CONSTRUCTORS \
 public: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-#define HostProject_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_24_GENERATED_BODY \
+#define Jason_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_26_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	HostProject_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_24_PRIVATE_PROPERTY_OFFSET \
-	HostProject_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_24_SPARSE_DATA \
-	HostProject_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_24_RPC_WRAPPERS_NO_PURE_DECLS \
-	HostProject_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_24_INCLASS_NO_PURE_DECLS \
-	HostProject_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_24_ENHANCED_CONSTRUCTORS \
+	Jason_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_26_PRIVATE_PROPERTY_OFFSET \
+	Jason_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_26_SPARSE_DATA \
+	Jason_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_26_RPC_WRAPPERS_NO_PURE_DECLS \
+	Jason_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_26_INCLASS_NO_PURE_DECLS \
+	Jason_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_26_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
@@ -98,7 +98,7 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 template<> FANTASIA_API UClass* StaticClass<class UAzureTTSComponent>();
 
 #undef CURRENT_FILE_ID
-#define CURRENT_FILE_ID HostProject_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h
+#define CURRENT_FILE_ID Jason_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h
 
 
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

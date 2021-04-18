@@ -23,6 +23,12 @@ void UAWSPollyComponent::BeginPlay()
 void UAWSPollyComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+
+	if (idSynthesisReady != "") {
+		SynthesisReady.Broadcast(idSynthesisReady);
+		idSynthesisReady = "";
+	}
+		
 }
 
 void UAWSPollyComponent::getResult(FTTSData response, FString id)
@@ -31,7 +37,7 @@ void UAWSPollyComponent::getResult(FTTSData response, FString id)
 	handle->Shutdown();
 
 	Buffer.Add(id, response);
-	SynthesisReady.Broadcast(id);
+	idSynthesisReady = id;
 }
 
 void UAWSPollyComponent::AWSPollySynthesize(FString ssml, FString id, bool getLipSync)
@@ -43,14 +49,14 @@ void UAWSPollyComponent::AWSPollySynthesize(FString ssml, FString id, bool getLi
 	TTSResultAvailableHandle = handle->TTSResultAvailableSubscribeUser(TTSResultSubscriber);
 }
 
-USoundBase* UAWSPollyComponent::AWSPollyGetSound(FString id) {
+USoundWaveProcedural* UAWSPollyComponent::AWSPollyGetSound(FString id) {
 	uint32 SAMPLING_RATE = 16000;
 
 	SyntheticVoice = NewObject<USoundWaveProcedural>();
 	SyntheticVoice->SetSampleRate(SAMPLING_RATE);
 	SyntheticVoice->NumChannels = 1;
 	SyntheticVoice->SoundGroup = SOUNDGROUP_Voice;
-	SyntheticVoice->bLooping = true;
+	SyntheticVoice->bLooping = false;
 	SyntheticVoice->bProcedural = true;
 
 	SyntheticVoice->Duration = (float)Buffer[id].AudioData.Num() / (2 * (float)SAMPLING_RATE);

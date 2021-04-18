@@ -24,7 +24,7 @@ AzureTTSThread::~AzureTTSThread() {
 
 AzureTTSThread* AzureTTSThread::setup(shared_ptr<SpeechConfig> config, FString Language, FString Voice, FString Key, FString Region, FString ssml, FString id)
 {
-	if (FPlatformProcess::SupportsMultithreading())
+	if (!Runnable && FPlatformProcess::SupportsMultithreading())
 	{
 		Runnable = new AzureTTSThread(config, Language, Voice, Key, Region, ssml, id);
 	}
@@ -57,6 +57,8 @@ void AzureTTSThread::Shutdown()
 {
 	if (Runnable)
 	{
+		//Runnable->EnsureCompletion();
+		//delete Runnable;
 		Runnable = NULL;
 	}
 }
@@ -83,6 +85,7 @@ void AzureTTSThread::Synthesize()
 		newData.ssml = ssml;
 		
 		TTSResultAvailable.Broadcast(newData, id);
+		//Shutdown();
 	}
 	else if (result->Reason == ResultReason::Canceled)
 	{
