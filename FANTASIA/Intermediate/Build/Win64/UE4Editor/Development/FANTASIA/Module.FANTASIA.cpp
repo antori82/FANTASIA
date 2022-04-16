@@ -7,5 +7,6 @@
 #include "D:/Perforce/Jason/Jason/Plugins/FANTASIA/Source/FANTASIA/Private/AzureNLUThread.cpp"
 #include "D:/Perforce/Jason/Jason/Plugins/FANTASIA/Source/FANTASIA/Private/AzureTTSComponent.cpp"
 #include "D:/Perforce/Jason/Jason/Plugins/FANTASIA/Source/FANTASIA/Private/AzureTTSThread.cpp"
+#include "D:/Perforce/Jason/Jason/Plugins/FANTASIA/Source/FANTASIA/Private/BayesianNetwork.cpp"
 #include "D:/Perforce/Jason/Jason/Plugins/FANTASIA/Source/FANTASIA/Private/FANTASIA.cpp"
 #include "D:/Perforce/Jason/Jason/Plugins/FANTASIA/Source/FANTASIA/Private/Neo4jComponent.cpp"

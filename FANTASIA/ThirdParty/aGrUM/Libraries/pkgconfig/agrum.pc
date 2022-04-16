@@ -1,0 +1,9 @@
+libdir=D:\Users\Fabrizio\Downloads/lib
+includedir=D:\Users\Fabrizio\Downloads/include
+
+Name: aGrUM 0.16.3.9 (RELEASE)
+Description: C++ library designed for easily building applications using graphical models.
+Requires: 
+Version: 0.16.3.9
+Libs: -lagrum
+Cflags: 

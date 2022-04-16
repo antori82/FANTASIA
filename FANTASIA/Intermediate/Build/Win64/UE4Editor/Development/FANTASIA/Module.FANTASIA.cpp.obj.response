@@ -246,6 +246,8 @@
 /I D:\Perforce\Jason\Jason\Plugins\FANTASIA\ThirdParty\AWS\Core
 /I D:\Perforce\Jason\Jason\Plugins\FANTASIA\ThirdParty\AWS\Polly
 /I D:\Perforce\Jason\Jason\Plugins\FANTASIA\ThirdParty\AWS\TTS
+/I D:\Perforce\Jason\Jason\Plugins\FANTASIA\ThirdParty\aGrUM\Includes
+/I D:\Perforce\Jason\Jason\Plugins\FANTASIA\ThirdParty\nlohmann
 /I D:\Perforce\Jason\Jason\Plugins\FANTASIA\Source\FANTASIA\Public
 /I ThirdParty\PhysX3\PxShared\include
 /I ThirdParty\PhysX3\PxShared\include\cudamanager
@@ -276,9 +278,9 @@
 /I "C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared"
 /I "C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um"
 /I "C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\winrt"
-/FI"D:\Perforce\Jason\Jason\Intermediate\Build\Win64\JasonEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h"
-/Yu"D:\Perforce\Jason\Jason\Intermediate\Build\Win64\JasonEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h"
-/Fp"D:\Perforce\Jason\Jason\Intermediate\Build\Win64\JasonEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h.pch"
+/FI"D:\Perforce\Jason\Jason\Intermediate\Build\Win64\JasonEditor\Development\UnrealEd\SharedPCH.UnrealEd.ShadowErrors.h"
+/Yu"D:\Perforce\Jason\Jason\Intermediate\Build\Win64\JasonEditor\Development\UnrealEd\SharedPCH.UnrealEd.ShadowErrors.h"
+/Fp"D:\Perforce\Jason\Jason\Intermediate\Build\Win64\JasonEditor\Development\UnrealEd\SharedPCH.UnrealEd.ShadowErrors.h.pch"
 "D:\Perforce\Jason\Jason\Plugins\FANTASIA\Intermediate\Build\Win64\UE4Editor\Development\FANTASIA\Module.FANTASIA.cpp"
 /FI"D:\Perforce\Jason\Jason\Plugins\FANTASIA\Intermediate\Build\Win64\UE4Editor\Development\FANTASIA\Definitions.FANTASIA.h"
 /Fo"D:\Perforce\Jason\Jason\Plugins\FANTASIA\Intermediate\Build\Win64\UE4Editor\Development\FANTASIA\Module.FANTASIA.cpp.obj"

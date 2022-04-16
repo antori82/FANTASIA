@@ -5,9 +5,40 @@ using System.IO;
 
 public class FANTASIA : ModuleRules
 {
+	public bool LoadAgrum(ReadOnlyTargetRules Target, string ThirdPartyPath)
+		{
+			bool isLibrarySupported = false;
+
+			if ((Target.Platform == UnrealTargetPlatform.Win64) || (Target.Platform == UnrealTargetPlatform.Win32))
+			{
+				isLibrarySupported = true;
+
+				string PlatformString = (Target.Platform == UnrealTargetPlatform.Win64) ? "x64" : "x86";
+				string LibrariesPath = Path.Combine(ThirdPartyPath, "aGrUM", "Libraries");
+
+				/*
+				test your path with:
+				using System; // Console.WriteLine("");
+				Console.WriteLine("... LibrariesPath -> " + LibrariesPath);
+				*/
+
+				PublicAdditionalLibraries.Add(Path.Combine(LibrariesPath, "aGrUM." + PlatformString + ".lib"));
+			}
+
+			if (isLibrarySupported)
+			{
+				// Include path
+				PublicIncludePaths.Add(Path.Combine(ThirdPartyPath, "aGrUM", "Includes"));
+				PublicIncludePaths.Add(Path.Combine(ThirdPartyPath, "nlohmann"));
+			}
+
+			PublicDefinitions.Add(string.Format("WITH_AGRUM_BINDING={0}", isLibrarySupported ? 1 : 0));
+
+			return isLibrarySupported;
+		}
+		
 	public FANTASIA(ReadOnlyTargetRules Target) : base(Target)
 	{
-
 		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
 
 		bEnableExceptions = true;
@@ -29,7 +60,7 @@ public class FANTASIA : ModuleRules
 		PublicDependencyModuleNames.AddRange(
 			new string[]
 			{
-				"Core",
+				"Core"
 				// ... add other public dependencies that you statically link with here ...
 			}
 			);
@@ -46,6 +77,8 @@ public class FANTASIA : ModuleRules
 				"Json",
 				"JsonUtilities",
 				"HTTP",
+				"UnrealEd",
+				"AssetTools",
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);
@@ -78,6 +111,8 @@ public class FANTASIA : ModuleRules
 		RuntimeDependencies.Add(Path.Combine(ThirdParty, "aws-cpp-sdk-text-to-speech.dll"));
 		RuntimeDependencies.Add(Path.Combine(ThirdParty, "Microsoft.CognitiveServices.Speech.core.dll"));
 		RuntimeDependencies.Add(Path.Combine(ThirdParty, "Microsoft.CognitiveServices.Speech.extension.kws.dll"));
+
+		LoadAgrum(Target, ThirdParty);
 
 		DynamicallyLoadedModuleNames.AddRange(
 		new string[]
