@@ -164,8 +164,12 @@ void UNeo4jComponent::submitQuery(FString query, Neo4jOperation operation, FStri
 		payload += "\"parameters\": {";
 		for (FString key : keys) {
 			FString paramString = *parameters.Find(key);
-			paramString = paramString.Replace(TEXT("\""), TEXT("\\\""));
-			payload = payload + "\"" + key + "\": \"" + paramString + "\", ";
+			if (paramString.StartsWith("["))
+				payload = payload + "\"" + key + "\": " + paramString + ", ";
+			else {
+				paramString = paramString.Replace(TEXT("\""), TEXT("\\\""));
+				payload = payload + "\"" + key + "\": \"" + paramString + "\", ";
+			}
 		}
 		payload = payload.LeftChop(2) + "}, ";
 	}

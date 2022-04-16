@@ -3,6 +3,8 @@
 #include "D:/Perforce/Jason/Jason/Plugins/FANTASIA/Intermediate/Build/Win64/UE4Editor/Inc/FANTASIA/AzureASRComponent.gen.cpp"
 #include "D:/Perforce/Jason/Jason/Plugins/FANTASIA/Intermediate/Build/Win64/UE4Editor/Inc/FANTASIA/AzureNLUComponent.gen.cpp"
 #include "D:/Perforce/Jason/Jason/Plugins/FANTASIA/Intermediate/Build/Win64/UE4Editor/Inc/FANTASIA/AzureTTSComponent.gen.cpp"
+#include "D:/Perforce/Jason/Jason/Plugins/FANTASIA/Intermediate/Build/Win64/UE4Editor/Inc/FANTASIA/BayesianNetwork.gen.cpp"
 #include "D:/Perforce/Jason/Jason/Plugins/FANTASIA/Intermediate/Build/Win64/UE4Editor/Inc/FANTASIA/FANTASIA.init.gen.cpp"
 #include "D:/Perforce/Jason/Jason/Plugins/FANTASIA/Intermediate/Build/Win64/UE4Editor/Inc/FANTASIA/FANTASIATypes.gen.cpp"
 #include "D:/Perforce/Jason/Jason/Plugins/FANTASIA/Intermediate/Build/Win64/UE4Editor/Inc/FANTASIA/Neo4jComponent.gen.cpp"
+#include "D:/Perforce/Jason/Jason/Plugins/FANTASIA/Intermediate/Build/Win64/UE4Editor/Inc/FANTASIA/paramObject.gen.cpp"

@@ -1,9 +1,9 @@
 {
 	"FileVersion": 3,
 	"Version": 1,
-	"VersionName": "1.0",
+	"VersionName": "0.9",
 	"FriendlyName": "FANTASIA",
-	"Description": "Framework for Advanced Natural Tools and Applications in Social, Interactive Approaches",
+	"Description": "Framework for Advanced Natural Tools and Applications in Social, Interactive Agents",
 	"Category": "Other",
 	"CreatedBy": "Antonio Origlia",
 	"CreatedByURL": "",
@@ -12,7 +12,7 @@
 	"SupportURL": "",
 	"CanContainContent": true,
 	"IsBetaVersion": false,
-	"IsExperimentalVersion": false,
+	"IsExperimentalVersion": true,
 	"Installed": false,
 	"Modules": [
 		{

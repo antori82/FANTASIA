@@ -10,6 +10,7 @@
 			"AzureNLUThread.cpp.obj",
 			"AzureTTSComponent.cpp.obj",
 			"AzureTTSThread.cpp.obj",
+			"BayesianNetwork.cpp.obj",
 			"FANTASIA.cpp.obj",
 			"Neo4jComponent.cpp.obj"
 		],
@@ -18,9 +19,11 @@
 			"AzureASRComponent.gen.cpp.obj",
 			"AzureNLUComponent.gen.cpp.obj",
 			"AzureTTSComponent.gen.cpp.obj",
+			"BayesianNetwork.gen.cpp.obj",
 			"FANTASIA.init.gen.cpp.obj",
 			"FANTASIATypes.gen.cpp.obj",
-			"Neo4jComponent.gen.cpp.obj"
+			"Neo4jComponent.gen.cpp.obj",
+			"paramObject.gen.cpp.obj"
 		]
 	}
 }
