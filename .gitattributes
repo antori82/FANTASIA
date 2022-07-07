@@ -1,1 +1,2 @@
 FANTASIA/ThirdParty/aGrUM/Libraries/agrum.x64.lib filter=lfs diff=lfs merge=lfs -text
+*.lib filter=lfs diff=lfs merge=lfs -text

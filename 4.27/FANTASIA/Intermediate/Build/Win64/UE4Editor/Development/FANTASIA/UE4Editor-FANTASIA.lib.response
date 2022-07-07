@@ -1,0 +1,13 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UE4Editor-FANTASIA.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"D:\Perforce\Hologram5G\Intermediate\Build\Win64\Hologram5GEditor\Development\UnrealEd\SharedPCH.UnrealEd.ShadowErrors.h.obj"
+"D:\Perforce\Hologram5G\Plugins\FANTASIA\Intermediate\Build\Win64\UE4Editor\Development\FANTASIA\Module.FANTASIA.cpp.obj"
+"D:\Perforce\Hologram5G\Plugins\FANTASIA\Intermediate\Build\Win64\UE4Editor\Development\FANTASIA\Module.FANTASIA.gen.cpp.obj"
+"D:\Perforce\Hologram5G\Plugins\FANTASIA\Intermediate\Build\Win64\UE4Editor\Development\FANTASIA\Default.rc2.res"
+/OUT:"D:\Perforce\Hologram5G\Plugins\FANTASIA\Intermediate\Build\Win64\UE4Editor\Development\FANTASIA\UE4Editor-FANTASIA.lib"
