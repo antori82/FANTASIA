@@ -31,7 +31,6 @@ private:
 
 	TMap<FString, FTTSData> Buffer;
 	TMap<FString, FString> PendingSSML;
-	USoundWaveProcedural* SyntheticVoice;
 	AWSPollyThread* handle;
 	FTimerHandle TimerHandle;
 	FDelegateHandle TTSResultAvailableHandle;
@@ -69,7 +68,7 @@ public:
 		void AWSPollySynthesize(FString ssml, FString id, bool getLipSync);
 
 	UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Sound", Keywords = "AWS Plugin TTS"), Category = "TTS")
-		USoundWaveProcedural* AWSPollyGetSound(FString id);
+		USoundWave* AWSPollyGetSound(FString id);
 
 	UFUNCTION(BlueprintPure, meta = (DisplayName = "Get LipSync", Keywords = "AWS Plugin TTS"), Category = "TTS")
 		TArray<FTTSTimedStruct> AWSPollyGetLipSync(FString id);
