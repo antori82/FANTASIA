@@ -49,6 +49,7 @@ void UAWSPollyComponent::AWSPollySynthesize(FString ssml, FString id, bool getLi
 	TTSResultAvailableHandle = handle->TTSResultAvailableSubscribeUser(TTSResultSubscriber);
 }
 
+/*
 USoundWaveProcedural* UAWSPollyComponent::AWSPollyGetSound(FString id) {
 	uint32 SAMPLING_RATE = 16000;
 
@@ -64,6 +65,7 @@ USoundWaveProcedural* UAWSPollyComponent::AWSPollyGetSound(FString id) {
 
 	return SyntheticVoice;
 }
+*/
 
 TArray<FTTSTimedStruct> UAWSPollyComponent::AWSPollyGetLipSync(FString id) {
 	TArray<FTTSTimedStruct> outStruct = Buffer[id].lipsync;
@@ -75,4 +77,18 @@ TArray<FTTSTimedStruct> UAWSPollyComponent::AWSPollyGetNotifies(FString id) {
 	TArray<FTTSTimedStruct> outStruct = Buffer[id].notifies;
 
 	return outStruct;
+}
+
+USoundWave* UAWSPollyComponent::AWSPollyGetSound(FString id) {
+	uint32 SAMPLING_RATE = 16000;
+
+	USoundWave* SyntheticVoice = NewObject<USoundWave>();
+	SyntheticVoice->SetSampleRate(SAMPLING_RATE);
+	SyntheticVoice->NumChannels = 1;
+	const int32 BytesDataPerSecond = SAMPLING_RATE;
+	SyntheticVoice->RawPCMDataSize = Buffer[id].AudioData.Num() * sizeof(uint8);
+	SyntheticVoice->Duration = (float)Buffer[id].AudioData.Num() / (2 * (float)SAMPLING_RATE);
+	SyntheticVoice->RawPCMData = static_cast<uint8*>(FMemory::Malloc(SyntheticVoice->RawPCMDataSize));
+	FMemory::Memcpy(SyntheticVoice->RawPCMData, Buffer[id].AudioData.GetData(), SyntheticVoice->RawPCMDataSize);
+	return SyntheticVoice;
 }

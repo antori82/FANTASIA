@@ -54,15 +54,13 @@ void UAzureTTSComponent::AzureTTSSynthesize(FString ssml, FString id)
 USoundBase* UAzureTTSComponent::AzureTTSGetSound(FString id) {
 	uint32 SAMPLING_RATE = 16000;
 
-	SyntheticVoice = NewObject<USoundWaveProcedural>();
+	USoundWave* SyntheticVoice = NewObject<USoundWave>();
 	SyntheticVoice->SetSampleRate(SAMPLING_RATE);
 	SyntheticVoice->NumChannels = 1;
-	SyntheticVoice->SoundGroup = SOUNDGROUP_Voice;
-	SyntheticVoice->bLooping = true;
-	SyntheticVoice->bProcedural = true;
-
+	const int32 BytesDataPerSecond = SAMPLING_RATE;
+	SyntheticVoice->RawPCMDataSize = Buffer[id].AudioData.Num() * sizeof(uint8);
 	SyntheticVoice->Duration = (float)Buffer[id].AudioData.Num() / (2 * (float)SAMPLING_RATE);
-	SyntheticVoice->QueueAudio(Buffer[id].AudioData.GetData(), Buffer[id].AudioData.Num() * sizeof(int8));
-
+	SyntheticVoice->RawPCMData = static_cast<uint8*>(FMemory::Malloc(SyntheticVoice->RawPCMDataSize));
+	FMemory::Memcpy(SyntheticVoice->RawPCMData, Buffer[id].AudioData.GetData(), SyntheticVoice->RawPCMDataSize);
 	return SyntheticVoice;
 }
