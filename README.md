@@ -113,7 +113,7 @@ Project Link: [https://github.com/antori82/FANTASIA](https://github.com/antori82
 Special thanks to the students who contributed to FANTASIA
 
 * <a href="https://www.linkedin.com/in/antimo-de-biase-3660b6202/">Antimo De Biase</a> - Neo4j component prototype development
-Fabrizio Musella - aGrUM integration prototype development
+* Fabrizio Musella - aGrUM integration prototype development
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
