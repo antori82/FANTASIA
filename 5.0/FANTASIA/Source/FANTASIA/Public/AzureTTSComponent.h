@@ -37,7 +37,6 @@ private:
 
 	TMap<FString, FTTSData> Buffer;
 	TMap<FString, FString> PendingSSML;
-	USoundWaveProcedural* SyntheticVoice;
 	shared_ptr<SpeechConfig> config;
 	AzureTTSThread* handle;
 	
