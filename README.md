@@ -10,7 +10,7 @@
   <h3 align="center">Framework for Advanced Natural Tools and Applications with Social Interactive Agents</h3>
 
   <p align="center">
-    An Unreal Engine 4 set of tools to build Embodied Conversational Agents using easy, Blueprint based, interfaces towards powerful AI technologies.
+    An Unreal Engine set of tools to build Embodied Conversational Agents using easy, Blueprint based, interfaces towards powerful AI technologies.
     <br />
     <br />
     <a href="https://fantasiaplugin.wordpress.com/"><strong>Main website</strong></a>
