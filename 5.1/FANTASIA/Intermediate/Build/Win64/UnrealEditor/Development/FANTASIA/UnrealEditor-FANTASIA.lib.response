@@ -1,0 +1,12 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UnrealEditor-FANTASIA.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"D:\Perforce\FANTASIADevelopment\Intermediate\Build\Win64\FANTASIADevelopmentEditor\Development\UnrealEd\SharedPCH.UnrealEd.ShadowErrors.h.obj"
+"D:\Perforce\FANTASIADevelopment\Plugins\FANTASIA\Intermediate\Build\Win64\UnrealEditor\Development\FANTASIA\Module.FANTASIA.cpp.obj"
+"D:\Perforce\FANTASIADevelopment\Plugins\FANTASIA\Intermediate\Build\Win64\UnrealEditor\Development\FANTASIA\Default.rc2.res"
+/OUT:"D:\Perforce\FANTASIADevelopment\Plugins\FANTASIA\Intermediate\Build\Win64\UnrealEditor\Development\FANTASIA\UnrealEditor-FANTASIA.lib"
