@@ -129,6 +129,7 @@ template<> FANTASIA_API UClass* StaticClass<class UBayesianNetworkFactory>();
 #define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_98_SPARSE_DATA
 #define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_98_RPC_WRAPPERS \
  \
+	DECLARE_FUNCTION(exechasHardEvidence); \
 	DECLARE_FUNCTION(execidFromName); \
 	DECLARE_FUNCTION(execerase); \
 	DECLARE_FUNCTION(execwriteBIF); \
@@ -147,6 +148,7 @@ template<> FANTASIA_API UClass* StaticClass<class UBayesianNetworkFactory>();
 
 #define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_98_RPC_WRAPPERS_NO_PURE_DECLS \
  \
+	DECLARE_FUNCTION(exechasHardEvidence); \
 	DECLARE_FUNCTION(execidFromName); \
 	DECLARE_FUNCTION(execerase); \
 	DECLARE_FUNCTION(execwriteBIF); \

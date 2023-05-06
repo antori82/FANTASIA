@@ -49,24 +49,6 @@ void UAWSPollyComponent::AWSPollySynthesize(FString ssml, FString id, bool getLi
 	TTSResultAvailableHandle = handle->TTSResultAvailableSubscribeUser(TTSResultSubscriber);
 }
 
-/*
-USoundWaveProcedural* UAWSPollyComponent::AWSPollyGetSound(FString id) {
-	uint32 SAMPLING_RATE = 16000;
-
-	SyntheticVoice = NewObject<USoundWaveProcedural>();
-	SyntheticVoice->SetSampleRate(SAMPLING_RATE);
-	SyntheticVoice->NumChannels = 1;
-	SyntheticVoice->SoundGroup = SOUNDGROUP_Voice;
-	SyntheticVoice->bLooping = false;
-	SyntheticVoice->bProcedural = true;
-
-	SyntheticVoice->Duration = (float)Buffer[id].AudioData.Num() / (2 * (float)SAMPLING_RATE);
-	SyntheticVoice->QueueAudio(Buffer[id].AudioData.GetData(), Buffer[id].AudioData.Num() * sizeof(int8));
-
-	return SyntheticVoice;
-}
-*/
-
 TArray<FTTSTimedStruct> UAWSPollyComponent::AWSPollyGetLipSync(FString id) {
 	TArray<FTTSTimedStruct> outStruct = Buffer[id].lipsync;
 

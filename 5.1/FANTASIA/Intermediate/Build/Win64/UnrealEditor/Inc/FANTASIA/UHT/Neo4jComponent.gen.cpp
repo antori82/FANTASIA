@@ -161,6 +161,11 @@ void EmptyLinkFunctionForGeneratedCodeNeo4jComponent() {}
 		static const UECodeGen_Private::FMetaDataPairParam NewProp_response_MetaData[];
 #endif
 		static const UECodeGen_Private::FStrPropertyParams NewProp_response;
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_useV4_MetaData[];
+#endif
+		static void NewProp_useV4_SetBit(void* Obj);
+		static const UECodeGen_Private::FBoolPropertyParams NewProp_useV4;
 		static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 		static const FCppClassTypeInfoStatic StaticCppClassTypeInfo;
 		static const UECodeGen_Private::FClassParams ClassParams;
@@ -221,6 +226,17 @@ void EmptyLinkFunctionForGeneratedCodeNeo4jComponent() {}
 	};
 #endif
 	const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_response = { "response", nullptr, (EPropertyFlags)0x0010000000000014, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(UNeo4jComponent, response), METADATA_PARAMS(Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_response_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_response_MetaData)) };
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_useV4_MetaData[] = {
+		{ "Category", "Settings" },
+		{ "ModuleRelativePath", "Public/Neo4jComponent.h" },
+	};
+#endif
+	void Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_useV4_SetBit(void* Obj)
+	{
+		((UNeo4jComponent*)Obj)->useV4 = 1;
+	}
+	const UECodeGen_Private::FBoolPropertyParams Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_useV4 = { "useV4", nullptr, (EPropertyFlags)0x0010000000000001, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, sizeof(bool), sizeof(UNeo4jComponent), &Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_useV4_SetBit, METADATA_PARAMS(Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_useV4_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_useV4_MetaData)) };
 	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_UNeo4jComponent_Statics::PropPointers[] = {
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_endpoint,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_port,
@@ -228,6 +244,7 @@ void EmptyLinkFunctionForGeneratedCodeNeo4jComponent() {}
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_password,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_IncomingResponse,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_response,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_useV4,
 	};
 	const FCppClassTypeInfoStatic Z_Construct_UClass_UNeo4jComponent_Statics::StaticCppClassTypeInfo = {
 		TCppClassTypeTraits<UNeo4jComponent>::IsAbstract,
@@ -266,9 +283,9 @@ void EmptyLinkFunctionForGeneratedCodeNeo4jComponent() {}
 		static const FClassRegisterCompiledInInfo ClassInfo[];
 	};
 	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_Neo4jComponent_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_UNeo4jComponent, UNeo4jComponent::StaticClass, TEXT("UNeo4jComponent"), &Z_Registration_Info_UClass_UNeo4jComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UNeo4jComponent), 2118594147U) },
+		{ Z_Construct_UClass_UNeo4jComponent, UNeo4jComponent::StaticClass, TEXT("UNeo4jComponent"), &Z_Registration_Info_UClass_UNeo4jComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UNeo4jComponent), 4167998294U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_Neo4jComponent_h_2605721408(TEXT("/Script/FANTASIA"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_Neo4jComponent_h_4039695428(TEXT("/Script/FANTASIA"),
 		Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_Neo4jComponent_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_Neo4jComponent_h_Statics::ClassInfo),
 		nullptr, 0,
 		nullptr, 0);

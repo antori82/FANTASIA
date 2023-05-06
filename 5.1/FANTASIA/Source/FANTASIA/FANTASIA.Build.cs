@@ -64,8 +64,17 @@ public class FANTASIA : ModuleRules
 				// ... add other public dependencies that you statically link with here ...
 			}
 			);
-			
-		
+
+		#if !UE_BUILD_SHIPPING
+
+		PrivateDependencyModuleNames.AddRange(
+			new string[]
+			{
+				"UnrealEd",
+			});
+
+		#endif
+
 		PrivateDependencyModuleNames.AddRange(
 			new string[]
 			{
@@ -77,7 +86,6 @@ public class FANTASIA : ModuleRules
 				"Json",
 				"JsonUtilities",
 				"HTTP",
-				"UnrealEd",
 				"AssetTools",
 				// ... add private dependencies that you statically link with here ...	
 			}

@@ -11,7 +11,7 @@ void EmptyLinkFunctionForGeneratedCodeAzureTTSComponent() {}
 // Cross Module References
 	ENGINE_API UClass* Z_Construct_UClass_UActorComponent();
 	ENGINE_API UClass* Z_Construct_UClass_UAudioComponent_NoRegister();
-	ENGINE_API UClass* Z_Construct_UClass_USoundBase_NoRegister();
+	ENGINE_API UClass* Z_Construct_UClass_USoundWave_NoRegister();
 	FANTASIA_API UClass* Z_Construct_UClass_UAzureTTSComponent();
 	FANTASIA_API UClass* Z_Construct_UClass_UAzureTTSComponent_NoRegister();
 	FANTASIA_API UFunction* Z_Construct_UDelegateFunction_FANTASIA_SynthesizedEvent__DelegateSignature();
@@ -22,7 +22,7 @@ void EmptyLinkFunctionForGeneratedCodeAzureTTSComponent() {}
 		P_GET_PROPERTY(FStrProperty,Z_Param_id);
 		P_FINISH;
 		P_NATIVE_BEGIN;
-		*(USoundBase**)Z_Param__Result=P_THIS->AzureTTSGetSound(Z_Param_id);
+		*(USoundWave**)Z_Param__Result=P_THIS->AzureTTSGetSound(Z_Param_id);
 		P_NATIVE_END;
 	}
 	DEFINE_FUNCTION(UAzureTTSComponent::execAzureTTSSynthesize)
@@ -48,7 +48,7 @@ void EmptyLinkFunctionForGeneratedCodeAzureTTSComponent() {}
 		struct AzureTTSComponent_eventAzureTTSGetSound_Parms
 		{
 			FString id;
-			USoundBase* ReturnValue;
+			USoundWave* ReturnValue;
 		};
 		static const UECodeGen_Private::FStrPropertyParams NewProp_id;
 		static const UECodeGen_Private::FObjectPropertyParams NewProp_ReturnValue;
@@ -59,7 +59,7 @@ void EmptyLinkFunctionForGeneratedCodeAzureTTSComponent() {}
 		static const UECodeGen_Private::FFunctionParams FuncParams;
 	};
 	const UECodeGen_Private::FStrPropertyParams Z_Construct_UFunction_UAzureTTSComponent_AzureTTSGetSound_Statics::NewProp_id = { "id", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(AzureTTSComponent_eventAzureTTSGetSound_Parms, id), METADATA_PARAMS(nullptr, 0) };
-	const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_UAzureTTSComponent_AzureTTSGetSound_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(AzureTTSComponent_eventAzureTTSGetSound_Parms, ReturnValue), Z_Construct_UClass_USoundBase_NoRegister, METADATA_PARAMS(nullptr, 0) };
+	const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_UAzureTTSComponent_AzureTTSGetSound_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(AzureTTSComponent_eventAzureTTSGetSound_Parms, ReturnValue), Z_Construct_UClass_USoundWave_NoRegister, METADATA_PARAMS(nullptr, 0) };
 	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UAzureTTSComponent_AzureTTSGetSound_Statics::PropPointers[] = {
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UAzureTTSComponent_AzureTTSGetSound_Statics::NewProp_id,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UAzureTTSComponent_AzureTTSGetSound_Statics::NewProp_ReturnValue,
@@ -166,7 +166,7 @@ void EmptyLinkFunctionForGeneratedCodeAzureTTSComponent() {}
 		(UObject* (*)())Z_Construct_UPackage__Script_FANTASIA,
 	};
 	const FClassFunctionLinkInfo Z_Construct_UClass_UAzureTTSComponent_Statics::FuncInfo[] = {
-		{ &Z_Construct_UFunction_UAzureTTSComponent_AzureTTSGetSound, "AzureTTSGetSound" }, // 1578662472
+		{ &Z_Construct_UFunction_UAzureTTSComponent_AzureTTSGetSound, "AzureTTSGetSound" }, // 686604286
 		{ &Z_Construct_UFunction_UAzureTTSComponent_AzureTTSSynthesize, "AzureTTSSynthesize" }, // 3211448439
 	};
 #if WITH_METADATA
@@ -265,9 +265,9 @@ void EmptyLinkFunctionForGeneratedCodeAzureTTSComponent() {}
 		static const FClassRegisterCompiledInInfo ClassInfo[];
 	};
 	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_UAzureTTSComponent, UAzureTTSComponent::StaticClass, TEXT("UAzureTTSComponent"), &Z_Registration_Info_UClass_UAzureTTSComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UAzureTTSComponent), 3713927741U) },
+		{ Z_Construct_UClass_UAzureTTSComponent, UAzureTTSComponent::StaticClass, TEXT("UAzureTTSComponent"), &Z_Registration_Info_UClass_UAzureTTSComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UAzureTTSComponent), 704029599U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_3577396676(TEXT("/Script/FANTASIA"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_3658673827(TEXT("/Script/FANTASIA"),
 		Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_Statics::ClassInfo),
 		nullptr, 0,
 		nullptr, 0);

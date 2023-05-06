@@ -579,21 +579,21 @@ template<> FANTASIA_API UScriptStruct* StaticStruct<FNLUResponse>()
 		{ "ModuleRelativePath", "Public/FANTASIATypes.h" },
 	};
 #endif
-	const UECodeGen_Private::FStrPropertyParams Z_Construct_UScriptStruct_FNLUResponse_Statics::NewProp_query = { "query", nullptr, (EPropertyFlags)0x0010000000000014, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(FNLUResponse, query), METADATA_PARAMS(Z_Construct_UScriptStruct_FNLUResponse_Statics::NewProp_query_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FNLUResponse_Statics::NewProp_query_MetaData)) };
+	const UECodeGen_Private::FStrPropertyParams Z_Construct_UScriptStruct_FNLUResponse_Statics::NewProp_query = { "query", nullptr, (EPropertyFlags)0x0010000000000004, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(FNLUResponse, query), METADATA_PARAMS(Z_Construct_UScriptStruct_FNLUResponse_Statics::NewProp_query_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FNLUResponse_Statics::NewProp_query_MetaData)) };
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UScriptStruct_FNLUResponse_Statics::NewProp_topIntent_MetaData[] = {
 		{ "Category", "NLUResponse" },
 		{ "ModuleRelativePath", "Public/FANTASIATypes.h" },
 	};
 #endif
-	const UECodeGen_Private::FStrPropertyParams Z_Construct_UScriptStruct_FNLUResponse_Statics::NewProp_topIntent = { "topIntent", nullptr, (EPropertyFlags)0x0010000000000014, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(FNLUResponse, topIntent), METADATA_PARAMS(Z_Construct_UScriptStruct_FNLUResponse_Statics::NewProp_topIntent_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FNLUResponse_Statics::NewProp_topIntent_MetaData)) };
+	const UECodeGen_Private::FStrPropertyParams Z_Construct_UScriptStruct_FNLUResponse_Statics::NewProp_topIntent = { "topIntent", nullptr, (EPropertyFlags)0x0010000000000004, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(FNLUResponse, topIntent), METADATA_PARAMS(Z_Construct_UScriptStruct_FNLUResponse_Statics::NewProp_topIntent_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FNLUResponse_Statics::NewProp_topIntent_MetaData)) };
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UScriptStruct_FNLUResponse_Statics::NewProp_score_MetaData[] = {
 		{ "Category", "NLUResponse" },
 		{ "ModuleRelativePath", "Public/FANTASIATypes.h" },
 	};
 #endif
-	const UECodeGen_Private::FFloatPropertyParams Z_Construct_UScriptStruct_FNLUResponse_Statics::NewProp_score = { "score", nullptr, (EPropertyFlags)0x0010000000000014, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(FNLUResponse, score), METADATA_PARAMS(Z_Construct_UScriptStruct_FNLUResponse_Statics::NewProp_score_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FNLUResponse_Statics::NewProp_score_MetaData)) };
+	const UECodeGen_Private::FFloatPropertyParams Z_Construct_UScriptStruct_FNLUResponse_Statics::NewProp_score = { "score", nullptr, (EPropertyFlags)0x0010000000000004, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(FNLUResponse, score), METADATA_PARAMS(Z_Construct_UScriptStruct_FNLUResponse_Statics::NewProp_score_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FNLUResponse_Statics::NewProp_score_MetaData)) };
 	const UECodeGen_Private::FObjectPropertyParams Z_Construct_UScriptStruct_FNLUResponse_Statics::NewProp_entities_Inner = { "entities", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, 0, Z_Construct_UClass_UNLUEntity_NoRegister, METADATA_PARAMS(nullptr, 0) };
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UScriptStruct_FNLUResponse_Statics::NewProp_entities_MetaData[] = {
@@ -695,42 +695,42 @@ template<> FANTASIA_API UScriptStruct* StaticStruct<FNLUResponse>()
 		{ "ModuleRelativePath", "Public/FANTASIATypes.h" },
 	};
 #endif
-	const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_UNLUEntity_Statics::NewProp_entity = { "entity", nullptr, (EPropertyFlags)0x0010000000000014, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(UNLUEntity, entity), METADATA_PARAMS(Z_Construct_UClass_UNLUEntity_Statics::NewProp_entity_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UNLUEntity_Statics::NewProp_entity_MetaData)) };
+	const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_UNLUEntity_Statics::NewProp_entity = { "entity", nullptr, (EPropertyFlags)0x0010000000000004, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(UNLUEntity, entity), METADATA_PARAMS(Z_Construct_UClass_UNLUEntity_Statics::NewProp_entity_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UNLUEntity_Statics::NewProp_entity_MetaData)) };
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UNLUEntity_Statics::NewProp_type_MetaData[] = {
 		{ "Category", "NLUEntity" },
 		{ "ModuleRelativePath", "Public/FANTASIATypes.h" },
 	};
 #endif
-	const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_UNLUEntity_Statics::NewProp_type = { "type", nullptr, (EPropertyFlags)0x0010000000000014, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(UNLUEntity, type), METADATA_PARAMS(Z_Construct_UClass_UNLUEntity_Statics::NewProp_type_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UNLUEntity_Statics::NewProp_type_MetaData)) };
+	const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_UNLUEntity_Statics::NewProp_type = { "type", nullptr, (EPropertyFlags)0x0010000000000004, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(UNLUEntity, type), METADATA_PARAMS(Z_Construct_UClass_UNLUEntity_Statics::NewProp_type_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UNLUEntity_Statics::NewProp_type_MetaData)) };
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UNLUEntity_Statics::NewProp_startIndex_MetaData[] = {
 		{ "Category", "NLUEntity" },
 		{ "ModuleRelativePath", "Public/FANTASIATypes.h" },
 	};
 #endif
-	const UECodeGen_Private::FBytePropertyParams Z_Construct_UClass_UNLUEntity_Statics::NewProp_startIndex = { "startIndex", nullptr, (EPropertyFlags)0x0010000000000014, UECodeGen_Private::EPropertyGenFlags::Byte, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(UNLUEntity, startIndex), nullptr, METADATA_PARAMS(Z_Construct_UClass_UNLUEntity_Statics::NewProp_startIndex_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UNLUEntity_Statics::NewProp_startIndex_MetaData)) };
+	const UECodeGen_Private::FBytePropertyParams Z_Construct_UClass_UNLUEntity_Statics::NewProp_startIndex = { "startIndex", nullptr, (EPropertyFlags)0x0010000000000004, UECodeGen_Private::EPropertyGenFlags::Byte, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(UNLUEntity, startIndex), nullptr, METADATA_PARAMS(Z_Construct_UClass_UNLUEntity_Statics::NewProp_startIndex_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UNLUEntity_Statics::NewProp_startIndex_MetaData)) };
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UNLUEntity_Statics::NewProp_endIndex_MetaData[] = {
 		{ "Category", "NLUEntity" },
 		{ "ModuleRelativePath", "Public/FANTASIATypes.h" },
 	};
 #endif
-	const UECodeGen_Private::FBytePropertyParams Z_Construct_UClass_UNLUEntity_Statics::NewProp_endIndex = { "endIndex", nullptr, (EPropertyFlags)0x0010000000000014, UECodeGen_Private::EPropertyGenFlags::Byte, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(UNLUEntity, endIndex), nullptr, METADATA_PARAMS(Z_Construct_UClass_UNLUEntity_Statics::NewProp_endIndex_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UNLUEntity_Statics::NewProp_endIndex_MetaData)) };
+	const UECodeGen_Private::FBytePropertyParams Z_Construct_UClass_UNLUEntity_Statics::NewProp_endIndex = { "endIndex", nullptr, (EPropertyFlags)0x0010000000000004, UECodeGen_Private::EPropertyGenFlags::Byte, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(UNLUEntity, endIndex), nullptr, METADATA_PARAMS(Z_Construct_UClass_UNLUEntity_Statics::NewProp_endIndex_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UNLUEntity_Statics::NewProp_endIndex_MetaData)) };
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UNLUEntity_Statics::NewProp_score_MetaData[] = {
 		{ "Category", "NLUEntity" },
 		{ "ModuleRelativePath", "Public/FANTASIATypes.h" },
 	};
 #endif
-	const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_UNLUEntity_Statics::NewProp_score = { "score", nullptr, (EPropertyFlags)0x0010000000000014, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(UNLUEntity, score), METADATA_PARAMS(Z_Construct_UClass_UNLUEntity_Statics::NewProp_score_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UNLUEntity_Statics::NewProp_score_MetaData)) };
+	const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_UNLUEntity_Statics::NewProp_score = { "score", nullptr, (EPropertyFlags)0x0010000000000004, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(UNLUEntity, score), METADATA_PARAMS(Z_Construct_UClass_UNLUEntity_Statics::NewProp_score_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UNLUEntity_Statics::NewProp_score_MetaData)) };
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UNLUEntity_Statics::NewProp_childName_MetaData[] = {
 		{ "Category", "NLUEntity" },
 		{ "ModuleRelativePath", "Public/FANTASIATypes.h" },
 	};
 #endif
-	const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_UNLUEntity_Statics::NewProp_childName = { "childName", nullptr, (EPropertyFlags)0x0010000000000014, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(UNLUEntity, childName), METADATA_PARAMS(Z_Construct_UClass_UNLUEntity_Statics::NewProp_childName_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UNLUEntity_Statics::NewProp_childName_MetaData)) };
+	const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_UNLUEntity_Statics::NewProp_childName = { "childName", nullptr, (EPropertyFlags)0x0010000000000004, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(UNLUEntity, childName), METADATA_PARAMS(Z_Construct_UClass_UNLUEntity_Statics::NewProp_childName_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UNLUEntity_Statics::NewProp_childName_MetaData)) };
 	const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_UNLUEntity_Statics::NewProp_children_Inner = { "children", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, 0, Z_Construct_UClass_UNLUEntity_NoRegister, METADATA_PARAMS(nullptr, 0) };
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UNLUEntity_Statics::NewProp_children_MetaData[] = {
@@ -738,7 +738,7 @@ template<> FANTASIA_API UScriptStruct* StaticStruct<FNLUResponse>()
 		{ "ModuleRelativePath", "Public/FANTASIATypes.h" },
 	};
 #endif
-	const UECodeGen_Private::FArrayPropertyParams Z_Construct_UClass_UNLUEntity_Statics::NewProp_children = { "children", nullptr, (EPropertyFlags)0x0010000000000014, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(UNLUEntity, children), EArrayPropertyFlags::None, METADATA_PARAMS(Z_Construct_UClass_UNLUEntity_Statics::NewProp_children_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UNLUEntity_Statics::NewProp_children_MetaData)) };
+	const UECodeGen_Private::FArrayPropertyParams Z_Construct_UClass_UNLUEntity_Statics::NewProp_children = { "children", nullptr, (EPropertyFlags)0x0010000000000004, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(UNLUEntity, children), EArrayPropertyFlags::None, METADATA_PARAMS(Z_Construct_UClass_UNLUEntity_Statics::NewProp_children_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UNLUEntity_Statics::NewProp_children_MetaData)) };
 	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_UNLUEntity_Statics::PropPointers[] = {
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UNLUEntity_Statics::NewProp_entity,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UNLUEntity_Statics::NewProp_type,
@@ -1230,17 +1230,17 @@ template<> FANTASIA_API UScriptStruct* StaticStruct<FNLUResponse>()
 		{ FTTSTimedStruct::StaticStruct, Z_Construct_UScriptStruct_FTTSTimedStruct_Statics::NewStructOps, TEXT("TTSTimedStruct"), &Z_Registration_Info_UScriptStruct_TTSTimedStruct, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FTTSTimedStruct), 2916518837U) },
 		{ FTTSData::StaticStruct, Z_Construct_UScriptStruct_FTTSData_Statics::NewStructOps, TEXT("TTSData"), &Z_Registration_Info_UScriptStruct_TTSData, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FTTSData), 3536409331U) },
 		{ FNeo4jResponse::StaticStruct, Z_Construct_UScriptStruct_FNeo4jResponse_Statics::NewStructOps, TEXT("Neo4jResponse"), &Z_Registration_Info_UScriptStruct_Neo4jResponse, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FNeo4jResponse), 4021355796U) },
-		{ FNLUResponse::StaticStruct, Z_Construct_UScriptStruct_FNLUResponse_Statics::NewStructOps, TEXT("NLUResponse"), &Z_Registration_Info_UScriptStruct_NLUResponse, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FNLUResponse), 2982328945U) },
+		{ FNLUResponse::StaticStruct, Z_Construct_UScriptStruct_FNLUResponse_Statics::NewStructOps, TEXT("NLUResponse"), &Z_Registration_Info_UScriptStruct_NLUResponse, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FNLUResponse), 1075591970U) },
 	};
 	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_UNLUEntity, UNLUEntity::StaticClass, TEXT("UNLUEntity"), &Z_Registration_Info_UClass_UNLUEntity, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UNLUEntity), 715053120U) },
+		{ Z_Construct_UClass_UNLUEntity, UNLUEntity::StaticClass, TEXT("UNLUEntity"), &Z_Registration_Info_UClass_UNLUEntity, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UNLUEntity), 3357006778U) },
 		{ Z_Construct_UClass_UNeo4jResultRow, UNeo4jResultRow::StaticClass, TEXT("UNeo4jResultRow"), &Z_Registration_Info_UClass_UNeo4jResultRow, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UNeo4jResultRow), 3829791738U) },
 		{ Z_Construct_UClass_UNeo4jResultCell, UNeo4jResultCell::StaticClass, TEXT("UNeo4jResultCell"), &Z_Registration_Info_UClass_UNeo4jResultCell, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UNeo4jResultCell), 3081599935U) },
 		{ Z_Construct_UClass_UNeo4jResultCellNode, UNeo4jResultCellNode::StaticClass, TEXT("UNeo4jResultCellNode"), &Z_Registration_Info_UClass_UNeo4jResultCellNode, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UNeo4jResultCellNode), 705306860U) },
 		{ Z_Construct_UClass_UNeo4jResultCellRelationship, UNeo4jResultCellRelationship::StaticClass, TEXT("UNeo4jResultCellRelationship"), &Z_Registration_Info_UClass_UNeo4jResultCellRelationship, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UNeo4jResultCellRelationship), 4128101347U) },
 		{ Z_Construct_UClass_UNeo4jResultCellSimple, UNeo4jResultCellSimple::StaticClass, TEXT("UNeo4jResultCellSimple"), &Z_Registration_Info_UClass_UNeo4jResultCellSimple, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UNeo4jResultCellSimple), 3199737120U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_596407247(TEXT("/Script/FANTASIA"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_2407683524(TEXT("/Script/FANTASIA"),
 		Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_Statics::ClassInfo),
 		Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_Statics::ScriptStructInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_Statics::ScriptStructInfo),
 		Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_Statics::EnumInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_Statics::EnumInfo));

@@ -67,8 +67,7 @@ void AzureTTSThread::Synthesize()
 {
 	synthesizer = SpeechSynthesizer::FromConfig(TTSConfig, NULL);
 
-	ssml = "<!--ID=B7267351-473F-409D-9765-754A8EBCDE05;Version=1|{\"VoiceNameToIdMapItems\":[{\"Id\":\"735db598 - 81e2 - 408f - b039 - f7afef686748\",\"Name\":\"Microsoft Server Speech Text to Speech Voice(" + Language + ", " + Voice + ")\",\"VoiceType\":\"StandardVoice\"}]}--><speak xmlns=\"http://www.w3.org/2001/10/synthesis\" xmlns:mstts=\"http://www.w3.org/2001/mstts\" xmlns:emo=\"http://www.w3.org/2009/10/emotionml\" version=\"1.0\" xml:lang=\"" + Language + "\"><voice name=\"Microsoft Server Speech Text to Speech Voice (" + Language + ", " + Voice + ")\">" + ssml + "</voice></speak>";
-
+	ssml = "<speak version=\"1.0\" xmlns=\"http://www.w3.org/2001/10/synthesis\" xml:lang=\"it-IT\"><voice name = \"" + Language + "-" + Voice + "\">" + ssml + "</voice></speak >";
 	auto result = synthesizer->SpeakSsmlAsync(std::string(TCHAR_TO_UTF8(*ssml))).get();
 
 	if (result->Reason == ResultReason::SynthesizingAudioCompleted) {

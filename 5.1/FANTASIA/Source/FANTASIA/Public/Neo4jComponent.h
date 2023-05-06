@@ -28,7 +28,9 @@ public:
 		FIncomingNeo4jResponseEvent IncomingResponse;
 	UPROPERTY(BlueprintReadOnly)
 		FString response;
-	
+	UPROPERTY(EditAnywhere, Category = "Settings")
+		bool useV4;
+
 	void OnResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful);
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Submit query", AutoCreateRefTerm = "parameters"), Category = "Neo4j")

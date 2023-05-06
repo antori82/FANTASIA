@@ -78,13 +78,13 @@ struct FNLUResponse {
 
 	GENERATED_BODY()
 
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadWrite)
 		FString query;
 
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadWrite)
 		FString topIntent;
 
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadWrite)
 		float score;
 
 	UPROPERTY(BlueprintReadWrite)
@@ -99,25 +99,25 @@ class UNLUEntity : public UObject {
 		UNLUEntity() {};
 
 public:
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadWrite)
 		FString entity;
 
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadWrite)
 		FString type;
 
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadWrite)
 		uint8 startIndex;
 
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadWrite)
 		uint8 endIndex;
 
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadWrite)
 		float score;
 
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadWrite)
 		FString childName;
 
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadWrite)
 		TArray<UNLUEntity*> children;
 };
 

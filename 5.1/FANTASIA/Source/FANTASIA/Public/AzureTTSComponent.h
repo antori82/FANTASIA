@@ -75,5 +75,5 @@ public:
 		void AzureTTSSynthesize(FString ssml, FString id);
 
 	UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Sound", Keywords = "Azure Plugin TTS"), Category = "TTS")
-		USoundBase* AzureTTSGetSound(FString id);
+		USoundWave* AzureTTSGetSound(FString id);
 };

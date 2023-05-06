@@ -20,6 +20,7 @@ void UAzureTTSComponent::BeginPlay()
 	Super::BeginPlay();
 
 	config = SpeechConfig::FromSubscription(std::string(TCHAR_TO_UTF8(*Key)), std::string(TCHAR_TO_UTF8(*Region)));
+	config->SetSpeechSynthesisVoiceName(std::string(TCHAR_TO_UTF8(*Language)) + "-" + std::string(TCHAR_TO_UTF8(*Voice)));
 	//config-> SpeechSynthesisLanguage = std::string(TCHAR_TO_UTF8(*Language));
 }
 
@@ -51,7 +52,7 @@ void UAzureTTSComponent::AzureTTSSynthesize(FString ssml, FString id)
 	TTSResultAvailableHandle = handle->TTSResultAvailableSubscribeUser(TTSResultSubscriber);
 }
 
-USoundBase* UAzureTTSComponent::AzureTTSGetSound(FString id) {
+USoundWave* UAzureTTSComponent::AzureTTSGetSound(FString id) {
 	uint32 SAMPLING_RATE = 16000;
 
 	USoundWave* SyntheticVoice = NewObject<USoundWave>();

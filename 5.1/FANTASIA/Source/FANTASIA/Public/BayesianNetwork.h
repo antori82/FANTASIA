@@ -125,45 +125,48 @@ public:
 	UPROPERTY(BlueprintReadWrite)
 	InferenceAlgs InferenceAlgorithm = InferenceAlgs::ShaferShenoy;
 
-	UFUNCTION(BlueprintCallable, meta = (DisplayName = "makeInference", Keywords = "Inference", AutoCreateRefTerm = "evidences"), Category = "Bayesian_Network")
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Make Inference", Keywords = "Inference", AutoCreateRefTerm = "evidences"), Category = "Bayesian_Network")
 	void makeInference();
 
-	UFUNCTION(BlueprintCallable, meta = (DisplayName = "getPosterior", Keywords = "Inference", AutoCreateRefTerm = "evidences"), Category = "Bayesian_Network")
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Get Posterior", Keywords = "Inference", AutoCreateRefTerm = "evidences"), Category = "Bayesian_Network")
 	TMap<FString, float> getPosterior(FString variable);
 
 	//UFUNCTION(BlueprintCallable, meta = (DisplayName = "getPosterior", Keywords = "Inference", AutoCreateRefTerm = "evidences"), Category = "Bayesian_Network")
 	//void getPosterior(FGetPosteriorDelegate outMap, FString variable);
 	
-	UFUNCTION(BlueprintCallable, meta = (DisplayName = "addEvidence"), Category = "Bayesian_Network")
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Add Evidence"), Category = "Bayesian_Network")
 	void addEvidence(FString variable, TArray<float> data);
 
-	UFUNCTION(BlueprintCallable, meta = (DisplayName = "eraseAllEvidence"), Category = "Bayesian_Network")
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Erase All Evidence"), Category = "Bayesian_Network")
 	void eraseAllEvidence();
 
-	UFUNCTION(BlueprintCallable, meta = (DisplayName = "eraseEvidence"), Category = "Bayesian_Network")
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Erase Evidence"), Category = "Bayesian_Network")
 	void eraseEvidence(FString variable);
 
-	UFUNCTION(BlueprintCallable, meta = (DisplayName = "getEntropy"), Category = "Bayesian_Network")
+	UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Entropy"), Category = "Bayesian_Network")
 	double getEntropy(FString variable);
 
-	UFUNCTION(BlueprintCallable, meta = (DisplayName = "addDiscretizedVariable"), Category = "Bayesian_Network")
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Add Discretized Variable"), Category = "Bayesian_Network")
 	void addDiscretizedVariable(FString variable, FString description, float minTick, float maxTick, float nPoints, BayesianNodeType nodeType);
 
-	UFUNCTION(BlueprintCallable, meta = (DisplayName = "addLabelizedVariable"), Category = "Bayesian_Network")
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Add Labelized Variable"), Category = "Bayesian_Network")
 	void addLabelizedVariable(FString variable, FString description, TArray<FString> labels);
 
-	UFUNCTION(BlueprintCallable, meta = (DisplayName = "addArc"), Category = "Bayesian_Network")
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Add Arc"), Category = "Bayesian_Network")
 	void addArc(FString parent, FString child);
 
-	UFUNCTION(BlueprintCallable, meta = (DisplayName = "fillWith"), Category = "Bayesian_Network")
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Fill With"), Category = "Bayesian_Network")
 	void fillWith(FString variable, float value);
 
-	UFUNCTION(BlueprintCallable, meta = (DisplayName = "writeBIF"), Category = "Bayesian_Network")
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Write BIF"), Category = "Bayesian_Network")
 	void writeBIF(FString file);
 
-	UFUNCTION(BlueprintCallable, meta = (DisplayName = "clear"), Category = "Bayesian_Network")
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Clear"), Category = "Bayesian_Network")
 	void erase(FString variable);
 
-	UFUNCTION(BlueprintCallable, meta = (DisplayName = "idFromName"), Category = "Bayesian_Network")
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "ID From Name"), Category = "Bayesian_Network")
 	int idFromName(FString variable);
+
+	UFUNCTION(BlueprintPure, meta = (DisplayName = "Has Hard Evidence"), Category = "Bayesian_Network")
+	bool hasHardEvidence(FString variable);
 };

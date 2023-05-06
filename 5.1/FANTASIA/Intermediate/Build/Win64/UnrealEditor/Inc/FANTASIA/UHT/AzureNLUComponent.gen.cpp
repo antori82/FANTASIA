@@ -30,7 +30,7 @@ void EmptyLinkFunctionForGeneratedCodeAzureNLUComponent() {}
 #endif
 		static const UECodeGen_Private::FFunctionParams FuncParams;
 	};
-	const UECodeGen_Private::FStructPropertyParams Z_Construct_UDelegateFunction_FANTASIA_IncomingNLUEvent__DelegateSignature_Statics::NewProp_NLUResponse = { "NLUResponse", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(_Script_FANTASIA_eventIncomingNLUEvent_Parms, NLUResponse), Z_Construct_UScriptStruct_FNLUResponse, METADATA_PARAMS(nullptr, 0) }; // 2982328945
+	const UECodeGen_Private::FStructPropertyParams Z_Construct_UDelegateFunction_FANTASIA_IncomingNLUEvent__DelegateSignature_Statics::NewProp_NLUResponse = { "NLUResponse", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(_Script_FANTASIA_eventIncomingNLUEvent_Parms, NLUResponse), Z_Construct_UScriptStruct_FNLUResponse, METADATA_PARAMS(nullptr, 0) }; // 1075591970
 	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UDelegateFunction_FANTASIA_IncomingNLUEvent__DelegateSignature_Statics::PropPointers[] = {
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UDelegateFunction_FANTASIA_IncomingNLUEvent__DelegateSignature_Statics::NewProp_NLUResponse,
 	};
@@ -174,7 +174,7 @@ void EmptyLinkFunctionForGeneratedCodeAzureNLUComponent() {}
 		{ "ModuleRelativePath", "Public/AzureNLUComponent.h" },
 	};
 #endif
-	const UECodeGen_Private::FMulticastDelegatePropertyParams Z_Construct_UClass_UAzureNLUComponent_Statics::NewProp_IncomingMessage = { "IncomingMessage", nullptr, (EPropertyFlags)0x0010000010080000, UECodeGen_Private::EPropertyGenFlags::InlineMulticastDelegate, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(UAzureNLUComponent, IncomingMessage), Z_Construct_UDelegateFunction_FANTASIA_IncomingNLUEvent__DelegateSignature, METADATA_PARAMS(Z_Construct_UClass_UAzureNLUComponent_Statics::NewProp_IncomingMessage_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UAzureNLUComponent_Statics::NewProp_IncomingMessage_MetaData)) }; // 4229721991
+	const UECodeGen_Private::FMulticastDelegatePropertyParams Z_Construct_UClass_UAzureNLUComponent_Statics::NewProp_IncomingMessage = { "IncomingMessage", nullptr, (EPropertyFlags)0x0010000010080000, UECodeGen_Private::EPropertyGenFlags::InlineMulticastDelegate, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(UAzureNLUComponent, IncomingMessage), Z_Construct_UDelegateFunction_FANTASIA_IncomingNLUEvent__DelegateSignature, METADATA_PARAMS(Z_Construct_UClass_UAzureNLUComponent_Statics::NewProp_IncomingMessage_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UAzureNLUComponent_Statics::NewProp_IncomingMessage_MetaData)) }; // 748488503
 	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_UAzureNLUComponent_Statics::PropPointers[] = {
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UAzureNLUComponent_Statics::NewProp_Key,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UAzureNLUComponent_Statics::NewProp_Region,
@@ -219,9 +219,9 @@ void EmptyLinkFunctionForGeneratedCodeAzureNLUComponent() {}
 		static const FClassRegisterCompiledInInfo ClassInfo[];
 	};
 	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_AzureNLUComponent_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_UAzureNLUComponent, UAzureNLUComponent::StaticClass, TEXT("UAzureNLUComponent"), &Z_Registration_Info_UClass_UAzureNLUComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UAzureNLUComponent), 797093577U) },
+		{ Z_Construct_UClass_UAzureNLUComponent, UAzureNLUComponent::StaticClass, TEXT("UAzureNLUComponent"), &Z_Registration_Info_UClass_UAzureNLUComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UAzureNLUComponent), 3656255541U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_AzureNLUComponent_h_935325749(TEXT("/Script/FANTASIA"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_AzureNLUComponent_h_244630185(TEXT("/Script/FANTASIA"),
 		Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_AzureNLUComponent_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_AzureNLUComponent_h_Statics::ClassInfo),
 		nullptr, 0,
 		nullptr, 0);
