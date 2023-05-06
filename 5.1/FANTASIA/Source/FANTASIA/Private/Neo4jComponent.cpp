@@ -13,6 +13,7 @@ UNeo4jComponent::UNeo4jComponent()
 	// ...
 }
 
+
 void UNeo4jComponent::OnResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful)
 {
 	FNeo4jResponse neo4jResponse;
@@ -118,52 +119,60 @@ void UNeo4jComponent::OnResponseReceived(FHttpRequestPtr Request, FHttpResponseP
 			}
 		}
 	}
+	
 }
 
 void UNeo4jComponent::submitQuery(FString query, Neo4jOperation operation, FString transactionID, TMap<FString, FString> parameters) {
 	FString path;
 	FString method;
+	FString prefix;
 
 	FHttpModule* Http = &FHttpModule::Get();
 	TSharedRef<IHttpRequest, ESPMode::ThreadSafe> Request = Http->CreateRequest();
 	Request->OnProcessRequestComplete().BindUObject(this, &UNeo4jComponent::OnResponseReceived);
 
+	if (useV4)
+		prefix = "/db/data/transaction";
+	else
+		prefix = "/db/neo4j/tx";
+
 	switch (operation)
 	{
 	case Neo4jOperation::SINGLE_REQUEST:
-		path = "/db/data/transaction/commit";
+		path = prefix + "/commit";
 		method = "POST";
 		break;
 	case Neo4jOperation::BEGIN_TRANSACTION:
-		path = "/db/data/transaction";
+		path = prefix;
 		method = "POST";
 		break;
 	case Neo4jOperation::COMMIT_TRANSACTION:
-		path = "/db/data/transaction/" + transactionID + "/commit";
+		path = prefix + "/" + transactionID + "/commit";
 		method = "POST";
 		break;
 	case Neo4jOperation::ROLLBACK_TRANSACTION:
-		path = "/db/data/transaction/" + transactionID;
+		path = prefix + "/" + transactionID;
 		method = "DELETE";
 		break;
 	case Neo4jOperation::ADD_TO_TRANSACTION:
-		path = "/db/data/transaction/" + transactionID;
+		path = prefix + "/" + transactionID;
 		method = "POST";
 		break;
 	default:
 		break;
 	}
-
+	
 	Request->SetURL(endpoint + ":" + FString::FromInt(port) + path);
 	Request->SetVerb(method);
 	Request->SetHeader(TEXT("Authorization"), "Basic " + FBase64::Encode(user + ":" + password));
 	Request->SetHeader(TEXT("User-Agent"), "X-UnrealEngine-Agent");
-	Request->SetHeader("Content-Type", TEXT("application/json"));
+	Request->SetHeader(TEXT("Content-Type"), TEXT("application/json"));
 
 	if (query.IsEmpty())
 		query = "MATCH (n) RETURN n LIMIT 1";
 
 	query.ReplaceInline(TEXT("\r\n"), TEXT(" "));
+	query.ReplaceInline(TEXT("\n"), TEXT(" "));
 	query.ReplaceInline(TEXT("\\"), TEXT("\\\\"));
 	query.ReplaceInline(TEXT("\""), TEXT("\\\""));
 	FString payload = "{\"statements\" : [{\"statement\" : \"" + query + "\", ";

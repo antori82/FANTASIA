@@ -9,7 +9,7 @@
 #include "UObject/ScriptMacros.h"
 
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
-class USoundBase;
+class USoundWave;
 #ifdef FANTASIA_AzureTTSComponent_generated_h
 #error "AzureTTSComponent.generated.h already included, missing '#pragma once' in AzureTTSComponent.h"
 #endif

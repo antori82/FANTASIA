@@ -1636,6 +1636,9 @@
             "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\intermediate\\build\\win64\\unrealeditor\\inc\\fantasia\\uht\\neo4jcomponent.gen.cpp",
             "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\source\\fantasia\\public\\neo4jcomponent.h",
             "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\intermediate\\build\\win64\\unrealeditor\\inc\\fantasia\\uht\\neo4jcomponent.generated.h",
+            "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\intermediate\\build\\win64\\unrealeditor\\inc\\fantasia\\uht\\openaicomponent.gen.cpp",
+            "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\source\\fantasia\\public\\openaicomponent.h",
+            "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\intermediate\\build\\win64\\unrealeditor\\inc\\fantasia\\uht\\openaicomponent.generated.h",
             "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\intermediate\\build\\win64\\unrealeditor\\inc\\fantasia\\uht\\paramobject.gen.cpp",
             "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\source\\fantasia\\public\\paramobject.h",
             "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\intermediate\\build\\win64\\unrealeditor\\inc\\fantasia\\uht\\paramobject.generated.h",
@@ -1650,7 +1653,8 @@
             "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\source\\fantasia\\private\\bayesiannetwork.cpp",
             "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\source\\fantasia\\private\\fantasia.cpp",
             "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\source\\fantasia\\private\\mathutilities.cpp",
-            "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\source\\fantasia\\private\\neo4jcomponent.cpp"
+            "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\source\\fantasia\\private\\neo4jcomponent.cpp",
+            "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\source\\fantasia\\private\\openaicomponent.cpp"
         ],
         "ImportedModules": [],
         "ImportedHeaderUnits": []

@@ -211,15 +211,6 @@ void UBayesianNetwork::addEvidence(FString variable, TArray<float> data)
 	if (inference->hasEvidence(var))
 		inference->eraseEvidence(var);
 	inference->addEvidence(var, vec);
-
-	/*if (variable == "109064338") {
-		for (float v : vec) {
-			UE_LOG(LogTemp, Warning, TEXT("%hs"), TCHAR_TO_UTF8(*variable));
-			UE_LOG(LogTemp, Warning, TEXT("%hf"), v);
-			inference->makeInference();
-			UE_LOG(LogTemp, Warning, TEXT("%hg"), inference->H(var));
-		}
-	}*/
 }
 
 void UBayesianNetwork::eraseAllEvidence()
@@ -238,6 +229,16 @@ double UBayesianNetwork::getEntropy(FString variable)
 		return (float) inference->H(TCHAR_TO_UTF8(*variable));
 	return 0;
 }
+
+bool UBayesianNetwork::hasHardEvidence(FString variable)
+{
+	if (!variable.IsEmpty() && (float) inference->H(TCHAR_TO_UTF8(*variable)) == 0.0)
+		return true;
+	return false;
+}
+
+
+
 
 FText FBayesianNetworkActions::GetName() const
 {

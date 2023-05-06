@@ -145,6 +145,10 @@ void EmptyLinkFunctionForGeneratedCodeAzureASRComponent() {}
 #endif
 		static const UECodeGen_Private::FStrPropertyParams NewProp_Language;
 #if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_Endpoint_MetaData[];
+#endif
+		static const UECodeGen_Private::FStrPropertyParams NewProp_Endpoint;
+#if WITH_METADATA
 		static const UECodeGen_Private::FMetaDataPairParam NewProp_IncomingMessage_MetaData[];
 #endif
 		static const UECodeGen_Private::FMulticastDelegatePropertyParams NewProp_IncomingMessage;
@@ -190,6 +194,13 @@ void EmptyLinkFunctionForGeneratedCodeAzureASRComponent() {}
 #endif
 	const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_UAzureASRComponent_Statics::NewProp_Language = { "Language", nullptr, (EPropertyFlags)0x0010000000000001, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(UAzureASRComponent, Language), METADATA_PARAMS(Z_Construct_UClass_UAzureASRComponent_Statics::NewProp_Language_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UAzureASRComponent_Statics::NewProp_Language_MetaData)) };
 #if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UAzureASRComponent_Statics::NewProp_Endpoint_MetaData[] = {
+		{ "Category", "Configuration" },
+		{ "ModuleRelativePath", "Public/AzureASRComponent.h" },
+	};
+#endif
+	const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_UAzureASRComponent_Statics::NewProp_Endpoint = { "Endpoint", nullptr, (EPropertyFlags)0x0010000000000001, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(UAzureASRComponent, Endpoint), METADATA_PARAMS(Z_Construct_UClass_UAzureASRComponent_Statics::NewProp_Endpoint_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UAzureASRComponent_Statics::NewProp_Endpoint_MetaData)) };
+#if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UAzureASRComponent_Statics::NewProp_IncomingMessage_MetaData[] = {
 		{ "Category", "Speech Recognition" },
 		{ "ModuleRelativePath", "Public/AzureASRComponent.h" },
@@ -200,6 +211,7 @@ void EmptyLinkFunctionForGeneratedCodeAzureASRComponent() {}
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UAzureASRComponent_Statics::NewProp_Key,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UAzureASRComponent_Statics::NewProp_Region,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UAzureASRComponent_Statics::NewProp_Language,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UAzureASRComponent_Statics::NewProp_Endpoint,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UAzureASRComponent_Statics::NewProp_IncomingMessage,
 	};
 	const FCppClassTypeInfoStatic Z_Construct_UClass_UAzureASRComponent_Statics::StaticCppClassTypeInfo = {
@@ -239,9 +251,9 @@ void EmptyLinkFunctionForGeneratedCodeAzureASRComponent() {}
 		static const FClassRegisterCompiledInInfo ClassInfo[];
 	};
 	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_AzureASRComponent_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_UAzureASRComponent, UAzureASRComponent::StaticClass, TEXT("UAzureASRComponent"), &Z_Registration_Info_UClass_UAzureASRComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UAzureASRComponent), 4042670593U) },
+		{ Z_Construct_UClass_UAzureASRComponent, UAzureASRComponent::StaticClass, TEXT("UAzureASRComponent"), &Z_Registration_Info_UClass_UAzureASRComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UAzureASRComponent), 116741485U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_AzureASRComponent_h_2699118935(TEXT("/Script/FANTASIA"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_AzureASRComponent_h_495955786(TEXT("/Script/FANTASIA"),
 		Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_AzureASRComponent_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_AzureASRComponent_h_Statics::ClassInfo),
 		nullptr, 0,
 		nullptr, 0);

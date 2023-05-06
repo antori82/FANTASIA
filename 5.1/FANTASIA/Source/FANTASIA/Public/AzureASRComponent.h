@@ -59,6 +59,9 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Configuration")
 		FString Language;
 
+	UPROPERTY(EditAnywhere, Category = "Configuration")
+		FString Endpoint;
+
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 

@@ -441,6 +441,14 @@ template<> FANTASIA_API UScriptStruct* StaticStruct<FBayesianNodeStruct>()
 	}
 	DEFINE_VTABLE_PTR_HELPER_CTOR(UBayesianNetworkFactory);
 	UBayesianNetworkFactory::~UBayesianNetworkFactory() {}
+	DEFINE_FUNCTION(UBayesianNetwork::exechasHardEvidence)
+	{
+		P_GET_PROPERTY(FStrProperty,Z_Param_variable);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		*(bool*)Z_Param__Result=P_THIS->hasHardEvidence(Z_Param_variable);
+		P_NATIVE_END;
+	}
 	DEFINE_FUNCTION(UBayesianNetwork::execidFromName)
 	{
 		P_GET_PROPERTY(FStrProperty,Z_Param_variable);
@@ -574,6 +582,7 @@ template<> FANTASIA_API UScriptStruct* StaticStruct<FBayesianNodeStruct>()
 			{ "fillWith", &UBayesianNetwork::execfillWith },
 			{ "getEntropy", &UBayesianNetwork::execgetEntropy },
 			{ "getPosterior", &UBayesianNetwork::execgetPosterior },
+			{ "hasHardEvidence", &UBayesianNetwork::exechasHardEvidence },
 			{ "idFromName", &UBayesianNetwork::execidFromName },
 			{ "Init", &UBayesianNetwork::execInit },
 			{ "makeInference", &UBayesianNetwork::execmakeInference },
@@ -605,7 +614,7 @@ template<> FANTASIA_API UScriptStruct* StaticStruct<FBayesianNodeStruct>()
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UBayesianNetwork_addArc_Statics::Function_MetaDataParams[] = {
 		{ "Category", "Bayesian_Network" },
-		{ "DisplayName", "addArc" },
+		{ "DisplayName", "Add Arc" },
 		{ "ModuleRelativePath", "Public/BayesianNetwork.h" },
 	};
 #endif
@@ -662,7 +671,7 @@ template<> FANTASIA_API UScriptStruct* StaticStruct<FBayesianNodeStruct>()
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UBayesianNetwork_addDiscretizedVariable_Statics::Function_MetaDataParams[] = {
 		{ "Category", "Bayesian_Network" },
-		{ "DisplayName", "addDiscretizedVariable" },
+		{ "DisplayName", "Add Discretized Variable" },
 		{ "ModuleRelativePath", "Public/BayesianNetwork.h" },
 	};
 #endif
@@ -704,7 +713,7 @@ template<> FANTASIA_API UScriptStruct* StaticStruct<FBayesianNodeStruct>()
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UBayesianNetwork_addEvidence_Statics::Function_MetaDataParams[] = {
 		{ "Category", "Bayesian_Network" },
 		{ "Comment", "//UFUNCTION(BlueprintCallable, meta = (DisplayName = \"getPosterior\", Keywords = \"Inference\", AutoCreateRefTerm = \"evidences\"), Category = \"Bayesian_Network\")\n//void getPosterior(FGetPosteriorDelegate outMap, FString variable);\n" },
-		{ "DisplayName", "addEvidence" },
+		{ "DisplayName", "Add Evidence" },
 		{ "ModuleRelativePath", "Public/BayesianNetwork.h" },
 		{ "ToolTip", "UFUNCTION(BlueprintCallable, meta = (DisplayName = \"getPosterior\", Keywords = \"Inference\", AutoCreateRefTerm = \"evidences\"), Category = \"Bayesian_Network\")\nvoid getPosterior(FGetPosteriorDelegate outMap, FString variable);" },
 	};
@@ -750,7 +759,7 @@ template<> FANTASIA_API UScriptStruct* StaticStruct<FBayesianNodeStruct>()
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UBayesianNetwork_addLabelizedVariable_Statics::Function_MetaDataParams[] = {
 		{ "Category", "Bayesian_Network" },
-		{ "DisplayName", "addLabelizedVariable" },
+		{ "DisplayName", "Add Labelized Variable" },
 		{ "ModuleRelativePath", "Public/BayesianNetwork.h" },
 	};
 #endif
@@ -784,7 +793,7 @@ template<> FANTASIA_API UScriptStruct* StaticStruct<FBayesianNodeStruct>()
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UBayesianNetwork_erase_Statics::Function_MetaDataParams[] = {
 		{ "Category", "Bayesian_Network" },
-		{ "DisplayName", "clear" },
+		{ "DisplayName", "Clear" },
 		{ "ModuleRelativePath", "Public/BayesianNetwork.h" },
 	};
 #endif
@@ -808,7 +817,7 @@ template<> FANTASIA_API UScriptStruct* StaticStruct<FBayesianNodeStruct>()
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UBayesianNetwork_eraseAllEvidence_Statics::Function_MetaDataParams[] = {
 		{ "Category", "Bayesian_Network" },
-		{ "DisplayName", "eraseAllEvidence" },
+		{ "DisplayName", "Erase All Evidence" },
 		{ "ModuleRelativePath", "Public/BayesianNetwork.h" },
 	};
 #endif
@@ -842,7 +851,7 @@ template<> FANTASIA_API UScriptStruct* StaticStruct<FBayesianNodeStruct>()
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UBayesianNetwork_eraseEvidence_Statics::Function_MetaDataParams[] = {
 		{ "Category", "Bayesian_Network" },
-		{ "DisplayName", "eraseEvidence" },
+		{ "DisplayName", "Erase Evidence" },
 		{ "ModuleRelativePath", "Public/BayesianNetwork.h" },
 	};
 #endif
@@ -880,7 +889,7 @@ template<> FANTASIA_API UScriptStruct* StaticStruct<FBayesianNodeStruct>()
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UBayesianNetwork_fillWith_Statics::Function_MetaDataParams[] = {
 		{ "Category", "Bayesian_Network" },
-		{ "DisplayName", "fillWith" },
+		{ "DisplayName", "Fill With" },
 		{ "ModuleRelativePath", "Public/BayesianNetwork.h" },
 	};
 #endif
@@ -918,11 +927,11 @@ template<> FANTASIA_API UScriptStruct* StaticStruct<FBayesianNodeStruct>()
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UBayesianNetwork_getEntropy_Statics::Function_MetaDataParams[] = {
 		{ "Category", "Bayesian_Network" },
-		{ "DisplayName", "getEntropy" },
+		{ "DisplayName", "Get Entropy" },
 		{ "ModuleRelativePath", "Public/BayesianNetwork.h" },
 	};
 #endif
-	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UBayesianNetwork_getEntropy_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UBayesianNetwork, nullptr, "getEntropy", nullptr, nullptr, sizeof(Z_Construct_UFunction_UBayesianNetwork_getEntropy_Statics::BayesianNetwork_eventgetEntropy_Parms), Z_Construct_UFunction_UBayesianNetwork_getEntropy_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UBayesianNetwork_getEntropy_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_UBayesianNetwork_getEntropy_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_UBayesianNetwork_getEntropy_Statics::Function_MetaDataParams)) };
+	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UBayesianNetwork_getEntropy_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UBayesianNetwork, nullptr, "getEntropy", nullptr, nullptr, sizeof(Z_Construct_UFunction_UBayesianNetwork_getEntropy_Statics::BayesianNetwork_eventgetEntropy_Parms), Z_Construct_UFunction_UBayesianNetwork_getEntropy_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UBayesianNetwork_getEntropy_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x14020401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_UBayesianNetwork_getEntropy_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_UBayesianNetwork_getEntropy_Statics::Function_MetaDataParams)) };
 	UFunction* Z_Construct_UFunction_UBayesianNetwork_getEntropy()
 	{
 		static UFunction* ReturnFunction = nullptr;
@@ -963,7 +972,7 @@ template<> FANTASIA_API UScriptStruct* StaticStruct<FBayesianNodeStruct>()
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UBayesianNetwork_getPosterior_Statics::Function_MetaDataParams[] = {
 		{ "AutoCreateRefTerm", "evidences" },
 		{ "Category", "Bayesian_Network" },
-		{ "DisplayName", "getPosterior" },
+		{ "DisplayName", "Get Posterior" },
 		{ "Keywords", "Inference" },
 		{ "ModuleRelativePath", "Public/BayesianNetwork.h" },
 	};
@@ -975,6 +984,49 @@ template<> FANTASIA_API UScriptStruct* StaticStruct<FBayesianNodeStruct>()
 		if (!ReturnFunction)
 		{
 			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UBayesianNetwork_getPosterior_Statics::FuncParams);
+		}
+		return ReturnFunction;
+	}
+	struct Z_Construct_UFunction_UBayesianNetwork_hasHardEvidence_Statics
+	{
+		struct BayesianNetwork_eventhasHardEvidence_Parms
+		{
+			FString variable;
+			bool ReturnValue;
+		};
+		static const UECodeGen_Private::FStrPropertyParams NewProp_variable;
+		static void NewProp_ReturnValue_SetBit(void* Obj);
+		static const UECodeGen_Private::FBoolPropertyParams NewProp_ReturnValue;
+		static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
+#endif
+		static const UECodeGen_Private::FFunctionParams FuncParams;
+	};
+	const UECodeGen_Private::FStrPropertyParams Z_Construct_UFunction_UBayesianNetwork_hasHardEvidence_Statics::NewProp_variable = { "variable", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(BayesianNetwork_eventhasHardEvidence_Parms, variable), METADATA_PARAMS(nullptr, 0) };
+	void Z_Construct_UFunction_UBayesianNetwork_hasHardEvidence_Statics::NewProp_ReturnValue_SetBit(void* Obj)
+	{
+		((BayesianNetwork_eventhasHardEvidence_Parms*)Obj)->ReturnValue = 1;
+	}
+	const UECodeGen_Private::FBoolPropertyParams Z_Construct_UFunction_UBayesianNetwork_hasHardEvidence_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, sizeof(bool), sizeof(BayesianNetwork_eventhasHardEvidence_Parms), &Z_Construct_UFunction_UBayesianNetwork_hasHardEvidence_Statics::NewProp_ReturnValue_SetBit, METADATA_PARAMS(nullptr, 0) };
+	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UBayesianNetwork_hasHardEvidence_Statics::PropPointers[] = {
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UBayesianNetwork_hasHardEvidence_Statics::NewProp_variable,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UBayesianNetwork_hasHardEvidence_Statics::NewProp_ReturnValue,
+	};
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UBayesianNetwork_hasHardEvidence_Statics::Function_MetaDataParams[] = {
+		{ "Category", "Bayesian_Network" },
+		{ "DisplayName", "Has Hard Evidence" },
+		{ "ModuleRelativePath", "Public/BayesianNetwork.h" },
+	};
+#endif
+	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UBayesianNetwork_hasHardEvidence_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UBayesianNetwork, nullptr, "hasHardEvidence", nullptr, nullptr, sizeof(Z_Construct_UFunction_UBayesianNetwork_hasHardEvidence_Statics::BayesianNetwork_eventhasHardEvidence_Parms), Z_Construct_UFunction_UBayesianNetwork_hasHardEvidence_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UBayesianNetwork_hasHardEvidence_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x14020401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_UBayesianNetwork_hasHardEvidence_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_UBayesianNetwork_hasHardEvidence_Statics::Function_MetaDataParams)) };
+	UFunction* Z_Construct_UFunction_UBayesianNetwork_hasHardEvidence()
+	{
+		static UFunction* ReturnFunction = nullptr;
+		if (!ReturnFunction)
+		{
+			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UBayesianNetwork_hasHardEvidence_Statics::FuncParams);
 		}
 		return ReturnFunction;
 	}
@@ -1002,7 +1054,7 @@ template<> FANTASIA_API UScriptStruct* StaticStruct<FBayesianNodeStruct>()
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UBayesianNetwork_idFromName_Statics::Function_MetaDataParams[] = {
 		{ "Category", "Bayesian_Network" },
-		{ "DisplayName", "idFromName" },
+		{ "DisplayName", "ID From Name" },
 		{ "ModuleRelativePath", "Public/BayesianNetwork.h" },
 	};
 #endif
@@ -1051,7 +1103,7 @@ template<> FANTASIA_API UScriptStruct* StaticStruct<FBayesianNodeStruct>()
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UBayesianNetwork_makeInference_Statics::Function_MetaDataParams[] = {
 		{ "AutoCreateRefTerm", "evidences" },
 		{ "Category", "Bayesian_Network" },
-		{ "DisplayName", "makeInference" },
+		{ "DisplayName", "Make Inference" },
 		{ "Keywords", "Inference" },
 		{ "ModuleRelativePath", "Public/BayesianNetwork.h" },
 	};
@@ -1086,7 +1138,7 @@ template<> FANTASIA_API UScriptStruct* StaticStruct<FBayesianNodeStruct>()
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UBayesianNetwork_writeBIF_Statics::Function_MetaDataParams[] = {
 		{ "Category", "Bayesian_Network" },
-		{ "DisplayName", "writeBIF" },
+		{ "DisplayName", "Write BIF" },
 		{ "ModuleRelativePath", "Public/BayesianNetwork.h" },
 	};
 #endif
@@ -1147,20 +1199,21 @@ template<> FANTASIA_API UScriptStruct* StaticStruct<FBayesianNodeStruct>()
 		(UObject* (*)())Z_Construct_UPackage__Script_FANTASIA,
 	};
 	const FClassFunctionLinkInfo Z_Construct_UClass_UBayesianNetwork_Statics::FuncInfo[] = {
-		{ &Z_Construct_UFunction_UBayesianNetwork_addArc, "addArc" }, // 246263933
-		{ &Z_Construct_UFunction_UBayesianNetwork_addDiscretizedVariable, "addDiscretizedVariable" }, // 4204845798
-		{ &Z_Construct_UFunction_UBayesianNetwork_addEvidence, "addEvidence" }, // 3734222587
-		{ &Z_Construct_UFunction_UBayesianNetwork_addLabelizedVariable, "addLabelizedVariable" }, // 4151712337
-		{ &Z_Construct_UFunction_UBayesianNetwork_erase, "erase" }, // 1680131866
-		{ &Z_Construct_UFunction_UBayesianNetwork_eraseAllEvidence, "eraseAllEvidence" }, // 2263175528
-		{ &Z_Construct_UFunction_UBayesianNetwork_eraseEvidence, "eraseEvidence" }, // 702289958
-		{ &Z_Construct_UFunction_UBayesianNetwork_fillWith, "fillWith" }, // 4126258729
-		{ &Z_Construct_UFunction_UBayesianNetwork_getEntropy, "getEntropy" }, // 928063627
-		{ &Z_Construct_UFunction_UBayesianNetwork_getPosterior, "getPosterior" }, // 2100711030
-		{ &Z_Construct_UFunction_UBayesianNetwork_idFromName, "idFromName" }, // 4058904786
+		{ &Z_Construct_UFunction_UBayesianNetwork_addArc, "addArc" }, // 497392041
+		{ &Z_Construct_UFunction_UBayesianNetwork_addDiscretizedVariable, "addDiscretizedVariable" }, // 265773911
+		{ &Z_Construct_UFunction_UBayesianNetwork_addEvidence, "addEvidence" }, // 619420892
+		{ &Z_Construct_UFunction_UBayesianNetwork_addLabelizedVariable, "addLabelizedVariable" }, // 747444328
+		{ &Z_Construct_UFunction_UBayesianNetwork_erase, "erase" }, // 3992200080
+		{ &Z_Construct_UFunction_UBayesianNetwork_eraseAllEvidence, "eraseAllEvidence" }, // 3982499745
+		{ &Z_Construct_UFunction_UBayesianNetwork_eraseEvidence, "eraseEvidence" }, // 456748902
+		{ &Z_Construct_UFunction_UBayesianNetwork_fillWith, "fillWith" }, // 1417497150
+		{ &Z_Construct_UFunction_UBayesianNetwork_getEntropy, "getEntropy" }, // 1287329745
+		{ &Z_Construct_UFunction_UBayesianNetwork_getPosterior, "getPosterior" }, // 2111638029
+		{ &Z_Construct_UFunction_UBayesianNetwork_hasHardEvidence, "hasHardEvidence" }, // 1311721209
+		{ &Z_Construct_UFunction_UBayesianNetwork_idFromName, "idFromName" }, // 2686510668
 		{ &Z_Construct_UFunction_UBayesianNetwork_Init, "Init" }, // 1550691382
-		{ &Z_Construct_UFunction_UBayesianNetwork_makeInference, "makeInference" }, // 4126161622
-		{ &Z_Construct_UFunction_UBayesianNetwork_writeBIF, "writeBIF" }, // 1774955708
+		{ &Z_Construct_UFunction_UBayesianNetwork_makeInference, "makeInference" }, // 3292952758
+		{ &Z_Construct_UFunction_UBayesianNetwork_writeBIF, "writeBIF" }, // 2642616244
 	};
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UBayesianNetwork_Statics::Class_MetaDataParams[] = {
@@ -1272,9 +1325,9 @@ template<> FANTASIA_API UScriptStruct* StaticStruct<FBayesianNodeStruct>()
 	};
 	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_Statics::ClassInfo[] = {
 		{ Z_Construct_UClass_UBayesianNetworkFactory, UBayesianNetworkFactory::StaticClass, TEXT("UBayesianNetworkFactory"), &Z_Registration_Info_UClass_UBayesianNetworkFactory, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UBayesianNetworkFactory), 4041612464U) },
-		{ Z_Construct_UClass_UBayesianNetwork, UBayesianNetwork::StaticClass, TEXT("UBayesianNetwork"), &Z_Registration_Info_UClass_UBayesianNetwork, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UBayesianNetwork), 2310624768U) },
+		{ Z_Construct_UClass_UBayesianNetwork, UBayesianNetwork::StaticClass, TEXT("UBayesianNetwork"), &Z_Registration_Info_UClass_UBayesianNetwork, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UBayesianNetwork), 2869670854U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_2239557842(TEXT("/Script/FANTASIA"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_3878149641(TEXT("/Script/FANTASIA"),
 		Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_Statics::ClassInfo),
 		Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_Statics::ScriptStructInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_Statics::ScriptStructInfo),
 		Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_Statics::EnumInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_Statics::EnumInfo));
