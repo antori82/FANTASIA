@@ -1,0 +1,11 @@
+{
+	"RemapUnityFiles": 
+	{
+		"Module.FANTASIAEditor.cpp.obj": [
+			"BayesianNetworkFactory.gen.cpp.obj",
+			"FANTASIAEditor.init.gen.cpp.obj",
+			"BayesianNetworkFactory.cpp.obj",
+			"FANTASIAEditor.cpp.obj"
+		]
+	}
+}

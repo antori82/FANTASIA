@@ -1,0 +1,8 @@
+{
+	"BuildId": "25360045",
+	"Modules": 
+	{
+		"FANTASIA": "UnrealEditor-FANTASIA.dll",
+		"FANTASIAEditor": "UnrealEditor-FANTASIAEditor.dll"
+	}
+}
