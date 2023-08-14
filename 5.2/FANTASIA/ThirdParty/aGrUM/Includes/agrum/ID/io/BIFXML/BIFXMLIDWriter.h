@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -26,7 +25,8 @@
  *
  * Writes an influence diagram in XML files with BIF format
  *
- * @author Jean-Christophe MAGNAN and Pierre-Henri WUILLEMIN
+ * @author Pierre-Henri WUILLEMIN(_at_LIP6) and Jean-Christophe MAGNAN and Christophe
+ * GONZALES(_at_AMU)
  */
 
 #ifndef GUM_BIF_XML_ID_WRITER_H
@@ -57,7 +57,7 @@ namespace gum {
    */
   template < typename GUM_SCALAR >
 
-  class BIFXMLIDWriter : public IDWriter< GUM_SCALAR > {
+  class BIFXMLIDWriter: public IDWriter< GUM_SCALAR > {
     public:
     // ==========================================================================
     /// @name Constructor & destructor
@@ -83,8 +83,7 @@ namespace gum {
      * @param infdiag The influence diagram writen in the stream.
      * @throws IOError Raised if an I/O error occurs.
      */
-    virtual void write(std::ostream&                         output,
-                       const InfluenceDiagram< GUM_SCALAR >& infdiag);
+    virtual void write(std::ostream& output, const InfluenceDiagram< GUM_SCALAR >& infdiag);
 
     /**
      * Writes an Influence Diagram in the file referenced by filePath.
@@ -95,32 +94,30 @@ namespace gum {
      * @param infdiag The Influence Diagram writen in the file.
      * @throw IOError Raised if an I/O error occurs.
      */
-    virtual void write(std::string                           filePath,
-                       const InfluenceDiagram< GUM_SCALAR >& infdiag);
+    virtual void write(std::string filePath, const InfluenceDiagram< GUM_SCALAR >& infdiag);
 
     private:
     /**
      * Returns the header of the BIF file.
      */
-    std::string __heading();
+    std::string _heading_();
 
     /**
      * Returns the end of the BIF file.
      */
-    std::string __documentend();
+    std::string _documentend_();
 
     /**
      * Returns a bloc defining a variable in the BIF format.
      */
-    std::string __variableBloc(const DiscreteVariable& var, int nodeType);
+    std::string _variableBloc_(const DiscreteVariable& var, int nodeType);
 
     /**
      * Returns a bloc defining a variable's table (if she has) in the BIF
      * format.
      */
-    std::string
-       __variableDefinition(const NodeId&                         varNodeId,
-                            const InfluenceDiagram< GUM_SCALAR >& infdiag);
+    std::string _variableDefinition_(const NodeId&                         varNodeId,
+                                     const InfluenceDiagram< GUM_SCALAR >& infdiag);
   };
 } /* namespace gum */
 

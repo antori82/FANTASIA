@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,7 +23,7 @@
  * @file
  * @brief Headers of gum::PRMSlotChain.
  *
- * @author Lionel TORTI and Pierre-Henri WUILLEMIN
+ * @author Lionel TORTI and Pierre-Henri WUILLEMIN(_at_LIP6)
  */
 
 #ifndef GUM_SLOT_CHAIN_H
@@ -32,17 +31,7 @@
 
 #include <string>
 
-#include <agrum/core/sequence.h>
 
-#include <agrum/multidim/ICIModels/multiDimNoisyORCompound.h>
-#include <agrum/multidim/ICIModels/multiDimNoisyORNet.h>
-#include <agrum/multidim/implementations/multiDimBijArray.h>
-#include <agrum/multidim/potential.h>
-
-#include <agrum/PRM/elements/PRMType.h>
-#include <agrum/PRM/elements/PRMClassElement.h>
-#include <agrum/PRM/elements/PRMClassElementContainer.h>
-#include <agrum/PRM/elements/PRMAttribute.h>
 #include <agrum/PRM/elements/PRMAggregate.h>
 #include <agrum/PRM/elements/PRMReferenceSlot.h>
 
@@ -80,7 +69,7 @@ namespace gum {
      */
     // ==========================================================================
     template < typename GUM_SCALAR >
-    class PRMSlotChain : public PRMClassElement< GUM_SCALAR > {
+    class PRMSlotChain: public PRMClassElement< GUM_SCALAR > {
       public:
       // ========================================================================
       /// @name Constructors & destructor
@@ -124,8 +113,7 @@ namespace gum {
        * @throw WrongClassElement<GUM_SCALAR> Raised contains invalid
        *PRMClassElement<GUM_SCALAR>.
        */
-      PRMSlotChain(Sequence< PRMClassElement< GUM_SCALAR >* >* chain,
-                   const std::string&                          name);
+      PRMSlotChain(Sequence< PRMClassElement< GUM_SCALAR >* >* chain, const std::string& name);
 
       /**
        * Copy constructor.
@@ -144,8 +132,7 @@ namespace gum {
       /// @{
 
       /// See gum::PRMClassElement<GUM_SCALAR>::elt_type().
-      virtual typename PRMClassElement< GUM_SCALAR >::ClassElementType
-         elt_type() const;
+      virtual typename PRMClassElement< GUM_SCALAR >::ClassElementType elt_type() const;
 
       /// This is similar to the following call: this->lastElt().type()
       virtual PRMType& type();
@@ -187,10 +174,10 @@ namespace gum {
       /// PRMSlotChain.
       const Sequence< PRMClassElement< GUM_SCALAR >* >& chain() const;
 
-      /// See gum::PRMClassElement<GUM_SCALAR>::_addParent().
+      /// See gum::PRMClassElement<GUM_SCALAR>::addParent_().
       virtual void addParent(const PRMClassElement< GUM_SCALAR >& elt);
 
-      /// See gum::PRMClassElement<GUM_SCALAR>::_addChild().
+      /// See gum::PRMClassElement<GUM_SCALAR>::addChild_().
       virtual void addChild(const PRMClassElement< GUM_SCALAR >& elt);
 
       /// @brief Raise a gum::OperationNotAllowed exception
@@ -207,14 +194,14 @@ namespace gum {
       /// @{
 
       /// The sequence of PRMClassElement<GUM_SCALAR> composing the slot chain
-      Sequence< PRMClassElement< GUM_SCALAR >* >* __chain;
+      Sequence< PRMClassElement< GUM_SCALAR >* >* _chain_;
 
       /// Flag indicating if this slot chain is multiple or not.
-      bool __isMultiple;
+      bool _isMultiple_;
 
       /// Copy the last element, this prevents unwanted DuplicateElement
       /// exceptions.
-      void __copyLastElt();
+      void _copyLastElt_();
 
       /// @}
     };

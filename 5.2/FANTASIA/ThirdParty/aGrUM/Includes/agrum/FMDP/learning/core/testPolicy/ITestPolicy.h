@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,23 +23,24 @@
  * @file
  * @brief Headers of the ITestPolicy
  *
- * @author Jean-Christophe MAGNAN and Pierre-Henri WUILLEMIN
+ * @author Pierre-Henri WUILLEMIN(_at_LIP6) and Jean-Christophe MAGNAN and Christophe
+ * GONZALES(_at_AMU)
  *
  */
 #ifndef GUM_MULTI_DIM_FUNCTION_GRAPH_INTERFACE_TEST_POLICY_H
 #define GUM_MULTI_DIM_FUNCTION_GRAPH_INTERFACE_TEST_POLICY_H
 
 // ============================================================================
-#include <agrum/core/smallobjectallocator/smallObjectAllocator.h>
+#include <agrum/tools/core/smallobjectallocator/smallObjectAllocator.h>
 // ============================================================================
-#include <agrum/graphs/parts/nodeGraphPart.h>
+#include <agrum/tools/graphs/parts/nodeGraphPart.h>
 // ============================================================================
 
 namespace gum {
 
   /**
    * @class ITestPolicy ITestPolicy.h
-   * <agrum/multidim/core/testPolicies/ITestPolicy.h>
+   * <agrum/tools/multidim/core/testPolicies/ITestPolicy.h>
    *
    * @brief Interface specifying the methods to be implemented by any TestPolicy
    *
@@ -57,22 +57,21 @@ namespace gum {
     // ============================================================================
     ///
     // ============================================================================
-    ITestPolicy() : __isModified(false), __nbObs(0) {
-      GUM_CONSTRUCTOR(ITestPolicy);
-    }
+    ITestPolicy() : _isModified_(false), _nbObs_(0) { GUM_CONSTRUCTOR(ITestPolicy); }
 
     // ============================================================================
     ///
     // ============================================================================
-    virtual ~ITestPolicy() { GUM_DESTRUCTOR(ITestPolicy); }
+    virtual ~ITestPolicy() {
+      GUM_DESTRUCTOR(ITestPolicy);
+      ;
+    }
 
     // ============================================================================
     /// Allocators and Deallocators redefinition
     // ============================================================================
-    void* operator new(size_t s) {
-      return SmallObjectAllocator::instance().allocate(s);
-    }
-    void operator delete(void* p) {
+    void* operator new(size_t s) { return SmallObjectAllocator::instance().allocate(s); }
+    void  operator delete(void* p) {
       SmallObjectAllocator::instance().deallocate(p, sizeof(ITestPolicy));
     }
 
@@ -88,14 +87,14 @@ namespace gum {
     /// Comptabilizes the new observation
     // ============================================================================
     virtual void addObservation(Idx attr, GUM_SCALAR value) {
-      __isModified = true;
-      __nbObs++;
+      _isModified_ = true;
+      _nbObs_++;
     }
 
     // ============================================================================
     /// Comptabilizes the new observation
     // ============================================================================
-    Idx nbObservation() const { return __nbObs; }
+    Idx nbObservation() const { return _nbObs_; }
 
     /// @}
 
@@ -114,7 +113,7 @@ namespace gum {
     // ============================================================================
     /// Recomputes the statistic from the beginning
     // ============================================================================
-    virtual void computeScore() const { __isModified = false; }
+    virtual void computeScore() const { _isModified_ = false; }
 
     // ============================================================================
     /// Returns the performance of current variable according to the test
@@ -138,8 +137,8 @@ namespace gum {
     ///
     // ============================================================================
     void add(const ITestPolicy< GUM_SCALAR >& src) {
-      __isModified = true;
-      __nbObs += src.nbObservation();
+      _isModified_ = true;
+      _nbObs_ += src.nbObservation();
     }
 
     /// @}
@@ -155,21 +154,21 @@ namespace gum {
     // ============================================================================
     std::string toString() const {
       std::stringstream ss;
-      ss << "\t\t\tNb Obs : " << __nbObs << std::endl;
+      ss << "\t\t\tNb Obs : " << _nbObs_ << std::endl;
       return ss.str();
     }
 
     /// @}
 
     protected:
-    bool _isModified() const { return __isModified; }
+    bool isModified_() const { return _isModified_; }
 
     private:
     ///  Booleans indicating if we have to re eval test
-    mutable bool __isModified;
+    mutable bool _isModified_;
 
     ///
-    Idx __nbObs;
+    Idx _nbObs_;
   };
 
 }   // End of namespace gum

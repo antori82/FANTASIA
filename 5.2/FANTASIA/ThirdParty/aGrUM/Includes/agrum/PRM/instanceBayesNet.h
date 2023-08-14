@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,7 +23,7 @@
  * @file
  * @brief Headers of InstanceBayesNet.
  *
- * @author Lionel TORTI and Pierre-Henri WUILLEMIN
+ * @author Lionel TORTI and Pierre-Henri WUILLEMIN(_at_LIP6)
  */
 
 #ifndef GUM_INSTANCE_BAYESNET_H
@@ -32,7 +31,6 @@
 
 #include <list>
 
-#include <agrum/BN/IBayesNet.h>
 
 #include <agrum/PRM/PRM.h>
 
@@ -54,7 +52,7 @@ namespace gum {
      *
      */
     template < typename GUM_SCALAR >
-    class InstanceBayesNet : public IBayesNet< GUM_SCALAR > {
+    class InstanceBayesNet: public IBayesNet< GUM_SCALAR > {
       public:
       // ========================================================================
       /// @name Constructors & destructor.
@@ -97,8 +95,7 @@ namespace gum {
       virtual NodeId idFromName(const std::string& name) const;
 
       /// See gum::IBaseBayesNet::variableFromName().
-      virtual const DiscreteVariable&
-         variableFromName(const std::string& name) const;
+      virtual const DiscreteVariable& variableFromName(const std::string& name) const;
 
       const NodeProperty< Size >& modalities() const;
 
@@ -113,22 +110,21 @@ namespace gum {
       /// @}
       private:
       /// Mapping between DiscreteVariable and their NodeId
-      HashTable< const DiscreteVariable*, const PRMAttribute< GUM_SCALAR >* >
-         __varNodeMap;
+      HashTable< const DiscreteVariable*, const PRMAttribute< GUM_SCALAR >* > _varNodeMap_;
 
       /// Private getter with type checking in case the id is not a formal
       /// PRMAttribute<GUM_SCALAR>.
       /// @throw NotFound Raised if id is not a formal attribute.
-      const PRMClassElement< GUM_SCALAR >& __get(NodeId id) const;
+      const PRMClassElement< GUM_SCALAR >& _get_(NodeId id) const;
 
-      const PRMClassElement< GUM_SCALAR >& __get(const std::string& name) const;
+      const PRMClassElement< GUM_SCALAR >& _get_(const std::string& name) const;
 
       /// The PRMClassElementContainer decorated by this.
-      const PRMInstance< GUM_SCALAR >* __inst;
+      const PRMInstance< GUM_SCALAR >* _inst_;
 
-      mutable NodeProperty< Size > __modalities;
+      mutable NodeProperty< Size > _modalities_;
 
-      void __init(const PRMInstance< GUM_SCALAR >& i);
+      void _init_(const PRMInstance< GUM_SCALAR >& i);
     };
 
 

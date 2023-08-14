@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,7 +23,8 @@
  * @file
  * @brief Headers of the Chi2TestPolicy
  *
- * @author Jean-Christophe MAGNAN and Pierre-Henri WUILLEMIN
+ * @author Pierre-Henri WUILLEMIN(_at_LIP6) and Jean-Christophe MAGNAN and Christophe
+ * GONZALES(_at_AMU)
  *
  */
 #ifndef GUM_MULTI_DIM_FUNCTION_GRAPH_CHI2_TEST_POLICY_H
@@ -40,7 +40,7 @@ namespace gum {
 
   /**
    * @class Chi2TestPolicy Chi2TestPolicy.h
-   * <agrum/multidim/core/testPolicy/Chi2TestPolicy.h>
+   * <agrum/tools/multidim/core/testPolicy/Chi2TestPolicy.h>
    *
    * @brief Chi2TestPolicy implements a test policy that follows the Chi2
    * statistic
@@ -48,21 +48,22 @@ namespace gum {
    * @ingroup fmdp_group
    */
   template < typename GUM_SCALAR >
-  class Chi2TestPolicy : public ITestPolicy< GUM_SCALAR > {
+  class Chi2TestPolicy: public ITestPolicy< GUM_SCALAR > {
     public:
-    Chi2TestPolicy() : ITestPolicy< GUM_SCALAR >(), __conTab(), __chi2Score(0) {
+    Chi2TestPolicy() : ITestPolicy< GUM_SCALAR >(), _conTab_(), _chi2Score_(0) {
       GUM_CONSTRUCTOR(Chi2TestPolicy);
     }
 
-    virtual ~Chi2TestPolicy() { GUM_DESTRUCTOR(Chi2TestPolicy); }
+    virtual ~Chi2TestPolicy() {
+      GUM_DESTRUCTOR(Chi2TestPolicy);
+      ;
+    }
 
     // ============================================================================
     /// Allocators and Deallocators redefinition
     // ============================================================================
-    void* operator new(size_t s) {
-      return SmallObjectAllocator::instance().allocate(s);
-    }
-    void operator delete(void* p) {
+    void* operator new(size_t s) { return SmallObjectAllocator::instance().allocate(s); }
+    void  operator delete(void* p) {
       SmallObjectAllocator::instance().deallocate(p, sizeof(Chi2TestPolicy));
     }
 
@@ -89,8 +90,7 @@ namespace gum {
     /// relevant
     // ============================================================================
     bool isTestRelevant() const {
-      return (this->nbObservation() > 20
-              && this->nbObservation() > __conTab.attrASize() * 5);
+      return (this->nbObservation() > 20 && this->nbObservation() > _conTab_.attrASize() * 5);
     }
 
     /// @}
@@ -118,15 +118,14 @@ namespace gum {
 
     /// @}
 
-    const ContingencyTable< Idx, GUM_SCALAR >& ct() const { return __conTab; }
+    const ContingencyTable< Idx, GUM_SCALAR >& ct() const { return _conTab_; }
 
     void add(const Chi2TestPolicy< GUM_SCALAR >& src);
 
     std::string toString() const {
       std::stringstream ss;
-      ss << ITestPolicy< GUM_SCALAR >::toString()
-         << "\t\t\tContingency Table : " << std::endl
-         << __conTab.toString() << std::endl
+      ss << ITestPolicy< GUM_SCALAR >::toString() << "\t\t\tContingency Table : " << std::endl
+         << _conTab_.toString() << std::endl
          << "\t\t\tGStat : " << this->score() << std::endl
          << "\t\t\tGStat : " << this->secondaryscore() << std::endl;
       return ss.str();
@@ -134,9 +133,9 @@ namespace gum {
 
     private:
     /// The contingency table used to keeps records of all observation
-    ContingencyTable< Idx, GUM_SCALAR > __conTab;
+    ContingencyTable< Idx, GUM_SCALAR > _conTab_;
 
-    mutable double __chi2Score;
+    mutable double _chi2Score_;
   };
 
 }   // End of namespace gum

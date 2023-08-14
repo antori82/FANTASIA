@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -25,7 +24,7 @@
  * @brief the type of algorithm to use to perform relevant reasoning in
  * Bayes net inference
  *
- * @author Christophe GONZALES and Pierre-Henri WUILLEMIN
+ * @author Christophe GONZALES(_at_AMU) and Pierre-Henri WUILLEMIN(_at_LIP6)
  */
 #ifndef GUM_RELEVANT_POTENTIAL_FINDER_TYPE_H
 #define GUM_RELEVANT_POTENTIAL_FINDER_TYPE_H

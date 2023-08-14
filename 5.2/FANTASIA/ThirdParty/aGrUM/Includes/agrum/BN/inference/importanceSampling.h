@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,7 +23,7 @@
  * @file
  * @brief This file contains Importance sampling class definition.
  *
- * @author Paul ALAM & Pierre-Henri WUILLEMIN
+ * @author Paul ALAM & Pierre-Henri WUILLEMIN(_at_LIP6)
  */
 
 
@@ -38,7 +37,7 @@ namespace gum {
   /**
    * @class ImportanceInference importanceInference.h
    *<agrum/BN/inference/importanceInference.h>
-   * @brief class for making Importance sampling inference in bayesian networks.
+   * @brief class for making Importance sampling inference in Bayesian networks.
    * @ingroup bn_approximation
    *
    * This class overrides pure function declared in the inherited class
@@ -49,7 +48,7 @@ namespace gum {
 
 
   template < typename GUM_SCALAR >
-  class ImportanceSampling : public SamplingInference< GUM_SCALAR > {
+  class ImportanceSampling: public SamplingInference< GUM_SCALAR > {
     public:
     /**
      * Default constructor
@@ -64,14 +63,14 @@ namespace gum {
 
     protected:
     /// draws a defined number of samples without updating the estimators
-    Instantiation _burnIn() override;
+    Instantiation burnIn_() override;
 
 
     /// draws a sample according to Importance sampling
     /**
      * @param w the weight of sample being generated
      * @param prev the previous sample generated
-     * @param bn the bayesian network containing the evidence
+     * @param bn the Bayesian network containing the evidence
      * @param hardEvNodes hard evidence nodes
      * @param hardEv hard evidences values
      *
@@ -80,7 +79,7 @@ namespace gum {
      * Each node added to the sample (in a topological order) has a weight.
      * The sample's weight is the product of all weights.
      */
-    Instantiation _draw(GUM_SCALAR* w, Instantiation prev) override;
+    Instantiation draw_(GUM_SCALAR* w, Instantiation prev) override;
 
 
     /// modifies the cpts of a BN in order to tend to uniform distributions
@@ -93,7 +92,7 @@ namespace gum {
      * normalizing
      *
      */
-    void _unsharpenBN(BayesNetFragment< GUM_SCALAR >* bn, float epsilon);
+    void unsharpenBN_(BayesNetFragment< GUM_SCALAR >* bn, float epsilon);
 
     /// fired when Bayesian network is contextualized
     /**
@@ -106,7 +105,7 @@ namespace gum {
      * BN.
      *
      */
-    void _onContextualize(BayesNetFragment< GUM_SCALAR >* bn) override;
+    void onContextualize_(BayesNetFragment< GUM_SCALAR >* bn) override;
   };
 
 

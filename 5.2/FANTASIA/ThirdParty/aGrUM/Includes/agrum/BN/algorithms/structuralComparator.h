@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -26,15 +25,13 @@
  * Classifies corresponding arcs, edges and nothing in a graph given a reference
  * graph to then return values of recall, precision and Fscore.
  *
- * @author Quentin FALCAND and Pierre-Henri WUILLEMIN
+ * @author Quentin FALCAND and Pierre-Henri WUILLEMIN(_at_LIP6)
  */
 #ifndef GUM_LEARNING_STRUCTURAL_COMPARATOR_H
 #define GUM_LEARNING_STRUCTURAL_COMPARATOR_H
 
 #include <agrum/BN/BayesNet.h>
-#include <agrum/graphs/diGraph.h>
-#include <agrum/graphs/mixedGraph.h>
-#include <agrum/graphs/undiGraph.h>
+#include <agrum/tools/graphs/PDAG.h>
 
 
 namespace gum {
@@ -67,17 +64,17 @@ namespace gum {
     void compare(const DiGraph& ref, const DiGraph& test);
     /// compare two UndiGraphs
     void compare(const UndiGraph& ref, const UndiGraph& test);
-    /// compare two MixedGraphs
-    void compare(const MixedGraph& ref, const MixedGraph& test);
+    /// compare two PDAGs
+    void compare(const PDAG& ref, const PDAG& test);
     /// compare two BNs based on their DAG
     template < typename GS1, typename GS2 >
     void compare(const BayesNet< GS1 >& ref, const BayesNet< GS2 >& test);
-    /// compare a MixedGraph with the essential graph of a reference BN
+    /// compare a PDAG with the essential graph of a reference BN
     template < typename GUM_SCALAR >
-    void compare(const BayesNet< GUM_SCALAR >& ref, const MixedGraph& test);
-    /// compare the essential graph of a BN with a reference MixedGraph
+    void compare(const BayesNet< GUM_SCALAR >& ref, const PDAG& test);
+    /// compare the essential graph of a BN with a reference PDAG
     template < typename GUM_SCALAR >
-    void compare(const MixedGraph& ref, const BayesNet< GUM_SCALAR >& test);
+    void compare(const PDAG& ref, const BayesNet< GUM_SCALAR >& test);
 
     /// Measures for the skeleton, aka graph without orientations
     double precision_skeleton() const;
@@ -93,7 +90,7 @@ namespace gum {
     protected:
     private:
     /// Confusion matrix
-    /*   __________________________________________________
+    /*    __________________________________________________
      *  |   \predicted |           |           |           |
      *  |true\         |    -->    |    ---    |     X     |
      *  |--------------|-----------|-----------|-----------|
@@ -105,14 +102,14 @@ namespace gum {
      *  |--------------|-----------|-----------|-----------|
      *  |       X      |wrong arc  |wrong edge | true none |
      *  |      	       |      none |      none |           |
-     *  |______________|___________|___________|___________|
+     *  | _____________|___________|___________|___________|
      *
      */
-    double __true_edge, __true_arc, __true_none;
-    double __wrong_edge_arc, __wrong_edge_none;
-    double __wrong_arc_edge, __wrong_arc_none, __misoriented_arc;
-    double __wrong_none_edge, __wrong_none_arc;
-    // double __precision, __recall, __f_score;
+    double _true_edge_, _true_arc_, _true_none_;
+    double _wrong_edge_arc_, _wrong_edge_none_;
+    double _wrong_arc_edge_, _wrong_arc_none_, _misoriented_arc_;
+    double _wrong_none_edge_, _wrong_none_arc_;
+    // double  _precision_,  _recall_,  _f_score_;
   };
 
 } /* namespace gum */

@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,29 +23,28 @@
  * @file
  * @brief Inline implementation of PRMGenerator.
  *
- * @author Lionel TORTI and Pierre-Henri WUILLEMIN
+ * @author Lionel TORTI and Pierre-Henri WUILLEMIN(_at_LIP6)
  */
 #include <agrum/PRM/generator/nameGenerator.h>
 
 namespace gum {
   namespace prm {
     INLINE
-    NameGenerator::NameGenerator() : __counters(3, 1) {
-      GUM_CONSTRUCTOR(NameGenerator);
-    }
+    NameGenerator::NameGenerator() : _counters_(3, 1) { GUM_CONSTRUCTOR(NameGenerator); }
 
-    INLINE
-    NameGenerator::NameGenerator(const NameGenerator& source) :
-        __counters(source.__counters) {
+    INLINE NameGenerator::NameGenerator(const NameGenerator& source) :
+        _counters_(source._counters_) {
       GUM_CONS_CPY(NameGenerator);
     }
 
-    INLINE
-    NameGenerator::~NameGenerator() { GUM_DESTRUCTOR(NameGenerator); }
+    INLINE NameGenerator::~NameGenerator() {
+      GUM_DESTRUCTOR(NameGenerator);
+      ;
+    }
 
     INLINE
     NameGenerator& NameGenerator::operator=(const NameGenerator& source) {
-      __counters = source.__counters;
+      _counters_ = source._counters_;
       return *this;
     }
 
@@ -57,37 +55,37 @@ namespace gum {
       switch (type) {
         case PRMObject::prm_type::ALL:
         case PRMObject::prm_type::CLASS: {
-          s << "class_" << ++(__counters[0]);
+          s << "class_" << ++(_counters_[0]);
           break;
         }
 
         case PRMObject::prm_type::PRM_INTERFACE: {
-          s << "iface_" << ++(__counters[0]);
+          s << "iface_" << ++(_counters_[0]);
           break;
         }
 
         case PRMObject::prm_type::SYSTEM: {
-          s << "sys_" << ++(__counters[0]);
+          s << "sys_" << ++(_counters_[0]);
           break;
         }
 
         case PRMObject::prm_type::TYPE: {
-          s << "type_" << ++(__counters[0]);
+          s << "type_" << ++(_counters_[0]);
           break;
         }
 
         case PRMObject::prm_type::CLASS_ELT: {
-          s << "elt_" << ++(__counters[1]);
+          s << "elt_" << ++(_counters_[1]);
           break;
         }
 
         case PRMObject::prm_type::INSTANCE: {
-          s << "inst_" << ++(__counters[2]);
+          s << "inst_" << ++(_counters_[2]);
           break;
         }
 
         default: {
-          GUM_ERROR(FatalError, "unknown PRMObject type");
+          GUM_ERROR(FatalError, "unknown PRMObject type")
         }
       }
 

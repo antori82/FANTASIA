@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,7 +23,7 @@
  * @file
  * @brief Headers of gum::PRMClassElement.
  *
- * @author Lionel TORTI and Pierre-Henri WUILLEMIN
+ * @author Lionel TORTI and Pierre-Henri WUILLEMIN(_at_LIP6)
  */
 
 #ifndef GUM_CLASS_ELEMENT_H
@@ -34,11 +33,7 @@
 
 #include <agrum/agrum.h>
 
-#include <agrum/graphs/graphElements.h>
 
-#include <agrum/multidim/potential.h>
-
-#include <agrum/PRM/elements/PRMObject.h>
 #include <agrum/PRM/utils_prm.h>
 
 namespace gum {
@@ -58,7 +53,7 @@ namespace gum {
      * @ingroup prm_group
      */
     template < typename GUM_SCALAR >
-    class PRMClassElement : public PRMObject {
+    class PRMClassElement: public PRMObject {
       public:
       // ========================================================================
       /// @name Constructor & Destructor.
@@ -117,8 +112,7 @@ namespace gum {
       }
 
       /// Returns true if obj_ptr is of type PRMReferenceSlot.
-      static INLINE bool
-         isReferenceSlot(const PRMClassElement< GUM_SCALAR >& elt) {
+      static INLINE bool isReferenceSlot(const PRMClassElement< GUM_SCALAR >& elt) {
         return elt.elt_type() == prm_refslot;
       }
 
@@ -257,11 +251,11 @@ namespace gum {
       /// @}
       protected:
       /// The safe name of this PRMClassElement.
-      std::string _safeName;
+      std::string safeName_;
 
       private:
       /// The node's id of this element
-      NodeId __id;
+      NodeId _id_;
     };
 
 

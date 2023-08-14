@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,13 +23,12 @@
  * @file
  * @brief Headers of gum::PRMFormAttribute.
  *
- * @author Lionel TORTI and Pierre-Henri WUILLEMIN
+ * @author Lionel TORTI and Pierre-Henri WUILLEMIN(_at_LIP6)
  */
 
 #ifndef GUM_FORM_ATTRIBUTE_H
 #define GUM_FORM_ATTRIBUTE_H
 
-#include <agrum/PRM/elements/PRMAttribute.h>
 
 #include <agrum/PRM/elements/PRMClass.h>
 
@@ -47,32 +45,29 @@ namespace gum {
      * @ingroup prm_group
      */
     template < typename GUM_SCALAR >
-    class PRMFormAttribute : public PRMAttribute< GUM_SCALAR > {
+    class PRMFormAttribute: public PRMAttribute< GUM_SCALAR > {
       public:
       PRMFormAttribute(const PRMClass< GUM_SCALAR >&          c,
                        const std::string&                     name,
                        const PRMType&                         type,
-                       MultiDimImplementation< std::string >* impl =
-                          new MultiDimArray< std::string >());
+                       MultiDimImplementation< std::string >* impl
+                       = new MultiDimArray< std::string >());
 
       virtual ~PRMFormAttribute();
 
       /// See gum::prm::PRMAttribute.
+      virtual PRMAttribute< GUM_SCALAR >* newFactory(const PRMClass< GUM_SCALAR >& c) const;
+
+      /// See gum::prm::PRMAttribute.
       virtual PRMAttribute< GUM_SCALAR >*
-         newFactory(const PRMClass< GUM_SCALAR >& c) const;
+         copy(Bijection< const DiscreteVariable*, const DiscreteVariable* > bij) const;
 
       /// See gum::prm::PRMAttribute.
-      virtual PRMAttribute< GUM_SCALAR >* copy(
-         Bijection< const DiscreteVariable*, const DiscreteVariable* > bij) const;
+      virtual void copyCpf(const Bijection< const DiscreteVariable*, const DiscreteVariable* >& bif,
+                           const PRMAttribute< GUM_SCALAR >& source);
 
       /// See gum::prm::PRMAttribute.
-      virtual void copyCpf(
-         const Bijection< const DiscreteVariable*, const DiscreteVariable* >& bif,
-         const PRMAttribute< GUM_SCALAR >& source);
-
-      /// See gum::prm::PRMAttribute.
-      virtual typename PRMClassElement< GUM_SCALAR >::ClassElementType
-         elt_type() const;
+      virtual typename PRMClassElement< GUM_SCALAR >::ClassElementType elt_type() const;
 
       /// See gum::prm::PRMAttribute.
       virtual PRMType& type();
@@ -103,26 +98,26 @@ namespace gum {
       virtual void swap(const PRMType& old_type, const PRMType& new_type);
 
       protected:
-      virtual PRMType* _type();
-      virtual void     _type(PRMType* t);
+      virtual PRMType* type_();
+      virtual void     type_(PRMType* t);
 
       private:
       PRMFormAttribute(const PRMFormAttribute& source);
       PRMFormAttribute& operator=(const PRMFormAttribute& source);
 
       /// The random variable type of this attribute
-      PRMType* __type;
+      PRMType* _type_;
 
       /// A pointer on the Potential of this attribute
-      mutable Potential< GUM_SCALAR >* __cpf;
+      mutable Potential< GUM_SCALAR >* _cpf_;
 
       /// A pointer on the Potential of this attribute
-      MultiDimImplementation< std::string >* __formulas;
+      MultiDimImplementation< std::string >* _formulas_;
 
       /// A pointe toward the class of this attribute
-      const PRMClass< GUM_SCALAR >* __class;
+      const PRMClass< GUM_SCALAR >* _class_;
 
-      void __fillCpf() const;
+      void _fillCpf_() const;
     };
 
 

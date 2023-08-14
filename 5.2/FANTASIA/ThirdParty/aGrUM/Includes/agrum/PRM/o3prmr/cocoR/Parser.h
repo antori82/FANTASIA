@@ -1,7 +1,7 @@
 /***************************************************************************
  *  aGrUM modified frames and atg files for cocoR
- *   Copyright (c) 2005 by Christophe GONZALES and Pierre-Henri WUILLEMIN  *
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005 by Christophe GONZALES(@AMU) and Pierre-Henri WUILLEMIN(@LIP6)  *
+ *   info_at_agrum_dot_org
 ***************************************************************************/
 /*----------------------------------------------------------------------
 Compiler Generator Coco/R,
@@ -47,7 +47,7 @@ Coco/R itself) does not fall under the GNU General Public License.
 #ifdef HAVE_DIRENT_H
 #include <dirent.h>
 #else
-#include <agrum/core/mvsc/dirent.h>
+#include <agrum/tools/core/mvsc/dirent.h>
 #endif
 
 #include <iostream>
@@ -92,7 +92,7 @@ class Parser {
     void ExpectWeak( int n, int follow );
     bool WeakSeparator( int n, int syFol, int repFol );
 
-    ErrorsContainer  __errors;
+    ErrorsContainer  errors__;
 
   public:
     Scanner* scanner;
@@ -100,15 +100,15 @@ class Parser {
     Token* t;     // last recognized token
     Token* la;      // lookahead token
 
-    gum::prm::o3prmr::O3prmrContext<double> *__context;
-gum::prm::o3prmr::O3prmrSession<double> *__currentSession;
+    gum::prm::o3prmr::O3prmrContext<double> *context__;
+gum::prm::o3prmr::O3prmrSession<double> *currentSession__;
 
 void SemErr(std::string s) {
   SemErr(widen(s).c_str());
 }
 
 void setO3prmrContext(gum::prm::o3prmr::O3prmrContext<double> *c) {
-  __context=c;
+  context__=c;
 }
 
 //=====================

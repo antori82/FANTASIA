@@ -1,7 +1,7 @@
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -49,10 +49,10 @@ namespace gum {
 
 #include <agrum/config.h>
 
-#include <agrum/core/debug.h>
-#include <agrum/core/exceptions.h>
-#include <agrum/core/inline.h>
-#include <agrum/core/types.h>
-#include <agrum/core/utils_misc.h>
+#include <agrum/tools/core/debug.h>
+#include <agrum/tools/core/exceptions.h>
+#include <agrum/tools/core/inline.h>
+#include <agrum/tools/core/types.h>
+#include <agrum/tools/core/utils_misc.h>
 
 #endif   // GUM_AGRUM_H

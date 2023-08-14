@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -22,19 +21,19 @@
 
 /**
  * @file
- * @brief Implementation of Gibbs Sampling for inference in Bayesian Networks.
+ * @brief Implementation of Gibbs Sampling for inference in Bayesian networks.
  *
- * @author Paul ALAM & Pierre-Henri WUILLEMIN
+ * @author Paul ALAM & Pierre-Henri WUILLEMIN(_at_LIP6)
  */
 
 #include <agrum/BN/inference/GibbsSampling.h>
 
-#define GIBBS_SAMPLING_DEFAULT_EPSILON std::exp(-1.6)
+#define GIBBS_SAMPLING_DEFAULT_EPSILON          std::exp(-1.6)
 #define GIBBS_SAMPLING_DEFAULT_MIN_EPSILON_RATE std::exp(-5)
-#define GIBBS_SAMPLING_DEFAULT_BURNIN 300
+#define GIBBS_SAMPLING_DEFAULT_BURNIN           300
 
 #define GIBBS_SAMPLING_POURCENT_DRAWN_SAMPLE 50   // percent drawn
-#define GIBBS_SAMPLING_DRAWN_AT_RANDOM true
+#define GIBBS_SAMPLING_DRAWN_AT_RANDOM       true
 
 namespace gum {
 
@@ -42,11 +41,10 @@ namespace gum {
   template < typename GUM_SCALAR >
   GibbsSampling< GUM_SCALAR >::GibbsSampling(const IBayesNet< GUM_SCALAR >* bn) :
       SamplingInference< GUM_SCALAR >(bn),
-      GibbsOperator< GUM_SCALAR >(
-         *bn,
-         &this->hardEvidence(),
-         1 + (bn->size() * GIBBS_SAMPLING_POURCENT_DRAWN_SAMPLE / 100),
-         GIBBS_SAMPLING_DRAWN_AT_RANDOM) {
+      GibbsOperator< GUM_SCALAR >(*bn,
+                                  &this->hardEvidence(),
+                                  1 + (bn->size() * GIBBS_SAMPLING_POURCENT_DRAWN_SAMPLE / 100),
+                                  GIBBS_SAMPLING_DRAWN_AT_RANDOM) {
     GUM_CONSTRUCTOR(GibbsSampling);
 
     this->setEpsilon(GIBBS_SAMPLING_DEFAULT_EPSILON);
@@ -62,20 +60,20 @@ namespace gum {
 
 
   template < typename GUM_SCALAR >
-  Instantiation GibbsSampling< GUM_SCALAR >::_monteCarloSample() {
+  Instantiation GibbsSampling< GUM_SCALAR >::monteCarloSample_() {
     return GibbsOperator< GUM_SCALAR >::monteCarloSample();
   }
 
 
   template < typename GUM_SCALAR >
-  Instantiation GibbsSampling< GUM_SCALAR >::_burnIn() {
+  Instantiation GibbsSampling< GUM_SCALAR >::burnIn_() {
     gum::Instantiation Ip;
     if (this->burnIn() == 0) return Ip;
 
     GUM_SCALAR w = 1.0f;
-    Ip = _monteCarloSample();
+    Ip           = monteCarloSample_();
     for (Size i = 1; i < this->burnIn(); i++)
-      Ip = this->_draw(&w, Ip);
+      Ip = this->draw_(&w, Ip);
 
     return Ip;
   }
@@ -83,8 +81,7 @@ namespace gum {
   /// draws next sample for gibbs sampling
 
   template < typename GUM_SCALAR >
-  Instantiation GibbsSampling< GUM_SCALAR >::_draw(GUM_SCALAR*   w,
-                                                   Instantiation prev) {
+  Instantiation GibbsSampling< GUM_SCALAR >::draw_(GUM_SCALAR* w, Instantiation prev) {
     *w = 1.0;
     return GibbsOperator< GUM_SCALAR >::nextSample(prev);
   }

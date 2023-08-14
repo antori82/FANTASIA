@@ -1,7 +1,7 @@
 /***************************************************************************
  *  aGrUM modified frames and atg files for cocoR
- *   Copyright (c) 2005 by Christophe GONZALES and Pierre-Henri WUILLEMIN  *
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005 by Christophe GONZALES(@AMU) and Pierre-Henri WUILLEMIN(@LIP6)  *
+ *   info_at_agrum_dot_org
 ***************************************************************************/
 /*----------------------------------------------------------------------
 Compiler Generator Coco/R,
@@ -35,9 +35,8 @@ Coco/R itself) does not fall under the GNU General Public License.
 #if !defined(gum_net_COCO_PARSER_H__)
 #define gum_net_COCO_PARSER_H__
 
-#include <agrum/core/cast_unicode.h>
+#include <agrum/tools/core/cast_unicode.h>
 
-#include <agrum/BN/IBayesNet.h>
 #include <agrum/BN/BayesNetFactory.h>
 
 #undef TRY
@@ -74,7 +73,7 @@ class Parser {
     void ExpectWeak( int n, int follow );
     bool WeakSeparator( int n, int syFol, int repFol );
 
-    ErrorsContainer  __errors;
+    ErrorsContainer  errors__;
 
   public:
     Scanner* scanner;
@@ -82,14 +81,14 @@ class Parser {
     Token* t;     // last recognized token
     Token* la;      // lookahead token
 
-    gum::IBayesNetFactory* __factory;
+    gum::IBayesNetFactory* factory__;
 
 void setFactory(gum::IBayesNetFactory* f) {
-  __factory=f;
+  factory__=f;
 }
 
 gum::IBayesNetFactory& factory() {
-  if (__factory) return *__factory;
+  if (factory__) return *factory__;
   GUM_ERROR(gum::OperationNotAllowed,"Please set a factory for scanning DSL file...");
 }
 
@@ -101,7 +100,7 @@ void Warning(std::string s) {
   Warning(widen("Warning : "+s).c_str());
 }
 
-void __checkSizeOfProbabilityAssignation(const std::vector<float>&v,const std::string& var, int res) {
+void checkSizeOfProbabilityAssignation__(const std::vector<float>&v,const std::string& var, int res) {
   if ((int) v.size()<res)
     Warning("Not enough data in probability assignation for node "+var);
   if ((int) v.size()>res)
@@ -147,4 +146,5 @@ void __checkSizeOfProbabilityAssignation(const std::vector<float>&v,const std::s
 
 
 #endif // !defined(COCO_PARSER_H__)
+
 

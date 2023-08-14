@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -23,7 +22,6 @@
 #ifndef NETREADER_H
 #define NETREADER_H
 
-#include <agrum/BN/BayesNet.h>
 #include <agrum/BN/io/BNReader.h>
 #include <agrum/agrum.h>
 #include <iostream>
@@ -31,8 +29,8 @@
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 // including coco-generated PARSER and SCANNER
-#  undef COCO_PARSER_H__
-#  undef COCO_SCANNER_H__
+#  undef _COCO_PARSER_H_
+#  undef _COCO_SCANNER_H_
 #  include <agrum/BN/io/net/cocoR/Parser.h>
 #endif   // DOXYGEN_SHOULD_SKIP_THIS
 
@@ -46,11 +44,11 @@ namespace gum {
    * @ingroup bn_io
    * @brief Pure virtual class for reading a BN from a file.
    *
-   * Every class used to read the content of a Bayesian Network from a stream,
+   * Every class used to read the content of a Bayesian network from a stream,
    * or a file must be a subclass of NetReader.
    */
   template < typename GUM_SCALAR >
-  class NetReader : public BNReader< GUM_SCALAR > {
+  class NetReader: public BNReader< GUM_SCALAR > {
     public:
     /**
      * Constructor
@@ -66,7 +64,7 @@ namespace gum {
     /**
      * Default destructor.
      */
-    ~NetReader() final;
+    ~NetReader();
 
     /// Direct access to DSL scanner (mandatory for listener connection)
     /// @throws IOError if file not exists
@@ -115,18 +113,18 @@ namespace gum {
     /// @}
 
     protected:
-    BayesNet< GUM_SCALAR >*        __bn;
-    BayesNetFactory< GUM_SCALAR >* __factory;
-    net::Scanner*                  __scanner;
-    net::Parser*                   __parser;
+    BayesNet< GUM_SCALAR >*        _bn_;
+    BayesNetFactory< GUM_SCALAR >* _factory_;
+    net::Scanner*                  _scanner_;
+    net::Parser*                   _parser_;
 
-    std::string __streamName;
-    bool        __traceScanning;
-    bool        __parseDone;
+    std::string _streamName_;
+    bool        _traceScanning_;
+    bool        _parseDone_;
 
     // a boolean to throw the ioerror not in the constructor but in the
     // proceed()
-    bool __ioerror;
+    bool _ioerror_;
   };
 
 

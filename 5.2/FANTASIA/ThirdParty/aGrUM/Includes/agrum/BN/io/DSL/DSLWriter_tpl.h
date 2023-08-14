@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -23,7 +22,7 @@
 /** @file
  * @brief Templates implementation of bns/io/gumBNWriter.h classes.
  *
- * @author Lionel TORTI and Pierre-Henri WUILLEMIN
+ * @author Lionel TORTI and Pierre-Henri WUILLEMIN(_at_LIP6)
  */
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
@@ -33,7 +32,7 @@
 
 namespace gum {
   /* =========================================================================*/
-  /* ===                           GUM_DSL_WRITTER === */
+  /* ===                           GUM_DSL_WRITER === */
   /* =========================================================================*/
   // Default constructor.
   template < typename GUM_SCALAR >
@@ -47,83 +46,76 @@ namespace gum {
     GUM_DESTRUCTOR(DSLWriter);
   }
 
-  /** Writes a Bayesian Network in the output stream using the DSL format.
+  /** Writes a Bayesian network in the output stream using the DSL format.
    * @param ouput The output stream.
-   * @param bn The Bayesian Network writen in output.
+   * @param bn The Bayesian network writen in output.
    * @throws Raised if an I/O error occurs.
    */
   template < typename GUM_SCALAR >
-  void DSLWriter< GUM_SCALAR >::write(std::ostream&                  output,
-                                      const IBayesNet< GUM_SCALAR >& bn) {
-    if (!output.good()) {
-      GUM_ERROR(IOError, "Stream states flags are not all unset.");
-    }
+  void DSLWriter< GUM_SCALAR >::_doWrite(std::ostream& output, const IBayesNet< GUM_SCALAR >& bn) {
+    if (!output.good()) { GUM_ERROR(IOError, "Input/Output error : stream not writable.") }
 
     output << "net " << bn.propertyWithDefault("name", "unnamedBN") << std::endl
            << "{" << std::endl;
 
-    output << "// property softwar aGrUM " << GUM_VERSION << std::endl
-           << std::endl;
+    output << "// property softwar aGrUM " << GUM_VERSION << std::endl << std::endl;
 
-    for (auto node : bn.topologicalOrder()) {
-      output << __variableBloc(bn, bn.variable(node));
+    for (auto node: bn.topologicalOrder()) {
+      output << _variableBloc_(bn, bn.variable(node));
     }
 
     output << "};";
 
     output.flush();
 
-    if (output.fail()) { GUM_ERROR(IOError, "Writting in the ostream failed."); }
+    if (output.fail()) { GUM_ERROR(IOError, "Writing in the ostream failed.") }
   }
 
-  /** Writes a Bayesian Network in the referenced file using the DSL format.
+  /** Writes a Bayesian network in the referenced file using the DSL format.
    * If the file doesn't exists, it is created.
    * If the file exists, it's content will be erased.
-   * @param filePath The path to the file used to write the Bayesian Network.
-   * @param bn The Bayesian Network writed in the file.
+   * @param filePath The path to the file used to write the Bayesian network.
+   * @param bn The Bayesian network writed in the file.
    * @throws Raised if an I/O error occurs.
    */
   template < typename GUM_SCALAR >
-  void DSLWriter< GUM_SCALAR >::write(const std::string&             filePath,
-                                      const IBayesNet< GUM_SCALAR >& bn) {
-    std::filebuf fb;
-    fb.open(filePath.c_str(), std::ios::out);
-    std::ostream output(&fb);
+  void DSLWriter< GUM_SCALAR >::_doWrite(const std::string&             filePath,
+                                         const IBayesNet< GUM_SCALAR >& bn) {
+    std::ofstream output(filePath.c_str(), std::ios_base::trunc);
 
-    write(output, bn);
+    _doWrite(output, bn);
 
-    fb.close();
+    output.close();
+    if (output.fail()) { GUM_ERROR(IOError, "Writing in the ostream failed.") }
   }
 
   /**
    * Returns a bloc defining a variable in the DSL format.
    */
   template < typename GUM_SCALAR >
-  std::string
-     DSLWriter< GUM_SCALAR >::__variableBloc(const IBayesNet< GUM_SCALAR >& bn,
-                                             const DiscreteVariable&        var) {
+  std::string DSLWriter< GUM_SCALAR >::_variableBloc_(const IBayesNet< GUM_SCALAR >& bn,
+                                                      const DiscreteVariable&        var) {
     NodeId             id;
     std::ostringstream oss;
 
     id = bn.idFromName(var.name());
 
-    oss << "\tnode " << var.name() << "\n\t{\n";
+    oss << "\tnode " << this->_onlyValidCharsInName(var.name()) << "\n\t{\n";
 
     oss << "\t\tTYPE = CPT;\n";
 
     oss << "\t\tHEADER =\n\t\t{\n";
-    oss << "\t\t\tID = " << var.name() << ";\n";
-    oss << "\t\t\tNAME = \"" << var.name() << "\";\n";
+    oss << "\t\t\tID = " << this->_onlyValidCharsInName(var.name()) << ";\n";
+    oss << "\t\t\tNAME = \"" << this->_onlyValidCharsInName(var.name()) << "\";\n";
     oss << "\t\t};\n";
 
     oss << "\t\tPARENTS = (";
-    const Sequence< const DiscreteVariable* >& tmp_vars =
-       bn.cpt(id).variablesSequence();
+    const Sequence< const DiscreteVariable* >& tmp_vars = bn.cpt(id).variablesSequence();
 
     for (Idx i = tmp_vars.size() - 1; i > 0; i--) {
       if (i < tmp_vars.size() - 1) oss << ", ";
 
-      oss << tmp_vars[i]->name();
+      oss << this->_onlyValidCharsInName(tmp_vars[i]->name());
     }
 
     oss << ");\n";
@@ -136,7 +128,7 @@ namespace gum {
     for (Idx i = 0; i < var.domainSize(); i++) {
       if (i != 0) oss << ", ";
 
-      oss << var.label(i);
+      oss << this->_onlyValidCharsInName(var.label(i));
     }
 
     oss << ");\n";
@@ -164,6 +156,10 @@ namespace gum {
     return oss.str();
   }
 
+  template < typename GUM_SCALAR >
+  void DSLWriter< GUM_SCALAR >::_syntacticalCheck(const IBayesNet< GUM_SCALAR >& bn) {
+    this->_validCharInNamesCheck(bn);
+  }
 } /* namespace gum */
 
 #endif   // DOXYGEN_SHOULD_SKIP_THIS

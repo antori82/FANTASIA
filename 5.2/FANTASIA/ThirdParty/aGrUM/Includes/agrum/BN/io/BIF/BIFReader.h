@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -22,7 +21,7 @@
 
 /**
  * @file
- * @brief Definition of templatized reader of BIF files for Bayesian Networks.
+ * @brief Definition of templatized reader of BIF files for Bayesian networks.
  *
  * how to use it :
  * @code
@@ -60,7 +59,7 @@ between 0 and 100
 
  * @endcode
  *
- * @author Pierre-Henri WUILLEMIN
+ * @author Pierre-Henri WUILLEMIN(_at_LIP6)
  */
 #ifndef BIF_READER_H
 #define BIF_READER_H
@@ -69,8 +68,6 @@ between 0 and 100
 #include <iostream>
 #include <string>
 
-#include <agrum/BN/BayesNetFactory.h>
-#include <agrum/BN/IBayesNet.h>
 #include <agrum/BN/io/BNReader.h>
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -83,7 +80,7 @@ namespace gum {
 * @class BIFReader
 * @headerfile BIFReader.h <agrum/BN/io/BIF/BIFReader.h>
    * @ingroup bn_io
-   * @brief Definition of templatized reader of BIF files for Bayesian Networks.
+   * @brief Definition of templatized reader of BIF files for Bayesian networks.
    *
    * how to use it :
    * @code
@@ -120,20 +117,20 @@ namespace gum {
 
    * @endcode
    *
-   * @author Pierre-Henri WUILLEMIN
+   * @author Pierre-Henri WUILLEMIN(_at_LIP6)
    */
   template < typename GUM_SCALAR >
-  class BIFReader : public BNReader< GUM_SCALAR > {
+  class BIFReader: public BNReader< GUM_SCALAR > {
     public:
     BIFReader(BayesNet< GUM_SCALAR >* bn, const std::string& filename);
 
-    ~BIFReader() final;
+    ~BIFReader();
 
     /// Direct access to BIF scanner (mandatory for listener connection)
     /// @throws IOError if file not exists
     BIF::Scanner& scanner();
 
-    /// name of readen file
+    /// name of read file
     const std::string& streamName() const;
 
     /// accessor to trace function (just write the number of parser line)
@@ -172,19 +169,19 @@ namespace gum {
     void showErrorCounts(std::ostream& o = std::cerr);
     /// @}
 
-    protected:
-    BayesNet< GUM_SCALAR >*        __bn;
-    BayesNetFactory< GUM_SCALAR >* __factory;
-    BIF::Scanner*                  __scanner;
-    BIF::Parser*                   __parser;
+    private:
+    BayesNet< GUM_SCALAR >*        _bn_;
+    BayesNetFactory< GUM_SCALAR >* _factory_;
+    BIF::Scanner*                  _scanner_;
+    BIF::Parser*                   _parser_;
 
-    std::string __streamName;
-    bool        __traceScanning;
-    bool        __parseDone;
+    std::string _streamName_;
+    bool        _traceScanning_;
+    bool        _parseDone_;
 
     // a boolean to throw the ioerror not in the constructor but in the
     // proceed()
-    bool __ioerror;
+    bool _ioerror_;
   };
 
 

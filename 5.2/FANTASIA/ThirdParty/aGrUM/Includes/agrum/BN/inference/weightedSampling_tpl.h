@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -22,9 +21,9 @@
 
 /**
  * @file
- * @brief Implementation of Weighted Sampling for inference in Bayesian Networks.
+ * @brief Implementation of Weighted Sampling for inference in Bayesian networks.
  *
- * @author Paul ALAM & Pierre-Henri WUILLEMIN
+ * @author Paul ALAM & Pierre-Henri WUILLEMIN(_at_LIP6)
  */
 
 
@@ -36,39 +35,37 @@ namespace gum {
 
   /// Default constructor
   template < typename GUM_SCALAR >
-  WeightedSampling< GUM_SCALAR >::WeightedSampling(
-     const IBayesNet< GUM_SCALAR >* bn) :
+  WeightedSampling< GUM_SCALAR >::WeightedSampling(const IBayesNet< GUM_SCALAR >* bn) :
       SamplingInference< GUM_SCALAR >(bn) {
-    GUM_CONSTRUCTOR(WeightedSampling);
+    GUM_CONSTRUCTOR(WeightedSampling)
   }
 
 
   /// Destructor
   template < typename GUM_SCALAR >
   WeightedSampling< GUM_SCALAR >::~WeightedSampling() {
-    GUM_DESTRUCTOR(WeightedSampling);
+    GUM_DESTRUCTOR(WeightedSampling)
   }
 
 
   /// No burn in needed for Weighted sampling
   template < typename GUM_SCALAR >
-  Instantiation WeightedSampling< GUM_SCALAR >::_burnIn() {
+  Instantiation WeightedSampling< GUM_SCALAR >::burnIn_() {
     gum::Instantiation I;
     return I;
   }
 
 
   template < typename GUM_SCALAR >
-  Instantiation WeightedSampling< GUM_SCALAR >::_draw(GUM_SCALAR*   w,
-                                                      Instantiation prev) {
-    *w = 1.0f;
+  Instantiation WeightedSampling< GUM_SCALAR >::draw_(GUM_SCALAR* w, Instantiation prev) {
+    *w              = 1.0f;
     bool wrongValue = false;
     do {
       prev.clear();
       wrongValue = false;
-      *w = 1.0f;
+      *w         = 1.0f;
 
-      for (const auto nod : this->BN().topologicalOrder()) {
+      for (const auto nod: this->BN().topologicalOrder()) {
         if (this->hardEvidenceNodes().contains(nod)) {
           prev.add(this->BN().variable(nod));
           prev.chgVal(this->BN().variable(nod), this->hardEvidence()[nod]);
@@ -81,7 +78,7 @@ namespace gum {
 
           *w *= localp;
         } else {
-          this->_addVarSample(nod, &prev);
+          this->addVarSample_(nod, &prev);
         }
       }
     } while (wrongValue);

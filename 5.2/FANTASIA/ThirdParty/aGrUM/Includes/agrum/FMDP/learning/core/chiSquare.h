@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,15 +23,16 @@
  * @file
  * @brief Headers of the ChiSquare class.
  *
- * @author Jean-Christophe MAGNAN and Pierre-Henri WUILLEMIN
+ * @author Pierre-Henri WUILLEMIN(_at_LIP6) and Jean-Christophe MAGNAN and Christophe
+ * GONZALES(_at_AMU)
  */
 
 
 #ifndef GUM_CHI_SQUARE_H
 #  define GUM_CHI_SQUARE_H
 
-#  include <agrum/core/math/math.h>
-#  include <agrum/core/hashTable.h>
+#  include <agrum/tools/core/math/math_utils.h>
+#  include <agrum/tools/core/hashTable.h>
 
 
 namespace gum {
@@ -54,22 +54,22 @@ namespace gum {
     /// @{
 
     /// maximum meaningful z value
-    static constexpr double __Z_MAX = 6.0;
+    static constexpr double _Z_MAX_ = 6.0;
 
     /// accuracy of critchi approximation
-    static constexpr double __CHI_EPSILON = 0.000001;
+    static constexpr double _CHI_EPSILON_ = 0.000001;
 
     /// maximum chi square value
-    static constexpr double __CHI_MAX = 99999.0;
+    static constexpr double _CHI_MAX_ = 99999.0;
 
     /// log (sqrt (pi))
-    static constexpr double __LOG_SQRT_PI = 0.5723649429247000870717135;
+    static constexpr double _LOG_SQRT_PI_ = 0.5723649429247000870717135;
 
     /// 1 / sqrt (pi)
-    static constexpr double __I_SQRT_PI = 0.5641895835477562869480795;
+    static constexpr double _I_SQRT_PI_ = 0.5641895835477562869480795;
 
     /// max value to represent exp (x)
-    static constexpr double __BIGX = 20.0;
+    static constexpr double _BIGX_ = 20.0;
 
     /// @}
 
@@ -77,9 +77,9 @@ namespace gum {
     /// Required constant to compute the cdf
     /// @{
 
-    static double __exp(double x) { return (((x) < -__BIGX) ? 0.0 : exp(x)); }
+    static double _exp_(double x) { return (((x) < -_BIGX_) ? 0.0 : exp(x)); }
 
-    static double __probaZValue(double z);
+    static double _probaZValue_(double z);
     /// @}
   };
 
@@ -88,8 +88,8 @@ namespace gum {
 #endif   // GUM_CHI_SQUARE_H
 
 
-// static HashTable<std::pair<double, unsigned long>, double> __chi2Cache;
-// static HashTable<double, double> __ZCache;
+// static HashTable<std::pair<double, unsigned long>, double>  _chi2Cache_;
+// static HashTable<double, double>  _ZCache_;
 // static Idx nbZ;
 // static Idx nbChi;
 // static Idx nbZt;

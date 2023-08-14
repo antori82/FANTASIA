@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023 by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,7 +23,7 @@
  * @file
  * @brief Headers of gum::PRMAggregate.
  *
- * @author Lionel TORTI and Pierre-Henri WUILLEMIN
+ * @author Lionel TORTI and Pierre-Henri WUILLEMIN(_at_LIP6)
  */
 
 #ifndef GUM_AGGREGATE_H
@@ -33,14 +32,8 @@
 #include <memory>
 #include <string>
 
-#include <agrum/multidim/aggregators/multiDimAggregator.h>
-#include <agrum/multidim/implementations/multiDimImplementation.h>
-#include <agrum/multidim/potential.h>
 
 #include <agrum/PRM/elements/PRMType.h>
-#include <agrum/PRM/elements/PRMClassElement.h>
-#include <agrum/PRM/elements/PRMAttribute.h>
-#include <agrum/PRM/elements/PRMAggregate.h>
 #include <agrum/PRM/elements/PRMScalarAttribute.h>
 
 
@@ -67,7 +60,7 @@ namespace gum {
      * @ingroup prm_group
      */
     template < typename GUM_SCALAR >
-    class PRMAggregate : public PRMClassElement< GUM_SCALAR > {
+    class PRMAggregate: public PRMClassElement< GUM_SCALAR > {
       friend class PRMClass< GUM_SCALAR >;
 
       public:
@@ -86,7 +79,8 @@ namespace gum {
         OR,
         AND,
         AMPLITUDE,
-        MEDIAN
+        MEDIAN,
+        SUM
       };
 
       /**
@@ -116,10 +110,12 @@ namespace gum {
           return AggregateType::AMPLITUDE;
         } else if (toLower(str) == "median") {
           return AggregateType::MEDIAN;
+        } else if (toLower(str) == "sum") {
+          return AggregateType::SUM;
         } else {
           std::string msg = "Unknown aggregate: ";
           msg.append(str);
-          GUM_ERROR(NotFound, msg);
+          GUM_ERROR(NotFound, msg)
         }
       }
 
@@ -136,9 +132,7 @@ namespace gum {
        * @param rvType The random variable type of this aggregate, which is
        * copied.
        */
-      PRMAggregate(const std::string& name,
-                   AggregateType      aggType,
-                   const PRMType&     rvType);
+      PRMAggregate(const std::string& name, AggregateType aggType, const PRMType& rvType);
 
       /**
        * Default constructor.
@@ -163,8 +157,7 @@ namespace gum {
       /// @{
 
       /// See gum::PRMClassElement::elt_type().
-      virtual typename PRMClassElement< GUM_SCALAR >::ClassElementType
-         elt_type() const;
+      virtual typename PRMClassElement< GUM_SCALAR >::ClassElementType elt_type() const;
 
       /// Returns the aggregate of *this.
       AggregateType agg_type() const;
@@ -202,10 +195,15 @@ namespace gum {
        */
       bool hasLabel() const;
 
-      /// See gum::PRMClassElement::_addParent().
+      /**
+       * @brief Returns true if the aggregator is decomposable.
+       */
+      bool isDecomposable() const;
+
+      /// See gum::PRMClassElement::addParent_().
       virtual void addParent(const PRMClassElement< GUM_SCALAR >& elt);
 
-      /// See gum::PRMClassElement::_addChild().
+      /// See gum::PRMClassElement::addChild_().
       virtual void addChild(const PRMClassElement< GUM_SCALAR >& elt);
 
       /// See gum::PRMClassElement::type().
@@ -245,11 +243,10 @@ namespace gum {
       /// @{
 
       /// Copy constructor. Don't use it.
-      PRMAggregate< GUM_SCALAR >(const PRMAggregate< GUM_SCALAR >& source);
+      PRMAggregate(const PRMAggregate< GUM_SCALAR >& source);
 
       /// Copy operator. Don't use it.
-      PRMAggregate< GUM_SCALAR >&
-         operator=(const PRMAggregate< GUM_SCALAR >& source);
+      PRMAggregate< GUM_SCALAR >& operator=(const PRMAggregate< GUM_SCALAR >& source);
 
       /// @}
       // ========================================================================
@@ -258,18 +255,18 @@ namespace gum {
       /// @{
 
       /// The AggregateType of this aggregate.
-      AggregateType __agg_type;
+      AggregateType _agg_type_;
 
       /// The random variable type of this aggregate
       /// It is deleted with the aggregate.
-      PRMType* __type;
+      PRMType* _type_;
 
       /// Some aggregators applies only on a given label. This attribute must
       /// have the concerned Idx. If not initialized the pointer equals 0.
       /// It is deleted with the aggregate.
-      std::shared_ptr< Idx > __label;
-      // Idx* __label;
-      std::string __label_value;
+      std::shared_ptr< Idx > _label_;
+      // Idx*  _label_;
+      std::string _label_value_;
 
       /// @}
     };

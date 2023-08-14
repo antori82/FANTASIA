@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -23,12 +22,11 @@
 /** @file
  * @brief Source implementation of IBayesNetGenerator
  *
- * @author Christophe GONZALES, Pierre-Henri WUILLEMIN, Lionel TORTI and
- *Ariele-Paolo
- *MAESANO
+ * @author Christophe GONZALES(_at_AMU), Pierre-Henri WUILLEMIN(_at_LIP6), Lionel TORTI
+ *and Ariele-Paolo MAESANO
  *
  */
-
+#include <agrum/tools/variables/rangeVariable.h>
 #include <agrum/BN/generator/IBayesNetGenerator.h>
 
 namespace gum {
@@ -36,83 +34,92 @@ namespace gum {
   // Default constructor.
   // Use the SimpleCPTGenerator for generating the BNs CPT.
   template < typename GUM_SCALAR, template < typename > class ICPTGenerator >
-  INLINE IBayesNetGenerator< GUM_SCALAR, ICPTGenerator >::IBayesNetGenerator(
-     Size nbrNodes, Size maxArcs, Size maxModality) :
-      _bayesNet() {
+  INLINE IBayesNetGenerator< GUM_SCALAR, ICPTGenerator >::IBayesNetGenerator(Size nbrNodes,
+                                                                             Size maxArcs,
+                                                                             Size maxModality) :
+      dag_() {
     GUM_CONSTRUCTOR(IBayesNetGenerator);
-    _nbrNodes = nbrNodes;
+    nbrNodes_ = nbrNodes;
 
     if (maxArcs < nbrNodes - 1 || maxArcs > (nbrNodes * (nbrNodes - 1)) / 2)
-      GUM_ERROR(OperationNotAllowed, " maxArcs value not possible ");
+      GUM_ERROR(OperationNotAllowed, " maxArcs value not possible ")
 
     if (maxModality < 2)
-      GUM_ERROR(OperationNotAllowed,
-                " maxModality must be at least equal to two ");
+      GUM_ERROR(OperationNotAllowed, " maxModality must be at least equal to two ")
 
-    _maxArcs = maxArcs;
-    _maxModality = maxModality;
+    maxArcs_     = maxArcs;
+    maxModality_ = maxModality;
   }
 
   // Destructor.
   template < typename GUM_SCALAR, template < typename > class ICPTGenerator >
   INLINE IBayesNetGenerator< GUM_SCALAR, ICPTGenerator >::~IBayesNetGenerator() {
     GUM_DESTRUCTOR(IBayesNetGenerator);
-    //    delete _cptGenerator;
+    //    delete cptGenerator_;
   }
 
   template < typename GUM_SCALAR, template < typename > class ICPTGenerator >
-  void IBayesNetGenerator< GUM_SCALAR, ICPTGenerator >::fillCPT() {
-    for (auto node : _bayesNet.nodes())
-      this->generateCPT(_bayesNet.cpt(node).pos(_bayesNet.variable(node)),
-                        _bayesNet.cpt(node));   // TODO ASSERT THE LINE
+  void IBayesNetGenerator< GUM_SCALAR, ICPTGenerator >::fillCPT(BayesNet< GUM_SCALAR >& bn) const {
+    for (auto node: bn.nodes())
+      this->generateCPT(bn.cpt(node).pos(bn.variable(node)), bn.cpt(node));
   }
 
   template < typename GUM_SCALAR, template < typename > class ICPTGenerator >
-  INLINE Size
-         IBayesNetGenerator< GUM_SCALAR, ICPTGenerator >::maxModality() const {
-    return _maxModality;
+  INLINE Size IBayesNetGenerator< GUM_SCALAR, ICPTGenerator >::maxModality() const {
+    return maxModality_;
   }
 
   template < typename GUM_SCALAR, template < typename > class ICPTGenerator >
   INLINE Size IBayesNetGenerator< GUM_SCALAR, ICPTGenerator >::nbrNodes() const {
-    return _nbrNodes;
+    return nbrNodes_;
   }
 
   template < typename GUM_SCALAR, template < typename > class ICPTGenerator >
   INLINE Size IBayesNetGenerator< GUM_SCALAR, ICPTGenerator >::maxArcs() const {
-    return _maxArcs;
+    return maxArcs_;
   }
 
   template < typename GUM_SCALAR, template < typename > class ICPTGenerator >
-  INLINE void IBayesNetGenerator< GUM_SCALAR, ICPTGenerator >::setMaxModality(
-     Size maxModality) {
+  INLINE void IBayesNetGenerator< GUM_SCALAR, ICPTGenerator >::setMaxModality(Size maxModality) {
     if (maxModality < 2)
-      GUM_ERROR(OperationNotAllowed,
-                " maxModality must be at least equal to two ");
+      GUM_ERROR(OperationNotAllowed, " maxModality must be at least equal to two ")
 
-    _maxModality = maxModality;
+    maxModality_ = maxModality;
   }
   template < typename GUM_SCALAR, template < typename > class ICPTGenerator >
-  INLINE void
-     IBayesNetGenerator< GUM_SCALAR, ICPTGenerator >::setNbrNodes(Size nbrNodes) {
-    if ((_maxArcs < nbrNodes - 1) || (_maxArcs > (nbrNodes * (nbrNodes - 1)) / 2))
-      GUM_ERROR(OperationNotAllowed, " nbrNodes value not possible ");
+  INLINE void IBayesNetGenerator< GUM_SCALAR, ICPTGenerator >::setNbrNodes(Size nbrNodes) {
+    if ((maxArcs_ < nbrNodes - 1) || (maxArcs_ > (nbrNodes * (nbrNodes - 1)) / 2))
+      GUM_ERROR(OperationNotAllowed, " nbrNodes value not possible ")
 
-    _nbrNodes = nbrNodes;
+    nbrNodes_ = nbrNodes;
   }
 
   template < typename GUM_SCALAR, template < typename > class ICPTGenerator >
-  INLINE void
-     IBayesNetGenerator< GUM_SCALAR, ICPTGenerator >::setMaxArcs(Size maxArcs) {
-    if (maxArcs < _nbrNodes - 1 || maxArcs > (_nbrNodes * (_nbrNodes - 1)) / 2)
-      GUM_ERROR(OperationNotAllowed, " maxArcs value not possible ");
+  INLINE void IBayesNetGenerator< GUM_SCALAR, ICPTGenerator >::setMaxArcs(Size maxArcs) {
+    if (maxArcs < nbrNodes_ - 1 || maxArcs > (nbrNodes_ * (nbrNodes_ - 1)) / 2)
+      GUM_ERROR(OperationNotAllowed, " maxArcs value not possible ")
 
-    _maxArcs = maxArcs;
+    maxArcs_ = maxArcs;
+  }
+  template < typename GUM_SCALAR, template < typename > class ICPTGenerator >
+  INLINE void IBayesNetGenerator< GUM_SCALAR, ICPTGenerator >::fromDAG(BayesNet< GUM_SCALAR >& bn) {
+    bn.clear();
+
+    const auto  width = (this->dag_.size() >= 100) ? 3 : 2;
+    int         n     = 0;
+    const auto& topo  = this->dag_.topologicalOrder();
+    for (const auto node: topo) {
+      std::stringstream strBuff;
+      strBuff << "X" << std::setfill('0') << std::setw(width) << n++;
+      bn.add(RangeVariable(strBuff.str(), "", 0, long(1 + randomValue(this->maxModality_ - 1))),
+             node);
+    }
+    bn.beginTopologyTransformation();
+    for (auto arc: this->dag_.arcs()) {
+      bn.addArc(arc.tail(), arc.head());
+    }
+    bn.endTopologyTransformation();
   }
 
-  // Generates a bayesian network using floats.
-  // @param nbrNodes The number of nodes in the generated BN.
-  // @param density The probability of adding an arc between two nodes.
-  // @return A BNs randomly generated.
 
 } /* namespace gum */

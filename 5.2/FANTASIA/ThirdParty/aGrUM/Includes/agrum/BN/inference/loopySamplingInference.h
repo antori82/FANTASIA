@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -26,7 +25,7 @@
  * and
  * an approximate Inference method.
  *
- * @author Paul ALAM & Pierre-Henri WUILLEMIN
+ * @author Paul ALAM & Pierre-Henri WUILLEMIN(_at_LIP6)
  */
 
 #ifndef GUM_LOOPY_INFERENCE_H
@@ -34,8 +33,6 @@
 #include <agrum/BN/inference/GibbsSampling.h>
 #include <agrum/BN/inference/MonteCarloSampling.h>
 #include <agrum/BN/inference/importanceSampling.h>
-#include <agrum/BN/inference/tools/approximateInference.h>
-#include <agrum/BN/inference/tools/marginalTargetedInference.h>
 #include <agrum/BN/inference/weightedSampling.h>
 
 namespace gum {
@@ -44,7 +41,7 @@ namespace gum {
    * @class LoopySamplingInference LoopySamplingInference.h
    *<agrum/BN/inference/loopySamplingInference.h>
    * @brief class for making hybrid sampling inference with loopy belief
-   *propagation and an approximation inference method in bayesian networks.
+   *propagation and an approximation inference method in Bayesian networks.
    * @ingroup bn_approximation
    *
    * This class inherits of template class APPROX, which SHOULD be one of the 4
@@ -56,7 +53,7 @@ namespace gum {
    */
 
   template < typename GUM_SCALAR, template < typename > class APPROX >
-  class LoopySamplingInference : public APPROX< GUM_SCALAR > {
+  class LoopySamplingInference: public APPROX< GUM_SCALAR > {
     public:
     /**
      * Default constructor
@@ -70,14 +67,14 @@ namespace gum {
 
     /// makes the inference by generating samples w.r.t the mother class' sampling
     /// method after initalizing  estimators with loopy belief propagation
-    virtual void _makeInference();
+    virtual void makeInference_();
 
     void setVirtualLBPSize(GUM_SCALAR vlbpsize) {
-      if (vlbpsize > 0) _virtualLBPSize = vlbpsize;
+      if (vlbpsize > 0) virtualLBPSize_ = vlbpsize;
     };
 
     protected:
-    GUM_SCALAR _virtualLBPSize;
+    GUM_SCALAR virtualLBPSize_;
   };
 
 #ifndef GUM_NO_EXTERN_TEMPLATE_CLASS
@@ -221,14 +218,11 @@ namespace gum {
 #endif
 
   template < typename GUM_SCALAR >
-  using HybridMonteCarloSampling =
-     LoopySamplingInference< GUM_SCALAR, MonteCarloSampling >;
+  using HybridMonteCarloSampling = LoopySamplingInference< GUM_SCALAR, MonteCarloSampling >;
   template < typename GUM_SCALAR >
-  using HybridWeightedSampling =
-     LoopySamplingInference< GUM_SCALAR, WeightedSampling >;
+  using HybridWeightedSampling = LoopySamplingInference< GUM_SCALAR, WeightedSampling >;
   template < typename GUM_SCALAR >
-  using HybridImportanceSampling =
-     LoopySamplingInference< GUM_SCALAR, ImportanceSampling >;
+  using HybridImportanceSampling = LoopySamplingInference< GUM_SCALAR, ImportanceSampling >;
   template < typename GUM_SCALAR >
   using HybridGibbsSampling = LoopySamplingInference< GUM_SCALAR, GibbsSampling >;
 }   // namespace gum

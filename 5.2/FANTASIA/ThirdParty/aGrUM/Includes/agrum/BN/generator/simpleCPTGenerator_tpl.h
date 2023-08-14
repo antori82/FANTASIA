@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -23,7 +22,7 @@
 /** @file
  * @brief Source implementation of SimpleCPTGenerator.
  *
- * @author Pierre-Henri WUILLEMIN and Lionel TORTI and Ariele-Paolo MAESANO
+ * @author Pierre-Henri WUILLEMIN(_at_LIP6) and Lionel TORTI and Ariele-Paolo MAESANO
  *
  */
 #include <agrum/BN/generator/simpleCPTGenerator.h>
@@ -34,8 +33,7 @@ namespace gum {
 
   // Default constructor.
   template < typename GUM_SCALAR >
-  INLINE SimpleCPTGenerator< GUM_SCALAR >::SimpleCPTGenerator() :
-      ICPTGenerator< GUM_SCALAR >() {
+  INLINE SimpleCPTGenerator< GUM_SCALAR >::SimpleCPTGenerator() : ICPTGenerator< GUM_SCALAR >() {
     GUM_CONSTRUCTOR(SimpleCPTGenerator);
   }
 
@@ -50,26 +48,9 @@ namespace gum {
   // @param cpt A reference on the CPT to fill.
 
   template < typename GUM_SCALAR >
-  void SimpleCPTGenerator< GUM_SCALAR >::generateCPT(
-     const Idx& varId, const Potential< GUM_SCALAR >& cpt) {
-    cpt.random();
-
-    const auto&   var = cpt.variable(varId);
-    Instantiation cptInst(cpt);
-
-    for (cptInst.setFirstNotVar(var); !cptInst.end(); cptInst.incNotVar(var)) {
-      GUM_SCALAR sum = (GUM_SCALAR)0;
-
-      for (cptInst.setFirstVar(var); !cptInst.end(); cptInst.incVar(var)) {
-        sum += cpt[cptInst];
-      }
-
-      for (cptInst.setFirstVar(var); !cptInst.end(); cptInst.incVar(var)) {
-        cpt.set(cptInst, cpt[cptInst] / sum);
-      }
-
-      cptInst.unsetEnd();
-    }
+  void SimpleCPTGenerator< GUM_SCALAR >::generateCPT(const Idx&                     varId,
+                                                     const Potential< GUM_SCALAR >& cpt) const {
+    cpt.random().normalizeAsCPT(varId);
   }
 
 } /* namespace gum */

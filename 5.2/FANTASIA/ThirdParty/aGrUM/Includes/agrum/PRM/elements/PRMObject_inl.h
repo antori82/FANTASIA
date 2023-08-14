@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,7 +23,7 @@
  * @file
  * @brief Inline implementation of PRMObject.
  *
- * @author Lionel TORTI and Pierre-Henri WUILLEMIN
+ * @author Lionel TORTI and Pierre-Henri WUILLEMIN(_at_LIP6)
  */
 
 namespace gum {
@@ -32,23 +31,19 @@ namespace gum {
 
     // Returns the name of this object.
     INLINE
-    const std::string& PRMObject::name() const { return __name; }
+    const std::string& PRMObject::name() const { return _name_; }
 
     // Returns the name of this object.
     INLINE
-    void PRMObject::name(const std::string& name) { __name = name; }
+    void PRMObject::name(const std::string& name) { _name_ = name; }
 
     // To PRMObject are equal if they have the same name (which is unique).
     INLINE
-    bool PRMObject::operator==(const PRMObject& obj) const {
-      return __name == obj.name();
-    }
+    bool PRMObject::operator==(const PRMObject& obj) const { return _name_ == obj.name(); }
 
     // To PRMObject are equal if they have the same name (which is unique).
     INLINE
-    bool PRMObject::operator!=(const PRMObject& obj) const {
-      return __name != obj.name();
-    }
+    bool PRMObject::operator!=(const PRMObject& obj) const { return _name_ != obj.name(); }
 
   } /* namespace prm */
 } /* namespace gum */

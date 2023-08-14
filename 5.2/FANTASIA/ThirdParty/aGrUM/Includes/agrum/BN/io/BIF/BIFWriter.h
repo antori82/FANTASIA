@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -22,12 +21,12 @@
 
 /**
  * @file
- * @brief Definition of classe for BIF file output manipulation
+ * @brief Definition of class for BIF file output manipulation
  *
- * This class servers to write the content of a Bayesian Network in
+ * This class servers to write the content of a Bayesian network in
  * the BIF format.
  *
- * @author Lionel TORTI and Pierre-Henri WUILLEMIN
+ * @author Lionel TORTI and Pierre-Henri WUILLEMIN(_at_LIP6)
  */
 
 #ifndef GUM_BIF_WRITER_H
@@ -39,7 +38,6 @@
 #include <string>
 
 #include <agrum/BN/io/BNWriter.h>
-
 #include <agrum/agrum.h>
 
 namespace gum {
@@ -50,14 +48,14 @@ namespace gum {
    * @ingroup bn_io
    * @brief Writes a IBayesNet in the BIF format.
    *
-   * This class servers to write the content of a Bayesian Network in
+   * This class servers to write the content of a Bayesian network in
    * the BIF format. See
    * http://www.cs.cmu.edu/~fgcozman/Research/InterchangeFormat/Old/xmlbif02.html
    * for information on this format.
    *
    */
   template < typename GUM_SCALAR >
-  class BIFWriter : public BNWriter< GUM_SCALAR > {
+  class BIFWriter: public BNWriter< GUM_SCALAR > {
     public:
     // ==========================================================================
     /// @name Constructor & destructor
@@ -72,44 +70,54 @@ namespace gum {
     /**
      * Destructor.
      */
-    ~BIFWriter() final;
+    ~BIFWriter() override;
+
+    BIFWriter(const BIFWriter&)                = default;
+    BIFWriter(BIFWriter&&) noexcept            = default;
+    BIFWriter& operator=(const BIFWriter&)     = default;
+    BIFWriter& operator=(BIFWriter&&) noexcept = default;
 
     /// @}
-
+    protected:
     /**
-     * Writes a Bayesian Network in the output stream using the BIF format.
+     * Writes a Bayesian network in the output stream using the BIF format.
      *
      * @param output The output stream.
-     * @param bn The Bayesian Network writen in output.
+     * @param bn The Bayesian network writen in output.
      * @throws IOError Raised if and I/O error occurs.
      */
-    void write(std::ostream& output, const IBayesNet< GUM_SCALAR >& bn) final;
+    void _doWrite(std::ostream& output, const IBayesNet< GUM_SCALAR >& bn) final;
 
     /**
-     * Writes a Bayesian Network in the referenced file using the BIF format.
+     * Writes a Bayesian network in the referenced file using the BIF format.
      * If the files doesn't exists, it is created.
      *
-     * @param filePath The path to the file used to write the Bayesian Network.
-     * @param bn The Bayesian Network writed in the file.
+     * @param filePath The path to the file used to write the Bayesian network.
+     * @param bn The Bayesian network writed in the file.
      * @throws IOError Raised if and I/O error occurs.
      */
-    void write(const std::string&             filePath,
-               const IBayesNet< GUM_SCALAR >& bn) final;
+    void _doWrite(const std::string& filePath, const IBayesNet< GUM_SCALAR >& bn) final;
+
+    /**
+     * Check whether the BN is syntactically correct for BIF format.
+     *
+     * @throw FatalError if found.
+     */
+    void _syntacticalCheck(const IBayesNet< GUM_SCALAR >& bn) final;
 
     private:
     // Returns the header of the BIF file.
-    std::string __header(const IBayesNet< GUM_SCALAR >& bn);
+    std::string _header_(const IBayesNet< GUM_SCALAR >& bn);
 
     // Returns a bloc defining a variable in the BIF format.
-    std::string __variableBloc(const DiscreteVariable& var);
+    std::string _variableBloc_(const DiscreteVariable& var);
 
     // Returns a bloc defining a variable's CPT in the BIF format.
-    std::string __variableCPT(const Potential< GUM_SCALAR >& cpt);
+    std::string _variableCPT_(const Potential< GUM_SCALAR >& cpt);
 
     // Returns the modalities labels of the variables in varsSeq
-    std::string
-       __variablesLabels(const Sequence< const DiscreteVariable* >& varsSeq,
-                         const Instantiation&                       inst);
+    std::string _variablesLabels_(const Sequence< const DiscreteVariable* >& varsSeq,
+                                  const Instantiation&                       inst);
   };
 
 

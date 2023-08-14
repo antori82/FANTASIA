@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -31,14 +30,11 @@
 #ifndef GUM_ITI_H
 #define GUM_ITI_H
 // =========================================================================
-#include <agrum/core/multiPriorityQueue.h>
+#include <agrum/tools/core/multiPriorityQueue.h>
 // =========================================================================
-#include <agrum/multidim/implementations/multiDimFunctionGraph.h>
 // =========================================================================
-#include <agrum/FMDP/learning/core/templateStrategy.h>
 #include <agrum/FMDP/learning/datastructure/incrementalGraphLearner.h>
 // =========================================================================
-#include <agrum/variables/discreteVariable.h>
 // =========================================================================
 
 namespace gum {
@@ -59,7 +55,7 @@ namespace gum {
    */
 
   template < TESTNAME AttributeSelection, bool isScalar = false >
-  class ITI : public IncrementalGraphLearner< AttributeSelection, isScalar > {
+  class ITI: public IncrementalGraphLearner< AttributeSelection, isScalar > {
     public:
     // ###################################################################
     /// @name Constructor & destructor.
@@ -102,7 +98,10 @@ namespace gum {
     // ==========================================================================
     /// Default destructor
     // ==========================================================================
-    ~ITI() { GUM_DESTRUCTOR(ITI); }
+    ~ITI() {
+      GUM_DESTRUCTOR(ITI);
+      ;
+    }
 
     /// @}
 
@@ -128,8 +127,7 @@ namespace gum {
      * @param currentNodeId
      */
     // ==========================================================================
-    void _updateNodeWithObservation(const Observation* newObs,
-                                    NodeId             currentNodeId);
+    void updateNodeWithObservation_(const Observation* newObs, NodeId currentNodeId);
 
     /// @}
 
@@ -152,7 +150,7 @@ namespace gum {
      * @return the newly created node's id
      */
     // ==========================================================================
-    NodeId _insertNode(NodeDatabase< AttributeSelection, isScalar >* nDB,
+    NodeId insertNode_(NodeDatabase< AttributeSelection, isScalar >* nDB,
                        const DiscreteVariable*                       boundVar);
 
     // ==========================================================================
@@ -162,7 +160,7 @@ namespace gum {
      * @param desiredVar : its new associated variable
      */
     // ==========================================================================
-    void _chgNodeBoundVar(NodeId chgedNodeId, const DiscreteVariable* desiredVar);
+    void chgNodeBoundVar_(NodeId chgedNodeId, const DiscreteVariable* desiredVar);
 
     // ==========================================================================
     /**
@@ -170,7 +168,7 @@ namespace gum {
      * @param removedNodeId : the node to remove
      */
     // ==========================================================================
-    void _removeNode(NodeId removedNodeId);
+    void removeNode_(NodeId removedNodeId);
 
     /// @}
 
@@ -193,7 +191,7 @@ namespace gum {
      * @return the mathcing node id in the target
      */
     // ==========================================================================
-    NodeId __insertNodeInFunctionGraph(NodeId src);
+    NodeId _insertNodeInFunctionGraph_(NodeId src);
 
     // ==========================================================================
     /**
@@ -205,8 +203,8 @@ namespace gum {
      * @return the matching node in the target
      */
     // ==========================================================================
-    NodeId __insertTerminalNode(NodeId src) {
-      return __insertTerminalNode(src, Int2Type< isScalar >());
+    NodeId _insertTerminalNode_(NodeId src) {
+      return _insertTerminalNode_(src, Int2Type< isScalar >());
     }
 
     // ==========================================================================
@@ -218,7 +216,7 @@ namespace gum {
      * @return the matching node in the target
      */
     // ==========================================================================
-    NodeId __insertTerminalNode(NodeId src, Int2Type< true >);
+    NodeId _insertTerminalNode_(NodeId src, Int2Type< true >);
 
     // ==========================================================================
     /**
@@ -229,7 +227,7 @@ namespace gum {
      * @return the matching node in the target
      */
     // ==========================================================================
-    NodeId __insertTerminalNode(NodeId src, Int2Type< false >);
+    NodeId _insertTerminalNode_(NodeId src, Int2Type< false >);
 
     /// @}
 
@@ -237,14 +235,13 @@ namespace gum {
     protected:
     // ==========================================================================
     /**
-     * @brief _insertSetOfVars
+     * @brief insertSetOfVars_
      * @param ret
      */
     // ==========================================================================
-    void _insertSetOfVars(MultiDimFunctionGraph< double >* ret) {
-      for (SetIteratorSafe< const DiscreteVariable* > varIter =
-              this->_setOfVars.beginSafe();
-           varIter != this->_setOfVars.endSafe();
+    void insertSetOfVars_(MultiDimFunctionGraph< double >* ret) {
+      for (SetIteratorSafe< const DiscreteVariable* > varIter = this->setOfVars_.beginSafe();
+           varIter != this->setOfVars_.endSafe();
            ++varIter)
         ret->add(**varIter);
     }
@@ -253,13 +250,13 @@ namespace gum {
     /// Hashtable indicating if given node has been modified (upon receiving new
     /// exemple or through a transpose)
     /// The aim is not if we have revise the installed variable on that node
-    HashTable< NodeId, bool > __staleTable;
+    HashTable< NodeId, bool > _staleTable_;
 
     /// The total number of observation added to this tree
-    Idx __nbTotalObservation;
+    Idx _nbTotalObservation_;
 
     /// The threshold above which we consider variables to be dependant
-    double __attributeSelectionThreshold;
+    double _attributeSelectionThreshold_;
   };
 
 

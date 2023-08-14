@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -68,7 +67,8 @@ between 0 and 100
  * @endcode
  *
  *
- * @author Jean-Christophe MAGNAN and Pierre-Henri WUILLEMIN
+ * @author Pierre-Henri WUILLEMIN(_at_LIP6) and Jean-Christophe MAGNAN and Christophe
+GONZALES(_at_AMU)
  */
 #ifndef GUM_BIF_XML_ID_READER_H
 #define GUM_BIF_XML_ID_READER_H
@@ -81,10 +81,8 @@ between 0 and 100
 
 #include <agrum/ID/io/IDReader.h>
 #include <agrum/agrum.h>
-#include <agrum/core/signal/signaler.h>
-#include <agrum/core/signal/signaler2.h>
-#include <agrum/external/tinyxml/ticpp/ticpp.h>
-#include <agrum/variables/labelizedVariable.h>
+#include <agrum/tools/external/tinyxml/ticpp/ticpp.h>
+#include <agrum/tools/variables/labelizedVariable.h>
 
 namespace gum {
   /**
@@ -99,15 +97,14 @@ namespace gum {
    *
    */
   template < typename GUM_SCALAR >
-  class BIFXMLIDReader : IDReader< GUM_SCALAR > {
+  class BIFXMLIDReader: IDReader< GUM_SCALAR > {
     public:
     /**
      * Constructor
      * A reader is created to reading a defined file.
      * Note that an ID as to be created before and given in parameter.
      */
-    BIFXMLIDReader(InfluenceDiagram< GUM_SCALAR >* infdiag,
-                   const std::string&              filePath);
+    BIFXMLIDReader(InfluenceDiagram< GUM_SCALAR >* infdiag, const std::string& filePath);
 
     /**
      * Default destructor.
@@ -133,24 +130,24 @@ namespace gum {
     /**
      * Parsing xml element containing data on variables
      */
-    void __parsingVariables(ticpp::Element* parentNetwork);
+    void _parsingVariables_(ticpp::Element* parentNetwork);
 
     /**
      * fill the diagram
      */
-    void __fillingDiagram(ticpp::Element* parentNetwork);
+    void _fillingDiagram_(ticpp::Element* parentNetwork);
 
     /**
      * An handle to the influence diagram in which will be load the content of
      * the
      * xml filePath
      */
-    InfluenceDiagram< GUM_SCALAR >* __infdiag;
+    InfluenceDiagram< GUM_SCALAR >* _infdiag_;
 
     /**
      * the path to the xml filePath
      */
-    std::string __filePath;
+    std::string _filePath_;
   };
 
 } /* namespace gum */

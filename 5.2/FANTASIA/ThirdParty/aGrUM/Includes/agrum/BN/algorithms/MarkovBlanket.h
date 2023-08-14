@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,21 +23,19 @@
  * @file
  * @brief Class building the markovBlanket from a DAGmodel and a node name
  *
- * @author Pierre-Henri WUILLEMIN and Christophe GONZALES
+ * @author Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
  *
  */
 #ifndef GUM_MARKOVBLANKET_H
 #define GUM_MARKOVBLANKET_H
 
-#include <agrum/graphicalModels/DAGmodel.h>
-#include <agrum/graphs/diGraph.h>
-#include <agrum/graphs/graphElements.h>
+#include <agrum/tools/graphicalModels/DAGmodel.h>
 
 namespace gum {
 
   /**
 * @class MarkovBlanket
-* @headerfile MarkovBlanket.h <agrum/BN/algorithms/MarokovBlanket.h>
+* @headerfile MarkovBlanket.h <agrum/BN/algorithms/MarkovBlanket.h>
    * @brief Class building the markov Blanket from a BN and a nodeName.
    * @ingroup bn_group
 
@@ -54,7 +51,7 @@ namespace gum {
     ~MarkovBlanket();
 
     /// @return a copy of the graph
-    DAG dag();
+    DAG dag() const;
 
     // @return a dot representation of this MarkovBlanket
     // node of interest is in red
@@ -63,10 +60,16 @@ namespace gum {
     std::string toDot() const;
 
     /// wrapping @ref DAG::parents(id)
-    const NodeSet& parents(const NodeId id) const;
+    const NodeSet& parents(NodeId id) const;
 
-    /// wrapping @ref DAG::parents(id)
-    const NodeSet& children(const NodeId id) const;
+    /// wrapping @ref DAG::children(id)
+    const NodeSet& children(NodeId id) const;
+
+    /// wrapping @ref DAG::parents(ids)
+    NodeSet parents(const NodeSet& ids) const;
+
+    /// wrapping @ref DAG::children(ids)
+    NodeSet children(const NodeSet& ids) const;
 
     /// wrapping @ref DAG::sizeArcs()
     Size sizeArcs() const;
@@ -85,15 +88,15 @@ namespace gum {
 
     /// @return true if all the named node are the same and all the named arcs are
     /// the same
-    bool hasSameStructure(const DAGmodel& other);
+    bool hasSameStructure(const DAGmodel& other) const;
 
     private:
-    bool __buildMarkovBlanket(const NodeId id);
+    bool _buildMarkovBlanket_(const NodeId id);
 
-    const DAGmodel& __model;
-    DAG             __mb;
-    const NodeId    __node;
-    ArcSet          __specialArcs;
+    const DAGmodel& _model_;
+    DAG             _mb_;
+    const NodeId    _node_;
+    ArcSet          _specialArcs_;
   };
 }   // namespace gum
 

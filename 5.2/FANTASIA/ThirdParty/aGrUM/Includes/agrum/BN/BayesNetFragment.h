@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,7 +23,7 @@
  * @file
  * @brief Class representing Fragment of Bayesian networks
  *
- * @author Pierre-Henri WUILLEMIN and Christophe GONZALES
+ * @author Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
  *
  */
 #ifndef GUM_BAYES_NET_FRAGMENT_H
@@ -32,8 +31,7 @@
 
 #include <agrum/agrum.h>
 
-#include <agrum/BN/IBayesNet.h>
-#include <agrum/graphs/parts/listeners/diGraphListener.h>
+#include <agrum/tools/graphs/parts/listeners/diGraphListener.h>
 
 #include <agrum/BN/BayesNet.h>
 
@@ -44,7 +42,7 @@ namespace gum {
    * @brief Portion of a BN identified by the list of nodes and a BayesNet.
    * @ingroup bn_group
    *
-   * @author Pierre-Henri WUILLEMIN
+   * @author Pierre-Henri WUILLEMIN(_at_LIP6)
    *
    * This class is a decorator of a BayesNet implementing the IBayesNet
    * interface. CPTs can be shared with the BN or can be specific to the
@@ -70,23 +68,21 @@ namespace gum {
    * defined.
    */
   template < typename GUM_SCALAR >
-  class BayesNetFragment
-      : public IBayesNet< GUM_SCALAR >
-      , public gum::DiGraphListener {
+  class BayesNetFragment: public IBayesNet< GUM_SCALAR >, public gum::DiGraphListener {
     private:
     /// The referred BayesNet
-    const IBayesNet< GUM_SCALAR >& __bn;
+    const IBayesNet< GUM_SCALAR >& _bn_;
 
     /// Mapping between the variable's id and their CPT specific to this
     /// Fragment.
-    NodeProperty< const Potential< GUM_SCALAR >* > __localCPTs;
+    NodeProperty< const Potential< GUM_SCALAR >* > _localCPTs_;
 
     public:
     /// @name Constructors / Destructors
     /// @{
-    BayesNetFragment() = delete;
+    BayesNetFragment()                                               = delete;
     BayesNetFragment(const BayesNetFragment< GUM_SCALAR >& fragment) = delete;
-    BayesNetFragment(BayesNetFragment< GUM_SCALAR >&& fragment) = delete;
+    BayesNetFragment(BayesNetFragment< GUM_SCALAR >&& fragment)      = delete;
 
     explicit BayesNetFragment(const IBayesNet< GUM_SCALAR >& bn);
 
@@ -127,15 +123,15 @@ namespace gum {
      *
      * @throw NotFound If no variable's id matches varId.
      */
-    virtual const Potential< GUM_SCALAR >& cpt(NodeId varId) const final;
-    virtual const Potential< GUM_SCALAR >& cpt(const std::string& name) const {
+    const Potential< GUM_SCALAR >& cpt(NodeId varId) const final;
+    const Potential< GUM_SCALAR >& cpt(const std::string& name) const {
       return cpt(idFromName(name));
     };
 
     /**
      * Returns a constant reference to the VariableNodeMap of this BN
      */
-    virtual const VariableNodeMap& variableNodeMap() const final;
+    const VariableNodeMap& variableNodeMap() const final;
 
     /**
      * Returns a constant reference over a variabe given it's node id.
@@ -166,8 +162,7 @@ namespace gum {
      *
      * @throw NotFound if no such name exists in the graph.
      */
-    virtual const DiscreteVariable&
-       variableFromName(const std::string& name) const final;
+    virtual const DiscreteVariable& variableFromName(const std::string& name) const final;
 
     /**
      * creates a dot representing the whole referred BN hilighting the fragment.
@@ -195,9 +190,7 @@ namespace gum {
      * @warning nothing happens if the node is already installed
      */
     void installNode(NodeId id);
-    void installNode(const std::string& name) {
-      installNode(__bn.idFromName(name));
-    }
+    void installNode(const std::string& name) { installNode(_bn_.idFromName(name)); }
 
     /**
      * install a node and all its ascendants
@@ -206,9 +199,7 @@ namespace gum {
      * @warning nothing happens if the node is already installed
      */
     void installAscendants(NodeId id);
-    void installAscendants(const std::string& name) {
-      installAscendants(__bn.idFromName(name));
-    }
+    void installAscendants(const std::string& name) { installAscendants(_bn_.idFromName(name)); }
 
     /**
      * uninstall a node referenced by its nodeId
@@ -216,9 +207,7 @@ namespace gum {
      * @warning nothing happens if the node is not installed
      */
     void uninstallNode(NodeId id);
-    void uninstallNode(const std::string& name) {
-      uninstallNode(idFromName(name));
-    }
+    void uninstallNode(const std::string& name) { uninstallNode(idFromName(name)); }
 
     /**
      * install a local marginal BY COPY for a node into the fragment.
@@ -231,9 +220,8 @@ namespace gum {
      *(or is not a marginal)
      **/
     void installMarginal(NodeId id, const Potential< GUM_SCALAR >& pot);
-    void installMarginal(const std::string&             name,
-                         const Potential< GUM_SCALAR >& pot) {
-      installMarginal(__bn.idFromName(name), pot);
+    void installMarginal(const std::string& name, const Potential< GUM_SCALAR >& pot) {
+      installMarginal(_bn_.idFromName(name), pot);
     }
 
     /**
@@ -250,7 +238,7 @@ namespace gum {
      **/
     void installCPT(NodeId id, const Potential< GUM_SCALAR >& pot);
     void installCPT(const std::string& name, const Potential< GUM_SCALAR >& pot) {
-      installCPT(__bn.idFromName(name), pot);
+      installCPT(_bn_.idFromName(name), pot);
     };
 
     /**
@@ -276,31 +264,40 @@ namespace gum {
 
     /**
      * returns true if all nodes in the fragment are consistent
+     *
+     * @throws gum::OperatioNotAllowed if the fragment is not consistent.
      */
     bool checkConsistency() const;
 
     /// @}
+
+
+    /** create a brand new BayesNet from a fragment.
+     *
+     * @return the new BayesNet<GUM_SCALAR>
+     */
+    gum::BayesNet< GUM_SCALAR > toBN() const;
 
     using IBayesNet< GUM_SCALAR >::nodes;
     using IBayesNet< GUM_SCALAR >::dag;
 
     protected:
     // remove an arc
-    void _uninstallArc(NodeId from, NodeId to);
+    void uninstallArc_(NodeId from, NodeId to);
 
     // add an arc
-    void _installArc(NodeId from, NodeId to);
+    void installArc_(NodeId from, NodeId to);
 
-    // install a CPT BY COPY, create or delete arcs. Checks are made in public methods
-    // In particular, it is assumed that all the variables in the pot are in the
-    // fragment
-    void _installCPT(NodeId id, const Potential< GUM_SCALAR >& pot);
+    // install a CPT BY COPY, create or delete arcs. Checks are made in public
+    // methods In particular, it is assumed that all the variables in the pot are
+    // in the fragment
+    void installCPT_(NodeId id, const Potential< GUM_SCALAR >& pot);
 
     /**
      * uninstall a local CPT. Does nothing if no local CPT for this nodeId
      * No check. No change in the topology. Checks are made in public methods.
      */
-    void _uninstallCPT(NodeId id);
+    void uninstallCPT_(NodeId id);
   };
 
 

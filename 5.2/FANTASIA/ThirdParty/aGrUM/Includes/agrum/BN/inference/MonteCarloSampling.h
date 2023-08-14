@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,7 +23,7 @@
  * @file
  * @brief This file contains Monte Carlo sampling class definition.
  *
- * @author Paul ALAM & Pierre-Henri WUILLEMIN
+ * @author Paul ALAM & Pierre-Henri WUILLEMIN(_at_LIP6)
  */
 
 
@@ -50,7 +49,7 @@ namespace gum {
 
 
   template < typename GUM_SCALAR >
-  class MonteCarloSampling : public SamplingInference< GUM_SCALAR > {
+  class MonteCarloSampling: public SamplingInference< GUM_SCALAR > {
     public:
     /**
      * Default constructor
@@ -64,13 +63,13 @@ namespace gum {
 
     protected:
     /// draws a defined number of samples without updating the estimators
-    Instantiation _burnIn() override;
+    Instantiation burnIn_() override;
 
     /// draws a sample according to classic Monte Carlo sampling
     /**
      * @param w the weight of sample being generated
      * @param prev the previous sample generated
-     * @param bn the bayesian network containing the evidence
+     * @param bn the Bayesian network containing the evidence
      * @param hardEvNodes hard evidence nodes
      * @param hardEv hard evidences values
      *
@@ -78,7 +77,7 @@ namespace gum {
      * samples not consistent with evidence
      *
      */
-    Instantiation _draw(GUM_SCALAR* w, Instantiation prev) override;
+    Instantiation draw_(GUM_SCALAR* w, Instantiation prev) override;
   };
 
 

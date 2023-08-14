@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -21,10 +20,10 @@
 
 
 /** @file
- * @brief Class for generating bayesian networks using MC algorithm
+ * @brief Class for generating Bayesian networks using MC algorithm
  * cf. [Ide and Cozman, 2002]
  *
- * @author Ariele MAESANO & Pierre-Henri WUILLEMIN
+ * @author Ariele MAESANO & Pierre-Henri WUILLEMIN(_at_LIP6)
  */
 
 #ifndef GUM_MAX_INDUCED_WIDTH_MC_BAYES_NET_GENERATOR
@@ -42,39 +41,34 @@
 #ifdef HAVE_DIRENT_H
 #  include <dirent.h>
 #else
-#  include <agrum/core/mvsc/dirent.h>
 #endif
 
-#include <agrum/BN/BayesNet.h>
 #include <agrum/BN/generator/MCBayesNetGenerator.h>
-#include <agrum/BN/generator/simpleCPTDisturber.h>
-#include <agrum/BN/generator/simpleCPTGenerator.h>
-#include <agrum/variables/labelizedVariable.h>
 
 namespace gum {
   /**
    * @class MaxInducedWidthMCBayesNetGenerator
    *maxInducedWidthMCBayesNetGenerator.h
    *<agrum/BN/generator/SimpleMCayesNetGenerator.h>
-   * @brief Class for generating bayesian networks with Markov chains.
+   * @brief Class for generating Bayesian networks with Markov chains.
    * @ingroup bn_generator
    *
    * This class is inherited from MCBayesNetGenerator and is an example of
    *Markov
-   *Chain Bayesian Network Generator that can be implemented.
+   *Chain Bayesian network Generator that can be implemented.
    * Here a constraint is added which is the maximum number of parents that
    *nodes can
    *have.
    * @warning  Be careful when entering the parameters, high Values may cause
    *the
-   *density of the Bayesian Network to be too high
+   *density of the Bayesian network to be too high
    * resulting in the failure of most of the inference Methods.
    * */
   template < typename GUM_SCALAR,
              template < typename > class ICPTGenerator = SimpleCPTGenerator,
              template < typename > class ICPTDisturber = SimpleCPTDisturber >
-  class MaxInducedWidthMCBayesNetGenerator
-      : public MCBayesNetGenerator< GUM_SCALAR, ICPTGenerator, ICPTDisturber > {
+  class MaxInducedWidthMCBayesNetGenerator:
+      public MCBayesNetGenerator< GUM_SCALAR, ICPTGenerator, ICPTDisturber > {
     public:
     // ############################################################################
     /// @name Constructors / Destructor
@@ -92,7 +86,7 @@ namespace gum {
      * @param maxModality Each DRV has from 2 to maxModality modalities
      * @param maxInducedWidth The number of maximum variable allow in the cliques
      * of
-     * the junction tree of the bayesian Network.
+     * the junction tree of the Bayesian network.
      * @param iteration The number of iterations wanted to repeat the algorithm
      * @param p probability for the change of the state (see \ref probability_p_q
      * "use
@@ -103,11 +97,11 @@ namespace gum {
      */
     MaxInducedWidthMCBayesNetGenerator(Size nbrNodes,
                                        Size maxArcs,
-                                       Size maxModality = 2,
+                                       Size maxModality     = 2,
                                        Size maxInducedWidth = 3,
-                                       Idx  iteration = 5000,
-                                       Idx  p = 30,
-                                       Idx  q = 40);
+                                       Idx  iteration       = NB_INIT_ITERATIONS,
+                                       Idx  p               = 30,
+                                       Idx  q               = 40);
 
     /**
      * Constructor.
@@ -119,7 +113,7 @@ namespace gum {
      * nbrNodes, maxArcs and maxModality
      * @param maxInducedWidth The number of maximum variable allow in the cliques
      * of
-     * the junction tree of the bayesian Network.
+     * the junction tree of the Bayesian network.
      * @param iteration The number of iterations wanted to repeat the algorithm
      * @param p probability for the change of the state (see \ref probability_p_q
      * "use
@@ -129,15 +123,15 @@ namespace gum {
      * of p and q" )
      */
     explicit MaxInducedWidthMCBayesNetGenerator(BayesNet< GUM_SCALAR > bayesNet,
-                                                Size maxInducedWidth = 3,
-                                                Idx  iteration = 5000,
-                                                Idx  p = 30,
-                                                Idx  q = 40);
+                                                Size                   maxInducedWidth = 3,
+                                                Idx iteration = NB_INIT_ITERATIONS,
+                                                Idx p         = 30,
+                                                Idx q         = 40);
 
     /**
      * Destructor.
      */
-    ~MaxInducedWidthMCBayesNetGenerator() final;
+    ~MaxInducedWidthMCBayesNetGenerator();
 
     /// @}
 
@@ -163,7 +157,7 @@ namespace gum {
     /// @}
 
     protected:
-    Size _maxlog10InducedWidth;
+    Size maxlog10InducedWidth_;
 
     private:
     /**
@@ -171,7 +165,7 @@ namespace gum {
      * @return boolean state that verify the conditions
      */
 
-    bool __checkConditions() final;
+    bool _checkConditions_() final;
   };
 
 

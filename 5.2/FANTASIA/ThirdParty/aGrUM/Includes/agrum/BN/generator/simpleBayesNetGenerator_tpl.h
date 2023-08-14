@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -23,7 +22,7 @@
 /** @file
  * @brief Source implementation of SimpleBayesNetGenerator
  *
- * @author Pierre-Henri WUILLEMIN and Lionel TORTI and Ariele-Paolo MAESANO
+ * @author Pierre-Henri WUILLEMIN(_at_LIP6) and Lionel TORTI and Ariele-Paolo MAESANO
  *
  */
 
@@ -31,18 +30,13 @@
 
 namespace gum {
 
-#ifdef _MSC_VER
-#  define IBNG IBayesNetGenerator
-#else
-#  define IBNG IBayesNetGenerator< GUM_SCALAR, ICPTGenerator >
-#endif
-
   // Use the SimpleCPTGenerator for generating the BNs CPT.
   template < typename GUM_SCALAR, template < typename > class ICPTGenerator >
-  INLINE
-     SimpleBayesNetGenerator< GUM_SCALAR, ICPTGenerator >::SimpleBayesNetGenerator(
-        Size nbrNodes, Size maxArcs, Size maxModality) :
-      IBNG(nbrNodes, maxArcs, maxModality) {
+  INLINE SimpleBayesNetGenerator< GUM_SCALAR, ICPTGenerator >::SimpleBayesNetGenerator(
+     Size nbrNodes,
+     Size maxArcs,
+     Size maxModality) :
+      IBayesNetGenerator< GUM_SCALAR, ICPTGenerator >(nbrNodes, maxArcs, maxModality) {
     GUM_CONSTRUCTOR(SimpleBayesNetGenerator);
   }
 
@@ -55,17 +49,16 @@ namespace gum {
   cptGenerator ,Size nbrNodes, float density, Size maxModality):
     IBayesNetGenerator<GUM_SCALAR,ICPTGenerator>(cptGenerator
   ,nbrNodes,density,maxModality) {
-    GUM_CONSTRUCTOR ( SimpleBayesNetGenerator );
+    GUM_CONSTRUCTOR ( SimpleBayesNetGenerator )
   }*/
 
   // Destructor.
   template < typename GUM_SCALAR, template < typename > class ICPTGenerator >
-  INLINE SimpleBayesNetGenerator< GUM_SCALAR,
-                                  ICPTGenerator >::~SimpleBayesNetGenerator() {
+  INLINE SimpleBayesNetGenerator< GUM_SCALAR, ICPTGenerator >::~SimpleBayesNetGenerator() {
     GUM_DESTRUCTOR(SimpleBayesNetGenerator);
   }
 
-  // Generates a bayesian network using floats.
+  // Generates a Bayesian network using floats.
   // @param nbrNodes The number of nodes in the generated BN.
   // @param density The probability of adding an arc between two nodes.
   // @return A BNs randomly generated.
@@ -73,29 +66,16 @@ namespace gum {
   template < typename GUM_SCALAR, template < typename > class ICPTGenerator >
   void SimpleBayesNetGenerator< GUM_SCALAR, ICPTGenerator >::generateBN(
      BayesNet< GUM_SCALAR >& bayesNet) {
-    this->_bayesNet = bayesNet;
-    HashTable< Size, NodeId > map;
-    std::stringstream         strBuff;
-
-    for (Size i = 0; this->_nbrNodes > i; ++i) {
-      strBuff << "n" << i;
-      Size nb_mod =
-         (this->_maxModality == 2) ? 2 : 2 + randomValue(this->_maxModality - 1);
-      map.insert(
-         i, this->_bayesNet.add(LabelizedVariable(strBuff.str(), "", nb_mod)));
-      strBuff.str("");
-    }
+    this->dag_.clear();
+    this->dag_.addNodes(this->nbrNodes_);
 
     // We add arcs
-    float density = (float)(this->_maxArcs * 2)
-                    / (float)(this->_nbrNodes * (this->_nbrNodes - 1));
+    float density = (float)(this->maxArcs_ * 2) / (float)(this->nbrNodes_ * (this->nbrNodes_ - 1));
+    for (Size i = 0; i < this->nbrNodes_; ++i)
+      for (Size j = i + 1; j < this->nbrNodes_; ++j)
+        if (randomProba() < density) this->dag_.addArc(i, j);
 
-    for (Size i = 0; i < this->_nbrNodes; ++i)
-      for (Size j = i + 1; j < this->_nbrNodes; ++j)
-        if (randomProba() < density) this->_bayesNet.addArc(map[i], map[j]);
-
-    this->fillCPT();
-
-    bayesNet = this->_bayesNet;
+    this->fromDAG(bayesNet);
+    this->fillCPT(bayesNet);
   }
 } /* namespace gum */

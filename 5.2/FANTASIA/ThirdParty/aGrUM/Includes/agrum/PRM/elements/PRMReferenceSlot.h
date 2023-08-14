@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,7 +23,7 @@
  * @file
  * @brief Headers of gum::PRMClassElement.
  *
- * @author Lionel TORTI and Pierre-Henri WUILLEMIN
+ * @author Lionel TORTI and Pierre-Henri WUILLEMIN(_at_LIP6)
  */
 
 #ifndef GUM_REFERENCE_SLOT_H
@@ -58,7 +57,7 @@ namespace gum {
      */
     // ==========================================================================
     template < typename GUM_SCALAR >
-    class PRMReferenceSlot : public PRMClassElement< GUM_SCALAR > {
+    class PRMReferenceSlot: public PRMClassElement< GUM_SCALAR > {
       public:
       // ========================================================================
       /// @name Protected constructors & destructor.
@@ -90,8 +89,7 @@ namespace gum {
       /**
        * Implementation of the pure virtual method of PRMObject.
        */
-      virtual typename PRMClassElement< GUM_SCALAR >::ClassElementType
-         elt_type() const;
+      virtual typename PRMClassElement< GUM_SCALAR >::ClassElementType elt_type() const;
 
       /**
        * Returns the type of this slot, which is a PRMClassElementContainer
@@ -162,10 +160,10 @@ namespace gum {
       // @{
 
       /// The type of this PRMReferenceSlot.
-      PRMClassElementContainer< GUM_SCALAR >& __slotType;
+      PRMClassElementContainer< GUM_SCALAR >& _slotType_;
 
       /// Flag indicating if this slot is an array.
-      bool __isArray;
+      bool _isArray_;
 
       /// @}
     };

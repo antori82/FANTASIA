@@ -1,8 +1,6 @@
-
 /**
- *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023 by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -66,7 +64,8 @@ between 0 and 100
  * @endcode
  *
  *
- * @author Jean-Christophe MAGNAN and Pierre-Henri WUILLEMIN
+ * @author Pierre-Henri WUILLEMIN(_at_LIP6) and Jean-Christophe MAGNAN and Christophe
+GONZALES(_at_AMU)
  */
 #ifndef GUM_BIF_XML_BN_READER_H
 #define GUM_BIF_XML_BN_READER_H
@@ -79,10 +78,8 @@ between 0 and 100
 
 #include <agrum/BN/io/BNReader.h>
 #include <agrum/agrum.h>
-#include <agrum/core/signal/signaler.h>
-#include <agrum/core/signal/signaler2.h>
-#include <agrum/external/tinyxml/ticpp/ticpp.h>
-#include <agrum/variables/labelizedVariable.h>
+#include <agrum/tools/external/tinyxml/ticpp/ticpp.h>
+#include <agrum/tools/variables/labelizedVariable.h>
 
 namespace gum {
 
@@ -99,7 +96,7 @@ namespace gum {
    *
    */
   template < typename GUM_SCALAR >
-  class BIFXMLBNReader : BNReader< GUM_SCALAR > {
+  class BIFXMLBNReader: BNReader< GUM_SCALAR > {
     public:
     /**
      * Constructor
@@ -111,7 +108,7 @@ namespace gum {
     /**
      * Default destructor.
      */
-    ~BIFXMLBNReader() final;
+    ~BIFXMLBNReader();
 
     /**
      * Reads the bayes net from the file referenced by filePath  given at the
@@ -132,23 +129,23 @@ namespace gum {
     /**
      * Parsing xml element containing data on variables
      */
-    void __parsingVariables(ticpp::Element* parentNetwork);
+    void _parsingVariables_(ticpp::Element* parentNetwork);
 
     /**
      * fill the diagram
      */
-    void __fillingBN(ticpp::Element* parentNetwork);
+    void _fillingBN_(ticpp::Element* parentNetwork);
 
     /**
      * An handle to the bayes net in which will be load the content of the xml
      * filePath
      */
-    BayesNet< GUM_SCALAR >* __bn;
+    BayesNet< GUM_SCALAR >* _bn_;
 
     /**
      * the path to the xml filePath
      */
-    std::string __filePath;
+    std::string _filePath_;
   };
 
 

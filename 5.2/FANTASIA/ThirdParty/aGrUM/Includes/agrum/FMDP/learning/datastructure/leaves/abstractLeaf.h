@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -31,12 +30,11 @@
 #ifndef GUM_ABSTRACT_LEAF_H
 #define GUM_ABSTRACT_LEAF_H
 // =========================================================================
-#include <agrum/core/hashTable.h>
-#include <agrum/core/multiPriorityQueue.h>
-#include <agrum/core/sequence.h>
-#include <agrum/core/smallobjectallocator/smallObjectAllocator.h>
+#include <agrum/tools/core/multiPriorityQueue.h>
+#include <agrum/tools/core/sequence.h>
+#include <agrum/tools/core/smallobjectallocator/smallObjectAllocator.h>
 // =========================================================================
-#include <agrum/graphs/graphElements.h>
+#include <agrum/tools/graphs/graphElements.h>
 // =========================================================================
 
 namespace gum {
@@ -60,22 +58,21 @@ namespace gum {
     // ###################################################################
     /// Default constructor
     // ###################################################################
-    AbstractLeaf(NodeId leafId) : __leafId(leafId) {
-      GUM_CONSTRUCTOR(AbstractLeaf);
-    }
+    AbstractLeaf(NodeId leafId) : _leafId_(leafId) { GUM_CONSTRUCTOR(AbstractLeaf); }
 
     // ###################################################################
     /// Default destructor
     // ###################################################################
-    virtual ~AbstractLeaf() { GUM_DESTRUCTOR(AbstractLeaf); }
+    virtual ~AbstractLeaf() {
+      GUM_DESTRUCTOR(AbstractLeaf);
+      ;
+    }
 
     // ============================================================================
     /// Allocators and Deallocators redefinition
     // ============================================================================
-    void* operator new(size_t s) {
-      return SmallObjectAllocator::instance().allocate(s);
-    }
-    void operator delete(void* p) {
+    void* operator new(size_t s) { return SmallObjectAllocator::instance().allocate(s); }
+    void  operator delete(void* p) {
       SmallObjectAllocator::instance().deallocate(p, sizeof(AbstractLeaf));
     }
 
@@ -85,21 +82,21 @@ namespace gum {
     /// Gaves the leaf effectif for given modality
     // ###################################################################
     virtual double effectif(Idx) const = 0;
-    virtual double total() const = 0;
+    virtual double total() const       = 0;
 
     // ###################################################################
     /// Returns true if abstractleaf has leaf in it
     // ###################################################################
-    virtual bool contains(NodeId testedId) const { return __leafId == testedId; }
+    virtual bool contains(NodeId testedId) const { return _leafId_ == testedId; }
 
-    NodeId id() { return __leafId; }
+    NodeId id() { return _leafId_; }
 
     virtual Idx nbModa() const = 0;
 
     virtual std::string toString() = 0;
 
     private:
-    NodeId __leafId;
+    NodeId _leafId_;
   };
 
 

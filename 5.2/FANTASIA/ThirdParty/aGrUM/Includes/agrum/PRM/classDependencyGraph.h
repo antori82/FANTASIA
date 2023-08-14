@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,7 +23,7 @@
  * @file
  * @brief Headers of ClassDependencyGraph<GUM_SCALAR>.
  *
- * @author Lionel TORTI and Pierre-Henri WUILLEMIN
+ * @author Lionel TORTI and Pierre-Henri WUILLEMIN(_at_LIP6)
  */
 
 #ifndef GUM_ClassDependencyGraph_H
@@ -47,9 +46,8 @@ namespace gum {
     class ClassDependencyGraph {
       public:
       /// Association between a class element and it's holding class.
-      typedef std::pair< const PRMClassElementContainer< GUM_SCALAR >*,
-                         const PRMClassElement< GUM_SCALAR >* >
-         EltPair;
+      using EltPair = std::pair< const PRMClassElementContainer< GUM_SCALAR >*,
+                                 const PRMClassElement< GUM_SCALAR >* >;
 
       // ========================================================================
       /// @name Constructors and Destructor.
@@ -103,45 +101,42 @@ namespace gum {
       /// @}
       private:
       /// Build the class dependency graph.
-      void __buildGraph(const PRM< GUM_SCALAR >& prm);
+      void _buildGraph_(const PRM< GUM_SCALAR >& prm);
 
-      /// Add nodes in __graph while updating consequently all the mappings.
-      void __addNode(const PRMClassElementContainer< GUM_SCALAR >* c,
+      /// Add nodes in  _graph_ while updating consequently all the mappings.
+      void _addNode_(const PRMClassElementContainer< GUM_SCALAR >* c,
                      const PRMClassElement< GUM_SCALAR >&          elt);
 
-      /// Add arcs in __graph.
-      void
-         __addArcs(const PRMClassElementContainer< GUM_SCALAR >&              c,
-                   NodeId                                                     node,
-                   HashTable< const PRMClassElement< GUM_SCALAR >*, NodeId >& map);
+      /// Add arcs in  _graph_.
+      void _addArcs_(const PRMClassElementContainer< GUM_SCALAR >&              c,
+                     NodeId                                                     node,
+                     HashTable< const PRMClassElement< GUM_SCALAR >*, NodeId >& map);
 
       /// The graph itself.
-      DAG __graph;
+      DAG _graph_;
 
       /// The modalities map for each node in the
       /// ClassDependencyGraph<GUM_SCALAR>.
       /// This
       /// is useful when using a Triangulation class over a
       /// ClassDependencyGraph<GUM_SCALAR>.
-      NodeProperty< Size > __modalitites;
+      NodeProperty< Size > _modalitites_;
 
-      /// Mapping between the nodes in __graph with the
+      /// Mapping between the nodes in  _graph_ with the
       /// PRMClassElement<GUM_SCALAR>
       /// in
       /// the
       /// PRM<GUM_SCALAR>.
-      NodeProperty< EltPair* > __elt_map;
+      NodeProperty< EltPair* > _elt_map_;
 
       /// Code shortcut.
-      typedef HashTable<
-         const PRMClassElementContainer< GUM_SCALAR >*,
-         HashTable< const PRMClassElement< GUM_SCALAR >*, NodeId >* >
-         NodeMap;
+      using NodeMap = HashTable< const PRMClassElementContainer< GUM_SCALAR >*,
+                                 HashTable< const PRMClassElement< GUM_SCALAR >*, NodeId >* >;
 
       /// Map each Class to a HashTable mapping the Class's ClassElements to
       /// their
-      /// assigned NodeId in __graph.
-      NodeMap __node_map;
+      /// assigned NodeId in  _graph_.
+      NodeMap _node_map_;
     };
 
 

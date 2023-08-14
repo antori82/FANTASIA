@@ -81,14 +81,26 @@ struct FNLUResponse {
 	UPROPERTY(BlueprintReadOnly)
 		FString query;
 
-	UPROPERTY(BlueprintReadOnly)
-		FString topIntent;
-
-	UPROPERTY(BlueprintReadOnly)
-		float score = 0;
-
 	UPROPERTY(BlueprintReadWrite)
 		TArray<UNLUEntity*> entities;
+
+	UPROPERTY(BlueprintReadWrite)
+		TArray<UNLUIntent*> intents;
+};
+
+UCLASS(ClassGroup = (Azure), BlueprintType)
+class UNLUIntent : public UObject {
+
+	GENERATED_BODY()
+
+	UNLUIntent() {};
+
+public:
+	UPROPERTY(BlueprintReadOnly)
+	FString intent;
+
+	UPROPERTY(BlueprintReadOnly)
+	FString confidence;
 };
 
 UCLASS(ClassGroup = (Azure), BlueprintType)
@@ -96,7 +108,7 @@ class UNLUEntity : public UObject {
 
 	GENERATED_BODY()
 
-		UNLUEntity() {};
+	UNLUEntity() {};
 
 public:
 	UPROPERTY(BlueprintReadOnly)
@@ -113,9 +125,6 @@ public:
 
 	UPROPERTY(BlueprintReadOnly)
 		float score;
-
-	UPROPERTY(BlueprintReadOnly)
-		FString childName;
 
 	UPROPERTY(BlueprintReadOnly)
 		TArray<UNLUEntity*> children;

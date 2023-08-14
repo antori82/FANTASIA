@@ -50,14 +50,14 @@ namespace Aws
             typedef Allocator<U> other;
         };
 
-        typename Base::pointer allocate(size_type n, const void *hint = nullptr)
+        typename T* allocate(size_type n, const void *hint = nullptr)
         {
             AWS_UNREFERENCED_PARAM(hint);
 
-            return reinterpret_cast<typename Base::pointer>(Malloc("AWSSTL", n * sizeof(T)));
+            return reinterpret_cast<T*>(Malloc("AWSSTL", n * sizeof(T)));
         }
 
-        void deallocate(typename Base::pointer p, size_type n)
+        void deallocate(typename T* p, size_type n)
         {
             AWS_UNREFERENCED_PARAM(n);
 

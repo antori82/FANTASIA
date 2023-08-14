@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,7 +23,8 @@
  * @file
  * @brief Headers of the RMax planer class.
  *
- * @author Jean-Christophe MAGNAN and Pierre-Henri WUILLEMIN
+ * @author Pierre-Henri WUILLEMIN(_at_LIP6) and Jean-Christophe MAGNAN and Christophe
+ * GONZALES(_at_AMU)
  */
 
 // =========================================================================
@@ -32,7 +32,6 @@
 #define GUM_ADAPTIVE_RMAX_PLANER_H
 // =========================================================================
 #include <agrum/FMDP/SDyna/Strategies/IDecisionStrategy.h>
-#include <agrum/FMDP/fmdp.h>
 #include <agrum/FMDP/learning/fmdpLearner.h>
 #include <agrum/FMDP/planning/structuredPlaner.h>
 #include <agrum/FMDP/simulation/statesCounter.h>
@@ -50,9 +49,7 @@ namespace gum {
    * process
    *
    */
-  class AdaptiveRMaxPlaner
-      : public StructuredPlaner< double >
-      , public IDecisionStrategy {
+  class AdaptiveRMaxPlaner: public StructuredPlaner< double >, public IDecisionStrategy {
     // ###################################################################
     /// @name
     // ###################################################################
@@ -61,11 +58,10 @@ namespace gum {
     // ==========================================================================
     ///
     // ==========================================================================
-    static AdaptiveRMaxPlaner*
-       ReducedAndOrderedInstance(const ILearningStrategy* learner,
-                                 double                   discountFactor = 0.9,
-                                 double                   epsilon = 0.00001,
-                                 bool                     verbose = true) {
+    static AdaptiveRMaxPlaner* ReducedAndOrderedInstance(const ILearningStrategy* learner,
+                                                         double discountFactor = 0.9,
+                                                         double epsilon        = 0.00001,
+                                                         bool   verbose        = true) {
       return new AdaptiveRMaxPlaner(new MDDOperatorStrategy< double >(),
                                     discountFactor,
                                     epsilon,
@@ -77,9 +73,9 @@ namespace gum {
     ///
     // ==========================================================================
     static AdaptiveRMaxPlaner* TreeInstance(const ILearningStrategy* learner,
-                                            double discountFactor = 0.9,
-                                            double epsilon = 0.00001,
-                                            bool   verbose = true) {
+                                            double                   discountFactor = 0.9,
+                                            double                   epsilon        = 0.00001,
+                                            bool                     verbose        = true) {
       return new AdaptiveRMaxPlaner(new TreeOperatorStrategy< double >(),
                                     discountFactor,
                                     epsilon,
@@ -152,12 +148,12 @@ namespace gum {
     // ==========================================================================
     ///
     // ==========================================================================
-    virtual void _initVFunction();
+    virtual void initVFunction_();
 
     // ==========================================================================
     /// Performs a single step of value iteration
     // ==========================================================================
-    virtual MultiDimFunctionGraph< double >* _valueIteration();
+    virtual MultiDimFunctionGraph< double >* valueIteration_();
 
     /// @}
 
@@ -171,26 +167,26 @@ namespace gum {
     // ==========================================================================
     /// Perform the required tasks to extract an optimal policy
     // ==========================================================================
-    virtual void _evalPolicy();
+    virtual void evalPolicy_();
 
     /// @}
 
     private:
-    void __makeRMaxFunctionGraphs();
+    void _makeRMaxFunctionGraphs_();
 
-    std::pair< NodeId, NodeId > __visitLearner(const IVisitableGraphLearner*,
+    std::pair< NodeId, NodeId > _visitLearner_(const IVisitableGraphLearner*,
                                                NodeId currentNodeId,
                                                MultiDimFunctionGraph< double >*,
                                                MultiDimFunctionGraph< double >*);
-    void                        __clearTables();
+    void                        _clearTables_();
 
     private:
-    HashTable< Idx, MultiDimFunctionGraph< double >* > __actionsRMaxTable;
-    HashTable< Idx, MultiDimFunctionGraph< double >* > __actionsBoolTable;
-    const ILearningStrategy*                           __fmdpLearner;
+    HashTable< Idx, MultiDimFunctionGraph< double >* > _actionsRMaxTable_;
+    HashTable< Idx, MultiDimFunctionGraph< double >* > _actionsBoolTable_;
+    const ILearningStrategy*                           _fmdpLearner_;
 
-    double __rThreshold;
-    double __rmax;
+    double _rThreshold_;
+    double _rmax_;
 
 
     // ###################################################################
@@ -199,18 +195,17 @@ namespace gum {
     /// @{
     public:
     void checkState(const Instantiation& newState, Idx actionId) {
-      if (!__initializedTable[actionId]) {
-        __counterTable[actionId]->reset(newState);
-        __initializedTable[actionId] = true;
-      } else
-        __counterTable[actionId]->incState(newState);
+      if (!_initializedTable_[actionId]) {
+        _counterTable_[actionId]->reset(newState);
+        _initializedTable_[actionId] = true;
+      } else _counterTable_[actionId]->incState(newState);
     }
 
     private:
-    HashTable< Idx, StatesCounter* > __counterTable;
-    HashTable< Idx, bool >           __initializedTable;
+    HashTable< Idx, StatesCounter* > _counterTable_;
+    HashTable< Idx, bool >           _initializedTable_;
 
-    bool __initialized;
+    bool _initialized_;
     /// @}
   };
 

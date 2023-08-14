@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -50,36 +49,32 @@ namespace gum {
    * @throws IOError Raised if an I/O error occurs.
    */
   template < typename GUM_SCALAR >
-  INLINE void BIFXMLIDWriter< GUM_SCALAR >::write(
-     std::ostream& output, const InfluenceDiagram< GUM_SCALAR >& infdiag) {
-    if (!output.good()) {
-      GUM_ERROR(IOError, "Stream states flags are not all unset.");
-    }
+  INLINE void BIFXMLIDWriter< GUM_SCALAR >::write(std::ostream&                         output,
+                                                  const InfluenceDiagram< GUM_SCALAR >& infdiag) {
+    if (!output.good()) { GUM_ERROR(IOError, "Input/Output error : stream not writable.") }
 
-    output << __heading() << std::endl;
+    output << _heading_() << std::endl;
     output << "<!-- Variables -->" << std::endl;
 
-    for (const auto node : infdiag.nodes()) {
+    for (const auto node: infdiag.nodes()) {
       int nodeType = 1;
 
-      if (infdiag.isChanceNode(node))
-        nodeType = 2;
-      else if (infdiag.isUtilityNode(node))
-        nodeType = 3;
+      if (infdiag.isChanceNode(node)) nodeType = 2;
+      else if (infdiag.isUtilityNode(node)) nodeType = 3;
 
-      output << __variableBloc(infdiag.variable(node), nodeType) << std::endl;
+      output << _variableBloc_(infdiag.variable(node), nodeType) << std::endl;
     }
 
     output << "<!-- Probability distributions -->" << std::endl;
 
-    for (const auto node : infdiag.nodes())
-      output << __variableDefinition(node, infdiag);
+    for (const auto node: infdiag.nodes())
+      output << _variableDefinition_(node, infdiag);
 
     output << std::endl;
-    output << __documentend();
+    output << _documentend_();
     output.flush();
 
-    if (output.fail()) { GUM_ERROR(IOError, "Writting in the ostream failed."); }
+    if (output.fail()) { GUM_ERROR(IOError, "Writing in the ostream failed.") }
   }
 
   /*
@@ -92,22 +87,22 @@ namespace gum {
    * @throw IOError Raised if an I/O error occurs.
    */
   template < typename GUM_SCALAR >
-  INLINE void BIFXMLIDWriter< GUM_SCALAR >::write(
-     std::string filePath, const InfluenceDiagram< GUM_SCALAR >& infdiag) {
+  INLINE void BIFXMLIDWriter< GUM_SCALAR >::write(std::string                           filePath,
+                                                  const InfluenceDiagram< GUM_SCALAR >& infdiag) {
     std::ofstream output(filePath.c_str(), std::ios_base::trunc);
 
     write(output, infdiag);
 
     output.close();
 
-    if (output.fail()) { GUM_ERROR(IOError, "Writting in the ostream failed."); }
+    if (output.fail()) { GUM_ERROR(IOError, "Writing in the ostream failed.") }
   }
 
   /*
    * Returns the header of the BIF file.
    */
   template < typename GUM_SCALAR >
-  INLINE std::string BIFXMLIDWriter< GUM_SCALAR >::__heading() {
+  INLINE std::string BIFXMLIDWriter< GUM_SCALAR >::_heading_() {
     std::stringstream str;
 
     // Header for every xml
@@ -149,9 +144,8 @@ namespace gum {
    * Returns a bloc defining a variable in the BIF format.
    */
   template < typename GUM_SCALAR >
-  INLINE std::string
-         BIFXMLIDWriter< GUM_SCALAR >::__variableBloc(const DiscreteVariable& var,
-                                                  int varType) {
+  INLINE std::string BIFXMLIDWriter< GUM_SCALAR >::_variableBloc_(const DiscreteVariable& var,
+                                                                  int                     varType) {
     //<VARIABLE TYPE="nature|decision|utility">
     //<NAME>name</NAME>
     //<OUTCOME>outcome1</OUTCOME>
@@ -195,8 +189,9 @@ namespace gum {
    * Returns a bloc defining a variable's CPT in the BIF format.
    */
   template < typename GUM_SCALAR >
-  INLINE std::string BIFXMLIDWriter< GUM_SCALAR >::__variableDefinition(
-     const NodeId& varNodeId, const InfluenceDiagram< GUM_SCALAR >& infdiag) {
+  INLINE std::string BIFXMLIDWriter< GUM_SCALAR >::_variableDefinition_(
+     const NodeId&                         varNodeId,
+     const InfluenceDiagram< GUM_SCALAR >& infdiag) {
     //<DEFINITION>
     //<FOR>var</FOR>
     //<GIVEN>conditional var</GIVEN>
@@ -204,19 +199,17 @@ namespace gum {
     //</DEFINITION>
     std::stringstream str;
 
-    if (!((infdiag.isDecisionNode(varNodeId))
-          && (infdiag.parents(varNodeId).empty()))) {
+    if (!((infdiag.isDecisionNode(varNodeId)) && (infdiag.parents(varNodeId).empty()))) {
       // Declaration
       str << "<DEFINITION>" << std::endl;
 
       // Variable
-      str << "\t<FOR>" << infdiag.variable(varNodeId).name() << "</FOR>"
-          << std::endl;
+      str << "\t<FOR>" << infdiag.variable(varNodeId).name() << "</FOR>" << std::endl;
 
       // Conditional Parents
       List< std::string > parentList;
 
-      for (const auto par : infdiag.parents(varNodeId))
+      for (const auto par: infdiag.parents(varNodeId))
         parentList.pushBack(infdiag.variable(par).name());
 
       for (List< std::string >::iterator parentListIte = parentList.rbegin();
@@ -254,7 +247,7 @@ namespace gum {
    * Returns the end of the BIF file.
    */
   template < typename GUM_SCALAR >
-  INLINE std::string BIFXMLIDWriter< GUM_SCALAR >::__documentend() {
+  INLINE std::string BIFXMLIDWriter< GUM_SCALAR >::_documentend_() {
     std::stringstream str;
 
     str << "</NETWORK>" << std::endl;

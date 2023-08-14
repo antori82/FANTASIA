@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,7 +23,7 @@
  * @file
  * @brief Headers of PRMObject.
  *
- * @author Lionel TORTI and Pierre-Henri WUILLEMIN
+ * @author Lionel TORTI and Pierre-Henri WUILLEMIN(_at_LIP6)
  */
 
 #ifndef GUM_PRM_OBJECT_H
@@ -99,9 +98,7 @@ namespace gum {
       }
 
       /// Returns true if obj_ptr is of type Class.
-      static INLINE bool isClass(const PRMObject& obj) {
-        return obj.obj_type() == prm_type::CLASS;
-      }
+      static INLINE bool isClass(const PRMObject& obj) { return obj.obj_type() == prm_type::CLASS; }
 
       /// Returns true if obj_ptr is of type PRMInterface.
       static INLINE bool isInterface(const PRMObject& obj) {
@@ -153,7 +150,7 @@ namespace gum {
 
       /**
        * @brief Change the name of the PRM Object.
-       * @warning Don't do this unless you know wath you are doing !
+       * @warning Don't do this unless you know what you are doing !
        */
       void name(const std::string& name);
 
@@ -197,7 +194,7 @@ namespace gum {
 
       // The name of this object
       // ======================================================================
-      std::string __name;
+      std::string _name_;
 
       /// @}
     };

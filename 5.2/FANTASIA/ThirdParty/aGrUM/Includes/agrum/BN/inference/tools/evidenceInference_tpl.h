@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -32,12 +31,11 @@ namespace gum {
 
   // Default Constructor
   template < typename GUM_SCALAR >
-  EvidenceInference< GUM_SCALAR >::EvidenceInference(
-     const IBayesNet< GUM_SCALAR >* bn) :
+  EvidenceInference< GUM_SCALAR >::EvidenceInference(const IBayesNet< GUM_SCALAR >* bn) :
       BayesNetInference< GUM_SCALAR >(bn) {
     // assign a BN if this has not been done before (due to virtual inheritance)
-    if (this->__bn == nullptr) {
-      BayesNetInference< GUM_SCALAR >::__setBayesNetDuringConstruction(bn);
+    if (this->hasNoModel_()) {
+      BayesNetInference< GUM_SCALAR >::_setBayesNetDuringConstruction_(bn);
     }
 
     GUM_CONSTRUCTOR(EvidenceInference);

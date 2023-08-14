@@ -5,7 +5,6 @@
 
 using namespace std;
 using namespace Microsoft::CognitiveServices::Speech;
-using namespace Microsoft::CognitiveServices::Speech::Audio;
 
 // Sets default values for this component's properties
 UAzureNLUComponent::UAzureNLUComponent()
@@ -23,9 +22,18 @@ void UAzureNLUComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	config = SpeechConfig::FromSubscription(std::string(TCHAR_TO_UTF8(*Key)), std::string(TCHAR_TO_UTF8(*Region)));
+	config = SpeechConfig::FromSubscription(std::string(TCHAR_TO_UTF8(*SpeechKey)), std::string(TCHAR_TO_UTF8(*Region)));
 	config->SetSpeechRecognitionLanguage(std::string(TCHAR_TO_UTF8(*Language)));
-	model = LanguageUnderstandingModel::FromAppId(TCHAR_TO_UTF8(*AppID));
+
+
+	auto cluModel = ConversationalLanguageUnderstandingModel::FromResource(
+		std::string(TCHAR_TO_UTF8(*LanguageKey)),
+		std::string(TCHAR_TO_UTF8(*Endpoint)),
+		std::string(TCHAR_TO_UTF8(*projectName)),
+		std::string(TCHAR_TO_UTF8(*deploymentName)));
+
+	models.push_back(cluModel);
+	
 }
 
 void UAzureNLUComponent::getResult(FNLUResponse response)
@@ -45,6 +53,6 @@ void UAzureNLUComponent::AzureNLUStart()
 {
 	FNLUResultAvailableDelegate NLUResultSubscriber;
 	NLUResultSubscriber.BindUObject(this, &UAzureNLUComponent::getResult);
-	handle = AzureNLUThread::setup(config, model);
+	handle = AzureNLUThread::setup(config, models);
 	NLUResultAvailableHandle = handle->NLUResultAvailableSubscribeUser(NLUResultSubscriber);
 }

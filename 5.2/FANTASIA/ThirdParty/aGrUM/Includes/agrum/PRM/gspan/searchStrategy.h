@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,7 +23,7 @@
  * @file
  * @brief Headers of the SearchStrategy class and child
  *
- * @author Lionel TORTI and Pierre-Henri WUILLEMIN
+ * @author Lionel TORTI and Pierre-Henri WUILLEMIN(_at_LIP6)
  */
 
 #ifndef GUM_SEARCHSTRATEGY_H
@@ -35,18 +34,8 @@
 #include <utility>
 #include <vector>
 
-#include <agrum/core/math/math.h>
-#include <agrum/core/bijection.h>
-#include <agrum/core/sequence.h>
-#include <agrum/core/set.h>
-
-#include <agrum/graphs/diGraph.h>
-
-#include <agrum/graphs/algorithms/triangulations/partialOrderedTriangulation.h>
 
 #include <agrum/PRM/gspan/edgeGrowth.h>
-#include <agrum/PRM/gspan/interfaceGraph.h>
-#include <agrum/PRM/gspan/pattern.h>
 
 namespace gum {
   namespace prm {
@@ -78,17 +67,16 @@ namespace gum {
         /// @{
 
         /// Default constructor.
-        SearchStrategy< GUM_SCALAR >();
+        SearchStrategy();
 
         /// Copy constructor.
-        SearchStrategy< GUM_SCALAR >(const SearchStrategy< GUM_SCALAR >& from);
+        SearchStrategy(const SearchStrategy< GUM_SCALAR >& from);
 
         /// Destructor.
-        virtual ~SearchStrategy< GUM_SCALAR >();
+        virtual ~SearchStrategy();
 
         /// Copy operator.
-        SearchStrategy< GUM_SCALAR >&
-           operator=(const SearchStrategy< GUM_SCALAR >& from);
+        SearchStrategy< GUM_SCALAR >& operator=(const SearchStrategy< GUM_SCALAR >& from);
 
         /// @}
         // =========================================================================
@@ -102,15 +90,16 @@ namespace gum {
 
         virtual bool accept_growth(const Pattern*                  parent,
                                    const Pattern*                  child,
-                                   const EdgeGrowth< GUM_SCALAR >& growth) = 0;
+                                   const EdgeGrowth< GUM_SCALAR >& growth)
+           = 0;
 
         virtual bool operator()(LabelData* i, LabelData* j) = 0;
-        virtual bool operator()(Pattern* i, Pattern* j) = 0;
+        virtual bool operator()(Pattern* i, Pattern* j)     = 0;
         /// @}
 
         protected:
-        DFSTree< GUM_SCALAR >* _tree;
-        double                 _computeCost(const Pattern& p);
+        DFSTree< GUM_SCALAR >* tree_;
+        double                 computeCost_(const Pattern& p);
       };
 
       /**
@@ -123,7 +112,7 @@ namespace gum {
        *value.
        */
       template < typename GUM_SCALAR >
-      class FrequenceSearch : public SearchStrategy< GUM_SCALAR > {
+      class FrequenceSearch: public SearchStrategy< GUM_SCALAR > {
         public:
         // =========================================================================
         /// @name Constructor and destructor.
@@ -159,7 +148,7 @@ namespace gum {
         /// @}
 
         private:
-        Size __freq;
+        Size _freq_;
       };
 
       /**
@@ -173,7 +162,7 @@ namespace gum {
        * A new growth is accepted if it is at least better than its predecessor.
        */
       template < typename GUM_SCALAR >
-      class StrictSearch : public SearchStrategy< GUM_SCALAR > {
+      class StrictSearch: public SearchStrategy< GUM_SCALAR > {
         public:
         // =========================================================================
         /// @name Constructor and destructor.
@@ -209,11 +198,11 @@ namespace gum {
         /// @}
 
         private:
-        Size   __freq;
-        double __inner_cost(const Pattern* p);
-        double __outer_cost(const Pattern* p);
-        void   __compute_costs(const Pattern* p);
-        HashTable< const Pattern*, std::pair< double, double > > __map;
+        Size                                                     _freq_;
+        double                                                   _inner_cost_(const Pattern* p);
+        double                                                   _outer_cost_(const Pattern* p);
+        void                                                     _compute_costs_(const Pattern* p);
+        HashTable< const Pattern*, std::pair< double, double > > _map_;
         /// Private structure to represent data about a pattern.
         struct PData {
           /// A yet to be triangulated undigraph
@@ -234,20 +223,18 @@ namespace gum {
           /// Returns the set of outputs nodes given all the matches of pattern
           NodeSet outputs;
         };
-        std::string __dot;
-        std::string __str(const PRMInstance< GUM_SCALAR >*  i,
+        std::string _dot_;
+        std::string _str_(const PRMInstance< GUM_SCALAR >*  i,
                           const PRMAttribute< GUM_SCALAR >* a) const;
-        std::string __str(const PRMInstance< GUM_SCALAR >*  i,
+        std::string _str_(const PRMInstance< GUM_SCALAR >*  i,
                           const PRMAttribute< GUM_SCALAR >& a) const;
-        std::string __str(const PRMInstance< GUM_SCALAR >*  i,
+        std::string _str_(const PRMInstance< GUM_SCALAR >*  i,
                           const PRMSlotChain< GUM_SCALAR >& a) const;
-        void        __buildPatternGraph(
-                  typename StrictSearch< GUM_SCALAR >::PData&   data,
-                  Set< Potential< GUM_SCALAR >* >&              pool,
-                  const Sequence< PRMInstance< GUM_SCALAR >* >& match);
-        std::pair< Size, Size >
-           __elimination_cost(typename StrictSearch< GUM_SCALAR >::PData& data,
-                              Set< Potential< GUM_SCALAR >* >&            pool);
+        void        _buildPatternGraph_(typename StrictSearch< GUM_SCALAR >::PData&   data,
+                                        Set< Potential< GUM_SCALAR >* >&              pool,
+                                        const Sequence< PRMInstance< GUM_SCALAR >* >& match);
+        std::pair< Size, Size > _elimination_cost_(typename StrictSearch< GUM_SCALAR >::PData& data,
+                                                   Set< Potential< GUM_SCALAR >* >& pool);
       };
 
       /**
@@ -260,7 +247,7 @@ namespace gum {
        * or equal than its father.
        */
       template < typename GUM_SCALAR >
-      class TreeWidthSearch : public SearchStrategy< GUM_SCALAR > {
+      class TreeWidthSearch: public SearchStrategy< GUM_SCALAR > {
         public:
         // =========================================================================
         /// @name Constructor and destructor.
@@ -298,7 +285,7 @@ namespace gum {
         /// @}
 
         private:
-        HashTable< const Pattern*, double > __map;
+        HashTable< const Pattern*, double > _map_;
       };
 
 

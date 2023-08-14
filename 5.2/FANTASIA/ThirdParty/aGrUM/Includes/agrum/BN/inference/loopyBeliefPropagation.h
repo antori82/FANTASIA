@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -23,7 +22,7 @@
 /**
  * @file
  * @brief This file contains gibbs sampling (for BNs) class definitions.
- * @author Pierre-Henri WUILLEMIN and Christophe GONZALES
+ * @author Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
  */
 #ifndef GUM_LOOPYBELIEFPROPAGATION_H
 #define GUM_LOOPYBELIEFPROPAGATION_H
@@ -34,12 +33,12 @@ namespace gum {
   /**
    * @class LoopyBeliefPropagation loopyBeliefPropagation.h
    *<agrum/BN/inference/loopyBeliefPropagation.h>
-   * @brief class for making Loopy Belief Propagation in bayesian networks.
+   * @brief class for making Loopy Belief Propagation in Bayesian networks.
    * @ingroup bn_inference
    *
    */
   template < typename GUM_SCALAR >
-  class LoopyBeliefPropagation : public ApproximateInference< GUM_SCALAR > {
+  class LoopyBeliefPropagation: public ApproximateInference< GUM_SCALAR > {
     public:
     /**
      * Default constructor
@@ -52,51 +51,51 @@ namespace gum {
     virtual ~LoopyBeliefPropagation();
 
     protected:
-    virtual void _onStateChanged(){};
+    virtual void onStateChanged_(){};
 
-    virtual void _onEvidenceAdded(const NodeId id, bool isHardEvidence){};
+    virtual void onEvidenceAdded_(const NodeId id, bool isHardEvidence){};
 
-    virtual void _onEvidenceErased(const NodeId id, bool isHardEvidence){};
+    virtual void onEvidenceErased_(const NodeId id, bool isHardEvidence){};
 
-    virtual void _onAllEvidenceErased(bool contains_hard_evidence){};
+    virtual void onAllEvidenceErased_(bool contains_hard_evidence){};
 
-    virtual void _onEvidenceChanged(const NodeId id, bool hasChangedSoftHard){};
+    virtual void onEvidenceChanged_(const NodeId id, bool hasChangedSoftHard){};
 
-    virtual void _onBayesNetChanged(const IBayesNet< GUM_SCALAR >* bn){};
+    virtual void onModelChanged_(const GraphicalModel* bn){};
 
-    virtual void _updateOutdatedBNStructure();
+    virtual void updateOutdatedStructure_();
 
-    virtual void _updateOutdatedBNPotentials(){};
+    virtual void updateOutdatedPotentials_(){};
 
-    virtual void _onMarginalTargetAdded(const NodeId id){};
+    virtual void onMarginalTargetAdded_(const NodeId id){};
 
-    virtual void _onMarginalTargetErased(const NodeId id){};
+    virtual void onMarginalTargetErased_(const NodeId id){};
 
-    virtual void _onAllMarginalTargetsAdded(){};
+    virtual void onAllMarginalTargetsAdded_(){};
 
-    virtual void _onAllMarginalTargetsErased(){};
+    virtual void onAllMarginalTargetsErased_(){};
 
     /// asks derived classes for the posterior of a given variable
     /** @param id The variable's id. */
-    virtual const Potential< GUM_SCALAR >& _posterior(NodeId id);
+    virtual const Potential< GUM_SCALAR >& posterior_(NodeId id);
 
-    virtual void _makeInference();
+    virtual void makeInference_();
 
     // will be used in both directions :
-    // for x->y, (x,y) and (y,x) will be in __messages
-    ArcProperty< Potential< GUM_SCALAR > >  __messages;
-    NodeProperty< Potential< GUM_SCALAR > > __posteriors;
+    // for x->y, (x,y) and (y,x) will be in  _messages_
+    ArcProperty< Potential< GUM_SCALAR > >  _messages_;
+    NodeProperty< Potential< GUM_SCALAR > > _posteriors_;
 
-    void __initStats();
+    void _initStats_();
 
-    void                    __init_messages();
-    Potential< GUM_SCALAR > __computeProdPi(NodeId X);
-    Potential< GUM_SCALAR > __computeProdPi(NodeId X, NodeId except);
-    Potential< GUM_SCALAR > __computeProdLambda(NodeId X);
-    Potential< GUM_SCALAR > __computeProdLambda(NodeId X, NodeId except);
+    void                    _init_messages_();
+    Potential< GUM_SCALAR > _computeProdPi_(NodeId X);
+    Potential< GUM_SCALAR > _computeProdPi_(NodeId X, NodeId except);
+    Potential< GUM_SCALAR > _computeProdLambda_(NodeId X);
+    Potential< GUM_SCALAR > _computeProdLambda_(NodeId X, NodeId except);
 
     // return the max differential BNdistance for this node
-    GUM_SCALAR __updateNodeMessage(NodeId X);
+    GUM_SCALAR _updateNodeMessage_(NodeId X);
   };
 
 #ifndef GUM_NO_EXTERN_TEMPLATE_CLASS

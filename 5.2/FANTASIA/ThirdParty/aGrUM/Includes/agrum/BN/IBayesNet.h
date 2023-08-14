@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023 by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,7 +23,7 @@
  * @file
  * @brief Class representing Bayesian networks
  *
- * @author Pierre-Henri WUILLEMIN and Lionel TORTI
+ * @author Pierre-Henri WUILLEMIN(_at_LIP6) and Lionel TORTI
  *
  */
 #ifndef GUM_SIMPLE_BAYES_NET_H
@@ -34,10 +33,9 @@
 
 #include <agrum/agrum.h>
 
-#include <agrum/core/hashTable.h>
 
-#include <agrum/graphicalModels/DAGmodel.h>
-#include <agrum/multidim/potential.h>
+#include <agrum/tools/graphicalModels/DAGmodel.h>
+#include <agrum/tools/multidim/potential.h>
 
 namespace gum {
 
@@ -47,7 +45,7 @@ namespace gum {
   /**
    * @class IBayesNet
    * @headerfile IBayesNet.h <agrum/BN/IBayesNet.h>
-   * @brief Class representing the minimal interface for Bayesian Network.
+   * @brief Class representing the minimal interface for Bayesian network.
    * @ingroup bn_group
    *
    * This class is used as a base class for different versions of Bayesian
@@ -59,7 +57,7 @@ namespace gum {
    * class when a simple BN is needed.
    */
   template < typename GUM_SCALAR >
-  class IBayesNet : public DAGmodel {
+  class IBayesNet: public DAGmodel {
     public:
     // ===========================================================================
     /// @name Constructors / Destructors
@@ -131,8 +129,7 @@ namespace gum {
      *
      * @throw NotFound if no such name exists in the graph.
      */
-    virtual const DiscreteVariable&
-       variableFromName(const std::string& name) const = 0;
+    virtual const DiscreteVariable& variableFromName(const std::string& name) const = 0;
     /// @}
 
     // ===========================================================================
@@ -154,6 +151,13 @@ namespace gum {
 
     ///
     /// @}
+
+    /**
+     * Check if the BayesNet is consistent (variables, CPT)
+     *
+     * @return a list of comments on the consistency of the Bayes Net
+     */
+    std::vector< std::string > consistencyCheck() const;
 
     /**
      * This operator compares 2 BNs !
@@ -197,12 +201,14 @@ namespace gum {
     /**
      *
      * @return the smallest value (not equal to 0) in the CPTs of *this
+     * @warning can return 0 if no other value in the CPTs than 0...
      */
     GUM_SCALAR minNonZeroParam() const;
 
     /**
      *
      * @return the biggest value (not equal to 1) in the CPTs of *this
+     * @warning can return one if no other value in the CPTs than one....
      */
     GUM_SCALAR maxNonOneParam() const;
 
@@ -228,12 +234,12 @@ namespace gum {
     NodeSet minimalCondSet(const NodeSet& targets, const NodeSet& soids) const;
 
     private:
-    void __minimalCondSetVisitUp(NodeId         node,
+    void _minimalCondSetVisitUp_(NodeId         node,
                                  const NodeSet& soids,
                                  NodeSet&       minimal,
                                  NodeSet&       alreadyVisitedUp,
                                  NodeSet&       alreadyVisitedDn) const;
-    void __minimalCondSetVisitDn(NodeId         node,
+    void _minimalCondSetVisitDn_(NodeId         node,
                                  const NodeSet& soids,
                                  NodeSet&       minimal,
                                  NodeSet&       alreadyVisitedUp,
@@ -248,8 +254,7 @@ namespace gum {
 
   /// Prints map's DAG in output using the Graphviz-dot format.
   template < typename GUM_SCALAR >
-  std::ostream& operator<<(std::ostream&                  output,
-                           const IBayesNet< GUM_SCALAR >& bn);
+  std::ostream& operator<<(std::ostream& output, const IBayesNet< GUM_SCALAR >& bn);
 
 } /* namespace gum */
 

@@ -96,9 +96,9 @@ public class FANTASIA : ModuleRules
         string ModulePath = ModuleDirectory;
 		string ThirdParty = Path.GetFullPath(Path.Combine(ModulePath, "../../ThirdParty/"));
 
-		string LibraryPath = Path.Combine(ThirdParty, "Microsoft.CognitiveServices.Speech.1.5.1", "build", "native", "x64", "Release");
-		string IncludePath1 = Path.Combine(ThirdParty, "Microsoft.CognitiveServices.Speech.1.5.1", "build", "native", "include", "cxx_api");
-		string IncludePath2 = Path.Combine(ThirdParty, "Microsoft.CognitiveServices.Speech.1.5.1", "build", "native", "include", "c_api");
+		string LibraryPath = Path.Combine(ThirdParty, "Microsoft.CognitiveServices.Speech.1.31.0", "build", "native", "x64", "Release");
+		string IncludePath1 = Path.Combine(ThirdParty, "Microsoft.CognitiveServices.Speech.1.31.0", "build", "native", "include", "cxx_api");
+		string IncludePath2 = Path.Combine(ThirdParty, "Microsoft.CognitiveServices.Speech.1.31.0", "build", "native", "include", "c_api");
 
 		PublicAdditionalLibraries.Add(LibraryPath + "/Microsoft.CognitiveServices.Speech.core.lib");
 		
@@ -124,7 +124,7 @@ public class FANTASIA : ModuleRules
 
 		PublicIncludePaths.Add(Path.Combine(ThirdParty, "kdepp"));
 
-//		CppStandard = CppStandardVersion.Latest;
+		CppStandard = CppStandardVersion.Cpp20;
 
 		LoadAgrum(Target, ThirdParty);
 

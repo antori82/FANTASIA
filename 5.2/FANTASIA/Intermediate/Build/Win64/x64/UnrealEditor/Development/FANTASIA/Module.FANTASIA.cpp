@@ -8,6 +8,7 @@
 #include "D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/Intermediate/Build/Win64/UnrealEditor/Inc/FANTASIA/UHT/FANTASIATypes.gen.cpp"
 #include "D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/Intermediate/Build/Win64/UnrealEditor/Inc/FANTASIA/UHT/MathUtilities.gen.cpp"
 #include "D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/Intermediate/Build/Win64/UnrealEditor/Inc/FANTASIA/UHT/Neo4jComponent.gen.cpp"
+#include "D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/Intermediate/Build/Win64/UnrealEditor/Inc/FANTASIA/UHT/OpenAIComponent.gen.cpp"
 #include "D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/Intermediate/Build/Win64/UnrealEditor/Inc/FANTASIA/UHT/paramObject.gen.cpp"
 #include "D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/Source/FANTASIA/Private/AWSPollyComponent.cpp"
 #include "D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/Source/FANTASIA/Private/AWSPollyThread.cpp"
@@ -21,3 +22,4 @@
 #include "D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/Source/FANTASIA/Private/FANTASIA.cpp"
 #include "D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/Source/FANTASIA/Private/MathUtilities.cpp"
 #include "D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/Source/FANTASIA/Private/Neo4jComponent.cpp"
+#include "D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/Source/FANTASIA/Private/OpenAIComponent.cpp"

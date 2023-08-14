@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -60,7 +59,7 @@
 
  * @endcode
  *
- * @author Pierre-Henri WUILLEMIN
+ * @author Pierre-Henri WUILLEMIN(_at_LIP6)
  */
 
 // ======================================================================================================
@@ -71,11 +70,9 @@
 #include <iostream>
 #include <string>
 // ======================================================================================================
-#include <agrum/FMDP/fmdp.h>
 #include <agrum/FMDP/fmdpFactory.h>
 #include <agrum/FMDP/io/fmdpReader.h>
 // ======================================================================================================
-#include <agrum/multidim/implementations/multiDimFunctionGraph.h>
 // ======================================================================================================
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -88,10 +85,11 @@ namespace gum {
    * @class FMDPDatReader
    * @brief Definition of templatized reader of FMDPDat files for Factored
    * Markov Decision Processes.
-   * @author Jean-Christophe MAGNAN and Pierre-Henri WUILLEMIN
+   * @author Pierre-Henri WUILLEMIN(_at_LIP6) and Jean-Christophe MAGNAN and
+   * Christophe GONZALES(_at_AMU)
    */
   template < typename GUM_SCALAR >
-  class FMDPDatReader : public FMDPReader< GUM_SCALAR > {
+  class FMDPDatReader: public FMDPReader< GUM_SCALAR > {
     public:
     FMDPDatReader(FMDP< GUM_SCALAR >* fmdp, const std::string& filename);
     ~FMDPDatReader();
@@ -140,18 +138,18 @@ namespace gum {
     /// @}
 
     protected:
-    FMDP< GUM_SCALAR >*        __fmdp;
-    FMDPFactory< GUM_SCALAR >* __factory;
-    MDPDAT::Scanner*           __scanner;
-    MDPDAT::Parser*            __parser;
+    FMDP< GUM_SCALAR >*        _fmdp_;
+    FMDPFactory< GUM_SCALAR >* _factory_;
+    MDPDAT::Scanner*           _scanner_;
+    MDPDAT::Parser*            _parser_;
 
-    std::string __streamName;
-    bool        __traceScanning;
-    bool        __parseDone;
+    std::string _streamName_;
+    bool        _traceScanning_;
+    bool        _parseDone_;
 
     // a boolean to throw the ioerror not in the constructor but in the
     // proceed()
-    bool __ioerror;
+    bool _ioerror_;
   };
 
 

@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,7 +23,7 @@
  * @file
  * @brief This file contains Gibbs sampling (for BNs) class definitions
  *
- * @author Paul ALAM & Pierre-Henri WUILLEMIN
+ * @author Paul ALAM & Pierre-Henri WUILLEMIN(_at_LIP6)
  */
 
 
@@ -32,8 +31,6 @@
 #define GUM_GIBBS_OPERATOR_H
 
 #include <agrum/BN/IBayesNet.h>
-#include <agrum/multidim/instantiation.h>
-#include <agrum/multidim/potential.h>
 
 namespace gum {
 
@@ -54,7 +51,7 @@ namespace gum {
      */
     GibbsOperator(const IBayesNet< GUM_SCALAR >& BN,
                   const NodeProperty< Idx >*     hardEv,
-                  Size                           nbr = 1,
+                  Size                           nbr      = 1,
                   bool                           atRandom = false);
 
     /**
@@ -63,13 +60,13 @@ namespace gum {
     virtual ~GibbsOperator();
 
     /** Getters and setters*/
-    Size nbrDrawnVar() const { return _nbr; }
+    Size nbrDrawnVar() const { return nbr_; }
 
-    void setNbrDrawnVar(Size nbr) { _nbr = nbr; }
+    void setNbrDrawnVar(Size nbr) { nbr_ = nbr; }
 
-    bool isDrawnAtRandom() const { return _atRandom; }
+    bool isDrawnAtRandom() const { return atRandom_; }
 
-    void setDrawnAtRandom(bool atRandom) { _atRandom = atRandom; }
+    void setDrawnAtRandom(bool atRandom) { atRandom_ = atRandom; }
 
     /// draws a Monte Carlo sample
     Instantiation monteCarloSample();
@@ -78,31 +75,32 @@ namespace gum {
     Instantiation nextSample(Instantiation prev);
 
     protected:
-    /// number of samples drawn
-    Size                           _counting;
-    const IBayesNet< GUM_SCALAR >& _sampling_bn;
-    const NodeProperty< Idx >*     _hardEv;
-    Sequence< NodeId >             _samplingNodes;
+    Size                           counting_;
+    const IBayesNet< GUM_SCALAR >& samplingBn_;
+    const NodeProperty< Idx >*     hardEv_;
+    Sequence< NodeId >             samplingNodes_;
 
-    Size _nbr;
-
-    protected:
-    bool _atRandom;
-
+    Size nbr_;
+    bool atRandom_;
 
     private:
-    void __updateSamplingNodes();
+    void _updateSamplingNodes_();
+
     // adds a node to current instantiation
-    void __drawVarMonteCarlo(NodeId nod, Instantiation* I);
-    void __GibbsSample(NodeId id, Instantiation* I);
+    void _drawVarMonteCarlo_(NodeId nod, Instantiation* I);
+
+    void _GibbsSample_(NodeId id, Instantiation* I);
   };
 
 
 #ifndef GUM_NO_EXTERN_TEMPLATE_CLASS
+
   extern template class GibbsOperator< double >;
+
 #endif
 
 }   // namespace gum
 
 #include <agrum/BN/inference/tools/gibbsOperator_tpl.h>
+
 #endif

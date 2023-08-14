@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -21,9 +20,10 @@
 
 
 /** @file
- * @brief Class for generating bayesian networks.
+ * @brief Class for generating Bayesian networks.
  *
- * @author Jean-Christophe MAGNAN and Pierre-Henri WUILLEMIN
+ * @author Pierre-Henri WUILLEMIN(_at_LIP6) and Jean-Christophe MAGNAN and Christophe
+ * GONZALES(_at_AMU)
  */
 #ifndef GUM_INF_DIAG_GENERATOR_H
 #define GUM_INF_DIAG_GENERATOR_H
@@ -34,10 +34,9 @@
 #include <vector>
 
 #include <agrum/BN/generator/simpleCPTGenerator.h>
-#include <agrum/ID/generator/UTGenerator.h>
 #include <agrum/ID/generator/simpleUTGenerator.h>
 #include <agrum/ID/influenceDiagram.h>
-#include <agrum/variables/labelizedVariable.h>
+#include <agrum/tools/variables/labelizedVariable.h>
 
 namespace gum {
 
@@ -90,8 +89,7 @@ namespace gum {
      * @param cptGenerator The policy used to generate CPT.
      * @param utGenerator The policy used to generate UT.
      */
-    InfluenceDiagramGenerator(ICPTGenerator< GUM_SCALAR >* cptGenerator,
-                              UTGenerator*                 utGenerator);
+    InfluenceDiagramGenerator(ICPTGenerator< GUM_SCALAR >* cptGenerator, UTGenerator* utGenerator);
 
     /**
      * Destructor.
@@ -121,11 +119,11 @@ namespace gum {
     /// @}
     private:
     // Check if a temporal order exists and creates ones if not
-    void __checkTemporalOrder(InfluenceDiagram< GUM_SCALAR >* infdiag);
+    void _checkTemporalOrder_(InfluenceDiagram< GUM_SCALAR >* infdiag);
     // The Conditional Probability Table generator
-    ICPTGenerator< GUM_SCALAR >* __cptGenerator;
+    ICPTGenerator< GUM_SCALAR >* _cptGenerator_;
     // The Utility Table generator
-    UTGenerator* __utGenerator;
+    UTGenerator* _utGenerator_;
   };
 
 } /* namespace gum */

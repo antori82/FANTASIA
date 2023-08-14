@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -44,7 +43,7 @@ namespace gum {
   template < typename GUM_SCALAR >
   void Chi2TestPolicy< GUM_SCALAR >::addObservation(Idx iattr, GUM_SCALAR ivalue) {
     ITestPolicy< GUM_SCALAR >::addObservation(iattr, ivalue);
-    __conTab.add(iattr, ivalue);
+    _conTab_.add(iattr, ivalue);
   }
 
 
@@ -58,20 +57,17 @@ namespace gum {
   template < typename GUM_SCALAR >
   void Chi2TestPolicy< GUM_SCALAR >::computeScore() const {
     ITestPolicy< GUM_SCALAR >::computeScore();
-    __chi2Score = 0;
-    for (auto attrIter = __conTab.attrABeginSafe();
-         attrIter != __conTab.attrAEndSafe();
+    _chi2Score_ = 0;
+    for (auto attrIter = _conTab_.attrABeginSafe(); attrIter != _conTab_.attrAEndSafe();
          ++attrIter) {
-      double semiExpected =
-         (double)(attrIter.val()) / (double)this->nbObservation();
-      for (auto valIter = __conTab.attrBBeginSafe();
-           valIter != __conTab.attrBEndSafe();
+      double semiExpected = (double)(attrIter.val()) / (double)this->nbObservation();
+      for (auto valIter = _conTab_.attrBBeginSafe(); valIter != _conTab_.attrBEndSafe();
            ++valIter) {
-        double cell = (double)__conTab.joint(attrIter.key(), valIter.key());
+        double cell = (double)_conTab_.joint(attrIter.key(), valIter.key());
         if (cell < 5) continue;
         double expected = semiExpected * (double)(valIter.val());
 
-        __chi2Score += std::pow(cell - expected, 2.0) / expected;
+        _chi2Score_ += std::pow(cell - expected, 2.0) / expected;
       }
     }
   }
@@ -81,11 +77,10 @@ namespace gum {
   // ============================================================================
   template < typename GUM_SCALAR >
   double Chi2TestPolicy< GUM_SCALAR >::score() const {
-    if (this->_isModified()) computeScore();
-    double score =
-       1
-       - ChiSquare::probaChi2(
-          __chi2Score, (__conTab.attrASize() - 1) * (__conTab.attrBSize() - 1));
+    if (this->isModified_()) computeScore();
+    double score
+       = 1
+       - ChiSquare::probaChi2(_chi2Score_, (_conTab_.attrASize() - 1) * (_conTab_.attrBSize() - 1));
     return score;
   }
 
@@ -94,14 +89,14 @@ namespace gum {
   // ============================================================================
   template < typename GUM_SCALAR >
   double Chi2TestPolicy< GUM_SCALAR >::secondaryscore() const {
-    if (this->_isModified()) computeScore();
-    return __chi2Score;
+    if (this->isModified_()) computeScore();
+    return _chi2Score_;
   }
 
   template < typename GUM_SCALAR >
   void Chi2TestPolicy< GUM_SCALAR >::add(const Chi2TestPolicy< GUM_SCALAR >& src) {
     ITestPolicy< GUM_SCALAR >::add(src);
-    __conTab += src.ct();
+    _conTab_ += src.ct();
   }
 
 }   // End of namespace gum

@@ -17,18 +17,20 @@ public:
 	// Sets default values for this component's properties
 	UNeo4jComponent();
 	UPROPERTY(EditAnywhere, Category = "Settings")
-		FString endpoint;
+	FString endpoint;
 	UPROPERTY(EditAnywhere, Category = "Settings")
-		int port;
+	int port;
 	UPROPERTY(EditAnywhere, Category = "Settings")
-		FString user;
+	FString user;
 	UPROPERTY(EditAnywhere, Category = "Settings")
-		FString password;
+	FString password;
 	UPROPERTY(BlueprintAssignable, BlueprintCallable)
-		FIncomingNeo4jResponseEvent IncomingResponse;
+	FIncomingNeo4jResponseEvent IncomingResponse;
 	UPROPERTY(BlueprintReadOnly)
-		FString response;
-	
+	FString response;
+	UPROPERTY(EditAnywhere, Category = "Settings")
+	bool useV4;
+
 	void OnResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful);
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Submit query", AutoCreateRefTerm = "parameters"), Category = "Neo4j")

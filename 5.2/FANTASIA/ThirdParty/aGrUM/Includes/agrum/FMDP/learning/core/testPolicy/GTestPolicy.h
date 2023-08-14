@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,7 +23,8 @@
  * @file
  * @brief Headers of the GTestPolicy
  *
- * @author Jean-Christophe MAGNAN and Pierre-Henri WUILLEMIN
+ * @author Pierre-Henri WUILLEMIN(_at_LIP6) and Jean-Christophe MAGNAN and Christophe
+ * GONZALES(_at_AMU)
  *
  */
 #ifndef GUM_MULTI_DIM_FUNCTION_GRAPH_G_TEST_POLICY_H
@@ -43,14 +43,14 @@ namespace gum {
 
   /**
    * @class GTestPolicy GTestPolicy.h
-   * <agrum/multidim/core/testPolicies/GTestPolicy.h>
+   * <agrum/tools/multidim/core/testPolicies/GTestPolicy.h>
    *
    * @brief G implements a test policy that follows the G statistic
    *
    * @ingroup fmdp_group
    */
   template < typename GUM_SCALAR >
-  class GTestPolicy : public ITestPolicy< GUM_SCALAR > {
+  class GTestPolicy: public ITestPolicy< GUM_SCALAR > {
     public:
     // ############################################################################
     /// @name Constructor/Destrcutor
@@ -60,21 +60,22 @@ namespace gum {
     // ============================================================================
     /// Constructor
     // ============================================================================
-    GTestPolicy() : ITestPolicy< GUM_SCALAR >(), __conTab(), __GStat(0) {
+    GTestPolicy() : ITestPolicy< GUM_SCALAR >(), _conTab_(), _GStat_(0) {
       GUM_CONSTRUCTOR(GTestPolicy);
     }
 
     // ============================================================================
     /// Destructor
     // ============================================================================
-    virtual ~GTestPolicy() { GUM_DESTRUCTOR(GTestPolicy); }
+    virtual ~GTestPolicy() {
+      GUM_DESTRUCTOR(GTestPolicy);
+      ;
+    }
 
     // ============================================================================
     /// Allocators and Deallocators redefinition
     // ============================================================================
-    void* operator new(size_t s) {
-      return SmallObjectAllocator::instance().allocate(s);
-    }
+    void* operator new(size_t s) { return SmallObjectAllocator::instance().allocate(s); }
 
     void operator delete(void* p) {
       SmallObjectAllocator::instance().deallocate(p, sizeof(GTestPolicy));
@@ -105,8 +106,7 @@ namespace gum {
     /// relevant
     // ============================================================================
     bool isTestRelevant() const {
-      return (this->nbObservation() > 20
-              && this->nbObservation() > __conTab.attrASize() * 5);
+      return (this->nbObservation() > 20 && this->nbObservation() > _conTab_.attrASize() * 5);
     }
 
     // ============================================================================
@@ -142,7 +142,7 @@ namespace gum {
     /// Returns contingency table (needed for the merging of GTestPolicy
     /// instances)
     // ============================================================================
-    const ContingencyTable< Idx, GUM_SCALAR >& ct() const { return __conTab; }
+    const ContingencyTable< Idx, GUM_SCALAR >& ct() const { return _conTab_; }
 
 
     /// @}
@@ -155,10 +155,9 @@ namespace gum {
 
     std::string toString() const {
       std::stringstream ss;
-      ss << ITestPolicy< GUM_SCALAR >::toString()
-         << "\t\t\tContingency Table : " << std::endl
-         << __conTab.toString() << std::endl
-         << "\t\t\tGStat : " << __GStat << std::endl
+      ss << ITestPolicy< GUM_SCALAR >::toString() << "\t\t\tContingency Table : " << std::endl
+         << _conTab_.toString() << std::endl
+         << "\t\t\tGStat : " << _GStat_ << std::endl
          << "\t\t\tGStat : " << this->secondaryscore() << std::endl;
       return ss.str();
     }
@@ -167,8 +166,8 @@ namespace gum {
 
     private:
     /// The contingency table used to keeps records of all observation
-    ContingencyTable< Idx, GUM_SCALAR > __conTab;
-    mutable double                      __GStat;
+    ContingencyTable< Idx, GUM_SCALAR > _conTab_;
+    mutable double                      _GStat_;
   };
 
 }   // End of namespace gum

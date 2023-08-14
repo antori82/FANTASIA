@@ -12,23 +12,23 @@
 #
 set (AGRUM_FOUND 1)
 set (AGRUM_DEFINITIONS "")
-set (AGRUM_INCLUDE_DIR "D:\Users\Fabrizio\Downloads/include")
-set (AGRUM_INCLUDE_DIRS "D:\Users\Fabrizio\Downloads/include")
+set (AGRUM_INCLUDE_DIR "INSTALL_PATH/include")
+set (AGRUM_INCLUDE_DIRS "INSTALL_PATH/include")
 set (AGRUM_CXX_FLAGS "")
-set (AGRUM_LIBRARY_DIRS "D:\Users\Fabrizio\Downloads/lib")
-set (AGRUM_LIB_DIR "D:\Users\Fabrizio\Downloads/lib") # deprecated
+set (AGRUM_LIBRARY_DIRS "INSTALL_PATH/lib")
+set (AGRUM_LIB_DIR "INSTALL_PATH/lib") # deprecated
 
 set (AGRUM_LIBRARY_DEBUG "agrum-dbg")
 set (AGRUM_LIBRARIES_DEBUG "agrum-dbg")
 set (AGRUM_LIBRARY_RELEASE "agrum")
 set (AGRUM_LIBRARIES_RELEASE "agrum")
 
-set (AGRUM_USE_FILE "D:\Users\Fabrizio\Downloads/lib/cmake/aGrUM/aGrUMUse.cmake")
-set (AGRUM_ROOTDIR "D:\Users\Fabrizio\Downloads")
-set (AGRUM_VERSION_STRING "0.16.3.9")
-set (AGRUM_VERSION_MAJOR "0")
-set (AGRUM_VERSION_MINOR "16")
-set (AGRUM_VERSION_PATCH "3.9")
+set (AGRUM_USE_FILE "INSTALL_PATH/lib/cmake/aGrUM/aGrUMUse.cmake")
+set (AGRUM_ROOTDIR "INSTALL_PATH")
+set (AGRUM_VERSION_STRING "1.7.1")
+set (AGRUM_VERSION_MAJOR "1")
+set (AGRUM_VERSION_MINOR "7")
+set (AGRUM_VERSION_PATCH "1")
 
 # Our library dependencies (contains definitions for IMPORTED targets)
-include ("D:\Users\Fabrizio\Downloads/lib/cmake/aGrUM/agrum-targets.cmake")
+include ("INSTALL_PATH/lib/cmake/aGrUM/agrum-targets.cmake")

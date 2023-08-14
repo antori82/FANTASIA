@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,7 +23,7 @@
  * @file
  * @brief Inline implementation of the DFSCode class.
  *
- * @author Lionel TORTI and Pierre-Henri WUILLEMIN
+ * @author Lionel TORTI and Pierre-Henri WUILLEMIN(_at_LIP6)
  */
 
 namespace gum {
@@ -32,13 +31,16 @@ namespace gum {
     namespace gspan {
 
       INLINE
-      DFSCode::DFSCode() { GUM_CONSTRUCTOR(DFSCode); }
+      DFSCode::DFSCode() {
+        GUM_CONSTRUCTOR(DFSCode);
+        ;
+      }
 
       INLINE
       DFSCode::DFSCode(const DFSCode& source) {
         GUM_CONS_CPY(DFSCode);
 
-        for (const auto code : source.codes)
+        for (const auto code: source.codes)
           codes.push_back(new EdgeCode(*code));
       }
 
@@ -46,16 +48,16 @@ namespace gum {
       DFSCode::~DFSCode() {
         GUM_DESTRUCTOR(DFSCode);
 
-        for (const auto item : codes)
+        for (const auto item: codes)
           delete item;
       }
 
       INLINE
       DFSCode& DFSCode::operator=(const DFSCode& source) {
-        for (const auto item : codes)
+        for (const auto item: codes)
           delete item;
 
-        for (const auto srcitem : source.codes)
+        for (const auto srcitem: source.codes)
           codes.push_back(new EdgeCode(*srcitem));
 
         return *this;
@@ -92,11 +94,10 @@ namespace gum {
         DFSCode::const_iterator iter = codes.begin();
         DFSCode::const_iterator jter = from.codes.begin();
 
-        for (; (iter != codes.end()) && (jter != from.codes.end());
-             ++iter, ++jter) {
+        for (; (iter != codes.end()) && (jter != from.codes.end()); ++iter, ++jter) {
           if ((**iter) != (**jter)) {
             EdgeCode& alpha = **iter;
-            EdgeCode& beta = **jter;
+            EdgeCode& beta  = **jter;
 
             if (alpha.isBackward()) {
               if (beta.isForward()) {
@@ -143,8 +144,7 @@ namespace gum {
         DFSCode::const_iterator iter = codes.begin();
         DFSCode::const_iterator jter = from.codes.begin();
 
-        for (; (iter != codes.end()) && (jter != from.codes.end());
-             ++iter, ++jter) {
+        for (; (iter != codes.end()) && (jter != from.codes.end()); ++iter, ++jter) {
           if ((**iter) != (**jter)) { return (**iter) < (**jter); }
         }
 

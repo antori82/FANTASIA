@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -21,10 +20,10 @@
 
 
 /** @file
- * @brief Class for generating bayesian networks.
+ * @brief Class for generating Bayesian networks.
  *
- * @author Christophe GONZALES and Pierre-Henri WUILLEMIN and Ariele-Paolo
- *MAESANO
+ * @author Christophe GONZALES(_at_AMU) and Pierre-Henri WUILLEMIN(_at_LIP6) and
+ *Ariele-Paolo MAESANO
  */
 #ifndef GUM_SIMPLE_BAYES_NET_GENERATOR_H
 #define GUM_SIMPLE_BAYES_NET_GENERATOR_H
@@ -43,21 +42,19 @@ namespace gum {
   /**
    * @class SimpleBayesNetGenerator simpleBayesNetGenerator.h
    *<agrum/BN/generator/simpleBayesNetGenerator.h>
-   * @brief Class for generating bayesian networks.
+   * @brief Class for generating Bayesian networks.
    * @ingroup bn_generator
    *
-   * This class randomly generates a bayesian network given three parameters:
+   * This class randomly generates a Bayesian network given three parameters:
    * the number of nodes and the max number of arcs and the number of maximum
    *modality for each nodes.
    * @warning  Be Careful when entering the parameters, high Values may cause
    *the
-   *density of the Bayesian Network to be too high
+   *density of the Bayesian network to be too high
    * resulting in the failure of most of the inference Methods.
    */
-  template < typename GUM_SCALAR,
-             template < typename > class ICPTGenerator = SimpleCPTGenerator >
-  class SimpleBayesNetGenerator
-      : public IBayesNetGenerator< GUM_SCALAR, ICPTGenerator > {
+  template < typename GUM_SCALAR, template < typename > class ICPTGenerator = SimpleCPTGenerator >
+  class SimpleBayesNetGenerator: public IBayesNetGenerator< GUM_SCALAR, ICPTGenerator > {
     public:
     // ############################################################################
     /// @name Constructors / Destructor
@@ -84,9 +81,9 @@ namespace gum {
     // ############################################################################
     /// @{
     /**
-     * function that generates a bayesian networks.
-     * @param bayesNet Bayesian Network to be completed after initialisation
-     * @return null but modify inputed Bayesian Network
+     * function that generates a Bayesian networks.
+     * @param bayesNet Bayesian network to be completed after initialisation
+     * @return null but modify inputed Bayesian network
      */
     void generateBN(BayesNet< GUM_SCALAR >& bayesNet) override;
 
