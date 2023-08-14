@@ -61,6 +61,60 @@ void UOpenAIComponent::getGPTCompletion(FString prompt, TArray<FString> stopSequ
 	Request->ProcessRequest();
 }
 
+void UOpenAIComponent::OnChatGPTResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful) {
+	if (bWasSuccessful) {
+
+		TSharedPtr<FJsonValue> JsonValue;
+		TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(Response->GetContentAsString());
+
+		if (FJsonSerializer::Deserialize(Reader, JsonValue))
+		{
+			FString temp = Response->GetContentAsString();
+			const TSharedPtr<FJsonObject>* FileMessageObject;
+
+			if (JsonValue->TryGetObject(FileMessageObject)) {
+				TArray<TSharedPtr<FJsonValue>> results = FileMessageObject->Get()->GetArrayField("choices");
+				IncomingChatGPTResponse.Broadcast(results[0]->AsObject()->GetObjectField("message")->GetStringField("content"), results[0]->AsObject()->GetObjectField("message")->GetStringField("role"));
+			}
+		}
+	}
+}
+
+void UOpenAIComponent::getChatGPTCompletion(TArray<FChatTurn> messages, FString apiMethod) {
+	FHttpModule* Http = &FHttpModule::Get();
+	FString payload;
+	TSharedRef<IHttpRequest, ESPMode::ThreadSafe> Request = Http->CreateRequest();
+
+	Request->OnProcessRequestComplete().BindUObject(this, &UOpenAIComponent::OnChatGPTResponseReceived);
+	Request->SetURL("https://api.openai.com/v1/chat/completions");
+	Request->SetVerb("POST");
+	Request->SetHeader(TEXT("Content-Type"), TEXT("application/json"));
+	Request->SetHeader(TEXT("Authorization"), "Bearer " + Key);
+	Request->SetHeader(TEXT("User-Agent"), "X-UnrealEngine-Agent");
+
+	TSharedPtr<FJsonObject> payloadObject = MakeShareable(new FJsonObject());
+
+
+	TArray<TSharedPtr<FJsonValue>> jsonMessages;
+	for (int i = 0; i < messages.Num(); i++)
+	{
+		TSharedPtr<FJsonObject> turn = MakeShareable(new FJsonObject());
+		FText enumValueText;
+		UEnum::GetDisplayValueAsText(messages[i].role, enumValueText);
+		turn->SetStringField("role", enumValueText.ToString().ToLower());
+		turn->SetStringField("content", messages[i].content);
+
+		jsonMessages.Add(MakeShareable(new FJsonValueObject(turn)));
+	}
+	payloadObject->SetArrayField(TEXT("messages"), jsonMessages);
+	payloadObject->SetStringField("model", apiMethod);
+
+	FJsonSerializer::Serialize(payloadObject.ToSharedRef(), TJsonWriterFactory<>::Create(&payload));
+
+	Request->SetContentAsString(payload);
+	Request->ProcessRequest();
+}
+
 // Called when the game starts
 void UOpenAIComponent::BeginPlay()
 {
