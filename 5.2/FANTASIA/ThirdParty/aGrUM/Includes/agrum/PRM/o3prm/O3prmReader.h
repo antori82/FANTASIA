@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,7 +23,7 @@
  * @file
  * @brief Headers for the O3prmReader class.
  *
- * @author Christophe GONZALES and Pierre-Henri WUILLEMIN
+ * @author Christophe GONZALES(_at_AMU) and Pierre-Henri WUILLEMIN(_at_LIP6)
  * @author Lionel TORTI
  */
 
@@ -38,18 +37,13 @@
 #include <string>
 #include <vector>
 
-#include <agrum/PRM/PRM.h>
 #include <agrum/PRM/o3prm/O3ClassFactory.h>
 #include <agrum/PRM/o3prm/O3InterfaceFactory.h>
-#include <agrum/PRM/o3prm/O3NameSolver.h>
 #include <agrum/PRM/o3prm/O3SystemFactory.h>
 #include <agrum/PRM/o3prm/O3TypeFactory.h>
-#include <agrum/PRM/o3prm/O3prm.h>
 #include <agrum/PRM/o3prm/cocoR/Parser.h>
 #include <agrum/PRM/o3prm/cocoR/Scanner.h>
 #include <agrum/agrum.h>
-#include <agrum/core/errorsContainer.h>
-#include <agrum/core/utils_string.h>
 
 namespace gum {
   namespace prm {
@@ -84,9 +78,7 @@ namespace gum {
         /// to search from import yourself, using addClassPath.
         Size readString(const std::string& string);
 
-        void parseStream(std::istream& input,
-                         std::ostream& output,
-                         std::string   module = "");
+        void parseStream(std::istream& input, std::ostream& output, std::string module = "");
         /**
          * @brief This methods defines the list of paths to look for o3prm
          * files.
@@ -107,8 +99,8 @@ namespace gum {
          */
         void addClassPath(const std::string& class_path);
 
-        gum::prm::PRM< GUM_SCALAR >*       prm() { return __prm; }
-        const gum::prm::PRM< GUM_SCALAR >* prm() const { return __prm; }
+        gum::prm::PRM< GUM_SCALAR >*       prm() { return _prm_; }
+        const gum::prm::PRM< GUM_SCALAR >* prm() const { return _prm_; }
 
         /// @{
         /// publishing Errors API
@@ -143,29 +135,27 @@ namespace gum {
         /// @}
 
         private:
-        PRM< GUM_SCALAR >*         __prm;
-        std::unique_ptr< O3PRM >   __o3_prm;
-        std::vector< std::string > __class_path;
-        Set< std::string >         __imported;
+        PRM< GUM_SCALAR >*         _prm_;
+        std::unique_ptr< O3PRM >   _o3_prm_;
+        std::vector< std::string > _class_path_;
+        Set< std::string >         _imported_;
 
         // Needed when file can't be parse (can not open it for exemple)
-        ErrorsContainer __errors;
+        ErrorsContainer _errors_;
 
-        void __readStream(std::istream&      input,
-                          const std::string& file,
-                          std::string        module = "");
+        void _readStream_(std::istream& input, const std::string& file, std::string module = "");
 
-        void __parseImport(const O3Import& i, const std::string& module_path);
+        void _parseImport_(const O3Import& i, const std::string& module_path);
 
-        void __parseStream(std::istream&      input,
+        void _parseStream_(std::istream&      input,
                            const std::string& filename,
                            const std::string& module);
 
-        std::vector< const O3Import* > __copyImports();
+        std::vector< const O3Import* > _copyImports_();
 
-        std::string __clean(std::string text) const;
-        std::string __print(const ParseError& err) const;
-        std::string __readStream(std::istream& input);
+        std::string _clean_(std::string text) const;
+        std::string _print_(const ParseError& err) const;
+        std::string _readStream_(std::istream& input);
       };
 
     }   // namespace o3prm

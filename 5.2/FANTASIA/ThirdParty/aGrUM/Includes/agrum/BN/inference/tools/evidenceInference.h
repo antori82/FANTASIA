@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -25,7 +24,7 @@
  * @brief This file contains the abstract class definition for computing
  * the probability of evidence entered in Bayesian networks
  *
- * @author Christophe GONZALES and Pierre-Henri WUILLEMIN
+ * @author Christophe GONZALES(_at_AMU) and Pierre-Henri WUILLEMIN(_at_LIP6)
  */
 
 #ifndef GUM_BAYES_NET_EVIDENCE_INFERENCE_H
@@ -49,7 +48,7 @@ namespace gum {
    * of the probability of evidence entered in Bayesian networks
    */
   template < typename GUM_SCALAR >
-  class EvidenceInference : public virtual BayesNetInference< GUM_SCALAR > {
+  class EvidenceInference: public virtual BayesNetInference< GUM_SCALAR > {
     public:
     // ############################################################################
     /// @name Constructors / Destructors

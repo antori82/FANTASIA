@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,7 +23,7 @@
  * @file
  * @brief algorithm for exact computation KL divergence between BNs
  *
- * @author Pierre-Henri WUILLEMIN
+ * @author Pierre-Henri WUILLEMIN(_at_LIP6)
  *
  */
 #ifndef GUM_BRUTE_FORCE_KL_H
@@ -67,15 +66,14 @@ namespace gum {
    */
 
   template < typename GUM_SCALAR >
-  class ExactBNdistance : public BNdistance< GUM_SCALAR > {
+  class ExactBNdistance: public BNdistance< GUM_SCALAR > {
     public:
     /** constructor must give 2 BNs
      * @throw gum::OperationNotAllowed if the 2 BNs have not the same domainSize
      * or
      * compatible node sets.
      */
-    ExactBNdistance(const IBayesNet< GUM_SCALAR >& P,
-                    const IBayesNet< GUM_SCALAR >& Q);
+    ExactBNdistance(const IBayesNet< GUM_SCALAR >& P, const IBayesNet< GUM_SCALAR >& Q);
 
     /** copy constructor
      */
@@ -85,19 +83,19 @@ namespace gum {
     virtual ~ExactBNdistance();
 
     protected:
-    void _computeKL() final;
+    void computeKL_() final;
 
-    using BNdistance< GUM_SCALAR >::_p;
-    using BNdistance< GUM_SCALAR >::_q;
-    using BNdistance< GUM_SCALAR >::_hellinger;
-    using BNdistance< GUM_SCALAR >::_bhattacharya;
-    using BNdistance< GUM_SCALAR >::_jsd;
+    using BNdistance< GUM_SCALAR >::p_;
+    using BNdistance< GUM_SCALAR >::q_;
+    using BNdistance< GUM_SCALAR >::hellinger_;
+    using BNdistance< GUM_SCALAR >::bhattacharya_;
+    using BNdistance< GUM_SCALAR >::jsd_;
 
-    using BNdistance< GUM_SCALAR >::_klPQ;
-    using BNdistance< GUM_SCALAR >::_klQP;
+    using BNdistance< GUM_SCALAR >::klPQ_;
+    using BNdistance< GUM_SCALAR >::klQP_;
 
-    using BNdistance< GUM_SCALAR >::_errorPQ;
-    using BNdistance< GUM_SCALAR >::_errorQP;
+    using BNdistance< GUM_SCALAR >::errorPQ_;
+    using BNdistance< GUM_SCALAR >::errorQP_;
   };
 
 #ifndef GUM_NO_EXTERN_TEMPLATE_CLASS

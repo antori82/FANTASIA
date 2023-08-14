@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -21,10 +20,10 @@
 
 
 /** @file
- * @brief Class for generating bayesian networks using MC algorithm
+ * @brief Class for generating Bayesian networks using MC algorithm
  * cf. [Ide and Cozman, 2002]
  *
- * @author Ariele MAESANO and Pierre-Henri WUILLEMIN
+ * @author Ariele MAESANO and Pierre-Henri WUILLEMIN(_at_LIP6)
  */
 
 #ifndef GUM_MAX_PARENTS_MC_BAYES_NET_GENERATOR
@@ -42,26 +41,21 @@
 #ifdef HAVE_DIRENT_H
 #  include <dirent.h>
 #else
-#  include <agrum/core/mvsc/dirent.h>
 #endif
 
 
-#include <agrum/BN/BayesNet.h>
 #include <agrum/BN/generator/MCBayesNetGenerator.h>
-#include <agrum/BN/generator/simpleCPTDisturber.h>
-#include <agrum/BN/generator/simpleCPTGenerator.h>
-#include <agrum/variables/labelizedVariable.h>
 
 namespace gum {
   /**
    * @class MaxParentsMCBayesNetGenerator maxParentsMCBayesNetGenerator.h
    *<agrum/BN/generator/SimpleMCayesNetGenerator.h>
-   * @brief Class for generating bayesian networks with Markov chains.
+   * @brief Class for generating Bayesian networks with Markov chains.
    * @ingroup bn_generator
    *
    * This class is inherited from MCBayesNetGenerator and is an example of
    *Markov
-   *Chain Bayesian Network Generator that can be implemented.
+   *Chain Bayesian network Generator that can be implemented.
    * Here a constraint is added which is the maximum number of parents that a
    *node
    *can have.
@@ -69,10 +63,10 @@ namespace gum {
    *must:\n
    * 1) Create the class
    *XXXXXXMCBayesNetGenerator<GUM_SCALAR,ICPTGenerator,ICPTDisturber>.\n
-   * 2) Add a variable specific to the constraint (here _maxParents). \n
-   * 3) Verify in the function _checkCondition() the wanted constraint and then
+   * 2) Add a variable specific to the constraint (here maxParents_). \n
+   * 3) Verify in the function checkCondition_() the wanted constraint and then
    *launch
-   * MCBayesNetGenerator<GUM_SCALAR,ICPTGenerator,ICPTDisturber>::__checkConditions()
+   * MCBayesNetGenerator<GUM_SCALAR,ICPTGenerator,ICPTDisturber>:: _checkConditions_()
    *to verify the default constraint.\n
    * 4) Define the getters and setters of the constraint variable.\n
    * 5) And verify in the constructor that the constraint is not in
@@ -81,14 +75,14 @@ namespace gum {
    *
    * @warning  Be Careful when entering the parameters, high Values may cause
    *the
-   *density of the Bayesian Network to be too high
+   *density of the Bayesian network to be too high
    * resulting in the failure of most of the inference Methods. \n
    * */
   template < typename GUM_SCALAR,
              template < typename > class ICPTGenerator = SimpleCPTGenerator,
              template < typename > class ICPTDisturber = SimpleCPTDisturber >
-  class MaxParentsMCBayesNetGenerator
-      : public MCBayesNetGenerator< GUM_SCALAR, ICPTGenerator, ICPTDisturber > {
+  class MaxParentsMCBayesNetGenerator:
+      public MCBayesNetGenerator< GUM_SCALAR, ICPTGenerator, ICPTDisturber > {
     public:
     // ############################################################################
     /// @name Constructors / Destructor
@@ -118,10 +112,10 @@ namespace gum {
     MaxParentsMCBayesNetGenerator(Size nbrNodes,
                                   Size maxArcs,
                                   Size maxModality = 2,
-                                  Size maxParents = 1,
-                                  Idx  iteration = 5000,
-                                  Idx  p = 30,
-                                  Idx  q = 40);
+                                  Size maxParents  = 1,
+                                  Idx  iteration   = NB_INIT_ITERATIONS,
+                                  Idx  p           = 30,
+                                  Idx  q           = 40);
 
     /**
      * Constructor.
@@ -144,14 +138,14 @@ namespace gum {
      */
     explicit MaxParentsMCBayesNetGenerator(BayesNet< GUM_SCALAR > bayesNet,
                                            Size                   maxParents = 2,
-                                           Idx                    iteration = 5000,
-                                           Idx                    p = 30,
-                                           Idx                    q = 40);
+                                           Idx                    iteration  = NB_INIT_ITERATIONS,
+                                           Idx                    p          = 30,
+                                           Idx                    q          = 40);
 
     /**
      * Destructor.
      */
-    ~MaxParentsMCBayesNetGenerator() final;
+    ~MaxParentsMCBayesNetGenerator();
 
     /// @}
 
@@ -177,7 +171,7 @@ namespace gum {
     /// @}
 
     protected:
-    Size _maxParents;
+    Size maxParents_;
 
     private:
     /**
@@ -185,7 +179,7 @@ namespace gum {
      * @return boolean state that verify the conditions
      */
 
-    bool __checkConditions() final;
+    bool _checkConditions_() final;
   };
 
 #ifndef GUM_NO_EXTERN_TEMPLATE_CLASS

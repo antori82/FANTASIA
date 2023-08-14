@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -39,14 +38,14 @@ namespace gum {
    * @ingroup bn_io
    * @brief Writes a IBayesNet in the DSL format.
    *
-   * This class servers to write the content of a Bayesian Network in
+   * This class servers to write the content of a Bayesian network in
    * the DSL format. See
    * http://www.cs.cmu.edu/~fgcozman/Research/InterchangeFormat/Old/xmlDSL02.html
    * for information on this format.
    *
    */
   template < typename GUM_SCALAR >
-  class DSLWriter : public BNWriter< GUM_SCALAR > {
+  class DSLWriter: public BNWriter< GUM_SCALAR > {
     public:
     // ==========================================================================
     /// @name Constructor & destructor
@@ -61,34 +60,44 @@ namespace gum {
     /**
      * Destructor.
      */
-    ~DSLWriter() final;
+    ~DSLWriter() override;
+
+    DSLWriter(const DSLWriter&)                = default;
+    DSLWriter(DSLWriter&&) noexcept            = default;
+    DSLWriter& operator=(const DSLWriter&)     = default;
+    DSLWriter& operator=(DSLWriter&&) noexcept = default;
 
     /// @}
-
+    protected:
     /**
-     * Writes a Bayesian Network in the output stream using the DSL format.
+     * Writes a Bayesian network in the output stream using the DSL format.
      *
      * @param output The output stream.
-     * @param bn The Bayesian Network writen in output.
+     * @param bn The Bayesian network writen in output.
      * @throws IOError Raised if and I/O error occurs.
      */
-    void write(std::ostream& output, const IBayesNet< GUM_SCALAR >& bn) final;
+    void _doWrite(std::ostream& output, const IBayesNet< GUM_SCALAR >& bn) final;
 
     /**
-     * Writes a Bayesian Network in the referenced file using the DSL format.
+     * Writes a Bayesian network in the referenced file using the DSL format.
      * If the files doesn't exists, it is created.
      *
-     * @param filePath The path to the file used to write the Bayesian Network.
-     * @param bn The Bayesian Network writed in the file.
+     * @param filePath The path to the file used to write the Bayesian network.
+     * @param bn The Bayesian network writed in the file.
      * @throws IOError Raised if and I/O error occurs.
      */
-    void write(const std::string&             filePath,
-               const IBayesNet< GUM_SCALAR >& bn) final;
+    void _doWrite(const std::string& filePath, const IBayesNet< GUM_SCALAR >& bn) final;
+
+    /**
+     * Check whether the BN is syntactically correct for BIF format.
+     *
+     * @throw FatalError if found.
+     */
+    void _syntacticalCheck(const IBayesNet< GUM_SCALAR >& bn) final;
 
     private:
     // Returns a bloc defining a variable in the DSL format.
-    std::string __variableBloc(const IBayesNet< GUM_SCALAR >& bn,
-                               const DiscreteVariable&        var);
+    std::string _variableBloc_(const IBayesNet< GUM_SCALAR >& bn, const DiscreteVariable& var);
   };
 
 

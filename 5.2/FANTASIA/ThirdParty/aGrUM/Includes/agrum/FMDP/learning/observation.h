@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,7 +23,8 @@
  * @file
  * @brief Headers of the Observation class.
  *
- * @author Jean-Christophe MAGNAN and Pierre-Henri WUILLEMIN
+ * @author Pierre-Henri WUILLEMIN(_at_LIP6) and Jean-Christophe MAGNAN and Christophe
+ * GONZALES(_at_AMU)
  */
 
 // #define  TRACE_ALGO
@@ -32,10 +32,9 @@
 #ifndef GUM_OBSERVATION_H
 #define GUM_OBSERVATION_H
 // =========================================================================
-#include <agrum/core/hashTable.h>
-#include <agrum/core/smallobjectallocator/smallObjectAllocator.h>
+#include <agrum/tools/core/smallobjectallocator/smallObjectAllocator.h>
 // =========================================================================
-#include <agrum/variables/discreteVariable.h>
+#include <agrum/tools/variables/discreteVariable.h>
 // =========================================================================
 
 namespace gum {
@@ -60,20 +59,24 @@ namespace gum {
     // ###################################################################
     /// Default constructor
     // ###################################################################
-    Observation() { GUM_CONSTRUCTOR(Observation); }
+    Observation() {
+      GUM_CONSTRUCTOR(Observation);
+      ;
+    }
 
     // ###################################################################
     /// Default destructor
     // ###################################################################
-    ~Observation() { GUM_DESTRUCTOR(Observation); }
+    ~Observation() {
+      GUM_DESTRUCTOR(Observation);
+      ;
+    }
 
     // ============================================================================
     /// Allocators and Deallocators redefinition
     // ============================================================================
-    void* operator new(size_t s) {
-      return SmallObjectAllocator::instance().allocate(s);
-    }
-    void operator delete(void* p) {
+    void* operator new(size_t s) { return SmallObjectAllocator::instance().allocate(s); }
+    void  operator delete(void* p) {
       SmallObjectAllocator::instance().deallocate(p, sizeof(Observation));
     }
 
@@ -91,12 +94,8 @@ namespace gum {
      * @throws NotFound if variable is not in this observation
      */
     // ###################################################################
-    INLINE Idx modality(const DiscreteVariable* var) const {
-      return __varInst[var];
-    }
-    INLINE Idx rModality(const DiscreteVariable* var) const {
-      return __rInst[var];
-    }
+    INLINE Idx modality(const DiscreteVariable* var) const { return _varInst_[var]; }
+    INLINE Idx rModality(const DiscreteVariable* var) const { return _rInst_[var]; }
 
     // ###################################################################
     /**
@@ -107,21 +106,21 @@ namespace gum {
      */
     // ###################################################################
     INLINE void setModality(const DiscreteVariable* var, Idx modality) {
-      __varInst.insert(var, modality);
+      _varInst_.insert(var, modality);
     }
     INLINE void setRModality(const DiscreteVariable* var, Idx modality) {
-      __rInst.insert(var, modality);
+      _rInst_.insert(var, modality);
     }
 
     // ###################################################################
     // Returns the reward obtained during this observation
     // ###################################################################
-    double reward() const { return __reward; }
+    double reward() const { return _reward_; }
 
     // ###################################################################
     // Sets the reward obtained during this observation
     // ###################################################################
-    void setReward(double reward) { __reward = reward; }
+    void setReward(double reward) { _reward_ = reward; }
 
     /// @}
     ///
@@ -136,29 +135,27 @@ namespace gum {
     /// Returns an const safe iterator on the beginning of the list of
     /// variables in this observation
     // ###################################################################
-    HashTableConstIteratorSafe< const DiscreteVariable*, Idx >
-       cbeginVariablesSafe() const {
-      return __varInst.cbeginSafe();
+    HashTableConstIteratorSafe< const DiscreteVariable*, Idx > cbeginVariablesSafe() const {
+      return _varInst_.cbeginSafe();
     }
 
     // ###################################################################
     /// Returns an const safe iterator on the end of the list of
     /// variables in this observation
     // ###################################################################
-    HashTableConstIteratorSafe< const DiscreteVariable*, Idx >
-       cendVariablesSafe() const {
-      return __varInst.cendSafe();
+    HashTableConstIteratorSafe< const DiscreteVariable*, Idx > cendVariablesSafe() const {
+      return _varInst_.cendSafe();
     }
 
     /// @}
 
     private:
     /// Table giving for every variables its instantiation
-    HashTable< const DiscreteVariable*, Idx > __varInst;
-    HashTable< const DiscreteVariable*, Idx > __rInst;
+    HashTable< const DiscreteVariable*, Idx > _varInst_;
+    HashTable< const DiscreteVariable*, Idx > _rInst_;
 
     /// The reward associated to this transition
-    double __reward;
+    double _reward_;
   };
 
 } /* namespace gum */

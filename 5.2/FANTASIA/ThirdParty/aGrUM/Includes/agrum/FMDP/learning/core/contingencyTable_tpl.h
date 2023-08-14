@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -66,49 +65,37 @@ namespace gum {
   void ContingencyTable< GUM_SCALAR_A, GUM_SCALAR_B >::add(GUM_SCALAR_A valueA,
                                                            GUM_SCALAR_B valueB) {
     // Updating
-    if (__attrAMarginalTable.exists(valueA))
-      __attrAMarginalTable[valueA]++;
-    else
-      __attrAMarginalTable.insert(valueA, 1);
+    if (_attrAMarginalTable_.exists(valueA)) _attrAMarginalTable_[valueA]++;
+    else _attrAMarginalTable_.insert(valueA, 1);
 
-    if (__attrBMarginalTable.exists(valueB))
-      __attrBMarginalTable[valueB]++;
-    else
-      __attrBMarginalTable.insert(valueB, 1);
+    if (_attrBMarginalTable_.exists(valueB)) _attrBMarginalTable_[valueB]++;
+    else _attrBMarginalTable_.insert(valueB, 1);
 
     std::pair< GUM_SCALAR_A, GUM_SCALAR_B > cell(valueA, valueB);
-    if (__jointTable.exists(cell))
-      __jointTable[cell]++;
-    else
-      __jointTable.insert(cell, 1);
+    if (_jointTable_.exists(cell)) _jointTable_[cell]++;
+    else _jointTable_.insert(cell, 1);
   }
 
   template < typename GUM_SCALAR_A, typename GUM_SCALAR_B >
   ContingencyTable< GUM_SCALAR_A, GUM_SCALAR_B >&
-        ContingencyTable< GUM_SCALAR_A, GUM_SCALAR_B >::
-        operator+=(const ContingencyTable< GUM_SCALAR_A, GUM_SCALAR_B >& src) {
+     ContingencyTable< GUM_SCALAR_A, GUM_SCALAR_B >::operator+=(
+        const ContingencyTable< GUM_SCALAR_A, GUM_SCALAR_B >& src) {
     // Ajout dans marginal A et table joint des valeurs pour src
     for (auto aTer = src.attrABeginSafe(); aTer != src.attrAEndSafe(); ++aTer) {
-      if (__attrAMarginalTable.exists(aTer.key()))
-        __attrAMarginalTable[aTer.key()] += aTer.val();
-      else
-        __attrAMarginalTable.insert(aTer.key(), aTer.val());
+      if (_attrAMarginalTable_.exists(aTer.key())) _attrAMarginalTable_[aTer.key()] += aTer.val();
+      else _attrAMarginalTable_.insert(aTer.key(), aTer.val());
 
       for (auto bTer = src.attrBBeginSafe(); bTer != src.attrBEndSafe(); ++bTer) {
         std::pair< GUM_SCALAR_A, GUM_SCALAR_B > cell(aTer.key(), bTer.key());
-        if (__jointTable.exists(cell))
-          __jointTable[cell] += src.joint(aTer.key(), bTer.key());
-        else
-          __jointTable.insert(cell, src.joint(aTer.key(), bTer.key()));
+        if (_jointTable_.exists(cell)) _jointTable_[cell] += src.joint(aTer.key(), bTer.key());
+        else _jointTable_.insert(cell, src.joint(aTer.key(), bTer.key()));
       }
     }
 
     // Ajout dans marginal B des valeurs de src
     for (auto bTer = src.attrBBeginSafe(); bTer != src.attrBEndSafe(); ++bTer) {
-      if (__attrBMarginalTable.exists(bTer.key()))
-        __attrBMarginalTable[bTer.key()] += bTer.val();
-      else
-        __attrBMarginalTable.insert(bTer.key(), bTer.val());
+      if (_attrBMarginalTable_.exists(bTer.key())) _attrBMarginalTable_[bTer.key()] += bTer.val();
+      else _attrBMarginalTable_.insert(bTer.key(), bTer.val());
     }
     return *this;
   }

@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,7 +23,7 @@
  * @file
  * @brief Headers of Class.
  *
- * @author Lionel TORTI and Pierre-Henri WUILLEMIN
+ * @author Lionel TORTI and Pierre-Henri WUILLEMIN(_at_LIP6)
  */
 
 #ifndef GUM_RANDOM_VARIABLE_TYPE_H
@@ -35,12 +34,8 @@
 
 #include <agrum/agrum.h>
 
-#include <agrum/multidim/implementations/multiDimArray.h>
-#include <agrum/multidim/implementations/multiDimImplementation.h>
-#include <agrum/variables/discreteVariable.h>
-#include <agrum/variables/labelizedVariable.h>
+#include <agrum/tools/variables/labelizedVariable.h>
 
-#include <agrum/PRM/elements/PRMObject.h>
 #include <agrum/PRM/utils_prm.h>
 
 namespace gum {
@@ -60,7 +55,7 @@ namespace gum {
      * Since MultiDim use pointers to handle DiscreteVariables, it is necessary
      * to create a new instance of a type for each PRMAttribute.
      */
-    class PRMType : public PRMObject {
+    class PRMType: public PRMObject {
       public:
       // ==========================================================================
       /// @name Friends of PRMType
@@ -158,11 +153,13 @@ namespace gum {
        * Equality operator.
        */
       bool operator==(const PRMObject& from) const;
+      bool operator==(const PRMType& from) const;
 
       /**
        * Difference operator.
        */
       bool operator!=(const PRMObject& from) const;
+      bool operator!=(const PRMType& from) const;
 
       /// @}
       // ==========================================================================
@@ -224,7 +221,7 @@ namespace gum {
        * @param t The PRMType to replace this PRMType super.
        *
        * @throw OperationNotAllowed If this PRMType has no super.
-       * @throw TypeError If t is not equal to this PRMType super.
+       * @throw PRMTypeError If t is not equal to this PRMType super.
        */
       void setSuper(PRMType& t);
 
@@ -266,21 +263,21 @@ namespace gum {
       /// @{
 
       /// Returns true if this is a valid type or subtype.
-      bool __isValid() const;
+      bool _isValid_() const;
 
       /// Used at construction to set a unique name to this class underlying
       /// DiscreteVariable.
-      void __updateName();
+      void _updateName_();
 
       /// The discrete variable
-      DiscreteVariable* __var;
+      DiscreteVariable* _var_;
 
       /// The super type of this, if any.
-      PRMType* __superType;
+      PRMType* _superType_;
 
       /// A vector in which the i-th element is the Idx of the super
       /// type's label for the i-th label of this.
-      std::vector< Idx >* __label_map;
+      std::vector< Idx >* _label_map_;
 
       /// @}
     };

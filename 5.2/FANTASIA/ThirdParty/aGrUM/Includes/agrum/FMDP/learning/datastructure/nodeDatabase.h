@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -31,16 +30,13 @@
 #ifndef GUM_NODE_DATABASE_H
 #define GUM_NODE_DATABASE_H
 // =========================================================================
-#include <agrum/core/hashTable.h>
-#include <agrum/core/sequence.h>
+#include <agrum/tools/core/sequence.h>
 // =========================================================================
 #include <agrum/FMDP/learning/core/templateStrategy.h>
 #include <agrum/FMDP/learning/core/testPolicy/Chi2TestPolicy.h>
 #include <agrum/FMDP/learning/core/testPolicy/GTestPolicy.h>
 #include <agrum/FMDP/learning/core/testPolicy/leastSquareTestPolicy.h>
-#include <agrum/FMDP/learning/observation.h>
 // =========================================================================
-#include <agrum/variables/discreteVariable.h>
 // =========================================================================
 
 namespace gum {
@@ -56,14 +52,13 @@ namespace gum {
 
   template < TESTNAME AttributeSelection, bool isScalar >
   class NodeDatabase {
-    typedef typename ValueSelect< isScalar, double, Idx >::type ValueType;
+    using ValueType = typename ValueSelect< isScalar, double, Idx >::type;
 
     template < typename GUM_SCALAR >
-    using TestPolicy =
-       typename TestSelect< AttributeSelection,
-                            GTestPolicy< GUM_SCALAR >,
-                            Chi2TestPolicy< GUM_SCALAR >,
-                            LeastSquareTestPolicy< GUM_SCALAR > >::type;
+    using TestPolicy = typename TestSelect< AttributeSelection,
+                                            GTestPolicy< GUM_SCALAR >,
+                                            Chi2TestPolicy< GUM_SCALAR >,
+                                            LeastSquareTestPolicy< GUM_SCALAR > >::type;
 
     public:
     // ==========================================================================
@@ -74,8 +69,7 @@ namespace gum {
     // ###################################################################
     /// Default constructor
     // ###################################################################
-    NodeDatabase(const Set< const DiscreteVariable* >*,
-                 const DiscreteVariable* = nullptr);
+    NodeDatabase(const Set< const DiscreteVariable* >*, const DiscreteVariable* = nullptr);
 
     // ###################################################################
     /// Default destructor
@@ -85,10 +79,8 @@ namespace gum {
     // ============================================================================
     /// Allocators and Deallocators redefinition
     // ============================================================================
-    void* operator new(size_t s) {
-      return SmallObjectAllocator::instance().allocate(s);
-    }
-    void operator delete(void* p) {
+    void* operator new(size_t s) { return SmallObjectAllocator::instance().allocate(s); }
+    void  operator delete(void* p) {
       SmallObjectAllocator::instance().deallocate(p, sizeof(NodeDatabase));
     }
 
@@ -102,22 +94,22 @@ namespace gum {
     // ###################################################################
     /** Updates database with new observation
      *
-     * Calls either @fn __addObservation( const Observation*, Int2Type<true>)
-     * or @fn __addObservation( const Observation*, Int2Type<false>)
+     * Calls either @fn  _addObservation_( const Observation*, Int2Type<true>)
+     * or @fn  _addObservation_( const Observation*, Int2Type<false>)
      * depending on if we're learning reward function or transition probability
      **/
     // ###################################################################
     void addObservation(const Observation*);
 
     private:
-    void __addObservation(const Observation*, Int2Type< true >);
-    void __addObservation(const Observation*, Int2Type< false >);
+    void _addObservation_(const Observation*, Int2Type< true >);
+    void _addObservation_(const Observation*, Int2Type< false >);
 
     public:
     // ###################################################################
     /// Nb observation taken into account by this instance
     // ###################################################################
-    INLINE Idx nbObservation() const { return __nbObservation; }
+    INLINE Idx nbObservation() const { return _nbObservation_; }
 
     /// @}
 
@@ -131,23 +123,21 @@ namespace gum {
     /// any statistic is relevant
     // ###################################################################
     INLINE bool isTestRelevant(const DiscreteVariable* var) const {
-      return __attrTable[var]->isTestRelevant();
+      return _attrTable_[var]->isTestRelevant();
     }
 
     // ###################################################################
     /// Returns the performance of given variables according to selection
     /// criterion
     // ###################################################################
-    INLINE double testValue(const DiscreteVariable* var) const {
-      return __attrTable[var]->score();
-    }
+    INLINE double testValue(const DiscreteVariable* var) const { return _attrTable_[var]->score(); }
 
     // ###################################################################
     /// Returns the performance of given variables according to selection
     /// secondary criterion (to break ties)
     // ###################################################################
     INLINE double testOtherCriterion(const DiscreteVariable* var) const {
-      return __attrTable[var]->secondaryscore();
+      return _attrTable_[var]->secondaryscore();
     }
 
     /// @}
@@ -168,17 +158,17 @@ namespace gum {
     /// (so that test policy information can be merged too)
     // ###################################################################
     const TestPolicy< ValueType >* testPolicy(const DiscreteVariable* var) const {
-      return __attrTable[var];
+      return _attrTable_[var];
     }
 
     // ###################################################################
     /// Iterators on value count to recopy correctly its content
     // ###################################################################
     const HashTableConstIteratorSafe< ValueType, Idx > cbeginValues() const {
-      return __valueCount.cbeginSafe();
+      return _valueCount_.cbeginSafe();
     }
     const HashTableConstIteratorSafe< ValueType, Idx > cendValues() const {
-      return __valueCount.cendSafe();
+      return _valueCount_.cendSafe();
     }
 
     /// @}
@@ -188,30 +178,29 @@ namespace gum {
     // ###################################################################
 
     Idx effectif(Idx moda) const {
-      return __valueCount.exists(ValueType(moda)) ? __valueCount[ValueType(moda)]
-                                                  : 0;
+      return _valueCount_.exists(ValueType(moda)) ? _valueCount_[ValueType(moda)] : 0;
     }
 
-    Idx valueDomain() const { return __valueDomain(Int2Type< isScalar >()); }
+    Idx valueDomain() const { return _valueDomain_(Int2Type< isScalar >()); }
 
     private:
-    Idx __valueDomain(Int2Type< true >) const { return __valueCount.size(); }
-    Idx __valueDomain(Int2Type< false >) const { return __value->domainSize(); }
+    Idx _valueDomain_(Int2Type< true >) const { return _valueCount_.size(); }
+    Idx _valueDomain_(Int2Type< false >) const { return _value_->domainSize(); }
 
     std::string toString() const;
 
     private:
     /// Table giving for every variables its instantiation
-    HashTable< const DiscreteVariable*, TestPolicy< ValueType >* > __attrTable;
+    HashTable< const DiscreteVariable*, TestPolicy< ValueType >* > _attrTable_;
 
     /// So does this reference on the value observed
-    const DiscreteVariable* __value;
+    const DiscreteVariable* _value_;
 
     ///
-    Idx __nbObservation;
+    Idx _nbObservation_;
 
     ///
-    HashTable< ValueType, Idx > __valueCount;
+    HashTable< ValueType, Idx > _valueCount_;
   };
 
 

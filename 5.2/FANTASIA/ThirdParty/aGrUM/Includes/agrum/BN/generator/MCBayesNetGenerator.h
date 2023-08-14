@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -21,14 +20,16 @@
 
 
 /** @file
- * @brief Class for generating bayesian networks.using MC algorithm
+ * @brief Class for generating Bayesian networks.using MC algorithm
  * cf. [Ide and Cozman, 2002]
  *
- * @author Pierre-Henri WUILLEMIN and Ariele-Paolo MAESANO
+ * @author Pierre-Henri WUILLEMIN(_at_LIP6) and Ariele-Paolo MAESANO
  */
 
 #ifndef GUM_MC_BAYES_NET_GENERATOR
 #define GUM_MC_BAYES_NET_GENERATOR
+
+#define NB_INIT_ITERATIONS 5000
 
 #include <agrum/agrum.h>
 
@@ -42,31 +43,26 @@
 #ifdef HAVE_DIRENT_H
 #  include <dirent.h>
 #else
-#  include <agrum/core/mvsc/dirent.h>
+#  include <agrum/tools/core/mvsc/dirent.h>
 #endif
 
-#include <agrum/BN/BayesNet.h>
 #include <agrum/BN/generator/IBayesNetGenerator.h>
 #include <agrum/BN/generator/simpleCPTDisturber.h>
-#include <agrum/BN/generator/simpleCPTGenerator.h>
 #include <agrum/BN/inference/lazyPropagation.h>
-#include <agrum/core/hashTable.h>
-#include <agrum/multidim/potential.h>
-#include <agrum/variables/labelizedVariable.h>
 
 namespace gum {
   /**
    * @class MCBayesNetGenerator
    * @headerfile MCBayesNetGenerator.h
    * <agrum/BN/generator/MCayesNetGenerator.h>
-   * @brief Class for generating bayesian networks with Markov chains.
+   * @brief Class for generating Bayesian networks with Markov chains.
    * @ingroup bn_generator
    *
-   * This class randomly generates a bayesian network given 6 parameters: the
+   * This class randomly generates a Bayesian network given 6 parameters: the
    * number of nodes, the maximum number of arcs the and of iterations the
    * maximum modality.
    * @warning  Be Careful when entering the parameters, high Values may cause
-   * the density of the Bayesian Network to be too high resulting in the
+   * the density of the Bayesian network to be too high resulting in the
    * failure of most of the inference Methods.
    *
    * \anchor probability_p_q
@@ -157,9 +153,9 @@ namespace gum {
   template < typename GUM_SCALAR,
              template < typename > class ICPTGenerator = SimpleCPTGenerator,
              template < typename > class ICPTDisturber = SimpleCPTDisturber >
-  class MCBayesNetGenerator
-      : public IBayesNetGenerator< GUM_SCALAR, ICPTGenerator >
-      , public ICPTDisturber< GUM_SCALAR > {
+  class MCBayesNetGenerator:
+      public IBayesNetGenerator< GUM_SCALAR, ICPTGenerator >,
+      public ICPTDisturber< GUM_SCALAR > {
     public:
     // ############################################################################
     /// @name Constructors / Destructor
@@ -185,9 +181,9 @@ namespace gum {
     MCBayesNetGenerator(Size nbrNodes,
                         Size maxArcs,
                         Idx  maxModality = 2,
-                        Size iteration = 5000,
-                        Idx  p = 30,
-                        Idx  q = 40);
+                        Size iteration   = NB_INIT_ITERATIONS,
+                        Idx  p           = 30,
+                        Idx  q           = 40);
 
     /**
      * Constructor.
@@ -204,9 +200,9 @@ namespace gum {
      * )
      */
     explicit MCBayesNetGenerator(BayesNet< GUM_SCALAR > bayesNet,
-                                 Size                   iteration = 5000,
-                                 Idx                    p = 30,
-                                 Idx                    q = 40);
+                                 Size                   iteration = NB_INIT_ITERATIONS,
+                                 Idx                    p         = 30,
+                                 Idx                    q         = 40);
 
     /**
      * Destructor.
@@ -221,24 +217,25 @@ namespace gum {
     // ############################################################################
     /// @{
     /**
-     * Generates a random bayesian network.
+     * Generates a random Bayesian network.
      * @param bayesNet empty IBayesNet to generate.
-     * @return null but modify inputed Bayesian Network
+     * @return null but modify inputed Bayesian network
      */
     void generateBN(BayesNet< GUM_SCALAR >& bayesNet) override;
 
     /**
-     * Change randomly the topology of a specific bayesian networks.
+     * Change randomly the topology of a specific Bayesian networks.
      * @param bayesNetinit IBayesNet to be modify
      * @param iteration The number of iterations wanted to repeat the algorithm
-     * @return null but modify inputed Bayesian Network
+     * @return null but modify inputed Bayesian network
      * @throws OperationNotAllow if the initial state of the IBayesNet is not
      * respecting the wanted conditions
      * if iteration = 0, it is assumed that the number of iteration wanted is the
      * same
      * as the one specified in the constructor
-     */
+
     void disturbBN(BayesNet< GUM_SCALAR >& bayesNetinit, Size iteration = 0);
+    */
 
     ///@}
 
@@ -284,38 +281,39 @@ namespace gum {
 
     /// @}
     protected:
-    Size                                          _iteration;
-    Idx                                           _p, _q;
-    bool                                          _disturbing;
-    BayesNet< GUM_SCALAR >                        _bayesNettemp;
-    HashTable< NodeId, Potential< GUM_SCALAR >* > _hashMarginal;
+    Size iteration_;
+    Idx  p_, q_;
+    /*
+       bool                                          disturbing_;
+    BayesNet< GUM_SCALAR >                        bayesNettemp_;
+    HashTable< NodeId, Potential< GUM_SCALAR >* > hashMarginal_;*/
 
     /**
      * The function that verify if graph is a polytree.
      **/
-    bool __isPolytree();
+    bool _isPolytree_();
     /**
      * The function that verify if node i and j are connected.
      **/
-    bool __connect(NodeId i, NodeId j);
+    bool _connect_(NodeId i, NodeId j);
     /**
      * The function that verify if there is a oriented path from node i to node
      *j.
      **/
-    bool __directedPath(NodeId tail, NodeId head);
+    bool _directedPath_(NodeId tail, NodeId head);
     /**
      * The function that will insert an arc between node i to node j, but only
      *if
      *there isn't any cycle created.
      **/
-    void __insertArc(NodeId i, NodeId j);
+    void _insertArc_(NodeId i, NodeId j);
     /**
      * The function that will remove the arc between node i and node j. If the
      *boolean parameter mustbeconnex is true, the function will assert that the
      *graph
      *remain connected and will restore the arc otherwise.
      **/
-    void __eraseArc(NodeId i, NodeId j, bool mustbeconnex = true);
+    void _eraseArc_(NodeId i, NodeId j, bool mustbeconnex = true);
 
     /**
      * In the case that the graph is a polytree, the function will, according to
@@ -327,7 +325,7 @@ namespace gum {
      *will return to the previous topology.
      **/
 
-    void __PMMx_poly();
+    void _PMMx_poly_();
     /**
      * In the case that the graph is a multiconnected graph, the function will,
      *according to the probability p and q, choose which change of state must
@@ -336,91 +334,91 @@ namespace gum {
      *and if
      *not, will return to the previous topology.
      **/
-    void __PMMx_multi();
+    void _PMMx_multi_();
     /**
      * In the case that the graph is a polytree, the function will add a ramdom
      *arc
-     *by the use of the function __insertArc if the arc does not exist allready.
+     *by the use of the function  _insertArc_ if the arc does not exist allready.
      **/
 
-    void __jump_poly();
+    void _jump_poly_();
 
     /**
      * In the case that the graph is a multiconnect graph, the function will
      *choose
      *randomly two nodes and will remove the arc between them by the use of the
-     *function __insertArc if the arc exists.
+     *function  _insertArc_ if the arc exists.
      **/
 
-    void __jump_multi();
+    void _jump_multi_();
 
     /**
      * The function will add or remove a random arc in the graph using the
      *functions
-     *__insertArc and __removeArc.
+     * _insertArc_ and  _removeArc_.
      **/
-    void __AorR();
+    void _AorR_();
     /**
      * The function will remove and add a random arc changing the topology of the
      *graph but asserting its connectivity.
      **/
-    void __AR();
+    void _AR_();
     /**
      * The boolean function that will assert the respect of the constraint.
      **/
-    virtual bool __checkConditions();
+    virtual bool _checkConditions_();
 
-    // NOT USED ? void __createDAG( Size BNSize, Size iniRoot );
+    // NOT USED ? void  _createDAG_( Size BNSize, Size iniRoot );
 
-    // NOT USED ? std::vector<Idx>* __createPartDAG( Size BNSize, Size iniRoot
+    // NOT USED ? std::vector<Idx>*  _createPartDAG_( Size BNSize, Size iniRoot
     // );
 
     /**
-     * The internal function used by the previous __connect. It asserts the
+     * The internal function used by the previous  _is_connected_. It asserts the
      *existence
      *of an unoriented path between node i and node j avoiding passing through
      *nodes
      *listed in excluded.
      **/
 
-    bool __connect(NodeId i, NodeId j, NodeSet& excluded);
+    bool _is_connected_(const NodeId i, const NodeId j, NodeSet& excluded);
 
     /**
-     * The internal function used by the previous __directedPath. It asserts the
+     * The internal function used by the previous  _directedPath_. It asserts the
      *existence of an oriented path between node i and node j avoiding passing
      *through nodes listed in excluded.
      **/
-    bool __directedPath(NodeId tail, NodeId head, NodeSet& excluded);
+    bool _directedPath_(NodeId tail, NodeId head, NodeSet& excluded);
 
     /**
      * The function that randomly choose two nodes of the graph.
      **/
 
-    void __chooseNodes(NodeId& i, NodeId& j);
+    void _chooseNodes_(NodeId& i, NodeId& j);
 
     /**
      * The function that randomly choose two neighbours nodes of the graph.
      **/
-    void __chooseCloseNodes(NodeId& i, NodeId& j);
+    void _chooseCloseNodes_(NodeId& i, NodeId& j);
 
     /**
      * The function that randomly change the simple tree into a polytree.
      **/
 
-    void __transformPoly(Idx nbiter);
+    void _transformPoly_(Idx nbiter);
 
     /**
      * The function that randomly generate a simple tree.
      **/
-    void __createTree(Size BNSize);
+    void _createTree_(Size BNSize);
 
     /**
-     * The internal function used by __createTree that randomly generate a
+     * The internal function used by  _createTree_ that randomly generate a
      *simple
      *tree.
      * n : id number for node label
      **/
-    NodeId __createPartTree(Size BNSize, Idx& n);
+    NodeId _createPartTree_(Size BNSize, Idx& n);
   };
 
 

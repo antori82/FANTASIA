@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,7 +23,7 @@
  * @file
  * @brief Headers of the DFSTree class.
  *
- * @author Lionel TORTI and Pierre-Henri WUILLEMIN
+ * @author Lionel TORTI and Pierre-Henri WUILLEMIN(_at_LIP6)
  */
 
 #ifndef GUM_EDGE_GROWTH_H
@@ -35,16 +34,9 @@
 #include <utility>
 #include <vector>
 
-#include <agrum/core/math/math.h>
-#include <agrum/core/bijection.h>
-#include <agrum/core/sequence.h>
-#include <agrum/core/set.h>
 
-#include <agrum/graphs/diGraph.h>
+#include <agrum/tools/graphs/algorithms/triangulations/partialOrderedTriangulation.h>
 
-#include <agrum/graphs/algorithms/triangulations/partialOrderedTriangulation.h>
-
-#include <agrum/PRM/gspan/interfaceGraph.h>
 #include <agrum/PRM/gspan/pattern.h>
 
 namespace gum {
@@ -64,10 +56,7 @@ namespace gum {
         public:
         friend class DFSTree< GUM_SCALAR >;
         /// Constructor.
-        EdgeGrowth(NodeId     a_u,
-                   LabelData* an_edge,
-                   LabelData* a_l_v,
-                   NodeId     a_v = 0);
+        EdgeGrowth(NodeId a_u, LabelData* an_edge, LabelData* a_l_v, NodeId a_v = 0);
         /// Copy constructor.
         EdgeGrowth(const EdgeGrowth& from);
         /// Destructor.
@@ -85,9 +74,7 @@ namespace gum {
         void insert(PRMInstance< GUM_SCALAR >* u, PRMInstance< GUM_SCALAR >* v);
         /// The mapping between the u and v for each match in the interface
         /// graph.
-        NodeProperty<
-           std::pair< PRMInstance< GUM_SCALAR >*, PRMInstance< GUM_SCALAR >* > >
-           matches;
+        NodeProperty< std::pair< PRMInstance< GUM_SCALAR >*, PRMInstance< GUM_SCALAR >* > > matches;
         /// Return a string representation of this
         std::string toString();
 
@@ -101,8 +88,7 @@ namespace gum {
       };
 
       template < typename GUM_SCALAR >
-      std::ostream& operator<<(std::ostream&                   out,
-                               const EdgeGrowth< GUM_SCALAR >& edge);
+      std::ostream& operator<<(std::ostream& out, const EdgeGrowth< GUM_SCALAR >& edge);
 
 
 #ifndef GUM_NO_EXTERN_TEMPLATE_CLASS

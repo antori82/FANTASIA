@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -31,9 +30,7 @@
 #ifndef GUM_LEAF_PAIR_H
 #define GUM_LEAF_PAIR_H
 // =========================================================================
-#include <agrum/graphs/graphElements.h>
 // =========================================================================
-#include <agrum/FMDP/learning/datastructure/leaves/abstractLeaf.h>
 #include <agrum/FMDP/learning/datastructure/leaves/composedLeaf.h>
 // =========================================================================
 
@@ -58,22 +55,21 @@ namespace gum {
     // ###################################################################
     /// Default constructor
     // ###################################################################
-    LeafPair(AbstractLeaf* l1, AbstractLeaf* l2) : __l1(l1), __l2(l2) {
-      GUM_CONSTRUCTOR(LeafPair);
-    }
+    LeafPair(AbstractLeaf* l1, AbstractLeaf* l2) : _l1_(l1), _l2_(l2) { GUM_CONSTRUCTOR(LeafPair); }
 
     // ###################################################################
     /// Default destructor
     // ###################################################################
-    ~LeafPair() { GUM_DESTRUCTOR(LeafPair); }
+    ~LeafPair() {
+      GUM_DESTRUCTOR(LeafPair);
+      ;
+    }
 
     // ============================================================================
     /// Allocators and Deallocators redefinition
     // ============================================================================
-    void* operator new(size_t s) {
-      return SmallObjectAllocator::instance().allocate(s);
-    }
-    void operator delete(void* p) {
+    void* operator new(size_t s) { return SmallObjectAllocator::instance().allocate(s); }
+    void  operator delete(void* p) {
       SmallObjectAllocator::instance().deallocate(p, sizeof(LeafPair));
     }
 
@@ -99,35 +95,29 @@ namespace gum {
     // ###################################################################
     ///
     // ###################################################################
-    AbstractLeaf* firstLeaf() { return __l1; }
-    AbstractLeaf* secondLeaf() { return __l2; }
+    AbstractLeaf* firstLeaf() { return _l1_; }
+    AbstractLeaf* secondLeaf() { return _l2_; }
 
     // ###################################################################
     /// Returns true if pair has leaf in it
     // ###################################################################
-    bool contains(NodeId testedId) {
-      return __l1->contains(testedId) || __l2->contains(testedId);
-    }
+    bool contains(NodeId testedId) { return _l1_->contains(testedId) || _l2_->contains(testedId); }
 
     // ###################################################################
     /// Returns a leaf matching data and having given id as id
     // ###################################################################
-    AbstractLeaf* convert2Leaf(NodeId leafId) const {
-      return new ComposedLeaf(leafId, __l1, __l2);
-    }
+    AbstractLeaf* convert2Leaf(NodeId leafId) const { return new ComposedLeaf(leafId, _l1_, _l2_); }
 
-    AbstractLeaf* otherLeaf(AbstractLeaf* l) const {
-      return l == __l1 ? __l2 : __l1;
-    }
+    AbstractLeaf* otherLeaf(AbstractLeaf* l) const { return l == _l1_ ? _l2_ : _l1_; }
 
     std::string toString();
 
     private:
-    AbstractLeaf* __l1;
-    AbstractLeaf* __l2;
+    AbstractLeaf* _l1_;
+    AbstractLeaf* _l2_;
 
-    double __likelyhood1;
-    double __likelyhood2;
+    double _likelyhood1_;
+    double _likelyhood2_;
   };
 
 

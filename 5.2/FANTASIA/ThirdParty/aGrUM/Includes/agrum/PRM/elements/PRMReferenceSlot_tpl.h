@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,7 +23,7 @@
  * @file
  * @brief Inline implementation of gum::PRMReferenceSlot
  *
- * @author Lionel TORTI and Pierre-Henri WUILLEMIN
+ * @author Lionel TORTI and Pierre-Henri WUILLEMIN(_at_LIP6)
  */
 #include <agrum/PRM/elements/PRMReferenceSlot.h>
 
@@ -32,15 +31,13 @@ namespace gum {
   namespace prm {
 
     template < typename GUM_SCALAR >
-    PRMReferenceSlot< GUM_SCALAR >::PRMReferenceSlot(
-       const std::string&                      name,
-       PRMClassElementContainer< GUM_SCALAR >& type,
-       bool                                    isArray) :
+    PRMReferenceSlot< GUM_SCALAR >::PRMReferenceSlot(const std::string&                      name,
+                                                     PRMClassElementContainer< GUM_SCALAR >& type,
+                                                     bool isArray) :
         PRMClassElement< GUM_SCALAR >(name),
-        __slotType(type), __isArray(isArray) {
+        _slotType_(type), _isArray_(isArray) {
       GUM_CONSTRUCTOR(PRMReferenceSlot);
-      this->_safeName =
-         PRMObject::LEFT_CAST() + type.name() + PRMObject::RIGHT_CAST() + name;
+      this->safeName_ = PRMObject::LEFT_CAST() + type.name() + PRMObject::RIGHT_CAST() + name;
     }
 
     // Destructor.
@@ -50,20 +47,18 @@ namespace gum {
     }
 
     template < typename GUM_SCALAR >
-    PRMReferenceSlot< GUM_SCALAR >::PRMReferenceSlot(
-       const PRMReferenceSlot< GUM_SCALAR >& source) :
-        PRMClassElement< GUM_SCALAR >(source),
-        __slotType(source.__slotType), __isArray(source.__isArray) {
+    PRMReferenceSlot< GUM_SCALAR >::PRMReferenceSlot(const PRMReferenceSlot< GUM_SCALAR >& source) :
+        PRMClassElement< GUM_SCALAR >(source), _slotType_(source._slotType_),
+        _isArray_(source._isArray_) {
       GUM_CONS_CPY(PRMReferenceSlot);
-      GUM_ERROR(FatalError,
-                "illegal call to gum::ReferenceSlot copy constructor.");
+      GUM_ERROR(FatalError, "illegal call to gum::ReferenceSlot copy constructor.")
     }
 
     // Copy operator. Raise a FatalError.
     template < typename GUM_SCALAR >
-    PRMReferenceSlot< GUM_SCALAR >& PRMReferenceSlot< GUM_SCALAR >::
-                                    operator=(const PRMReferenceSlot< GUM_SCALAR >& from) {
-      GUM_ERROR(FatalError, "illegal call to gum::ReferenceSlot copy operator.");
+    PRMReferenceSlot< GUM_SCALAR >&
+       PRMReferenceSlot< GUM_SCALAR >::operator=(const PRMReferenceSlot< GUM_SCALAR >& from) {
+      GUM_ERROR(FatalError, "illegal call to gum::ReferenceSlot copy operator.")
     }
 
     template < typename GUM_SCALAR >
@@ -73,57 +68,54 @@ namespace gum {
     }
 
     template < typename GUM_SCALAR >
-    INLINE PRMClassElementContainer< GUM_SCALAR >&
-           PRMReferenceSlot< GUM_SCALAR >::slotType() {
-      return __slotType;
+    INLINE PRMClassElementContainer< GUM_SCALAR >& PRMReferenceSlot< GUM_SCALAR >::slotType() {
+      return _slotType_;
     }
 
     template < typename GUM_SCALAR >
     INLINE const PRMClassElementContainer< GUM_SCALAR >&
                  PRMReferenceSlot< GUM_SCALAR >::slotType() const {
-      return __slotType;
+      return _slotType_;
     }
 
     template < typename GUM_SCALAR >
     INLINE bool PRMReferenceSlot< GUM_SCALAR >::isArray() const {
-      return __isArray;
+      return _isArray_;
     }
 
     template < typename GUM_SCALAR >
     INLINE PRMType& PRMReferenceSlot< GUM_SCALAR >::type() {
-      GUM_ERROR(OperationNotAllowed, "This is a ReferenceSlot.");
+      GUM_ERROR(OperationNotAllowed, "This is a ReferenceSlot.")
     }
 
     template < typename GUM_SCALAR >
     INLINE const PRMType& PRMReferenceSlot< GUM_SCALAR >::type() const {
-      GUM_ERROR(OperationNotAllowed, "This is a ReferenceSlot.");
+      GUM_ERROR(OperationNotAllowed, "This is a ReferenceSlot.")
     }
 
     template < typename GUM_SCALAR >
     INLINE Potential< GUM_SCALAR >& PRMReferenceSlot< GUM_SCALAR >::cpf() {
-      GUM_ERROR(OperationNotAllowed, "This is a ReferenceSlot.");
+      GUM_ERROR(OperationNotAllowed, "This is a ReferenceSlot.")
     }
 
     template < typename GUM_SCALAR >
-    INLINE const Potential< GUM_SCALAR >&
-                 PRMReferenceSlot< GUM_SCALAR >::cpf() const {
-      GUM_ERROR(OperationNotAllowed, "This is a ReferenceSlot.");
+    INLINE const Potential< GUM_SCALAR >& PRMReferenceSlot< GUM_SCALAR >::cpf() const {
+      GUM_ERROR(OperationNotAllowed, "This is a ReferenceSlot.")
     }
 
     template < typename GUM_SCALAR >
-    INLINE PRMAttribute< GUM_SCALAR >*
-           PRMReferenceSlot< GUM_SCALAR >::getCastDescendant() const {
-      GUM_ERROR(OperationNotAllowed, "This is a ReferenceSlot.");
+    INLINE PRMAttribute< GUM_SCALAR >* PRMReferenceSlot< GUM_SCALAR >::getCastDescendant() const {
+      GUM_ERROR(OperationNotAllowed, "This is a ReferenceSlot.")
     }
 
 
     template < typename GUM_SCALAR >
-    INLINE void PRMReferenceSlot< GUM_SCALAR >::addParent(
-       const PRMClassElement< GUM_SCALAR >& elt) {}
+    INLINE void
+       PRMReferenceSlot< GUM_SCALAR >::addParent(const PRMClassElement< GUM_SCALAR >& elt) {}
 
     template < typename GUM_SCALAR >
-    INLINE void PRMReferenceSlot< GUM_SCALAR >::addChild(
-       const PRMClassElement< GUM_SCALAR >& elt) {}
+    INLINE void PRMReferenceSlot< GUM_SCALAR >::addChild(const PRMClassElement< GUM_SCALAR >& elt) {
+    }
 
   } /* namespace prm */
 } /* namespace gum */

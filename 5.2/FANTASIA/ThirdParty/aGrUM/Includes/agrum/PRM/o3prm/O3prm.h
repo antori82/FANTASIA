@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,7 +23,7 @@
  * @file
  * @brief Headers for the AST of the O3PRM language.
  *
- * @author Christophe GONZALES and Pierre-Henri WUILLEMIN
+ * @author Christophe GONZALES(_at_AMU) and Pierre-Henri WUILLEMIN(_at_LIP6)
  * @author Lionel TORTI
  */
 
@@ -33,8 +32,7 @@
 #include <vector>
 
 #include <agrum/agrum.h>
-#include <agrum/core/hashTable.h>
-#include <agrum/core/math/formula.h>
+#include <agrum/tools/core/math/formula.h>
 
 #ifndef GUM_PRM_O3PRM_PRM_H
 #  define GUM_PRM_O3PRM_PRM_H
@@ -71,9 +69,9 @@ namespace gum {
         int  column() const;
 
         private:
-        std::string __file;
-        int         __line;
-        int         __column;
+        std::string _file_;
+        int         _line_;
+        int         _column_;
       };
 
       /**
@@ -101,8 +99,8 @@ namespace gum {
         const Formula& formula() const;
 
         private:
-        O3Position                 __pos;
-        std::unique_ptr< Formula > __formula;
+        O3Position                 _pos_;
+        std::unique_ptr< Formula > _formula_;
       };
 
       /**
@@ -130,8 +128,8 @@ namespace gum {
         float  value() const;
 
         private:
-        O3Position __pos;
-        float      __value;
+        O3Position _pos_;
+        float      _value_;
       };
 
       /**
@@ -159,8 +157,8 @@ namespace gum {
         int  value() const;
 
         private:
-        O3Position __pos;
-        int        __value;
+        O3Position _pos_;
+        int        _value_;
       };
 
       /**
@@ -188,8 +186,8 @@ namespace gum {
         const std::string& label() const;
 
         private:
-        O3Position  __pos;
-        std::string __label;
+        O3Position  _pos_;
+        std::string _label_;
       };
 
       std::ostream& operator<<(std::ostream& o, const O3Label& src);
@@ -204,7 +202,7 @@ namespace gum {
       class O3Type {
         public:
         using LabelPair = std::pair< O3Label, O3Label >;
-        using LabelMap = std::vector< LabelPair >;
+        using LabelMap  = std::vector< LabelPair >;
 
         O3Type();
         O3Type(const O3Type& src);
@@ -230,11 +228,11 @@ namespace gum {
         const bool& deprecated() const;
 
         private:
-        O3Position __pos;
-        O3Label    __name;
-        O3Label    __superLabel;
-        LabelMap   __labels;
-        bool       __dep_flag;
+        O3Position _pos_;
+        O3Label    _name_;
+        O3Label    _superLabel_;
+        LabelMap   _labels_;
+        bool       _dep_flag_;
       };
 
       /**
@@ -270,11 +268,11 @@ namespace gum {
         const bool& deprecated() const;
 
         private:
-        O3Position __pos;
-        O3Label    __name;
-        O3Integer  __start;
-        O3Integer  __end;
-        bool       __dep_flag;
+        O3Position _pos_;
+        O3Label    _name_;
+        O3Integer  _start_;
+        O3Integer  _end_;
+        bool       _dep_flag_;
       };
 
       /**
@@ -307,10 +305,10 @@ namespace gum {
         const bool& deprecated() const;
 
         private:
-        O3Position             __pos;
-        O3Label                __name;
-        std::vector< O3Float > __values;
-        bool                   __dep_flag;
+        O3Position             _pos_;
+        O3Label                _name_;
+        std::vector< O3Float > _values_;
+        bool                   _dep_flag_;
       };
 
       /**
@@ -341,9 +339,9 @@ namespace gum {
         bool  isArray() const;
 
         private:
-        O3Label __type;
-        O3Label __name;
-        bool    __isArray;
+        O3Label _type_;
+        O3Label _name_;
+        bool    _isArray_;
       };
 
       /**
@@ -378,10 +376,10 @@ namespace gum {
         const O3InterfaceElementList& elements() const;
 
         private:
-        O3Position                                __pos;
-        O3Label                                   __name;
-        O3Label                                   __superLabel;
-        std::unique_ptr< O3InterfaceElementList > __elts;
+        O3Position                                _pos_;
+        O3Label                                   _name_;
+        O3Label                                   _superLabel_;
+        std::unique_ptr< O3InterfaceElementList > _elts_;
       };
 
       /**
@@ -393,15 +391,15 @@ namespace gum {
        */
       class O3Parameter {
         public:
-        enum class PRMType { NONE, INT, FLOAT };
+        enum class PRMType {
+          NONE,
+          INT,
+          FLOAT
+        };
 
         O3Parameter();
-        O3Parameter(const O3Position& pos,
-                    const O3Label&    name,
-                    const O3Integer&  value);
-        O3Parameter(const O3Position& pos,
-                    const O3Label&    name,
-                    const O3Float&    value);
+        O3Parameter(const O3Position& pos, const O3Label& name, const O3Integer& value);
+        O3Parameter(const O3Position& pos, const O3Label& name, const O3Float& value);
         O3Parameter(const O3Parameter& src);
         O3Parameter(O3Parameter&& src);
         ~O3Parameter();
@@ -422,10 +420,10 @@ namespace gum {
         const O3Float& value() const;
 
         private:
-        PRMType    __type;
-        O3Position __pos;
-        O3Label    __name;
-        O3Float    __value;
+        PRMType    _type_;
+        O3Position _pos_;
+        O3Label    _name_;
+        O3Float    _value_;
       };
 
       /**
@@ -456,9 +454,9 @@ namespace gum {
         bool  isArray() const;
 
         private:
-        O3Label __type;
-        O3Label __name;
-        bool    __isArray;
+        O3Label _type_;
+        O3Label _name_;
+        bool    _isArray_;
       };
 
       /**
@@ -473,9 +471,7 @@ namespace gum {
         using O3LabelList = std::vector< O3Label >;
 
         O3Attribute();
-        O3Attribute(const O3Label&     type,
-                    const O3Label&     name,
-                    const O3LabelList& parents);
+        O3Attribute(const O3Label& type, const O3Label& name, const O3LabelList& parents);
         O3Attribute(const O3Attribute& src);
         O3Attribute(O3Attribute&& src);
         virtual ~O3Attribute();
@@ -495,9 +491,9 @@ namespace gum {
         virtual std::unique_ptr< O3Attribute > copy() const = 0;
 
         private:
-        O3Label     __type;
-        O3Label     __name;
-        O3LabelList __parents;
+        O3Label     _type_;
+        O3Label     _name_;
+        O3LabelList _parents_;
       };
 
       /**
@@ -507,7 +503,7 @@ namespace gum {
        *
        * @brief The O3RawCPT is part of the AST of the O3PRM language.
        */
-      class O3RawCPT : public O3Attribute {
+      class O3RawCPT: public O3Attribute {
         public:
         using O3FormulaList = std::vector< O3Formula >;
 
@@ -529,7 +525,7 @@ namespace gum {
         virtual std::unique_ptr< O3Attribute > copy() const;
 
         private:
-        std::unique_ptr< O3FormulaList > __values;
+        std::unique_ptr< O3FormulaList > _values_;
       };
 
       /**
@@ -539,12 +535,12 @@ namespace gum {
        *
        * @brief The O3RuleCPT is part of the AST of the O3PRM language.
        */
-      class O3RuleCPT : public O3Attribute {
+      class O3RuleCPT: public O3Attribute {
         public:
-        using O3LabelList = std::vector< O3Label >;
+        using O3LabelList   = std::vector< O3Label >;
         using O3FormulaList = std::vector< O3Formula >;
-        using O3Rule = std::pair< O3LabelList, O3FormulaList >;
-        using O3RuleList = std::vector< O3Rule >;
+        using O3Rule        = std::pair< O3LabelList, O3FormulaList >;
+        using O3RuleList    = std::vector< O3Rule >;
 
         O3RuleCPT();
         O3RuleCPT(const O3Label&                  type,
@@ -564,7 +560,7 @@ namespace gum {
         virtual std::unique_ptr< O3Attribute > copy() const;
 
         private:
-        std::unique_ptr< O3RuleList > __rules;
+        std::unique_ptr< O3RuleList > _rules_;
       };
 
       /**
@@ -602,11 +598,11 @@ namespace gum {
         const O3LabelList& parameters() const;
 
         private:
-        O3Label     __variableType;
-        O3Label     __aggregateType;
-        O3Label     __name;
-        O3LabelList __parents;
-        O3LabelList __parameters;
+        O3Label     _variableType_;
+        O3Label     _aggregateType_;
+        O3Label     _name_;
+        O3LabelList _parents_;
+        O3LabelList _parameters_;
       };
 
       /**
@@ -618,11 +614,11 @@ namespace gum {
        */
       class O3Class {
         public:
-        using O3LabelList = std::vector< O3Label >;
-        using O3ParameterList = std::vector< O3Parameter >;
+        using O3LabelList         = std::vector< O3Label >;
+        using O3ParameterList     = std::vector< O3Parameter >;
         using O3ReferenceSlotList = std::vector< O3ReferenceSlot >;
-        using O3AttributeList = std::vector< std::unique_ptr< O3Attribute > >;
-        using O3AggregateList = std::vector< O3Aggregate >;
+        using O3AttributeList     = std::vector< std::unique_ptr< O3Attribute > >;
+        using O3AggregateList     = std::vector< O3Aggregate >;
 
         O3Class();
         O3Class(const O3Class& src);
@@ -657,14 +653,14 @@ namespace gum {
         const O3AggregateList& aggregates() const;
 
         private:
-        O3Position                             __pos;
-        O3Label                                __name;
-        O3Label                                __superLabel;
-        std::unique_ptr< O3LabelList >         __interfaces;
-        std::unique_ptr< O3ParameterList >     __params;
-        std::unique_ptr< O3ReferenceSlotList > __refs;
-        std::unique_ptr< O3AttributeList >     __attrs;
-        std::unique_ptr< O3AggregateList >     __aggs;
+        O3Position                             _pos_;
+        O3Label                                _name_;
+        O3Label                                _superLabel_;
+        std::unique_ptr< O3LabelList >         _interfaces_;
+        std::unique_ptr< O3ParameterList >     _params_;
+        std::unique_ptr< O3ReferenceSlotList > _refs_;
+        std::unique_ptr< O3AttributeList >     _attrs_;
+        std::unique_ptr< O3AggregateList >     _aggs_;
       };
 
       /**
@@ -700,11 +696,11 @@ namespace gum {
         const O3Integer& rightIndex() const;
 
         private:
-        O3Label   __leftInstance;
-        O3Integer __leftIndex;
-        O3Label   __leftReference;
-        O3Label   __rightInstance;
-        O3Integer __rightIndex;
+        O3Label   _leftInstance_;
+        O3Integer _leftIndex_;
+        O3Label   _leftReference_;
+        O3Label   _rightInstance_;
+        O3Integer _rightIndex_;
       };
 
       /**
@@ -740,11 +736,11 @@ namespace gum {
         const O3Integer& rightIndex() const;
 
         private:
-        O3Label   __leftInstance;
-        O3Integer __leftIndex;
-        O3Label   __leftReference;
-        O3Label   __rightInstance;
-        O3Integer __rightIndex;
+        O3Label   _leftInstance_;
+        O3Integer _leftIndex_;
+        O3Label   _leftReference_;
+        O3Label   _rightInstance_;
+        O3Integer _rightIndex_;
       };
 
       /**
@@ -775,9 +771,9 @@ namespace gum {
         bool  isInteger() const;
 
         private:
-        O3Label __name;
-        O3Float __value;
-        bool    __isInteger;
+        O3Label _name_;
+        O3Float _value_;
+        bool    _isInteger_;
       };
 
       /**
@@ -812,10 +808,10 @@ namespace gum {
         const O3InstanceParameterList& parameters() const;
 
         private:
-        O3Label                 __type;
-        O3Label                 __name;
-        O3Integer               __size;
-        O3InstanceParameterList __parameters;
+        O3Label                 _type_;
+        O3Label                 _name_;
+        O3Integer               _size_;
+        O3InstanceParameterList _parameters_;
       };
 
       /**
@@ -827,9 +823,9 @@ namespace gum {
        */
       class O3System {
         public:
-        using O3InstanceList = std::vector< O3Instance >;
+        using O3InstanceList   = std::vector< O3Instance >;
         using O3AssignmentList = std::vector< O3Assignment >;
-        using O3IncrementList = std::vector< O3Increment >;
+        using O3IncrementList  = std::vector< O3Increment >;
 
         O3System();
         O3System(const O3System& src);
@@ -852,10 +848,10 @@ namespace gum {
         const O3IncrementList& increments() const;
 
         private:
-        O3Label          __name;
-        O3InstanceList   __instances;
-        O3AssignmentList __assigments;
-        O3IncrementList  __increments;
+        O3Label          _name_;
+        O3InstanceList   _instances_;
+        O3AssignmentList _assigments_;
+        O3IncrementList  _increments_;
       };
 
       /**
@@ -879,7 +875,7 @@ namespace gum {
         const O3Label& import() const;
 
         private:
-        O3Label __import;
+        O3Label _import_;
       };
 
       /**
@@ -891,13 +887,13 @@ namespace gum {
        */
       class O3PRM {
         public:
-        using O3TypeList = std::vector< std::unique_ptr< O3Type > >;
-        using O3IntTypeList = std::vector< std::unique_ptr< O3IntType > >;
-        using O3RealTypeList = std::vector< std::unique_ptr< O3RealType > >;
+        using O3TypeList      = std::vector< std::unique_ptr< O3Type > >;
+        using O3IntTypeList   = std::vector< std::unique_ptr< O3IntType > >;
+        using O3RealTypeList  = std::vector< std::unique_ptr< O3RealType > >;
         using O3InterfaceList = std::vector< std::unique_ptr< O3Interface > >;
-        using O3ClassList = std::vector< std::unique_ptr< O3Class > >;
-        using O3SystemList = std::vector< std::unique_ptr< O3System > >;
-        using O3ImportList = std::vector< std::unique_ptr< O3Import > >;
+        using O3ClassList     = std::vector< std::unique_ptr< O3Class > >;
+        using O3SystemList    = std::vector< std::unique_ptr< O3System > >;
+        using O3ImportList    = std::vector< std::unique_ptr< O3Import > >;
 
         O3PRM();
         O3PRM(const O3PRM& src);
@@ -929,13 +925,13 @@ namespace gum {
         const O3ImportList& imports() const;
 
         private:
-        O3TypeList      __types;
-        O3IntTypeList   __int_types;
-        O3RealTypeList  __real_types;
-        O3InterfaceList __interfaces;
-        O3ClassList     __classes;
-        O3SystemList    __systems;
-        O3ImportList    __imports;
+        O3TypeList      _types_;
+        O3IntTypeList   _int_types_;
+        O3RealTypeList  _real_types_;
+        O3InterfaceList _interfaces_;
+        O3ClassList     _classes_;
+        O3SystemList    _systems_;
+        O3ImportList    _imports_;
       };
 
     }   // namespace o3prm

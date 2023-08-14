@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,10 +23,10 @@
  * @file
  * @brief Definition of classe for BN file output manipulation
  *
- * This class servers to write the content of a Bayesian Network in
+ * This class servers to write the content of a Bayesian network in
  * the BN format.
  *
- * @author Lionel TORTI and Pierre-Henri WUILLEMIN
+ * @author Lionel TORTI and Pierre-Henri WUILLEMIN(_at_LIP6)
  */
 
 #ifndef GUM_OCNF_WRITER_H
@@ -40,8 +39,6 @@
 
 #include <agrum/BN/io/cnf/CNFWriter.h>
 #include <agrum/agrum.h>
-#include <agrum/core/approximations/approximationPolicy.h>
-#include <agrum/core/hashTable.h>
 namespace gum {
 
   /**
@@ -50,16 +47,14 @@ namespace gum {
    * @brief Writes a IBayesNet in the BN format.
    * @ingroup bn_io
    *
-   * This class servers to write the content of a Bayesian Network in
+   * This class servers to write the content of a Bayesian network in
    * the BN format. See
    * TODO
    * for information on this format.
    *
    */
-  template < typename GUM_SCALAR,
-             template < typename > class IApproximationPolicy = ExactPolicy >
-  class FactorisedValuesCNFWriter
-      : public CNFWriter< GUM_SCALAR, IApproximationPolicy > {
+  template < typename GUM_SCALAR, template < typename > class IApproximationPolicy = ExactPolicy >
+  class FactorisedValuesCNFWriter: public CNFWriter< GUM_SCALAR, IApproximationPolicy > {
     public:
     // ==========================================================================
     /// @name Constructor & destructor
@@ -74,29 +69,28 @@ namespace gum {
     /**
      * Destructor.
      */
-    ~FactorisedValuesCNFWriter() final;
+    ~FactorisedValuesCNFWriter();
 
     /// @}
-
+    protected:
     /**
-     * Writes a Bayesian Network in the output stream using the BN format.
+     * Writes a Bayesian network in the output stream using the BN format.
      *
      * @param output The output stream.
-     * @param bn The Bayesian Network writen in output.
+     * @param bn The Bayesian network writen in output.
      * @throws IOError Raised if and I/O error occurs.
      */
-    void write(std::ostream& output, const IBayesNet< GUM_SCALAR >& bn) final;
+    void _doWrite(std::ostream& output, const IBayesNet< GUM_SCALAR >& bn) final;
 
     /**
-     * Writes a Bayesian Network in the referenced file using the BN format.
+     * Writes a Bayesian network in the referenced file using the BN format.
      * If the files doesn't exists, it is created.
      *
-     * @param filePath The path to the file used to write the Bayesian Network.
-     * @param bn The Bayesian Network writed in the file.
+     * @param filePath The path to the file used to write the Bayesian network.
+     * @param bn The Bayesian network writed in the file.
      * @throws IOError Raised if and I/O error occurs.
      */
-    void write(const std::string&             filePath,
-               const IBayesNet< GUM_SCALAR >& bn) final;
+    void _doWrite(const std::string& filePath, const IBayesNet< GUM_SCALAR >& bn) final;
   };
 
 

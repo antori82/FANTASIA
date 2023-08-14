@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,16 +23,14 @@
  * @file
  * @brief Class building the essential Graph from a DAGmodel
  *
- * @author Pierre-Henri WUILLEMIN and Christophe GONZALES
+ * @author Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
  *
  */
 #ifndef GUM_ESSENTIALGRAPH_H
 #define GUM_ESSENTIALGRAPH_H
 
-#include <agrum/graphicalModels/DAGmodel.h>
-#include <agrum/graphs/graphElements.h>
-#include <agrum/graphs/mixedGraph.h>
-#include <agrum/graphs/undiGraph.h>
+#include <agrum/tools/graphicalModels/DAGmodel.h>
+#include <agrum/tools/graphs/PDAG.h>
 
 namespace gum {
 
@@ -44,13 +41,11 @@ namespace gum {
    * @ingroup bn_group
    *
    * Essential graph is a mixed graph (Chain Graph) that represents the class of
-   * markov equivalent Bayesian Networks (with the same independency model).
+   * markov equivalent Bayesian networks (with the same independence model).
    *
    * The main goal of this class is to nest the algorithm to build the essential
-   * graph
-   * from a BN and to encapsulate the representation (as a MixedGraph) of the
-   * essential
-   * graph.
+   * graph from a BN and to encapsulate the representation (as a MixedGraph) of the
+   * essential graph.
    *
    * gum::operator<<(std::ostream&, const BayesNet<GUM_SCALAR>&).
    */
@@ -60,26 +55,32 @@ namespace gum {
     // this constructor will build the essential graph
     explicit EssentialGraph(const DAGmodel& m);
     // this constructor will use mh as essential graph for m
-    EssentialGraph(const DAGmodel& m, const MixedGraph& mg);
+    EssentialGraph(const DAGmodel& m, const PDAG& mg);
     EssentialGraph(const EssentialGraph& g);
     EssentialGraph& operator=(const EssentialGraph& g);
 
     ~EssentialGraph();
 
     /// @return a copy of the mixed graph
-    MixedGraph mixedGraph();
+    PDAG pdag() const;
 
     /// @return a dot representation of this essentialGraph
     std::string toDot() const;
 
     /// wrapping @ref MixedGraph::parents(id)
-    const NodeSet& parents(const NodeId id) const;
+    const NodeSet& parents(NodeId id) const;
 
     /// wrapping @ref MixedGraph::parents(id)
-    const NodeSet& children(const NodeId id) const;
+    const NodeSet& children(NodeId id) const;
+
+    /// wrapping @ref MixedGraph::parents(ids)
+    NodeSet parents(const NodeSet& ids) const;
+
+    /// wrapping @ref MixedGraph::parents(ids)
+    NodeSet children(const NodeSet& ids) const;
 
     /// wrapping @ref MixedGraph::parents(id)
-    const NodeSet& neighbours(const NodeId id) const;
+    const NodeSet& neighbours(NodeId id) const;
 
     /// wrapping @ref MixedGraph::sizeArcs()
     Size sizeArcs() const;
@@ -103,11 +104,13 @@ namespace gum {
     const NodeGraphPart& nodes() const;
 
     private:
-    void __buildEssentialGraph();
-    bool __strongly_protected(NodeId a, NodeId b);
+    void _buildEssentialGraph_();
+    bool _strongly_protected_(NodeId a, NodeId b) const;
 
-    const DAGmodel* __dagmodel;
-    MixedGraph      __mg;
+    static bool _strongly_protected_(MixedGraph mg, NodeId a, NodeId b);
+
+    const DAGmodel* _dagmodel_;
+    PDAG            _pdag_;
   };
 }   // namespace gum
 

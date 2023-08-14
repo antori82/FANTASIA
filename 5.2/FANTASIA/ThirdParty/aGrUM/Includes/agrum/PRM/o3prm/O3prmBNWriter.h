@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -26,7 +25,8 @@
  *
  * Writes an bayes net in XML files with BIF format
  *
- * @author Jean-Christophe MAGNAN and Pierre-Henri WUILLEMIN
+ * @author Pierre-Henri WUILLEMIN(_at_LIP6) and Jean-Christophe MAGNAN and Christophe
+ * GONZALES(_at_AMU)
  */
 
 #ifndef GUM_O3PRMBNWRITER_H
@@ -40,9 +40,8 @@
 
 #include <agrum/BN/io/BNWriter.h>
 #include <agrum/agrum.h>
-#include <agrum/variables/discreteVariable.h>
-#include <agrum/variables/discretizedVariable.h>
-#include <agrum/variables/rangeVariable.h>
+
+#include <agrum/tools/variables/allDiscreteVariables.h>
 
 namespace gum {
   /**
@@ -55,7 +54,7 @@ namespace gum {
    *
    */
   template < typename GUM_SCALAR >
-  class O3prmBNWriter : public BNWriter< GUM_SCALAR > {
+  class O3prmBNWriter: public BNWriter< GUM_SCALAR > {
     public:
     // ==========================================================================
     /// @name Constructor & destructor
@@ -70,10 +69,10 @@ namespace gum {
     /**
      * Destructor.
      */
-    virtual ~O3prmBNWriter();
+    ~O3prmBNWriter() override;
 
     /// @}
-
+    protected:
     /**
      * Writes an bayes net in the given ouput stream.
      *
@@ -81,8 +80,7 @@ namespace gum {
      * @param bn The bayes net writen in the stream.
      * @throws IOError Raised if an I/O error occurs.
      */
-    virtual void write(std::ostream&                  output,
-                       const IBayesNet< GUM_SCALAR >& bn) final;
+    void _doWrite(std::ostream& output, const IBayesNet< GUM_SCALAR >& bn) final;
 
     /**
      * Writes an bayes net in the file referenced by filePath.
@@ -93,27 +91,25 @@ namespace gum {
      * @param bn The bayes net written in the file.
      * @throw IOError Raised if an I/O error occurs.
      */
-    virtual void write(const std::string&             filePath,
-                       const IBayesNet< GUM_SCALAR >& bn) final;
+    void _doWrite(const std::string& filePath, const IBayesNet< GUM_SCALAR >& bn) final;
 
     private:
-    std::string __extractAttribute(const IBayesNet< GUM_SCALAR >& bn, NodeId node);
+    std::string _extractAttribute_(const IBayesNet< GUM_SCALAR >& bn, NodeId node);
 
-    std::string __extractType(const IBayesNet< GUM_SCALAR >& bn, NodeId node);
+    std::string _extractType_(const IBayesNet< GUM_SCALAR >& bn, NodeId node);
 
     template < typename VARTYPE >
-    std::string __extractDiscretizedType(const VARTYPE* var);
+    std::string _extractDiscretizedType_(const VARTYPE* var);
 
-    std::string __extractName(const IBayesNet< GUM_SCALAR >& bn, NodeId node);
+    std::string _extractName_(const IBayesNet< GUM_SCALAR >& bn, NodeId node);
 
-    std::string __extractParents(const IBayesNet< GUM_SCALAR >& bn, NodeId node);
+    std::string _extractParents_(const IBayesNet< GUM_SCALAR >& bn, NodeId node);
 
-    std::string __extractCPT(const IBayesNet< GUM_SCALAR >& bn, NodeId node);
+    std::string _extractCPT_(const IBayesNet< GUM_SCALAR >& bn, NodeId node);
 
-    std::string __extractRangeType(const IBayesNet< GUM_SCALAR >& bn, NodeId node);
+    std::string _extractRangeType_(const IBayesNet< GUM_SCALAR >& bn, NodeId node);
 
-    std::string __extractLabelizedType(const IBayesNet< GUM_SCALAR >& bn,
-                                       NodeId                         node);
+    std::string _extractLabelizedType_(const IBayesNet< GUM_SCALAR >& bn, NodeId node);
   };
 
 

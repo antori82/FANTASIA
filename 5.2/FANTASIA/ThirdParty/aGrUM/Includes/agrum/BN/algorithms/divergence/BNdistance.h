@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,14 +23,13 @@
  * @file
  * @brief algorithm for KL divergence between BNs
  *
- * @author Pierre-Henri WUILLEMIN
+ * @author Pierre-Henri WUILLEMIN(_at_LIP6)
  *
  */
 #ifndef GUM_KL_H
 #define GUM_KL_H
 
 #include <agrum/BN/IBayesNet.h>
-#include <agrum/core/sequence.h>
 
 namespace gum {
 
@@ -43,7 +41,11 @@ namespace gum {
    * rate
    * of that very instance.
    */
-  enum class Complexity : char { Heavy, Difficult, Correct };
+  enum class Complexity : char {
+    Heavy,
+    Difficult,
+    Correct
+  };
 
   /**
    * @class KL
@@ -67,7 +69,7 @@ namespace gum {
   template < typename GUM_SCALAR >
   class BNdistance {
 // difficulty is chosen w.r.t the log10DomainSize of the BN
-#define GAP_COMPLEXITY_KL_HEAVY_DIFFICULT double(12.0)
+#define GAP_COMPLEXITY_KL_HEAVY_DIFFICULT   double(12.0)
 #define GAP_COMPLEXITY_KL_DIFFICULT_CORRECT double(7.0)
     public:
     /** constructor must give 2 BNs
@@ -87,7 +89,7 @@ namespace gum {
     /**
      * return
      * KL::Complexity::Heavy,KL::Complexity::Difficult,KL::Complexity::Correct
-     * depending on the BNs __p and __q
+     * depending on the BNs  _p_ and  _q_
      */
     Complexity difficulty() const;
 
@@ -130,30 +132,34 @@ namespace gum {
     protected:
     // should be pure virtual but using BNdistance directly is a way to delay the
     // choice between different computation scheme (@see ExactBNdistance)
-    virtual void _computeKL();
-    void         _process();
+    virtual void computeKL_();
 
-    const IBayesNet< GUM_SCALAR >& _p;
-    const IBayesNet< GUM_SCALAR >& _q;
+    void process_();
 
-    GUM_SCALAR _klPQ;
-    GUM_SCALAR _klQP;
-    GUM_SCALAR _hellinger;
-    GUM_SCALAR _bhattacharya;
-    GUM_SCALAR _jsd;
+    const IBayesNet< GUM_SCALAR >& p_;
+    const IBayesNet< GUM_SCALAR >& q_;
 
-    Size _errorPQ;
-    Size _errorQP;
+    GUM_SCALAR klPQ_;
+    GUM_SCALAR klQP_;
+
+    Size errorPQ_;
+    Size errorQP_;
+
+    GUM_SCALAR hellinger_;
+    GUM_SCALAR bhattacharya_;
+    GUM_SCALAR jsd_;
 
     private:
-    bool       __checkCompatibility() const;
-    Complexity __difficulty;
-    bool       __done;
+    bool       _checkCompatibility_() const;
+    Complexity _difficulty_;
+    bool       _done_;
   };
 
 
 #ifndef GUM_NO_EXTERN_TEMPLATE_CLASS
+
   extern template class BNdistance< double >;
+
 #endif
 
 }   // namespace gum

@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,7 +23,8 @@
  * @file
  * @brief Template trick for efficient development
  *
- * @author Jean-Christophe MAGNAN and Pierre-Henri WUILLEMIN
+ * @author Pierre-Henri WUILLEMIN(_at_LIP6) and Jean-Christophe MAGNAN and Christophe
+ * GONZALES(_at_AMU)
  */
 
 #ifndef GUM_TEMPLATE_STRATEGY_H
@@ -34,40 +34,49 @@ namespace gum {
 
   template < int v >
   struct Int2Type {
-    enum { value = v };
+    enum {
+      value = v
+    };
   };
 
-  enum TESTNAME { GTEST = 1, CHI2TEST = 2, LEASTSQUARETEST = 3 };
+  enum TESTNAME {
+    GTEST           = 1,
+    CHI2TEST        = 2,
+    LEASTSQUARETEST = 3
+  };
   template < TESTNAME, class A, class B, class C >
   struct TestSelect {
-    typedef A type;
+    using type = A;
   };
   template < class A, class B, class C >
   struct TestSelect< CHI2TEST, A, B, C > {
-    typedef B type;
+    using type = B;
   };
   template < class A, class B, class C >
   struct TestSelect< LEASTSQUARETEST, A, B, C > {
-    typedef C type;
+    using type = C;
   };
 
   template < bool, class A, class B >
   struct ValueSelect {
-    typedef A type;
+    using type = A;
   };
   template < class A, class B >
   struct ValueSelect< false, A, B > {
-    typedef B type;
+    using type = B;
   };
 
-  enum LEARNERNAME { IMDDILEARNER = 1, ITILEARNER = 2 };
+  enum LEARNERNAME {
+    IMDDILEARNER = 1,
+    ITILEARNER   = 2
+  };
   template < LEARNERNAME, class A, class B >
   struct LearnerSelect {
-    typedef A type;
+    using type = A;
   };
   template < class A, class B >
   struct LearnerSelect< ITILEARNER, A, B > {
-    typedef B type;
+    using type = B;
   };
 
 }   // end of namespace gum

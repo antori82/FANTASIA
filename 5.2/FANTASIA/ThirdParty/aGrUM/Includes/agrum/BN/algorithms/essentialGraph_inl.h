@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -23,7 +22,7 @@
 /** @file
  * @brief Inline implementation of the class building the essential Graph from a
  * DAGmodel
- * @author Pierre-Henri WUILLEMIN and Christophe GONZALES
+ * @author Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
  *
  */
 
@@ -32,34 +31,32 @@
 
 namespace gum {
 
-  INLINE MixedGraph EssentialGraph::mixedGraph() { return __mg; }
+  INLINE PDAG EssentialGraph::pdag() const { return _pdag_; }
 
-  INLINE const NodeSet& EssentialGraph::parents(const NodeId id) const {
-    return __mg.parents(id);
+  INLINE const NodeSet& EssentialGraph::parents(NodeId id) const { return _pdag_.parents(id); }
+
+  INLINE const NodeSet& EssentialGraph::children(NodeId id) const { return _pdag_.children(id); }
+
+  INLINE NodeSet EssentialGraph::parents(const NodeSet& ids) const { return _pdag_.parents(ids); }
+
+  INLINE NodeSet EssentialGraph::children(const NodeSet& ids) const { return _pdag_.children(ids); }
+
+  INLINE const NodeSet& EssentialGraph::neighbours(NodeId id) const {
+    return _pdag_.neighbours(id);
   }
 
-  INLINE const NodeSet& EssentialGraph::children(const NodeId id) const {
-    return __mg.children(id);
-  }
 
-  INLINE const NodeSet& EssentialGraph::neighbours(const NodeId id) const {
-    return __mg.neighbours(id);
-  }
+  INLINE Size EssentialGraph::sizeArcs() const { return _pdag_.sizeArcs(); }
 
+  INLINE const ArcSet& EssentialGraph::arcs() const { return _pdag_.arcs(); }
 
-  INLINE Size EssentialGraph::sizeArcs() const { return __mg.sizeArcs(); }
+  INLINE Size EssentialGraph::sizeEdges() const { return _pdag_.sizeEdges(); }
 
-  INLINE const ArcSet& EssentialGraph::arcs() const { return __mg.arcs(); }
+  INLINE const EdgeSet& EssentialGraph::edges() const { return _pdag_.edges(); }
 
-  INLINE Size EssentialGraph::sizeEdges() const { return __mg.sizeEdges(); }
+  INLINE Size EssentialGraph::sizeNodes() const { return _pdag_.sizeNodes(); }
 
-  INLINE const EdgeSet& EssentialGraph::edges() const { return __mg.edges(); }
+  INLINE Size EssentialGraph::size() const { return _pdag_.size(); }
 
-  INLINE Size EssentialGraph::sizeNodes() const { return __mg.sizeNodes(); }
-
-  INLINE Size EssentialGraph::size() const { return __mg.size(); }
-
-  INLINE const NodeGraphPart& EssentialGraph::nodes() const {
-    return __mg.nodes();
-  }
+  INLINE const NodeGraphPart& EssentialGraph::nodes() const { return _pdag_.nodes(); }
 }   // namespace gum

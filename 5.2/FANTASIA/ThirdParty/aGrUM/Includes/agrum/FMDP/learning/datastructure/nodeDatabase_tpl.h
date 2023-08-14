@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023 by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -43,26 +42,24 @@ namespace gum {
   NodeDatabase< AttributeSelection, isScalar >::NodeDatabase(
      const Set< const DiscreteVariable* >* attrSet,
      const DiscreteVariable*               value) :
-      __value(value) {
+      _value_(value) {
     GUM_CONSTRUCTOR(NodeDatabase);
 
-    for (SetIteratorSafe< const DiscreteVariable* > varIter =
-            attrSet->cbeginSafe();
+    for (SetIteratorSafe< const DiscreteVariable* > varIter = attrSet->cbeginSafe();
          varIter != attrSet->cendSafe();
          ++varIter)
-      __attrTable.insert(*varIter, new TestPolicy< ValueType >());
+      _attrTable_.insert(*varIter, new TestPolicy< ValueType >());
 
-    __nbObservation = 0;
+    _nbObservation_ = 0;
   }
 
 
   // ###################################################################
-  // Default desstructor
+  // Default destructor
   // ###################################################################
   template < TESTNAME AttributeSelection, bool isScalar >
   NodeDatabase< AttributeSelection, isScalar >::~NodeDatabase() {
-    for (auto varIter = __attrTable.beginSafe(); varIter != __attrTable.endSafe();
-         ++varIter)
+    for (auto varIter = _attrTable_.beginSafe(); varIter != _attrTable_.endSafe(); ++varIter)
       delete varIter.val();
 
     GUM_DESTRUCTOR(NodeDatabase);
@@ -76,46 +73,35 @@ namespace gum {
   // ###################################################################
   /* Updates database with new observation
    *
-   * Calls either @fn __addObservation( const Observation*, Int2Type<true>)
-   * or @fn __addObservation( const Observation*, Int2Type<false>)
+   * Calls either @fn  _addObservation_( const Observation*, Int2Type<true>)
+   * or @fn  _addObservation_( const Observation*, Int2Type<false>)
    * depending on if we're learning reward function or transition probability
    */
   // ###################################################################
   template < TESTNAME AttributeSelection, bool isScalar >
-  void NodeDatabase< AttributeSelection, isScalar >::addObservation(
-     const Observation* newObs) {
-    __nbObservation++;
-    this->__addObservation(newObs, Int2Type< isScalar >());
+  void NodeDatabase< AttributeSelection, isScalar >::addObservation(const Observation* newObs) {
+    _nbObservation_++;
+    this->_addObservation_(newObs, Int2Type< isScalar >());
   }
 
   template < TESTNAME AttributeSelection, bool isScalar >
-  void NodeDatabase< AttributeSelection, isScalar >::__addObservation(
-     const Observation* newObs, Int2Type< true >) {
-    for (auto varIter = __attrTable.cbeginSafe();
-         varIter != __attrTable.cendSafe();
-         ++varIter)
-      varIter.val()->addObservation(newObs->rModality(varIter.key()),
-                                    newObs->reward());
+  void NodeDatabase< AttributeSelection, isScalar >::_addObservation_(const Observation* newObs,
+                                                                      Int2Type< true >) {
+    for (auto varIter = _attrTable_.cbeginSafe(); varIter != _attrTable_.cendSafe(); ++varIter)
+      varIter.val()->addObservation(newObs->rModality(varIter.key()), newObs->reward());
 
-    if (__valueCount.exists(newObs->reward()))
-      __valueCount[newObs->reward()]++;
-    else
-      __valueCount.insert(newObs->reward(), 1);
+    if (_valueCount_.exists(newObs->reward())) _valueCount_[newObs->reward()]++;
+    else _valueCount_.insert(newObs->reward(), 1);
   }
 
   template < TESTNAME AttributeSelection, bool isScalar >
-  void NodeDatabase< AttributeSelection, isScalar >::__addObservation(
-     const Observation* newObs, Int2Type< false >) {
-    for (auto varIter = __attrTable.cbeginSafe();
-         varIter != __attrTable.cendSafe();
-         ++varIter)
-      varIter.val()->addObservation(newObs->modality(varIter.key()),
-                                    newObs->modality(__value));
+  void NodeDatabase< AttributeSelection, isScalar >::_addObservation_(const Observation* newObs,
+                                                                      Int2Type< false >) {
+    for (auto varIter = _attrTable_.cbeginSafe(); varIter != _attrTable_.cendSafe(); ++varIter)
+      varIter.val()->addObservation(newObs->modality(varIter.key()), newObs->modality(_value_));
 
-    if (__valueCount.exists(newObs->modality(__value)))
-      __valueCount[newObs->modality(__value)]++;
-    else
-      __valueCount.insert(newObs->modality(__value), 1);
+    if (_valueCount_.exists(newObs->modality(_value_))) _valueCount_[newObs->modality(_value_)]++;
+    else _valueCount_.insert(newObs->modality(_value_), 1);
   }
 
 
@@ -129,19 +115,16 @@ namespace gum {
   // ###################################################################
   template < TESTNAME AttributeSelection, bool isScalar >
   NodeDatabase< AttributeSelection, isScalar >&
-        NodeDatabase< AttributeSelection, isScalar >::
-        operator+=(const NodeDatabase< AttributeSelection, isScalar >& src) {
-    this->__nbObservation += src.nbObservation();
+     NodeDatabase< AttributeSelection, isScalar >::operator+=(
+        const NodeDatabase< AttributeSelection, isScalar >& src) {
+    this->_nbObservation_ += src.nbObservation();
 
-    for (auto varIter = __attrTable.beginSafe(); varIter != __attrTable.endSafe();
-         ++varIter)
+    for (auto varIter = _attrTable_.beginSafe(); varIter != _attrTable_.endSafe(); ++varIter)
       varIter.val()->add(*(src.testPolicy(varIter.key())));
 
     for (auto valIter = src.cbeginValues(); valIter != src.cendValues(); ++valIter)
-      if (__valueCount.exists(valIter.key()))
-        __valueCount[valIter.key()] += valIter.val();
-      else
-        __valueCount.insert(valIter.key(), valIter.val());
+      if (_valueCount_.exists(valIter.key())) _valueCount_[valIter.key()] += valIter.val();
+      else _valueCount_.insert(valIter.key(), valIter.val());
 
     return *this;
   }
@@ -152,11 +135,9 @@ namespace gum {
     std::stringstream ss;
 
     ss << "NbObservation : " << this->nbObservation() << std::endl;
-    for (auto varIter = __attrTable.beginSafe(); varIter != __attrTable.endSafe();
-         ++varIter)
+    for (auto varIter = _attrTable_.beginSafe(); varIter != _attrTable_.endSafe(); ++varIter)
       ss << "\t\tVariable : " << varIter.key()->name()
-         << " - Associated Test : " << __attrTable[varIter.key()]->toString()
-         << std::endl;
+         << " - Associated Test : " << _attrTable_[varIter.key()]->toString() << std::endl;
 
     return ss.str();
   }
@@ -169,10 +150,10 @@ namespace gum {
 /*template<TESTNAME AttributeSelection, bool isScalar>
 double *NodeDatabase<AttributeSelection, isScalar>::effectif(){
   double* ret = static_cast<double*>(
-SmallObjectAllocator::instance().allocate(sizeof(double)*__value->domainSize()));
-  for(Idx modality = 0; modality < __value->domainSize(); ++modality)
-    if( __valueCount.exists(modality) )
-      ret[modality] = (double)__valueCount[modality];
+SmallObjectAllocator::instance().allocate(sizeof(double)* _value_->domainSize()));
+  for(Idx modality = 0; modality <  _value_->domainSize(); ++modality)
+    if(  _valueCount_.exists(modality) )
+      ret[modality] = (double) _valueCount_[modality];
     else
       ret[modality] = 0.0;
   return ret;
@@ -181,8 +162,8 @@ SmallObjectAllocator::instance().allocate(sizeof(double)*__value->domainSize()))
 /*template<TESTNAME AttributeSelection, bool isScalar>
 double NodeDatabase<AttributeSelection, isScalar>::reward(){
   double ret = 0.0;
-  for(auto valuTer = __valueCount.cbeginSafe(); valuTer !=
-__valueCount.cendSafe(); ++valuTer)
+  for(auto valuTer =  _valueCount_.cbeginSafe(); valuTer !=
+ _valueCount_.cendSafe(); ++valuTer)
     ret += valuTer.key() * (double) valuTer.val();
-  return ret / __nbObservation;
+  return ret /  _nbObservation_;
 }*/

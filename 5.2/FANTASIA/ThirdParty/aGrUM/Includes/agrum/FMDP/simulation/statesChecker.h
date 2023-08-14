@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,7 +23,8 @@
  * @file
  * @brief Headers of the States Checker class.
  *
- * @author Jean-Christophe MAGNAN and Pierre-Henri WUILLEMIN
+ * @author Pierre-Henri WUILLEMIN(_at_LIP6) and Jean-Christophe MAGNAN and Christophe
+ * GONZALES(_at_AMU)
  */
 
 // =========================================================================
@@ -32,8 +32,7 @@
 #define GUM_STATES_CHECKER_H
 // =========================================================================
 // =========================================================================
-#include <agrum/core/sequence.h>
-#include <agrum/multidim/implementations/multiDimFunctionGraph.h>
+#include <agrum/tools/multidim/implementations/multiDimFunctionGraph.h>
 // =========================================================================
 
 namespace gum {
@@ -70,25 +69,25 @@ namespace gum {
     // ==========================================================================
     /// @{
 
-    bool checkState(const Instantiation& state) { return __checker->get(state); }
+    bool checkState(const Instantiation& state) { return _checker_->get(state); }
 
     void addState(const Instantiation&);
 
-    Idx nbVisitedStates() { return __nbVisitedStates; }
+    Idx nbVisitedStates() { return _nbVisitedStates_; }
 
     void reset(const Instantiation&);
 
     /// @}
 
     private:
-    void __insertState(const Instantiation&, NodeId, Idx);
+    void _insertState_(const Instantiation&, NodeId, Idx);
 
-    Idx __nbVisitedStates;
+    Idx _nbVisitedStates_;
 
-    MultiDimFunctionGraph< bool >* __checker;
-    NodeId                         __checkerTrueId, __checkerFalseId;
+    MultiDimFunctionGraph< bool >* _checker_;
+    NodeId                         _checkerTrueId_, _checkerFalseId_;
 
-    Set< Instantiation* > __visitedStates;
+    Set< Instantiation* > _visitedStates_;
   };
 } /* namespace gum */
 

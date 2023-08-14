@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,7 +23,7 @@
  * @file
  * @brief Functions for error messages.
  *
- * @author Christophe GONZALES and Pierre-Henri WUILLEMIN
+ * @author Christophe GONZALES(_at_AMU) and Pierre-Henri WUILLEMIN(_at_LIP6)
  * @author Lionel TORTI
  */
 
@@ -33,7 +32,7 @@
 #include <vector>
 
 #include <agrum/PRM/o3prm/O3prm.h>
-#include <agrum/core/errorsContainer.h>
+#include <agrum/tools/core/errorsContainer.h>
 
 #ifndef GUM_PRM_O3PRM_ERRORS_H
 #  define GUM_PRM_O3PRM_ERRORS_H
@@ -59,14 +58,11 @@ namespace gum {
                                          const O3Label&   super_type,
                                          ErrorsContainer& errors);
 
-      void O3PRM_TYPE_UNKNOWN_LABEL(const O3Label&   type,
-                                    const O3Label&   l,
-                                    ErrorsContainer& errors);
+      void O3PRM_TYPE_UNKNOWN_LABEL(const O3Label& type, const O3Label& l, ErrorsContainer& errors);
 
       void O3PRM_TYPE_INVALID_RANGE(const O3IntType& val, ErrorsContainer& errors);
 
-      void O3PRM_TYPE_INVALID_RANGE(const O3RealType& val,
-                                    ErrorsContainer&  errors);
+      void O3PRM_TYPE_INVALID_RANGE(const O3RealType& val, ErrorsContainer& errors);
 
       void O3PRM_CLASS_NOT_FOUND(const O3Label& val, ErrorsContainer& errors);
 
@@ -99,22 +95,18 @@ namespace gum {
                                           const O3Label&   i,
                                           ErrorsContainer& errors);
 
-      void O3PRM_CLASS_DUPLICATE_REFERENCE(const O3Label&   ref,
-                                           ErrorsContainer& errors);
+      void O3PRM_CLASS_DUPLICATE_REFERENCE(const O3Label& ref, ErrorsContainer& errors);
 
-      void O3PRM_CLASS_SELF_REFERENCE(const O3Label&   c,
-                                      const O3Label&   ref,
-                                      ErrorsContainer& errors);
+      void
+         O3PRM_CLASS_SELF_REFERENCE(const O3Label& c, const O3Label& ref, ErrorsContainer& errors);
 
       void O3PRM_CLASS_ILLEGAL_SUB_REFERENCE(const O3Label&   c,
                                              const O3Label&   sub,
                                              ErrorsContainer& errors);
 
-      void O3PRM_CLASS_PARENT_NOT_FOUND(const O3Label&   parent,
-                                        ErrorsContainer& errors);
+      void O3PRM_CLASS_PARENT_NOT_FOUND(const O3Label& parent, ErrorsContainer& errors);
 
-      void O3PRM_CLASS_ILLEGAL_PARENT(const O3Label&   parent,
-                                      ErrorsContainer& errors);
+      void O3PRM_CLASS_ILLEGAL_PARENT(const O3Label& parent, ErrorsContainer& errors);
 
       void O3PRM_CLASS_LINK_NOT_FOUND(const O3Label&     chain,
                                       const std::string& s,
@@ -172,8 +164,7 @@ namespace gum {
                                                const O3Label&   param,
                                                ErrorsContainer& errors);
 
-      void O3PRM_INTERFACE_ILLEGAL_ARRAY(const O3Label&   val,
-                                         ErrorsContainer& errors);
+      void O3PRM_INTERFACE_ILLEGAL_ARRAY(const O3Label& val, ErrorsContainer& errors);
 
       void O3PRM_INTERFACE_NOT_FOUND(const O3Label& val, ErrorsContainer& errors);
 
@@ -198,8 +189,7 @@ namespace gum {
                                                  const O3InterfaceElement& ref,
                                                  ErrorsContainer&          errors);
 
-      void O3PRM_INTERFACE_ILLEGAL_OVERLOAD(const O3InterfaceElement& elt,
-                                            ErrorsContainer&          errors);
+      void O3PRM_INTERFACE_ILLEGAL_OVERLOAD(const O3InterfaceElement& elt, ErrorsContainer& errors);
 
       void O3PRM_REFERENCE_NOT_FOUND(const O3Label& val, ErrorsContainer& errors);
 
@@ -207,16 +197,13 @@ namespace gum {
                                      const std::vector< std::string >& matches,
                                      ErrorsContainer&                  errors);
 
-      void O3PRM_SYSTEM_INSTANTIATION_FAILED(const O3System&  sys,
-                                             ErrorsContainer& errors);
+      void O3PRM_SYSTEM_INSTANTIATION_FAILED(const O3System& sys, ErrorsContainer& errors);
 
       void O3PRM_SYSTEM_NOT_A_CLASS(const O3Instance& i, ErrorsContainer& errors);
 
-      void O3PRM_SYSTEM_DUPLICATE_INSTANCE(const O3Instance& i,
-                                           ErrorsContainer&  errors);
+      void O3PRM_SYSTEM_DUPLICATE_INSTANCE(const O3Instance& i, ErrorsContainer& errors);
 
-      void O3PRM_SYSTEM_NOT_A_PARAMETER(const O3InstanceParameter& param,
-                                        ErrorsContainer&           errors);
+      void O3PRM_SYSTEM_NOT_A_PARAMETER(const O3InstanceParameter& param, ErrorsContainer& errors);
 
       void O3PRM_SYSTEM_PARAMETER_NOT_FOUND(const O3InstanceParameter& param,
                                             ErrorsContainer&           errors);
@@ -227,11 +214,9 @@ namespace gum {
       void O3PRM_SYSTEM_PARAMETER_NOT_FLOAT(const O3InstanceParameter& param,
                                             ErrorsContainer&           errors);
 
-      void O3PRM_SYSTEM_INVALID_LEFT_VALUE(const O3Label&   val,
-                                           ErrorsContainer& errors);
+      void O3PRM_SYSTEM_INVALID_LEFT_VALUE(const O3Label& val, ErrorsContainer& errors);
 
-      void O3PRM_SYSTEM_INSTANCE_NOT_FOUND(const O3Label&   i,
-                                           ErrorsContainer& errors);
+      void O3PRM_SYSTEM_INSTANCE_NOT_FOUND(const O3Label& i, ErrorsContainer& errors);
 
       void O3PRM_SYSTEM_REFERENCE_NOT_FOUND(const O3Label&     ref,
                                             const std::string& type,
@@ -239,8 +224,7 @@ namespace gum {
 
       void O3PRM_SYSTEM_NOT_AN_ARRAY(const O3Label& val, ErrorsContainer& errors);
 
-      void O3PRM_DEPRECATED_TYPE_WARNING(const O3Label&   type,
-                                         ErrorsContainer& errors);
+      void O3PRM_DEPRECATED_TYPE_WARNING(const O3Label& type, ErrorsContainer& errors);
 
     }   // namespace o3prm
   }     // namespace prm

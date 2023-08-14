@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,7 +23,7 @@
  * @file
  * @brief Inline implementation of gum::PRMScalarAttribute
  *
- * @author Lionel TORTI and Pierre-Henri WUILLEMIN
+ * @author Lionel TORTI and Pierre-Henri WUILLEMIN(_at_LIP6)
  */
 
 #include <sstream>
@@ -43,38 +42,35 @@ namespace gum {
        const PRMType&                        type,
        MultiDimImplementation< GUM_SCALAR >* impl) :
         PRMAttribute< GUM_SCALAR >(name),
-        __type(new PRMType(type)), __cpf(new Potential< GUM_SCALAR >(impl)) {
+        _type_(new PRMType(type)), _cpf_(new Potential< GUM_SCALAR >(impl)) {
       GUM_CONSTRUCTOR(PRMScalarAttribute);
-      __cpf->add(__type->variable());
+      _cpf_->add(_type_->variable());
 
-      this->_safeName =
-         PRMObject::LEFT_CAST() + __type->name() + PRMObject::RIGHT_CAST() + name;
+      this->safeName_ = PRMObject::LEFT_CAST() + _type_->name() + PRMObject::RIGHT_CAST() + name;
     }
 
     template < typename GUM_SCALAR >
     PRMScalarAttribute< GUM_SCALAR >::PRMScalarAttribute(
        const PRMScalarAttribute< GUM_SCALAR >& source) :
         PRMAttribute< GUM_SCALAR >(source),
-        __type(0), __cpf(0) {
+        _type_(0), _cpf_(0) {
       GUM_CONS_CPY(PRMScalarAttribute);
-      GUM_ERROR(FatalError,
-                "Illegal call to the copy constructor of gum::ScalarAttribute");
+      GUM_ERROR(FatalError, "Illegal call to the copy constructor of gum::ScalarAttribute")
     }
 
     template < typename GUM_SCALAR >
     PRMScalarAttribute< GUM_SCALAR >::~PRMScalarAttribute() {
       GUM_DESTRUCTOR(PRMScalarAttribute);
-      delete __cpf;
-      delete __type;
+      delete _cpf_;
+      delete _type_;
     }
 
     template < typename GUM_SCALAR >
-    PRMAttribute< GUM_SCALAR >* PRMScalarAttribute< GUM_SCALAR >::newFactory(
-       const PRMClass< GUM_SCALAR >& c) const {
+    PRMAttribute< GUM_SCALAR >*
+       PRMScalarAttribute< GUM_SCALAR >::newFactory(const PRMClass< GUM_SCALAR >& c) const {
       auto impl = static_cast< MultiDimImplementation< GUM_SCALAR >* >(
          this->cpf().content()->newFactory());
-      return new PRMScalarAttribute< GUM_SCALAR >(
-         this->name(), this->type(), impl);
+      return new PRMScalarAttribute< GUM_SCALAR >(this->name(), this->type(), impl);
     }
 
     template < typename GUM_SCALAR >
@@ -86,8 +82,8 @@ namespace gum {
         bij.insert(&(type().variable()), &(copy->type().variable()));
       }
 
-      delete copy->__cpf;
-      copy->__cpf = copyPotential(bij, cpf());
+      delete copy->_cpf_;
+      copy->_cpf_ = copyPotential(bij, cpf());
 
       return copy;
     }
@@ -95,31 +91,29 @@ namespace gum {
     template < typename GUM_SCALAR >
     void PRMScalarAttribute< GUM_SCALAR >::copyCpf(
        const Bijection< const DiscreteVariable*, const DiscreteVariable* >& bij,
-       const PRMAttribute< GUM_SCALAR >& source) {
-      delete __cpf;
-      __cpf = new Potential< GUM_SCALAR >();
+       const PRMAttribute< GUM_SCALAR >&                                    source) {
+      delete _cpf_;
+      _cpf_ = new Potential< GUM_SCALAR >();
 
-      for (auto var : source.cpf().variablesSequence()) {
-        __cpf->add(*(bij.second(var)));
+      for (auto var: source.cpf().variablesSequence()) {
+        _cpf_->add(*(bij.second(var)));
       }
 
-      Instantiation inst(*__cpf), jnst(source.cpf());
+      Instantiation inst(*_cpf_), jnst(source.cpf());
 
-      for (inst.setFirst(), jnst.setFirst(); !(inst.end() || jnst.end());
-           inst.inc(), jnst.inc()) {
-        __cpf->set(inst, source.cpf().get(jnst));
+      for (inst.setFirst(), jnst.setFirst(); !(inst.end() || jnst.end()); inst.inc(), jnst.inc()) {
+        _cpf_->set(inst, source.cpf().get(jnst));
       }
 
       GUM_ASSERT(inst.end() && jnst.end());
-      GUM_ASSERT(__cpf->contains(__type->variable()));
-      GUM_ASSERT(!__cpf->contains(source.type().variable()));
+      GUM_ASSERT(_cpf_->contains(_type_->variable()));
+      GUM_ASSERT(!_cpf_->contains(source.type().variable()));
     }
 
     template < typename GUM_SCALAR >
-    PRMScalarAttribute< GUM_SCALAR >& PRMScalarAttribute< GUM_SCALAR >::
-                                      operator=(const PRMScalarAttribute< GUM_SCALAR >& from) {
-      GUM_ERROR(FatalError,
-                "Illegal call to the copy operator of gum::ScalarAttribute");
+    PRMScalarAttribute< GUM_SCALAR >&
+       PRMScalarAttribute< GUM_SCALAR >::operator=(const PRMScalarAttribute< GUM_SCALAR >& from) {
+      GUM_ERROR(FatalError, "Illegal call to the copy operator of gum::ScalarAttribute")
     }
 
     template < typename GUM_SCALAR >
@@ -130,54 +124,48 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     INLINE PRMType& PRMScalarAttribute< GUM_SCALAR >::type() {
-      return *__type;
+      return *_type_;
     }
 
     template < typename GUM_SCALAR >
     INLINE const PRMType& PRMScalarAttribute< GUM_SCALAR >::type() const {
-      return *__type;
+      return *_type_;
     }
 
     template < typename GUM_SCALAR >
-    INLINE const Potential< GUM_SCALAR >&
-                 PRMScalarAttribute< GUM_SCALAR >::cpf() const {
-      return *__cpf;
+    INLINE const Potential< GUM_SCALAR >& PRMScalarAttribute< GUM_SCALAR >::cpf() const {
+      return *_cpf_;
     }
 
     template < typename GUM_SCALAR >
-    INLINE void PRMScalarAttribute< GUM_SCALAR >::addParent(
-       const PRMClassElement< GUM_SCALAR >& elt) {
+    INLINE void
+       PRMScalarAttribute< GUM_SCALAR >::addParent(const PRMClassElement< GUM_SCALAR >& elt) {
       try {
-        __cpf->add(elt.type().variable());
-      } catch (DuplicateElement&) {
-        GUM_ERROR(DuplicateElement,
-                  elt.name() << " as parent of " << this->name());
-      } catch (OperationNotAllowed&) {
-        GUM_ERROR(OperationNotAllowed,
-                  elt.name() << " of wrong type as parent of " << this->name());
+        _cpf_->add(elt.type().variable());
+      } catch (DuplicateElement const&) {
+        GUM_ERROR(DuplicateElement, elt.name() << " as parent of " << this->name())
+      } catch (OperationNotAllowed const&) {
+        GUM_ERROR(OperationNotAllowed, elt.name() << " of wrong type as parent of " << this->name())
       }
     }
 
-    // See gum::PRMClassElement<GUM_SCALAR>::_addChild().
+    // See gum::PRMClassElement<GUM_SCALAR>::addChild_().
     template < typename GUM_SCALAR >
-    INLINE void PRMScalarAttribute< GUM_SCALAR >::addChild(
-       const PRMClassElement< GUM_SCALAR >& elt) {}
+    INLINE void
+       PRMScalarAttribute< GUM_SCALAR >::addChild(const PRMClassElement< GUM_SCALAR >& elt) {}
 
     template < typename GUM_SCALAR >
-    PRMAttribute< GUM_SCALAR >*
-       PRMScalarAttribute< GUM_SCALAR >::getCastDescendant() const {
+    PRMAttribute< GUM_SCALAR >* PRMScalarAttribute< GUM_SCALAR >::getCastDescendant() const {
       PRMScalarAttribute< GUM_SCALAR >* cast = 0;
 
       try {
-        cast =
-           new PRMScalarAttribute< GUM_SCALAR >(this->name(), type().superType());
-      } catch (NotFound&) {
-        GUM_ERROR(OperationNotAllowed,
-                  "this ScalarAttribute can not have cast descendant");
+        cast = new PRMScalarAttribute< GUM_SCALAR >(this->name(), type().superType());
+      } catch (NotFound const&) {
+        GUM_ERROR(OperationNotAllowed, "this ScalarAttribute can not have cast descendant")
       }
 
       cast->addParent(*this);
-      const DiscreteVariable& my_var = type().variable();
+      const DiscreteVariable& my_var   = type().variable();
       DiscreteVariable&       cast_var = cast->type().variable();
       Instantiation           inst(cast->cpf());
 
@@ -193,116 +181,109 @@ namespace gum {
     }
 
     template < typename GUM_SCALAR >
-    void PRMScalarAttribute< GUM_SCALAR >::setAsCastDescendant(
-       PRMAttribute< GUM_SCALAR >* cast) {
+    void PRMScalarAttribute< GUM_SCALAR >::setAsCastDescendant(PRMAttribute< GUM_SCALAR >* cast) {
       try {
         type().setSuper(cast->type());
-      } catch (OperationNotAllowed&) {
-        GUM_ERROR(OperationNotAllowed,
-                  "this ScalarAttribute can not have cast descendant");
-      } catch (WrongType&) {
+      } catch (OperationNotAllowed const&) {
+        GUM_ERROR(OperationNotAllowed, "this ScalarAttribute can not have cast descendant")
+      } catch (TypeError const&) {
         std::stringstream msg;
         msg << type().name() << " is not a subtype of " << cast->type().name();
-        GUM_ERROR(WrongType, msg.str());
+        GUM_ERROR(TypeError, msg.str())
       }
       cast->becomeCastDescendant(type());
     }
 
     template < typename GUM_SCALAR >
     void PRMScalarAttribute< GUM_SCALAR >::becomeCastDescendant(PRMType& subtype) {
-      delete __cpf;
-      __cpf = new Potential< GUM_SCALAR >();
-      __cpf->add(type().variable());
-      __cpf->add(subtype.variable());
+      delete _cpf_;
+      _cpf_ = new Potential< GUM_SCALAR >();
+      _cpf_->add(type().variable());
+      _cpf_->add(subtype.variable());
 
-      Instantiation inst(*__cpf);
+      Instantiation inst(*_cpf_);
 
       for (inst.setFirst(); !inst.end(); inst.inc()) {
         auto my_pos = inst.pos(subtype.variable());
         if (subtype.label_map()[my_pos] == inst.pos(type().variable())) {
-          __cpf->set(inst, 1);
+          _cpf_->set(inst, 1);
         } else {
-          __cpf->set(inst, 0);
+          _cpf_->set(inst, 0);
         }
       }
     }
 
     template < typename GUM_SCALAR >
-    void PRMScalarAttribute< GUM_SCALAR >::swap(const PRMType& old_type,
-                                                const PRMType& new_type) {
-      if (&(old_type) == __type) {
-        GUM_ERROR(OperationNotAllowed, "Cannot replace attribute own type");
+    void PRMScalarAttribute< GUM_SCALAR >::swap(const PRMType& old_type, const PRMType& new_type) {
+      if (&(old_type) == _type_) {
+        GUM_ERROR(OperationNotAllowed, "Cannot replace attribute own type")
       }
       if (old_type->domainSize() != new_type->domainSize()) {
-        GUM_ERROR(OperationNotAllowed,
-                  "Cannot replace types with difference domain size");
+        GUM_ERROR(OperationNotAllowed, "Cannot replace types with difference domain size")
       }
-      if (!__cpf->contains(old_type.variable())) {
-        GUM_ERROR(NotFound, "could not find variable " + old_type.name());
+      if (!_cpf_->contains(old_type.variable())) {
+        GUM_ERROR(NotFound, "could not find variable " + old_type.name())
       }
 
-      auto old = __cpf;
+      auto old = _cpf_;
 
-      __cpf = new Potential< GUM_SCALAR >();
+      _cpf_ = new Potential< GUM_SCALAR >();
 
-      for (auto var : old->variablesSequence()) {
+      for (auto var: old->variablesSequence()) {
         if (var != &(old_type.variable())) {
-          __cpf->add(*var);
+          _cpf_->add(*var);
         } else {
-          __cpf->add(new_type.variable());
+          _cpf_->add(new_type.variable());
         }
       }
 
-      Instantiation inst(__cpf), jnst(old);
+      Instantiation inst(_cpf_), jnst(old);
 
-      for (inst.setFirst(), jnst.setFirst(); !(inst.end() || jnst.end());
-           inst.inc(), jnst.inc()) {
-        __cpf->set(inst, old->get(jnst));
+      for (inst.setFirst(), jnst.setFirst(); !(inst.end() || jnst.end()); inst.inc(), jnst.inc()) {
+        _cpf_->set(inst, old->get(jnst));
       }
 
       delete old;
 
       GUM_ASSERT(inst.end() && jnst.end());
-      GUM_ASSERT(__cpf->contains(__type->variable()));
-      GUM_ASSERT(__cpf->contains(new_type.variable()));
-      GUM_ASSERT(!__cpf->contains(old_type.variable()));
+      GUM_ASSERT(_cpf_->contains(_type_->variable()));
+      GUM_ASSERT(_cpf_->contains(new_type.variable()));
+      GUM_ASSERT(!_cpf_->contains(old_type.variable()));
     }
 
     template < typename GUM_SCALAR >
-    PRMType* PRMScalarAttribute< GUM_SCALAR >::_type() {
-      return __type;
+    PRMType* PRMScalarAttribute< GUM_SCALAR >::type_() {
+      return _type_;
     }
 
     template < typename GUM_SCALAR >
-    void PRMScalarAttribute< GUM_SCALAR >::_type(PRMType* t) {
-      if (__type->variable().domainSize() != t->variable().domainSize()) {
-        GUM_ERROR(OperationNotAllowed,
-                  "Cannot replace types with difference domain size");
+    void PRMScalarAttribute< GUM_SCALAR >::type_(PRMType* t) {
+      if (_type_->variable().domainSize() != t->variable().domainSize()) {
+        GUM_ERROR(OperationNotAllowed, "Cannot replace types with difference domain size")
       }
-      auto old = __cpf;
+      auto old = _cpf_;
 
-      __cpf = new Potential< GUM_SCALAR >();
+      _cpf_ = new Potential< GUM_SCALAR >();
 
-      for (auto var : old->variablesSequence()) {
-        if (var != &(__type->variable())) {
-          __cpf->add(*var);
+      for (auto var: old->variablesSequence()) {
+        if (var != &(_type_->variable())) {
+          _cpf_->add(*var);
         } else {
-          __cpf->add(t->variable());
+          _cpf_->add(t->variable());
         }
       }
 
-      Instantiation inst(__cpf), jnst(old);
+      Instantiation inst(_cpf_), jnst(old);
 
-      for (inst.setFirst(), jnst.setFirst(); !(inst.end() || jnst.end());
-           inst.inc(), jnst.inc()) {
-        __cpf->set(inst, old->get(jnst));
+      for (inst.setFirst(), jnst.setFirst(); !(inst.end() || jnst.end()); inst.inc(), jnst.inc()) {
+        _cpf_->set(inst, old->get(jnst));
       }
 
       delete old;
 
-      __type = t;
+      _type_ = t;
 
-      GUM_ASSERT(__cpf->contains(__type->variable()));
+      GUM_ASSERT(_cpf_->contains(_type_->variable()));
       GUM_ASSERT(inst.end() && jnst.end());
     }
 

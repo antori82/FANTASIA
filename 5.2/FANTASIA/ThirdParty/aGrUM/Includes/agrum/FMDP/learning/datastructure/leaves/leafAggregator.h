@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -31,19 +30,11 @@
 #ifndef GUM_LEAF_AGGREGATOR_H
 #define GUM_LEAF_AGGREGATOR_H
 // =========================================================================
-#include <agrum/core/hashTable.h>
-#include <agrum/core/multiPriorityQueue.h>
-#include <agrum/core/sequence.h>
 // =========================================================================
-#include <agrum/graphs/graphElements.h>
-#include <agrum/graphs/parts/nodeGraphPart.h>
 // =========================================================================
-#include <agrum/multidim/utils/FunctionGraphUtilities/link.h>
 // =========================================================================
-#include <agrum/FMDP/learning/datastructure/leaves/abstractLeaf.h>
 #include <agrum/FMDP/learning/datastructure/leaves/concreteLeaf.h>
 #include <agrum/FMDP/learning/datastructure/leaves/fusionContext.h>
-#include <agrum/FMDP/learning/datastructure/leaves/leafPair.h>
 // =========================================================================
 
 namespace gum {
@@ -122,28 +113,28 @@ namespace gum {
 
     void update();
 
-    bool needsUpdate() { return __needsUpdate; }
+    bool needsUpdate() { return _needsUpdate_; }
 
     HashTable< NodeId, AbstractLeaf* > leavesMap();
 
     std::string toString();
 
     private:
-    void __removeContext(Idx);
-    void __addInitialPair(LeafPair*);
-    void __updateInitialPair(LeafPair*);
-    void __removeInitialPair(LeafPair*);
+    void _removeContext_(Idx);
+    void _addInitialPair_(LeafPair*);
+    void _updateInitialPair_(LeafPair*);
+    void _removeInitialPair_(LeafPair*);
 
-    Sequence< FusionContext< false >* > __fusionSeq;
+    Sequence< FusionContext< false >* > _fusionSeq_;
 
-    FusionContext< true >* __initialContext;
+    FusionContext< true >* _initialContext_;
 
-    HashTable< AbstractLeaf*, Set< LeafPair* >* > __leaf2Pair;
+    HashTable< AbstractLeaf*, Set< LeafPair* >* > _leaf2Pair_;
 
-    NodeGraphPart* __leavesCpt;
+    NodeGraphPart* _leavesCpt_;
 
-    double __similarityThreshold;
-    bool   __needsUpdate;
+    double _similarityThreshold_;
+    bool   _needsUpdate_;
   };
 
 

@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -22,9 +21,9 @@
 
 /**
  * @file
- * @brief Implementation of Importance Sampling for inference in Bayesian Networks.
+ * @brief Implementation of Importance Sampling for inference in Bayesian networks.
  *
- * @author Paul ALAM & Pierre-Henri WUILLEMIN
+ * @author Paul ALAM & Pierre-Henri WUILLEMIN(_at_LIP6)
  */
 
 
@@ -35,8 +34,7 @@ namespace gum {
 
   ///  default constructor
   template < typename GUM_SCALAR >
-  ImportanceSampling< GUM_SCALAR >::ImportanceSampling(
-     const IBayesNet< GUM_SCALAR >* bn) :
+  ImportanceSampling< GUM_SCALAR >::ImportanceSampling(const IBayesNet< GUM_SCALAR >* bn) :
       SamplingInference< GUM_SCALAR >(bn) {
     GUM_CONSTRUCTOR(ImportanceSampling);
   }
@@ -50,26 +48,25 @@ namespace gum {
 
   /// no burn in needed for Importance sampling
   template < typename GUM_SCALAR >
-  Instantiation ImportanceSampling< GUM_SCALAR >::_burnIn() {
+  Instantiation ImportanceSampling< GUM_SCALAR >::burnIn_() {
     Instantiation I;
     return I;
   }
 
   template < typename GUM_SCALAR >
-  Instantiation ImportanceSampling< GUM_SCALAR >::_draw(GUM_SCALAR*   w,
-                                                        Instantiation prev) {
+  Instantiation ImportanceSampling< GUM_SCALAR >::draw_(GUM_SCALAR* w, Instantiation prev) {
     GUM_SCALAR pSurQ;
 
     do {
       prev.clear();
       pSurQ = 1.;
-      for (const auto ev : this->hardEvidenceNodes()) {
+      for (const auto ev: this->hardEvidenceNodes()) {
         prev.add(this->BN().variable(ev));
         prev.chgVal(this->BN().variable(ev), this->hardEvidence()[ev]);
       }
 
-      for (const auto nod : this->BN().topologicalOrder()) {
-        if (!this->hasHardEvidence(nod)) { this->_addVarSample(nod, &prev); }
+      for (const auto nod: this->BN().topologicalOrder()) {
+        if (!this->hasHardEvidence(nod)) { this->addVarSample_(nod, &prev); }
         auto probaP = this->BN().cpt(nod).get(prev);
         auto probaQ = this->samplingBN().cpt(nod).get(prev);
         if ((probaP == 0) || (probaQ == 0)) {
@@ -79,7 +76,7 @@ namespace gum {
         }
       }
       if (pSurQ > 0.0) {
-        for (const auto ev : this->hardEvidenceNodes()) {
+        for (const auto ev: this->hardEvidenceNodes()) {
           pSurQ *= this->samplingBN().cpt(ev).get(prev);
         }
       }
@@ -91,9 +88,9 @@ namespace gum {
 
 
   template < typename GUM_SCALAR >
-  void ImportanceSampling< GUM_SCALAR >::_unsharpenBN(
-     BayesNetFragment< GUM_SCALAR >* bn, float epsilon) {
-    for (const auto nod : bn->nodes().asNodeSet()) {
+  void ImportanceSampling< GUM_SCALAR >::unsharpenBN_(BayesNetFragment< GUM_SCALAR >* bn,
+                                                      float                           epsilon) {
+    for (const auto nod: bn->nodes().asNodeSet()) {
       auto p = bn->cpt(nod).isNonZeroMap().scale(epsilon) + bn->cpt(nod);
       p.normalizeAsCPT();
       bn->installCPT(nod, p);
@@ -101,16 +98,15 @@ namespace gum {
   }
 
   template < typename GUM_SCALAR >
-  void ImportanceSampling< GUM_SCALAR >::_onContextualize(
-     BayesNetFragment< GUM_SCALAR >* bn) {
-    for (const auto ev : this->hardEvidenceNodes()) {
+  void ImportanceSampling< GUM_SCALAR >::onContextualize_(BayesNetFragment< GUM_SCALAR >* bn) {
+    for (const auto ev: this->hardEvidenceNodes()) {
       bn->uninstallCPT(ev);
       bn->installCPT(ev, *(this->evidence()[ev]));
       // we keep the variables with hard evidence but alone
       // bn->uninstallNode( sid[i] );
     }
-    GUM_SCALAR minParam = bn->minNonZeroParam();
+    GUM_SCALAR minParam    = bn->minNonZeroParam();
     GUM_SCALAR minAccepted = GUM_SCALAR(this->epsilon() / bn->maxVarDomainSize());
-    if (minParam < minAccepted) this->_unsharpenBN(bn, float(minAccepted));
+    if (minParam < minAccepted) this->unsharpenBN_(bn, float(minAccepted));
   }
 }   // namespace gum

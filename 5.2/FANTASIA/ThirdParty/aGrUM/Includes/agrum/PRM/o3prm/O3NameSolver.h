@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,7 +23,7 @@
  * @file
  * @brief Headers for the O3NameSolver class.
  *
- * @author Christophe GONZALES and Pierre-Henri WUILLEMIN
+ * @author Christophe GONZALES(_at_AMU) and Pierre-Henri WUILLEMIN(_at_LIP6)
  * @author Lionel TORTI
  */
 
@@ -32,10 +31,8 @@
 #include <string>
 
 #include <agrum/PRM/PRM.h>
-#include <agrum/PRM/o3prm/O3prm.h>
 #include <agrum/PRM/o3prm/errors.h>
-#include <agrum/core/hashTable.h>
-#include <agrum/core/utils_string.h>
+#include <agrum/tools/core/utils_string.h>
 
 #ifndef GUM_PRM_O3PRM_O3NAMESOLVER_H
 #  define GUM_PRM_O3PRM_O3NAMESOLVER_H
@@ -56,9 +53,7 @@ namespace gum {
       template < typename GUM_SCALAR >
       class O3NameSolver {
         public:
-        O3NameSolver(PRM< GUM_SCALAR >& prm,
-                     O3PRM&             o3_prm,
-                     ErrorsContainer&   errors);
+        O3NameSolver(PRM< GUM_SCALAR >& prm, O3PRM& o3_prm, ErrorsContainer& errors);
 
         O3NameSolver(const O3NameSolver< GUM_SCALAR >& src);
 
@@ -66,8 +61,7 @@ namespace gum {
 
         ~O3NameSolver();
 
-        O3NameSolver< GUM_SCALAR >&
-           operator=(const O3NameSolver< GUM_SCALAR >& src);
+        O3NameSolver< GUM_SCALAR >& operator=(const O3NameSolver< GUM_SCALAR >& src);
 
         O3NameSolver< GUM_SCALAR >& operator=(O3NameSolver< GUM_SCALAR >&& src);
 
@@ -82,17 +76,17 @@ namespace gum {
         bool resolveSlotType(O3Label& name);
 
         private:
-        PRM< GUM_SCALAR >* __prm;
-        O3PRM*             __o3_prm;
-        ErrorsContainer*   __errors;
+        PRM< GUM_SCALAR >* _prm_;
+        O3PRM*             _o3_prm_;
+        ErrorsContainer*   _errors_;
 
         using NameMap = HashTable< std::string, std::string >;
 
-        NameMap __typeName;
-        NameMap __eltName;
-        NameMap __refName;
-        NameMap __interfaceName;
-        NameMap __className;
+        NameMap _typeName_;
+        NameMap _eltName_;
+        NameMap _refName_;
+        NameMap _interfaceName_;
+        NameMap _className_;
       };
 
     }   // namespace o3prm

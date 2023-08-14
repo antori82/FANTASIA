@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -23,12 +22,12 @@
 /**
  * @file
  * @brief Definition of abstract classes for file input  manipulation
- * of Bayesian Networks.
+ * of Bayesian networks.
  *
  * Every classe used to read a BN from a file, must inherit from
  * BNWriter or BNReader.
  *
- * @author Lionel TORTI and Pierre-Henri WUILLEMIN
+ * @author Lionel TORTI and Pierre-Henri WUILLEMIN(_at_LIP6)
  */
 #ifndef GUM_BN_READER_H
 #define GUM_BN_READER_H
@@ -48,7 +47,7 @@ namespace gum {
    * @ingroup bn_io
    * @brief Pure virtual class for reading a BN from a file.
    *
-   * Every class used to read the content of a Bayesian Network from a stream,
+   * Every class used to read the content of a Bayesian network from a stream,
    * or a file must be a subclass of BNReader.
    */
   template < typename GUM_SCALAR >
@@ -69,7 +68,7 @@ namespace gum {
     virtual ~BNReader();
 
     /**
-     * Reads a Bayesian Network from the file referenced by filePath into`
+     * Reads a Bayesian network from the file referenced by filePath into`
      * parameter bayesNet.
      * @return Returns the number of error during the parsing (0 if none).
      */

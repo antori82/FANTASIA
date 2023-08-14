@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,7 +23,8 @@
  * @file
  * @brief Headers of the FMDPFactory class.
  *
- * @author Jean-Christophe MAGNAN and Pierre-Henri WUILLEMIN
+ * @author Pierre-Henri WUILLEMIN(_at_LIP6) and Jean-Christophe MAGNAN and Christophe
+ * GONZALES(_at_AMU)
  */
 
 #ifndef GUM_FMDP_FACTORY_H
@@ -33,12 +33,10 @@
 #include <string>
 #include <vector>
 //======================================================================
-#include <agrum/core/sequence.h>
 
-#include <agrum/variables/labelizedVariable.h>
+#include <agrum/tools/variables/labelizedVariable.h>
 
 #include <agrum/FMDP/IfmdpFactory.h>
-#include <agrum/FMDP/fmdp.h>
 
 
 namespace gum {
@@ -68,7 +66,7 @@ namespace gum {
    */
 
   template < typename GUM_SCALAR >
-  class FMDPFactory : public AbstractFMDPFactory {
+  class FMDPFactory: public AbstractFMDPFactory {
     public:
     // ==========================================================================
     /// @name Constructor & destructor.
@@ -163,8 +161,7 @@ namespace gum {
     void startTransitionDeclaration();
 
     /// Tells the factory to add a transition table to the current fmdp.
-    void addTransition(const std::string&        var,
-                       const MultiDimAdressable* transition);
+    void addTransition(const std::string& var, const MultiDimAdressable* transition);
 
     /// Tells the factory to add a transition table to the current fmdp.
     /// This transition table will be extracted from incorporated
@@ -264,53 +261,53 @@ namespace gum {
 
     /// Depending on the context this flag is used for some VERY important
     /// reasons.
-    bool __foo_flag;
+    bool _foo_flag_;
 
     /// Depending on the context this flag is used for some VERY important
     /// reasons.
-    bool __bar_flag;
+    bool _bar_flag_;
 
     /// Just to keep track of strings between two start/end calls.
-    std::vector< std::string > __stringBag;
+    std::vector< std::string > _stringBag_;
 
     /// Just to keep track of multidim between two start/end calls.
-    std::vector< const MultiDimImplementation< GUM_SCALAR >* > __ddBag;
+    std::vector< const MultiDimImplementation< GUM_SCALAR >* > _ddBag_;
 
     /// Used in VARIABLE mode
-    /// Checks if in __stringBag there is no other modality with the same name.
-    void __checkModalityInBag(const std::string& mod);
+    /// Checks if in  _stringBag_ there is no other modality with the same name.
+    void _checkModalityInBag_(const std::string& mod);
 
     /// Reset the different parts used to constructed the FMDP.
-    void __resetParts();
+    void _resetParts_();
 
     /// Insert every variables in the function graph
-    void __initializeFunctionGraph();
+    void _initializeFunctionGraph_();
 
     /// Insert every variables in the function graph
-    void __finalizeFunctionGraph();
+    void _finalizeFunctionGraph_();
 
     /// @}
 
     /// State stack.
-    std::vector< FMDPfactory_state > __states;
+    std::vector< FMDPfactory_state > _states_;
 
     /// The constructed FMDP
-    FMDP< GUM_SCALAR >* __fmdp;
+    FMDP< GUM_SCALAR >* _fmdp_;
 
     /// The FunctionGraph we're building at a given time
-    MultiDimFunctionGraph< GUM_SCALAR >* __FunctionGraph;
+    MultiDimFunctionGraph< GUM_SCALAR >* _FunctionGraph_;
 
     /// Mapping between a declared variable's name and itself.
-    HashTable< std::string, const DiscreteVariable* > __varNameMap;
+    HashTable< std::string, const DiscreteVariable* > _varNameMap_;
 
     /// Action Id counter
-    Idx __actionIdcpt;
+    Idx _actionIdcpt_;
 
     /// Copy operator is illegal, use only copy constructor.
     FMDPFactory< GUM_SCALAR >& operator=(const FMDPFactory< GUM_SCALAR >& source);
 
     /// Raise an OperationNotAllowed with the message "Illegal state."
-    void __illegalStateError(const std::string& s);
+    void _illegalStateError_(const std::string& s);
   };
 
 

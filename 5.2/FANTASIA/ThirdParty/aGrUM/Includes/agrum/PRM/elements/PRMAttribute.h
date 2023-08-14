@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,14 +23,13 @@
  * @file
  * @brief Headers of gum::PRMAttribute.
  *
- * @author Lionel TORTI and Pierre-Henri WUILLEMIN
+ * @author Lionel TORTI and Pierre-Henri WUILLEMIN(_at_LIP6)
  */
 
 #ifndef GUM_ATTRIBUTE_H
 #define GUM_ATTRIBUTE_H
 
 #include <agrum/PRM/elements/PRMClassElement.h>
-#include <agrum/multidim/implementations/multiDimImplementation.h>
 
 namespace gum {
   namespace prm {
@@ -46,7 +44,7 @@ namespace gum {
      * Potential).
      *
      * An attribute in a PRM is the equivalent of a random variable in a
-     * bayesian network.
+     * Bayesian network.
      *
      * This class is constructed by a gum::PRMFactory and is deleted by its
      * gum::Class.
@@ -58,7 +56,7 @@ namespace gum {
      * @ingroup prm_group
      */
     template < typename GUM_SCALAR >
-    class PRMAttribute : public PRMClassElement< GUM_SCALAR > {
+    class PRMAttribute: public PRMClassElement< GUM_SCALAR > {
       public:
       // ========================================================================
       /// @name Constructors & destructor
@@ -75,19 +73,17 @@ namespace gum {
       // ========================================================================
       /// @{
 
+      virtual PRMAttribute< GUM_SCALAR >* newFactory(const PRMClass< GUM_SCALAR >& c) const = 0;
       virtual PRMAttribute< GUM_SCALAR >*
-         newFactory(const PRMClass< GUM_SCALAR >& c) const = 0;
-      virtual PRMAttribute< GUM_SCALAR >*
-         copy(Bijection< const DiscreteVariable*, const DiscreteVariable* > bij)
-            const = 0;
+         copy(Bijection< const DiscreteVariable*, const DiscreteVariable* > bij) const
+         = 0;
 
-      virtual void copyCpf(
-         const Bijection< const DiscreteVariable*, const DiscreteVariable* >& bif,
-         const PRMAttribute< GUM_SCALAR >& source) = 0;
+      virtual void copyCpf(const Bijection< const DiscreteVariable*, const DiscreteVariable* >& bif,
+                           const PRMAttribute< GUM_SCALAR >& source)
+         = 0;
 
       /// See gum::PRMClassElement::elt_type().
-      virtual typename PRMClassElement< GUM_SCALAR >::ClassElementType
-         elt_type() const = 0;
+      virtual typename PRMClassElement< GUM_SCALAR >::ClassElementType elt_type() const = 0;
 
       /// See gum::PRMClassElement::type().
       virtual PRMType& type() = 0;
@@ -98,10 +94,10 @@ namespace gum {
       /// See gum::PRMClassElement::cpf().
       virtual const Potential< GUM_SCALAR >& cpf() const = 0;
 
-      /// See gum::PRMClassElement::_addParent().
+      /// See gum::PRMClassElement::addParent_().
       virtual void addParent(const PRMClassElement< GUM_SCALAR >& elt) = 0;
 
-      /// See gum::PRMClassElement::_addChild().
+      /// See gum::PRMClassElement::addChild_().
       virtual void addChild(const PRMClassElement< GUM_SCALAR >& elt) = 0;
 
       /**
@@ -150,7 +146,7 @@ namespace gum {
        *
        * @throw OperationNotAllowed Raised if this PRMAttribute can not have any
        *                            cast descendant.
-       * @throw TypeError Raised if attr's PRMType is not a direct
+       * @throw PRMTypeError Raised if attr's PRMType is not a direct
        *descendant of
        *                  this PRMAttribute's PRMType.
        */
@@ -175,8 +171,8 @@ namespace gum {
       protected:
       PRMAttribute(const PRMAttribute< GUM_SCALAR >& source);
 
-      virtual PRMType* _type() = 0;
-      virtual void     _type(PRMType* t) = 0;
+      virtual PRMType* type_()           = 0;
+      virtual void     type_(PRMType* t) = 0;
     };
 
 

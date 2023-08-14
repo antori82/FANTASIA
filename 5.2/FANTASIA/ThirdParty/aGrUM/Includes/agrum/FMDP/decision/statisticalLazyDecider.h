@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,7 +23,8 @@
  * @file
  * @brief Headers of the Statistical lazy decision maker class.
  *
- * @author Jean-Christophe MAGNAN and Pierre-Henri WUILLEMIN
+ * @author Pierre-Henri WUILLEMIN(_at_LIP6) and Jean-Christophe MAGNAN and Christophe
+ * GONZALES(_at_AMU)
  */
 
 
@@ -50,7 +50,7 @@ namespace gum {
    * But count how many times every visited states have been visited
    *
    */
-  class StatisticalLazyDecider : public IDecisionStrategy {
+  class StatisticalLazyDecider: public IDecisionStrategy {
     // ###################################################################
     /// @name Constructor & destructor.
     // ###################################################################
@@ -59,14 +59,17 @@ namespace gum {
     // ==========================================================================
     /// Constructor
     // ==========================================================================
-    StatisticalLazyDecider() : __counter(), __initialized(false) {
+    StatisticalLazyDecider() : _counter_(), _initialized_(false) {
       GUM_CONSTRUCTOR(StatisticalLazyDecider);
     }
 
     // ==========================================================================
     /// Destructor
     // ==========================================================================
-    ~StatisticalLazyDecider() { GUM_DESTRUCTOR(StatisticalLazyDecider); }
+    ~StatisticalLazyDecider() {
+      GUM_DESTRUCTOR(StatisticalLazyDecider);
+      ;
+    }
 
     /// @}
 
@@ -77,16 +80,15 @@ namespace gum {
     /// @{
     public:
     void checkState(const Instantiation& newState, Idx actionId = 0) {
-      if (!__initialized) {
-        __counter.reset(newState);
-        __initialized = true;
-      } else
-        __counter.incState(newState);
+      if (!_initialized_) {
+        _counter_.reset(newState);
+        _initialized_ = true;
+      } else _counter_.incState(newState);
     }
 
     private:
-    StatesCounter __counter;
-    bool          __initialized;
+    StatesCounter _counter_;
+    bool          _initialized_;
   };
 }   // namespace gum
 #endif   // GUM_STATISTICAL_LAZY_DECIDER_H

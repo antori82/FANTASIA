@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -26,7 +25,7 @@
  *GIBBS
  *sampling
  *
- * @author Paul ALAM & Pierre-Henri WUILLEMIN
+ * @author Paul ALAM & Pierre-Henri WUILLEMIN(_at_LIP6)
  *
  */
 
@@ -36,9 +35,8 @@
 
 #include <agrum/BN/algorithms/divergence/BNdistance.h>
 #include <agrum/BN/inference/tools/gibbsOperator.h>
-#include <agrum/core/approximations/approximationScheme.h>
+#include <agrum/tools/core/approximations/approximationScheme.h>
 
-#include <agrum/core/signal/signaler.h>
 
 namespace gum {
 
@@ -76,10 +74,10 @@ namespace gum {
    */
 
   template < typename GUM_SCALAR >
-  class GibbsBNdistance
-      : public BNdistance< GUM_SCALAR >
-      , public ApproximationScheme
-      , public GibbsOperator< GUM_SCALAR > {
+  class GibbsBNdistance:
+      public BNdistance< GUM_SCALAR >,
+      public ApproximationScheme,
+      public GibbsOperator< GUM_SCALAR > {
     public:
     /* no default constructor */
 
@@ -90,8 +88,7 @@ namespace gum {
      */
 
 
-    GibbsBNdistance(const IBayesNet< GUM_SCALAR >& P,
-                    const IBayesNet< GUM_SCALAR >& Q);
+    GibbsBNdistance(const IBayesNet< GUM_SCALAR >& P, const IBayesNet< GUM_SCALAR >& Q);
 
     /** copy constructor
      */
@@ -103,7 +100,7 @@ namespace gum {
     /**
      * @brief Number of burn in for one iteration.
      * @param b The number of burn in.
-     * @throw OutOfLowerBound Raised if b < 1.
+     * @throw OutOfBounds Raised if b < 1.
      */
     void setBurnIn(Size b);
 
@@ -114,19 +111,19 @@ namespace gum {
     Size burnIn() const;
 
     protected:
-    void _computeKL() final;
+    void computeKL_() final;
 
-    using BNdistance< GUM_SCALAR >::_p;
-    using BNdistance< GUM_SCALAR >::_q;
-    using BNdistance< GUM_SCALAR >::_hellinger;
-    using BNdistance< GUM_SCALAR >::_bhattacharya;
-    using BNdistance< GUM_SCALAR >::_jsd;
+    using BNdistance< GUM_SCALAR >::p_;
+    using BNdistance< GUM_SCALAR >::q_;
+    using BNdistance< GUM_SCALAR >::hellinger_;
+    using BNdistance< GUM_SCALAR >::bhattacharya_;
+    using BNdistance< GUM_SCALAR >::jsd_;
 
-    using BNdistance< GUM_SCALAR >::_klPQ;
-    using BNdistance< GUM_SCALAR >::_klQP;
+    using BNdistance< GUM_SCALAR >::klPQ_;
+    using BNdistance< GUM_SCALAR >::klQP_;
 
-    using BNdistance< GUM_SCALAR >::_errorPQ;
-    using BNdistance< GUM_SCALAR >::_errorQP;
+    using BNdistance< GUM_SCALAR >::errorPQ_;
+    using BNdistance< GUM_SCALAR >::errorQP_;
   };
 
 

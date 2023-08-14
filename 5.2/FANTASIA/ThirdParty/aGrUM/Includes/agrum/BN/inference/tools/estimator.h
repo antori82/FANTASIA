@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,14 +23,12 @@
  * @file
  * @brief This file contains estimating tools for approximate inference
  *
- * @author Paul ALAM & Pierre-Henri WUILLEMIN
+ * @author Paul ALAM & Pierre-Henri WUILLEMIN(_at_LIP6)
  */
 #ifndef GUM_ESTIMATOR_H
 #define GUM_ESTIMATOR_H
 
-#include <agrum/BN/IBayesNet.h>
 #include <agrum/BN/inference/loopyBeliefPropagation.h>
-#include <agrum/core/hashTable.h>
 #include <vector>
 
 namespace gum {
@@ -53,7 +50,7 @@ namespace gum {
     Estimator();
 
     /**
-     * Constructor with Bayesian Network
+     * Constructor with Bayesian network
      */
     explicit Estimator(const IBayesNet< GUM_SCALAR >* bn);
 
@@ -116,16 +113,16 @@ namespace gum {
     private:
     /// estimator represented by hashtable between each variable name and a vector
     /// of cumulative sample weights
-    HashTable< std::string, std::vector< GUM_SCALAR > > _estimator;
+    HashTable< std::string, std::vector< GUM_SCALAR > > estimator_;
 
     /// cumulated weights of all samples
-    GUM_SCALAR _wtotal;
+    GUM_SCALAR wtotal_;
 
     /// number of generated samples
-    Size _ntotal;
+    Size ntotal_;
 
-    /// bayesian network on which approximation is done
-    const IBayesNet< GUM_SCALAR >* _bn;
+    /// Bayesian network on which approximation is done
+    const IBayesNet< GUM_SCALAR >* bn_;
 
     /// returns expected value of Bernouilli variable (called by it's name) of
     /// given parameter
@@ -155,7 +152,7 @@ namespace gum {
     private:
     /// the set of single posteriors computed during the last inference
     /** the posteriors are owned by LazyPropagation. */
-    HashTable< std::string, Potential< GUM_SCALAR >* > __target_posteriors;
+    HashTable< std::string, Potential< GUM_SCALAR >* > _target_posteriors_;
   };
 
 #ifndef GUM_NO_EXTERN_TEMPLATE_CLASS

@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -26,7 +25,8 @@
  *
  * All classes used to export ID must inherit from IDWriter
  *
- * @author Jean-Christophe MAGNAN and Pierre-Henri WUILLEMIN
+ * @author Pierre-Henri WUILLEMIN(_at_LIP6) and Jean-Christophe MAGNAN and Christophe
+ * GONZALES(_at_AMU)
  */
 #ifndef GUM_ID_WRITER_H
 #define GUM_ID_WRITER_H
@@ -67,8 +67,7 @@ namespace gum {
      * @param infdiag The influence diagram writen in the stream.
      * @throws IOError Raised if an I/O error occurs.
      */
-    virtual void write(std::ostream&                         output,
-                       const InfluenceDiagram< GUM_SCALAR >& infdiag) = 0;
+    virtual void write(std::ostream& output, const InfluenceDiagram< GUM_SCALAR >& infdiag) = 0;
 
     /**
      * Writes an Influence Diagram in the file referenced by filePath.
@@ -79,8 +78,7 @@ namespace gum {
      * @param infdiag The Influence Diagram writen in the file.
      * @throw IOError Raised if an I/O error occurs.
      */
-    virtual void write(std::string                           filePath,
-                       const InfluenceDiagram< GUM_SCALAR >& infdiag) = 0;
+    virtual void write(std::string filePath, const InfluenceDiagram< GUM_SCALAR >& infdiag) = 0;
   };
 } /* namespace gum */
 

@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,7 +23,7 @@
  * @file
  * @brief Inline implementation of ClassDependencyGraph.
  *
- * @author Lionel TORTI and Pierre-Henri WUILLEMIN
+ * @author Lionel TORTI and Pierre-Henri WUILLEMIN(_at_LIP6)
  */
 #include <agrum/PRM/classDependencyGraph.h>
 
@@ -36,55 +35,51 @@ namespace gum {
     ClassDependencyGraph< GUM_SCALAR >::~ClassDependencyGraph() {
       GUM_DESTRUCTOR(ClassDependencyGraph);
 
-      for (const auto& elt : __node_map)
+      for (const auto& elt: _node_map_)
         delete elt.second;
 
-      for (const auto& elt : __elt_map)
+      for (const auto& elt: _elt_map_)
         delete elt.second;
     }
 
     // Build the class dependency graph.
     template < typename GUM_SCALAR >
-    void ClassDependencyGraph< GUM_SCALAR >::__buildGraph(
-       const PRM< GUM_SCALAR >& prm) {
+    void ClassDependencyGraph< GUM_SCALAR >::_buildGraph_(const PRM< GUM_SCALAR >& prm) {
       // First we add all nodes
-      for (const auto ci : prm.classes()) {
-        __node_map.insert(
-           ci, new HashTable< const PRMClassElement< GUM_SCALAR >*, NodeId >());
+      for (const auto ci: prm.classes()) {
+        _node_map_.insert(ci, new HashTable< const PRMClassElement< GUM_SCALAR >*, NodeId >());
 
-        for (const auto node : ci->containerDag().nodes())
-          __addNode(ci, ci->get(node));
+        for (const auto node: ci->containerDag().nodes())
+          _addNode_(ci, ci->get(node));
       }
 
-      for (const auto ii : prm.interfaces()) {
-        __node_map.insert(
-           ii, new HashTable< const PRMClassElement< GUM_SCALAR >*, NodeId >());
+      for (const auto ii: prm.interfaces()) {
+        _node_map_.insert(ii, new HashTable< const PRMClassElement< GUM_SCALAR >*, NodeId >());
 
-        for (const auto node : ii->containerDag().nodes()) {
-          __addNode(ii, ii->get(node));
+        for (const auto node: ii->containerDag().nodes()) {
+          _addNode_(ii, ii->get(node));
         }
       }
 
       // Then we add the arcs
-      for (const auto cc : prm.classes())
-        for (const auto node : cc->containerDag().nodes())
-          __addArcs(*cc, node, *(__node_map[cc]));
+      for (const auto cc: prm.classes())
+        for (const auto node: cc->containerDag().nodes())
+          _addArcs_(*cc, node, *(_node_map_[cc]));
     }
 
-    // Add arcs in __graph.
+    // Add arcs in  _graph_.
     template < typename GUM_SCALAR >
-    void ClassDependencyGraph< GUM_SCALAR >::__addArcs(
+    void ClassDependencyGraph< GUM_SCALAR >::_addArcs_(
        const PRMClassElementContainer< GUM_SCALAR >&              c,
        NodeId                                                     node,
        HashTable< const PRMClassElement< GUM_SCALAR >*, NodeId >& map) {
       switch (c.get(node).elt_type()) {
         case PRMClassElement< GUM_SCALAR >::prm_slotchain: {
-          const PRMSlotChain< GUM_SCALAR >& sc =
-             static_cast< const PRMSlotChain< GUM_SCALAR >& >(c.get(node));
+          const PRMSlotChain< GUM_SCALAR >& sc
+             = static_cast< const PRMSlotChain< GUM_SCALAR >& >(c.get(node));
 
-          for (const auto chi : c.containerDag().children(node))
-            __graph.addArc((*(__node_map[&(sc.end())]))[&(
-                              sc.end().get(sc.lastElt().safeName()))],
+          for (const auto chi: c.containerDag().children(node))
+            _graph_.addArc((*(_node_map_[&(sc.end())]))[&(sc.end().get(sc.lastElt().safeName()))],
                            map[&(c.get(chi))]);
 
           break;
@@ -92,8 +87,8 @@ namespace gum {
 
         case PRMClassElement< GUM_SCALAR >::prm_aggregate:
         case PRMClassElement< GUM_SCALAR >::prm_attribute: {
-          for (const auto chi : c.containerDag().children(node))
-            __graph.addArc(map[&(c.get(node))], map[&(c.get(chi))]);
+          for (const auto chi: c.containerDag().children(node))
+            _graph_.addArc(map[&(c.get(node))], map[&(c.get(chi))]);
 
           break;
         }
@@ -104,63 +99,59 @@ namespace gum {
     }
 
     template < typename GUM_SCALAR >
-    INLINE ClassDependencyGraph< GUM_SCALAR >::ClassDependencyGraph(
-       const PRM< GUM_SCALAR >& prm) {
+    INLINE ClassDependencyGraph< GUM_SCALAR >::ClassDependencyGraph(const PRM< GUM_SCALAR >& prm) {
       GUM_CONSTRUCTOR(ClassDependencyGraph);
-      __buildGraph(prm);
+      _buildGraph_(prm);
     }
 
     template < typename GUM_SCALAR >
     INLINE ClassDependencyGraph< GUM_SCALAR >::ClassDependencyGraph(
        const ClassDependencyGraph< GUM_SCALAR >& source) :
-        __graph(source.__graph),
-        __modalitites(source.__modalitites), __elt_map(source.__elt_map) {
+        _graph_(source._graph_),
+        _modalitites_(source._modalitites_), _elt_map_(source._elt_map_) {
       GUM_CONS_CPY(ClassDependencyGraph);
 
-      for (const auto elt : source.__node_map) {
-        __node_map.insert(
+      for (const auto& elt: source._node_map_) {
+        _node_map_.insert(
            elt.first,
-           new HashTable< const PRMClassElement< GUM_SCALAR >*, NodeId >(
-              *elt.second));
+           new HashTable< const PRMClassElement< GUM_SCALAR >*, NodeId >(*elt.second));
       }
     }
 
     template < typename GUM_SCALAR >
     INLINE const DAG& ClassDependencyGraph< GUM_SCALAR >::dag() const {
-      return __graph;
+      return _graph_;
     }
 
     template < typename GUM_SCALAR >
     INLINE const typename ClassDependencyGraph< GUM_SCALAR >::EltPair&
        ClassDependencyGraph< GUM_SCALAR >::get(NodeId id) const {
-      return *(__elt_map[id]);
+      return *(_elt_map_[id]);
     }
 
     template < typename GUM_SCALAR >
-    INLINE NodeId ClassDependencyGraph< GUM_SCALAR >::get(
-       const PRMClassElementContainer< GUM_SCALAR >& c,
-       const PRMClassElement< GUM_SCALAR >&          elt) const {
-      return (*(__node_map[&c]))[&elt];
+    INLINE NodeId
+       ClassDependencyGraph< GUM_SCALAR >::get(const PRMClassElementContainer< GUM_SCALAR >& c,
+                                               const PRMClassElement< GUM_SCALAR >& elt) const {
+      return (*(_node_map_[&c]))[&elt];
     }
 
     template < typename GUM_SCALAR >
-    INLINE const NodeProperty< Size >&
-                 ClassDependencyGraph< GUM_SCALAR >::modalities() const {
-      return __modalitites;
+    INLINE const NodeProperty< Size >& ClassDependencyGraph< GUM_SCALAR >::modalities() const {
+      return _modalitites_;
     }
 
     template < typename GUM_SCALAR >
-    INLINE void ClassDependencyGraph< GUM_SCALAR >::__addNode(
+    INLINE void ClassDependencyGraph< GUM_SCALAR >::_addNode_(
        const PRMClassElementContainer< GUM_SCALAR >* c,
        const PRMClassElement< GUM_SCALAR >&          elt) {
       switch (elt.elt_type()) {
         case PRMClassElement< GUM_SCALAR >::prm_attribute:
         case PRMClassElement< GUM_SCALAR >::prm_aggregate: {
-          NodeId id = __graph.addNode();
-          __elt_map.insert(
-             id, new ClassDependencyGraph< GUM_SCALAR >::EltPair(c, &elt));
-          __node_map[c]->insert(&elt, id);
-          __modalitites.insert(id, elt.type().variable().domainSize());
+          NodeId id = _graph_.addNode();
+          _elt_map_.insert(id, new ClassDependencyGraph< GUM_SCALAR >::EltPair(c, &elt));
+          _node_map_[c]->insert(&elt, id);
+          _modalitites_.insert(id, elt.type().variable().domainSize());
           break;
         }
 

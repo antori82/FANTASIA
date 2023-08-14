@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,21 +23,15 @@
  * @file
  * @brief Headers for the O3TypeFactory class.
  *
- * @author Christophe GONZALES and Pierre-Henri WUILLEMIN
+ * @author Christophe GONZALES(_at_AMU) and Pierre-Henri WUILLEMIN(_at_LIP6)
  * @author Lionel TORTI
  */
 
 #include <memory>
 #include <string>
 
-#include <agrum/PRM/PRM.h>
 #include <agrum/PRM/PRMFactory.h>
 #include <agrum/PRM/o3prm/O3NameSolver.h>
-#include <agrum/PRM/o3prm/O3prm.h>
-#include <agrum/PRM/o3prm/errors.h>
-#include <agrum/core/errorsContainer.h>
-#include <agrum/core/hashTable.h>
-#include <agrum/core/set.h>
 
 #ifndef GUM_PRM_O3PRM_O3TYPE_FACTORY_H
 #  define GUM_PRM_O3PRM_O3TYPE_FACTORY_H
@@ -73,38 +66,38 @@ namespace gum {
         void build();
 
         private:
-        PRM< GUM_SCALAR >*          __prm;
-        O3PRM*                      __o3_prm;
-        O3NameSolver< GUM_SCALAR >* __solver;
-        ErrorsContainer*            __errors;
+        PRM< GUM_SCALAR >*          _prm_;
+        O3PRM*                      _o3_prm_;
+        O3NameSolver< GUM_SCALAR >* _solver_;
+        ErrorsContainer*            _errors_;
 
-        bool __build;
+        bool _build_;
 
-        HashTable< std::string, O3Type* >     __superMap;
-        HashTable< std::string, gum::NodeId > __nameMap;
-        HashTable< std::string, O3Type* >     __typeMap;
-        HashTable< NodeId, O3Type* >          __nodeMap;
-        DAG                                   __dag;
-        std::vector< O3Type* >                __o3Types;
-        std::vector< O3IntType* >             __o3IntTypes;
-        std::vector< O3RealType* >            __o3RealTypes;
+        HashTable< std::string, O3Type* >     _superMap_;
+        HashTable< std::string, gum::NodeId > _nameMap_;
+        HashTable< std::string, O3Type* >     _typeMap_;
+        HashTable< NodeId, O3Type* >          _nodeMap_;
+        DAG                                   _dag_;
+        std::vector< O3Type* >                _o3Types_;
+        std::vector< O3IntType* >             _o3IntTypes_;
+        std::vector< O3RealType* >            _o3RealTypes_;
 
-        void __buildTypes();
-        void __buildIntTypes();
-        void __buildRealTypes();
+        void _buildTypes_();
+        void _buildIntTypes_();
+        void _buildRealTypes_();
 
-        bool __isPrimitiveType(O3Type& type);
+        bool _isPrimitiveType_(O3Type& type);
 
-        bool __checkO3Types();
-        void __checkDepreactedO3Types();
-        bool __addTypes2Dag();
-        bool __addArcs2Dag();
-        bool __checkLabels(O3Type& type);
+        bool _checkO3Types_();
+        void _checkDepreactedO3Types_();
+        bool _addTypes2Dag_();
+        bool _addArcs2Dag_();
+        bool _checkLabels_(O3Type& type);
 
-        void __setO3TypeCreationOrder();
+        void _setO3TypeCreationOrder_();
 
-        bool __checkO3IntTypes();
-        bool __checkO3RealTypes();
+        bool _checkO3IntTypes_();
+        bool _checkO3RealTypes_();
       };
 
     }   // namespace o3prm

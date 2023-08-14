@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -23,7 +22,7 @@
 /** @file
  * @brief Inline implementation of the class building the essential Graph from a
  * DAGmodel
- * @author Pierre-Henri WUILLEMIN and Christophe GONZALES
+ * @author Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
  *
  */
 
@@ -32,23 +31,23 @@
 
 namespace gum {
 
-  INLINE DAG MarkovBlanket::dag() { return __mb; }
+  INLINE DAG MarkovBlanket::dag() const { return _mb_; }
 
-  INLINE const NodeSet& MarkovBlanket::parents(const NodeId id) const {
-    return __mb.parents(id);
-  }
+  INLINE const NodeSet& MarkovBlanket::parents(NodeId id) const { return _mb_.parents(id); }
 
-  INLINE const NodeSet& MarkovBlanket::children(const NodeId id) const {
-    return __mb.children(id);
-  }
+  INLINE const NodeSet& MarkovBlanket::children(NodeId id) const { return _mb_.children(id); }
 
-  INLINE Size MarkovBlanket::sizeArcs() const { return __mb.sizeArcs(); }
+  INLINE NodeSet MarkovBlanket::parents(const NodeSet& ids) const { return _mb_.parents(ids); }
 
-  INLINE const ArcSet& MarkovBlanket::arcs() const { return __mb.arcs(); }
+  INLINE NodeSet MarkovBlanket::children(const NodeSet& ids) const { return _mb_.children(ids); }
 
-  INLINE Size MarkovBlanket::sizeNodes() const { return __mb.sizeNodes(); }
+  INLINE Size MarkovBlanket::sizeArcs() const { return _mb_.sizeArcs(); }
 
-  INLINE Size MarkovBlanket::size() const { return __mb.size(); }
+  INLINE const ArcSet& MarkovBlanket::arcs() const { return _mb_.arcs(); }
 
-  INLINE const NodeGraphPart& MarkovBlanket::nodes() const { return __mb.nodes(); }
+  INLINE Size MarkovBlanket::sizeNodes() const { return _mb_.sizeNodes(); }
+
+  INLINE Size MarkovBlanket::size() const { return _mb_.size(); }
+
+  INLINE const NodeGraphPart& MarkovBlanket::nodes() const { return _mb_.nodes(); }
 }   // namespace gum

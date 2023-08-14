@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -45,7 +44,7 @@ namespace gum {
    */
 
 
-  class ComposedLeaf : public AbstractLeaf {
+  class ComposedLeaf: public AbstractLeaf {
     public:
     // ==========================================================================
     /// @name Constructor & destructor.
@@ -56,22 +55,23 @@ namespace gum {
     /// Default constructor
     // ###################################################################
     ComposedLeaf(NodeId leafId, AbstractLeaf* l1, AbstractLeaf* l2) :
-        AbstractLeaf(leafId), __l1(l1), __l2(l2) {
+        AbstractLeaf(leafId), _l1_(l1), _l2_(l2) {
       GUM_CONSTRUCTOR(ComposedLeaf);
     }
 
     // ###################################################################
     /// Default destructor
     // ###################################################################
-    ~ComposedLeaf() { GUM_DESTRUCTOR(ComposedLeaf); }
+    ~ComposedLeaf() {
+      GUM_DESTRUCTOR(ComposedLeaf);
+      ;
+    }
 
     // ============================================================================
     /// Allocators and Deallocators redefinition
     // ============================================================================
-    void* operator new(size_t s) {
-      return SmallObjectAllocator::instance().allocate(s);
-    }
-    void operator delete(void* p) {
+    void* operator new(size_t s) { return SmallObjectAllocator::instance().allocate(s); }
+    void  operator delete(void* p) {
       SmallObjectAllocator::instance().deallocate(p, sizeof(ComposedLeaf));
     }
 
@@ -80,26 +80,24 @@ namespace gum {
     // ###################################################################
     /// Gaves the leaf effectif for given modality
     // ###################################################################
-    double effectif(Idx moda) const {
-      return __l1->effectif(moda) + __l2->effectif(moda);
-    }
-    double total() const { return __l1->total() + __l2->total(); }
+    double effectif(Idx moda) const { return _l1_->effectif(moda) + _l2_->effectif(moda); }
+    double total() const { return _l1_->total() + _l2_->total(); }
 
     // ###################################################################
     /// Returns true if abstractleaf has leaf in it
     // ###################################################################
     bool contains(NodeId testedId) const {
-      return AbstractLeaf::contains(testedId) || __l1->contains(testedId)
-             || __l2->contains(testedId);
+      return AbstractLeaf::contains(testedId) || _l1_->contains(testedId)
+          || _l2_->contains(testedId);
     }
 
-    Idx nbModa() const { return __l1->nbModa(); }
+    Idx nbModa() const { return _l1_->nbModa(); }
 
     std::string toString();
 
     private:
-    AbstractLeaf* __l1;
-    AbstractLeaf* __l2;
+    AbstractLeaf* _l1_;
+    AbstractLeaf* _l2_;
   };
 
 

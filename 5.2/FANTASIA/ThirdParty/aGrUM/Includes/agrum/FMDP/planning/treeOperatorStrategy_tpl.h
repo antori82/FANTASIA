@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -25,7 +24,8 @@
  * @brief Template implementation of FMDP/planning/TreeOperatorStrategy.h
  * classes.
  *
- * @author Jean-Christophe MAGNAN and Pierre-Henri WUILLEMIN
+ * @author Pierre-Henri WUILLEMIN(_at_LIP6) and Jean-Christophe MAGNAN and Christophe
+ * GONZALES(_at_AMU)
  */
 
 // =========================================================================
@@ -34,12 +34,12 @@
 #include <utility>
 #include <vector>
 // =========================================================================
-#include <agrum/core/math/math.h>
-#include <agrum/multidim/instantiation.h>
+#include <agrum/tools/core/math/math_utils.h>
+#include <agrum/tools/multidim/instantiation.h>
 // =========================================================================
 #include <agrum/FMDP/planning/treeOperatorStrategy.h>
-#include <agrum/multidim/utils/FunctionGraphUtilities/operators/treeOperator.h>
-#include <agrum/multidim/utils/FunctionGraphUtilities/operators/treeRegress.h>
+#include <agrum/tools/multidim/utils/FunctionGraphUtilities/operators/treeOperator.h>
+#include <agrum/tools/multidim/utils/FunctionGraphUtilities/operators/treeRegress.h>
 // =========================================================================
 
 /// For shorter line and hence more comprehensive code only
@@ -90,29 +90,27 @@ namespace gum {
   /// @warning given qAction is deleted, return the new one
   // ==========================================================================
   template < typename GUM_SCALAR >
-  MultiDimFunctionGraph< GUM_SCALAR >* TreeOperatorStrategy< GUM_SCALAR >::regress(
-     const MultiDimFunctionGraph< GUM_SCALAR >* Vold,
-     Idx                                        actionId,
-     const FMDP< GUM_SCALAR >*                  fmdp,
-     const Set< const DiscreteVariable* >&      elVarSeq) {
+  MultiDimFunctionGraph< GUM_SCALAR >*
+     TreeOperatorStrategy< GUM_SCALAR >::regress(const MultiDimFunctionGraph< GUM_SCALAR >* Vold,
+                                                 Idx                                   actionId,
+                                                 const FMDP< GUM_SCALAR >*             fmdp,
+                                                 const Set< const DiscreteVariable* >& elVarSeq) {
     // ******************************************************************************
     // Initialisation :
     // Creating a copy of last Vfunction to deduce from the new Qaction
     // And finding the first var to eleminate (the one at the end)
-    Bijection< const DiscreteVariable*,
-               const MultiDimFunctionGraph< GUM_SCALAR >* >
-       pxi;
-    for (SequenceIteratorSafe< const DiscreteVariable* > varIter =
-            Vold->variablesSequence().beginSafe();
+    Bijection< const DiscreteVariable*, const MultiDimFunctionGraph< GUM_SCALAR >* > pxi;
+    for (SequenceIteratorSafe< const DiscreteVariable* > varIter
+         = Vold->variablesSequence().beginSafe();
          varIter != Vold->variablesSequence().endSafe();
          ++varIter) {
-      pxi.insert(
-         *varIter,
-         RECAST(fmdp->transition(actionId, fmdp->mapMainPrime().first(*varIter))));
+      pxi.insert(*varIter,
+                 RECAST(fmdp->transition(actionId, fmdp->mapMainPrime().first(*varIter))));
     }
 
     TreeRegress< GUM_SCALAR, std::multiplies, std::plus > tr(
-       Vold, pxi);   //, Vold->variablesSequence(), (GUM_SCALAR) 0.0 );
+       Vold,
+       pxi);   //, Vold->variablesSequence(), (GUM_SCALAR) 0.0 );
     return tr.compute();
   }
 
@@ -121,13 +119,12 @@ namespace gum {
   // ==========================================================================
   template < typename GUM_SCALAR >
   MultiDimFunctionGraph< GUM_SCALAR >*
-     TreeOperatorStrategy< GUM_SCALAR >::maximize(
-        const MultiDimFunctionGraph< GUM_SCALAR >* f1,
-        const MultiDimFunctionGraph< GUM_SCALAR >* f2,
-        Idx                                        del) {
+     TreeOperatorStrategy< GUM_SCALAR >::maximize(const MultiDimFunctionGraph< GUM_SCALAR >* f1,
+                                                  const MultiDimFunctionGraph< GUM_SCALAR >* f2,
+                                                  Idx                                        del) {
     TreeOperator< GUM_SCALAR, Maximizes > opi(f1, f2);
     MultiDimFunctionGraph< GUM_SCALAR >*  ret = opi.compute();
-    this->_deleteFunctionGraph(f1, f2, del);
+    this->deleteFunctionGraph_(f1, f2, del);
     return ret;
   }
 
@@ -136,13 +133,12 @@ namespace gum {
   // ==========================================================================
   template < typename GUM_SCALAR >
   MultiDimFunctionGraph< GUM_SCALAR >*
-     TreeOperatorStrategy< GUM_SCALAR >::minimize(
-        const MultiDimFunctionGraph< GUM_SCALAR >* f1,
-        const MultiDimFunctionGraph< GUM_SCALAR >* f2,
-        Idx                                        del) {
+     TreeOperatorStrategy< GUM_SCALAR >::minimize(const MultiDimFunctionGraph< GUM_SCALAR >* f1,
+                                                  const MultiDimFunctionGraph< GUM_SCALAR >* f2,
+                                                  Idx                                        del) {
     TreeOperator< GUM_SCALAR, Minimizes > opi(f1, f2);
     MultiDimFunctionGraph< GUM_SCALAR >*  ret = opi.compute();
-    this->_deleteFunctionGraph(f1, f2, del);
+    this->deleteFunctionGraph_(f1, f2, del);
     return ret;
   }
 
@@ -150,13 +146,12 @@ namespace gum {
   // ==========================================================================
   template < typename GUM_SCALAR >
   MultiDimFunctionGraph< GUM_SCALAR >*
-     TreeOperatorStrategy< GUM_SCALAR >::multiply(
-        const MultiDimFunctionGraph< GUM_SCALAR >* f1,
-        const MultiDimFunctionGraph< GUM_SCALAR >* f2,
-        Idx                                        del) {
+     TreeOperatorStrategy< GUM_SCALAR >::multiply(const MultiDimFunctionGraph< GUM_SCALAR >* f1,
+                                                  const MultiDimFunctionGraph< GUM_SCALAR >* f2,
+                                                  Idx                                        del) {
     TreeOperator< GUM_SCALAR, std::multiplies > opi(f1, f2);
     MultiDimFunctionGraph< GUM_SCALAR >*        ret = opi.compute();
-    this->_deleteFunctionGraph(f1, f2, del);
+    this->deleteFunctionGraph_(f1, f2, del);
     return ret;
   }
 
@@ -168,18 +163,14 @@ namespace gum {
   template < typename GUM_SCALAR >
   MultiDimFunctionGraph< ArgMaxSet< GUM_SCALAR, Idx >, SetTerminalNodePolicy >*
      TreeOperatorStrategy< GUM_SCALAR >::argmaximize(
-        const MultiDimFunctionGraph< ArgMaxSet< GUM_SCALAR, Idx >,
-                                     SetTerminalNodePolicy >* f1,
-        const MultiDimFunctionGraph< ArgMaxSet< GUM_SCALAR, Idx >,
-                                     SetTerminalNodePolicy >* f2,
-        Idx                                                   del) {
-    TreeOperator< ArgMaxSet< GUM_SCALAR, Idx >,
-                  ArgumentMaximisesAction,
-                  SetTerminalNodePolicy >
-       argmaxope(f1, f2);
-    MultiDimFunctionGraph< ArgMaxSet< GUM_SCALAR, Idx >, SetTerminalNodePolicy >*
-       ret = argmaxope.compute();
-    this->_deleteFunctionGraph(f1, f2, del);
+        const MultiDimFunctionGraph< ArgMaxSet< GUM_SCALAR, Idx >, SetTerminalNodePolicy >* f1,
+        const MultiDimFunctionGraph< ArgMaxSet< GUM_SCALAR, Idx >, SetTerminalNodePolicy >* f2,
+        Idx                                                                                 del) {
+    TreeOperator< ArgMaxSet< GUM_SCALAR, Idx >, ArgumentMaximisesAction, SetTerminalNodePolicy >
+                                                                                  argmaxope(f1, f2);
+    MultiDimFunctionGraph< ArgMaxSet< GUM_SCALAR, Idx >, SetTerminalNodePolicy >* ret
+       = argmaxope.compute();
+    this->deleteFunctionGraph_(f1, f2, del);
     return ret;
   }
 
@@ -190,13 +181,13 @@ namespace gum {
   /// @warning given function is deleted, returns the new one
   // ==========================================================================
   template < typename GUM_SCALAR >
-  MultiDimFunctionGraph< GUM_SCALAR >* TreeOperatorStrategy< GUM_SCALAR >::add(
-     const MultiDimFunctionGraph< GUM_SCALAR >* f1,
-     const MultiDimFunctionGraph< GUM_SCALAR >* f2,
-     Idx                                        del) {
+  MultiDimFunctionGraph< GUM_SCALAR >*
+     TreeOperatorStrategy< GUM_SCALAR >::add(const MultiDimFunctionGraph< GUM_SCALAR >* f1,
+                                             const MultiDimFunctionGraph< GUM_SCALAR >* f2,
+                                             Idx                                        del) {
     TreeOperator< GUM_SCALAR, std::plus > opi(f1, f2);
     MultiDimFunctionGraph< GUM_SCALAR >*  ret = opi.compute();
-    this->_deleteFunctionGraph(f1, f2, del);
+    this->deleteFunctionGraph_(f1, f2, del);
     return ret;
   }
 
@@ -208,13 +199,12 @@ namespace gum {
   // ==========================================================================
   template < typename GUM_SCALAR >
   MultiDimFunctionGraph< GUM_SCALAR >*
-     TreeOperatorStrategy< GUM_SCALAR >::subtract(
-        const MultiDimFunctionGraph< GUM_SCALAR >* f1,
-        const MultiDimFunctionGraph< GUM_SCALAR >* f2,
-        Idx                                        del) {
+     TreeOperatorStrategy< GUM_SCALAR >::subtract(const MultiDimFunctionGraph< GUM_SCALAR >* f1,
+                                                  const MultiDimFunctionGraph< GUM_SCALAR >* f2,
+                                                  Idx                                        del) {
     TreeOperator< GUM_SCALAR, std::minus > opi(f1, f2);
     MultiDimFunctionGraph< GUM_SCALAR >*   ret = opi.compute();
-    this->_deleteFunctionGraph(f1, f2, del);
+    this->deleteFunctionGraph_(f1, f2, del);
     return ret;
   }
 

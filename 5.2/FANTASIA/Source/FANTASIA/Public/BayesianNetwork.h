@@ -2,6 +2,10 @@
 
 #pragma once
 
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
+
 #include "FANTASIA.h"
 #include "FANTASIATypes.h"
 #include "Kismet/BlueprintFunctionLibrary.h"

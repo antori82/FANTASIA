@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -31,15 +30,11 @@
 #ifndef GUM_IMDDI_H
 #define GUM_IMDDI_H
 // =========================================================================
-#include <agrum/multidim/implementations/multiDimFunctionGraph.h>
 // =========================================================================
 #include <agrum/FMDP/learning/datastructure/incrementalGraphLearner.h>
-#include <agrum/FMDP/learning/datastructure/leaves/abstractLeaf.h>
-#include <agrum/FMDP/learning/datastructure/leaves/concreteLeaf.h>
 #include <agrum/FMDP/learning/datastructure/leaves/leafAggregator.h>
 #include <agrum/FMDP/learning/datastructure/variableselector.h>
 // =========================================================================
-#include <agrum/variables/discreteVariable.h>
 // =========================================================================
 
 namespace gum {
@@ -55,7 +50,7 @@ namespace gum {
    */
 
   template < TESTNAME AttributeSelection, bool isScalar = false >
-  class IMDDI : public IncrementalGraphLearner< AttributeSelection, isScalar > {
+  class IMDDI: public IncrementalGraphLearner< AttributeSelection, isScalar > {
     public:
     // ###################################################################
     /// @name Constructor & destructor.
@@ -97,8 +92,7 @@ namespace gum {
     void addObservation(const Observation*);
 
     protected:
-    void _updateNodeWithObservation(const Observation* newObs,
-                                    NodeId             currentNodeId);
+    void updateNodeWithObservation_(const Observation* newObs, NodeId currentNodeId);
 
     public:
     // ==========================================================================
@@ -107,17 +101,17 @@ namespace gum {
     void updateGraph();
 
     protected:
-    NodeId _insertLeafNode(NodeDatabase< AttributeSelection, isScalar >* nDB,
+    NodeId insertLeafNode_(NodeDatabase< AttributeSelection, isScalar >* nDB,
                            const DiscreteVariable*                       boundVar,
                            Set< const Observation* >*                    sonsMap);
 
-    void _chgNodeBoundVar(NodeId chgedNodeId, const DiscreteVariable* desiredVar);
+    void chgNodeBoundVar_(NodeId chgedNodeId, const DiscreteVariable* desiredVar);
 
-    void _removeNode(NodeId removedNodeId);
+    void removeNode_(NodeId removedNodeId);
 
     private:
-    void __addLeaf(NodeId);
-    void __removeLeaf(NodeId);
+    void _addLeaf_(NodeId);
+    void _removeLeaf_(NodeId);
 
     /// @}
 
@@ -130,16 +124,15 @@ namespace gum {
     // ==========================================================================
     /// Computes the score of the given variables for the given node
     // ==========================================================================
-    void __updateScore(const DiscreteVariable*, NodeId, VariableSelector& vs);
-    void __downdateScore(const DiscreteVariable*, NodeId, VariableSelector& vs);
+    void _updateScore_(const DiscreteVariable*, NodeId, VariableSelector& vs);
+    void _downdateScore_(const DiscreteVariable*, NodeId, VariableSelector& vs);
 
     // ==========================================================================
     /// For each node in the given set, this methods checks whether or not
     /// we should installed the given variable as a test.
     /// If so, the node is updated
     // ==========================================================================
-    void
-       __updateNodeSet(Set< NodeId >&, const DiscreteVariable*, VariableSelector&);
+    void _updateNodeSet_(Set< NodeId >&, const DiscreteVariable*, VariableSelector&);
 
 
     public:
@@ -149,37 +142,36 @@ namespace gum {
     void updateFunctionGraph();
 
     private:
-    void   __rebuildFunctionGraph();
-    NodeId __insertLeafInFunctionGraph(AbstractLeaf*, Int2Type< true >);
-    NodeId __insertLeafInFunctionGraph(AbstractLeaf*, Int2Type< false >);
+    void   _rebuildFunctionGraph_();
+    NodeId _insertLeafInFunctionGraph_(AbstractLeaf*, Int2Type< true >);
+    NodeId _insertLeafInFunctionGraph_(AbstractLeaf*, Int2Type< false >);
 
     /// @}
     ///
     public:
     void insertSetOfVars(MultiDimFunctionGraph< double >* ret) const {
-      for (SequenceIteratorSafe< const DiscreteVariable* > varIter =
-              __varOrder.beginSafe();
-           varIter != __varOrder.endSafe();
+      for (SequenceIteratorSafe< const DiscreteVariable* > varIter = _varOrder_.beginSafe();
+           varIter != _varOrder_.endSafe();
            ++varIter)
         ret->add(**varIter);
     }
 
     private:
-    Sequence< const DiscreteVariable* > __varOrder;
+    Sequence< const DiscreteVariable* > _varOrder_;
 
-    LeafAggregator __lg;
+    LeafAggregator _lg_;
 
-    HashTable< NodeId, AbstractLeaf* > __leafMap;
+    HashTable< NodeId, AbstractLeaf* > _leafMap_;
 
     /// The total number of observation added to this tree
-    Idx __nbTotalObservation;
+    Idx _nbTotalObservation_;
 
     /// The threshold above which we consider variables to be dependant
-    double __attributeSelectionThreshold;
+    double _attributeSelectionThreshold_;
 
     /// The threshold above which two leaves does not share the same probability
     /// distribution
-    // double __pairSelectionThreshold;
+    // double  _pairSelectionThreshold_;
   };
 
 

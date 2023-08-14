@@ -1,7 +1,7 @@
 /***************************************************************************
  *  aGrUM modified frames and atg files for cocoR
- *   Copyright (c) 2005 by Christophe GONZALES and Pierre-Henri WUILLEMIN  *
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005 by Christophe GONZALES(@AMU) and Pierre-Henri WUILLEMIN(@LIP6)  *
+ *   info_at_agrum_dot_org
 ***************************************************************************/
 /*----------------------------------------------------------------------
 Compiler Generator Coco/R,
@@ -38,8 +38,7 @@ Coco/R itself) does not fall under the GNU General Public License.
 #include <string>
 #include <vector>
 #include <utility>
-#include <agrum/core/debug.h>
-#include <agrum/core/hashTable.h>
+#include <agrum/tools/core/debug.h>
 #include <agrum/PRM/o3prm/O3prm.h>
 
 #include <iostream>
@@ -93,7 +92,7 @@ class Parser {
     void ExpectWeak( int n, int follow );
     bool WeakSeparator( int n, int syFol, int repFol );
 
-    ErrorsContainer  __errors;
+    ErrorsContainer  errors__;
 
   public:
     Scanner* scanner;
@@ -155,40 +154,40 @@ using O3ImportList = gum::prm::o3prm::O3PRM::O3ImportList;
 
 using O3PRM = gum::prm::o3prm::O3PRM;
 
-O3PRM* __prm;
-std::string __prefix;
+O3PRM* _prm_;
+std::string _prefix_;
 
-bool __ok (Size n) { return errors().error_count == n; }
+bool _ok_ (Size n) { return errors().error_count == n; }
 
-void __addO3Type( O3Type t ) {
+void _addO3Type_( O3Type t ) {
   get_prm()->types().emplace_back( new O3Type(std::move( t )) );
 }
 
-void __addO3IntType( O3IntType t ) {
+void _addO3IntType_( O3IntType t ) {
   get_prm()->int_types().emplace_back( new O3IntType(std::move( t )) );
 }
 
-void __addO3RealType( O3RealType t ) {
+void _addO3RealType_( O3RealType t ) {
   get_prm()->real_types().emplace_back( new O3RealType(std::move( t )) );
 }
 
-void __addO3Interface( O3Interface i ) {
+void _addO3Interface_( O3Interface i ) {
   get_prm()->interfaces().emplace_back( new O3Interface( std::move( i ) ) );
 }
 
-void __addO3Class( O3Class c ) {
+void _addO3Class_( O3Class c ) {
   get_prm()->classes().emplace_back( new O3Class( std::move( c ) ) );
 }
 
-void __addO3System( O3System s ) {
+void _addO3System_( O3System s ) {
   get_prm()->systems().emplace_back( new O3System( std::move( s ) ) );
 }
 
-void __addO3Import( O3Import i ) {
+void _addO3Import_( O3Import i ) {
   get_prm()->imports().emplace_back( new O3Import( std::move( i ) ) );
 }
 
-void __split( const O3Label& value, O3Label& left, O3Label& right) {
+void _split_( const O3Label& value, O3Label& left, O3Label& right) {
   auto idx = value.label().find_first_of('.');
   if ( ( idx == std::string::npos ) || ( idx == value.label().size() - 1 ) ) {
     left = O3Label( value.position(), value.label() );
@@ -202,7 +201,7 @@ void __split( const O3Label& value, O3Label& left, O3Label& right) {
   }
 }
 
-O3Label __setAnonTypeName(O3Class& c, O3Label& name, O3Position& pos, O3Type& t) {
+O3Label _setAnonTypeName_(O3Class& c, O3Label& name, O3Position& pos, O3Type& t) {
   std::stringstream ss;
   ss << "__" << c.name() << "_" << name.label();
   for (const auto& l: t.labels()) {
@@ -214,7 +213,7 @@ O3Label __setAnonTypeName(O3Class& c, O3Label& name, O3Position& pos, O3Type& t)
   return t.name();
 }
 
-O3Label __setAnonTypeName(O3Class& c, O3Label& name, O3Position& pos, O3IntType& t) {
+O3Label _setAnonTypeName_(O3Class& c, O3Label& name, O3Position& pos, O3IntType& t) {
   std::stringstream ss;
   ss << "__" << c.name() << "_" << name.label();
   ss << "_" << t.start().value() << '_' << t.end().value();
@@ -224,7 +223,7 @@ O3Label __setAnonTypeName(O3Class& c, O3Label& name, O3Position& pos, O3IntType&
   return t.name();
 }
 
-O3Label __setAnonTypeName(O3Class& c, O3Label& name, O3Position& pos, O3RealType& t) {
+O3Label _setAnonTypeName_(O3Class& c, O3Label& name, O3Position& pos, O3RealType& t) {
   std::stringstream ss;
   ss << "__" << c.name() << "_" << name.label();
   for (const auto& v: t.values()) {
@@ -239,18 +238,18 @@ O3Label __setAnonTypeName(O3Class& c, O3Label& name, O3Position& pos, O3RealType
 public:
 // Set the parser factory.
 void set_prm(O3PRM* prm) {
-  __prm = prm;
+  _prm_ = prm;
 }
 
 O3PRM* get_prm() {
-  return __prm;
+  return _prm_;
 }
 
 // Set the prefix for types, interfaces, classes and systems parsed
 void set_prefix( const std::string& prefix ) {
-  __prefix = prefix;
-  if ( __prefix.size() > 0 && __prefix[__prefix.size() - 1] != '.' ) {
-    __prefix.append( "." );
+  _prefix_ = prefix;
+  if ( _prefix_.size() > 0 && _prefix_[_prefix_.size() - 1] != '.' ) {
+    _prefix_.append( "." );
   }
 }
 
@@ -356,4 +355,5 @@ O3InterfaceElementList& elts);
 
 
 #endif // !defined(COCO_PARSER_H__)
+
 

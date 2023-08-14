@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -29,7 +28,6 @@
 #ifndef GUM_ABSTRACT_SIMULATOR_H
 #define GUM_ABSTRACT_SIMULATOR_H
 //======================================================================
-#include <agrum/multidim/instantiation.h>
 //======================================================================
 #include <agrum/FMDP/fmdp.h>
 //======================================================================
@@ -70,26 +68,22 @@ namespace gum {
     /// @{
 
     /// Sets the intial statefrom which we begun the simulation
-    INLINE void setInitialState(const Instantiation& initialState) {
-      _currentState = initialState;
-    }
-    void setInitialStateRandomly();
+    INLINE void setInitialState(const Instantiation& initialState) { currentState_ = initialState; }
+    void        setInitialStateRandomly();
 
     protected:
     /// Choses a random state as the first test for a run
-    virtual Instantiation _randomState();
+    virtual Instantiation randomState_();
 
     public:
     /// Sets the final states upon which a run is over
-    INLINE void setEndState(const Instantiation& endState) {
-      _endState = endState;
-    }
+    INLINE void setEndState(const Instantiation& endState) { endState_ = endState; }
 
     /// Tests if end state has been reached
     virtual bool hasReachEnd();
 
     ///
-    INLINE const Instantiation& currentState() { return _currentState; }
+    INLINE const Instantiation& currentState() { return currentState_; }
 
     ///
     virtual double reward() = 0;
@@ -108,7 +102,7 @@ namespace gum {
 
     /// Iteration over the variables of the simulated probleme
     virtual SequenceIteratorSafe< const DiscreteVariable* > beginVariables() = 0;
-    virtual SequenceIteratorSafe< const DiscreteVariable* > endVariables() = 0;
+    virtual SequenceIteratorSafe< const DiscreteVariable* > endVariables()   = 0;
 
     /// @}
 
@@ -121,16 +115,16 @@ namespace gum {
 
     /// Iteration over the variables of the simulated probleme
     virtual SequenceIteratorSafe< Idx > beginActions() = 0;
-    virtual SequenceIteratorSafe< Idx > endActions() = 0;
+    virtual SequenceIteratorSafe< Idx > endActions()   = 0;
 
 
     /// @}
 
     /// Tha state in which the system currently is
-    Instantiation _currentState, _endState;
+    Instantiation currentState_, endState_;
   };
 
 } /* namespace gum */
 
 
-#endif   // GUM__ABSTRACT_SIMULATOR_H
+#endif   //  _GUM_ABSTRACT_SIMULATOR_H

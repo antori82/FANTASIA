@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,7 +23,7 @@
  * @file
  * @brief Headers of the DFSTree class.
  *
- * @author Lionel TORTI and Pierre-Henri WUILLEMIN
+ * @author Lionel TORTI and Pierre-Henri WUILLEMIN(_at_LIP6)
  */
 
 #ifndef GUM_DFS_TREE_H
@@ -35,18 +34,6 @@
 #include <utility>
 #include <vector>
 
-#include <agrum/core/math/math.h>
-#include <agrum/core/bijection.h>
-#include <agrum/core/sequence.h>
-#include <agrum/core/set.h>
-
-#include <agrum/graphs/diGraph.h>
-
-#include <agrum/graphs/algorithms/triangulations/partialOrderedTriangulation.h>
-
-#include <agrum/PRM/gspan/edgeGrowth.h>
-#include <agrum/PRM/gspan/interfaceGraph.h>
-#include <agrum/PRM/gspan/pattern.h>
 
 #include <agrum/PRM/gspan/searchStrategy.h>
 
@@ -68,7 +55,7 @@ namespace gum {
        * discovered in an interface graph.
        */
       template < typename GUM_SCALAR >
-      class DFSTree : private DiGraph {
+      class DFSTree: private DiGraph {
         public:
         // =========================================================================
         /// @name Constructor and destructor.
@@ -161,9 +148,7 @@ namespace gum {
          * @throw OperationNotAllowed Raised if the grow is found to be not
          *minimal.
          */
-        Pattern& growPattern(Pattern&                  p,
-                             EdgeGrowth< GUM_SCALAR >& edge_growth,
-                             Size                      min_freq);
+        Pattern& growPattern(Pattern& p, EdgeGrowth< GUM_SCALAR >& edge_growth, Size min_freq);
 
         /// @}
         // =========================================================================
@@ -213,8 +198,7 @@ namespace gum {
          *
          * @throw NotFound Raised if p or node does not exists.
          */
-        Sequence< PRMInstance< GUM_SCALAR >* >& iso_map(const Pattern& p,
-                                                        NodeId         node);
+        Sequence< PRMInstance< GUM_SCALAR >* >& iso_map(const Pattern& p, NodeId node);
 
         /**
          * @brief Returns the maximal independent set of p isomorphism graph.
@@ -261,44 +245,38 @@ namespace gum {
 
         private:
         /// The interface graph on which this DFSTree applies.
-        const InterfaceGraph< GUM_SCALAR >* __graph;
+        const InterfaceGraph< GUM_SCALAR >* _graph_;
 
         /// The list of root patterns in this DFSTree.
-        std::list< NodeId > __roots;
+        std::list< NodeId > _roots_;
 
         /// The mapping between nodes in this DFSTree and the patterns they
         /// represents.
-        Bijection< NodeId, Pattern* > __node_map;
+        Bijection< NodeId, Pattern* > _node_map_;
 
         /// Data about patterns in this DFSTree.
-        HashTable< Pattern*, PatternData* > __data;
+        HashTable< Pattern*, PatternData* > _data_;
 
         /// The strategy used to prune the search tree.
-        SearchStrategy< GUM_SCALAR >* __strategy;
+        SearchStrategy< GUM_SCALAR >* _strategy_;
 
         /// Raise different exceptions if child is invalid or illegal
-        void __checkGrowth(Pattern&                  p,
-                           Pattern*                  child,
-                           EdgeGrowth< GUM_SCALAR >& edge_growth);
+        void _checkGrowth_(Pattern& p, Pattern* child, EdgeGrowth< GUM_SCALAR >& edge_growth);
 
         /// Add a child to this DFSTree.
-        void __addChild(Pattern&                  p,
-                        Pattern*                  child,
-                        EdgeGrowth< GUM_SCALAR >& edge_growth);
+        void _addChild_(Pattern& p, Pattern* child, EdgeGrowth< GUM_SCALAR >& edge_growth);
 
         /// Check if an instance match is redundant.
-        bool __is_new_seq(
-           Sequence< PRMInstance< GUM_SCALAR >* >&                  seq,
-           NodeProperty< Sequence< PRMInstance< GUM_SCALAR >* >* >& iso_map);
+        bool _is_new_seq_(Sequence< PRMInstance< GUM_SCALAR >* >&                  seq,
+                          NodeProperty< Sequence< PRMInstance< GUM_SCALAR >* >* >& iso_map);
 
         /// This initialize the DSFTree with a new root.
         /// @param p A Pattern.
         /// @param seq A sequence of EdgeData<GUM_SCALAR>.
-        void __initialiaze_root(Pattern*                             p,
-                                Sequence< EdgeData< GUM_SCALAR >* >& seq);
+        void _initialiaze_root_(Pattern* p, Sequence< EdgeData< GUM_SCALAR >* >& seq);
 
-        // Used by __find_sub_pattern.
-        bool __test_equality(HashTable< PRMClassElement< GUM_SCALAR >*, Size >& x,
+        // Used by  _find_sub_pattern_.
+        bool _test_equality_(HashTable< PRMClassElement< GUM_SCALAR >*, Size >& x,
                              HashTable< PRMClassElement< GUM_SCALAR >*, Size >& y);
       };
 

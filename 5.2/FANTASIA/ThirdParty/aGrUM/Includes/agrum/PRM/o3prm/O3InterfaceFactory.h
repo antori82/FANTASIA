@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,20 +23,15 @@
  * @file
  * @brief Headers for the O3InterfaceFactory class.
  *
- * @author Christophe GONZALES and Pierre-Henri WUILLEMIN
+ * @author Christophe GONZALES(_at_AMU) and Pierre-Henri WUILLEMIN(_at_LIP6)
  * @author Lionel TORTI
  */
 
 #include <memory>
 #include <string>
 
-#include <agrum/PRM/PRM.h>
 #include <agrum/PRM/PRMFactory.h>
 #include <agrum/PRM/o3prm/O3NameSolver.h>
-#include <agrum/PRM/o3prm/O3prm.h>
-#include <agrum/PRM/o3prm/errors.h>
-#include <agrum/core/hashTable.h>
-#include <agrum/core/set.h>
 
 #ifndef GUM_PRM_O3PRM_O3INTERFACE_FACTORY_H
 #  define GUM_PRM_O3PRM_O3INTERFACE_FACTORY_H
@@ -65,47 +59,43 @@ namespace gum {
         O3InterfaceFactory(const O3InterfaceFactory< GUM_SCALAR >& src);
         O3InterfaceFactory(O3InterfaceFactory< GUM_SCALAR >&& src);
         ~O3InterfaceFactory();
-        O3InterfaceFactory< GUM_SCALAR >&
-           operator=(const O3InterfaceFactory< GUM_SCALAR >& src);
-        O3InterfaceFactory< GUM_SCALAR >&
-           operator=(O3InterfaceFactory< GUM_SCALAR >&& src);
+        O3InterfaceFactory< GUM_SCALAR >& operator=(const O3InterfaceFactory< GUM_SCALAR >& src);
+        O3InterfaceFactory< GUM_SCALAR >& operator=(O3InterfaceFactory< GUM_SCALAR >&& src);
 
         void buildInterfaces();
 
         void buildElements();
 
         private:
-        PRM< GUM_SCALAR >*          __prm;
-        O3PRM*                      __o3_prm;
-        O3NameSolver< GUM_SCALAR >* __solver;
-        ErrorsContainer*            __errors;
+        PRM< GUM_SCALAR >*          _prm_;
+        O3PRM*                      _o3_prm_;
+        O3NameSolver< GUM_SCALAR >* _solver_;
+        ErrorsContainer*            _errors_;
 
-        HashTable< std::string, std::string >  __eltName;
-        HashTable< std::string, gum::NodeId >  __nameMap;
-        HashTable< std::string, O3Interface* > __interfaceMap;
-        HashTable< NodeId, O3Interface* >      __nodeMap;
-        DAG                                    __dag;
-        std::vector< O3Interface* >            __o3Interface;
+        HashTable< std::string, std::string >  _eltName_;
+        HashTable< std::string, gum::NodeId >  _nameMap_;
+        HashTable< std::string, O3Interface* > _interfaceMap_;
+        HashTable< NodeId, O3Interface* >      _nodeMap_;
+        DAG                                    _dag_;
+        std::vector< O3Interface* >            _o3Interface_;
 
-        bool __addInterface2Dag();
+        bool _addInterface2Dag_();
 
-        bool __addArcs2Dag();
+        bool _addArcs2Dag_();
 
-        void __setO3InterfaceCreationOrder();
+        void _setO3InterfaceCreationOrder_();
 
-        bool __checkO3Interfaces();
+        bool _checkO3Interfaces_();
 
-        bool __checkInterfaceElement(O3Interface& i, O3InterfaceElement& elt);
+        bool _checkInterfaceElement_(O3Interface& i, O3InterfaceElement& elt);
 
-        bool __checkOverloadLegality(O3Interface& i, O3InterfaceElement& elt);
+        bool _checkOverloadLegality_(O3Interface& i, O3InterfaceElement& elt);
 
-        bool __checkAttributeOverloadLegality(O3Interface&        i,
-                                              O3InterfaceElement& elt);
+        bool _checkAttributeOverloadLegality_(O3Interface& i, O3InterfaceElement& elt);
 
-        bool __checkReferenceOverloadLegality(O3Interface&        i,
-                                              O3InterfaceElement& elt);
+        bool _checkReferenceOverloadLegality_(O3Interface& i, O3InterfaceElement& elt);
 
-        bool __checkCyclicReference(O3Interface& i, O3InterfaceElement& elt);
+        bool _checkCyclicReference_(O3Interface& i, O3InterfaceElement& elt);
       };
 
     }   // namespace o3prm

@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,7 +23,8 @@
  * @file
  * @brief Headers of the IFMDPFactory interface-like class.
  *
- * @author Jean-Christophe MAGNAN and Pierre-Henri WUILLEMIN
+ * @author Pierre-Henri WUILLEMIN(_at_LIP6) and Jean-Christophe MAGNAN and Christophe
+ * GONZALES(_at_AMU)
  */
 
 #ifndef GUM_ABSTRACT_FMDP_FACTORY_H
@@ -33,8 +33,6 @@
 #include <string>
 #include <vector>
 
-#include <agrum/graphs/graphElements.h>
-#include <agrum/variables/discreteVariable.h>
 
 #include <agrum/FMDP/fmdp.h>
 
@@ -176,8 +174,7 @@ namespace gum {
     virtual void startTransitionDeclaration() = 0;
 
     /// Tells the factory to add a transition table to the current fmdp.
-    virtual void addTransition(const std::string&        var,
-                               const MultiDimAdressable* transition) = 0;
+    virtual void addTransition(const std::string& var, const MultiDimAdressable* transition) = 0;
 
     /// Tells the factory to add a transition table to the current fmdp.
     /// This transition table will be extracted from incorporated
@@ -269,15 +266,15 @@ namespace gum {
      * @name verbosity control
      * @{
      */
-    void setVerbose() { __verbose = true; }
+    void setVerbose() { _verbose_ = true; }
 
-    void resetVerbose() { __verbose = false; }
+    void resetVerbose() { _verbose_ = false; }
 
-    bool isVerbose() { return __verbose; }
+    bool isVerbose() { return _verbose_; }
     /// @}
 
     private:
-    bool __verbose;
+    bool _verbose_;
   };
 } /* namespace gum */
 

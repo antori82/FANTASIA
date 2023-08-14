@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -25,7 +24,7 @@
  * @brief Implementation of Monte Carlo Sampling for inference in Bayesian
  * Networks.
  *
- * @author Paul ALAM & Pierre-Henri WUILLEMIN
+ * @author Paul ALAM & Pierre-Henri WUILLEMIN(_at_LIP6)
  */
 
 
@@ -36,8 +35,7 @@ namespace gum {
 
   /// Default constructor
   template < typename GUM_SCALAR >
-  MonteCarloSampling< GUM_SCALAR >::MonteCarloSampling(
-     const IBayesNet< GUM_SCALAR >* bn) :
+  MonteCarloSampling< GUM_SCALAR >::MonteCarloSampling(const IBayesNet< GUM_SCALAR >* bn) :
       SamplingInference< GUM_SCALAR >(bn) {
     GUM_CONSTRUCTOR(MonteCarloSampling);
   }
@@ -50,22 +48,21 @@ namespace gum {
 
   /// no burn in needed for Monte Carlo sampling
   template < typename GUM_SCALAR >
-  Instantiation MonteCarloSampling< GUM_SCALAR >::_burnIn() {
+  Instantiation MonteCarloSampling< GUM_SCALAR >::burnIn_() {
     gum::Instantiation I;
     return I;
   }
 
 
   template < typename GUM_SCALAR >
-  Instantiation MonteCarloSampling< GUM_SCALAR >::_draw(GUM_SCALAR*   w,
-                                                        Instantiation prev) {
-    *w = 1.0f;
+  Instantiation MonteCarloSampling< GUM_SCALAR >::draw_(GUM_SCALAR* w, Instantiation prev) {
+    *w               = 1.0f;
     bool wrong_value = false;
     do {
       wrong_value = false;
       prev.clear();
-      for (const auto nod : this->BN().topologicalOrder()) {
-        this->_addVarSample(nod, &prev);
+      for (const auto nod: this->BN().topologicalOrder()) {
+        this->addVarSample_(nod, &prev);
         if (this->hardEvidenceNodes().contains(nod)
             && prev.val(this->BN().variable(nod)) != this->hardEvidence()[nod]) {
           wrong_value = true;

@@ -1,8 +1,6 @@
-
 /**
- *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023 by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -50,32 +48,29 @@ namespace gum {
    * @throws IOError Raised if an I/O error occurs.
    */
   template < typename GUM_SCALAR >
-  INLINE void
-     BIFXMLBNWriter< GUM_SCALAR >::write(std::ostream&                  output,
-                                         const IBayesNet< GUM_SCALAR >& bn) {
-    if (!output.good()) {
-      GUM_ERROR(IOError, "Stream states flags are not all unset.");
-    }
+  INLINE void BIFXMLBNWriter< GUM_SCALAR >::_doWrite(std::ostream&                  output,
+                                                     const IBayesNet< GUM_SCALAR >& bn) {
+    if (!output.good()) { GUM_ERROR(IOError, "Input/Output error : stream not writable.") }
 
-    output << __heading(bn) << std::endl;
+    output << _heading_(bn) << std::endl;
 
     output << "<!-- Variables -->" << std::endl;
 
-    for (auto node : bn.nodes())
-      output << __variableBloc(bn.variable(node)) << std::endl;
+    for (auto node: bn.nodes())
+      output << _variableBloc_(bn.variable(node)) << std::endl;
 
     output << "<!-- Probability distributions -->" << std::endl;
 
-    for (auto node : bn.nodes())
-      output << __variableDefinition(node, bn);
+    for (auto node: bn.nodes())
+      output << _variableDefinition_(node, bn);
 
     output << std::endl;
 
-    output << __documentend();
+    output << _documentend_();
 
     output.flush();
 
-    if (output.fail()) { GUM_ERROR(IOError, "Writting in the ostream failed."); }
+    if (output.fail()) { GUM_ERROR(IOError, "Writing in the ostream failed.") }
   }
 
   /*
@@ -88,24 +83,21 @@ namespace gum {
    * @throw IOError Raised if an I/O error occurs.
    */
   template < typename GUM_SCALAR >
-  INLINE void
-     BIFXMLBNWriter< GUM_SCALAR >::write(const std::string&             filePath,
-                                         const IBayesNet< GUM_SCALAR >& bn) {
+  INLINE void BIFXMLBNWriter< GUM_SCALAR >::_doWrite(const std::string&             filePath,
+                                                     const IBayesNet< GUM_SCALAR >& bn) {
     std::ofstream output(filePath.c_str(), std::ios_base::trunc);
 
-    write(output, bn);
+    _doWrite(output, bn);
 
     output.close();
-
-    if (output.fail()) { GUM_ERROR(IOError, "Writting in the ostream failed."); }
+    if (output.fail()) { GUM_ERROR(IOError, "Writing in the ostream failed.") }
   }
 
   /*
    * Returns the header of the BIF file.
    */
   template < typename GUM_SCALAR >
-  INLINE std::string
-         BIFXMLBNWriter< GUM_SCALAR >::__heading(const IBayesNet< GUM_SCALAR >& bn) {
+  INLINE std::string BIFXMLBNWriter< GUM_SCALAR >::_heading_(const IBayesNet< GUM_SCALAR >& bn) {
     std::stringstream str;
 
     // Header for every xml
@@ -139,8 +131,7 @@ namespace gum {
 
     // Network declaration
     str << "<NETWORK>" << std::endl;
-    str << "<NAME>" << bn.propertyWithDefault("name", "unnamedBN") << "</NAME>"
-        << std::endl;
+    str << "<NAME>" << bn.propertyWithDefault("name", "unnamedBN") << "</NAME>" << std::endl;
     str << "<PROPERTY>software aGrUM</PROPERTY>" << std::endl;
 
     return str.str();
@@ -150,8 +141,7 @@ namespace gum {
    * Returns a bloc defining a variable in the BIF format.
    */
   template < typename GUM_SCALAR >
-  INLINE std::string
-         BIFXMLBNWriter< GUM_SCALAR >::__variableBloc(const DiscreteVariable& var) {
+  INLINE std::string BIFXMLBNWriter< GUM_SCALAR >::_variableBloc_(const DiscreteVariable& var) {
     //<VARIABLE TYPE="nature|decision|utility">
     //<NAME>name</NAME>
     //<OUTCOME>outcome1</OUTCOME>
@@ -182,8 +172,9 @@ namespace gum {
    * Returns a bloc defining a variable's CPT in the BIF format.
    */
   template < typename GUM_SCALAR >
-  INLINE std::string BIFXMLBNWriter< GUM_SCALAR >::__variableDefinition(
-     const NodeId& varNodeId, const IBayesNet< GUM_SCALAR >& bn) {
+  INLINE std::string
+         BIFXMLBNWriter< GUM_SCALAR >::_variableDefinition_(const NodeId&                  varNodeId,
+                                                        const IBayesNet< GUM_SCALAR >& bn) {
     //<DEFINITION>
     //<FOR>var</FOR>
     //<GIVEN>conditional var</GIVEN>
@@ -216,10 +207,8 @@ namespace gum {
     str << "\t<TABLE>";
 
     for (inst.setFirst(); !inst.end(); inst.inc()) {
-      if (inst.val(0) == 0)
-        str << std::endl << "\t\t";
-      else
-        str << " ";
+      if (inst.val(0) == 0) str << std::endl << "\t\t";
+      else str << " ";
 
       str << cpt[inst];   //"<!-- "<<inst<<" -->"<<std::endl;
     }
@@ -236,7 +225,7 @@ namespace gum {
    * Returns the end of the BIF file.
    */
   template < typename GUM_SCALAR >
-  INLINE std::string BIFXMLBNWriter< GUM_SCALAR >::__documentend() {
+  INLINE std::string BIFXMLBNWriter< GUM_SCALAR >::_documentend_() {
     std::stringstream str;
 
     str << "</NETWORK>" << std::endl;

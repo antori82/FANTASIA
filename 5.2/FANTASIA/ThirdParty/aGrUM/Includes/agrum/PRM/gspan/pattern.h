@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,7 +23,7 @@
  * @file
  * @brief Headers of the Pattern class.
  *
- * @author Lionel TORTI and Pierre-Henri WUILLEMIN
+ * @author Lionel TORTI and Pierre-Henri WUILLEMIN(_at_LIP6)
  */
 
 #ifndef GUM_PATTERN_H
@@ -32,7 +31,6 @@
 
 #include <agrum/agrum.h>
 
-#include <agrum/graphs/diGraph.h>
 
 #include <agrum/PRM/gspan/DFSCode.h>
 #include <agrum/PRM/gspan/interfaceGraph.h>
@@ -70,7 +68,7 @@ namespace gum {
        * from backward edges.
        *
        */
-      class Pattern : private DiGraph {
+      class Pattern: private DiGraph {
         public:
         // =========================================================================
         /// @name Constructor and destructor.
@@ -202,47 +200,41 @@ namespace gum {
 
         private:
         /// The DFSCode of this Pattern.
-        DFSCode __code;
+        DFSCode _code_;
 
         /// Mapping between nodes in this Pattern and their respective
         /// LabelData.
-        NodeProperty< LabelData* > __node_map;
+        NodeProperty< LabelData* > _node_map_;
 
         /// Mapping between edges in this Pattern and their respective
         /// LabelData.
-        ArcProperty< std::pair< LabelData*, EdgeCode* > > __arc_map;
+        ArcProperty< std::pair< LabelData*, EdgeCode* > > _arc_map_;
 
         /// The last LabelData added to this pattern.
-        LabelData* __last;
+        LabelData* _last_ = nullptr;
 
         /// Returns true if the expand code by adding and edge betwenne u and v
         /// is
         /// minimal
-        /// with respect to __code.
+        /// with respect to  _code_.
         /// @param u A node in this Pattern.
         /// @param v A node in this Pattern.
         /// @returns true if the expand code by adding and edge betwenne u and v
         /// is
         /// minimal
-        ///          with respect to __code.
-        bool __expandCodeIsMinimal(NodeId u, NodeId v);
+        ///          with respect to  _code_.
+        bool _expandCodeIsMinimal_(NodeId u, NodeId v);
 
-        /// Recurisve method used by __expandCodeIsMinimal.
+        /// Recurisve method used by  _expandCodeIsMinimal_.
         /// @param p A Pattern.
         /// @param node_map A bijection.
         /// @param u A node in this Pattern.
         /// @param v A node in this Pattern.
         /// @return true if the expansion is minimal.
-        bool __rec(Pattern&                     p,
-                   Bijection< NodeId, NodeId >& node_map,
-                   NodeId                       u,
-                   NodeId                       v);
+        bool _rec_(Pattern& p, Bijection< NodeId, NodeId >& node_map, NodeId u, NodeId v);
 
-        /// A non recursive bugged version of __rec.
-        bool __not_rec(Pattern&                     p,
-                       Bijection< NodeId, NodeId >& node_map,
-                       NodeId                       u,
-                       NodeId                       v);
+        /// A non recursive bugged version of  _rec_.
+        bool _not_rec_(Pattern& p, Bijection< NodeId, NodeId >& node_map, NodeId u, NodeId v);
 
         // to avoid clang++ warnings
         using DiGraph::addNode;

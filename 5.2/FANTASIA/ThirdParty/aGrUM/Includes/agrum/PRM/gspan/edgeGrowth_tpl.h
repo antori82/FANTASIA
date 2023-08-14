@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,7 +23,7 @@
  * @file
  * @brief Inline implementation of the DFSTree class.
  *
- * @author Lionel TORTI and Pierre-Henri WUILLEMIN
+ * @author Lionel TORTI and Pierre-Henri WUILLEMIN(_at_LIP6)
  */
 
 #include <agrum/PRM/gspan/edgeGrowth.h>
@@ -39,23 +38,17 @@ namespace gum {
                                                   LabelData* a_l_v,
                                                   NodeId     a_v) :
           u(a_u),
-          edge(an_edge), l_v(a_l_v), v(a_v),
-          degree_list(new std::vector< NodeId >()) {
+          edge(an_edge), l_v(a_l_v), v(a_v), degree_list(new std::vector< NodeId >()) {
         GUM_CONSTRUCTOR(EdgeGrowth);
       }
 
       template < typename GUM_SCALAR >
-      INLINE EdgeGrowth< GUM_SCALAR >::EdgeGrowth(
-         const EdgeGrowth< GUM_SCALAR >& from) :
-          u(from.u),
-          edge(from.edge), v(from.v), matches(from.matches),
-          iso_graph(from.iso_graph), degree_list(0),
-          max_indep_set(from.max_indep_set) {
+      INLINE EdgeGrowth< GUM_SCALAR >::EdgeGrowth(const EdgeGrowth< GUM_SCALAR >& from) :
+          u(from.u), edge(from.edge), v(from.v), matches(from.matches), iso_graph(from.iso_graph),
+          degree_list(0), max_indep_set(from.max_indep_set) {
         GUM_CONS_CPY(EdgeGrowth);
 
-        if (from.degree_list != 0) {
-          degree_list = new std::vector< NodeId >(*(from.degree_list));
-        }
+        if (from.degree_list != 0) { degree_list = new std::vector< NodeId >(*(from.degree_list)); }
       }
 
       template < typename GUM_SCALAR >
@@ -78,9 +71,9 @@ namespace gum {
         NodeId id = iso_graph.addNode();
         degree_list->push_back(id);
 
-        for (const auto& elt : matches) {
-          if ((elt.second.first == u) || (elt.second.second == u)
-              || (elt.second.first == v) || (elt.second.second == v)) {
+        for (const auto& elt: matches) {
+          if ((elt.second.first == u) || (elt.second.second == u) || (elt.second.first == v)
+              || (elt.second.second == v)) {
             iso_graph.addEdge(elt.first, id);
           }
         }

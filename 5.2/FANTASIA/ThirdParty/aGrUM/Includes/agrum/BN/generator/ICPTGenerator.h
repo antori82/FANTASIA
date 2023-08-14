@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -23,14 +22,14 @@
 /** @file
  * @brief Interface-like class for generating Conditional Probability Tables.
  *
- * @author Christophe GONZALES and Pierre-Henri WUILLEMIN and Ariele-Paolo
- *MAESANO
+ * @author Christophe GONZALES(_at_AMU) and Pierre-Henri WUILLEMIN(_at_LIP6) and
+ *Ariele-Paolo MAESANO
  */
 #ifndef GUM_I_CPT_GENERATOR_H
 #define GUM_I_CPT_GENERATOR_H
 
 #include <agrum/agrum.h>
-#include <agrum/multidim/potential.h>
+#include <agrum/tools/multidim/potential.h>
 
 namespace gum {
   /** @class ICPTGenerator
@@ -68,8 +67,7 @@ namespace gum {
      * @param varId The variable id of the CPT owner.
      * @param cpt A reference on the CPT to fill.
      */
-    virtual void generateCPT(const Idx&                     varId,
-                             const Potential< GUM_SCALAR >& cpt) = 0;
+    virtual void generateCPT(const Idx& varId, const Potential< GUM_SCALAR >& cpt) const = 0;
     /// @}
   };
 

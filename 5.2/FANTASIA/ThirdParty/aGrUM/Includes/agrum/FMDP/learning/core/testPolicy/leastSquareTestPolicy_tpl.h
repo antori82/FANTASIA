@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -35,9 +34,7 @@ namespace gum {
 
   template < typename GUM_SCALAR >
   LeastSquareTestPolicy< GUM_SCALAR >::~LeastSquareTestPolicy() {
-    for (auto obsIter = this->__obsTable.cbeginSafe();
-         __obsTable.cendSafe() != obsIter;
-         ++obsIter)
+    for (auto obsIter = this->_obsTable_.cbeginSafe(); _obsTable_.cendSafe() != obsIter; ++obsIter)
       delete obsIter.val();
 
     GUM_DESTRUCTOR(LeastSquareTestPolicy);
@@ -52,24 +49,18 @@ namespace gum {
   //
   // ==========================================================================
   template < typename GUM_SCALAR >
-  void LeastSquareTestPolicy< GUM_SCALAR >::addObservation(Idx        attr,
-                                                           GUM_SCALAR value) {
+  void LeastSquareTestPolicy< GUM_SCALAR >::addObservation(Idx attr, GUM_SCALAR value) {
     ITestPolicy< GUM_SCALAR >::addObservation(attr, value);
-    __sumO += value;
+    _sumO_ += value;
 
-    if (__sumAttrTable.exists(attr))
-      __sumAttrTable[attr] += value;
-    else
-      __sumAttrTable.insert(attr, value);
+    if (_sumAttrTable_.exists(attr)) _sumAttrTable_[attr] += value;
+    else _sumAttrTable_.insert(attr, value);
 
-    if (__nbObsTable.exists(attr))
-      __nbObsTable[attr]++;
-    else
-      __nbObsTable.insert(attr, 1);
+    if (_nbObsTable_.exists(attr)) _nbObsTable_[attr]++;
+    else _nbObsTable_.insert(attr, 1);
 
-    if (!__obsTable.exists(attr))
-      __obsTable.insert(attr, new LinkedList< double >());
-    __obsTable[attr]->addLink(value);
+    if (!_obsTable_.exists(attr)) _obsTable_.insert(attr, new LinkedList< double >());
+    _obsTable_[attr]->addLink(value);
   }
 
 
@@ -83,27 +74,25 @@ namespace gum {
   template < typename GUM_SCALAR >
   void LeastSquareTestPolicy< GUM_SCALAR >::computeScore() {
     ITestPolicy< GUM_SCALAR >::computeScore();
-    double mean = __sumO / (double)this->nbObservation();
-    double errorO = 0.0;
+    double mean         = _sumO_ / (double)this->nbObservation();
+    double errorO       = 0.0;
     double sumErrorAttr = 0.0;
-    for (auto attrIter = __sumAttrTable.cbeginSafe();
-         attrIter != __sumAttrTable.cendSafe();
+    for (auto attrIter = _sumAttrTable_.cbeginSafe(); attrIter != _sumAttrTable_.cendSafe();
          ++attrIter) {
-      Idx    key = attrIter.key();
-      double meanAttr = __sumAttrTable[key] / (double)__nbObsTable[key];
+      Idx    key       = attrIter.key();
+      double meanAttr  = _sumAttrTable_[key] / (double)_nbObsTable_[key];
       double errorAttr = 0.0;
 
-      const Link< double >* linky = __obsTable[key]->list();
+      const Link< double >* linky = _obsTable_[key]->list();
       while (linky) {
         errorAttr += std::pow(linky->element() - meanAttr, 2);
         errorO += std::pow(linky->element() - mean, 2);
         linky = linky->nextLink();
       }
 
-      sumErrorAttr +=
-         ((double)__nbObsTable[key] / (double)this->nbObservation()) * errorAttr;
+      sumErrorAttr += ((double)_nbObsTable_[key] / (double)this->nbObservation()) * errorAttr;
     }
-    __score = errorO - sumErrorAttr;
+    _score_ = errorO - sumErrorAttr;
   }
 
   // ============================================================================
@@ -111,8 +100,8 @@ namespace gum {
   // ============================================================================
   template < typename GUM_SCALAR >
   double LeastSquareTestPolicy< GUM_SCALAR >::score() {
-    if (this->_isModified()) computeScore();
-    return __score;
+    if (this->isModified_()) computeScore();
+    return _score_;
   }
 
   // ============================================================================
@@ -120,38 +109,31 @@ namespace gum {
   // ============================================================================
   template < typename GUM_SCALAR >
   double LeastSquareTestPolicy< GUM_SCALAR >::secondaryscore() const {
-    if (this->_isModified()) computeScore();
-    return __score;
+    if (this->isModified_()) computeScore();
+    return _score_;
   }
 
   template < typename GUM_SCALAR >
   void LeastSquareTestPolicy< GUM_SCALAR >::add(const LeastSquareTestPolicy& src) {
     ITestPolicy< GUM_SCALAR >::add(src);
 
-    for (auto obsIter = src.nbObsTable().cbeginSafe();
-         obsIter != src.nbObsTable().cendSafe();
+    for (auto obsIter = src.nbObsTable().cbeginSafe(); obsIter != src.nbObsTable().cendSafe();
          ++obsIter)
-      if (__nbObsTable.exists(obsIter.key()))
-        __nbObsTable[obsIter.key()] += obsIter.val();
-      else
-        __nbObsTable.insert(obsIter.key(), obsIter.val());
+      if (_nbObsTable_.exists(obsIter.key())) _nbObsTable_[obsIter.key()] += obsIter.val();
+      else _nbObsTable_.insert(obsIter.key(), obsIter.val());
 
-    for (auto attrIter = src.sumAttrTable().cbeginSafe();
-         attrIter != src.sumAttrTable().cendSafe();
+    for (auto attrIter = src.sumAttrTable().cbeginSafe(); attrIter != src.sumAttrTable().cendSafe();
          ++attrIter)
-      if (__sumAttrTable.exists(attrIter.key()))
-        __sumAttrTable[attrIter.key()] += attrIter.val();
-      else
-        __sumAttrTable.insert(attrIter.key(), attrIter.val());
+      if (_sumAttrTable_.exists(attrIter.key())) _sumAttrTable_[attrIter.key()] += attrIter.val();
+      else _sumAttrTable_.insert(attrIter.key(), attrIter.val());
 
-    for (auto obsIter = src.obsTable().cbeginSafe();
-         obsIter != src.obsTable().cendSafe();
+    for (auto obsIter = src.obsTable().cbeginSafe(); obsIter != src.obsTable().cendSafe();
          ++obsIter) {
-      if (!__obsTable.exists(obsIter.key()))
-        __obsTable.insert(obsIter.key(), new LinkedList< double >());
+      if (!_obsTable_.exists(obsIter.key()))
+        _obsTable_.insert(obsIter.key(), new LinkedList< double >());
       const Link< double >* srcLink = obsIter.val()->list();
       while (srcLink) {
-        __obsTable[obsIter.key()]->addLink(srcLink->element());
+        _obsTable_[obsIter.key()]->addLink(srcLink->element());
         srcLink = srcLink->nextLink();
       }
     }

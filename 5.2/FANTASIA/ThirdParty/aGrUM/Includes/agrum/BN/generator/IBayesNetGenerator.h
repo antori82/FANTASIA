@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -21,10 +20,10 @@
 
 
 /** @file
- * @brief Interface-like class for generating bayesian networks.
+ * @brief Interface-like class for generating Bayesian networks.
  *
- * @author Christophe GONZALES, Pierre-Henri WUILLEMIN, Lionel TORTI and
- * Ariele-Paolo MAESANO
+ * @author Christophe GONZALES(_at_AMU), Pierre-Henri WUILLEMIN(_at_LIP6), Lionel TORTI
+ * and Ariele-Paolo MAESANO
  */
 #ifndef GUM_I_BAYES_NET_GENERATOR_H
 #define GUM_I_BAYES_NET_GENERATOR_H
@@ -35,11 +34,11 @@
 #include <iostream>
 #include <vector>
 
+#include <agrum/agrum.h>
 #include <agrum/BN/BayesNet.h>
 #include <agrum/BN/generator/simpleCPTGenerator.h>
-#include <agrum/agrum.h>
 
-#include <agrum/variables/labelizedVariable.h>
+#include <agrum/tools/variables/labelizedVariable.h>
 
 #include <agrum/BN/algorithms/divergence/BNdistance.h>
 
@@ -48,7 +47,7 @@ namespace gum {
   /**
    * @class IBayesNetGenerator
    * @headerfile IBayesNetGenerator.h <agrum/BN/generator/IBayesNetGenerator.h>
-   * @brief Class for generating bayesian networks.
+   * @brief Class for generating Bayesian networks.
    * @ingroup bn_generator
    *
    * This class is the abstract class for randomly generating a bayesian
@@ -56,11 +55,11 @@ namespace gum {
    * number of arcs and the maximum number of modality for each node.
    *
    * @warning  Be Careful when entering the parameters, high Values may cause
-   * the density of the Bayesian Network to be too high resulting in the
+   * the density of the Bayesian network to be too high resulting in the
    * failure of most of the inference Methods.
    */
   template < typename GUM_SCALAR, template < typename > class ICPTGenerator >
-  class IBayesNetGenerator : public ICPTGenerator< GUM_SCALAR > {
+  class IBayesNetGenerator: public ICPTGenerator< GUM_SCALAR > {
     public:
     // ############################################################################
     /// @name Constructors / Destructor
@@ -94,21 +93,22 @@ namespace gum {
     /// @{
 
     /**
-     * Virtual function that Generates a bayesian networks.
-     * @param bayesNet Bayesian Network to be completed after initialisation
-     * @return null but modify inputed empty Bayesian Network
+     * Virtual function that Generates a Bayesian networks.
+     * @param bayesNet Bayesian network to be completed after initialisation
+     * @return null but modify inputed empty Bayesian network
      */
 
     virtual void generateBN(BayesNet< GUM_SCALAR >& bayesNet) = 0;
 
+    void fromDAG(BayesNet< GUM_SCALAR >& bayesNet);
     /**
      * function that insert random values in the CPT of each nodes according to
      * the
      * @a CPTGenerator.
-     * @return null but modify inputed empty Bayesian Network
+     * @return null but modify inputed empty Bayesian network
      */
 
-    void fillCPT();
+    void fillCPT(BayesNet< GUM_SCALAR >& bn) const;
 
     /// @}
     // ===========================================================================
@@ -160,11 +160,11 @@ namespace gum {
     /// @}
     protected:
     // The Conditional Probability Table generator
-    //  CPTGenerator * _cptGenerator;
-    Size                   _nbrNodes;
-    Size                   _maxArcs;
-    Size                   _maxModality;
-    BayesNet< GUM_SCALAR > _bayesNet;
+    //  CPTGenerator * cptGenerator_;
+    Size nbrNodes_;
+    Size maxArcs_;
+    Size maxModality_;
+    DAG  dag_;
   };
 
 } /* namespace gum */

@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,7 +23,7 @@
  * @file
  * @brief Headers of GroundedInference.
  *
- * @author Lionel TORTI and Pierre-Henri WUILLEMIN
+ * @author Lionel TORTI and Pierre-Henri WUILLEMIN(_at_LIP6)
  */
 #ifndef GUM_GROUNDED_INFERENCE_H
 #define GUM_GROUNDED_INFERENCE_H
@@ -44,7 +43,7 @@ namespace gum {
      *
      */
     template < typename GUM_SCALAR >
-    class GroundedInference : public PRMInference< GUM_SCALAR > {
+    class GroundedInference: public PRMInference< GUM_SCALAR > {
       public:
       // ========================================================================
       /// @name Constructor & destructor.
@@ -52,8 +51,7 @@ namespace gum {
       /// @{
 
       /// Default constructor.
-      GroundedInference(const PRM< GUM_SCALAR >&       prm,
-                        const PRMSystem< GUM_SCALAR >& system);
+      GroundedInference(const PRM< GUM_SCALAR >& prm, const PRMSystem< GUM_SCALAR >& system);
 
       /// Destructor.
       virtual ~GroundedInference();
@@ -96,29 +94,25 @@ namespace gum {
 
       /// This method is called whenever an evidence is added, but AFTER
       /// any processing made by PRMInference.
-      virtual void
-         _evidenceAdded(const typename PRMInference< GUM_SCALAR >::Chain& chain);
+      virtual void evidenceAdded_(const typename PRMInference< GUM_SCALAR >::Chain& chain);
 
       /// This method is called whenever an evidence is removed, but BEFORE
       /// any processing made by PRMInference.
-      virtual void
-         _evidenceRemoved(const typename PRMInference< GUM_SCALAR >::Chain& chain);
+      virtual void evidenceRemoved_(const typename PRMInference< GUM_SCALAR >::Chain& chain);
 
       /// @brief Generic method to compute the marginal of given element.
       /// @param chain
       /// @param m CPF filled with the marginal of elt. It is initialized
       ///          properly.
-      virtual void
-         _marginal(const typename PRMInference< GUM_SCALAR >::Chain& chain,
-                   Potential< GUM_SCALAR >&                          m);
+      virtual void posterior_(const typename PRMInference< GUM_SCALAR >::Chain& chain,
+                              Potential< GUM_SCALAR >&                          m);
 
       /// @brief Generic method to compute the marginal of given element.
       /// @param queries Set of pairs of PRMInstance and PRMAttribute.
       /// @param j CPF filled with the joint probability of queries. It is
       ///          initialized properly.
-      virtual void _joint(
-         const std::vector< typename PRMInference< GUM_SCALAR >::Chain >& queries,
-         Potential< GUM_SCALAR >&                                         j);
+      virtual void joint_(const std::vector< typename PRMInference< GUM_SCALAR >::Chain >& queries,
+                          Potential< GUM_SCALAR >&                                         j);
 
       /// @}
       private:
@@ -129,9 +123,9 @@ namespace gum {
       GroundedInference& operator=(const GroundedInference& source);
 
       /// The bayesnet inference engine used by this class.
-      MarginalTargetedInference< GUM_SCALAR >* __inf;
+      MarginalTargetedInference< GUM_SCALAR >* _inf_;
 
-      List< const Potential< GUM_SCALAR >* > __obs;
+      List< const Potential< GUM_SCALAR >* > _obs_;
     };
 
 

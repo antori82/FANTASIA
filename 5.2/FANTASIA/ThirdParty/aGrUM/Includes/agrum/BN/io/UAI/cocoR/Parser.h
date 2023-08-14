@@ -1,7 +1,7 @@
 /***************************************************************************
  *  aGrUM modified frames and atg files for cocoR
- *   Copyright (c) 2005 by Christophe GONZALES and Pierre-Henri WUILLEMIN  *
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005 by Christophe GONZALES(@AMU) and Pierre-Henri WUILLEMIN(@LIP6)  *
+ *   info_at_agrum_dot_org
 ***************************************************************************/
 /*----------------------------------------------------------------------
 Compiler Generator Coco/R,
@@ -32,13 +32,13 @@ Coco/R itself) does not fall under the GNU General Public License.
 -----------------------------------------------------------------------*/
 
 
-#if !defined(gum_UAI_COCO_PARSER_H__)
-#define gum_UAI_COCO_PARSER_H__
+#if !defined(gum_UAIBN_COCO_PARSER_H__)
+#define gum_UAIBN_COCO_PARSER_H__
 
 #include <iostream>
 #include <tuple>
 
-#include <agrum/core/cast_unicode.h>
+#include <agrum/tools/core/cast_unicode.h>
 
 #undef TRY
 #define  TRY(inst) try { inst; } catch (gum::Exception& e) { SemErr(e.errorType());}
@@ -49,7 +49,7 @@ Coco/R itself) does not fall under the GNU General Public License.
 #include "Scanner.h"
 
 namespace gum {
-namespace UAI {
+namespace UAIBN {
 
 
 class Parser {
@@ -73,7 +73,7 @@ class Parser {
     void ExpectWeak( int n, int follow );
     bool WeakSeparator( int n, int syFol, int repFol );
 
-    ErrorsContainer  __errors;
+    ErrorsContainer  errors__;
 
   public:
     Scanner* scanner;
@@ -107,7 +107,7 @@ decltype(quartets) getQuartets() {
 
     	void NUMBER();
 	void LISTE();
-	void UAI();
+	void UAIBN();
 
     void Parse();
 

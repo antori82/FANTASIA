@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,7 +23,7 @@
  * @file
  * @brief Headers of InterfaceGraph.
  *
- * @author Lionel TORTI and Pierre-Henri WUILLEMIN
+ * @author Lionel TORTI and Pierre-Henri WUILLEMIN(_at_LIP6)
  */
 #ifndef GUM_INTERFACE_GRAPH_H
 #define GUM_INTERFACE_GRAPH_H
@@ -34,8 +33,6 @@
 #include <string>
 
 #include <agrum/PRM/PRM.h>
-#include <agrum/core/hashTable.h>
-#include <agrum/graphs/undiGraph.h>
 
 namespace gum {
   namespace prm {
@@ -77,17 +74,17 @@ namespace gum {
 
       /**
        * @struct NodeData interfaceGraph.h <agrum/PRM/gspan/interfaceGraph.h>
-       * Inner class to handle data about nodes in __graph.
+       * Inner class to handle data about nodes in  _graph_.
        */
       template < typename GUM_SCALAR >
       class NodeData {
         public:
         /// Constructor.
-        NodeData< GUM_SCALAR >();
+        NodeData();
         /// Copy Constructor.
-        NodeData< GUM_SCALAR >(const NodeData< GUM_SCALAR >& from);
+        NodeData(const NodeData< GUM_SCALAR >& from);
         /// Destructor.
-        ~NodeData< GUM_SCALAR >();
+        ~NodeData();
         /// The instance represented by this node.
         PRMInstance< GUM_SCALAR >* n;
         /// The label of this node.
@@ -105,12 +102,11 @@ namespace gum {
        * @return Returns out.
        */
       template < typename GUM_SCALAR >
-      std::ostream& operator<<(std::ostream&                 out,
-                               const NodeData< GUM_SCALAR >& data);
+      std::ostream& operator<<(std::ostream& out, const NodeData< GUM_SCALAR >& data);
 
       /**
        * @struct EdgeData interfaceGraph.h <agrum/PRM/gspan/interfaceGraph.h>
-       * Inner class to handle data about edges in __graph.
+       * Inner class to handle data about edges in  _graph_.
        */
       template < typename GUM_SCALAR >
       class EdgeData {
@@ -144,8 +140,7 @@ namespace gum {
        * @return Returns out.
        */
       template < typename GUM_SCALAR >
-      std::ostream& operator<<(std::ostream&                 out,
-                               const EdgeData< GUM_SCALAR >& data);
+      std::ostream& operator<<(std::ostream& out, const EdgeData< GUM_SCALAR >& data);
 
       /**
        * @class InterfaceGraph
@@ -224,8 +219,7 @@ namespace gum {
 
         /// Returns data about a node.
         /// @throw NotFound
-        const NodeData< GUM_SCALAR >&
-           node(const PRMInstance< GUM_SCALAR >* i) const;
+        const NodeData< GUM_SCALAR >& node(const PRMInstance< GUM_SCALAR >* i) const;
 
         /// Returns data about a node.
         /// @throw NotFound
@@ -246,48 +240,46 @@ namespace gum {
         private:
         /// The gum::prm::PRMSystem<GUM_SCALAR> represented by this interface
         /// graph.
-        const PRMSystem< GUM_SCALAR >* __sys;
+        const PRMSystem< GUM_SCALAR >* _sys_;
 
         /// The interface graph.
-        UndiGraph __graph;
+        UndiGraph _graph_;
 
-        /// Data associated with a node in __graph.
-        NodeProperty< NodeData< GUM_SCALAR >* > __nodes;
+        /// Data associated with a node in  _graph_.
+        NodeProperty< NodeData< GUM_SCALAR >* > _nodes_;
 
-        /// Mapping between PRMInstance<GUM_SCALAR> dans their id in __graph.
-        HashTable< PRMInstance< GUM_SCALAR >*, NodeId > __idMap;
+        /// Mapping between PRMInstance<GUM_SCALAR> dans their id in  _graph_.
+        HashTable< PRMInstance< GUM_SCALAR >*, NodeId > _idMap_;
 
-        /// Data associated with edges in __graph.
-        EdgeProperty< EdgeData< GUM_SCALAR >* > __edges;
+        /// Data associated with edges in  _graph_.
+        EdgeProperty< EdgeData< GUM_SCALAR >* > _edges_;
 
         /// Bijection between labels and their ids.
-        Bijection< Idx, LabelData* >* __labels;
+        Bijection< Idx, LabelData* >* _labels_;
 
         /// Mapping between a LabelData and the set of NodeData<GUM_SCALAR> with
         /// that
         /// label.
-        HashTable< LabelData*, Set< NodeData< GUM_SCALAR >* >* > __nodeMap;
+        HashTable< LabelData*, Set< NodeData< GUM_SCALAR >* >* > _nodeMap_;
 
         /// Mapping between a LabelData and the set of EdgeData<GUM_SCALAR> with
         /// that
         /// label.
-        HashTable< LabelData*, Set< EdgeData< GUM_SCALAR >* >* > __edgeMap;
+        HashTable< LabelData*, Set< EdgeData< GUM_SCALAR >* >* > _edgeMap_;
 
         /// A counter used of assigning ids to labels.
-        Idx __counter;
+        Idx _counter_;
 
         /// For shallow copies
-        bool __erase_flag;
+        bool _erase_flag_;
 
-        /// Compute the label of node and add it to __labels if it does not
+        /// Compute the label of node and add it to  _labels_ if it does not
         /// exists yet. Update node with the correct label's id.
-        void __label(NodeData< GUM_SCALAR >*               node,
-                     HashTable< std::string, LabelData* >& label_map);
+        void _label_(NodeData< GUM_SCALAR >* node, HashTable< std::string, LabelData* >& label_map);
 
-        /// Compute the label of edge and add it to __labels if it does not
+        /// Compute the label of edge and add it to  _labels_ if it does not
         /// exists yet. Update edge with the correct label's id.
-        void __label(EdgeData< GUM_SCALAR >*               edge,
-                     HashTable< std::string, LabelData* >& label_map);
+        void _label_(EdgeData< GUM_SCALAR >* edge, HashTable< std::string, LabelData* >& label_map);
       };
 
 

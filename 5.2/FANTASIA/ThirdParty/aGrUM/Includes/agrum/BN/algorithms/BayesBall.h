@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,7 +23,8 @@
  * @file
  * @brief The BayesBall algorithm (as described by Schachter).
  *
- * @author Lionel TORTI and Christophe GONZALES and Pierre-Henri WUILLEMIN
+ * @author Lionel TORTI & Christophe GONZALES(_at_AMU) and Pierre-Henri
+ * WUILLEMIN(_at_LIP6)
  */
 
 #ifndef GUM_BAYESBALLS_H
@@ -34,9 +34,6 @@
 
 #include <agrum/agrum.h>
 
-#include <agrum/core/hashTable.h>
-#include <agrum/core/list.h>
-#include <agrum/core/sequence.h>
 
 #include <agrum/BN/IBayesNet.h>
 
@@ -82,12 +79,12 @@ namespace gum {
 
     /** @brief update a set of potentials, keeping only those d-connected with
      * query variables given evidence */
-    template < typename GUM_SCALAR, template < typename > class TABLE >
-    static void relevantPotentials(const IBayesNet< GUM_SCALAR >&     bn,
-                                   const NodeSet&                     query,
-                                   const NodeSet&                     hardEvidence,
-                                   const NodeSet&                     softEvidence,
-                                   Set< const TABLE< GUM_SCALAR >* >& potentials);
+    template < typename GUM_SCALAR, class TABLE >
+    static void relevantPotentials(const IBayesNet< GUM_SCALAR >& bn,
+                                   const NodeSet&                 query,
+                                   const NodeSet&                 hardEvidence,
+                                   const NodeSet&                 softEvidence,
+                                   Set< const TABLE* >&           potentials);
 
     /// @}
   };

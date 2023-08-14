@@ -1,7 +1,7 @@
 /***************************************************************************
  *  aGrUM modified frames and atg files for cocoR
- *   Copyright (c) 2005 by Christophe GONZALES and Pierre-Henri WUILLEMIN  *
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005 by Christophe GONZALES(@AMU) and Pierre-Henri WUILLEMIN(@LIP6)  *
+ *   info_at_agrum_dot_org
 ***************************************************************************/
 /*----------------------------------------------------------------------
 Compiler Generator Coco/R,
@@ -42,9 +42,8 @@ Coco/R itself) does not fall under the GNU General Public License.
 #include <wchar.h>
 #include <locale.h>
 
-#include <agrum/core/signal/signaler1.h>
-#include <agrum/core/cocoR/common.h>
-#include <agrum/core/errorsContainer.h>
+#include <agrum/tools/core/signal/signaler1.h>
+#include <agrum/tools/core/errorsContainer.h>
 
 namespace gum {
 namespace net {
@@ -206,8 +205,8 @@ class Scanner {
     void* heapTop;
     void** heapEnd;
 
-    std::wstring __filenamne;
-    bool __trace;
+    std::wstring filenamne__;
+    bool trace__;
 
     unsigned char EOL;
     int eofSym;
@@ -259,14 +258,14 @@ class Scanner {
     Scanner( FILE* s,bool trace=false );
     ~Scanner();
 
-    void setTrace( bool b ) { __trace=b;}
+    void setTrace( bool b ) { trace__=b;}
 
     void Load( const wchar_t* fileName );
     Token* Scan();
     Token* Peek();
     void ResetPeek();
 
-    const std::wstring& filename() const {return __filenamne;}
+    const std::wstring& filename() const {return filenamne__;}
     Buffer* getBuffer() {return buffer;}
 
 }; // end Scanner
@@ -276,4 +275,5 @@ class Scanner {
 
 
 #endif // !defined(COCO_SCANNER_H__)
+
 

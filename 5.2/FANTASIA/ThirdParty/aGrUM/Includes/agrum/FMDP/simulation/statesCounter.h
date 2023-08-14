@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,18 +23,17 @@
  * @file
  * @brief Headers of the States Counter class.
  *
- * @author Jean-Christophe MAGNAN and Pierre-Henri WUILLEMIN
+ * @author Pierre-Henri WUILLEMIN(_at_LIP6) and Jean-Christophe MAGNAN and Christophe
+ * GONZALES(_at_AMU)
  */
 
 // =========================================================================
 #ifndef GUM_STATES_COUNTER_H
 #define GUM_STATES_COUNTER_H
 // =========================================================================
-#include <agrum/core/sequence.h>
 // =========================================================================
 #include <agrum/FMDP/learning/datastructure/IVisitableGraphLearner.h>
 // =========================================================================
-#include <agrum/multidim/implementations/multiDimFunctionGraph.h>
 // =========================================================================
 
 namespace gum {
@@ -48,7 +46,7 @@ namespace gum {
    * already visited.
    * @ingroup fmdp_group
    */
-  class StatesCounter : public IVisitableGraphLearner {
+  class StatesCounter: public IVisitableGraphLearner {
     public:
     // ==========================================================================
     /// @name Constructor & destructor.
@@ -89,36 +87,32 @@ namespace gum {
     // ==========================================================================
     ///
     // ==========================================================================
-    NodeId root() const { return __counter->root(); }
+    NodeId root() const { return _counter_->root(); }
 
     // ==========================================================================
     ///
     // ==========================================================================
-    bool isTerminal(NodeId ni) const { return __counter->isTerminalNode(ni); }
+    bool isTerminal(NodeId ni) const { return _counter_->isTerminalNode(ni); }
 
     // ==========================================================================
     ///
     // ==========================================================================
-    const DiscreteVariable* nodeVar(NodeId ni) const {
-      return __counter->node(ni)->nodeVar();
-    }
+    const DiscreteVariable* nodeVar(NodeId ni) const { return _counter_->node(ni)->nodeVar(); }
 
     // ==========================================================================
     ///
     // ==========================================================================
-    NodeId nodeSon(NodeId ni, Idx modality) const {
-      return __counter->node(ni)->son(modality);
-    }
+    NodeId nodeSon(NodeId ni, Idx modality) const { return _counter_->node(ni)->son(modality); }
 
     // ==========================================================================
     ///
     // ==========================================================================
-    Idx nodeNbObservation(NodeId ni) const { return __counter->nodeValue(ni); }
+    Idx nodeNbObservation(NodeId ni) const { return _counter_->nodeValue(ni); }
 
     void insertSetOfVars(MultiDimFunctionGraph< double >* ret) const {
-      for (SequenceIteratorSafe< const DiscreteVariable* > varIter =
-              __counter->variablesSequence().beginSafe();
-           varIter != __counter->variablesSequence().endSafe();
+      for (SequenceIteratorSafe< const DiscreteVariable* > varIter
+           = _counter_->variablesSequence().beginSafe();
+           varIter != _counter_->variablesSequence().endSafe();
            ++varIter)
         ret->add(**varIter);
     }
@@ -127,11 +121,11 @@ namespace gum {
     /// @}
 
     private:
-    void __incState(const Instantiation&, NodeId, Idx, Size);
+    void _incState_(const Instantiation&, NodeId, Idx, Size);
 
-    MultiDimFunctionGraph< Size >* __counter;
+    MultiDimFunctionGraph< Size >* _counter_;
 
-    Set< Instantiation* > __visitedStates;
+    Set< Instantiation* > _visitedStates_;
   };
 } /* namespace gum */
 

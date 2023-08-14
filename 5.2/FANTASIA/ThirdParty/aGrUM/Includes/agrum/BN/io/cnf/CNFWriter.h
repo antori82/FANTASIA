@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,10 +23,10 @@
  * @file
  * @brief Definition of classe for BN file output manipulation
  *
- * This class servers to write the content of a Bayesian Network in
+ * This class servers to write the content of a Bayesian network in
  * the BN format.
  *
- * @author Lionel TORTI and Pierre-Henri WUILLEMIN
+ * @author Lionel TORTI and Pierre-Henri WUILLEMIN(_at_LIP6)
  */
 
 #ifndef GUM_CNF_WRITER_H
@@ -40,14 +39,12 @@
 
 #include <agrum/BN/io/BNWriter.h>
 #include <agrum/agrum.h>
-#include <agrum/core/approximations/approximationPolicy.h>
-#include <agrum/core/hashTable.h>
 
 // Ajout sur branche DDE pour pouvoir compiler (à retirer très probablement)
 // problème sur template <typename> class IApproximationPolicy = ExactPolicy
 // sinon
 // (reconnaissance de ExactPolicy?)
-#include <agrum/core/approximations/exactPolicy.h>
+#include <agrum/tools/core/approximations/exactPolicy.h>
 
 namespace gum {
 
@@ -57,17 +54,14 @@ namespace gum {
    * @ingroup bn_io
    * @brief Writes a IBayesNet in the BN format.
    *
-   * This class servers to write the content of a Bayesian Network in
+   * This class servers to write the content of a Bayesian network in
    * the BN format. See
    * TODO
    * for information on this format.
    *
    */
-  template < typename GUM_SCALAR,
-             template < typename > class IApproximationPolicy = ExactPolicy >
-  class CNFWriter
-      : public BNWriter< GUM_SCALAR >
-      , public IApproximationPolicy< GUM_SCALAR > {
+  template < typename GUM_SCALAR, template < typename > class IApproximationPolicy = ExactPolicy >
+  class CNFWriter: public BNWriter< GUM_SCALAR >, public IApproximationPolicy< GUM_SCALAR > {
     public:
     // ==========================================================================
     /// @name Constructor & destructor
@@ -84,28 +78,31 @@ namespace gum {
      */
     ~CNFWriter() override;
 
-    /// @}
+    CNFWriter(const CNFWriter&)                = default;
+    CNFWriter(CNFWriter&&) noexcept            = default;
+    CNFWriter& operator=(const CNFWriter&)     = default;
+    CNFWriter& operator=(CNFWriter&&) noexcept = default;
 
+    /// @}
+    protected:
     /**
-     * Writes a Bayesian Network in the output stream using the BN format.
+     * Writes a Bayesian network in the output stream using the BN format.
      *
      * @param output The output stream.
-     * @param bn The Bayesian Network writen in output.
+     * @param bn The Bayesian network writen in output.
      * @throws IOError Raised if and I/O error occurs.
      */
-    void write(std::ostream&                  output,
-               const IBayesNet< GUM_SCALAR >& bn) override = 0;
+    void _doWrite(std::ostream& output, const IBayesNet< GUM_SCALAR >& bn) override = 0;
 
     /**
-     * Writes a Bayesian Network in the referenced file using the BN format.
+     * Writes a Bayesian network in the referenced file using the BN format.
      * If the files doesn't exists, it is created.
      *
-     * @param filePath The path to the file used to write the Bayesian Network.
-     * @param bn The Bayesian Network writed in the file.
+     * @param filePath The path to the file used to write the Bayesian network.
+     * @param bn The Bayesian network writed in the file.
      * @throws IOError Raised if and I/O error occurs.
      */
-    void write(const std::string&             filePath,
-               const IBayesNet< GUM_SCALAR >& bn) override = 0;
+    void _doWrite(const std::string& filePath, const IBayesNet< GUM_SCALAR >& bn) override = 0;
 
     inline GUM_SCALAR fromExact(const GUM_SCALAR& value) const override {
       return IApproximationPolicy< GUM_SCALAR >::fromExact(value);

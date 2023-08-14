@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,7 +23,8 @@
  * @file
  * @brief Headers of the LeastSquareTestPolicy
  *
- * @author Jean-Christophe MAGNAN and Pierre-Henri WUILLEMIN
+ * @author Pierre-Henri WUILLEMIN(_at_LIP6) and Jean-Christophe MAGNAN and Christophe
+ * GONZALES(_at_AMU)
  *
  */
 #ifndef GUM_MULTI_DIM_FUNCTION_GRAPH_LEAST_SQUARE_TEST_POLICY_H
@@ -34,14 +34,14 @@
 #include <agrum/FMDP/learning/core/contingencyTable.h>
 #include <agrum/FMDP/learning/core/testPolicy/ITestPolicy.h>
 // ============================================================================
-#include <agrum/multidim/utils/FunctionGraphUtilities/link.h>
+#include <agrum/tools/multidim/utils/FunctionGraphUtilities/link.h>
 // ============================================================================
 
 namespace gum {
 
   /**
    * @class LeastSquareTestPolicy leastSquareTestPolicy.h
-   * <agrum/multidim/core/testPolicy/leastSquareTestPolicy.h>
+   * <agrum/tools/multidim/core/testPolicy/leastSquareTestPolicy.h>
    *
    * @brief LeastSquareTestPolicy implements a test policy that follows the
    * Least Square statistic
@@ -49,7 +49,7 @@ namespace gum {
    * @ingroup fmdp_group
    */
   template < typename GUM_SCALAR >
-  class LeastSquareTestPolicy : public ITestPolicy< GUM_SCALAR > {
+  class LeastSquareTestPolicy: public ITestPolicy< GUM_SCALAR > {
     public:
     // ############################################################################
     /// @name Constructor/Destrcutor
@@ -59,20 +59,16 @@ namespace gum {
     // ============================================================================
     /// Constructor
     // ============================================================================
-    LeastSquareTestPolicy() :
-        ITestPolicy< GUM_SCALAR >(), __sumO(0.0), __score(0) {
+    LeastSquareTestPolicy() : ITestPolicy< GUM_SCALAR >(), _sumO_(0.0), _score_(0) {
       GUM_CONSTRUCTOR(LeastSquareTestPolicy);
     }
 
     // ============================================================================
     /// Allocators and Deallocators redefinition
     // ============================================================================
-    void* operator new(size_t s) {
-      return SmallObjectAllocator::instance().allocate(s);
-    }
-    void operator delete(void* p) {
-      SmallObjectAllocator::instance().deallocate(p,
-                                                  sizeof(LeastSquareTestPolicy));
+    void* operator new(size_t s) { return SmallObjectAllocator::instance().allocate(s); }
+    void  operator delete(void* p) {
+      SmallObjectAllocator::instance().deallocate(p, sizeof(LeastSquareTestPolicy));
     }
 
     // ============================================================================
@@ -145,40 +141,38 @@ namespace gum {
     // ============================================================================
     /// Returns global sum (needed for the merging)
     // ============================================================================
-    double sumValue() const { return __sumO; }
+    double sumValue() const { return _sumO_; }
 
     // ============================================================================
     /// Returns nbobs per modality table (needed for the merging)
     // ============================================================================
-    const HashTable< Idx, Idx >& nbObsTable() const { return __nbObsTable; }
+    const HashTable< Idx, Idx >& nbObsTable() const { return _nbObsTable_; }
 
     // ============================================================================
     /// Returns sum per modality table (needed for the merging)
     // ============================================================================
-    const HashTable< Idx, double >& sumAttrTable() const { return __sumAttrTable; }
+    const HashTable< Idx, double >& sumAttrTable() const { return _sumAttrTable_; }
 
     // ============================================================================
     /// Returns global sum (needed for the merging)
     // ============================================================================
-    const HashTable< Idx, LinkedList< double >* >& obsTable() const {
-      return __obsTable;
-    }
+    const HashTable< Idx, LinkedList< double >* >& obsTable() const { return _obsTable_; }
 
     private:
     /// Global sum
-    double __sumO;
+    double _sumO_;
 
     /// Nb Observation for each modality assumed by variable
-    HashTable< Idx, Idx > __nbObsTable;
+    HashTable< Idx, Idx > _nbObsTable_;
 
     /// Sum for each modality assumed by variable
-    HashTable< Idx, double > __sumAttrTable;
+    HashTable< Idx, double > _sumAttrTable_;
 
     /// Not sure if needed
-    HashTable< Idx, LinkedList< double >* > __obsTable;
+    HashTable< Idx, LinkedList< double >* > _obsTable_;
 
     /// Keeping computed score
-    double __score;
+    double _score_;
   };
 
 }   // End of namespace gum

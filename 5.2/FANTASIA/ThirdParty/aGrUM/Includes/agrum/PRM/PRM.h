@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,7 +23,7 @@
  * @file
  * @brief Headers of PRM.
  *
- * @author Lionel TORTI and Pierre-Henri WUILLEMIN
+ * @author Lionel TORTI and Pierre-Henri WUILLEMIN(_at_LIP6)
  */
 
 #ifndef GUM_PRM_H
@@ -32,18 +31,8 @@
 
 #include <string>
 
-#include <agrum/core/hashTable.h>
-#include <agrum/core/sequence.h>
 
-#include <agrum/PRM/elements/PRMAggregate.h>
-#include <agrum/PRM/elements/PRMAttribute.h>
-#include <agrum/PRM/elements/PRMClass.h>
 #include <agrum/PRM/elements/PRMFuncAttribute.h>
-#include <agrum/PRM/elements/PRMInstance.h>
-#include <agrum/PRM/elements/PRMObject.h>
-#include <agrum/PRM/elements/PRMReferenceSlot.h>
-#include <agrum/PRM/elements/PRMSlotChain.h>
-#include <agrum/PRM/elements/PRMType.h>
 
 #include <agrum/PRM/elements/PRMSystem.h>
 
@@ -158,8 +147,7 @@ namespace gum {
        * Returns a constant reference on a Class<GUM_SCALAR> given it's name.
        * @throw NotFound Raised if no class is found with the given name.
        */
-      const PRMInterface< GUM_SCALAR >&
-         getInterface(const std::string& name) const;
+      const PRMInterface< GUM_SCALAR >& getInterface(const std::string& name) const;
 
       /**
        * Returns the Set of all Class<GUM_SCALAR> in this PRM.
@@ -203,7 +191,7 @@ namespace gum {
       PRM< GUM_SCALAR >& operator=(const PRM< GUM_SCALAR >& source);
 
       /// Add the built-in types in the PRM
-      void __addBuiltInTypes();
+      void _addBuiltInTypes_();
 
       /// @}
       // ========================================================================
@@ -212,28 +200,28 @@ namespace gum {
       /// @{
 
       /// Mapping of all Class<GUM_SCALAR> given their name.
-      HashTable< std::string, PRMClass< GUM_SCALAR >* > __classMap;
+      HashTable< std::string, PRMClass< GUM_SCALAR >* > _classMap_;
 
       /// Set of all Class<GUM_SCALAR> in this PRM.
-      Set< PRMClass< GUM_SCALAR >* > __classes;
+      Set< PRMClass< GUM_SCALAR >* > _classes_;
 
       /// Mapping of all Class<GUM_SCALAR> given their name.
-      HashTable< std::string, PRMInterface< GUM_SCALAR >* > __interfaceMap;
+      HashTable< std::string, PRMInterface< GUM_SCALAR >* > _interfaceMap_;
 
       /// Set of all Class<GUM_SCALAR> in this PRM.
-      Set< PRMInterface< GUM_SCALAR >* > __interfaces;
+      Set< PRMInterface< GUM_SCALAR >* > _interfaces_;
 
       /// Mapping of all PRMType given their name.
-      HashTable< std::string, PRMType* > __typeMap;
+      HashTable< std::string, PRMType* > _typeMap_;
 
       /// Set of all PRMType in this PRM.
-      Set< PRMType* > __types;
+      Set< PRMType* > _types_;
 
       /// Mapping of all Systems given their name.
-      HashTable< std::string, PRMSystem< GUM_SCALAR >* > __systemMap;
+      HashTable< std::string, PRMSystem< GUM_SCALAR >* > _systemMap_;
 
       /// Set of all Systems in this PRM.
-      Set< PRMSystem< GUM_SCALAR >* > __systems;
+      Set< PRMSystem< GUM_SCALAR >* > _systems_;
 
       /// @}
     };

@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,7 +23,7 @@
  * @file
  * @brief Detect barren nodes for inference in Bayesian networks
  *
- * @author Christophe GONZALES and Pierre-Henri WUILLEMIN
+ * @author Christophe GONZALES(_at_AMU) and Pierre-Henri WUILLEMIN(_at_LIP6)
  */
 #ifndef GUM_BARREN_NODES_FINDER_H
 #define GUM_BARREN_NODES_FINDER_H
@@ -32,8 +31,7 @@
 
 #include <agrum/BN/BayesNet.h>
 #include <agrum/agrum.h>
-#include <agrum/graphs/DAG.h>
-#include <agrum/graphs/cliqueGraph.h>
+#include <agrum/tools/graphs/cliqueGraph.h>
 
 
 namespace gum {
@@ -103,20 +101,19 @@ namespace gum {
     /// returns the set of barren potentials in messages sent in a junction tree
     template < typename GUM_SCALAR >
     ArcProperty< Set< const Potential< GUM_SCALAR >* > >
-       barrenPotentials(const CliqueGraph&             junction_tree,
-                        const IBayesNet< GUM_SCALAR >& bn);
+       barrenPotentials(const CliqueGraph& junction_tree, const IBayesNet< GUM_SCALAR >& bn);
 
     /// @}
 
     private:
     /// the DAG on which we compute the barren nodes
-    const DAG* __dag;
+    const DAG* _dag_;
 
     /// the set of observed nodes
-    const NodeSet* __observed_nodes;
+    const NodeSet* _observed_nodes_;
 
     /// the set of targeted nodes
-    const NodeSet* __target_nodes;
+    const NodeSet* _target_nodes_;
   };
 
 

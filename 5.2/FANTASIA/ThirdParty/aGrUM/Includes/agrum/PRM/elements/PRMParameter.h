@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,16 +23,14 @@
  * @file
  * @brief Headers of gum::PRMParameter.
  *
- * @author Lionel TORTI and Pierre-Henri WUILLEMIN
+ * @author Lionel TORTI and Pierre-Henri WUILLEMIN(_at_LIP6)
  */
 
 #ifndef GUM_PARAMETER_H
 #define GUM_PARAMETER_H
 
-#include <agrum/multidim/potential.h>
 
 #include <agrum/PRM/elements/PRMType.h>
-#include <agrum/PRM/elements/PRMClassElement.h>
 #include <agrum/PRM/elements/PRMAttribute.h>
 
 
@@ -49,9 +46,12 @@ namespace gum {
      * @ingroup prm_group
      */
     template < typename GUM_SCALAR >
-    class PRMParameter : public PRMClassElement< GUM_SCALAR > {
+    class PRMParameter: public PRMClassElement< GUM_SCALAR > {
       public:
-      enum ParameterType { INT, REAL };
+      enum ParameterType {
+        INT,
+        REAL
+      };
 
       // ========================================================================
       /// @name Constructor & destructor.
@@ -77,8 +77,7 @@ namespace gum {
       /// @{
 
       /// See gum::PRMClassElement::elt_type().
-      virtual typename PRMClassElement< GUM_SCALAR >::ClassElementType
-         elt_type() const;
+      virtual typename PRMClassElement< GUM_SCALAR >::ClassElementType elt_type() const;
 
       GUM_SCALAR value() const;
 
@@ -114,8 +113,7 @@ namespace gum {
       PRMParameter(const PRMParameter< GUM_SCALAR >& source);
 
       /// Copy operator. Don't use it.
-      PRMParameter< GUM_SCALAR >&
-         operator=(const PRMParameter< GUM_SCALAR >& from);
+      PRMParameter< GUM_SCALAR >& operator=(const PRMParameter< GUM_SCALAR >& from);
 
       private:
       // ========================================================================
@@ -123,9 +121,9 @@ namespace gum {
       // ========================================================================
       /// @{
 
-      ParameterType __type;
+      ParameterType _type_;
 
-      GUM_SCALAR __value;
+      GUM_SCALAR _value_;
 
       /// @}
     };

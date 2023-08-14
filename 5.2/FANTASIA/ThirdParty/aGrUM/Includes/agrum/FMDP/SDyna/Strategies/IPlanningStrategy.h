@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,7 +23,8 @@
  * @file
  * @brief Headers of the Planning Strategy interface.
  *
- * @author Jean-Christophe MAGNAN and Pierre-Henri WUILLEMIN
+ * @author Pierre-Henri WUILLEMIN(_at_LIP6) and Jean-Christophe MAGNAN and Christophe
+ * GONZALES(_at_AMU)
  */
 
 
@@ -34,7 +34,6 @@
 // =========================================================================
 #include <string>
 // =========================================================================
-#include <agrum/core/types.h>
 // =========================================================================
 #include <agrum/FMDP/planning/actionSet.h>
 // =========================================================================
@@ -92,8 +91,7 @@ namespace gum {
     // ==========================================================================
     /// Returns optimalPolicy computed so far current size
     // ==========================================================================
-    virtual const MultiDimFunctionGraph< ActionSet, SetTerminalNodePolicy >*
-       optimalPolicy() = 0;
+    virtual const MultiDimFunctionGraph< ActionSet, SetTerminalNodePolicy >* optimalPolicy() = 0;
 
     /// @}
 

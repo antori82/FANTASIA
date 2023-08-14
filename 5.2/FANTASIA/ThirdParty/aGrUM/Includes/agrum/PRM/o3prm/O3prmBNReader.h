@@ -1,8 +1,7 @@
-
 /**
  *
- *  Copyright 2005-2019 Pierre-Henri WUILLEMIN et Christophe GONZALES (LIP6)
- *   {prenom.nom}_at_lip6.fr
+ *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ *   info_at_agrum_dot_org
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -27,7 +26,7 @@
  *
  * this class generates the groundedBN from a class or an instance name.
  *
- * @author Pierre-Henri WUILLEMIN and Lionel TORTI
+ * @author Pierre-Henri WUILLEMIN(_at_LIP6) and Lionel TORTI
  */
 #ifndef GUM_PRM_O3PRM_BNREADER_H
 #define GUM_PRM_O3PRM_BNREADER_H
@@ -36,9 +35,7 @@
 #include <string>
 
 #include <agrum/BN/io/BNReader.h>
-#include <agrum/core/errorsContainer.h>
 
-#include <agrum/PRM/PRM.h>
 #include <agrum/PRM/o3prm/O3prmReader.h>
 
 namespace gum {
@@ -54,12 +51,12 @@ namespace gum {
    * gum::BayesNet.
    */
   template < typename GUM_SCALAR >
-  class O3prmBNReader : public BNReader< GUM_SCALAR > {
+  class O3prmBNReader: public BNReader< GUM_SCALAR > {
     public:
     O3prmBNReader(BayesNet< GUM_SCALAR >* bn,
                   const std::string&      filename,
                   const std::string&      entityName = "",
-                  const std::string&      classPath = "");
+                  const std::string&      classPath  = "");
 
     ~O3prmBNReader();
 
@@ -72,50 +69,46 @@ namespace gum {
     /// publishing Errors API
 
     /// # of errors
-    Size errors() { return __errors.error_count; }
+    Size errors() { return _errors_.error_count; }
     /// # of errors
-    Size warnings() { return __errors.warning_count; }
+    Size warnings() { return _errors_.warning_count; }
 
-    Idx errLine(Idx i) { return __errors.error(i).line; }
+    Idx errLine(Idx i) { return _errors_.error(i).line; }
     /// col of ith error or warning
-    Idx errCol(Idx i) { return __errors.error(i).column; }
+    Idx errCol(Idx i) { return _errors_.error(i).column; }
     /// type of ith error or warning
-    bool errIsError(Idx i) { return __errors.error(i).is_error; }
+    bool errIsError(Idx i) { return _errors_.error(i).is_error; }
     /// message of ith error or warning
-    std::string errMsg(Idx i) { return __errors.error(i).msg; }
+    std::string errMsg(Idx i) { return _errors_.error(i).msg; }
 
     /// send on std::cerr the list of errors
-    void showElegantErrors(std::ostream& o = std::cerr) {
-      __errors.elegantErrors(o);
-    }
+    void showElegantErrors(std::ostream& o = std::cerr) { _errors_.elegantErrors(o); }
 
     /// send on std::cerr the list of errors or warnings
     void showElegantErrorsAndWarnings(std::ostream& o = std::cerr) {
-      __errors.elegantErrorsAndWarnings(o);
+      _errors_.elegantErrorsAndWarnings(o);
     }
 
     /// send on std::cerr the number of errors and the number of warnings
-    void showErrorCounts(std::ostream& o = std::cerr) {
-      __errors.syntheticResults(o);
-    }
+    void showErrorCounts(std::ostream& o = std::cerr) { _errors_.syntheticResults(o); }
     /// @}
 
     private:
-    std::string __filename;
+    std::string _filename_;
 
-    std::string __classpath;
-    std::string __entityName;
+    std::string _classpath_;
+    std::string _entityName_;
 
-    BayesNet< GUM_SCALAR >* __bn;
-    ErrorsContainer         __errors;
+    BayesNet< GUM_SCALAR >* _bn_;
+    ErrorsContainer         _errors_;
 
-    void               __generateBN(prm::PRMSystem< GUM_SCALAR >& system);
-    static std::string __getVariableName(const std::string& path,
+    void               _generateBN_(prm::PRMSystem< GUM_SCALAR >& system);
+    static std::string _getVariableName_(const std::string& path,
                                          const std::string& type,
                                          const std::string& name,
                                          const std::string& toRemove = "");
-    static std::string __getEntityName(const std::string& filename);
-    static std::string __getInstanceName(const std::string& classname);
+    static std::string _getEntityName_(const std::string& filename);
+    static std::string _getInstanceName_(const std::string& classname);
   };
 
 }   // namespace gum
