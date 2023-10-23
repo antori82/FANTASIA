@@ -113,14 +113,16 @@ public class FANTASIA : ModuleRules
 
 		PublicIncludePaths.AddRange(new string[] { IncludePath1, IncludePath2, IncludePath3, IncludePath4, IncludePath5 });
 
-		RuntimeDependencies.Add(Path.Combine(ThirdParty, "aws-c-common.dll"));
-		RuntimeDependencies.Add(Path.Combine(ThirdParty, "aws-c-event-stream.dll"));
-		RuntimeDependencies.Add(Path.Combine(ThirdParty, "aws-checksums.dll"));
-		RuntimeDependencies.Add(Path.Combine(ThirdParty, "aws-cpp-sdk-core.dll"));
-		RuntimeDependencies.Add(Path.Combine(ThirdParty, "aws-cpp-sdk-polly.dll"));
-		RuntimeDependencies.Add(Path.Combine(ThirdParty, "aws-cpp-sdk-text-to-speech.dll"));
-		RuntimeDependencies.Add(Path.Combine(ThirdParty, "Microsoft.CognitiveServices.Speech.core.dll"));
-		RuntimeDependencies.Add(Path.Combine(ThirdParty, "Microsoft.CognitiveServices.Speech.extension.kws.dll"));
+		string Redist = Path.Combine(ThirdParty, "Redist");
+
+        RuntimeDependencies.Add(Path.Combine(Redist, "aws-c-common.dll"));
+		RuntimeDependencies.Add(Path.Combine(Redist, "aws-c-event-stream.dll"));
+		RuntimeDependencies.Add(Path.Combine(Redist, "aws-checksums.dll"));
+		RuntimeDependencies.Add(Path.Combine(Redist, "aws-cpp-sdk-core.dll"));
+		RuntimeDependencies.Add(Path.Combine(Redist, "aws-cpp-sdk-polly.dll"));
+		RuntimeDependencies.Add(Path.Combine(Redist, "aws-cpp-sdk-text-to-speech.dll"));
+		RuntimeDependencies.Add(Path.Combine(Redist, "Microsoft.CognitiveServices.Speech.core.dll"));
+		RuntimeDependencies.Add(Path.Combine(Redist, "Microsoft.CognitiveServices.Speech.extension.kws.dll"));
 
 		PublicIncludePaths.Add(Path.Combine(ThirdParty, "kdepp"));
 
