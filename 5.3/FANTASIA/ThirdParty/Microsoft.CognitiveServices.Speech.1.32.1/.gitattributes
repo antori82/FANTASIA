@@ -1,0 +1,1 @@
+Microsoft.CognitiveServices.Speech.1.32.1.nupkg filter=lfs diff=lfs merge=lfs -text
