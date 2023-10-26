@@ -3,6 +3,14 @@
 #include "FANTASIATypes.generated.h"
 
 UENUM(BlueprintType)
+enum class InfluenceNodeType : uint8 {
+	NORMAL = 0 UMETA(DisplayName = "NORMAL"),
+	CHANCE = 1 UMETA(DisplayName = "CHANCE"),
+	UTILITY = 2 UMETA(DisplayName = "UTILITY"),
+	DECISION = 3 UMETA(DisplayName = "DECISION"),
+};
+
+UENUM(BlueprintType)
 enum class BayesianNodeType : uint8 {
 	NORMAL = 0 UMETA(DisplayName = "NORMAL"),
 	AMPLITUDE = 1 UMETA(DisplayName = "AMPLITUDE"),
