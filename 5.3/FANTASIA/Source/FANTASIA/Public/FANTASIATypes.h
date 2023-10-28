@@ -4,10 +4,9 @@
 
 UENUM(BlueprintType)
 enum class InfluenceNodeType : uint8 {
-	NORMAL = 0 UMETA(DisplayName = "NORMAL"),
-	CHANCE = 1 UMETA(DisplayName = "CHANCE"),
-	UTILITY = 2 UMETA(DisplayName = "UTILITY"),
-	DECISION = 3 UMETA(DisplayName = "DECISION"),
+	CHANCE = 0 UMETA(DisplayName = "CHANCE"),
+	UTILITY = 1 UMETA(DisplayName = "UTILITY"),
+	DECISION = 2 UMETA(DisplayName = "DECISION"),
 };
 
 UENUM(BlueprintType)

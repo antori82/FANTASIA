@@ -140,8 +140,8 @@ public:
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "addDiscretizedVariable"), Category = "Influence_Diagram")
 	void addDiscretizedVariable(FString variable, FString description, float minTick, float maxTick, float nPoints, InfluenceNodeType nodeType);
 
-	UFUNCTION(BlueprintCallable, meta = (DisplayName = "addNode"), Category = "Influence_Diagram")
-	void addNode(FString variable, FString description, TArray<FString> labels, InfluenceNodeType nodeType);
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "addLabelizedVariable"), Category = "Influence_Diagram")
+	void addLabelizedVariable(FString variable, FString description, TArray<FString> labels, InfluenceNodeType nodeType);
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "addArc"), Category = "Influence_Diagram")
 	void addArc(FString parent, FString child);
