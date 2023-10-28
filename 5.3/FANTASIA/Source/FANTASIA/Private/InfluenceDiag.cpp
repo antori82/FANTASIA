@@ -119,7 +119,7 @@ TMap<FString, FArrayFloat> UInfluenceDiag::optimalDecision(FString variable)
 	TMap<FString, FArrayFloat> out;
 
 	try {
-		gum::Potential<double> result = inference->optimalDecision("VacationActivity");
+		gum::Potential<double> result = inference->optimalDecision(TCHAR_TO_UTF8(*variable));
 
 		auto table = result.content();
 		gum::Instantiation inst(*table);
@@ -192,7 +192,6 @@ void UInfluenceDiag::addDiscretizedVariable(FString variable, FString descriptio
 			newNode.addTick(i);
 
 		switch (nodeType) {
-		case InfluenceNodeType::NORMAL: id.add(newNode); break;
 		case InfluenceNodeType::CHANCE: id.addChanceNode(newNode); break;
 		case InfluenceNodeType::UTILITY: id.addUtilityNode(newNode); break;
 		case InfluenceNodeType::DECISION: id.addDecisionNode(newNode); break;
@@ -203,7 +202,7 @@ void UInfluenceDiag::addDiscretizedVariable(FString variable, FString descriptio
 	}
 }
 
-void UInfluenceDiag::addNode(FString variable, FString description, TArray<FString> labels, InfluenceNodeType nodeType)
+void UInfluenceDiag::addLabelizedVariable(FString variable, FString description, TArray<FString> labels, InfluenceNodeType nodeType)
 {
 	if (!nodeNames.Contains(variable))
 	{
@@ -215,7 +214,6 @@ void UInfluenceDiag::addNode(FString variable, FString description, TArray<FStri
 			newNode.addLabel(TCHAR_TO_UTF8(*label));
 
 		switch (nodeType) {
-		case InfluenceNodeType::NORMAL: id.add(newNode); break;
 		case InfluenceNodeType::CHANCE: id.addChanceNode(newNode); break;
 		case InfluenceNodeType::UTILITY: id.addUtilityNode(newNode); break;
 		case InfluenceNodeType::DECISION: id.addDecisionNode(newNode); break;
