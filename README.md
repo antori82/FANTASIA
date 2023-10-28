@@ -114,7 +114,7 @@ Special thanks to the students who contributed to FANTASIA
 
 * <a href="https://www.linkedin.com/in/antimo-de-biase-3660b6202/">Antimo De Biase</a> - Neo4j component prototype development
 * Fabrizio Musella - aGrUM integration prototype development
-* <a href="https://www.linkedin.com/in/rbgdotbrush/">Roberto Basile Giannini</a> - General improvements and aGrUM integration updates
+* <a href="https://www.linkedin.com/in/rbgdotbrush/">Roberto Basile Giannini</a> - General improvements and aGrUM updates (Influence Diagrams integration)
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
