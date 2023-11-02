@@ -35,12 +35,7 @@ void UInfluenceDiag::Init()
 		initialized = true;
 	}
 
-	switch (InferenceAlgorithm)
-	{
-	case InferenceIDAlgs::ShaferShenoyLIMID:
-		inference = new gum::ShaferShenoyLIMIDInference<double>(&id);
-		break;
-	}
+	inference = new gum::ShaferShenoyLIMIDInference<double>(&id);
 }
 
 void UInfluenceDiag::makeInference()
@@ -50,6 +45,15 @@ void UInfluenceDiag::makeInference()
 	}
 	catch (gum::NotFound& e)
 		UE_LOG(LogTemp, Warning, TEXT("%hs from %hs"), e.errorType().c_str(), e.errorContent().c_str());
+}
+
+void UInfluenceDiag::addNoForgettingAssumption(TArray<FString> decisionVariables)
+{
+	std::vector<gum::NodeId> ids;
+	for (FString variable : decisionVariables)
+		ids.push_back(id.idFromName(TCHAR_TO_UTF8(*variable)));
+	
+	inference->addNoForgettingAssumption(ids);
 }
 
 TMap<FString, float> UInfluenceDiag::getPosterior(FString variable)
