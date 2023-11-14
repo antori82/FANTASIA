@@ -114,15 +114,16 @@ void UNeo4jComponent::OnResponseReceived(FHttpRequestPtr Request, FHttpResponseP
 							}
 						}
 					}
-					IncomingResponse.Broadcast(neo4jResponse);
+					//IncomingResponse.Broadcast(neo4jResponse);
 				}
+				IncomingResponse.Broadcast(neo4jResponse);
 			}
 		}
 	}
 
 }
 
-void UNeo4jComponent::submitQuery(FString query, Neo4jOperation operation, FString transactionID, TMap<FString, FString> parameters) {
+void UNeo4jComponent::submitQuery(FString query, Neo4jOperation operation, FString transactionID, TMap<FString, FString> parameters, FString database = "neo4j") {
 	FString path;
 	FString method;
 	FString prefix;
@@ -134,7 +135,7 @@ void UNeo4jComponent::submitQuery(FString query, Neo4jOperation operation, FStri
 	if (useV4)
 		prefix = "/db/data/transaction";
 	else
-		prefix = "/db/neo4j/tx";
+		prefix = "/db/" + database + "/tx";
 
 	switch (operation)
 	{
@@ -190,6 +191,7 @@ void UNeo4jComponent::submitQuery(FString query, Neo4jOperation operation, FStri
 		}
 		payload = payload.LeftChop(2) + "}, ";
 	}
+	//payload = payload + "\"database\": { name: \"" + database + "\"}}, ";
 
 	Request->SetContentAsString(payload + "\"resultDataContents\" : [ \"row\", \"graph\" ]}]}");
 	Request->ProcessRequest();
