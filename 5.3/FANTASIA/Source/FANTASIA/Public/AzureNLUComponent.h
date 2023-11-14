@@ -41,7 +41,7 @@ private:
 	shared_ptr<AudioConfig> audioInput;
 	AzureNLUThread* handle;
 	shared_ptr<SpeechConfig> config;
-	std::vector<std::shared_ptr<LanguageUnderstandingModel>> models;
+	shared_ptr<LanguageUnderstandingModel> model;
 
 	FDelegateHandle NLUResultAvailableHandle;
 	//bool dataSent = false;
@@ -51,7 +51,7 @@ private:
 public:
 
 	UPROPERTY(EditAnywhere, Category = "Configuration")
-		FString SpeechKey;
+		FString Key;
 
 	UPROPERTY(EditAnywhere, Category = "Configuration")
 		FString Region;
@@ -60,16 +60,7 @@ public:
 		FString Language;
 
 	UPROPERTY(EditAnywhere, Category = "Configuration")
-		FString LanguageKey;
-
-	UPROPERTY(EditAnywhere, Category = "Configuration")
-		FString Endpoint;
-
-	UPROPERTY(EditAnywhere, Category = "Configuration")
-	FString projectName;
-
-	UPROPERTY(EditAnywhere, Category = "Configuration")
-	FString deploymentName;
+		FString AppID;
 
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;

@@ -9,6 +9,7 @@
 			"BayesianNetwork.gen.cpp.obj",
 			"FANTASIA.init.gen.cpp.obj",
 			"FANTASIATypes.gen.cpp.obj",
+			"InfluenceDiag.gen.cpp.obj",
 			"MathUtilities.gen.cpp.obj",
 			"Neo4jComponent.gen.cpp.obj",
 			"OpenAIComponent.gen.cpp.obj",
@@ -23,6 +24,7 @@
 			"AzureTTSThread.cpp.obj",
 			"BayesianNetwork.cpp.obj",
 			"FANTASIA.cpp.obj",
+			"InfluenceDiag.cpp.obj",
 			"MathUtilities.cpp.obj",
 			"Neo4jComponent.cpp.obj",
 			"OpenAIComponent.cpp.obj"

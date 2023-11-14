@@ -34,7 +34,7 @@ public:
 	void OnResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful);
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Submit query", AutoCreateRefTerm = "parameters"), Category = "Neo4j")
-	void submitQuery(FString query, Neo4jOperation operation, FString transactionID, TMap<FString, FString> parameters);
+	void submitQuery(FString query, Neo4jOperation operation, FString transactionID, TMap<FString, FString> parameters, FString database);
 
 protected:
 	// Called when the game starts
