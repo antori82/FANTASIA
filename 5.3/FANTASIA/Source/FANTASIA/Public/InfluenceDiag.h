@@ -84,7 +84,7 @@ class FANTASIA_API UInfluenceDiag : public UObject
 
 private:
 	gum::InfluenceDiagram<double> id;
-	gum::InfluenceDiagramInference<double>* inference = new gum::ShaferShenoyLIMIDInference<double>(&id);
+	gum::ShaferShenoyLIMIDInference<double>* inference;
 	bool initialized = false;
 
 public:
@@ -112,6 +112,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "makeInference", Keywords = "Inference", AutoCreateRefTerm = "evidences"), Category = "Influence_Diagram")
 	void makeInference();
+
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "addNoForgettingAssumption", Keywords = "Inference", AutoCreateRefTerm = "evidences"), Category = "Influence_Diagram")
+	void addNoForgettingAssumption(TArray<FString> decisionVariables);
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "getPosterior", Keywords = "Inference", AutoCreateRefTerm = "evidences"), Category = "Influence_Diagram")
 	TMap<FString, float> getPosterior(FString variable);
