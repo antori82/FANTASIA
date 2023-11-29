@@ -52,7 +52,7 @@
 <br/>
 <br/>
 
-FANTASIA is a collection of tools for UE that I have developed over the years to work with Embodied Conversational Agents at the University of Padua and at the University of Naples Federico II in Italy. Since I have been working with different characters for different tasks, I developed these tools so that the functionalities characterizing one agent could be easily transferred to others. Since I have done this multiple times with minimal effort, now, and since there appears to be an increasing interest towards Virtual Humans in UE, I decided to take all the dirty code I have and re-engineer it so that I could distribute it to the community. I hope it will be helpful for other colleagues in the academy but I also hope it will help people, in general, produce amazing stuff.
+FANTASIA is a collection of tools for UE that we have developed over the years to work with Embodied Conversational Agents at the University of Padua and at the University of Naples Federico II in Italy. Since we have been working with different characters for different tasks, I developed these tools so that the functionalities characterizing one agent could be easily transferred to others. Since we have done this multiple times with minimal effort, now, and since there appears to be an increasing interest towards Virtual Humans in UE, we decided to take all the dirty code we have and re-engineer it so that we could distribute it to the community. We hope it will be helpful for other colleagues in the academy but we also hope it will help people, in general, produce amazing stuff.
 
 ### Installation
 
@@ -108,12 +108,17 @@ Project Link: [https://github.com/antori82/FANTASIA](https://github.com/antori82
 
 <!-- ACKNOWLEDGEMENTS -->
 ## Acknowledgements
+
+FANTASIA would not be the same without the precious contribution from the Linguistics field provided by
+
+* <a href="https://www.linkedin.com/in/maria-di-maro-b43261120/">Dr. Maria Di Maro</a> - (PhD) Common ground management and Clarification Requests generation
+* <a href="https://www.linkedin.com/in/martina-di-bratto-95034322b/">Martina Di Bratto</a> - (PhD Student) Argumentative Dialogue Management
+
 Special thanks to the students who contributed to FANTASIA
 
 * <a href="https://www.linkedin.com/in/antimo-de-biase-3660b6202/">Antimo De Biase</a> - Neo4j component prototype development
 * Fabrizio Musella - aGrUM integration prototype development
 * <a href="https://www.linkedin.com/in/rbgdotbrush/">Roberto Basile Giannini</a> - General improvements and aGrUM updates (Influence Diagrams integration)
-
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
