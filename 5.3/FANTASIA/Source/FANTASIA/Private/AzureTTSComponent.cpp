@@ -39,6 +39,7 @@ void UAzureTTSComponent::getResult(FTTSData response, FString id)
 	handle->TTSResultAvailableUnsubscribeUser(TTSResultAvailableHandle);
 	handle->Shutdown();
 
+	Buffer.Remove(id);
 	Buffer.Add(id, response);
 	idSynthesisReady = id;
 }

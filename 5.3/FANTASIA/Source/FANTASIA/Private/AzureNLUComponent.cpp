@@ -12,7 +12,7 @@ UAzureNLUComponent::UAzureNLUComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = false;
+	PrimaryComponentTick.bCanEverTick = true;
 	PrimaryComponentTick.bRunOnAnyThread = false;
 
 	VoiceCapture = FVoiceModule::Get().CreateVoiceCapture("");
@@ -31,15 +31,22 @@ void UAzureNLUComponent::BeginPlay()
 
 void UAzureNLUComponent::getResult(FNLUResponse response)
 {
+	//IncomingMessage.Broadcast(response);
 	handle->NLUResultAvailableUnsubscribeUser(NLUResultAvailableHandle);
 	handle->Shutdown();
-	IncomingMessage.Broadcast(response);
+
+	outResponse = response;
+	responseReady = true;
 }
 
 // Called every frame
 void UAzureNLUComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+	//Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+	if (responseReady) {
+		IncomingMessage.Broadcast(outResponse);
+		responseReady = false;
+	}
 }
 
 void UAzureNLUComponent::AzureNLUStart()

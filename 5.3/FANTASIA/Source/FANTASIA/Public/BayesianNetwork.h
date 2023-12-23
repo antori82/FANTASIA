@@ -19,6 +19,7 @@
 #include "agrum/BN/inference/lazyPropagation.h"
 #include "agrum/BN/inference/ShaferShenoyInference.h"
 #include "agrum/BN/inference/variableElimination.h"
+#include <agrum/BN/algorithms/MarkovBlanket.h>
 
 #include "MathUtilities.h"
 #include "BayesianNetwork.generated.h"
@@ -148,4 +149,7 @@ public:
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "idFromName"), Category = "Bayesian_Network")
 	int idFromName(FString variable);
+
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "getMarkovBlanketNodes"), Category = "Bayesian_Network")
+	TArray<FString> getMarkovBlanketNodes(FString variable);
 };
