@@ -61,7 +61,6 @@ template<> FANTASIA_API UScriptStruct* StaticStruct<struct FArrayFloat>();
 	DECLARE_FUNCTION(execgetMEU); \
 	DECLARE_FUNCTION(execgetPosteriorUtility); \
 	DECLARE_FUNCTION(execgetPosterior); \
-	DECLARE_FUNCTION(execaddNoForgettingAssumption); \
 	DECLARE_FUNCTION(execmakeInference); \
 	DECLARE_FUNCTION(execInit);
 

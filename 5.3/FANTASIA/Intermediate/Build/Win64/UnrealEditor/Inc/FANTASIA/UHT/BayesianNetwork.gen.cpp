@@ -397,6 +397,14 @@ template<> FANTASIA_API UScriptStruct* StaticStruct<FBayesianNodeStruct>()
 		}
 		return Z_Registration_Info_UScriptStruct_BayesianNodeStruct.InnerSingleton;
 	}
+	DEFINE_FUNCTION(UBayesianNetwork::execgetMarkovBlanketNodes)
+	{
+		P_GET_PROPERTY(FStrProperty,Z_Param_variable);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		*(TArray<FString>*)Z_Param__Result=P_THIS->getMarkovBlanketNodes(Z_Param_variable);
+		P_NATIVE_END;
+	}
 	DEFINE_FUNCTION(UBayesianNetwork::execidFromName)
 	{
 		P_GET_PROPERTY(FStrProperty,Z_Param_variable);
@@ -529,6 +537,7 @@ template<> FANTASIA_API UScriptStruct* StaticStruct<FBayesianNodeStruct>()
 			{ "eraseEvidence", &UBayesianNetwork::execeraseEvidence },
 			{ "fillWith", &UBayesianNetwork::execfillWith },
 			{ "getEntropy", &UBayesianNetwork::execgetEntropy },
+			{ "getMarkovBlanketNodes", &UBayesianNetwork::execgetMarkovBlanketNodes },
 			{ "getPosterior", &UBayesianNetwork::execgetPosterior },
 			{ "idFromName", &UBayesianNetwork::execidFromName },
 			{ "Init", &UBayesianNetwork::execInit },
@@ -908,6 +917,49 @@ template<> FANTASIA_API UScriptStruct* StaticStruct<FBayesianNodeStruct>()
 		}
 		return ReturnFunction;
 	}
+	struct Z_Construct_UFunction_UBayesianNetwork_getMarkovBlanketNodes_Statics
+	{
+		struct BayesianNetwork_eventgetMarkovBlanketNodes_Parms
+		{
+			FString variable;
+			TArray<FString> ReturnValue;
+		};
+		static const UECodeGen_Private::FStrPropertyParams NewProp_variable;
+		static const UECodeGen_Private::FStrPropertyParams NewProp_ReturnValue_Inner;
+		static const UECodeGen_Private::FArrayPropertyParams NewProp_ReturnValue;
+		static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
+#endif
+		static const UECodeGen_Private::FFunctionParams FuncParams;
+	};
+	const UECodeGen_Private::FStrPropertyParams Z_Construct_UFunction_UBayesianNetwork_getMarkovBlanketNodes_Statics::NewProp_variable = { "variable", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(BayesianNetwork_eventgetMarkovBlanketNodes_Parms, variable), METADATA_PARAMS(0, nullptr) };
+	const UECodeGen_Private::FStrPropertyParams Z_Construct_UFunction_UBayesianNetwork_getMarkovBlanketNodes_Statics::NewProp_ReturnValue_Inner = { "ReturnValue", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, METADATA_PARAMS(0, nullptr) };
+	const UECodeGen_Private::FArrayPropertyParams Z_Construct_UFunction_UBayesianNetwork_getMarkovBlanketNodes_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(BayesianNetwork_eventgetMarkovBlanketNodes_Parms, ReturnValue), EArrayPropertyFlags::None, METADATA_PARAMS(0, nullptr) };
+	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UBayesianNetwork_getMarkovBlanketNodes_Statics::PropPointers[] = {
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UBayesianNetwork_getMarkovBlanketNodes_Statics::NewProp_variable,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UBayesianNetwork_getMarkovBlanketNodes_Statics::NewProp_ReturnValue_Inner,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UBayesianNetwork_getMarkovBlanketNodes_Statics::NewProp_ReturnValue,
+	};
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UBayesianNetwork_getMarkovBlanketNodes_Statics::Function_MetaDataParams[] = {
+		{ "Category", "Bayesian_Network" },
+		{ "DisplayName", "getMarkovBlanketNodes" },
+		{ "ModuleRelativePath", "Public/BayesianNetwork.h" },
+	};
+#endif
+	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UBayesianNetwork_getMarkovBlanketNodes_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UBayesianNetwork, nullptr, "getMarkovBlanketNodes", nullptr, nullptr, Z_Construct_UFunction_UBayesianNetwork_getMarkovBlanketNodes_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UBayesianNetwork_getMarkovBlanketNodes_Statics::PropPointers), sizeof(Z_Construct_UFunction_UBayesianNetwork_getMarkovBlanketNodes_Statics::BayesianNetwork_eventgetMarkovBlanketNodes_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UBayesianNetwork_getMarkovBlanketNodes_Statics::Function_MetaDataParams), Z_Construct_UFunction_UBayesianNetwork_getMarkovBlanketNodes_Statics::Function_MetaDataParams) };
+	static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UBayesianNetwork_getMarkovBlanketNodes_Statics::PropPointers) < 2048);
+	static_assert(sizeof(Z_Construct_UFunction_UBayesianNetwork_getMarkovBlanketNodes_Statics::BayesianNetwork_eventgetMarkovBlanketNodes_Parms) < MAX_uint16);
+	UFunction* Z_Construct_UFunction_UBayesianNetwork_getMarkovBlanketNodes()
+	{
+		static UFunction* ReturnFunction = nullptr;
+		if (!ReturnFunction)
+		{
+			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UBayesianNetwork_getMarkovBlanketNodes_Statics::FuncParams);
+		}
+		return ReturnFunction;
+	}
 	struct Z_Construct_UFunction_UBayesianNetwork_getPosterior_Statics
 	{
 		struct BayesianNetwork_eventgetPosterior_Parms
@@ -1139,6 +1191,7 @@ template<> FANTASIA_API UScriptStruct* StaticStruct<FBayesianNodeStruct>()
 		{ &Z_Construct_UFunction_UBayesianNetwork_eraseEvidence, "eraseEvidence" }, // 2103075554
 		{ &Z_Construct_UFunction_UBayesianNetwork_fillWith, "fillWith" }, // 650257522
 		{ &Z_Construct_UFunction_UBayesianNetwork_getEntropy, "getEntropy" }, // 3969648927
+		{ &Z_Construct_UFunction_UBayesianNetwork_getMarkovBlanketNodes, "getMarkovBlanketNodes" }, // 1138090276
 		{ &Z_Construct_UFunction_UBayesianNetwork_getPosterior, "getPosterior" }, // 2850130629
 		{ &Z_Construct_UFunction_UBayesianNetwork_idFromName, "idFromName" }, // 3023876241
 		{ &Z_Construct_UFunction_UBayesianNetwork_Init, "Init" }, // 326228055
@@ -1256,9 +1309,9 @@ template<> FANTASIA_API UScriptStruct* StaticStruct<FBayesianNodeStruct>()
 		{ FBayesianNodeStruct::StaticStruct, Z_Construct_UScriptStruct_FBayesianNodeStruct_Statics::NewStructOps, TEXT("BayesianNodeStruct"), &Z_Registration_Info_UScriptStruct_BayesianNodeStruct, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FBayesianNodeStruct), 1407546252U) },
 	};
 	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_UBayesianNetwork, UBayesianNetwork::StaticClass, TEXT("UBayesianNetwork"), &Z_Registration_Info_UClass_UBayesianNetwork, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UBayesianNetwork), 636153428U) },
+		{ Z_Construct_UClass_UBayesianNetwork, UBayesianNetwork::StaticClass, TEXT("UBayesianNetwork"), &Z_Registration_Info_UClass_UBayesianNetwork, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UBayesianNetwork), 2917463472U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_2343613117(TEXT("/Script/FANTASIA"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_162287604(TEXT("/Script/FANTASIA"),
 		Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_Statics::ClassInfo),
 		Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_Statics::ScriptStructInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_Statics::ScriptStructInfo),
 		Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_Statics::EnumInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_Statics::EnumInfo));

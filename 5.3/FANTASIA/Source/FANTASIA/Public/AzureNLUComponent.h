@@ -44,7 +44,9 @@ private:
 	shared_ptr<LanguageUnderstandingModel> model;
 
 	FDelegateHandle NLUResultAvailableHandle;
-	//bool dataSent = false;
+	bool responseReady = false;
+	FNLUResponse outResponse;
+
 
 	void getResult(FNLUResponse response);
 
