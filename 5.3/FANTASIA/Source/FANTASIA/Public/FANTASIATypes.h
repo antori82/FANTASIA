@@ -86,16 +86,28 @@ struct FNLUResponse {
 	GENERATED_BODY()
 
 	UPROPERTY(BlueprintReadOnly)
-	FString query;
-
-	UPROPERTY(BlueprintReadOnly)
-	FString topIntent;
-
-	UPROPERTY(BlueprintReadOnly)
-	float score;
+		FString query;
 
 	UPROPERTY(BlueprintReadWrite)
-	TArray<UNLUEntity*> entities;
+		TArray<UNLUEntity*> entities;
+
+	UPROPERTY(BlueprintReadWrite)
+		TArray<UNLUIntent*> intents;
+};
+
+UCLASS(ClassGroup = (Azure), BlueprintType)
+class UNLUIntent : public UObject {
+
+	GENERATED_BODY()
+
+	UNLUIntent() {};
+
+public:
+	UPROPERTY(BlueprintReadOnly)
+	FString intent;
+
+	UPROPERTY(BlueprintReadOnly)
+	FString confidence;
 };
 
 UCLASS(ClassGroup = (Azure), BlueprintType)
@@ -107,25 +119,22 @@ class UNLUEntity : public UObject {
 
 public:
 	UPROPERTY(BlueprintReadOnly)
-	FString entity;
+		FString entity;
 
 	UPROPERTY(BlueprintReadOnly)
-	FString type;
+		FString type;
 
 	UPROPERTY(BlueprintReadOnly)
-	uint8 startIndex;
+		uint8 startIndex;
 
 	UPROPERTY(BlueprintReadOnly)
-	uint8 endIndex;
+		uint8 endIndex;
 
 	UPROPERTY(BlueprintReadOnly)
-	float score;
+		float score;
 
 	UPROPERTY(BlueprintReadOnly)
-	FString childName;
-
-	UPROPERTY(BlueprintReadOnly)
-	TArray<UNLUEntity*> children;
+		TArray<UNLUEntity*> children;
 };
 
 UCLASS(ClassGroup = (Neo4j), BlueprintType)

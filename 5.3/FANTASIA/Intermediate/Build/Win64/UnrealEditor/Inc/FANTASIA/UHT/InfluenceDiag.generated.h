@@ -25,11 +25,11 @@ enum class InfluenceNodeType : uint8;
 template<> FANTASIA_API UScriptStruct* StaticStruct<struct FInfluenceDiagArcStruct>();
 
 #define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_51_GENERATED_BODY \
-	friend struct Z_Construct_UScriptStruct_FInflueceDiagNodeStruct_Statics; \
+	friend struct Z_Construct_UScriptStruct_FInfluenceDiagNodeStruct_Statics; \
 	FANTASIA_API static class UScriptStruct* StaticStruct();
 
 
-template<> FANTASIA_API UScriptStruct* StaticStruct<struct FInflueceDiagNodeStruct>();
+template<> FANTASIA_API UScriptStruct* StaticStruct<struct FInfluenceDiagNodeStruct>();
 
 #define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_72_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FArrayFloat_Statics; \
