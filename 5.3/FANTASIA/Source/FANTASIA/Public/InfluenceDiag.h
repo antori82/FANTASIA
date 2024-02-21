@@ -46,7 +46,7 @@ struct FInfluenceDiagArcStruct
 };
 
 USTRUCT(Blueprintable)
-struct FInflueceDiagNodeStruct
+struct FInfluenceDiagNodeStruct
 {
 	GENERATED_USTRUCT_BODY()
 
@@ -90,7 +90,7 @@ private:
 public:
 
 	UPROPERTY(EditAnywhere)
-	TArray<FInflueceDiagNodeStruct> serializedNodes;
+	TArray<FInfluenceDiagNodeStruct> serializedNodes;
 
 	UPROPERTY(BlueprintReadOnly)
 	TArray<FString> nodeNames;

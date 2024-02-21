@@ -158,7 +158,7 @@ void AzureASRThread::StartOneShotRecognition()
 	// Checks result.
 	if (result->Reason == ResultReason::RecognizedSpeech)
 	{
-		PartialRecognitionAvailable.Broadcast(result->Text.c_str());
+		PartialRecognitionAvailable.Broadcast(UTF8_TO_TCHAR(result->Text.c_str()));
 	}
 	else if (result->Reason == ResultReason::NoMatch)
 	{

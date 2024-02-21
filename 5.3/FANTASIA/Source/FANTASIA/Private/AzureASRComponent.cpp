@@ -24,6 +24,7 @@ void UAzureASRComponent::BeginPlay()
 	Super::BeginPlay();
 
 	config = SpeechConfig::FromSubscription(std::string(TCHAR_TO_UTF8(*Key)), std::string(TCHAR_TO_UTF8(*Region)));
+	config->SetEndpointId(std::string(TCHAR_TO_UTF8(*Endpoint)));
 	config->SetSpeechRecognitionLanguage(std::string(TCHAR_TO_UTF8(*Language)));
 }
 
