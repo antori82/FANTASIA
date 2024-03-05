@@ -87,6 +87,8 @@ Origlia, A., Di Bratto, M., Di Maro, M., & Mennella, S. (2022). Developing Embod
 
 ## Projects using FANTASIA
 
+<a href="https://www.specialprojectunina.com/"><strong>SPECIAL</strong></a> - Supporting Patients with Embodied Conversational Interfaces and Argumentative Language (funded by the University of Naples Federico II): developing a Virtual Human to increase health literacy and fight stereotypes about epilepsy.
+
 <a href="https://www.logogramma.com/artificial-intelligence/progetti-di-ricerca-e-sviluppo-sperimentale-co-finanziati/visit3d/"><strong>VISIT3D</strong></a> - Logogramma S.r.l. in collaboration with URBAN/ECO Research Center (University of Naples Federico II): developing a Virtual Reality guide for reflection about visual arts.
 
 <!-- LICENSE -->
