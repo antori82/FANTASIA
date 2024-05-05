@@ -1,0 +1,17 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UnrealEditor-FANTASIA.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"D:\Perforce\FANTASIADevelopment\Intermediate\Build\Win64\x64\FANTASIADevelopmentEditor\Development\UnrealEd\SharedPCH.UnrealEd.Cpp20.h.obj"
+"D:\Perforce\FANTASIADevelopment\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIA\Module.FANTASIA.1.cpp.obj"
+"D:\Perforce\FANTASIADevelopment\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIA\Module.FANTASIA.2.cpp.obj"
+"D:\Perforce\FANTASIADevelopment\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIA\Module.FANTASIA.3.cpp.obj"
+"D:\Perforce\FANTASIADevelopment\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIA\Module.FANTASIA.4.cpp.obj"
+"D:\Perforce\FANTASIADevelopment\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIA\Module.FANTASIA.5.cpp.obj"
+"D:\Perforce\FANTASIADevelopment\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIA\Module.FANTASIA.6.cpp.obj"
+"D:\Perforce\FANTASIADevelopment\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIA\Default.rc2.res"
+/OUT:"D:\Perforce\FANTASIADevelopment\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIA\UnrealEditor-FANTASIA.lib"
