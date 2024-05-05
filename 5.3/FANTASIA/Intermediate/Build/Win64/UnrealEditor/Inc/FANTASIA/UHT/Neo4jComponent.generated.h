@@ -36,7 +36,9 @@ private: \
 	friend struct Z_Construct_UClass_UNeo4jComponent_Statics; \
 public: \
 	DECLARE_CLASS(UNeo4jComponent, UActorComponent, COMPILED_IN_FLAGS(0 | CLASS_Config), CASTCLASS_None, TEXT("/Script/FANTASIA"), NO_API) \
-	DECLARE_SERIALIZER(UNeo4jComponent)
+	DECLARE_SERIALIZER(UNeo4jComponent) \
+	static const TCHAR* StaticConfigName() {return TEXT("Game");} \
+
 
 
 #define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_Neo4jComponent_h_14_ENHANCED_CONSTRUCTORS \

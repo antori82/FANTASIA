@@ -8,7 +8,7 @@
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FIncomingNeo4jResponseEvent, FNeo4jResponse, Neo4jResponse);
 
-UCLASS(ClassGroup = (Neo4j), meta = (BlueprintSpawnableComponent))
+UCLASS(ClassGroup = (Neo4j), meta = (BlueprintSpawnableComponent), config=Game)
 class UNeo4jComponent : public UActorComponent
 {
 	GENERATED_BODY()
@@ -16,19 +16,19 @@ class UNeo4jComponent : public UActorComponent
 public:
 	// Sets default values for this component's properties
 	UNeo4jComponent();
-	UPROPERTY(EditAnywhere, Category = "Settings")
+	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
 	FString endpoint;
-	UPROPERTY(EditAnywhere, Category = "Settings")
+	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
 	int port;
-	UPROPERTY(EditAnywhere, Category = "Settings")
+	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
 	FString user;
-	UPROPERTY(EditAnywhere, Category = "Settings")
+	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
 	FString password;
 	UPROPERTY(BlueprintAssignable, BlueprintCallable)
 	FIncomingNeo4jResponseEvent IncomingResponse;
 	UPROPERTY(BlueprintReadOnly)
 	FString response;
-	UPROPERTY(EditAnywhere, Category = "Settings")
+	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
 	bool useV4;
 
 	void OnResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful);

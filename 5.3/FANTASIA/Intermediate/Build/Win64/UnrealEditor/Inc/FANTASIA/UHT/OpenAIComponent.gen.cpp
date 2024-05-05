@@ -315,7 +315,7 @@ template<> FANTASIA_API UScriptStruct* StaticStruct<FChatTurn>()
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UOpenAIComponent_getChatGPTCompletion_Statics::Function_MetaDataParams[] = {
 		{ "AutoCreateRefTerm", "messages" },
 		{ "Category", "GPT" },
-		{ "CPP_Default_apiMethod", "gpt-4" },
+		{ "CPP_Default_apiMethod", "gpt-4-turbo-preview" },
 		{ "DisplayName", "GetChatGPTCompletion" },
 		{ "ModuleRelativePath", "Public/OpenAIComponent.h" },
 	};
@@ -372,7 +372,7 @@ template<> FANTASIA_API UScriptStruct* StaticStruct<FChatTurn>()
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UOpenAIComponent_getGPTCompletion_Statics::Function_MetaDataParams[] = {
 		{ "AutoCreateRefTerm", "stopSequences" },
 		{ "Category", "GPT" },
-		{ "CPP_Default_apiMethod", "text-davinci-003" },
+		{ "CPP_Default_apiMethod", "gpt-4-turbo-preview" },
 		{ "CPP_Default_maxTokens", "1000" },
 		{ "CPP_Default_temperature", "0.700000" },
 		{ "DisplayName", "GetGPTCompletion" },
@@ -425,8 +425,8 @@ template<> FANTASIA_API UScriptStruct* StaticStruct<FChatTurn>()
 	};
 	static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_UOpenAIComponent_Statics::DependentSingletons) < 16);
 	const FClassFunctionLinkInfo Z_Construct_UClass_UOpenAIComponent_Statics::FuncInfo[] = {
-		{ &Z_Construct_UFunction_UOpenAIComponent_getChatGPTCompletion, "getChatGPTCompletion" }, // 1617183598
-		{ &Z_Construct_UFunction_UOpenAIComponent_getGPTCompletion, "getGPTCompletion" }, // 1664619988
+		{ &Z_Construct_UFunction_UOpenAIComponent_getChatGPTCompletion, "getChatGPTCompletion" }, // 450772979
+		{ &Z_Construct_UFunction_UOpenAIComponent_getGPTCompletion, "getGPTCompletion" }, // 1780619034
 	};
 	static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_UOpenAIComponent_Statics::FuncInfo) < 2048);
 #if WITH_METADATA
@@ -439,11 +439,11 @@ template<> FANTASIA_API UScriptStruct* StaticStruct<FChatTurn>()
 #endif
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UOpenAIComponent_Statics::NewProp_Key_MetaData[] = {
-		{ "Category", "Settings" },
+		{ "Category", "Configuration" },
 		{ "ModuleRelativePath", "Public/OpenAIComponent.h" },
 	};
 #endif
-	const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_UOpenAIComponent_Statics::NewProp_Key = { "Key", nullptr, (EPropertyFlags)0x0010000000000001, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UOpenAIComponent, Key), METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UClass_UOpenAIComponent_Statics::NewProp_Key_MetaData), Z_Construct_UClass_UOpenAIComponent_Statics::NewProp_Key_MetaData) };
+	const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_UOpenAIComponent_Statics::NewProp_Key = { "Key", nullptr, (EPropertyFlags)0x0010000000004001, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UOpenAIComponent, Key), METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UClass_UOpenAIComponent_Statics::NewProp_Key_MetaData), Z_Construct_UClass_UOpenAIComponent_Statics::NewProp_Key_MetaData) };
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UOpenAIComponent_Statics::NewProp_IncomingGPTResponse_MetaData[] = {
 		{ "ModuleRelativePath", "Public/OpenAIComponent.h" },
@@ -466,7 +466,7 @@ template<> FANTASIA_API UScriptStruct* StaticStruct<FChatTurn>()
 	};
 	const UECodeGen_Private::FClassParams Z_Construct_UClass_UOpenAIComponent_Statics::ClassParams = {
 		&UOpenAIComponent::StaticClass,
-		"Engine",
+		"Game",
 		&StaticCppClassTypeInfo,
 		DependentSingletons,
 		FuncInfo,
@@ -507,9 +507,9 @@ template<> FANTASIA_API UScriptStruct* StaticStruct<FChatTurn>()
 		{ FChatTurn::StaticStruct, Z_Construct_UScriptStruct_FChatTurn_Statics::NewStructOps, TEXT("ChatTurn"), &Z_Registration_Info_UScriptStruct_ChatTurn, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FChatTurn), 1023649587U) },
 	};
 	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_OpenAIComponent_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_UOpenAIComponent, UOpenAIComponent::StaticClass, TEXT("UOpenAIComponent"), &Z_Registration_Info_UClass_UOpenAIComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UOpenAIComponent), 3707004073U) },
+		{ Z_Construct_UClass_UOpenAIComponent, UOpenAIComponent::StaticClass, TEXT("UOpenAIComponent"), &Z_Registration_Info_UClass_UOpenAIComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UOpenAIComponent), 2961411411U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_OpenAIComponent_h_823258215(TEXT("/Script/FANTASIA"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_OpenAIComponent_h_182953923(TEXT("/Script/FANTASIA"),
 		Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_OpenAIComponent_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_OpenAIComponent_h_Statics::ClassInfo),
 		Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_OpenAIComponent_h_Statics::ScriptStructInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_OpenAIComponent_h_Statics::ScriptStructInfo),
 		Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_OpenAIComponent_h_Statics::EnumInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_OpenAIComponent_h_Statics::EnumInfo));

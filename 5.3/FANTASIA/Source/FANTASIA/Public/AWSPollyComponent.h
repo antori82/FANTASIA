@@ -14,7 +14,7 @@
 
 //using namespace std;
 
-UCLASS(ClassGroup = (AmazonWebServices), meta = (BlueprintSpawnableComponent))
+UCLASS(ClassGroup = (AmazonWebServices), meta = (BlueprintSpawnableComponent), config = Game)
 class UAWSPollyComponent : public UActorComponent
 {
 	GENERATED_BODY()
@@ -49,16 +49,16 @@ public:
 	UPROPERTY(BlueprintAssignable, Category = "Speech to Text")
 		FSynthesizedEvent SynthesisReady;
 
-	UPROPERTY(EditAnywhere, Category = "Configuration")
+	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
 		FString Voice;
 		
-	UPROPERTY(EditAnywhere, Category = "Configuration")
+	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
 		TTSVoiceType voiceType;
 
-	UPROPERTY(EditAnywhere, Category = "Configuration")
+	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
 		FString AccessKey;
 
-	UPROPERTY(EditAnywhere, Category = "Configuration")
+	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
 		FString SecretAccessKey;
 
 	// Called every frame

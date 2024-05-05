@@ -40,12 +40,19 @@ void UAzureNLUComponent::getResult(FNLUResponse response)
 {
 	handle->NLUResultAvailableUnsubscribeUser(NLUResultAvailableHandle);
 	handle->Shutdown();
-	IncomingMessage.Broadcast(response);
+	//IncomingMessage.Broadcast(response);
+
+	outResponse = response;
+	responseReady = true;
 }
 
 // Called every frame
 void UAzureNLUComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
+	if (responseReady) {
+		responseReady = false;
+		IncomingMessage.Broadcast(outResponse);
+	}
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 }
 

@@ -34,7 +34,9 @@ private: \
 	friend struct Z_Construct_UClass_UAzureASRComponent_Statics; \
 public: \
 	DECLARE_CLASS(UAzureASRComponent, UActorComponent, COMPILED_IN_FLAGS(0 | CLASS_Config), CASTCLASS_None, TEXT("/Script/FANTASIA"), NO_API) \
-	DECLARE_SERIALIZER(UAzureASRComponent)
+	DECLARE_SERIALIZER(UAzureASRComponent) \
+	static const TCHAR* StaticConfigName() {return TEXT("Game");} \
+
 
 
 #define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_AzureASRComponent_h_26_ENHANCED_CONSTRUCTORS \

@@ -20,7 +20,7 @@
 using namespace std;
 using namespace Microsoft::CognitiveServices::Speech;
 
-UCLASS(ClassGroup = (Azure), meta = (BlueprintSpawnableComponent))
+UCLASS(ClassGroup = (Azure), meta = (BlueprintSpawnableComponent), config=Game)
 class UAzureTTSComponent : public UActorComponent
 {
 	GENERATED_BODY()
@@ -56,19 +56,19 @@ public:
 	UPROPERTY(BlueprintAssignable, Category = "Speech to Text")
 		FSynthesizedEvent SynthesisReady;
 
-	UPROPERTY(EditAnywhere, Category = "Configuration")
+	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
 		FString Language;
 
-	UPROPERTY(EditAnywhere, Category = "Configuration")
+	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
 		FString Voice;
 
-	UPROPERTY(EditAnywhere, Category = "Configuration")
+	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
 		FString Key;
 
-	UPROPERTY(EditAnywhere, Category = "Configuration")
+	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
 		FString Region;
 
-	UPROPERTY(EditAnywhere, Category = "Configuration")
+	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
 		FString Endpoint;
 
 	// Called every frame

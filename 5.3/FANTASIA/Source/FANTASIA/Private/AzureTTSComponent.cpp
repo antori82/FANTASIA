@@ -37,12 +37,12 @@ void UAzureTTSComponent::TickComponent(float DeltaTime, ELevelTick TickType, FAc
 
 void UAzureTTSComponent::getResult(FTTSData response, FString id)
 {
-	handle->TTSResultAvailableUnsubscribeUser(TTSResultAvailableHandle);
-	handle->Shutdown();
-
 	Buffer.Remove(id);
 	Buffer.Add(id, response);
 	idSynthesisReady = id;
+
+	handle->TTSResultAvailableUnsubscribeUser(TTSResultAvailableHandle);
+	handle->Shutdown();
 }
 
 void UAzureTTSComponent::AzureTTSSynthesize(FString ssml, FString id)
