@@ -20,7 +20,7 @@ using namespace Microsoft::CognitiveServices::Speech::Audio;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FIncomingASREvent, FString, message);
 
-UCLASS( ClassGroup=(Azure), meta=(BlueprintSpawnableComponent) )
+UCLASS( ClassGroup=(Azure), meta=(BlueprintSpawnableComponent), config= Game)
 class UAzureASRComponent : public UActorComponent
 {
 	GENERATED_BODY()
@@ -50,16 +50,16 @@ public:
 	TArray<uint8> IncomingRawVoiceData;
 	TArray<uint8> BufferedData;
 
-	UPROPERTY(EditAnywhere, Category = "Configuration")
+	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
 		FString Key;
 
-	UPROPERTY(EditAnywhere, Category = "Configuration")
+	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
 		FString Region;
 
-	UPROPERTY(EditAnywhere, Category = "Configuration")
+	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
 		FString Language;
 
-	UPROPERTY(EditAnywhere, Category = "Configuration")
+	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
 		FString Endpoint;
 
 	// Called every frame

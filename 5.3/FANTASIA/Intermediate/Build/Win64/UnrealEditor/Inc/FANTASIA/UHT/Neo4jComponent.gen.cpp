@@ -208,32 +208,32 @@ void FIncomingNeo4jResponseEvent_DelegateWrapper(const FMulticastScriptDelegate&
 #endif
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_endpoint_MetaData[] = {
-		{ "Category", "Settings" },
+		{ "Category", "Configuration" },
 		{ "ModuleRelativePath", "Public/Neo4jComponent.h" },
 	};
 #endif
-	const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_endpoint = { "endpoint", nullptr, (EPropertyFlags)0x0010000000000001, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UNeo4jComponent, endpoint), METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_endpoint_MetaData), Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_endpoint_MetaData) };
+	const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_endpoint = { "endpoint", nullptr, (EPropertyFlags)0x0010000000004001, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UNeo4jComponent, endpoint), METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_endpoint_MetaData), Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_endpoint_MetaData) };
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_port_MetaData[] = {
-		{ "Category", "Settings" },
+		{ "Category", "Configuration" },
 		{ "ModuleRelativePath", "Public/Neo4jComponent.h" },
 	};
 #endif
-	const UECodeGen_Private::FIntPropertyParams Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_port = { "port", nullptr, (EPropertyFlags)0x0010000000000001, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UNeo4jComponent, port), METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_port_MetaData), Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_port_MetaData) };
+	const UECodeGen_Private::FIntPropertyParams Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_port = { "port", nullptr, (EPropertyFlags)0x0010000000004001, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UNeo4jComponent, port), METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_port_MetaData), Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_port_MetaData) };
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_user_MetaData[] = {
-		{ "Category", "Settings" },
+		{ "Category", "Configuration" },
 		{ "ModuleRelativePath", "Public/Neo4jComponent.h" },
 	};
 #endif
-	const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_user = { "user", nullptr, (EPropertyFlags)0x0010000000000001, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UNeo4jComponent, user), METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_user_MetaData), Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_user_MetaData) };
+	const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_user = { "user", nullptr, (EPropertyFlags)0x0010000000004001, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UNeo4jComponent, user), METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_user_MetaData), Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_user_MetaData) };
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_password_MetaData[] = {
-		{ "Category", "Settings" },
+		{ "Category", "Configuration" },
 		{ "ModuleRelativePath", "Public/Neo4jComponent.h" },
 	};
 #endif
-	const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_password = { "password", nullptr, (EPropertyFlags)0x0010000000000001, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UNeo4jComponent, password), METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_password_MetaData), Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_password_MetaData) };
+	const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_password = { "password", nullptr, (EPropertyFlags)0x0010000000004001, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UNeo4jComponent, password), METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_password_MetaData), Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_password_MetaData) };
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_IncomingResponse_MetaData[] = {
 		{ "ModuleRelativePath", "Public/Neo4jComponent.h" },
@@ -249,7 +249,7 @@ void FIncomingNeo4jResponseEvent_DelegateWrapper(const FMulticastScriptDelegate&
 	const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_response = { "response", nullptr, (EPropertyFlags)0x0010000000000014, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UNeo4jComponent, response), METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_response_MetaData), Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_response_MetaData) };
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_useV4_MetaData[] = {
-		{ "Category", "Settings" },
+		{ "Category", "Configuration" },
 		{ "ModuleRelativePath", "Public/Neo4jComponent.h" },
 	};
 #endif
@@ -257,7 +257,7 @@ void FIncomingNeo4jResponseEvent_DelegateWrapper(const FMulticastScriptDelegate&
 	{
 		((UNeo4jComponent*)Obj)->useV4 = 1;
 	}
-	const UECodeGen_Private::FBoolPropertyParams Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_useV4 = { "useV4", nullptr, (EPropertyFlags)0x0010000000000001, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, sizeof(bool), sizeof(UNeo4jComponent), &Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_useV4_SetBit, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_useV4_MetaData), Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_useV4_MetaData) };
+	const UECodeGen_Private::FBoolPropertyParams Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_useV4 = { "useV4", nullptr, (EPropertyFlags)0x0010000000004001, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, sizeof(bool), sizeof(UNeo4jComponent), &Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_useV4_SetBit, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_useV4_MetaData), Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_useV4_MetaData) };
 	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_UNeo4jComponent_Statics::PropPointers[] = {
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_endpoint,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_port,
@@ -272,7 +272,7 @@ void FIncomingNeo4jResponseEvent_DelegateWrapper(const FMulticastScriptDelegate&
 	};
 	const UECodeGen_Private::FClassParams Z_Construct_UClass_UNeo4jComponent_Statics::ClassParams = {
 		&UNeo4jComponent::StaticClass,
-		"Engine",
+		"Game",
 		&StaticCppClassTypeInfo,
 		DependentSingletons,
 		FuncInfo,
@@ -305,9 +305,9 @@ void FIncomingNeo4jResponseEvent_DelegateWrapper(const FMulticastScriptDelegate&
 		static const FClassRegisterCompiledInInfo ClassInfo[];
 	};
 	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_Neo4jComponent_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_UNeo4jComponent, UNeo4jComponent::StaticClass, TEXT("UNeo4jComponent"), &Z_Registration_Info_UClass_UNeo4jComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UNeo4jComponent), 2651347883U) },
+		{ Z_Construct_UClass_UNeo4jComponent, UNeo4jComponent::StaticClass, TEXT("UNeo4jComponent"), &Z_Registration_Info_UClass_UNeo4jComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UNeo4jComponent), 1073715141U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_Neo4jComponent_h_4064746380(TEXT("/Script/FANTASIA"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_Neo4jComponent_h_1297430423(TEXT("/Script/FANTASIA"),
 		Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_Neo4jComponent_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_Neo4jComponent_h_Statics::ClassInfo),
 		nullptr, 0,
 		nullptr, 0);

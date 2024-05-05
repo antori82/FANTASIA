@@ -34,7 +34,9 @@ private: \
 	friend struct Z_Construct_UClass_UAWSPollyComponent_Statics; \
 public: \
 	DECLARE_CLASS(UAWSPollyComponent, UActorComponent, COMPILED_IN_FLAGS(0 | CLASS_Config), CASTCLASS_None, TEXT("/Script/FANTASIA"), NO_API) \
-	DECLARE_SERIALIZER(UAWSPollyComponent)
+	DECLARE_SERIALIZER(UAWSPollyComponent) \
+	static const TCHAR* StaticConfigName() {return TEXT("Game");} \
+
 
 
 #define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_AWSPollyComponent_h_20_ENHANCED_CONSTRUCTORS \

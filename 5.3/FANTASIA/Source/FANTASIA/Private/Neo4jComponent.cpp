@@ -37,7 +37,7 @@ void UNeo4jComponent::OnResponseReceived(FHttpRequestPtr Request, FHttpResponseP
 
 				const TSharedPtr<FJsonObject>* FileMessageObject;
 
-				if (JsonValue->TryGetObject(FileMessageObject)) {
+ 				if (JsonValue->TryGetObject(FileMessageObject)) {
 					TArray<TSharedPtr<FJsonValue>> results = FileMessageObject->Get()->GetArrayField("results");
 					for (TSharedPtr<FJsonValue> result : results) {
 						TArray<TSharedPtr<FJsonValue>> columns = result->AsObject()->GetArrayField("columns");

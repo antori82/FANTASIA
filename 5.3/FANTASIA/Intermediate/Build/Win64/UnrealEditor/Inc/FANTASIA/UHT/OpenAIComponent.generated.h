@@ -46,7 +46,9 @@ private: \
 	friend struct Z_Construct_UClass_UOpenAIComponent_Statics; \
 public: \
 	DECLARE_CLASS(UOpenAIComponent, UActorComponent, COMPILED_IN_FLAGS(0 | CLASS_Config), CASTCLASS_None, TEXT("/Script/FANTASIA"), NO_API) \
-	DECLARE_SERIALIZER(UOpenAIComponent)
+	DECLARE_SERIALIZER(UOpenAIComponent) \
+	static const TCHAR* StaticConfigName() {return TEXT("Game");} \
+
 
 
 #define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_OpenAIComponent_h_34_ENHANCED_CONSTRUCTORS \
