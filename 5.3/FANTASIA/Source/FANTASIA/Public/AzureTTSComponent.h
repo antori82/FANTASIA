@@ -15,13 +15,14 @@
 #include "Runtime/Online/HTTP/Public/Http.h"
 #include "Runtime/Json/Public/Json.h"
 #include "Runtime/JsonUtilities/Public/JsonUtilities.h"
+#include "TTSInterface.h"
 #include "AzureTTSComponent.generated.h"
 
 using namespace std;
 using namespace Microsoft::CognitiveServices::Speech;
 
-UCLASS(ClassGroup = (Azure), meta = (BlueprintSpawnableComponent), config=Game)
-class UAzureTTSComponent : public UActorComponent
+UCLASS(ClassGroup = (Azure), meta = (BlueprintSpawnableComponent))
+class UAzureTTSComponent : public UActorComponent, public ITTSInterface
 {
 	GENERATED_BODY()
 
@@ -39,10 +40,10 @@ private:
 	TMap<FString, FString> PendingSSML;
 	shared_ptr<SpeechConfig> config;
 	AzureTTSThread* handle;
-	
+
 	FDelegateHandle TTSResultAvailableHandle;
 
-	void getResult(FTTSData response, FString id);
+	void getResult(FTTSData response, FString id) override;
 
 	FSynthesizedInternalEvent synthesisReadyInternal;
 
@@ -51,32 +52,32 @@ private:
 public:
 
 	UPROPERTY(BlueprintReadWrite, Category = "Speech to Text")
-		UAudioComponent* Speaker;
+	UAudioComponent* Speaker;
 
 	UPROPERTY(BlueprintAssignable, Category = "Speech to Text")
-		FSynthesizedEvent SynthesisReady;
+	FSynthesizedEvent SynthesisReady;
 
-	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
-		FString Language;
+	UPROPERTY(EditAnywhere, Category = "Configuration")
+	FString Language;
 
-	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
-		FString Voice;
+	UPROPERTY(EditAnywhere, Category = "Configuration")
+	FString Voice;
 
-	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
-		FString Key;
+	UPROPERTY(EditAnywhere, Category = "Configuration")
+	FString Key;
 
-	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
-		FString Region;
+	UPROPERTY(EditAnywhere, Category = "Configuration")
+	FString Region;
 
-	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
-		FString Endpoint;
+	UPROPERTY(EditAnywhere, Category = "Configuration")
+	FString Endpoint;
 
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "TTS Start", Keywords = "Azure Plugin TTS"), Category = "TTS")
-		void AzureTTSSynthesize(FString ssml, FString id);
+	void TTSSynthesize(FString ssml, FString id) override;
 
 	UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Sound", Keywords = "Azure Plugin TTS"), Category = "TTS")
-		USoundBase* AzureTTSGetSound(FString id);
+	USoundWave* TTSGetSound(FString id) override;
 };

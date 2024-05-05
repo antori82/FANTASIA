@@ -1,0 +1,44 @@
+{
+	"RemapUnityFiles": 
+	{
+		"Module.FANTASIA.1.cpp.obj": [
+			"AWSPollyComponent.gen.cpp.obj",
+			"AzureASRComponent.gen.cpp.obj",
+			"AzureNLUComponent.gen.cpp.obj",
+			"BayesianNetwork.gen.cpp.obj",
+			"FANTASIA.init.gen.cpp.obj",
+			"FANTASIATypes.gen.cpp.obj",
+			"InfluenceDiag.gen.cpp.obj",
+			"MathUtilities.gen.cpp.obj"
+		],
+		"Module.FANTASIA.2.cpp.obj": [
+			"Neo4jComponent.gen.cpp.obj",
+			"OpenAIComponent.gen.cpp.obj",
+			"paramObject.gen.cpp.obj",
+			"AWSPollyComponent.cpp.obj",
+			"AWSPollyThread.cpp.obj",
+			"AzureASRComponent.cpp.obj",
+			"AzureASRThread.cpp.obj",
+			"AzureNLUComponent.cpp.obj",
+			"AzureNLUThread.cpp.obj",
+			"AzureTTSComponent.cpp.obj"
+		],
+		"Module.FANTASIA.3.cpp.obj": [
+			"AzureTTSThread.cpp.obj"
+		],
+		"Module.FANTASIA.4.cpp.obj": [
+			"BayesianNetwork.cpp.obj",
+			"FANTASIA.cpp.obj",
+			"GeneralTTSComponent.cpp.obj"
+		],
+		"Module.FANTASIA.5.cpp.obj": [
+			"GeneralTTSThread.cpp.obj"
+		],
+		"Module.FANTASIA.6.cpp.obj": [
+			"InfluenceDiag.cpp.obj",
+			"MathUtilities.cpp.obj",
+			"Neo4jComponent.cpp.obj",
+			"OpenAIComponent.cpp.obj"
+		]
+	}
+}
