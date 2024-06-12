@@ -16,7 +16,7 @@
     <a href="https://fantasiaplugin.wordpress.com/"><strong>Main website</strong></a>
     <br />
     <br />
-    <a href="https://forums.unrealengine.com/community/work-in-progress/1867915-framework-for-advanced-natural-tools-and-applications-with-social-interactive-agents-fantasia">Forum thread</a>
+    <a href="https://forums.unrealengine.com/t/framework-for-advanced-natural-tools-and-applications-with-social-interactive-agents-fantasia/158706">Forum thread</a>
     ·
     <a href="https://www.youtube.com/channel/UChH-PYQw-_IZJM7nYJywevg">Youtube channel</a>
     ·
@@ -100,7 +100,7 @@ Project Link: [https://github.com/antori82/FANTASIA](https://github.com/antori82
 
 [Youtube channel](https://www.youtube.com/channel/UChH-PYQw-_IZJM7nYJywevg)
 
-[Unreal Engine Forum discussion page](https://forums.unrealengine.com/community/work-in-progress/1867915-framework-for-advanced-natural-tools-and-applications-with-social-interactive-agents-fantasia) 
+[Unreal Engine Forum discussion page](https://forums.unrealengine.com/t/framework-for-advanced-natural-tools-and-applications-with-social-interactive-agents-fantasia/158706) 
 
 
 <!-- ACKNOWLEDGEMENTS -->
@@ -116,6 +116,7 @@ Special thanks to the students who contributed to FANTASIA
 * <a href="https://www.linkedin.com/in/antimo-de-biase-3660b6202/">Antimo De Biase</a> - Neo4j component prototype development
 * Fabrizio Musella - aGrUM integration prototype development
 * <a href="https://www.linkedin.com/in/rbgdotbrush/">Roberto Basile Giannini</a> - General improvements and aGrUM updates (Influence Diagrams integration)
+* <a href="https://www.linkedin.com/in/marco-galantino-232a07300">Marco Galantino</a> - TTS General interface
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
