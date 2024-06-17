@@ -1,0 +1,14 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\source\\fantasiaeditor\\private\\fantasiaeditor.cpp",
+        "ProvidedModule": "",
+        "PCH": "d:\\perforce\\fantasiadevelopment\\intermediate\\build\\win64\\x64\\fantasiadevelopmenteditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.cpp20.h.pch",
+        "Includes": [
+            "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\fantasiaeditor\\definitions.fantasiaeditor.h",
+            "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\source\\fantasiaeditor\\public\\fantasiaeditor.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}
