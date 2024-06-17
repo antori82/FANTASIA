@@ -1,0 +1,27 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\source\\fantasia\\private\\mathutilities.cpp",
+        "ProvidedModule": "",
+        "PCH": "d:\\perforce\\fantasiadevelopment\\intermediate\\build\\win64\\x64\\fantasiadevelopmenteditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.cpp20.h.pch",
+        "Includes": [
+            "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\fantasia\\definitions.fantasia.h",
+            "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\source\\fantasia\\public\\mathutilities.h",
+            "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\source\\fantasia\\public\\fantasia.h",
+            "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\thirdparty\\kdepp\\kde.h",
+            "c:\\program files (x86)\\microsoft visual studio\\2022\\buildtools\\vc\\tools\\msvc\\14.37.32822\\include\\array",
+            "c:\\program files (x86)\\microsoft visual studio\\2022\\buildtools\\vc\\tools\\msvc\\14.37.32822\\include\\cmath",
+            "c:\\program files (x86)\\microsoft visual studio\\2022\\buildtools\\vc\\tools\\msvc\\14.37.32822\\include\\numeric",
+            "c:\\program files (x86)\\microsoft visual studio\\2022\\buildtools\\vc\\tools\\msvc\\14.37.32822\\include\\stdexcept",
+            "c:\\program files (x86)\\microsoft visual studio\\2022\\buildtools\\vc\\tools\\msvc\\14.37.32822\\include\\xstring",
+            "c:\\program files (x86)\\microsoft visual studio\\2022\\buildtools\\vc\\tools\\msvc\\14.37.32822\\include\\xpolymorphic_allocator.h",
+            "c:\\program files (x86)\\microsoft visual studio\\2022\\buildtools\\vc\\tools\\msvc\\14.37.32822\\include\\__msvc_sanitizer_annotate_container.hpp",
+            "c:\\program files (x86)\\microsoft visual studio\\2022\\buildtools\\vc\\tools\\msvc\\14.37.32822\\include\\string",
+            "c:\\program files (x86)\\microsoft visual studio\\2022\\buildtools\\vc\\tools\\msvc\\14.37.32822\\include\\cctype",
+            "c:\\program files (x86)\\microsoft visual studio\\2022\\buildtools\\vc\\tools\\msvc\\14.37.32822\\include\\vector",
+            "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\intermediate\\build\\win64\\unrealeditor\\inc\\fantasia\\uht\\mathutilities.generated.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}
