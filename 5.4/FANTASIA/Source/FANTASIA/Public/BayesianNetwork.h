@@ -6,6 +6,11 @@
 #define NOMINMAX
 #endif
 
+#pragma warning (disable : 4263)
+#pragma warning (disable : 4264)
+#pragma warning (disable : 4265)
+#pragma warning (disable : 4701)
+
 #include "FANTASIA.h"
 #include "FANTASIATypes.h"
 #include "Kismet/BlueprintFunctionLibrary.h"

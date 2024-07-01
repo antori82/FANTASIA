@@ -41,6 +41,7 @@ public class FANTASIA : ModuleRules
 
     private void LoadGrpc(ReadOnlyTargetRules Target, string ThirdPartyPath)
     {
+        string EngineThirdPartyPath = Path.Combine(ModuleDirectory, "../../ThirdParty/");
         // Use UE third-party library
         PublicDependencyModuleNames.AddRange(new string[]
         {
@@ -50,17 +51,17 @@ public class FANTASIA : ModuleRules
 
         System.Console.WriteLine("Platform={0}, Architecture={1}", Target.Platform.ToString(), Target.Architecture);
 
-        string[] libraryPaths = Directory.GetFiles(Path.Combine(OpenSSLLib, "Win64", "VS2015", "Release"), "*.lib");
+        string[] libraryPaths = Directory.GetFiles(Path.Combine(Path.Combine(EngineThirdPartyPath, "OpenSSL", "1.1.1t", "lib"), "Win64", "VS2015", "Release"), "*.lib");
         PublicAdditionalLibraries.AddRange(libraryPaths);
-        AddPublicIncludePath(Path.Combine(OpenSSLInclude, "Win64", "VS2015"));
+        PublicIncludePaths.Add(Path.Combine(Path.Combine(EngineThirdPartyPath, "OpenSSL", "1.1.1t", "include"), "Win64", "VS2015"));
 
         libraryPaths = Directory.GetFiles(Path.Combine(ThirdPartyPath, "grpc", "lib", "win64", "Release"), "*.lib");
         PublicAdditionalLibraries.AddRange(libraryPaths);
 
         // gRPC include
-        AddPublicIncludePath(Path.Combine(ThirdPartyPath, "grpc", "include"));
-        AddPublicIncludePath(Path.Combine(ThirdPartyPath, "grpc", "protobuf", "src"));
-        AddPublicIncludePath(Path.Combine(ThirdPartyPath, "grpc", "abseil-cpp"));
+        PublicIncludePaths.Add(Path.Combine(ThirdPartyPath, "grpc", "include"));
+        PublicIncludePaths.Add(Path.Combine(ThirdPartyPath, "grpc", "protobuf", "src"));
+        PublicIncludePaths.Add(Path.Combine(ThirdPartyPath, "grpc", "abseil-cpp"));
 
         // gRPC define
         PublicDefinitions.Add("GOOGLE_PROTOBUF_INTERNAL_DONATE_STEAL_INLINE=0");
@@ -69,54 +70,8 @@ public class FANTASIA : ModuleRules
         PublicDefinitions.Add("WITH_GRPC_BINDING=1");
     }
 
-    protected virtual bool AddPublicIncludePath(string includeDir)
-    {
-        PublicIncludePaths.Add(includeDir);
-        return true;
-    }
 
-    protected virtual string ModuleBuildPath
-    {
-        get
-        {
-            string ModulePath = ModuleDirectory;
-            string ThirdParty = Path.GetFullPath(Path.Combine(ModulePath, "../../ThirdParty/"));
-            return Path.Combine(ThirdParty, "grpc");
-        }
-    }
 
-    protected virtual string EngineThirdPartyPath
-    {
-        get
-        {
-            string ModulePath = ModuleDirectory;
-            return Path.Combine(ModulePath, "../../ThirdParty/");
-        }
-    }
-
-    protected virtual string OpenSSLPath
-    {
-        get
-        {
-            return Path.Combine(EngineThirdPartyPath, "OpenSSL");
-        }
-    }
-
-    protected virtual string OpenSSLLib
-    {
-        get
-        {
-            return Path.Combine(EngineThirdPartyPath, "OpenSSL", "1.1.1t", "lib");
-        }
-    }
-
-    protected virtual string OpenSSLInclude
-    {
-        get
-        {
-            return Path.Combine(EngineThirdPartyPath, "OpenSSL", "1.1.1t", "include");
-        }
-    }
 
 
     public FANTASIA(ReadOnlyTargetRules Target) : base(Target)

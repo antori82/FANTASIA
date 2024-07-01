@@ -45,10 +45,6 @@ public:
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "NvidiaReadAudioFile", Keywords = "Nvidia Plugin"), Category = "Audio2Face")
 	void ReadAudioFile(USoundWave* SoundWave, bool tts);
 
-	/*UFUNCTION(BlueprintCallable, meta = (DisplayName = "A2FaceActivate", Keywords = "Nvidia Plugin"), Category = "Audio2Face")
-	void A2FaceActivate();
-
-	void A2FaceDeactivate();*/
 	void A2FaceFMyThread(TArray<float> AudioData, int32 sampleRate);
 	void LoadSoundWaveFromTTS_Internal(TArray<float>& OutAudioData, int32& sampleRate, USoundWave* SoundWave);
 	void LoadSoundWaveFromFile_Internal(TArray<float>& OutAudioData, int32& sampleRate, USoundWave* SoundWave);

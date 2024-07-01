@@ -3,30 +3,8 @@
 #include "Components/ActorComponent.h"
 #include <Json.h>
 #include "Runtime/Online/HTTP/Public/Http.h"
+#include "FANTASIATypes.h"
 #include "OpenAIComponent.generated.h"
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FIncomingGPTResponseEvent, FString, GPTResponse);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FIncomingChatGPTResponseEvent, FString, chatGPTResponse, FString, role);
-
-UENUM(BlueprintType)
-enum class ChatGPTRoleType : uint8 {
-	SYSTEM = 0 UMETA(DisplayName = "SYSTEM"),
-	ASSISTANT = 1 UMETA(DisplayName = "ASSISTANT"),
-	USER = 2 UMETA(DisplayName = "USER"),
-	FUNCTION = 3 UMETA(DisplayName = "FUNCTION"),
-	};
-
-USTRUCT(Blueprintable)
-struct FChatTurn
-{
-	GENERATED_USTRUCT_BODY()
-	
-	UPROPERTY(BlueprintReadWrite)
-	ChatGPTRoleType role = ChatGPTRoleType::USER;
-
-	UPROPERTY(BlueprintReadWrite)
-	FString content = TEXT("");
-};
 
 UCLASS(ClassGroup = (OpenAI), meta = (BlueprintSpawnableComponent), config=Game)
 class UOpenAIComponent : public UActorComponent

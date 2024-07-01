@@ -17,28 +17,28 @@ enum class InfluenceNodeType : uint8;
 #endif
 #define FANTASIA_InfluenceDiag_generated_h
 
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_39_GENERATED_BODY \
+#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_40_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FInfluenceDiagArcStruct_Statics; \
 	FANTASIA_API static class UScriptStruct* StaticStruct();
 
 
 template<> FANTASIA_API UScriptStruct* StaticStruct<struct FInfluenceDiagArcStruct>();
 
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_51_GENERATED_BODY \
+#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_52_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FInfluenceDiagNodeStruct_Statics; \
 	FANTASIA_API static class UScriptStruct* StaticStruct();
 
 
 template<> FANTASIA_API UScriptStruct* StaticStruct<struct FInfluenceDiagNodeStruct>();
 
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_72_GENERATED_BODY \
+#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_73_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FArrayFloat_Statics; \
 	FANTASIA_API static class UScriptStruct* StaticStruct();
 
 
 template<> FANTASIA_API UScriptStruct* StaticStruct<struct FArrayFloat>();
 
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_83_RPC_WRAPPERS \
+#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_84_RPC_WRAPPERS \
 	DECLARE_FUNCTION(execdecisionOrder); \
 	DECLARE_FUNCTION(execdecisionOrderExists); \
 	DECLARE_FUNCTION(execidFromName); \
@@ -61,7 +61,7 @@ template<> FANTASIA_API UScriptStruct* StaticStruct<struct FArrayFloat>();
 	DECLARE_FUNCTION(execInit);
 
 
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_83_INCLASS \
+#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_84_INCLASS \
 private: \
 	static void StaticRegisterNativesUInfluenceDiag(); \
 	friend struct Z_Construct_UClass_UInfluenceDiag_Statics; \
@@ -70,7 +70,7 @@ public: \
 	DECLARE_SERIALIZER(UInfluenceDiag)
 
 
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_83_STANDARD_CONSTRUCTORS \
+#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_84_STANDARD_CONSTRUCTORS \
 	/** Standard constructor, called after all reflected properties have been initialized */ \
 	NO_API UInfluenceDiag(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get()); \
 	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(UInfluenceDiag) \
@@ -84,13 +84,13 @@ public: \
 	NO_API virtual ~UInfluenceDiag();
 
 
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_80_PROLOG
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_83_GENERATED_BODY_LEGACY \
+#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_81_PROLOG
+#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_84_GENERATED_BODY_LEGACY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_83_RPC_WRAPPERS \
-	FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_83_INCLASS \
-	FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_83_STANDARD_CONSTRUCTORS \
+	FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_84_RPC_WRAPPERS \
+	FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_84_INCLASS \
+	FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_84_STANDARD_CONSTRUCTORS \
 public: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 

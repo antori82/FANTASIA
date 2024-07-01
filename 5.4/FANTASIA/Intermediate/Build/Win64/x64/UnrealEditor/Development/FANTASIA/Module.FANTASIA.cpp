@@ -11,6 +11,7 @@
 #include "D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/Intermediate/Build/Win64/UnrealEditor/Inc/FANTASIA/UHT/InfluenceDiag.gen.cpp"
 #include "D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/Intermediate/Build/Win64/UnrealEditor/Inc/FANTASIA/UHT/MathUtilities.gen.cpp"
 #include "D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/Intermediate/Build/Win64/UnrealEditor/Inc/FANTASIA/UHT/Neo4jComponent.gen.cpp"
+#include "D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/Intermediate/Build/Win64/UnrealEditor/Inc/FANTASIA/UHT/OllamaComponent.gen.cpp"
 #include "D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/Intermediate/Build/Win64/UnrealEditor/Inc/FANTASIA/UHT/OpenAIComponent.gen.cpp"
 #include "D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/Intermediate/Build/Win64/UnrealEditor/Inc/FANTASIA/UHT/paramObject.gen.cpp"
 #include "D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/Intermediate/Build/Win64/UnrealEditor/Inc/FANTASIA/UHT/TTSInterface.gen.cpp"
