@@ -15,43 +15,58 @@ struct FTTSData;
 #endif
 #define FANTASIA_FANTASIATypes_generated_h
 
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_43_GENERATED_BODY \
+#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_5_DELEGATE \
+FANTASIA_API void FIncomingGPTResponseEvent_DelegateWrapper(const FMulticastScriptDelegate& IncomingGPTResponseEvent, const FString& GPTResponse);
+
+
+#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_6_DELEGATE \
+FANTASIA_API void FIncomingChatGPTResponseEvent_DelegateWrapper(const FMulticastScriptDelegate& IncomingChatGPTResponseEvent, const FString& chatGPTResponse, const FString& role);
+
+
+#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_19_GENERATED_BODY \
+	friend struct Z_Construct_UScriptStruct_FChatTurn_Statics; \
+	FANTASIA_API static class UScriptStruct* StaticStruct();
+
+
+template<> FANTASIA_API UScriptStruct* StaticStruct<struct FChatTurn>();
+
+#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_66_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FTTSTimedStruct_Statics; \
 	FANTASIA_API static class UScriptStruct* StaticStruct();
 
 
 template<> FANTASIA_API UScriptStruct* StaticStruct<struct FTTSTimedStruct>();
 
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_55_GENERATED_BODY \
+#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_78_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FTTSData_Statics; \
 	FANTASIA_API static class UScriptStruct* StaticStruct();
 
 
 template<> FANTASIA_API UScriptStruct* StaticStruct<struct FTTSData>();
 
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_64_DELEGATE \
+#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_87_DELEGATE \
 FANTASIA_API void FSynthesizedEvent_DelegateWrapper(const FMulticastScriptDelegate& SynthesizedEvent, const FString& id);
 
 
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_65_DELEGATE \
+#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_88_DELEGATE \
 FANTASIA_API void FSynthesizedInternalEvent_DelegateWrapper(const FMulticastScriptDelegate& SynthesizedInternalEvent, FTTSData response, const FString& id);
 
 
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_71_GENERATED_BODY \
+#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_94_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FNeo4jResponse_Statics; \
 	FANTASIA_API static class UScriptStruct* StaticStruct();
 
 
 template<> FANTASIA_API UScriptStruct* StaticStruct<struct FNeo4jResponse>();
 
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_86_GENERATED_BODY \
+#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_109_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FNLUResponse_Statics; \
 	FANTASIA_API static class UScriptStruct* StaticStruct();
 
 
 template<> FANTASIA_API UScriptStruct* StaticStruct<struct FNLUResponse>();
 
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_101_INCLASS_NO_PURE_DECLS \
+#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_124_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUNLUIntent(); \
 	friend struct Z_Construct_UClass_UNLUIntent_Statics; \
@@ -60,7 +75,7 @@ public: \
 	DECLARE_SERIALIZER(UNLUIntent)
 
 
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_101_ENHANCED_CONSTRUCTORS \
+#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_124_ENHANCED_CONSTRUCTORS \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
 	UNLUIntent(UNLUIntent&&); \
@@ -72,19 +87,19 @@ public: \
 	NO_API virtual ~UNLUIntent();
 
 
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_98_PROLOG
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_101_GENERATED_BODY \
+#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_121_PROLOG
+#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_124_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_101_INCLASS_NO_PURE_DECLS \
-	FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_101_ENHANCED_CONSTRUCTORS \
+	FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_124_INCLASS_NO_PURE_DECLS \
+	FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_124_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
 template<> FANTASIA_API UClass* StaticClass<class UNLUIntent>();
 
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_116_INCLASS_NO_PURE_DECLS \
+#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_139_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUNLUEntity(); \
 	friend struct Z_Construct_UClass_UNLUEntity_Statics; \
@@ -93,7 +108,7 @@ public: \
 	DECLARE_SERIALIZER(UNLUEntity)
 
 
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_116_ENHANCED_CONSTRUCTORS \
+#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_139_ENHANCED_CONSTRUCTORS \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
 	UNLUEntity(UNLUEntity&&); \
@@ -105,19 +120,19 @@ public: \
 	NO_API virtual ~UNLUEntity();
 
 
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_113_PROLOG
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_116_GENERATED_BODY \
+#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_136_PROLOG
+#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_139_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_116_INCLASS_NO_PURE_DECLS \
-	FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_116_ENHANCED_CONSTRUCTORS \
+	FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_139_INCLASS_NO_PURE_DECLS \
+	FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_139_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
 template<> FANTASIA_API UClass* StaticClass<class UNLUEntity>();
 
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_143_INCLASS_NO_PURE_DECLS \
+#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_166_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUNeo4jResultRow(); \
 	friend struct Z_Construct_UClass_UNeo4jResultRow_Statics; \
@@ -126,7 +141,7 @@ public: \
 	DECLARE_SERIALIZER(UNeo4jResultRow)
 
 
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_143_ENHANCED_CONSTRUCTORS \
+#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_166_ENHANCED_CONSTRUCTORS \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
 	UNeo4jResultRow(UNeo4jResultRow&&); \
@@ -138,19 +153,19 @@ public: \
 	NO_API virtual ~UNeo4jResultRow();
 
 
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_140_PROLOG
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_143_GENERATED_BODY \
+#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_163_PROLOG
+#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_166_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_143_INCLASS_NO_PURE_DECLS \
-	FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_143_ENHANCED_CONSTRUCTORS \
+	FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_166_INCLASS_NO_PURE_DECLS \
+	FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_166_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
 template<> FANTASIA_API UClass* StaticClass<class UNeo4jResultRow>();
 
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_155_INCLASS_NO_PURE_DECLS \
+#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_178_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUNeo4jResultCell(); \
 	friend struct Z_Construct_UClass_UNeo4jResultCell_Statics; \
@@ -159,7 +174,7 @@ public: \
 	DECLARE_SERIALIZER(UNeo4jResultCell)
 
 
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_155_ENHANCED_CONSTRUCTORS \
+#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_178_ENHANCED_CONSTRUCTORS \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
 	UNeo4jResultCell(UNeo4jResultCell&&); \
@@ -171,19 +186,19 @@ public: \
 	NO_API virtual ~UNeo4jResultCell();
 
 
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_152_PROLOG
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_155_GENERATED_BODY \
+#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_175_PROLOG
+#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_178_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_155_INCLASS_NO_PURE_DECLS \
-	FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_155_ENHANCED_CONSTRUCTORS \
+	FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_178_INCLASS_NO_PURE_DECLS \
+	FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_178_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
 template<> FANTASIA_API UClass* StaticClass<class UNeo4jResultCell>();
 
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_164_INCLASS_NO_PURE_DECLS \
+#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_187_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUNeo4jResultCellNode(); \
 	friend struct Z_Construct_UClass_UNeo4jResultCellNode_Statics; \
@@ -192,7 +207,7 @@ public: \
 	DECLARE_SERIALIZER(UNeo4jResultCellNode)
 
 
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_164_ENHANCED_CONSTRUCTORS \
+#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_187_ENHANCED_CONSTRUCTORS \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
 	UNeo4jResultCellNode(UNeo4jResultCellNode&&); \
@@ -204,19 +219,19 @@ public: \
 	NO_API virtual ~UNeo4jResultCellNode();
 
 
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_161_PROLOG
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_164_GENERATED_BODY \
+#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_184_PROLOG
+#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_187_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_164_INCLASS_NO_PURE_DECLS \
-	FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_164_ENHANCED_CONSTRUCTORS \
+	FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_187_INCLASS_NO_PURE_DECLS \
+	FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_187_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
 template<> FANTASIA_API UClass* StaticClass<class UNeo4jResultCellNode>();
 
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_182_INCLASS_NO_PURE_DECLS \
+#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_205_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUNeo4jResultCellRelationship(); \
 	friend struct Z_Construct_UClass_UNeo4jResultCellRelationship_Statics; \
@@ -225,7 +240,7 @@ public: \
 	DECLARE_SERIALIZER(UNeo4jResultCellRelationship)
 
 
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_182_ENHANCED_CONSTRUCTORS \
+#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_205_ENHANCED_CONSTRUCTORS \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
 	UNeo4jResultCellRelationship(UNeo4jResultCellRelationship&&); \
@@ -237,19 +252,19 @@ public: \
 	NO_API virtual ~UNeo4jResultCellRelationship();
 
 
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_179_PROLOG
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_182_GENERATED_BODY \
+#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_202_PROLOG
+#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_205_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_182_INCLASS_NO_PURE_DECLS \
-	FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_182_ENHANCED_CONSTRUCTORS \
+	FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_205_INCLASS_NO_PURE_DECLS \
+	FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_205_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
 template<> FANTASIA_API UClass* StaticClass<class UNeo4jResultCellRelationship>();
 
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_200_INCLASS_NO_PURE_DECLS \
+#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_223_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUNeo4jResultCellSimple(); \
 	friend struct Z_Construct_UClass_UNeo4jResultCellSimple_Statics; \
@@ -258,7 +273,7 @@ public: \
 	DECLARE_SERIALIZER(UNeo4jResultCellSimple)
 
 
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_200_ENHANCED_CONSTRUCTORS \
+#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_223_ENHANCED_CONSTRUCTORS \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
 	UNeo4jResultCellSimple(UNeo4jResultCellSimple&&); \
@@ -270,12 +285,12 @@ public: \
 	NO_API virtual ~UNeo4jResultCellSimple();
 
 
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_197_PROLOG
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_200_GENERATED_BODY \
+#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_220_PROLOG
+#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_223_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_200_INCLASS_NO_PURE_DECLS \
-	FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_200_ENHANCED_CONSTRUCTORS \
+	FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_223_INCLASS_NO_PURE_DECLS \
+	FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_223_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
@@ -285,6 +300,16 @@ template<> FANTASIA_API UClass* StaticClass<class UNeo4jResultCellSimple>();
 #undef CURRENT_FILE_ID
 #define CURRENT_FILE_ID FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h
 
+
+#define FOREACH_ENUM_CHATGPTROLETYPE(op) \
+	op(ChatGPTRoleType::SYSTEM) \
+	op(ChatGPTRoleType::ASSISTANT) \
+	op(ChatGPTRoleType::USER) \
+	op(ChatGPTRoleType::FUNCTION) 
+
+enum class ChatGPTRoleType : uint8;
+template<> struct TIsUEnumClass<ChatGPTRoleType> { enum { Value = true }; };
+template<> FANTASIA_API UEnum* StaticEnum<ChatGPTRoleType>();
 
 #define FOREACH_ENUM_INFLUENCENODETYPE(op) \
 	op(InfluenceNodeType::CHANCE) \

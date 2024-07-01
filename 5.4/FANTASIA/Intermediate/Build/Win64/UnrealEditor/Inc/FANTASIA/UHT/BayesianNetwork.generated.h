@@ -17,32 +17,32 @@ struct FMapContainer;
 #endif
 #define FANTASIA_BayesianNetwork_generated_h
 
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_30_GENERATED_BODY \
+#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_35_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FMapContainer_Statics; \
 	FANTASIA_API static class UScriptStruct* StaticStruct();
 
 
 template<> FANTASIA_API UScriptStruct* StaticStruct<struct FMapContainer>();
 
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_36_DELEGATE \
+#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_41_DELEGATE \
 FANTASIA_API void FGetPosteriorDelegate_DelegateWrapper(const FScriptDelegate& GetPosteriorDelegate, FMapContainer outMap);
 
 
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_50_GENERATED_BODY \
+#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_55_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FBayesianArcStruct_Statics; \
 	FANTASIA_API static class UScriptStruct* StaticStruct();
 
 
 template<> FANTASIA_API UScriptStruct* StaticStruct<struct FBayesianArcStruct>();
 
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_62_GENERATED_BODY \
+#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_67_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FBayesianNodeStruct_Statics; \
 	FANTASIA_API static class UScriptStruct* StaticStruct();
 
 
 template<> FANTASIA_API UScriptStruct* StaticStruct<struct FBayesianNodeStruct>();
 
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_81_RPC_WRAPPERS \
+#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_86_RPC_WRAPPERS \
 	DECLARE_FUNCTION(execgetMarkovBlanketNodes); \
 	DECLARE_FUNCTION(execidFromName); \
 	DECLARE_FUNCTION(execerase); \
@@ -60,7 +60,7 @@ template<> FANTASIA_API UScriptStruct* StaticStruct<struct FBayesianNodeStruct>(
 	DECLARE_FUNCTION(execInit);
 
 
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_81_INCLASS \
+#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_86_INCLASS \
 private: \
 	static void StaticRegisterNativesUBayesianNetwork(); \
 	friend struct Z_Construct_UClass_UBayesianNetwork_Statics; \
@@ -69,7 +69,7 @@ public: \
 	DECLARE_SERIALIZER(UBayesianNetwork)
 
 
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_81_STANDARD_CONSTRUCTORS \
+#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_86_STANDARD_CONSTRUCTORS \
 	/** Standard constructor, called after all reflected properties have been initialized */ \
 	NO_API UBayesianNetwork(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get()); \
 	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(UBayesianNetwork) \
@@ -83,13 +83,13 @@ public: \
 	NO_API virtual ~UBayesianNetwork();
 
 
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_78_PROLOG
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_81_GENERATED_BODY_LEGACY \
+#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_83_PROLOG
+#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_86_GENERATED_BODY_LEGACY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_81_RPC_WRAPPERS \
-	FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_81_INCLASS \
-	FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_81_STANDARD_CONSTRUCTORS \
+	FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_86_RPC_WRAPPERS \
+	FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_86_INCLASS \
+	FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_86_STANDARD_CONSTRUCTORS \
 public: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 

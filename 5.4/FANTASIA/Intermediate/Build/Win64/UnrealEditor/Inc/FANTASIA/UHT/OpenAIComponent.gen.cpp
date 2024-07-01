@@ -6,6 +6,7 @@
 
 #include "UObject/GeneratedCppIncludes.h"
 #include "FANTASIA/Public/OpenAIComponent.h"
+#include "FANTASIA/Public/FANTASIATypes.h"
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
 void EmptyLinkFunctionForGeneratedCodeOpenAIComponent() {}
 
@@ -13,239 +14,11 @@ void EmptyLinkFunctionForGeneratedCodeOpenAIComponent() {}
 ENGINE_API UClass* Z_Construct_UClass_UActorComponent();
 FANTASIA_API UClass* Z_Construct_UClass_UOpenAIComponent();
 FANTASIA_API UClass* Z_Construct_UClass_UOpenAIComponent_NoRegister();
-FANTASIA_API UEnum* Z_Construct_UEnum_FANTASIA_ChatGPTRoleType();
 FANTASIA_API UFunction* Z_Construct_UDelegateFunction_FANTASIA_IncomingChatGPTResponseEvent__DelegateSignature();
 FANTASIA_API UFunction* Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature();
 FANTASIA_API UScriptStruct* Z_Construct_UScriptStruct_FChatTurn();
 UPackage* Z_Construct_UPackage__Script_FANTASIA();
 // End Cross Module References
-
-// Begin Delegate FIncomingGPTResponseEvent
-struct Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature_Statics
-{
-	struct _Script_FANTASIA_eventIncomingGPTResponseEvent_Parms
-	{
-		FString GPTResponse;
-	};
-#if WITH_METADATA
-	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "ModuleRelativePath", "Public/OpenAIComponent.h" },
-	};
-#endif // WITH_METADATA
-	static const UECodeGen_Private::FStrPropertyParams NewProp_GPTResponse;
-	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
-	static const UECodeGen_Private::FFunctionParams FuncParams;
-};
-const UECodeGen_Private::FStrPropertyParams Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature_Statics::NewProp_GPTResponse = { "GPTResponse", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(_Script_FANTASIA_eventIncomingGPTResponseEvent_Parms, GPTResponse), METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature_Statics::PropPointers[] = {
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature_Statics::NewProp_GPTResponse,
-};
-static_assert(UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature_Statics::FuncParams = { (UObject*(*)())Z_Construct_UPackage__Script_FANTASIA, nullptr, "IncomingGPTResponseEvent__DelegateSignature", nullptr, nullptr, Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature_Statics::PropPointers), sizeof(Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature_Statics::_Script_FANTASIA_eventIncomingGPTResponseEvent_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00130000, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature_Statics::Function_MetaDataParams), Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature_Statics::Function_MetaDataParams) };
-static_assert(sizeof(Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature_Statics::_Script_FANTASIA_eventIncomingGPTResponseEvent_Parms) < MAX_uint16);
-UFunction* Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature()
-{
-	static UFunction* ReturnFunction = nullptr;
-	if (!ReturnFunction)
-	{
-		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature_Statics::FuncParams);
-	}
-	return ReturnFunction;
-}
-void FIncomingGPTResponseEvent_DelegateWrapper(const FMulticastScriptDelegate& IncomingGPTResponseEvent, const FString& GPTResponse)
-{
-	struct _Script_FANTASIA_eventIncomingGPTResponseEvent_Parms
-	{
-		FString GPTResponse;
-	};
-	_Script_FANTASIA_eventIncomingGPTResponseEvent_Parms Parms;
-	Parms.GPTResponse=GPTResponse;
-	IncomingGPTResponseEvent.ProcessMulticastDelegate<UObject>(&Parms);
-}
-// End Delegate FIncomingGPTResponseEvent
-
-// Begin Delegate FIncomingChatGPTResponseEvent
-struct Z_Construct_UDelegateFunction_FANTASIA_IncomingChatGPTResponseEvent__DelegateSignature_Statics
-{
-	struct _Script_FANTASIA_eventIncomingChatGPTResponseEvent_Parms
-	{
-		FString chatGPTResponse;
-		FString role;
-	};
-#if WITH_METADATA
-	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "ModuleRelativePath", "Public/OpenAIComponent.h" },
-	};
-#endif // WITH_METADATA
-	static const UECodeGen_Private::FStrPropertyParams NewProp_chatGPTResponse;
-	static const UECodeGen_Private::FStrPropertyParams NewProp_role;
-	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
-	static const UECodeGen_Private::FFunctionParams FuncParams;
-};
-const UECodeGen_Private::FStrPropertyParams Z_Construct_UDelegateFunction_FANTASIA_IncomingChatGPTResponseEvent__DelegateSignature_Statics::NewProp_chatGPTResponse = { "chatGPTResponse", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(_Script_FANTASIA_eventIncomingChatGPTResponseEvent_Parms, chatGPTResponse), METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FStrPropertyParams Z_Construct_UDelegateFunction_FANTASIA_IncomingChatGPTResponseEvent__DelegateSignature_Statics::NewProp_role = { "role", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(_Script_FANTASIA_eventIncomingChatGPTResponseEvent_Parms, role), METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UDelegateFunction_FANTASIA_IncomingChatGPTResponseEvent__DelegateSignature_Statics::PropPointers[] = {
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UDelegateFunction_FANTASIA_IncomingChatGPTResponseEvent__DelegateSignature_Statics::NewProp_chatGPTResponse,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UDelegateFunction_FANTASIA_IncomingChatGPTResponseEvent__DelegateSignature_Statics::NewProp_role,
-};
-static_assert(UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_IncomingChatGPTResponseEvent__DelegateSignature_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UDelegateFunction_FANTASIA_IncomingChatGPTResponseEvent__DelegateSignature_Statics::FuncParams = { (UObject*(*)())Z_Construct_UPackage__Script_FANTASIA, nullptr, "IncomingChatGPTResponseEvent__DelegateSignature", nullptr, nullptr, Z_Construct_UDelegateFunction_FANTASIA_IncomingChatGPTResponseEvent__DelegateSignature_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_IncomingChatGPTResponseEvent__DelegateSignature_Statics::PropPointers), sizeof(Z_Construct_UDelegateFunction_FANTASIA_IncomingChatGPTResponseEvent__DelegateSignature_Statics::_Script_FANTASIA_eventIncomingChatGPTResponseEvent_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00130000, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_IncomingChatGPTResponseEvent__DelegateSignature_Statics::Function_MetaDataParams), Z_Construct_UDelegateFunction_FANTASIA_IncomingChatGPTResponseEvent__DelegateSignature_Statics::Function_MetaDataParams) };
-static_assert(sizeof(Z_Construct_UDelegateFunction_FANTASIA_IncomingChatGPTResponseEvent__DelegateSignature_Statics::_Script_FANTASIA_eventIncomingChatGPTResponseEvent_Parms) < MAX_uint16);
-UFunction* Z_Construct_UDelegateFunction_FANTASIA_IncomingChatGPTResponseEvent__DelegateSignature()
-{
-	static UFunction* ReturnFunction = nullptr;
-	if (!ReturnFunction)
-	{
-		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UDelegateFunction_FANTASIA_IncomingChatGPTResponseEvent__DelegateSignature_Statics::FuncParams);
-	}
-	return ReturnFunction;
-}
-void FIncomingChatGPTResponseEvent_DelegateWrapper(const FMulticastScriptDelegate& IncomingChatGPTResponseEvent, const FString& chatGPTResponse, const FString& role)
-{
-	struct _Script_FANTASIA_eventIncomingChatGPTResponseEvent_Parms
-	{
-		FString chatGPTResponse;
-		FString role;
-	};
-	_Script_FANTASIA_eventIncomingChatGPTResponseEvent_Parms Parms;
-	Parms.chatGPTResponse=chatGPTResponse;
-	Parms.role=role;
-	IncomingChatGPTResponseEvent.ProcessMulticastDelegate<UObject>(&Parms);
-}
-// End Delegate FIncomingChatGPTResponseEvent
-
-// Begin Enum ChatGPTRoleType
-static FEnumRegistrationInfo Z_Registration_Info_UEnum_ChatGPTRoleType;
-static UEnum* ChatGPTRoleType_StaticEnum()
-{
-	if (!Z_Registration_Info_UEnum_ChatGPTRoleType.OuterSingleton)
-	{
-		Z_Registration_Info_UEnum_ChatGPTRoleType.OuterSingleton = GetStaticEnum(Z_Construct_UEnum_FANTASIA_ChatGPTRoleType, (UObject*)Z_Construct_UPackage__Script_FANTASIA(), TEXT("ChatGPTRoleType"));
-	}
-	return Z_Registration_Info_UEnum_ChatGPTRoleType.OuterSingleton;
-}
-template<> FANTASIA_API UEnum* StaticEnum<ChatGPTRoleType>()
-{
-	return ChatGPTRoleType_StaticEnum();
-}
-struct Z_Construct_UEnum_FANTASIA_ChatGPTRoleType_Statics
-{
-#if WITH_METADATA
-	static constexpr UECodeGen_Private::FMetaDataPairParam Enum_MetaDataParams[] = {
-		{ "ASSISTANT.DisplayName", "ASSISTANT" },
-		{ "ASSISTANT.Name", "ChatGPTRoleType::ASSISTANT" },
-		{ "BlueprintType", "true" },
-		{ "FUNCTION.DisplayName", "FUNCTION" },
-		{ "FUNCTION.Name", "ChatGPTRoleType::FUNCTION" },
-		{ "ModuleRelativePath", "Public/OpenAIComponent.h" },
-		{ "SYSTEM.DisplayName", "SYSTEM" },
-		{ "SYSTEM.Name", "ChatGPTRoleType::SYSTEM" },
-		{ "USER.DisplayName", "USER" },
-		{ "USER.Name", "ChatGPTRoleType::USER" },
-	};
-#endif // WITH_METADATA
-	static constexpr UECodeGen_Private::FEnumeratorParam Enumerators[] = {
-		{ "ChatGPTRoleType::SYSTEM", (int64)ChatGPTRoleType::SYSTEM },
-		{ "ChatGPTRoleType::ASSISTANT", (int64)ChatGPTRoleType::ASSISTANT },
-		{ "ChatGPTRoleType::USER", (int64)ChatGPTRoleType::USER },
-		{ "ChatGPTRoleType::FUNCTION", (int64)ChatGPTRoleType::FUNCTION },
-	};
-	static const UECodeGen_Private::FEnumParams EnumParams;
-};
-const UECodeGen_Private::FEnumParams Z_Construct_UEnum_FANTASIA_ChatGPTRoleType_Statics::EnumParams = {
-	(UObject*(*)())Z_Construct_UPackage__Script_FANTASIA,
-	nullptr,
-	"ChatGPTRoleType",
-	"ChatGPTRoleType",
-	Z_Construct_UEnum_FANTASIA_ChatGPTRoleType_Statics::Enumerators,
-	RF_Public|RF_Transient|RF_MarkAsNative,
-	UE_ARRAY_COUNT(Z_Construct_UEnum_FANTASIA_ChatGPTRoleType_Statics::Enumerators),
-	EEnumFlags::None,
-	(uint8)UEnum::ECppForm::EnumClass,
-	METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UEnum_FANTASIA_ChatGPTRoleType_Statics::Enum_MetaDataParams), Z_Construct_UEnum_FANTASIA_ChatGPTRoleType_Statics::Enum_MetaDataParams)
-};
-UEnum* Z_Construct_UEnum_FANTASIA_ChatGPTRoleType()
-{
-	if (!Z_Registration_Info_UEnum_ChatGPTRoleType.InnerSingleton)
-	{
-		UECodeGen_Private::ConstructUEnum(Z_Registration_Info_UEnum_ChatGPTRoleType.InnerSingleton, Z_Construct_UEnum_FANTASIA_ChatGPTRoleType_Statics::EnumParams);
-	}
-	return Z_Registration_Info_UEnum_ChatGPTRoleType.InnerSingleton;
-}
-// End Enum ChatGPTRoleType
-
-// Begin ScriptStruct FChatTurn
-static FStructRegistrationInfo Z_Registration_Info_UScriptStruct_ChatTurn;
-class UScriptStruct* FChatTurn::StaticStruct()
-{
-	if (!Z_Registration_Info_UScriptStruct_ChatTurn.OuterSingleton)
-	{
-		Z_Registration_Info_UScriptStruct_ChatTurn.OuterSingleton = GetStaticStruct(Z_Construct_UScriptStruct_FChatTurn, (UObject*)Z_Construct_UPackage__Script_FANTASIA(), TEXT("ChatTurn"));
-	}
-	return Z_Registration_Info_UScriptStruct_ChatTurn.OuterSingleton;
-}
-template<> FANTASIA_API UScriptStruct* StaticStruct<FChatTurn>()
-{
-	return FChatTurn::StaticStruct();
-}
-struct Z_Construct_UScriptStruct_FChatTurn_Statics
-{
-#if WITH_METADATA
-	static constexpr UECodeGen_Private::FMetaDataPairParam Struct_MetaDataParams[] = {
-		{ "BlueprintType", "true" },
-		{ "IsBlueprintBase", "true" },
-		{ "ModuleRelativePath", "Public/OpenAIComponent.h" },
-	};
-	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_role_MetaData[] = {
-		{ "Category", "ChatTurn" },
-		{ "ModuleRelativePath", "Public/OpenAIComponent.h" },
-	};
-	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_content_MetaData[] = {
-		{ "Category", "ChatTurn" },
-		{ "ModuleRelativePath", "Public/OpenAIComponent.h" },
-	};
-#endif // WITH_METADATA
-	static const UECodeGen_Private::FBytePropertyParams NewProp_role_Underlying;
-	static const UECodeGen_Private::FEnumPropertyParams NewProp_role;
-	static const UECodeGen_Private::FStrPropertyParams NewProp_content;
-	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
-	static void* NewStructOps()
-	{
-		return (UScriptStruct::ICppStructOps*)new UScriptStruct::TCppStructOps<FChatTurn>();
-	}
-	static const UECodeGen_Private::FStructParams StructParams;
-};
-const UECodeGen_Private::FBytePropertyParams Z_Construct_UScriptStruct_FChatTurn_Statics::NewProp_role_Underlying = { "UnderlyingType", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Byte, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, nullptr, METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FEnumPropertyParams Z_Construct_UScriptStruct_FChatTurn_Statics::NewProp_role = { "role", nullptr, (EPropertyFlags)0x0010000000000004, UECodeGen_Private::EPropertyGenFlags::Enum, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(FChatTurn, role), Z_Construct_UEnum_FANTASIA_ChatGPTRoleType, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_role_MetaData), NewProp_role_MetaData) }; // 19465158
-const UECodeGen_Private::FStrPropertyParams Z_Construct_UScriptStruct_FChatTurn_Statics::NewProp_content = { "content", nullptr, (EPropertyFlags)0x0010000000000004, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(FChatTurn, content), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_content_MetaData), NewProp_content_MetaData) };
-const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UScriptStruct_FChatTurn_Statics::PropPointers[] = {
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FChatTurn_Statics::NewProp_role_Underlying,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FChatTurn_Statics::NewProp_role,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FChatTurn_Statics::NewProp_content,
-};
-static_assert(UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FChatTurn_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FStructParams Z_Construct_UScriptStruct_FChatTurn_Statics::StructParams = {
-	(UObject* (*)())Z_Construct_UPackage__Script_FANTASIA,
-	nullptr,
-	&NewStructOps,
-	"ChatTurn",
-	Z_Construct_UScriptStruct_FChatTurn_Statics::PropPointers,
-	UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FChatTurn_Statics::PropPointers),
-	sizeof(FChatTurn),
-	alignof(FChatTurn),
-	RF_Public|RF_Transient|RF_MarkAsNative,
-	EStructFlags(0x00000001),
-	METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FChatTurn_Statics::Struct_MetaDataParams), Z_Construct_UScriptStruct_FChatTurn_Statics::Struct_MetaDataParams)
-};
-UScriptStruct* Z_Construct_UScriptStruct_FChatTurn()
-{
-	if (!Z_Registration_Info_UScriptStruct_ChatTurn.InnerSingleton)
-	{
-		UECodeGen_Private::ConstructUScriptStruct(Z_Registration_Info_UScriptStruct_ChatTurn.InnerSingleton, Z_Construct_UScriptStruct_FChatTurn_Statics::StructParams);
-	}
-	return Z_Registration_Info_UScriptStruct_ChatTurn.InnerSingleton;
-}
-// End ScriptStruct FChatTurn
 
 // Begin Class UOpenAIComponent Function getChatGPTCompletion
 struct Z_Construct_UFunction_UOpenAIComponent_getChatGPTCompletion_Statics
@@ -270,8 +43,8 @@ struct Z_Construct_UFunction_UOpenAIComponent_getChatGPTCompletion_Statics
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
-const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_UOpenAIComponent_getChatGPTCompletion_Statics::NewProp_messages_Inner = { "messages", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, Z_Construct_UScriptStruct_FChatTurn, METADATA_PARAMS(0, nullptr) }; // 3235528809
-const UECodeGen_Private::FArrayPropertyParams Z_Construct_UFunction_UOpenAIComponent_getChatGPTCompletion_Statics::NewProp_messages = { "messages", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(OpenAIComponent_eventgetChatGPTCompletion_Parms, messages), EArrayPropertyFlags::None, METADATA_PARAMS(0, nullptr) }; // 3235528809
+const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_UOpenAIComponent_getChatGPTCompletion_Statics::NewProp_messages_Inner = { "messages", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, Z_Construct_UScriptStruct_FChatTurn, METADATA_PARAMS(0, nullptr) }; // 2042086127
+const UECodeGen_Private::FArrayPropertyParams Z_Construct_UFunction_UOpenAIComponent_getChatGPTCompletion_Statics::NewProp_messages = { "messages", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(OpenAIComponent_eventgetChatGPTCompletion_Parms, messages), EArrayPropertyFlags::None, METADATA_PARAMS(0, nullptr) }; // 2042086127
 const UECodeGen_Private::FStrPropertyParams Z_Construct_UFunction_UOpenAIComponent_getChatGPTCompletion_Statics::NewProp_apiMethod = { "apiMethod", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(OpenAIComponent_eventgetChatGPTCompletion_Parms, apiMethod), METADATA_PARAMS(0, nullptr) };
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UOpenAIComponent_getChatGPTCompletion_Statics::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UOpenAIComponent_getChatGPTCompletion_Statics::NewProp_messages_Inner,
@@ -413,7 +186,7 @@ struct Z_Construct_UClass_UOpenAIComponent_Statics
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static UObject* (*const DependentSingletons[])();
 	static constexpr FClassFunctionLinkInfo FuncInfo[] = {
-		{ &Z_Construct_UFunction_UOpenAIComponent_getChatGPTCompletion, "getChatGPTCompletion" }, // 1879237546
+		{ &Z_Construct_UFunction_UOpenAIComponent_getChatGPTCompletion, "getChatGPTCompletion" }, // 3306270835
 		{ &Z_Construct_UFunction_UOpenAIComponent_getGPTCompletion, "getGPTCompletion" }, // 1245628726
 	};
 	static_assert(UE_ARRAY_COUNT(FuncInfo) < 2048);
@@ -423,8 +196,8 @@ struct Z_Construct_UClass_UOpenAIComponent_Statics
 	static const UECodeGen_Private::FClassParams ClassParams;
 };
 const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_UOpenAIComponent_Statics::NewProp_Key = { "Key", nullptr, (EPropertyFlags)0x0010000000004001, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UOpenAIComponent, Key), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Key_MetaData), NewProp_Key_MetaData) };
-const UECodeGen_Private::FMulticastDelegatePropertyParams Z_Construct_UClass_UOpenAIComponent_Statics::NewProp_IncomingGPTResponse = { "IncomingGPTResponse", nullptr, (EPropertyFlags)0x0010100010080000, UECodeGen_Private::EPropertyGenFlags::InlineMulticastDelegate, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UOpenAIComponent, IncomingGPTResponse), Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_IncomingGPTResponse_MetaData), NewProp_IncomingGPTResponse_MetaData) }; // 1365721519
-const UECodeGen_Private::FMulticastDelegatePropertyParams Z_Construct_UClass_UOpenAIComponent_Statics::NewProp_IncomingChatGPTResponse = { "IncomingChatGPTResponse", nullptr, (EPropertyFlags)0x0010100010080000, UECodeGen_Private::EPropertyGenFlags::InlineMulticastDelegate, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UOpenAIComponent, IncomingChatGPTResponse), Z_Construct_UDelegateFunction_FANTASIA_IncomingChatGPTResponseEvent__DelegateSignature, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_IncomingChatGPTResponse_MetaData), NewProp_IncomingChatGPTResponse_MetaData) }; // 937093515
+const UECodeGen_Private::FMulticastDelegatePropertyParams Z_Construct_UClass_UOpenAIComponent_Statics::NewProp_IncomingGPTResponse = { "IncomingGPTResponse", nullptr, (EPropertyFlags)0x0010100010080000, UECodeGen_Private::EPropertyGenFlags::InlineMulticastDelegate, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UOpenAIComponent, IncomingGPTResponse), Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_IncomingGPTResponse_MetaData), NewProp_IncomingGPTResponse_MetaData) }; // 4026830914
+const UECodeGen_Private::FMulticastDelegatePropertyParams Z_Construct_UClass_UOpenAIComponent_Statics::NewProp_IncomingChatGPTResponse = { "IncomingChatGPTResponse", nullptr, (EPropertyFlags)0x0010100010080000, UECodeGen_Private::EPropertyGenFlags::InlineMulticastDelegate, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UOpenAIComponent, IncomingChatGPTResponse), Z_Construct_UDelegateFunction_FANTASIA_IncomingChatGPTResponseEvent__DelegateSignature, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_IncomingChatGPTResponse_MetaData), NewProp_IncomingChatGPTResponse_MetaData) }; // 2190720310
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_UOpenAIComponent_Statics::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UOpenAIComponent_Statics::NewProp_Key,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UOpenAIComponent_Statics::NewProp_IncomingGPTResponse,
@@ -470,19 +243,13 @@ UOpenAIComponent::~UOpenAIComponent() {}
 // Begin Registration
 struct Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_OpenAIComponent_h_Statics
 {
-	static constexpr FEnumRegisterCompiledInInfo EnumInfo[] = {
-		{ ChatGPTRoleType_StaticEnum, TEXT("ChatGPTRoleType"), &Z_Registration_Info_UEnum_ChatGPTRoleType, CONSTRUCT_RELOAD_VERSION_INFO(FEnumReloadVersionInfo, 19465158U) },
-	};
-	static constexpr FStructRegisterCompiledInInfo ScriptStructInfo[] = {
-		{ FChatTurn::StaticStruct, Z_Construct_UScriptStruct_FChatTurn_Statics::NewStructOps, TEXT("ChatTurn"), &Z_Registration_Info_UScriptStruct_ChatTurn, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FChatTurn), 3235528809U) },
-	};
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_UOpenAIComponent, UOpenAIComponent::StaticClass, TEXT("UOpenAIComponent"), &Z_Registration_Info_UClass_UOpenAIComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UOpenAIComponent), 3039541197U) },
+		{ Z_Construct_UClass_UOpenAIComponent, UOpenAIComponent::StaticClass, TEXT("UOpenAIComponent"), &Z_Registration_Info_UClass_UOpenAIComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UOpenAIComponent), 2572697967U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_OpenAIComponent_h_1792023122(TEXT("/Script/FANTASIA"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_OpenAIComponent_h_21618808(TEXT("/Script/FANTASIA"),
 	Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_OpenAIComponent_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_OpenAIComponent_h_Statics::ClassInfo),
-	Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_OpenAIComponent_h_Statics::ScriptStructInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_OpenAIComponent_h_Statics::ScriptStructInfo),
-	Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_OpenAIComponent_h_Statics::EnumInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_OpenAIComponent_h_Statics::EnumInfo));
+	nullptr, 0,
+	nullptr, 0);
 // End Registration
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

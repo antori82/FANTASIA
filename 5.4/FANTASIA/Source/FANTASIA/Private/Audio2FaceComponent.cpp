@@ -17,7 +17,6 @@ UAudio2FaceComponent::UAudio2FaceComponent()
 
 void UAudio2FaceComponent::ReadAudioFile(USoundWave* SoundWave, bool tts)
 {
-    Inizio = FDateTime::UtcNow();
 	TArray<float>  AudioData;
 	int32 sampleRate;
     if (tts)
@@ -25,74 +24,10 @@ void UAudio2FaceComponent::ReadAudioFile(USoundWave* SoundWave, bool tts)
     else
     	LoadSoundWaveFromFile_Internal(AudioData, sampleRate, SoundWave);
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("sending audio.."));
-	//////////////////////PARTE THREADS GRPC////////////////////////    
+  
 	A2FaceFMyThread(AudioData, sampleRate);
     PrintTimeReadAudiofile();
 }
-
-//void UAudio2FaceComponent::A2FaceActivate()
-//{
-//    TSharedRef<IHttpRequest, ESPMode::ThreadSafe> Request = FHttpModule::Get().CreateRequest();
-//    Request->SetURL("http://localhost:8011/A2F/Exporter/ActivateStreamLivelink");
-//    Request->SetVerb("POST");
-//    Request->SetHeader("Content-Type", "application/json");
-//    Request->SetContentAsString(R"({"node_path": "/World/audio2face/StreamLivelink","value": true})");
-//
-//    Request->OnProcessRequestComplete().BindLambda([](FHttpRequestPtr Request, FHttpResponsePtr Response, bool bSuccess)
-//        {
-//            if (bSuccess && Response.IsValid() && Response->GetResponseCode() == 200)
-//            {
-//                // Handle your response here.
-//                UE_LOG(LogTemp, Log, TEXT("Response: %s"), *Response->GetContentAsString());
-//            }
-//            else
-//            {
-//                // Handle error here.
-//                if (Response.IsValid())
-//                {
-//                    UE_LOG(LogTemp, Warning, TEXT("HTTP Request failed: %s"), *Response->GetContentAsString());
-//                }
-//                else
-//                {
-//                    UE_LOG(LogTemp, Warning, TEXT("HTTP Request failed with no response"));
-//                }
-//            }
-//        });
-//
-//    Request->ProcessRequest();
-//}
-//
-//void UAudio2FaceComponent::A2FaceDeactivate()
-//{
-//    TSharedRef<IHttpRequest, ESPMode::ThreadSafe> Request = FHttpModule::Get().CreateRequest();
-//    Request->SetURL("http://localhost:8011/A2F/Exporter/ActivateStreamLivelink");
-//    Request->SetVerb("POST");
-//    Request->SetHeader("Content-Type", "application/json");
-//    Request->SetContentAsString(R"({"node_path": "/World/audio2face/StreamLivelink","value": false})");
-//
-//    Request->OnProcessRequestComplete().BindLambda([](FHttpRequestPtr Request, FHttpResponsePtr Response, bool bSuccess)
-//        {
-//            if (bSuccess && Response.IsValid() && Response->GetResponseCode() == 200)
-//            {
-//                // Handle your response here.
-//                UE_LOG(LogTemp, Log, TEXT("Response: %s"), *Response->GetContentAsString());
-//            }
-//            else
-//            {
-//                // Handle error here.
-//                if (Response.IsValid())
-//                {
-//                    UE_LOG(LogTemp, Warning, TEXT("HTTP Request failed: %s"), *Response->GetContentAsString());
-//                }
-//                else
-//                {
-//                    UE_LOG(LogTemp, Warning, TEXT("HTTP Request failed with no response"));
-//                }
-//            }
-//        });
-//
-//    Request->ProcessRequest();
-//}
 
 void UAudio2FaceComponent::A2FaceFMyThread(TArray<float> AudioData, int32 sampleRate)
 {
@@ -110,8 +45,6 @@ void UAudio2FaceComponent::A2FaceFMyThread(TArray<float> AudioData, int32 sample
 
 void UAudio2FaceComponent::LoadSoundWaveFromTTS_Internal(TArray<float>& OutAudioData, int32& sampleRate, USoundWave* SoundWave)
 {
-    //TArray<float> AudioData;
-
     OutAudioData.Empty();
     for (int i = 0; i < SoundWave->RawPCMDataSize; i += 2) {
         float NormalizedSample = 0.0f;
@@ -122,7 +55,6 @@ void UAudio2FaceComponent::LoadSoundWaveFromTTS_Internal(TArray<float>& OutAudio
         OutAudioData.Add(NormalizedSample);
 
     }
-    //OutAudioData = AudioData;
     sampleRate = 16000;
 
 }
@@ -139,14 +71,13 @@ void UAudio2FaceComponent::LoadSoundWaveFromFile_Internal(TArray<float>& OutAudi
         {
             float NormalizedSample = 0.0f;
 
-            // Se l'audio è stereo, somma i campioni dei due canali e divide per 2 e poi converte il campione in TarrayFloat
             if (NumChannels == 2)
             {
                 int16 Sample1 = *reinterpret_cast<int16*>(&AudioBytes[i]);
                 int16 Sample2 = *reinterpret_cast<int16*>(&AudioBytes[i + 2]);
                 NormalizedSample = (Sample1 + Sample2) / 2.0f / 32768.0f;
             }
-            else // Se l'audio è mono, converte il campione in TarrayFloat
+            else
             {
                 int16 Sample = *reinterpret_cast<int16*>(&AudioBytes[i]);
                 NormalizedSample = Sample / 32768.0f;
@@ -184,8 +115,6 @@ void UAudio2FaceComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
     Super::EndPlay(EndPlayReason);
     if (MyThread != NULL && MyThread->IsThreadRunning()) {
         MyThread->StopSending();
-        //A2FaceDeactivate();
-
     }
 }
 

@@ -6,6 +6,11 @@
 #define NOMINMAX
 #endif
 
+#pragma warning (disable : 4263)
+#pragma warning (disable : 4264)
+#pragma warning (disable : 4265)
+#pragma warning (disable : 4701)
+
 #include "FANTASIA.h"
 #include "FANTASIATypes.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
@@ -22,10 +27,6 @@
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
 #include "InfluenceDiag.generated.h"
-
-/**
- * 
- */
 
 UENUM(BlueprintType)
 enum class InferenceIDAlgs : uint8

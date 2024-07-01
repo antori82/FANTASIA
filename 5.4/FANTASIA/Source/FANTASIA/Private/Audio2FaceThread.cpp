@@ -77,9 +77,6 @@ void FMyThread::Shutdown()
 {
     if (Runnable)
     {
-        //Runnable->bIsFinished = false;
-        //Runnable->EnsureCompletion();
-        //delete Runnable;
         grpc_shutdown();
         PrintTimeThread();
         Runnable->StopRecording = false;
@@ -116,7 +113,6 @@ void FMyThread::SendToAudio2FaceGrpc()
 
     std::unique_ptr<Audio2Face::Stub> stub2 = Audio2Face::NewStub(channel2);
 
-    //TimeLogging
     int TimeLog = 0;
     FDateTime TimeInvioPrimoCHunk;
     //
@@ -130,7 +126,7 @@ void FMyThread::SendToAudio2FaceGrpc()
     start_marker.set_instance_name(PlayerA2FaceName);
     start_marker.set_samplerate(SampleRate);
     start_marker.set_block_until_playback_is_finished(block_until_playback_is_finished);
-    // Prima mandiamo start_marker
+
     PushAudioStreamRequest* request = new PushAudioStreamRequest();
     request->set_allocated_start_marker(&start_marker);
 
@@ -140,7 +136,6 @@ void FMyThread::SendToAudio2FaceGrpc()
     writer->Write(*request);
 
   
-    // Invia i messaggi con audio_data
     for (int32 i = 0; i < AudioData.Num(); i += chunk_size) {
         if (StopRecording == true) {
             break;
@@ -161,8 +156,6 @@ void FMyThread::SendToAudio2FaceGrpc()
             int32 MillisecondiTrascorsiStarterMark = TempoTrascorsoStarterMark.GetTotalMilliseconds();
 
         }
-       // Sleep(static_cast<DWORD>(round(sleep_between_chunks * 1000))); // Converti in millisecondi
-        //FPlatformProcess::Sleep(sleep_between_chunks);
     }
     writer->WritesDone();
     Status status = writer->Finish();
