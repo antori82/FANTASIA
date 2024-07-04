@@ -5,6 +5,7 @@
 #include "D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/Intermediate/Build/Win64/UnrealEditor/Inc/FANTASIA/UHT/AzureNLUComponent.gen.cpp"
 #include "D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/Intermediate/Build/Win64/UnrealEditor/Inc/FANTASIA/UHT/AzureTTSComponent.gen.cpp"
 #include "D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/Intermediate/Build/Win64/UnrealEditor/Inc/FANTASIA/UHT/BayesianNetwork.gen.cpp"
+#include "D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/Intermediate/Build/Win64/UnrealEditor/Inc/FANTASIA/UHT/ElevenLabsTTSComponent.gen.cpp"
 #include "D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/Intermediate/Build/Win64/UnrealEditor/Inc/FANTASIA/UHT/FANTASIA.init.gen.cpp"
 #include "D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/Intermediate/Build/Win64/UnrealEditor/Inc/FANTASIA/UHT/FANTASIATypes.gen.cpp"
 #include "D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/Intermediate/Build/Win64/UnrealEditor/Inc/FANTASIA/UHT/GeneralTTSComponent.gen.cpp"
