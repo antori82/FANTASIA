@@ -117,6 +117,7 @@ Special thanks to the students who contributed to FANTASIA
 * Fabrizio Musella - aGrUM integration prototype development
 * <a href="https://www.linkedin.com/in/rbgdotbrush/">Roberto Basile Giannini</a> - General improvements and aGrUM updates (Influence Diagrams integration)
 * <a href="https://www.linkedin.com/in/marco-galantino-232a07300">Marco Galantino</a> - TTS General interface
+* <a href="https://www.linkedin.com/in/yegor-napadystyy-b5482b2bb/">Yegor Napadystyy</a> - Audio2Face prototype connector
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
