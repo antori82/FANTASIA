@@ -163,6 +163,24 @@ public class FANTASIA : ModuleRules
 
         PublicIncludePaths.Add(Path.Combine(ThirdParty, "kdepp"));
 
+        string PrologCpp = Path.Combine(ThirdParty, "SWIProlog", "libs");
+
+        PublicDefinitions.Add("_SWI_CPP2_H");
+
+        PublicIncludePaths.Add(Path.Combine(ThirdParty, "SWIProlog", "headers"));
+        bEnableUndefinedIdentifierWarnings = false;
+        PublicAdditionalLibraries.Add(PrologCpp + "/libswipl.dll.a");
+        PublicAdditionalLibraries.Add(PrologCpp + "/libswipl.lib");
+        RuntimeDependencies.Add(Path.Combine(PrologCpp, "/libswipl.dll"));
+
+        PublicDefinitions.AddRange(
+            new string[]
+            {
+                "IOSTREAM_REPLACES_STDIO",
+                "__GNUC__"
+            }
+            );
+
         CppStandard = CppStandardVersion.Cpp20;
 
         LoadAgrum(Target, ThirdParty);
