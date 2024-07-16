@@ -40,13 +40,10 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
 	bool aBoolProperty;
 
-	void GenericMethod(bool bWasSuccessful);
+	const char* GenericMethod(bool bWasSuccessful);
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Submit query", AutoCreateRefTerm = "parameters"), Category = "SWIProlog")
-	void submitQuery(FString query, SWIPrologEnumTest enumItem, FString aString, TMap<FString, FString> aMapOfStrings, FString anotherString);
-
-	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Initialize prolog engine", AutoCreateRefTerm = "parameter1"), Category = "SWIProlog")
-	void initializeProlog();
+	void submitQuery(const bool choice, FString& outString);
 
 protected:
 	// Called when the game starts

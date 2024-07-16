@@ -15,23 +15,17 @@ USWIPrologComponent::USWIPrologComponent()
 }
 
 
-void USWIPrologComponent::GenericMethod(bool bWasSuccessful)
+const char* USWIPrologComponent::GenericMethod(bool bWasSuccessful)
 {
 	if (bWasSuccessful)
-		std::cout << "generic method called true";
+		return "Hello True World!";
 	else
-		std::cout << "generic method called false";
+		return "Hello False World!";
 
 }
 
-void USWIPrologComponent::submitQuery(FString query, SWIPrologEnumTest enumItem, FString aString, TMap<FString, FString> aMapOfStrings, FString anotherString = "SWIProlog") {
-	std::cout << "query submitted";
-}
-
-void USWIPrologComponent::initializeProlog() {
-	if (_putenv("SWI_HOME_DIR=C:\\Program Files\\swipl")) return;
-	//if (!PL_initialise(1, "Prolog?"))
-	//	PL_halt(1);
+void USWIPrologComponent::submitQuery(const bool choice, FString& outString) {
+	outString = USWIPrologComponent::GenericMethod(choice);
 }
 
 // Called when the game starts
