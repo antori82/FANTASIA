@@ -13,9 +13,6 @@
     An Unreal Engine set of tools to build Embodied Conversational Agents using easy, Blueprint based, interfaces towards powerful AI technologies.
     <br />
     <br />
-    <a href="https://fantasiaplugin.wordpress.com/"><strong>Main website</strong></a>
-    <br />
-    <br />
     <a href="https://forums.unrealengine.com/t/framework-for-advanced-natural-tools-and-applications-with-social-interactive-agents-fantasia/158706">Forum thread</a>
     ·
     <a href="https://www.youtube.com/channel/UChH-PYQw-_IZJM7nYJywevg">Youtube channel</a>
