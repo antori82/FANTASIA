@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
-
+#include "FANTASIATypes.h"
 #include "CoreMinimal.h"
 #include "UObject/Interface.h"
 #include "TTSThreadInterface.generated.h"

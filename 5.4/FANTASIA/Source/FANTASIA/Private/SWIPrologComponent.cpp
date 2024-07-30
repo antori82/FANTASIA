@@ -28,6 +28,14 @@ void USWIPrologComponent::submitQuery(const bool choice, FString& outString) {
 	outString = USWIPrologComponent::GenericMethod(choice);
 }
 
+void USWIPrologComponent::startProlog() {
+	if (_putenv("SWI_HOME_DIR=C:\\Program Files\\swipl")) return;
+	int argc = 0;
+	char** argv;
+	if (!PL_initialise(argc,argv))
+		PL_halt(1);
+}
+
 // Called when the game starts
 void USWIPrologComponent::BeginPlay()
 {
@@ -36,6 +44,8 @@ void USWIPrologComponent::BeginPlay()
 	// ...
 
 }
+
+
 
 // Called every frame
 void USWIPrologComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)

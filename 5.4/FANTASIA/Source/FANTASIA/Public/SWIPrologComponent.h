@@ -9,13 +9,13 @@
 #include "Windows/WindowsHWrapper.h"
 #include "Windows/AllowWindowsPlatformTypes.h"
 #include "Windows/AllowWindowsPlatformAtomics.h"
-THIRD_PARTY_INCLUDES_START
 #include <SWI-cpp2.h>
-THIRD_PARTY_INCLUDES_END
 #include "Windows/HideWindowsPlatformAtomics.h"
 #include "Windows/HideWindowsPlatformTypes.h"
 
 #include "SWIPrologComponent.generated.h"
+
+using namespace std;
 
 //DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FSWITestStruct,SWIPrologResponse);
 
@@ -27,6 +27,8 @@ class USWIPrologComponent : public UActorComponent
 public:
 	// Sets default values for this component's properties
 	USWIPrologComponent();
+
+	PlAtom myAtom;
 
 	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
 	FString aStringProperty;
@@ -44,6 +46,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Submit query", AutoCreateRefTerm = "parameters"), Category = "SWIProlog")
 	void submitQuery(const bool choice, FString& outString);
+
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Start Prolog", AutoCreateRefTerm = "parameters"), Category = "SWIProlog")
+	void startProlog();
 
 protected:
 	// Called when the game starts

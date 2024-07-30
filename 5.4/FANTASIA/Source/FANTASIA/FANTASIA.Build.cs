@@ -184,7 +184,7 @@ public class FANTASIA : ModuleRules
         CppStandard = CppStandardVersion.Cpp20;
 
         LoadAgrum(Target, ThirdParty);
-        LoadGrpc(Target, ThirdParty);
+        //LoadGrpc(Target, ThirdParty);
 
         DynamicallyLoadedModuleNames.AddRange(
         new string[]
