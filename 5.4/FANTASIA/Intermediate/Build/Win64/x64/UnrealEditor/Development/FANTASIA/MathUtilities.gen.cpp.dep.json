@@ -1,0 +1,28 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "c:\\users\\lorenzo\\documents\\unreal projects\\declarativeengine\\plugins\\fantasia\\intermediate\\build\\win64\\unrealeditor\\inc\\fantasia\\uht\\mathutilities.gen.cpp",
+        "ProvidedModule": "",
+        "PCH": "c:\\users\\lorenzo\\documents\\unreal projects\\declarativeengine\\intermediate\\build\\win64\\x64\\declarativeengineeditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.cpp20.h.pch",
+        "Includes": [
+            "c:\\users\\lorenzo\\documents\\unreal projects\\declarativeengine\\plugins\\fantasia\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\fantasia\\definitions.fantasia.h",
+            "c:\\users\\lorenzo\\documents\\unreal projects\\declarativeengine\\plugins\\fantasia\\source\\fantasia\\public\\mathutilities.h",
+            "c:\\users\\lorenzo\\documents\\unreal projects\\declarativeengine\\plugins\\fantasia\\source\\fantasia\\public\\fantasia.h",
+            "c:\\users\\lorenzo\\documents\\unreal projects\\declarativeengine\\plugins\\fantasia\\thirdparty\\kdepp\\kde.h",
+            "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.38.33130\\include\\array",
+            "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.38.33130\\include\\cmath",
+            "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.38.33130\\include\\numeric",
+            "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.38.33130\\include\\__msvc_bit_utils.hpp",
+            "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.38.33130\\include\\stdexcept",
+            "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.38.33130\\include\\xstring",
+            "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.38.33130\\include\\__msvc_sanitizer_annotate_container.hpp",
+            "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.38.33130\\include\\xpolymorphic_allocator.h",
+            "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.38.33130\\include\\string",
+            "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.38.33130\\include\\cctype",
+            "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.38.33130\\include\\vector",
+            "c:\\users\\lorenzo\\documents\\unreal projects\\declarativeengine\\plugins\\fantasia\\intermediate\\build\\win64\\unrealeditor\\inc\\fantasia\\uht\\mathutilities.generated.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

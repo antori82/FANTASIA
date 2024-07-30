@@ -1,0 +1,13 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "c:\\users\\lorenzo\\documents\\unreal projects\\declarativeengine\\plugins\\fantasia\\intermediate\\build\\win64\\unrealeditor\\inc\\fantasia\\uht\\fantasia.init.gen.cpp",
+        "ProvidedModule": "",
+        "PCH": "c:\\users\\lorenzo\\documents\\unreal projects\\declarativeengine\\intermediate\\build\\win64\\x64\\declarativeengineeditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.cpp20.h.pch",
+        "Includes": [
+            "c:\\users\\lorenzo\\documents\\unreal projects\\declarativeengine\\plugins\\fantasia\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\fantasia\\definitions.fantasia.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}
