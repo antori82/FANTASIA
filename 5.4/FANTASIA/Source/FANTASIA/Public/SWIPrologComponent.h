@@ -2,8 +2,8 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include <Json.h>
+#include "FANTASIA.h"
 #include "FANTASIATypes.h"
-
 
 #include "Windows/MinWindows.h"
 #include "Windows/WindowsHWrapper.h"
@@ -28,7 +28,6 @@ public:
 	// Sets default values for this component's properties
 	USWIPrologComponent();
 
-	PlAtom myAtom;
 
 	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
 	FString aStringProperty;

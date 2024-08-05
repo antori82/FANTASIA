@@ -6,7 +6,7 @@
         "PCH": "c:\\users\\lorenzo\\documents\\unreal projects\\declarativeengine\\intermediate\\build\\win64\\x64\\declarativeengineeditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.cpp20.h.pch",
         "Includes": [
             "c:\\users\\lorenzo\\documents\\unreal projects\\declarativeengine\\plugins\\fantasia\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\fantasiaeditor\\definitions.fantasiaeditor.h",
-            "c:\\users\\lorenzo\\documents\\unreal projects\\declarativeengine\\plugins\\fantasia\\intermediate\\build\\win64\\unrealeditor\\inc\\fantasiaeditor\\uht\\bayesiannetworkfactory.gen.cpp",
+            "c:\\users\\lorenzo\\documents\\unreal projects\\declarativeengine\\plugins\\fantasia\\source\\fantasiaeditor\\private\\bayesiannetworkfactory.cpp",
             "c:\\users\\lorenzo\\documents\\unreal projects\\declarativeengine\\plugins\\fantasia\\source\\fantasiaeditor\\public\\bayesiannetworkfactory.h",
             "c:\\users\\lorenzo\\documents\\unreal projects\\declarativeengine\\plugins\\fantasia\\source\\fantasiaeditor\\public\\fantasiaeditor.h",
             "c:\\unreal\\ue_5.4\\engine\\source\\developer\\assettools\\public\\assettypeactions_base.h",
@@ -24,8 +24,6 @@
             "c:\\unreal\\ue_5.4\\engine\\source\\developer\\assettools\\public\\assettoolsmodule.h",
             "c:\\unreal\\ue_5.4\\engine\\source\\editor\\unrealed\\public\\toolkits\\simpleasseteditor.h",
             "c:\\users\\lorenzo\\documents\\unreal projects\\declarativeengine\\plugins\\fantasia\\intermediate\\build\\win64\\unrealeditor\\inc\\fantasiaeditor\\uht\\bayesiannetworkfactory.generated.h",
-            "c:\\users\\lorenzo\\documents\\unreal projects\\declarativeengine\\plugins\\fantasia\\intermediate\\build\\win64\\unrealeditor\\inc\\fantasiaeditor\\uht\\fantasiaeditor.init.gen.cpp",
-            "c:\\users\\lorenzo\\documents\\unreal projects\\declarativeengine\\plugins\\fantasia\\source\\fantasiaeditor\\private\\bayesiannetworkfactory.cpp",
             "c:\\users\\lorenzo\\documents\\unreal projects\\declarativeengine\\plugins\\fantasia\\source\\fantasia\\public\\bayesiannetwork.h",
             "c:\\users\\lorenzo\\documents\\unreal projects\\declarativeengine\\plugins\\fantasia\\source\\fantasia\\public\\fantasia.h",
             "c:\\users\\lorenzo\\documents\\unreal projects\\declarativeengine\\plugins\\fantasia\\source\\fantasia\\public\\fantasiatypes.h",

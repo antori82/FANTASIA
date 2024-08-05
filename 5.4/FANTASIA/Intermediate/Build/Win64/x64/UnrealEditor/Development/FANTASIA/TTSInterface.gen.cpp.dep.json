@@ -7,8 +7,6 @@
         "Includes": [
             "c:\\users\\lorenzo\\documents\\unreal projects\\declarativeengine\\plugins\\fantasia\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\fantasia\\definitions.fantasia.h",
             "c:\\users\\lorenzo\\documents\\unreal projects\\declarativeengine\\plugins\\fantasia\\source\\fantasia\\public\\ttsinterface.h",
-            "c:\\users\\lorenzo\\documents\\unreal projects\\declarativeengine\\plugins\\fantasia\\source\\fantasia\\public\\fantasiatypes.h",
-            "c:\\users\\lorenzo\\documents\\unreal projects\\declarativeengine\\plugins\\fantasia\\intermediate\\build\\win64\\unrealeditor\\inc\\fantasia\\uht\\fantasiatypes.generated.h",
             "c:\\users\\lorenzo\\documents\\unreal projects\\declarativeengine\\plugins\\fantasia\\intermediate\\build\\win64\\unrealeditor\\inc\\fantasia\\uht\\ttsinterface.generated.h"
         ],
         "ImportedModules": [],
