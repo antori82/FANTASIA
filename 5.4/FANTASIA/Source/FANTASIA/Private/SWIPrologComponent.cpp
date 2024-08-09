@@ -31,7 +31,7 @@ void USWIPrologComponent::submitQuery(const bool choice, FString& outString) {
 void USWIPrologComponent::startProlog() {
 	if (_putenv("SWI_HOME_DIR=C:\\Program Files\\swipl")) return;
 	int argc = 0;
-	char** argv;
+	char** argv= NULL;
 	if (!PL_initialise(argc,argv))
 		PL_halt(1);
 }
