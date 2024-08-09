@@ -1,11 +1,11 @@
-"C:\Users\Lorenzo\Documents\Unreal Projects\DeclarativeEngine\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIA\Module.FANTASIA.cpp"
-/FI"C:\Users\Lorenzo\Documents\Unreal Projects\DeclarativeEngine\Intermediate\Build\Win64\x64\DeclarativeEngineEditor\Development\UnrealEd\SharedPCH.UnrealEd.Project.ValApi.Cpp20.h"
-/FI"C:\Users\Lorenzo\Documents\Unreal Projects\DeclarativeEngine\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIA\Definitions.FANTASIA.h"
-/Yu"C:\Users\Lorenzo\Documents\Unreal Projects\DeclarativeEngine\Intermediate\Build\Win64\x64\DeclarativeEngineEditor\Development\UnrealEd\SharedPCH.UnrealEd.Project.ValApi.Cpp20.h"
-/Fp"C:\Users\Lorenzo\Documents\Unreal Projects\DeclarativeEngine\Intermediate\Build\Win64\x64\DeclarativeEngineEditor\Development\UnrealEd\SharedPCH.UnrealEd.Project.ValApi.Cpp20.h.pch"
-/Fo"C:\Users\Lorenzo\Documents\Unreal Projects\DeclarativeEngine\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIA\Module.FANTASIA.cpp.obj"
-/sourceDependencies "C:\Users\Lorenzo\Documents\Unreal Projects\DeclarativeEngine\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIA\Module.FANTASIA.cpp.dep.json"
-@"C:\Users\Lorenzo\Documents\Unreal Projects\DeclarativeEngine\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIA\FANTASIA.Shared.rsp"
+"D:\Test\Test\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIA\Module.FANTASIA.cpp"
+/FI"D:\Test\Test\Intermediate\Build\Win64\x64\TestEditor\Development\UnrealEd\SharedPCH.UnrealEd.Project.ValApi.Cpp20.h"
+/FI"D:\Test\Test\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIA\Definitions.FANTASIA.h"
+/Yu"D:\Test\Test\Intermediate\Build\Win64\x64\TestEditor\Development\UnrealEd\SharedPCH.UnrealEd.Project.ValApi.Cpp20.h"
+/Fp"D:\Test\Test\Intermediate\Build\Win64\x64\TestEditor\Development\UnrealEd\SharedPCH.UnrealEd.Project.ValApi.Cpp20.h.pch"
+/Fo"D:\Test\Test\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIA\Module.FANTASIA.cpp.obj"
+/sourceDependencies "D:\Test\Test\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIA\Module.FANTASIA.cpp.dep.json"
+@"D:\Test\Test\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIA\FANTASIA.Shared.rsp"
 /Zc:inline
 /nologo
 /Oi
@@ -40,6 +40,7 @@
 /we4456
 /we4458
 /we4459
+/we4668
 /wd4244
 /wd4838
 /TP

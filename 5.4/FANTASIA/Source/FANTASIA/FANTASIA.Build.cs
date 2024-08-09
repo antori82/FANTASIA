@@ -168,7 +168,7 @@ public class FANTASIA : ModuleRules
         PublicDefinitions.Add("_SWI_CPP2_H");
 
         PublicIncludePaths.Add(Path.Combine(ThirdParty, "SWIProlog", "headers"));
-        bEnableUndefinedIdentifierWarnings = false;
+        //bEnableUndefinedIdentifierWarnings = false;
         PublicAdditionalLibraries.Add(PrologCpp + "/libswipl.dll.a");
         PublicAdditionalLibraries.Add(PrologCpp + "/libswipl.lib");
         RuntimeDependencies.Add(Path.Combine(PrologCpp, "/libswipl.dll"));

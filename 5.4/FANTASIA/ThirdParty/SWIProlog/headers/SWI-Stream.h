@@ -63,12 +63,14 @@
 #include <inttypes.h>			/* more portable than stdint.h */
 
 #ifdef _MSC_VER
-typedef __int32 int32_t;
-typedef unsigned __int32 uint32_t;
-typedef __int64 int64_t;
-typedef unsigned __int64 uint64_t;
-typedef intptr_t ssize_t;
-typedef uintptr_t size_t;
+    typedef __int32 int32_t;
+    typedef unsigned __int32 uint32_t;
+    typedef __int64 int64_t;
+    typedef unsigned __int64 uint64_t;
+    #ifndef ssize_t
+        typedef intptr_t ssize_t;
+        typedef uintptr_t size_t;
+    #endif
 #endif
 
 #ifdef __cplusplus

@@ -6,9 +6,9 @@
 /NAME:"UnrealEditor-FANTASIAEditor.dll"
 /IGNORE:4221
 /NODEFAULTLIB
-"C:\Users\Lorenzo\Documents\Unreal Projects\DeclarativeEngine\Intermediate\Build\Win64\x64\DeclarativeEngineEditor\Development\UnrealEd\SharedPCH.UnrealEd.Project.ValApi.Cpp20.h.obj"
-"C:\Users\Lorenzo\Documents\Unreal Projects\DeclarativeEngine\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIAEditor\Module.FANTASIAEditor.cpp.obj"
-"C:\Users\Lorenzo\Documents\Unreal Projects\DeclarativeEngine\plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIAEditor\BayesianNetworkFactory.gen.cpp.obj"
-"C:\Users\Lorenzo\Documents\Unreal Projects\DeclarativeEngine\plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIAEditor\FANTASIAEditor.init.gen.cpp.obj"
-"C:\Users\Lorenzo\Documents\Unreal Projects\DeclarativeEngine\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIAEditor\Default.rc2.res"
-/OUT:"C:\Users\Lorenzo\Documents\Unreal Projects\DeclarativeEngine\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIAEditor\UnrealEditor-FANTASIAEditor.lib"
+"D:\Test\Test\Intermediate\Build\Win64\x64\TestEditor\Development\UnrealEd\SharedPCH.UnrealEd.Project.ValApi.Cpp20.h.obj"
+"D:\Test\Test\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIAEditor\Module.FANTASIAEditor.cpp.obj"
+"D:\Test\Test\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIAEditor\BayesianNetworkFactory.cpp.obj"
+"D:\Test\Test\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIAEditor\FANTASIAEditor.cpp.obj"
+"D:\Test\Test\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIAEditor\Default.rc2.res"
+/OUT:"D:\Test\Test\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIAEditor\UnrealEditor-FANTASIAEditor.lib"
