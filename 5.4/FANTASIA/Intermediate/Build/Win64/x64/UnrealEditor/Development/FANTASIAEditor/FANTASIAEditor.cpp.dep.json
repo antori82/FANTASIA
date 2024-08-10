@@ -1,12 +1,12 @@
 {
     "Version": "1.2",
     "Data": {
-        "Source": "d:\\test\\test\\plugins\\fantasia\\source\\fantasiaeditor\\private\\fantasiaeditor.cpp",
+        "Source": "c:\\users\\lorenzo\\documents\\unreal projects\\declarativeengine\\plugins\\fantasia\\source\\fantasiaeditor\\private\\fantasiaeditor.cpp",
         "ProvidedModule": "",
-        "PCH": "d:\\test\\test\\intermediate\\build\\win64\\x64\\testeditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.cpp20.h.pch",
+        "PCH": "c:\\users\\lorenzo\\documents\\unreal projects\\declarativeengine\\intermediate\\build\\win64\\x64\\declarativeengineeditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.cpp20.h.pch",
         "Includes": [
-            "d:\\test\\test\\plugins\\fantasia\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\fantasiaeditor\\definitions.fantasiaeditor.h",
-            "d:\\test\\test\\plugins\\fantasia\\source\\fantasiaeditor\\public\\fantasiaeditor.h"
+            "c:\\users\\lorenzo\\documents\\unreal projects\\declarativeengine\\plugins\\fantasia\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\fantasiaeditor\\definitions.fantasiaeditor.h",
+            "c:\\users\\lorenzo\\documents\\unreal projects\\declarativeengine\\plugins\\fantasia\\source\\fantasiaeditor\\public\\fantasiaeditor.h"
         ],
         "ImportedModules": [],
         "ImportedHeaderUnits": []

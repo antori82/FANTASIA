@@ -14,25 +14,32 @@ USWIPrologComponent::USWIPrologComponent()
 	// ...
 }
 
-
-const char* USWIPrologComponent::GenericMethod(bool bWasSuccessful)
-{
-	if (bWasSuccessful)
-		return "Hello True World!";
-	else
-		return "Hello False World!";
-
-}
-
 void USWIPrologComponent::submitQuery(const bool choice, FString& outString) {
-	outString = USWIPrologComponent::GenericMethod(choice);
+	outString = "query started!";
+	try {
+		PlCall("consult", PlTermv(PlAtom("knowledge_base")));
+	}
+	catch (const PlException& err) {
+		cerr << "couldn't open prolog file... error: " << err.what();
+	}
+	PlTermv av(1);
+	
+	PlQuery q("character", av);
+	q.next_solution();
+	cout << "out: " << av[0].as_string() << "\n";
+
 }
 
 void USWIPrologComponent::startProlog() {
 	if (_putenv("SWI_HOME_DIR=C:\\Program Files\\swipl")) return;
-	int argc = 0;
-	char** argv= NULL;
-	if (!PL_initialise(argc,argv))
+	int argc = 1;
+	FString path = FPaths::GameSourceDir();
+	char myString[200];
+	strcpy_s(myString, (const char*)TCHAR_TO_ANSI(*path));
+	char* argv[1] = {
+		myString
+	};
+	if (!PL_initialise(argc,argv)){}
 		PL_halt(1);
 }
 

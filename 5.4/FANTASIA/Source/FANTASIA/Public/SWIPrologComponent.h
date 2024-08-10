@@ -43,8 +43,6 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
 	bool aBoolProperty;
 
-	const char* GenericMethod(bool bWasSuccessful);
-
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Submit query", AutoCreateRefTerm = "parameters"), Category = "SWIProlog")
 	void submitQuery(const bool choice, FString& outString);
 
