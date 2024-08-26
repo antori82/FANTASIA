@@ -165,7 +165,7 @@ public class FANTASIA : ModuleRules
 
         string PrologCpp = Path.Combine(ThirdParty, "SWIProlog", "libs");
 
-        PublicDefinitions.Add("_SWI_CPP2_H");
+        //PublicDefinitions.Add("_SWI_CPP2_H");
 
         PublicIncludePaths.Add(Path.Combine(ThirdParty, "SWIProlog", "headers"));
         //bEnableUndefinedIdentifierWarnings = false;
@@ -176,7 +176,6 @@ public class FANTASIA : ModuleRules
         PublicDefinitions.AddRange(
             new string[]
             {
-                "IOSTREAM_REPLACES_STDIO",
                 "__GNUC__"
             }
             );

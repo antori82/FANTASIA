@@ -1,23 +1,35 @@
 #pragma once
+#pragma warning (disable : 4800)
+#pragma warning (disable : 4673)
+#pragma warning (disable : 4670)
+#pragma warning (disable : 4668)
+#pragma warning (disable : 4834)
+
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include <Json.h>
 #include "FANTASIA.h"
 #include "FANTASIATypes.h"
-
-#include "Windows/MinWindows.h"
-#include "Windows/WindowsHWrapper.h"
 #include "Windows/AllowWindowsPlatformTypes.h"
 #include "Windows/AllowWindowsPlatformAtomics.h"
+#pragma push_macro("verify")
+#undef verify
 #include <SWI-cpp2.h>
-#include <SWI-Prolog.h>
-#include <SWI-Stream.h>
+#pragma pop_macro("verify")
 #include "Windows/HideWindowsPlatformAtomics.h"
 #include "Windows/HideWindowsPlatformTypes.h"
-
+//#include "Windows/WindowsHWrapper.h"
 #include "SWIPrologComponent.generated.h"
 
-using namespace std;
+#pragma warning (default : 4800)
+#pragma warning (default : 4673)
+#pragma warning (default : 4670)
+#pragma warning (default : 4668)
+#pragma warning (default : 4834)
+
+//using namespace std;
+
+
 
 //DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FSWITestStruct,SWIPrologResponse);
 

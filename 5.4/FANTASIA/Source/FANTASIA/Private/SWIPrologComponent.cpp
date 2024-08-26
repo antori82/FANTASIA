@@ -4,6 +4,8 @@
 #include "SWIPrologComponent.h"
 #include "Misc/Base64.h"
 #include <iostream>
+
+
 // Sets default values for this component's properties
 USWIPrologComponent::USWIPrologComponent()
 {
@@ -20,13 +22,15 @@ void USWIPrologComponent::submitQuery(const bool choice, FString& outString) {
 		PlCall("consult", PlTermv(PlAtom("knowledge_base")));
 	}
 	catch (const PlException& err) {
-		cerr << "couldn't open prolog file... error: " << err.what();
+		GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Red, FString("couldn't open prolog file... error: ") + FString(err.what()));
+	//	cerr << "couldn't open prolog file... error: " << err.what();
+		
 	}
 	PlTermv av(1);
 	
 	PlQuery q("character", av);
 	q.next_solution();
-	cout << "out: " << av[0].as_string() << "\n";
+	//cout << "out: " << av[0].as_string() << "\n";
 
 }
 
