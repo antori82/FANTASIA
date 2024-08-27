@@ -35,7 +35,7 @@ struct Z_Construct_UDelegateFunction_FANTASIA_IncomingNLUEvent__DelegateSignatur
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
-const UECodeGen_Private::FStructPropertyParams Z_Construct_UDelegateFunction_FANTASIA_IncomingNLUEvent__DelegateSignature_Statics::NewProp_NLUResponse = { "NLUResponse", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(_Script_FANTASIA_eventIncomingNLUEvent_Parms, NLUResponse), Z_Construct_UScriptStruct_FNLUResponse, METADATA_PARAMS(0, nullptr) }; // 667433752
+const UECodeGen_Private::FStructPropertyParams Z_Construct_UDelegateFunction_FANTASIA_IncomingNLUEvent__DelegateSignature_Statics::NewProp_NLUResponse = { "NLUResponse", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(_Script_FANTASIA_eventIncomingNLUEvent_Parms, NLUResponse), Z_Construct_UScriptStruct_FNLUResponse, METADATA_PARAMS(0, nullptr) }; // 836106496
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UDelegateFunction_FANTASIA_IncomingNLUEvent__DelegateSignature_Statics::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UDelegateFunction_FANTASIA_IncomingNLUEvent__DelegateSignature_Statics::NewProp_NLUResponse,
 };
@@ -118,7 +118,7 @@ struct Z_Construct_UClass_UAzureNLUComponent_Statics
 		{ "IncludePath", "AzureNLUComponent.h" },
 		{ "ModuleRelativePath", "Public/AzureNLUComponent.h" },
 	};
-	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_SpeechKey_MetaData[] = {
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_Key_MetaData[] = {
 		{ "Category", "Configuration" },
 		{ "ModuleRelativePath", "Public/AzureNLUComponent.h" },
 	};
@@ -130,19 +130,7 @@ struct Z_Construct_UClass_UAzureNLUComponent_Statics
 		{ "Category", "Configuration" },
 		{ "ModuleRelativePath", "Public/AzureNLUComponent.h" },
 	};
-	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_LanguageKey_MetaData[] = {
-		{ "Category", "Configuration" },
-		{ "ModuleRelativePath", "Public/AzureNLUComponent.h" },
-	};
-	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_Endpoint_MetaData[] = {
-		{ "Category", "Configuration" },
-		{ "ModuleRelativePath", "Public/AzureNLUComponent.h" },
-	};
-	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_projectName_MetaData[] = {
-		{ "Category", "Configuration" },
-		{ "ModuleRelativePath", "Public/AzureNLUComponent.h" },
-	};
-	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_deploymentName_MetaData[] = {
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_AppID_MetaData[] = {
 		{ "Category", "Configuration" },
 		{ "ModuleRelativePath", "Public/AzureNLUComponent.h" },
 	};
@@ -151,13 +139,10 @@ struct Z_Construct_UClass_UAzureNLUComponent_Statics
 		{ "ModuleRelativePath", "Public/AzureNLUComponent.h" },
 	};
 #endif // WITH_METADATA
-	static const UECodeGen_Private::FStrPropertyParams NewProp_SpeechKey;
+	static const UECodeGen_Private::FStrPropertyParams NewProp_Key;
 	static const UECodeGen_Private::FStrPropertyParams NewProp_Region;
 	static const UECodeGen_Private::FStrPropertyParams NewProp_Language;
-	static const UECodeGen_Private::FStrPropertyParams NewProp_LanguageKey;
-	static const UECodeGen_Private::FStrPropertyParams NewProp_Endpoint;
-	static const UECodeGen_Private::FStrPropertyParams NewProp_projectName;
-	static const UECodeGen_Private::FStrPropertyParams NewProp_deploymentName;
+	static const UECodeGen_Private::FStrPropertyParams NewProp_AppID;
 	static const UECodeGen_Private::FMulticastDelegatePropertyParams NewProp_IncomingMessage;
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static UObject* (*const DependentSingletons[])();
@@ -170,22 +155,16 @@ struct Z_Construct_UClass_UAzureNLUComponent_Statics
 	};
 	static const UECodeGen_Private::FClassParams ClassParams;
 };
-const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_UAzureNLUComponent_Statics::NewProp_SpeechKey = { "SpeechKey", nullptr, (EPropertyFlags)0x0010000000004001, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UAzureNLUComponent, SpeechKey), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_SpeechKey_MetaData), NewProp_SpeechKey_MetaData) };
-const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_UAzureNLUComponent_Statics::NewProp_Region = { "Region", nullptr, (EPropertyFlags)0x0010000000004001, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UAzureNLUComponent, Region), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Region_MetaData), NewProp_Region_MetaData) };
-const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_UAzureNLUComponent_Statics::NewProp_Language = { "Language", nullptr, (EPropertyFlags)0x0010000000004001, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UAzureNLUComponent, Language), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Language_MetaData), NewProp_Language_MetaData) };
-const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_UAzureNLUComponent_Statics::NewProp_LanguageKey = { "LanguageKey", nullptr, (EPropertyFlags)0x0010000000004001, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UAzureNLUComponent, LanguageKey), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_LanguageKey_MetaData), NewProp_LanguageKey_MetaData) };
-const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_UAzureNLUComponent_Statics::NewProp_Endpoint = { "Endpoint", nullptr, (EPropertyFlags)0x0010000000004001, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UAzureNLUComponent, Endpoint), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Endpoint_MetaData), NewProp_Endpoint_MetaData) };
-const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_UAzureNLUComponent_Statics::NewProp_projectName = { "projectName", nullptr, (EPropertyFlags)0x0010000000004001, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UAzureNLUComponent, projectName), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_projectName_MetaData), NewProp_projectName_MetaData) };
-const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_UAzureNLUComponent_Statics::NewProp_deploymentName = { "deploymentName", nullptr, (EPropertyFlags)0x0010000000004001, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UAzureNLUComponent, deploymentName), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_deploymentName_MetaData), NewProp_deploymentName_MetaData) };
-const UECodeGen_Private::FMulticastDelegatePropertyParams Z_Construct_UClass_UAzureNLUComponent_Statics::NewProp_IncomingMessage = { "IncomingMessage", nullptr, (EPropertyFlags)0x0010000010080000, UECodeGen_Private::EPropertyGenFlags::InlineMulticastDelegate, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UAzureNLUComponent, IncomingMessage), Z_Construct_UDelegateFunction_FANTASIA_IncomingNLUEvent__DelegateSignature, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_IncomingMessage_MetaData), NewProp_IncomingMessage_MetaData) }; // 2216557217
+const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_UAzureNLUComponent_Statics::NewProp_Key = { "Key", nullptr, (EPropertyFlags)0x0010000000000001, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UAzureNLUComponent, Key), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Key_MetaData), NewProp_Key_MetaData) };
+const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_UAzureNLUComponent_Statics::NewProp_Region = { "Region", nullptr, (EPropertyFlags)0x0010000000000001, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UAzureNLUComponent, Region), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Region_MetaData), NewProp_Region_MetaData) };
+const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_UAzureNLUComponent_Statics::NewProp_Language = { "Language", nullptr, (EPropertyFlags)0x0010000000000001, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UAzureNLUComponent, Language), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Language_MetaData), NewProp_Language_MetaData) };
+const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_UAzureNLUComponent_Statics::NewProp_AppID = { "AppID", nullptr, (EPropertyFlags)0x0010000000000001, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UAzureNLUComponent, AppID), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_AppID_MetaData), NewProp_AppID_MetaData) };
+const UECodeGen_Private::FMulticastDelegatePropertyParams Z_Construct_UClass_UAzureNLUComponent_Statics::NewProp_IncomingMessage = { "IncomingMessage", nullptr, (EPropertyFlags)0x0010000010080000, UECodeGen_Private::EPropertyGenFlags::InlineMulticastDelegate, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UAzureNLUComponent, IncomingMessage), Z_Construct_UDelegateFunction_FANTASIA_IncomingNLUEvent__DelegateSignature, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_IncomingMessage_MetaData), NewProp_IncomingMessage_MetaData) }; // 1819384937
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_UAzureNLUComponent_Statics::PropPointers[] = {
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UAzureNLUComponent_Statics::NewProp_SpeechKey,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UAzureNLUComponent_Statics::NewProp_Key,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UAzureNLUComponent_Statics::NewProp_Region,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UAzureNLUComponent_Statics::NewProp_Language,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UAzureNLUComponent_Statics::NewProp_LanguageKey,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UAzureNLUComponent_Statics::NewProp_Endpoint,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UAzureNLUComponent_Statics::NewProp_projectName,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UAzureNLUComponent_Statics::NewProp_deploymentName,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UAzureNLUComponent_Statics::NewProp_AppID,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UAzureNLUComponent_Statics::NewProp_IncomingMessage,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_UAzureNLUComponent_Statics::PropPointers) < 2048);
@@ -196,7 +175,7 @@ UObject* (*const Z_Construct_UClass_UAzureNLUComponent_Statics::DependentSinglet
 static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_UAzureNLUComponent_Statics::DependentSingletons) < 16);
 const UECodeGen_Private::FClassParams Z_Construct_UClass_UAzureNLUComponent_Statics::ClassParams = {
 	&UAzureNLUComponent::StaticClass,
-	"Game",
+	"Engine",
 	&StaticCppClassTypeInfo,
 	DependentSingletons,
 	FuncInfo,
@@ -229,10 +208,10 @@ UAzureNLUComponent::~UAzureNLUComponent() {}
 struct Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_AzureNLUComponent_h_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_UAzureNLUComponent, UAzureNLUComponent::StaticClass, TEXT("UAzureNLUComponent"), &Z_Registration_Info_UClass_UAzureNLUComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UAzureNLUComponent), 1244634690U) },
+		{ Z_Construct_UClass_UAzureNLUComponent, UAzureNLUComponent::StaticClass, TEXT("UAzureNLUComponent"), &Z_Registration_Info_UClass_UAzureNLUComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UAzureNLUComponent), 715358563U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_AzureNLUComponent_h_3328638884(TEXT("/Script/FANTASIA"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_AzureNLUComponent_h_2127555372(TEXT("/Script/FANTASIA"),
 	Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_AzureNLUComponent_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_AzureNLUComponent_h_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);

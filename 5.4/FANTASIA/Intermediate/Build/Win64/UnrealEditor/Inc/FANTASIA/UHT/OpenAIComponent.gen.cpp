@@ -15,7 +15,6 @@ ENGINE_API UClass* Z_Construct_UClass_UActorComponent();
 FANTASIA_API UClass* Z_Construct_UClass_UOpenAIComponent();
 FANTASIA_API UClass* Z_Construct_UClass_UOpenAIComponent_NoRegister();
 FANTASIA_API UFunction* Z_Construct_UDelegateFunction_FANTASIA_IncomingChatGPTResponseEvent__DelegateSignature();
-FANTASIA_API UFunction* Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature();
 FANTASIA_API UScriptStruct* Z_Construct_UScriptStruct_FChatTurn();
 UPackage* Z_Construct_UPackage__Script_FANTASIA();
 // End Cross Module References
@@ -74,84 +73,12 @@ DEFINE_FUNCTION(UOpenAIComponent::execgetChatGPTCompletion)
 }
 // End Class UOpenAIComponent Function getChatGPTCompletion
 
-// Begin Class UOpenAIComponent Function getGPTCompletion
-struct Z_Construct_UFunction_UOpenAIComponent_getGPTCompletion_Statics
-{
-	struct OpenAIComponent_eventgetGPTCompletion_Parms
-	{
-		FString prompt;
-		TArray<FString> stopSequences;
-		FString apiMethod;
-		int32 maxTokens;
-		float temperature;
-	};
-#if WITH_METADATA
-	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "AutoCreateRefTerm", "stopSequences" },
-		{ "Category", "GPT" },
-		{ "CPP_Default_apiMethod", "gpt-4-turbo-preview" },
-		{ "CPP_Default_maxTokens", "1000" },
-		{ "CPP_Default_temperature", "0.700000" },
-		{ "DisplayName", "GetGPTCompletion" },
-		{ "ModuleRelativePath", "Public/OpenAIComponent.h" },
-	};
-#endif // WITH_METADATA
-	static const UECodeGen_Private::FStrPropertyParams NewProp_prompt;
-	static const UECodeGen_Private::FStrPropertyParams NewProp_stopSequences_Inner;
-	static const UECodeGen_Private::FArrayPropertyParams NewProp_stopSequences;
-	static const UECodeGen_Private::FStrPropertyParams NewProp_apiMethod;
-	static const UECodeGen_Private::FIntPropertyParams NewProp_maxTokens;
-	static const UECodeGen_Private::FFloatPropertyParams NewProp_temperature;
-	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
-	static const UECodeGen_Private::FFunctionParams FuncParams;
-};
-const UECodeGen_Private::FStrPropertyParams Z_Construct_UFunction_UOpenAIComponent_getGPTCompletion_Statics::NewProp_prompt = { "prompt", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(OpenAIComponent_eventgetGPTCompletion_Parms, prompt), METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FStrPropertyParams Z_Construct_UFunction_UOpenAIComponent_getGPTCompletion_Statics::NewProp_stopSequences_Inner = { "stopSequences", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FArrayPropertyParams Z_Construct_UFunction_UOpenAIComponent_getGPTCompletion_Statics::NewProp_stopSequences = { "stopSequences", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(OpenAIComponent_eventgetGPTCompletion_Parms, stopSequences), EArrayPropertyFlags::None, METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FStrPropertyParams Z_Construct_UFunction_UOpenAIComponent_getGPTCompletion_Statics::NewProp_apiMethod = { "apiMethod", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(OpenAIComponent_eventgetGPTCompletion_Parms, apiMethod), METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FIntPropertyParams Z_Construct_UFunction_UOpenAIComponent_getGPTCompletion_Statics::NewProp_maxTokens = { "maxTokens", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(OpenAIComponent_eventgetGPTCompletion_Parms, maxTokens), METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_UOpenAIComponent_getGPTCompletion_Statics::NewProp_temperature = { "temperature", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(OpenAIComponent_eventgetGPTCompletion_Parms, temperature), METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UOpenAIComponent_getGPTCompletion_Statics::PropPointers[] = {
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UOpenAIComponent_getGPTCompletion_Statics::NewProp_prompt,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UOpenAIComponent_getGPTCompletion_Statics::NewProp_stopSequences_Inner,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UOpenAIComponent_getGPTCompletion_Statics::NewProp_stopSequences,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UOpenAIComponent_getGPTCompletion_Statics::NewProp_apiMethod,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UOpenAIComponent_getGPTCompletion_Statics::NewProp_maxTokens,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UOpenAIComponent_getGPTCompletion_Statics::NewProp_temperature,
-};
-static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UOpenAIComponent_getGPTCompletion_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UOpenAIComponent_getGPTCompletion_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UOpenAIComponent, nullptr, "getGPTCompletion", nullptr, nullptr, Z_Construct_UFunction_UOpenAIComponent_getGPTCompletion_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UOpenAIComponent_getGPTCompletion_Statics::PropPointers), sizeof(Z_Construct_UFunction_UOpenAIComponent_getGPTCompletion_Statics::OpenAIComponent_eventgetGPTCompletion_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UOpenAIComponent_getGPTCompletion_Statics::Function_MetaDataParams), Z_Construct_UFunction_UOpenAIComponent_getGPTCompletion_Statics::Function_MetaDataParams) };
-static_assert(sizeof(Z_Construct_UFunction_UOpenAIComponent_getGPTCompletion_Statics::OpenAIComponent_eventgetGPTCompletion_Parms) < MAX_uint16);
-UFunction* Z_Construct_UFunction_UOpenAIComponent_getGPTCompletion()
-{
-	static UFunction* ReturnFunction = nullptr;
-	if (!ReturnFunction)
-	{
-		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UOpenAIComponent_getGPTCompletion_Statics::FuncParams);
-	}
-	return ReturnFunction;
-}
-DEFINE_FUNCTION(UOpenAIComponent::execgetGPTCompletion)
-{
-	P_GET_PROPERTY(FStrProperty,Z_Param_prompt);
-	P_GET_TARRAY(FString,Z_Param_stopSequences);
-	P_GET_PROPERTY(FStrProperty,Z_Param_apiMethod);
-	P_GET_PROPERTY(FIntProperty,Z_Param_maxTokens);
-	P_GET_PROPERTY(FFloatProperty,Z_Param_temperature);
-	P_FINISH;
-	P_NATIVE_BEGIN;
-	P_THIS->getGPTCompletion(Z_Param_prompt,Z_Param_stopSequences,Z_Param_apiMethod,Z_Param_maxTokens,Z_Param_temperature);
-	P_NATIVE_END;
-}
-// End Class UOpenAIComponent Function getGPTCompletion
-
 // Begin Class UOpenAIComponent
 void UOpenAIComponent::StaticRegisterNativesUOpenAIComponent()
 {
 	UClass* Class = UOpenAIComponent::StaticClass();
 	static const FNameNativePtrPair Funcs[] = {
 		{ "getChatGPTCompletion", &UOpenAIComponent::execgetChatGPTCompletion },
-		{ "getGPTCompletion", &UOpenAIComponent::execgetGPTCompletion },
 	};
 	FNativeFunctionRegistrar::RegisterFunctions(Class, Funcs, UE_ARRAY_COUNT(Funcs));
 }
@@ -173,21 +100,16 @@ struct Z_Construct_UClass_UOpenAIComponent_Statics
 		{ "Category", "Configuration" },
 		{ "ModuleRelativePath", "Public/OpenAIComponent.h" },
 	};
-	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_IncomingGPTResponse_MetaData[] = {
-		{ "ModuleRelativePath", "Public/OpenAIComponent.h" },
-	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_IncomingChatGPTResponse_MetaData[] = {
 		{ "ModuleRelativePath", "Public/OpenAIComponent.h" },
 	};
 #endif // WITH_METADATA
 	static const UECodeGen_Private::FStrPropertyParams NewProp_Key;
-	static const UECodeGen_Private::FMulticastDelegatePropertyParams NewProp_IncomingGPTResponse;
 	static const UECodeGen_Private::FMulticastDelegatePropertyParams NewProp_IncomingChatGPTResponse;
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static UObject* (*const DependentSingletons[])();
 	static constexpr FClassFunctionLinkInfo FuncInfo[] = {
 		{ &Z_Construct_UFunction_UOpenAIComponent_getChatGPTCompletion, "getChatGPTCompletion" }, // 3306270835
-		{ &Z_Construct_UFunction_UOpenAIComponent_getGPTCompletion, "getGPTCompletion" }, // 1245628726
 	};
 	static_assert(UE_ARRAY_COUNT(FuncInfo) < 2048);
 	static constexpr FCppClassTypeInfoStatic StaticCppClassTypeInfo = {
@@ -196,11 +118,9 @@ struct Z_Construct_UClass_UOpenAIComponent_Statics
 	static const UECodeGen_Private::FClassParams ClassParams;
 };
 const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_UOpenAIComponent_Statics::NewProp_Key = { "Key", nullptr, (EPropertyFlags)0x0010000000004001, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UOpenAIComponent, Key), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Key_MetaData), NewProp_Key_MetaData) };
-const UECodeGen_Private::FMulticastDelegatePropertyParams Z_Construct_UClass_UOpenAIComponent_Statics::NewProp_IncomingGPTResponse = { "IncomingGPTResponse", nullptr, (EPropertyFlags)0x0010100010080000, UECodeGen_Private::EPropertyGenFlags::InlineMulticastDelegate, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UOpenAIComponent, IncomingGPTResponse), Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_IncomingGPTResponse_MetaData), NewProp_IncomingGPTResponse_MetaData) }; // 4026830914
 const UECodeGen_Private::FMulticastDelegatePropertyParams Z_Construct_UClass_UOpenAIComponent_Statics::NewProp_IncomingChatGPTResponse = { "IncomingChatGPTResponse", nullptr, (EPropertyFlags)0x0010100010080000, UECodeGen_Private::EPropertyGenFlags::InlineMulticastDelegate, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UOpenAIComponent, IncomingChatGPTResponse), Z_Construct_UDelegateFunction_FANTASIA_IncomingChatGPTResponseEvent__DelegateSignature, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_IncomingChatGPTResponse_MetaData), NewProp_IncomingChatGPTResponse_MetaData) }; // 2190720310
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_UOpenAIComponent_Statics::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UOpenAIComponent_Statics::NewProp_Key,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UOpenAIComponent_Statics::NewProp_IncomingGPTResponse,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UOpenAIComponent_Statics::NewProp_IncomingChatGPTResponse,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_UOpenAIComponent_Statics::PropPointers) < 2048);
@@ -244,10 +164,10 @@ UOpenAIComponent::~UOpenAIComponent() {}
 struct Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_OpenAIComponent_h_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_UOpenAIComponent, UOpenAIComponent::StaticClass, TEXT("UOpenAIComponent"), &Z_Registration_Info_UClass_UOpenAIComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UOpenAIComponent), 2572697967U) },
+		{ Z_Construct_UClass_UOpenAIComponent, UOpenAIComponent::StaticClass, TEXT("UOpenAIComponent"), &Z_Registration_Info_UClass_UOpenAIComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UOpenAIComponent), 2514094117U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_OpenAIComponent_h_21618808(TEXT("/Script/FANTASIA"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_OpenAIComponent_h_2145644226(TEXT("/Script/FANTASIA"),
 	Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_OpenAIComponent_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_OpenAIComponent_h_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);

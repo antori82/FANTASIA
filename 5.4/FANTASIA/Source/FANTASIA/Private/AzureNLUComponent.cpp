@@ -5,6 +5,7 @@
 
 using namespace std;
 using namespace Microsoft::CognitiveServices::Speech;
+using namespace Microsoft::CognitiveServices::Speech::Audio;
 
 // Sets default values for this component's properties
 UAzureNLUComponent::UAzureNLUComponent()
@@ -12,6 +13,7 @@ UAzureNLUComponent::UAzureNLUComponent()
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryComponentTick.bRunOnAnyThread = false;
 
 	VoiceCapture = FVoiceModule::Get().CreateVoiceCapture("");
 }
@@ -22,25 +24,16 @@ void UAzureNLUComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	config = SpeechConfig::FromSubscription(std::string(TCHAR_TO_UTF8(*SpeechKey)), std::string(TCHAR_TO_UTF8(*Region)));
+	config = SpeechConfig::FromSubscription(std::string(TCHAR_TO_UTF8(*Key)), std::string(TCHAR_TO_UTF8(*Region)));
 	config->SetSpeechRecognitionLanguage(std::string(TCHAR_TO_UTF8(*Language)));
-
-
-	auto cluModel = ConversationalLanguageUnderstandingModel::FromResource(
-		std::string(TCHAR_TO_UTF8(*LanguageKey)),
-		std::string(TCHAR_TO_UTF8(*Endpoint)),
-		std::string(TCHAR_TO_UTF8(*projectName)),
-		std::string(TCHAR_TO_UTF8(*deploymentName)));
-
-	models.push_back(cluModel);
-	
+	model = LanguageUnderstandingModel::FromAppId(TCHAR_TO_UTF8(*AppID));
 }
 
 void UAzureNLUComponent::getResult(FNLUResponse response)
 {
+	//IncomingMessage.Broadcast(response);
 	handle->NLUResultAvailableUnsubscribeUser(NLUResultAvailableHandle);
 	handle->Shutdown();
-	//IncomingMessage.Broadcast(response);
 
 	outResponse = response;
 	responseReady = true;
@@ -49,17 +42,17 @@ void UAzureNLUComponent::getResult(FNLUResponse response)
 // Called every frame
 void UAzureNLUComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
+	//Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 	if (responseReady) {
-		responseReady = false;
 		IncomingMessage.Broadcast(outResponse);
+		responseReady = false;
 	}
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 }
 
 void UAzureNLUComponent::AzureNLUStart()
 {
 	FNLUResultAvailableDelegate NLUResultSubscriber;
 	NLUResultSubscriber.BindUObject(this, &UAzureNLUComponent::getResult);
-	handle = AzureNLUThread::setup(config, models);
+	handle = AzureNLUThread::setup(config, model);
 	NLUResultAvailableHandle = handle->NLUResultAvailableSubscribeUser(NLUResultSubscriber);
 }

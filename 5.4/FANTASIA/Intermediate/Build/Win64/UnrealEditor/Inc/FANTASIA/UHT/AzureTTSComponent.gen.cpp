@@ -172,6 +172,10 @@ struct Z_Construct_UClass_UAzureTTSComponent_Statics
 		{ "Category", "Configuration" },
 		{ "ModuleRelativePath", "Public/AzureTTSComponent.h" },
 	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_Streaming_MetaData[] = {
+		{ "Category", "Configuration" },
+		{ "ModuleRelativePath", "Public/AzureTTSComponent.h" },
+	};
 #endif // WITH_METADATA
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_Speaker;
 	static const UECodeGen_Private::FMulticastDelegatePropertyParams NewProp_SynthesisReady;
@@ -180,6 +184,8 @@ struct Z_Construct_UClass_UAzureTTSComponent_Statics
 	static const UECodeGen_Private::FStrPropertyParams NewProp_Key;
 	static const UECodeGen_Private::FStrPropertyParams NewProp_Region;
 	static const UECodeGen_Private::FStrPropertyParams NewProp_Endpoint;
+	static void NewProp_Streaming_SetBit(void* Obj);
+	static const UECodeGen_Private::FBoolPropertyParams NewProp_Streaming;
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static UObject* (*const DependentSingletons[])();
 	static constexpr FClassFunctionLinkInfo FuncInfo[] = {
@@ -200,6 +206,11 @@ const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_UAzureTTSComponen
 const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_UAzureTTSComponent_Statics::NewProp_Key = { "Key", nullptr, (EPropertyFlags)0x0010000000000001, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UAzureTTSComponent, Key), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Key_MetaData), NewProp_Key_MetaData) };
 const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_UAzureTTSComponent_Statics::NewProp_Region = { "Region", nullptr, (EPropertyFlags)0x0010000000000001, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UAzureTTSComponent, Region), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Region_MetaData), NewProp_Region_MetaData) };
 const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_UAzureTTSComponent_Statics::NewProp_Endpoint = { "Endpoint", nullptr, (EPropertyFlags)0x0010000000000001, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UAzureTTSComponent, Endpoint), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Endpoint_MetaData), NewProp_Endpoint_MetaData) };
+void Z_Construct_UClass_UAzureTTSComponent_Statics::NewProp_Streaming_SetBit(void* Obj)
+{
+	((UAzureTTSComponent*)Obj)->Streaming = 1;
+}
+const UECodeGen_Private::FBoolPropertyParams Z_Construct_UClass_UAzureTTSComponent_Statics::NewProp_Streaming = { "Streaming", nullptr, (EPropertyFlags)0x0010000000000001, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, sizeof(bool), sizeof(UAzureTTSComponent), &Z_Construct_UClass_UAzureTTSComponent_Statics::NewProp_Streaming_SetBit, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Streaming_MetaData), NewProp_Streaming_MetaData) };
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_UAzureTTSComponent_Statics::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UAzureTTSComponent_Statics::NewProp_Speaker,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UAzureTTSComponent_Statics::NewProp_SynthesisReady,
@@ -208,6 +219,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_UAzureTTS
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UAzureTTSComponent_Statics::NewProp_Key,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UAzureTTSComponent_Statics::NewProp_Region,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UAzureTTSComponent_Statics::NewProp_Endpoint,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UAzureTTSComponent_Statics::NewProp_Streaming,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_UAzureTTSComponent_Statics::PropPointers) < 2048);
 UObject* (*const Z_Construct_UClass_UAzureTTSComponent_Statics::DependentSingletons[])() = {
@@ -253,10 +265,10 @@ UAzureTTSComponent::~UAzureTTSComponent() {}
 struct Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_UAzureTTSComponent, UAzureTTSComponent::StaticClass, TEXT("UAzureTTSComponent"), &Z_Registration_Info_UClass_UAzureTTSComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UAzureTTSComponent), 3527554808U) },
+		{ Z_Construct_UClass_UAzureTTSComponent, UAzureTTSComponent::StaticClass, TEXT("UAzureTTSComponent"), &Z_Registration_Info_UClass_UAzureTTSComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UAzureTTSComponent), 2782295306U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_3297203467(TEXT("/Script/FANTASIA"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_1869295861(TEXT("/Script/FANTASIA"),
 	Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);

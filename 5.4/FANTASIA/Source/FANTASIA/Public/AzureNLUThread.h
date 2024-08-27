@@ -25,11 +25,10 @@ private:
 	FRunnableThread* Thread;
 
 	shared_ptr<IntentRecognizer> recognizer;
-	std::vector<std::shared_ptr<LanguageUnderstandingModel>> NLUModels;
+	shared_ptr<LanguageUnderstandingModel> NLUModel;
 	shared_ptr<SpeechConfig> NLUConfig;
 
-	TArray<UNLUEntity*> BuildEntities(TArray<TSharedPtr<FJsonValue>> items, TArray<UNLUEntity*> entities);
-	TArray<UNLUIntent*> BuildIntents(TArray<TSharedPtr<FJsonValue>> items, TArray<UNLUIntent*> intents);
+	TArray<UNLUEntity*> BuildEntitiesTree(TArray<TSharedPtr<FJsonValue>> items, TArray<UNLUEntity*> entities);
 
 	FNLUResultAvailableEvent NLUResultAvailable;
 
@@ -38,7 +37,7 @@ public:
 	//~~~ Thread Core Functions ~~~
 
 	//Constructor
-	AzureNLUThread(shared_ptr<SpeechConfig> config, std::vector<std::shared_ptr<LanguageUnderstandingModel>> models);
+	AzureNLUThread(shared_ptr<SpeechConfig> config, shared_ptr<LanguageUnderstandingModel> model);
 
 	virtual ~AzureNLUThread();
 
@@ -50,7 +49,7 @@ public:
 
 	void StartOneShotRecognition();
 
-	static AzureNLUThread* setup(shared_ptr<SpeechConfig> config, std::vector<std::shared_ptr<LanguageUnderstandingModel>> models);
+	static AzureNLUThread* setup(shared_ptr<SpeechConfig> config, shared_ptr<LanguageUnderstandingModel> model);
 
 	/** Makes sure this thread has stopped properly */
 	void EnsureCompletion();
