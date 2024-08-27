@@ -2086,8 +2086,7 @@
             "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\source\\fantasia\\public\\paramobject.h",
             "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\intermediate\\build\\win64\\unrealeditor\\inc\\fantasia\\uht\\paramobject.generated.h",
             "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\intermediate\\build\\win64\\unrealeditor\\inc\\fantasia\\uht\\ttsinterface.gen.cpp",
-            "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\intermediate\\build\\win64\\unrealeditor\\inc\\fantasia\\uht\\ttsthreadinterface.gen.cpp",
-            "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\source\\fantasia\\private\\azurenlucomponent.cpp"
+            "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\intermediate\\build\\win64\\unrealeditor\\inc\\fantasia\\uht\\ttsthreadinterface.gen.cpp"
         ],
         "ImportedModules": [],
         "ImportedHeaderUnits": []
