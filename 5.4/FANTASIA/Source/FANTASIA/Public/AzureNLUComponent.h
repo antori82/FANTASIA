@@ -22,7 +22,7 @@ using namespace Microsoft::CognitiveServices::Speech::Intent;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FIncomingNLUEvent, FNLUResponse, NLUResponse);
 
-UCLASS(ClassGroup = (Azure), meta = (BlueprintSpawnableComponent))
+UCLASS(ClassGroup = (Azure), meta = (BlueprintSpawnableComponent), config = Game)
 class UAzureNLUComponent : public UActorComponent
 {
 	GENERATED_BODY()
@@ -41,35 +41,45 @@ private:
 	shared_ptr<AudioConfig> audioInput;
 	AzureNLUThread* handle;
 	shared_ptr<SpeechConfig> config;
-	shared_ptr<LanguageUnderstandingModel> model;
+	std::vector<std::shared_ptr<LanguageUnderstandingModel>> models;
 
 	FDelegateHandle NLUResultAvailableHandle;
 	bool responseReady = false;
 	FNLUResponse outResponse;
 
-
 	void getResult(FNLUResponse response);
+
+	bool checkConfigIsValid();
 
 public:
 
-	UPROPERTY(EditAnywhere, Category = "Configuration")
-		FString Key;
+	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
+	FString SpeechKey;
 
-	UPROPERTY(EditAnywhere, Category = "Configuration")
-		FString Region;
+	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
+	FString Region;
 
-	UPROPERTY(EditAnywhere, Category = "Configuration")
-		FString Language;
+	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
+	FString Language;
 
-	UPROPERTY(EditAnywhere, Category = "Configuration")
-		FString AppID;
+	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
+	FString LanguageKey;
+
+	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
+	FString Endpoint;
+
+	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
+	FString ProjectName;
+
+	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
+	FString DeploymentName;
 
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	UPROPERTY(BlueprintAssignable, Category = "Speech Understanding")
-		FIncomingNLUEvent IncomingMessage;
+	FIncomingNLUEvent IncomingMessage;
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "NLU Start", Keywords = "Azure Plugin NLU"), Category = "NLU")
-		void AzureNLUStart();
+	void AzureNLUStart();
 };

@@ -108,17 +108,14 @@ struct FNLUResponse {
 
 	GENERATED_BODY()
 
-	UPROPERTY(BlueprintReadWrite)
+	UPROPERTY(BlueprintReadOnly)
 	FString query;
 
 	UPROPERTY(BlueprintReadWrite)
-	FString topIntent;
-
-	UPROPERTY(BlueprintReadWrite)
-	float score;
-
-	UPROPERTY(BlueprintReadWrite)
 	TArray<UNLUEntity*> entities;
+
+	UPROPERTY(BlueprintReadWrite)
+	TArray<UNLUIntent*> intents;
 };
 
 UCLASS(ClassGroup = (Azure), BlueprintType)
