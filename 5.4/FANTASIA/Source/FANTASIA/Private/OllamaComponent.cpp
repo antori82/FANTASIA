@@ -25,7 +25,7 @@ void UOllamaComponent::OnOllamaGPTResponseReceived(FHttpRequestPtr Request, FHtt
 			const TSharedPtr<FJsonObject>* FileMessageObject;
 
 			if (JsonValue->TryGetObject(FileMessageObject)) {
-				IncomingGPTResponse.Broadcast(FileMessageObject->Get()->GetStringField("response"));
+				IncomingGPTResponse.Broadcast(FileMessageObject->Get()->GetStringField(TEXT("response")));
 			}
 		}
 	}
@@ -66,7 +66,7 @@ void UOllamaComponent::OnOllamaChatGPTResponseReceived(FHttpRequestPtr Request, 
 			const TSharedPtr<FJsonObject>* FileMessageObject;
 
 			if (JsonValue->TryGetObject(FileMessageObject)) {
-				IncomingChatGPTResponse.Broadcast(FileMessageObject->Get()->GetObjectField("message")->GetStringField("content"), FileMessageObject->Get()->GetObjectField("message")->GetStringField("role"));
+				IncomingChatGPTResponse.Broadcast(FileMessageObject->Get()->GetObjectField(TEXT("message"))->GetStringField(TEXT("content")), FileMessageObject->Get()->GetObjectField(TEXT("message"))->GetStringField(TEXT("role")));
 			}
 		}
 	}

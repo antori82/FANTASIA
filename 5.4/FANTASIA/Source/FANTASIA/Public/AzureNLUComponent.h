@@ -22,7 +22,7 @@ using namespace Microsoft::CognitiveServices::Speech::Intent;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FIncomingNLUEvent, FNLUResponse, NLUResponse);
 
-UCLASS(ClassGroup = (Azure), meta = (BlueprintSpawnableComponent), config = Game)
+UCLASS(ClassGroup = (Azure), meta = (BlueprintSpawnableComponent))
 class UAzureNLUComponent : public UActorComponent
 {
 	GENERATED_BODY()
@@ -41,36 +41,28 @@ private:
 	shared_ptr<AudioConfig> audioInput;
 	AzureNLUThread* handle;
 	shared_ptr<SpeechConfig> config;
-	std::vector<std::shared_ptr<LanguageUnderstandingModel>> models;
+	shared_ptr<LanguageUnderstandingModel> model;
 
 	FDelegateHandle NLUResultAvailableHandle;
 	bool responseReady = false;
 	FNLUResponse outResponse;
 
+
 	void getResult(FNLUResponse response);
 
 public:
 
-	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
-		FString SpeechKey;
+	UPROPERTY(EditAnywhere, Category = "Configuration")
+		FString Key;
 
-	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
+	UPROPERTY(EditAnywhere, Category = "Configuration")
 		FString Region;
 
-	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
+	UPROPERTY(EditAnywhere, Category = "Configuration")
 		FString Language;
 
-	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
-		FString LanguageKey;
-
-	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
-		FString Endpoint;
-
-	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
-	FString projectName;
-
-	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
-	FString deploymentName;
+	UPROPERTY(EditAnywhere, Category = "Configuration")
+		FString AppID;
 
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;

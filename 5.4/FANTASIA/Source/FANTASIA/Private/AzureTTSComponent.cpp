@@ -21,6 +21,8 @@ void UAzureTTSComponent::BeginPlay()
 
 	config = SpeechConfig::FromSubscription(std::string(TCHAR_TO_UTF8(*Key)), std::string(TCHAR_TO_UTF8(*Region)));
 	config->SetEndpointId(std::string(TCHAR_TO_UTF8(*Endpoint)));
+	if (Streaming)
+		config->SetSpeechSynthesisOutputFormat(SpeechSynthesisOutputFormat::Raw16Khz16BitMonoPcm);
 	//config-> SpeechSynthesisLanguage = std::string(TCHAR_TO_UTF8(*Language));
 }
 
