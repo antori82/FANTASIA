@@ -27,6 +27,7 @@ FANTASIA_API UClass* Z_Construct_UClass_UNLUIntent();
 FANTASIA_API UClass* Z_Construct_UClass_UNLUIntent_NoRegister();
 FANTASIA_API UEnum* Z_Construct_UEnum_FANTASIA_BayesianNodeType();
 FANTASIA_API UEnum* Z_Construct_UEnum_FANTASIA_ChatGPTRoleType();
+FANTASIA_API UEnum* Z_Construct_UEnum_FANTASIA_EAzureASREnum();
 FANTASIA_API UEnum* Z_Construct_UEnum_FANTASIA_InfluenceNodeType();
 FANTASIA_API UEnum* Z_Construct_UEnum_FANTASIA_Neo4jOperation();
 FANTASIA_API UEnum* Z_Construct_UEnum_FANTASIA_TTSVoiceType();
@@ -135,6 +136,58 @@ void FIncomingChatGPTResponseEvent_DelegateWrapper(const FMulticastScriptDelegat
 	IncomingChatGPTResponseEvent.ProcessMulticastDelegate<UObject>(&Parms);
 }
 // End Delegate FIncomingChatGPTResponseEvent
+
+// Begin Enum EAzureASREnum
+static FEnumRegistrationInfo Z_Registration_Info_UEnum_EAzureASREnum;
+static UEnum* EAzureASREnum_StaticEnum()
+{
+	if (!Z_Registration_Info_UEnum_EAzureASREnum.OuterSingleton)
+	{
+		Z_Registration_Info_UEnum_EAzureASREnum.OuterSingleton = GetStaticEnum(Z_Construct_UEnum_FANTASIA_EAzureASREnum, (UObject*)Z_Construct_UPackage__Script_FANTASIA(), TEXT("EAzureASREnum"));
+	}
+	return Z_Registration_Info_UEnum_EAzureASREnum.OuterSingleton;
+}
+template<> FANTASIA_API UEnum* StaticEnum<EAzureASREnum>()
+{
+	return EAzureASREnum_StaticEnum();
+}
+struct Z_Construct_UEnum_FANTASIA_EAzureASREnum_Statics
+{
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Enum_MetaDataParams[] = {
+		{ "ASR_CONTINUOUS.Name", "ASR_CONTINUOUS" },
+		{ "ASR_ONESHOT.Name", "ASR_ONESHOT" },
+		{ "BlueprintType", "true" },
+		{ "ModuleRelativePath", "Public/FANTASIATypes.h" },
+	};
+#endif // WITH_METADATA
+	static constexpr UECodeGen_Private::FEnumeratorParam Enumerators[] = {
+		{ "ASR_CONTINUOUS", (int64)ASR_CONTINUOUS },
+		{ "ASR_ONESHOT", (int64)ASR_ONESHOT },
+	};
+	static const UECodeGen_Private::FEnumParams EnumParams;
+};
+const UECodeGen_Private::FEnumParams Z_Construct_UEnum_FANTASIA_EAzureASREnum_Statics::EnumParams = {
+	(UObject*(*)())Z_Construct_UPackage__Script_FANTASIA,
+	nullptr,
+	"EAzureASREnum",
+	"EAzureASREnum",
+	Z_Construct_UEnum_FANTASIA_EAzureASREnum_Statics::Enumerators,
+	RF_Public|RF_Transient|RF_MarkAsNative,
+	UE_ARRAY_COUNT(Z_Construct_UEnum_FANTASIA_EAzureASREnum_Statics::Enumerators),
+	EEnumFlags::None,
+	(uint8)UEnum::ECppForm::Regular,
+	METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UEnum_FANTASIA_EAzureASREnum_Statics::Enum_MetaDataParams), Z_Construct_UEnum_FANTASIA_EAzureASREnum_Statics::Enum_MetaDataParams)
+};
+UEnum* Z_Construct_UEnum_FANTASIA_EAzureASREnum()
+{
+	if (!Z_Registration_Info_UEnum_EAzureASREnum.InnerSingleton)
+	{
+		UECodeGen_Private::ConstructUEnum(Z_Registration_Info_UEnum_EAzureASREnum.InnerSingleton, Z_Construct_UEnum_FANTASIA_EAzureASREnum_Statics::EnumParams);
+	}
+	return Z_Registration_Info_UEnum_EAzureASREnum.InnerSingleton;
+}
+// End Enum EAzureASREnum
 
 // Begin Enum ChatGPTRoleType
 static FEnumRegistrationInfo Z_Registration_Info_UEnum_ChatGPTRoleType;
@@ -1494,6 +1547,7 @@ UNeo4jResultCellSimple::~UNeo4jResultCellSimple() {}
 struct Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_Statics
 {
 	static constexpr FEnumRegisterCompiledInInfo EnumInfo[] = {
+		{ EAzureASREnum_StaticEnum, TEXT("EAzureASREnum"), &Z_Registration_Info_UEnum_EAzureASREnum, CONSTRUCT_RELOAD_VERSION_INFO(FEnumReloadVersionInfo, 2771402611U) },
 		{ ChatGPTRoleType_StaticEnum, TEXT("ChatGPTRoleType"), &Z_Registration_Info_UEnum_ChatGPTRoleType, CONSTRUCT_RELOAD_VERSION_INFO(FEnumReloadVersionInfo, 1359525058U) },
 		{ InfluenceNodeType_StaticEnum, TEXT("InfluenceNodeType"), &Z_Registration_Info_UEnum_InfluenceNodeType, CONSTRUCT_RELOAD_VERSION_INFO(FEnumReloadVersionInfo, 3896454705U) },
 		{ BayesianNodeType_StaticEnum, TEXT("BayesianNodeType"), &Z_Registration_Info_UEnum_BayesianNodeType, CONSTRUCT_RELOAD_VERSION_INFO(FEnumReloadVersionInfo, 2887683997U) },
@@ -1517,7 +1571,7 @@ struct Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_S
 		{ Z_Construct_UClass_UNeo4jResultCellSimple, UNeo4jResultCellSimple::StaticClass, TEXT("UNeo4jResultCellSimple"), &Z_Registration_Info_UClass_UNeo4jResultCellSimple, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UNeo4jResultCellSimple), 3829507120U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_3876249590(TEXT("/Script/FANTASIA"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_3022575376(TEXT("/Script/FANTASIA"),
 	Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_Statics::ClassInfo),
 	Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_Statics::ScriptStructInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_Statics::ScriptStructInfo),
 	Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_Statics::EnumInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_Statics::EnumInfo));

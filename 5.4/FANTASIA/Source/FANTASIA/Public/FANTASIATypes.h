@@ -6,12 +6,19 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FIncomingGPTResponseEvent, FString, 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FIncomingChatGPTResponseEvent, FString, chatGPTResponse, FString, role);
 
 UENUM(BlueprintType)
+enum EAzureASREnum : uint8
+{
+	ASR_CONTINUOUS,
+	ASR_ONESHOT
+};
+
+UENUM(BlueprintType)
 enum class ChatGPTRoleType : uint8 {
 	SYSTEM = 0 UMETA(DisplayName = "SYSTEM"),
 	ASSISTANT = 1 UMETA(DisplayName = "ASSISTANT"),
 	USER = 2 UMETA(DisplayName = "USER"),
 	FUNCTION = 3 UMETA(DisplayName = "FUNCTION"),
-	};
+};
 
 USTRUCT(Blueprintable)
 struct FChatTurn

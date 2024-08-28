@@ -1,5 +1,6 @@
 #pragma once
 #include "Core.h"
+#include "FANTASIATypes.h"
 #include <speechapi_cxx.h>
 
 using namespace std;
@@ -8,12 +9,9 @@ using namespace Microsoft::CognitiveServices::Speech::Audio;
 
 DECLARE_DELEGATE_OneParam(FPartialRecognitionAvailableDelegate, FString);
 DECLARE_EVENT_OneParam(AzureASRThread, FPartialRecognitionAvailableEvent, FString);
+DECLARE_DELEGATE_OneParam(FFinalRecognitionAvailableDelegate, FString);
+DECLARE_EVENT_OneParam(AzureASRThread, FFinalRecognitionAvailableEvent, FString);
 
-enum class EAzureASREnum : uint8
-{
-	ASR_CONTINUOUS,
-	ASR_ONESHOT
-};
 
 //~~~~~ Multi Threading ~~~
 class AzureASRThread : public FRunnable
@@ -39,6 +37,7 @@ private:
 	void StartOneShotRecognition();
 
 	FPartialRecognitionAvailableEvent PartialRecognitionAvailable;
+	FPartialRecognitionAvailableEvent FinalRecognitionAvailable;
 
 public:
 
@@ -67,5 +66,8 @@ public:
 
 	FDelegateHandle PartialRecognitionAvailableSubscribeUser(FPartialRecognitionAvailableDelegate& UseDelegate);
 	void PartialRecognitionAvailableUnsubscribeUser(FDelegateHandle DelegateHandle);
+
+	FDelegateHandle FinalRecognitionAvailableSubscribeUser(FFinalRecognitionAvailableDelegate& UseDelegate);
+	void FinalRecognitionAvailableUnsubscribeUser(FDelegateHandle DelegateHandle);
 
 };

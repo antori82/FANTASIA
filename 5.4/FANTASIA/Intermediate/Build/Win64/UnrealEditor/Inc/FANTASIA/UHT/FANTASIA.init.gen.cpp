@@ -8,11 +8,12 @@
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
 void EmptyLinkFunctionForGeneratedCodeFANTASIA_init() {}
 	FANTASIA_API UFunction* Z_Construct_UDelegateFunction_FANTASIA_GetPosteriorDelegate__DelegateSignature();
-	FANTASIA_API UFunction* Z_Construct_UDelegateFunction_FANTASIA_IncomingASREvent__DelegateSignature();
 	FANTASIA_API UFunction* Z_Construct_UDelegateFunction_FANTASIA_IncomingChatGPTResponseEvent__DelegateSignature();
+	FANTASIA_API UFunction* Z_Construct_UDelegateFunction_FANTASIA_IncomingFinalASREvent__DelegateSignature();
 	FANTASIA_API UFunction* Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature();
 	FANTASIA_API UFunction* Z_Construct_UDelegateFunction_FANTASIA_IncomingNeo4jResponseEvent__DelegateSignature();
 	FANTASIA_API UFunction* Z_Construct_UDelegateFunction_FANTASIA_IncomingNLUEvent__DelegateSignature();
+	FANTASIA_API UFunction* Z_Construct_UDelegateFunction_FANTASIA_IncomingPartialASREvent__DelegateSignature();
 	FANTASIA_API UFunction* Z_Construct_UDelegateFunction_FANTASIA_SynthesizedEvent__DelegateSignature();
 	FANTASIA_API UFunction* Z_Construct_UDelegateFunction_FANTASIA_SynthesizedInternalEvent__DelegateSignature();
 	static FPackageRegistrationInfo Z_Registration_Info_UPackage__Script_FANTASIA;
@@ -22,11 +23,12 @@ void EmptyLinkFunctionForGeneratedCodeFANTASIA_init() {}
 		{
 			static UObject* (*const SingletonFuncArray[])() = {
 				(UObject* (*)())Z_Construct_UDelegateFunction_FANTASIA_GetPosteriorDelegate__DelegateSignature,
-				(UObject* (*)())Z_Construct_UDelegateFunction_FANTASIA_IncomingASREvent__DelegateSignature,
 				(UObject* (*)())Z_Construct_UDelegateFunction_FANTASIA_IncomingChatGPTResponseEvent__DelegateSignature,
+				(UObject* (*)())Z_Construct_UDelegateFunction_FANTASIA_IncomingFinalASREvent__DelegateSignature,
 				(UObject* (*)())Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature,
 				(UObject* (*)())Z_Construct_UDelegateFunction_FANTASIA_IncomingNeo4jResponseEvent__DelegateSignature,
 				(UObject* (*)())Z_Construct_UDelegateFunction_FANTASIA_IncomingNLUEvent__DelegateSignature,
+				(UObject* (*)())Z_Construct_UDelegateFunction_FANTASIA_IncomingPartialASREvent__DelegateSignature,
 				(UObject* (*)())Z_Construct_UDelegateFunction_FANTASIA_SynthesizedEvent__DelegateSignature,
 				(UObject* (*)())Z_Construct_UDelegateFunction_FANTASIA_SynthesizedInternalEvent__DelegateSignature,
 			};
@@ -35,13 +37,13 @@ void EmptyLinkFunctionForGeneratedCodeFANTASIA_init() {}
 				SingletonFuncArray,
 				UE_ARRAY_COUNT(SingletonFuncArray),
 				PKG_CompiledIn | 0x00000000,
-				0xD5EE6A34,
-				0x122C403C,
+				0x2BAEAD9A,
+				0x89BB7F6A,
 				METADATA_PARAMS(0, nullptr)
 			};
 			UECodeGen_Private::ConstructUPackage(Z_Registration_Info_UPackage__Script_FANTASIA.OuterSingleton, PackageParams);
 		}
 		return Z_Registration_Info_UPackage__Script_FANTASIA.OuterSingleton;
 	}
-	static FRegisterCompiledInInfo Z_CompiledInDeferPackage_UPackage__Script_FANTASIA(Z_Construct_UPackage__Script_FANTASIA, TEXT("/Script/FANTASIA"), Z_Registration_Info_UPackage__Script_FANTASIA, CONSTRUCT_RELOAD_VERSION_INFO(FPackageReloadVersionInfo, 0xD5EE6A34, 0x122C403C));
+	static FRegisterCompiledInInfo Z_CompiledInDeferPackage_UPackage__Script_FANTASIA(Z_Construct_UPackage__Script_FANTASIA, TEXT("/Script/FANTASIA"), Z_Registration_Info_UPackage__Script_FANTASIA, CONSTRUCT_RELOAD_VERSION_INFO(FPackageReloadVersionInfo, 0x2BAEAD9A, 0x89BB7F6A));
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
