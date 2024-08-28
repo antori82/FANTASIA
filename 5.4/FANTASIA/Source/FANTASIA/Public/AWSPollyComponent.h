@@ -23,6 +23,39 @@ public:
 	// Sets default values for this component's properties
 	UAWSPollyComponent();
 
+	UPROPERTY(BlueprintReadWrite, Category = "Speech to Text")
+	UAudioComponent* Speaker;
+
+	UPROPERTY(BlueprintAssignable, Category = "Speech to Text")
+	FSynthesizedEvent SynthesisReady;
+
+	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
+	FString Voice;
+
+	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
+	TTSVoiceType voiceType;
+
+	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
+	FString AccessKey;
+
+	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
+	FString SecretAccessKey;
+
+	// Called every frame
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "TTS Start", Keywords = "AWS Plugin TTS"), Category = "TTS")
+	void AWSPollySynthesize(FString ssml, FString id, bool getLipSync);
+
+	UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Sound", Keywords = "AWS Plugin TTS"), Category = "TTS")
+	USoundWave* AWSPollyGetSound(FString id);
+
+	UFUNCTION(BlueprintPure, meta = (DisplayName = "Get LipSync", Keywords = "AWS Plugin TTS"), Category = "TTS")
+	TArray<FTTSTimedStruct> AWSPollyGetLipSync(FString id);
+
+	UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Notifies", Keywords = "AWS Plugin TTS"), Category = "TTS")
+	TArray<FTTSTimedStruct> AWSPollyGetNotifies(FString id);
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
@@ -34,45 +67,8 @@ private:
 	AWSPollyThread* handle;
 	FTimerHandle TimerHandle;
 	FDelegateHandle TTSResultAvailableHandle;
-
-	void getResult(FTTSData response, FString id);
-
 	FSynthesizedInternalEvent synthesisReadyInternal;
-
 	FString idSynthesisReady = "";
 
-public:
-
-	UPROPERTY(BlueprintReadWrite, Category = "Speech to Text")
-		UAudioComponent* Speaker;
-
-	UPROPERTY(BlueprintAssignable, Category = "Speech to Text")
-		FSynthesizedEvent SynthesisReady;
-
-	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
-		FString Voice;
-		
-	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
-		TTSVoiceType voiceType;
-
-	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
-		FString AccessKey;
-
-	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
-		FString SecretAccessKey;
-
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
-	UFUNCTION(BlueprintCallable, meta = (DisplayName = "TTS Start", Keywords = "AWS Plugin TTS"), Category = "TTS")
-		void AWSPollySynthesize(FString ssml, FString id, bool getLipSync);
-
-	UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Sound", Keywords = "AWS Plugin TTS"), Category = "TTS")
-		USoundWave* AWSPollyGetSound(FString id);
-
-	UFUNCTION(BlueprintPure, meta = (DisplayName = "Get LipSync", Keywords = "AWS Plugin TTS"), Category = "TTS")
-		TArray<FTTSTimedStruct> AWSPollyGetLipSync(FString id);
-
-	UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Notifies", Keywords = "AWS Plugin TTS"), Category = "TTS")
-		TArray<FTTSTimedStruct> AWSPollyGetNotifies(FString id);
+	void getResult(FTTSData response, FString id);
 };
