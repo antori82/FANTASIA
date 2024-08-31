@@ -492,14 +492,8 @@ struct Z_Construct_UFunction_UBayesianNetwork_addEvidence_Statics
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
 		{ "Category", "Bayesian_Network" },
-#if !UE_BUILD_SHIPPING
-		{ "Comment", "//UFUNCTION(BlueprintCallable, meta = (DisplayName = \"getPosterior\", Keywords = \"Inference\", AutoCreateRefTerm = \"evidences\"), Category = \"Bayesian_Network\")\n//void getPosterior(FGetPosteriorDelegate outMap, FString variable);\n" },
-#endif
 		{ "DisplayName", "addEvidence" },
 		{ "ModuleRelativePath", "Public/BayesianNetwork.h" },
-#if !UE_BUILD_SHIPPING
-		{ "ToolTip", "UFUNCTION(BlueprintCallable, meta = (DisplayName = \"getPosterior\", Keywords = \"Inference\", AutoCreateRefTerm = \"evidences\"), Category = \"Bayesian_Network\")\nvoid getPosterior(FGetPosteriorDelegate outMap, FString variable);" },
-#endif
 	};
 #endif // WITH_METADATA
 	static const UECodeGen_Private::FStrPropertyParams NewProp_variable;
@@ -1149,7 +1143,7 @@ struct Z_Construct_UClass_UBayesianNetwork_Statics
 	static constexpr FClassFunctionLinkInfo FuncInfo[] = {
 		{ &Z_Construct_UFunction_UBayesianNetwork_addArc, "addArc" }, // 3735489808
 		{ &Z_Construct_UFunction_UBayesianNetwork_addDiscretizedVariable, "addDiscretizedVariable" }, // 1956013269
-		{ &Z_Construct_UFunction_UBayesianNetwork_addEvidence, "addEvidence" }, // 2590928149
+		{ &Z_Construct_UFunction_UBayesianNetwork_addEvidence, "addEvidence" }, // 2594943928
 		{ &Z_Construct_UFunction_UBayesianNetwork_addLabelizedVariable, "addLabelizedVariable" }, // 4197049394
 		{ &Z_Construct_UFunction_UBayesianNetwork_erase, "erase" }, // 1256025515
 		{ &Z_Construct_UFunction_UBayesianNetwork_eraseAllEvidence, "eraseAllEvidence" }, // 3503794271
@@ -1242,10 +1236,10 @@ struct Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_S
 		{ FBayesianNodeStruct::StaticStruct, Z_Construct_UScriptStruct_FBayesianNodeStruct_Statics::NewStructOps, TEXT("BayesianNodeStruct"), &Z_Registration_Info_UScriptStruct_BayesianNodeStruct, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FBayesianNodeStruct), 2808211742U) },
 	};
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_UBayesianNetwork, UBayesianNetwork::StaticClass, TEXT("UBayesianNetwork"), &Z_Registration_Info_UClass_UBayesianNetwork, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UBayesianNetwork), 1895330121U) },
+		{ Z_Construct_UClass_UBayesianNetwork, UBayesianNetwork::StaticClass, TEXT("UBayesianNetwork"), &Z_Registration_Info_UClass_UBayesianNetwork, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UBayesianNetwork), 3353949285U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_3761884675(TEXT("/Script/FANTASIA"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_3024042598(TEXT("/Script/FANTASIA"),
 	Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_Statics::ClassInfo),
 	Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_Statics::ScriptStructInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_Statics::ScriptStructInfo),
 	Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_Statics::EnumInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_Statics::EnumInfo));

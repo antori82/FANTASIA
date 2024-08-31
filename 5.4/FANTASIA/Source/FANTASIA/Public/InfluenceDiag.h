@@ -28,6 +28,11 @@
 #include "UObject/NoExportTypes.h"
 #include "InfluenceDiag.generated.h"
 
+#pragma warning (default : 4263)
+#pragma warning (default : 4264)
+#pragma warning (default : 4265)
+#pragma warning (default : 4701)
+
 UENUM(BlueprintType)
 enum class InferenceIDAlgs : uint8
 {
