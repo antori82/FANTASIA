@@ -29,6 +29,11 @@
 #include "MathUtilities.h"
 #include "BayesianNetwork.generated.h"
 
+#pragma warning (default : 4263)
+#pragma warning (default : 4264)
+#pragma warning (default : 4265)
+#pragma warning (default : 4701)
+
 USTRUCT(BlueprintType)
 struct FMapContainer
 {
@@ -118,9 +123,6 @@ public:
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "getPosterior", Keywords = "Inference", AutoCreateRefTerm = "evidences"), Category = "Bayesian_Network")
 	TMap<FString, float> getPosterior(FString variable);
-
-	//UFUNCTION(BlueprintCallable, meta = (DisplayName = "getPosterior", Keywords = "Inference", AutoCreateRefTerm = "evidences"), Category = "Bayesian_Network")
-	//void getPosterior(FGetPosteriorDelegate outMap, FString variable);
 	
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "addEvidence"), Category = "Bayesian_Network")
 	void addEvidence(FString variable, TArray<float> data);

@@ -4,24 +4,20 @@
 #include <vector>
 
 
-std::vector<float> myLinspace(float start, float end, int points)
-{
+std::vector<float> myLinspace(float start, float end, int points) {
 	std::vector<float> res(points);
 	float step = (end - start) / (points - 1);
 	int i = 0;
 	float cand;
 
-	for (auto& e : res)
-	{
+	for (auto& e : res) {
 		cand = start + step * i++;
 		if (cand < end)
 			e = cand;
 		else
 			e = end;
 	}
-
 	return res;
-
 }
 
 UBayesianNetwork::UBayesianNetwork(const FObjectInitializer& ObjectInitializer)
@@ -44,18 +40,16 @@ void UBayesianNetwork::Init() {
 	}
 }
 
-void UBayesianNetwork::makeInference()
-{
+void UBayesianNetwork::makeInference() {
 	try {
 		//Init();
 		inference->makeInference();
 	}
 	catch (gum::NotFound& e)
-		UE_LOG(LogTemp, Warning, TEXT("%hs from %hs"), e.errorType().c_str(), e.errorContent().c_str());
+		UE_LOG(LogTemp, Warning, TEXT("[Bayesian Network] %hs from %hs"), e.errorType().c_str(), e.errorContent().c_str());
 }
 
-TMap<FString, float> UBayesianNetwork::getPosterior(FString variable)
-{
+TMap<FString, float> UBayesianNetwork::getPosterior(FString variable) {
 	const std::string nodeName(TCHAR_TO_UTF8(*variable));
 	TMap<FString, float> out;
 	unsigned int j;
@@ -68,19 +62,19 @@ TMap<FString, float> UBayesianNetwork::getPosterior(FString variable)
 			out.Add(FString(result.variable(0).label(j).c_str()), result.get(inst));
 	}
 	catch (gum::NotFound& e)
-		UE_LOG(LogTemp, Warning, TEXT("%hs from %hs"), e.errorType().c_str(), e.errorContent().c_str());
-	
+	{
+		UE_LOG(LogTemp, Warning, TEXT("[Bayesian Network] %hs from %hs"), e.errorType().c_str(), e.errorContent().c_str());
+		out.Add(FString("NOTFOUND"), 0.0);
+	}
 	return out;
 }
 
-void UBayesianNetwork::writeBIF(FString file)
-{
+void UBayesianNetwork::writeBIF(FString file) {
 	auto writer = gum::BIFWriter<double>();
 	writer.write(TCHAR_TO_UTF8(*file), bn);
 }
 
-void UBayesianNetwork::erase(FString variable)
-{
+void UBayesianNetwork::erase(FString variable) {
 	const std::string nodeName(TCHAR_TO_UTF8(*variable));
 	
 	TArray<FString> toRemove;
@@ -103,8 +97,7 @@ void UBayesianNetwork::setBN(const FString& Filename) {
 	unsigned int j;
 	FBayesianNodeStruct newNode;
 
-	switch (InferenceAlgorithm)
-	{
+	switch (InferenceAlgorithm) {
 		case InferenceAlgs::Lazy_Propagation:
 			inference = new gum::LazyPropagation<double>(&bn); break;
 		case InferenceAlgs::ShaferShenoy:
@@ -119,26 +112,22 @@ void UBayesianNetwork::setBN(const FString& Filename) {
 		newNode.variables.Empty();
 		newNode.values.Empty();
 		newNode.parents.Empty();
-
 		for (inst.setFirst(), j = 0; !inst.end(); ++inst, j++) {
 			newNode.name = FString(bn.variable(i).name().c_str());
 			if (j < bn.variable(i).domainSize())
 				newNode.variables.Add(FString(bn.variable(i).label(j).c_str()));
 			newNode.values.Add(bn.cpt(i).get(inst));
 		}
-
 		for (auto parent : bn.parents(i)) {
 			newNode.parents.Add(FString(bn.variable(parent).name().c_str()));
 		}
-
 		serializedNodes.Add(newNode);
 	}
 	initialized = true;
 }
 
 void UBayesianNetwork::addLabelizedVariable(FString variable, FString description, TArray<FString> labels) {
-	if (!nodeNames.Contains(variable))
-	{
+	if (!nodeNames.Contains(variable)) {
 		gum::LabelizedVariable newNode(TCHAR_TO_UTF8(*variable), TCHAR_TO_UTF8(*description), 0);
 		nodeNames.Add(variable);
 		nodeDescriptions.Add(variable, description);
@@ -146,8 +135,7 @@ void UBayesianNetwork::addLabelizedVariable(FString variable, FString descriptio
 }
 
 void UBayesianNetwork::addDiscretizedVariable(FString variable, FString description, float minTick, float maxTick, float nPoints, BayesianNodeType nodeType) {
-	if (!nodeNames.Contains(variable))
-	{
+	if (!nodeNames.Contains(variable)) {
 		gum::DiscretizedVariable<float> newNode(TCHAR_TO_UTF8(*variable), TCHAR_TO_UTF8(*description));
 		std::vector<float> ticks = myLinspace(minTick, maxTick, nPoints);
 
@@ -177,17 +165,19 @@ void UBayesianNetwork::addArc(FString parent, FString child) {
 	for (FString arc : arcs)
 		if (arc == newArc)
 			return;
-
 	try {
 		bn.addArc(TCHAR_TO_UTF8(*parent), TCHAR_TO_UTF8(*child));
 		arcs.Add(newArc);
 	}
 	catch (gum::NotFound& e)
-		UE_LOG(LogTemp, Warning, TEXT("%hs from %hs while adding arc"), e.errorType().c_str(), e.errorContent().c_str());
+		UE_LOG(LogTemp, Warning, TEXT("[Bayesian Network] %hs from %hs while adding arc"), e.errorType().c_str(), e.errorContent().c_str());
 }
 
 int UBayesianNetwork::idFromName(FString variable) {
-	return bn.idFromName(TCHAR_TO_UTF8(*variable));
+	if (nodeNames.Contains(variable))
+		return bn.idFromName(TCHAR_TO_UTF8(*variable));
+	UE_LOG(LogTemp, Warning, TEXT("[Bayesian Network] %hs does not exist"), TCHAR_TO_UTF8(*variable));
+	return -1;
 }
 
 void UBayesianNetwork::fillWith(FString variable, float value) {
@@ -195,7 +185,7 @@ void UBayesianNetwork::fillWith(FString variable, float value) {
 		bn.cpt(TCHAR_TO_UTF8(*variable)).fillWith(value);
 	}
 	catch (gum::NotFound& e)
-		UE_LOG(LogTemp, Warning, TEXT("%hs from %hs while filling"), e.errorType().c_str(), e.errorContent().c_str());
+		UE_LOG(LogTemp, Warning, TEXT("[Bayesian Network] %hs from %hs while filling"), e.errorType().c_str(), e.errorContent().c_str());
 }
 
 void UBayesianNetwork::addEvidence(FString variable, TArray<float> data)
@@ -213,26 +203,17 @@ void UBayesianNetwork::addEvidence(FString variable, TArray<float> data)
 	}
 	catch (gum::NotFound& e)
 		UE_LOG(LogTemp, Warning, TEXT("%hs from %hs while adding evidence"), e.errorType().c_str(), e.errorContent().c_str());
-
-
-	/*if (variable == "109064338") {
-		for (float v : vec) {
-			UE_LOG(LogTemp, Warning, TEXT("%hs"), TCHAR_TO_UTF8(*variable));
-			UE_LOG(LogTemp, Warning, TEXT("%hf"), v);
-			inference->makeInference();
-			UE_LOG(LogTemp, Warning, TEXT("%hg"), inference->H(var));
-		}
-	}*/
 }
 
 TArray<FString> UBayesianNetwork::getMarkovBlanketNodes(FString variable) {
-	gum::MarkovBlanket markovBlanket = gum::MarkovBlanket(bn, TCHAR_TO_UTF8(*variable));
-
 	TArray<FString> markovBlaketNodes;
 
-	for (auto node : markovBlanket.nodes())
-		markovBlaketNodes.Add(bn.variable(node).name().c_str());
+	if (nodeNames.Contains(variable)) {
+		gum::MarkovBlanket markovBlanket = gum::MarkovBlanket(bn, TCHAR_TO_UTF8(*variable));
 
+		for (auto node : markovBlanket.nodes())
+			markovBlaketNodes.Add(bn.variable(node).name().c_str());
+	}
 	return markovBlaketNodes;
 }
 
@@ -248,7 +229,7 @@ void UBayesianNetwork::eraseEvidence(FString variable)
 
 double UBayesianNetwork::getEntropy(FString variable)
 {
-	if (!variable.IsEmpty())
+	if (!variable.IsEmpty() and nodeNames.Contains(variable))
 		return (float) inference->H(TCHAR_TO_UTF8(*variable));
 	return 0;
 }
