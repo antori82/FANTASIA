@@ -5,24 +5,20 @@
 #include <vector>
 
 
-std::vector<float> myIDLinspace(float start, float end, int points)
-{
+std::vector<float> myIDLinspace(float start, float end, int points) {
 	std::vector<float> res(points);
 	float step = (end - start) / (points - 1);
 	int i = 0;
 	float cand;
 
-	for (auto& e : res)
-	{
+	for (auto& e : res) {
 		cand = start + step * i++;
 		if (cand < end)
 			e = cand;
 		else
 			e = end;
 	}
-
 	return res;
-
 }
 
 UInfluenceDiag::UInfluenceDiag(const FObjectInitializer& ObjectInitializer)
@@ -34,13 +30,7 @@ void UInfluenceDiag::Init()
 	if (!initialized) {
 		initialized = true;
 	}
-
-	switch (InferenceAlgorithm)
-	{
-	case InferenceIDAlgs::ShaferShenoyLIMID:
-		inference = new gum::ShaferShenoyLIMIDInference<double>(&id);
-		break;
-	}
+	inference = new gum::ShaferShenoyLIMIDInference<double>(&id);
 }
 
 void UInfluenceDiag::makeInference()
@@ -91,8 +81,7 @@ TMap<FString, float> UInfluenceDiag::getPosteriorUtility(FString variable)
 	return out;
 }
 
-TMap<FString, float> UInfluenceDiag::getMEU()
-{
+TMap<FString, float> UInfluenceDiag::getMEU() {
 	TMap<FString, float> out;
 
 	try {
@@ -107,15 +96,13 @@ TMap<FString, float> UInfluenceDiag::getMEU()
 	return out;
 }
 
-double UInfluenceDiag::getEntropy(FString variable)
-{
+double UInfluenceDiag::getEntropy(FString variable) {
 	if (!variable.IsEmpty())
 		return (float)inference->posterior((TCHAR_TO_UTF8(*variable))).entropy();
 	return 0;
 }
 
-TMap<FString, FArrayFloat> UInfluenceDiag::optimalDecision(FString variable)
-{
+TMap<FString, FArrayFloat> UInfluenceDiag::optimalDecision(FString variable) {
 	TMap<FString, FArrayFloat> out;
 
 	try {
@@ -183,8 +170,7 @@ void UInfluenceDiag::eraseEvidence(FString variable)
 
 void UInfluenceDiag::addDiscretizedVariable(FString variable, FString description, float minTick, float maxTick, float nPoints, InfluenceNodeType nodeType)
 {
-	if (!nodeNames.Contains(variable)) 
-	{
+	if (!nodeNames.Contains(variable))  {
 		gum::DiscretizedVariable<float> newNode(TCHAR_TO_UTF8(*variable), TCHAR_TO_UTF8(*description));
 		std::vector<float> ticks = myIDLinspace(minTick, maxTick, nPoints);
 
@@ -196,7 +182,6 @@ void UInfluenceDiag::addDiscretizedVariable(FString variable, FString descriptio
 		case InfluenceNodeType::UTILITY: id.addUtilityNode(newNode); break;
 		case InfluenceNodeType::DECISION: id.addDecisionNode(newNode); break;
 		}
-
 		nodeNames.Add(variable);
 		nodeDescriptions.Add(variable, description);
 	}
@@ -204,8 +189,7 @@ void UInfluenceDiag::addDiscretizedVariable(FString variable, FString descriptio
 
 void UInfluenceDiag::addLabelizedVariable(FString variable, FString description, TArray<FString> labels, InfluenceNodeType nodeType)
 {
-	if (!nodeNames.Contains(variable))
-	{
+	if (!nodeNames.Contains(variable)) {
 		gum::LabelizedVariable newNode(TCHAR_TO_UTF8(*variable), TCHAR_TO_UTF8(*description), 0);
 		nodeNames.Add(variable);
 		nodeDescriptions.Add(variable, description);
@@ -221,8 +205,7 @@ void UInfluenceDiag::addLabelizedVariable(FString variable, FString description,
 	}
 }
 
-void UInfluenceDiag::addArc(FString parent, FString child)
-{
+void UInfluenceDiag::addArc(FString parent, FString child) {
 	FString newArc = parent + "_" + child;
 
 	for (FString arc : arcs)
@@ -237,8 +220,7 @@ void UInfluenceDiag::addArc(FString parent, FString child)
 		UE_LOG(LogTemp, Warning, TEXT("%hs from %hs while adding arc"), e.errorType().c_str(), e.errorContent().c_str());
 }
 
-void UInfluenceDiag::fillCPT(FString variable, TArray<float> values)
-{
+void UInfluenceDiag::fillCPT(FString variable, TArray<float> values) {
 	const std::string nodeName(TCHAR_TO_UTF8(*variable));
 
 	if (!id.isUtilityNode(nodeName)) {
@@ -254,8 +236,7 @@ void UInfluenceDiag::fillCPT(FString variable, TArray<float> values)
 	}
 }
 
-void UInfluenceDiag::fillUtility(FString variable, TArray<float> values)
-{
+void UInfluenceDiag::fillUtility(FString variable, TArray<float> values) {
 	const std::string nodeName(TCHAR_TO_UTF8(*variable));
 
 	if (id.isUtilityNode(nodeName)) {
@@ -271,14 +252,12 @@ void UInfluenceDiag::fillUtility(FString variable, TArray<float> values)
 	}
 }
 
-void UInfluenceDiag::writeBIFXML(FString file)
-{
+void UInfluenceDiag::writeBIFXML(FString file) {
 	auto writer = gum::BIFXMLIDWriter<double>();
 	writer.write(TCHAR_TO_UTF8(*file), id);
 }
 
-void UInfluenceDiag::erase(FString variable)
-{
+void UInfluenceDiag::erase(FString variable) {
 	const std::string nodeName(TCHAR_TO_UTF8(*variable));
 
 	TArray<FString> toRemove;
@@ -295,18 +274,15 @@ void UInfluenceDiag::erase(FString variable)
 	nodeDescriptions.Remove(variable);
 }
 
-int UInfluenceDiag::idFromName(FString variable)
-{
+int UInfluenceDiag::idFromName(FString variable) {
 	return id.idFromName(TCHAR_TO_UTF8(*variable));
 }
 
-bool UInfluenceDiag::decisionOrderExists()
-{
+bool UInfluenceDiag::decisionOrderExists() {
 	return id.decisionOrderExists();
 }
 
-TArray<int> UInfluenceDiag::decisionOrder()
-{
+TArray<int> UInfluenceDiag::decisionOrder() {
 	TArray<int> out;
 	std::vector<gum::NodeId> decisionSequence;
 	decisionSequence = id.decisionOrder();

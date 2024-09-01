@@ -8,19 +8,15 @@ UGroqComponent::UGroqComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
-
-	// ...
+	PrimaryComponentTick.bCanEverTick = false;
 }
 
 void UGroqComponent::OnChatGPTResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful) {
 	if (bWasSuccessful) {
-
 		TSharedPtr<FJsonValue> JsonValue;
 		TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(Response->GetContentAsString());
 
-		if (FJsonSerializer::Deserialize(Reader, JsonValue))
-		{
+		if (FJsonSerializer::Deserialize(Reader, JsonValue)) {
 			FString temp = Response->GetContentAsString();
 			const TSharedPtr<FJsonObject>* FileMessageObject;
 
@@ -47,8 +43,7 @@ void UGroqComponent::getChatGPTCompletion(TArray<FChatTurn> messages, FString ap
 	TSharedPtr<FJsonObject> payloadObject = MakeShareable(new FJsonObject());
 
 	TArray<TSharedPtr<FJsonValue>> jsonMessages;
-	for (int i = 0; i < messages.Num(); i++)
-	{
+	for (int i = 0; i < messages.Num(); i++) {
 		TSharedPtr<FJsonObject> turn = MakeShareable(new FJsonObject());
 		FText enumValueText;
 		UEnum::GetDisplayValueAsText(messages[i].role, enumValueText);
@@ -67,18 +62,11 @@ void UGroqComponent::getChatGPTCompletion(TArray<FChatTurn> messages, FString ap
 }
 
 // Called when the game starts
-void UGroqComponent::BeginPlay()
-{
+void UGroqComponent::BeginPlay() {
 	Super::BeginPlay();
-
-	// ...
-
 }
 
 // Called every frame
-void UGroqComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
+void UGroqComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	// ...
 }
