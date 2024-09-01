@@ -47,6 +47,7 @@ void UElevenLabsTTSComponent::getResult(FTTSData response, FString id)
 void UElevenLabsTTSComponent::TTSSynthesize(FString text, FString id)
 {
 	FTTSResultAvailableDelegate TTSResultSubscriber;
+
 	TTSResultSubscriber.BindUObject(this, &UElevenLabsTTSComponent::getResult);
 	handle = ElevenLabsTTSThread::setup(Key, text, id, VoiceID, ModelID, stability, similarity_boost, style, use_speaker_boost);
 	TTSResultAvailableHandle = handle->TTSResultAvailableSubscribeUser(TTSResultSubscriber);
@@ -55,6 +56,7 @@ void UElevenLabsTTSComponent::TTSSynthesize(FString text, FString id)
 USoundWave* UElevenLabsTTSComponent::TTSGetSound(FString id) {
 	USoundWave* SyntheticVoice = NewObject<USoundWave>();
 	float SamplingRate = 16000;
+
 	SyntheticVoice->SetSampleRate(SamplingRate);
 	SyntheticVoice->NumChannels = 1;
 	const int32 BytesDataPerSecond = SamplingRate;

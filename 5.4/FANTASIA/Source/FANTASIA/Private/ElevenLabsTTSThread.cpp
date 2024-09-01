@@ -4,8 +4,7 @@ using namespace std;
 
 ElevenLabsTTSThread* ElevenLabsTTSThread::Runnable = NULL;
 
-ElevenLabsTTSThread::ElevenLabsTTSThread(FString inKey, FString inText, FString inID, FString inVoiceID, FString inModelID, float inStability, float inSimilarity_boost, float inStyle, bool inUse_speaker_boost) : StopTaskCounter(0)
-{
+ElevenLabsTTSThread::ElevenLabsTTSThread(FString inKey, FString inText, FString inID, FString inVoiceID, FString inModelID, float inStability, float inSimilarity_boost, float inStyle, bool inUse_speaker_boost) : StopTaskCounter(0) {
 	key = inKey;
 	text = inText;
 	id = inID;
@@ -26,41 +25,33 @@ ElevenLabsTTSThread::~ElevenLabsTTSThread() {
 }
 
 
-ElevenLabsTTSThread* ElevenLabsTTSThread::setup(FString key, FString text, FString inID, FString voiceID, FString modelID, float stability, float similarity_boost, float style, bool use_speaker_boost)
-{
-	if (!Runnable && FPlatformProcess::SupportsMultithreading())
-	{
+ElevenLabsTTSThread* ElevenLabsTTSThread::setup(FString key, FString text, FString inID, FString voiceID, FString modelID, float stability, float similarity_boost, float style, bool use_speaker_boost) {
+	if (!Runnable && FPlatformProcess::SupportsMultithreading()) {
 		Runnable = new ElevenLabsTTSThread(key, text, inID, voiceID, modelID, stability, similarity_boost, style, use_speaker_boost);
 	}
 	return Runnable;
 }
 
-bool ElevenLabsTTSThread::Init()
-{
+bool ElevenLabsTTSThread::Init() {
 	return true;
 }
 
-uint32 ElevenLabsTTSThread::Run()
-{
+uint32 ElevenLabsTTSThread::Run() {
 	Synthesize();
 	return 0;
 }
 
-void ElevenLabsTTSThread::Stop()
-{
+void ElevenLabsTTSThread::Stop() {
 	StopTaskCounter.Increment();
 }
 
-void ElevenLabsTTSThread::EnsureCompletion()
-{
+void ElevenLabsTTSThread::EnsureCompletion() {
 	Stop();
 	Thread->WaitForCompletion();
 }
 
-void ElevenLabsTTSThread::Shutdown()
-{
-	if (Runnable)
-	{
+void ElevenLabsTTSThread::Shutdown() {
+	if (Runnable) {
 		Runnable = NULL;
 	}
 }
@@ -73,10 +64,8 @@ void ElevenLabsTTSThread::Synthesize()
 
 	//Http request to API
 	TSharedRef<IHttpRequest, ESPMode::ThreadSafe> Request = FHttpModule::Get().CreateRequest();
-	Request->OnProcessRequestComplete().BindLambda([this](FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful)
-		{
-			if (bWasSuccessful && Response.IsValid())
-			{
+	Request->OnProcessRequestComplete().BindLambda([this](FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful) {
+			if (bWasSuccessful && Response.IsValid()) {
 				TArray<uint8> ResponseData = Response->GetContent();
 
 				FTTSData SynthResult;
@@ -86,9 +75,7 @@ void ElevenLabsTTSThread::Synthesize()
 				TTSResultAvailable.Broadcast(SynthResult, id);
 
 			}
-			else
-			{
-				//Error Handling
+			else {
 				UE_LOG(LogTemp, Error, TEXT("Connection to the TTS endpoint failed."));
 			}
 		});
@@ -112,12 +99,10 @@ void ElevenLabsTTSThread::Synthesize()
 	Request->ProcessRequest();
 }
 
-FDelegateHandle ElevenLabsTTSThread::TTSResultAvailableSubscribeUser(FTTSResultAvailableDelegate& UseDelegate)
-{
+FDelegateHandle ElevenLabsTTSThread::TTSResultAvailableSubscribeUser(FTTSResultAvailableDelegate& UseDelegate) {
 	return TTSResultAvailable.Add(UseDelegate);
 }
 
-void ElevenLabsTTSThread::TTSResultAvailableUnsubscribeUser(FDelegateHandle DelegateHandle)
-{
+void ElevenLabsTTSThread::TTSResultAvailableUnsubscribeUser(FDelegateHandle DelegateHandle) {
 	TTSResultAvailable.Remove(DelegateHandle);
 }

@@ -21,10 +21,6 @@ class UElevenLabsTTSComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
-public:
-	// Sets default values for this component's properties
-	UElevenLabsTTSComponent();
-
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
@@ -34,16 +30,17 @@ private:
 	TMap<FString, FTTSData> Buffer;
 	TMap<FString, FString> PendingSSML;
 	ElevenLabsTTSThread* handle;
-
 	FDelegateHandle TTSResultAvailableHandle;
+	FSynthesizedInternalEvent synthesisReadyInternal;
+	FString idSynthesisReady = "";
 
 	void getResult(FTTSData response, FString id);
 
-	FSynthesizedInternalEvent synthesisReadyInternal;
-
-	FString idSynthesisReady = "";
 
 public:
+
+	// Sets default values for this component's properties
+	UElevenLabsTTSComponent();
 
 	UPROPERTY(BlueprintReadWrite, Category = "Speech to Text")
 	UAudioComponent* Speaker;
