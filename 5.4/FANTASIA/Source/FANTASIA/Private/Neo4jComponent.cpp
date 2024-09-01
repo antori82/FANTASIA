@@ -8,11 +8,8 @@ UNeo4jComponent::UNeo4jComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
-
-	// ...
+	PrimaryComponentTick.bCanEverTick = false;
 }
-
 
 void UNeo4jComponent::OnResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful)
 {
@@ -114,13 +111,11 @@ void UNeo4jComponent::OnResponseReceived(FHttpRequestPtr Request, FHttpResponseP
 							}
 						}
 					}
-					//IncomingResponse.Broadcast(neo4jResponse);
 				}
 				IncomingResponse.Broadcast(neo4jResponse);
 			}
 		}
 	}
-
 }
 
 void UNeo4jComponent::submitQuery(FString query, Neo4jOperation operation, FString transactionID, TMap<FString, FString> parameters, FString database = "neo4j") {
@@ -137,8 +132,7 @@ void UNeo4jComponent::submitQuery(FString query, Neo4jOperation operation, FStri
 	else
 		prefix = "/db/" + database + "/tx";
 
-	switch (operation)
-	{
+	switch (operation) {
 	case Neo4jOperation::SINGLE_REQUEST:
 		path = prefix + "/commit";
 		method = "POST";
@@ -191,25 +185,16 @@ void UNeo4jComponent::submitQuery(FString query, Neo4jOperation operation, FStri
 		}
 		payload = payload.LeftChop(2) + "}, ";
 	}
-	//payload = payload + "\"database\": { name: \"" + database + "\"}}, ";
-
 	Request->SetContentAsString(payload + "\"resultDataContents\" : [ \"row\", \"graph\" ]}]}");
 	Request->ProcessRequest();
 }
 
 // Called when the game starts
-void UNeo4jComponent::BeginPlay()
-{
+void UNeo4jComponent::BeginPlay() {
 	Super::BeginPlay();
-
-	// ...
-
 }
 
 // Called every frame
-void UNeo4jComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
+void UNeo4jComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	// ...
 }

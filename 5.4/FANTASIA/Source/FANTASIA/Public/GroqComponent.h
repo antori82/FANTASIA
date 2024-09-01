@@ -24,17 +24,15 @@ public:
 	UPROPERTY(BlueprintAssignable, BlueprintCallable)
 	FIncomingChatGPTResponseEvent IncomingChatGPTResponse;
 
-	void OnGPTResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful);
-	void OnChatGPTResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful);
-
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "GetChatGPTCompletion", AutoCreateRefTerm = "messages"), Category = "GPT")
 	void getChatGPTCompletion(TArray<FChatTurn> messages, FString apiMethod = "llama3-8b-8192");
 
-protected:
-	// Called when the game starts
-	virtual void BeginPlay() override;
+	void OnChatGPTResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful);
 
-public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
+protected:
+	// Called when the game starts
+	virtual void BeginPlay() override;	
 };

@@ -21,8 +21,8 @@ std::vector<float> myLinspace(float start, float end, int points) {
 }
 
 UBayesianNetwork::UBayesianNetwork(const FObjectInitializer& ObjectInitializer)
-: Super(ObjectInitializer)
-{}
+: Super(ObjectInitializer) {
+}
 
 void UBayesianNetwork::Init() {
 	if (!initialized) {	

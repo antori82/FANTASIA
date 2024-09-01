@@ -107,12 +107,6 @@ public:
 	UPROPERTY(BlueprintReadOnly)
 	TArray<FString> arcs;
 
-	UPROPERTY(BlueprintReadWrite)
-	InferenceIDAlgs InferenceAlgorithm = InferenceIDAlgs::ShaferShenoyLIMID;
-
-	// Read ID from a BIFXML file
-	//void setID(const FString& Filename);
-
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Init"), Category = "Influence_Diagram")
 	void Init();
 
@@ -172,5 +166,4 @@ public:
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "decisionOrder"), Category = "Influence_Diagram")
 	TArray<int> decisionOrder();
-
 };

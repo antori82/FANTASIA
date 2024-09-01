@@ -1131,14 +1131,8 @@ struct Z_Construct_UFunction_UInfluenceDiag_Init_Statics
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
 		{ "Category", "Influence_Diagram" },
-#if !UE_BUILD_SHIPPING
-		{ "Comment", "// Read ID from a BIFXML file\n//void setID(const FString& Filename);\n" },
-#endif
 		{ "DisplayName", "Init" },
 		{ "ModuleRelativePath", "Public/InfluenceDiag.h" },
-#if !UE_BUILD_SHIPPING
-		{ "ToolTip", "Read ID from a BIFXML file\nvoid setID(const FString& Filename);" },
-#endif
 	};
 #endif // WITH_METADATA
 	static const UECodeGen_Private::FFunctionParams FuncParams;
@@ -1353,10 +1347,6 @@ struct Z_Construct_UClass_UInfluenceDiag_Statics
 		{ "Category", "InfluenceDiag" },
 		{ "ModuleRelativePath", "Public/InfluenceDiag.h" },
 	};
-	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_InferenceAlgorithm_MetaData[] = {
-		{ "Category", "InfluenceDiag" },
-		{ "ModuleRelativePath", "Public/InfluenceDiag.h" },
-	};
 #endif // WITH_METADATA
 	static const UECodeGen_Private::FStructPropertyParams NewProp_serializedNodes_Inner;
 	static const UECodeGen_Private::FArrayPropertyParams NewProp_serializedNodes;
@@ -1367,8 +1357,6 @@ struct Z_Construct_UClass_UInfluenceDiag_Statics
 	static const UECodeGen_Private::FMapPropertyParams NewProp_nodeDescriptions;
 	static const UECodeGen_Private::FStrPropertyParams NewProp_arcs_Inner;
 	static const UECodeGen_Private::FArrayPropertyParams NewProp_arcs;
-	static const UECodeGen_Private::FBytePropertyParams NewProp_InferenceAlgorithm_Underlying;
-	static const UECodeGen_Private::FEnumPropertyParams NewProp_InferenceAlgorithm;
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static UObject* (*const DependentSingletons[])();
 	static constexpr FClassFunctionLinkInfo FuncInfo[] = {
@@ -1388,7 +1376,7 @@ struct Z_Construct_UClass_UInfluenceDiag_Statics
 		{ &Z_Construct_UFunction_UInfluenceDiag_getPosterior, "getPosterior" }, // 1285629802
 		{ &Z_Construct_UFunction_UInfluenceDiag_getPosteriorUtility, "getPosteriorUtility" }, // 416397838
 		{ &Z_Construct_UFunction_UInfluenceDiag_idFromName, "idFromName" }, // 1196266314
-		{ &Z_Construct_UFunction_UInfluenceDiag_Init, "Init" }, // 770126633
+		{ &Z_Construct_UFunction_UInfluenceDiag_Init, "Init" }, // 1363811661
 		{ &Z_Construct_UFunction_UInfluenceDiag_makeInference, "makeInference" }, // 878041443
 		{ &Z_Construct_UFunction_UInfluenceDiag_optimalDecision, "optimalDecision" }, // 4093652227
 		{ &Z_Construct_UFunction_UInfluenceDiag_writeBIFXML, "writeBIFXML" }, // 308718179
@@ -1408,8 +1396,6 @@ const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_UInfluenceDiag_St
 const UECodeGen_Private::FMapPropertyParams Z_Construct_UClass_UInfluenceDiag_Statics::NewProp_nodeDescriptions = { "nodeDescriptions", nullptr, (EPropertyFlags)0x0010000000000014, UECodeGen_Private::EPropertyGenFlags::Map, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UInfluenceDiag, nodeDescriptions), EMapPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_nodeDescriptions_MetaData), NewProp_nodeDescriptions_MetaData) };
 const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_UInfluenceDiag_Statics::NewProp_arcs_Inner = { "arcs", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, METADATA_PARAMS(0, nullptr) };
 const UECodeGen_Private::FArrayPropertyParams Z_Construct_UClass_UInfluenceDiag_Statics::NewProp_arcs = { "arcs", nullptr, (EPropertyFlags)0x0010000000000014, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UInfluenceDiag, arcs), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_arcs_MetaData), NewProp_arcs_MetaData) };
-const UECodeGen_Private::FBytePropertyParams Z_Construct_UClass_UInfluenceDiag_Statics::NewProp_InferenceAlgorithm_Underlying = { "UnderlyingType", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Byte, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, nullptr, METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FEnumPropertyParams Z_Construct_UClass_UInfluenceDiag_Statics::NewProp_InferenceAlgorithm = { "InferenceAlgorithm", nullptr, (EPropertyFlags)0x0010000000000004, UECodeGen_Private::EPropertyGenFlags::Enum, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UInfluenceDiag, InferenceAlgorithm), Z_Construct_UEnum_FANTASIA_InferenceIDAlgs, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_InferenceAlgorithm_MetaData), NewProp_InferenceAlgorithm_MetaData) }; // 3949654803
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_UInfluenceDiag_Statics::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UInfluenceDiag_Statics::NewProp_serializedNodes_Inner,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UInfluenceDiag_Statics::NewProp_serializedNodes,
@@ -1420,8 +1406,6 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_UInfluenc
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UInfluenceDiag_Statics::NewProp_nodeDescriptions,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UInfluenceDiag_Statics::NewProp_arcs_Inner,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UInfluenceDiag_Statics::NewProp_arcs,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UInfluenceDiag_Statics::NewProp_InferenceAlgorithm_Underlying,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UInfluenceDiag_Statics::NewProp_InferenceAlgorithm,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_UInfluenceDiag_Statics::PropPointers) < 2048);
 UObject* (*const Z_Construct_UClass_UInfluenceDiag_Statics::DependentSingletons[])() = {
@@ -1472,10 +1456,10 @@ struct Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_S
 		{ FArrayFloat::StaticStruct, Z_Construct_UScriptStruct_FArrayFloat_Statics::NewStructOps, TEXT("ArrayFloat"), &Z_Registration_Info_UScriptStruct_ArrayFloat, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FArrayFloat), 3045350769U) },
 	};
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_UInfluenceDiag, UInfluenceDiag::StaticClass, TEXT("UInfluenceDiag"), &Z_Registration_Info_UClass_UInfluenceDiag, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UInfluenceDiag), 729181746U) },
+		{ Z_Construct_UClass_UInfluenceDiag, UInfluenceDiag::StaticClass, TEXT("UInfluenceDiag"), &Z_Registration_Info_UClass_UInfluenceDiag, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UInfluenceDiag), 1307087244U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_669096354(TEXT("/Script/FANTASIA"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_693804479(TEXT("/Script/FANTASIA"),
 	Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_Statics::ClassInfo),
 	Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_Statics::ScriptStructInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_Statics::ScriptStructInfo),
 	Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_Statics::EnumInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_Statics::EnumInfo));
