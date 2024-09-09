@@ -61,6 +61,9 @@ public:
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Start Prolog", AutoCreateRefTerm = "parameters"), Category = "SWIProlog")
 	void startProlog();
 
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Open Prolog file", AutoCreateRefTerm = "parameters"), Category = "SWIProlog")
+	void openPrologFile(const FString filename);
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;

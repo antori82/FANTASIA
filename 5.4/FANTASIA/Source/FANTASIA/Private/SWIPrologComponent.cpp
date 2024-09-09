@@ -18,6 +18,64 @@ USWIPrologComponent::USWIPrologComponent()
 
 void USWIPrologComponent::submitQuery(const bool choice, FString& outString) {
 	outString = "query started!";
+
+	FString RelativePath = FPaths::GameSourceDir();
+	FString FullPath = IFileManager::Get().ConvertToAbsolutePathForExternalAppForRead(*RelativePath);
+	char* result = TCHAR_TO_ANSI(*FullPath);
+	PlTermv initav(2);
+	initav[1] = PlAtom(result);
+	PlCall("working_directory", initav);
+
+	UE_LOG(LogTemp, Display, TEXT("query started!"));
+	PlCall("consult", PlTermv(PlAtom("bigProject")));
+	PlTermv arrayv(2);
+	PlTerm_tail tail(arrayv[1]); //tail of the prolog list
+	PlTerm temp(PlTerm(PlAtom("the")));
+	if (!tail.append(temp)) {
+		UE_LOG(LogTemp, Warning, TEXT("couldn't add atom to list..."));
+	}
+	PlTerm temp1(PlTerm(PlAtom("woman")));
+	if (!tail.append(temp1)) {
+		UE_LOG(LogTemp, Warning, TEXT("couldn't add atom to list..."));
+	}
+	PlTerm temp2(PlTerm(PlAtom("likes")));
+	if (!tail.append(temp2)) {
+		UE_LOG(LogTemp, Warning, TEXT("couldn't add atom to list..."));
+	}
+	PlTerm temp3(PlTerm(PlAtom("the")));
+	if (!tail.append(temp3)) {
+		UE_LOG(LogTemp, Warning, TEXT("couldn't add atom to list..."));
+	}
+	PlTerm temp4(PlTerm(PlAtom("man")));
+	if (!tail.append(temp4)) {
+		UE_LOG(LogTemp, Warning, TEXT("couldn't add atom to list..."));
+	}
+
+	if (!tail.close()) {
+		UE_LOG(LogTemp, Warning, TEXT("couldn't unify tail of list with []..."));
+	}
+	else {
+		UE_LOG(LogTemp, Display, TEXT("list created!"));
+	}
+
+	PlQuery query("smallProject", "main", arrayv);
+	try {
+		PlCheckFail(query.next_solution());
+	}
+	catch (PlException err) {
+		FString FsError = FString(ANSI_TO_TCHAR(err.what()));
+		UE_LOG(LogTemp, Warning, TEXT("error occurred: %s"), *FString(err.what()));
+	}
+	catch (PlFail f) {
+		UE_LOG(LogTemp, Warning, TEXT("query failed"));
+	}
+
+
+	
+
+
+	outString = arrayv[0].as_string().c_str();
+	/*
 	try {
 		PlCall("consult", PlTermv(PlAtom("knowledge_base")));
 	}
@@ -31,20 +89,42 @@ void USWIPrologComponent::submitQuery(const bool choice, FString& outString) {
 	PlQuery q("character", av);
 	q.next_solution();
 	//cout << "out: " << av[0].as_string() << "\n";
+	*/
 
+}
+
+void USWIPrologComponent::openPrologFile(const FString filename) {
+	//char* myfile = TCHAR_TO_ANSI(*filename);
+	FString filePath = FPaths::EngineSourceDir();
+	filePath = FPaths::GetPath("./bigProject.pl");
+	char* myfile = TCHAR_TO_ANSI(*filePath);
+	try {
+		PlCall("consult", PlTermv(PlAtom(myfile)));
+	}
+	catch (const PlException& err) {
+		FString FsError = FString(ANSI_TO_TCHAR(err.what()));
+		UE_LOG(LogTemp, Warning, TEXT("error occurred: %s"), *FsError);
+	}
 }
 
 void USWIPrologComponent::startProlog() {
 	if (_putenv("SWI_HOME_DIR=C:\\Program Files\\swipl")) return;
 	int argc = 1;
-	FString path = FPaths::GameSourceDir();
-	char myString[200];
-	strcpy_s(myString, (const char*)TCHAR_TO_ANSI(*path));
-	char* argv[1] = {
-		myString
-	};
-	if (!PL_initialise(argc,argv)){}
+
+	FString RelativePath = FPaths::GameSourceDir();
+	RelativePath = FPaths::GetPath("../plugins/FANTASIA/ThirdParty/SWIProlog/libs/libswipl.dll");
+	FString FullPath = IFileManager::Get().ConvertToAbsolutePathForExternalAppForRead(*RelativePath);
+	char* result = TCHAR_TO_ANSI(*FullPath);
+	if (!PL_initialise(argc, &result)) {
 		PL_halt(1);
+		UE_LOG(LogTemp, Warning, TEXT("failed to initialise prolog"));
+	}
+	else {
+		UE_LOG(LogTemp, Display, TEXT("prolog initialised succesfully"));
+		UE_LOG(LogTemp, Display, TEXT("path for prolog: %s"), *FullPath);
+	}
+		
+
 }
 
 // Called when the game starts
