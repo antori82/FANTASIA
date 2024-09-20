@@ -103,6 +103,8 @@ struct FNeo4jResponse {
 	TArray<UNeo4jResultRow*> rows;
 };
 
+
+
 USTRUCT(BlueprintType)
 struct FNLUResponse {
 
@@ -116,6 +118,37 @@ struct FNLUResponse {
 
 	UPROPERTY(BlueprintReadWrite)
 		TArray<UNLUIntent*> intents;
+};
+
+USTRUCT(BlueprintType)
+struct FSWIPrologResponse {
+
+	GENERATED_BODY()
+
+	UPROPERTY(BlueprintReadOnly)
+	FString queryName;
+
+	UPROPERTY(BlueprintReadOnly)
+	uint8 airity;
+
+	UPROPERTY(BlueprintReadOnly)
+	TArray<USWIPrologSolution*> results;
+};
+
+UCLASS(ClassGroup = (SWIProlog), BlueprintType)
+class USWIPrologSolution : public UObject {
+
+	GENERATED_BODY()
+
+public:
+
+	USWIPrologSolution() {};
+
+	UPROPERTY(BlueprintReadOnly)
+	TArray<FString> resultSet;
+
+	UPROPERTY(BlueprintReadOnly)
+	bool bResult;
 };
 
 UCLASS(ClassGroup = (Azure), BlueprintType)

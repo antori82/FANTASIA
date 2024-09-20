@@ -38,29 +38,48 @@ class USWIPrologComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
+private:
+
+	void startProlog();
+
 public:
 	// Sets default values for this component's properties
 	USWIPrologComponent();
 
 
-	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
-	FString aStringProperty;
+	UPROPERTY(BlueprintReadOnly, Category = "Configuration", Config)
+	FString resFolderPath;
 
 	//UPROPERTY(BlueprintAssignable, BlueprintCallable)
 	//FSWITestStruct assignableCallableProperty;
 
+	/*
 	UPROPERTY(BlueprintReadOnly)
 	FString readOnlyProperty;
 
 	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
 	bool aBoolProperty;
+	*/
 
+	/* 
+		inRuleOrFact: Rule or fact the query asks for
+		inElements: Elements within the term requested 
+			(capital letter means prolog variable
+			non capital letter means prolog term
+			elements in brackets means a prolog list [i,am,an,example])
+		outResponse: table of results
+	*/
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Submit query", AutoCreateRefTerm = "parameters"), Category = "SWIProlog")
-	void submitQuery(const bool choice, FString& outString);
+	void SWIPLsubmitQuery(const FString inRuleOrFact, const TArray<FString> inElements, FSWIPrologResponse& outResponse);
 
-	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Start Prolog", AutoCreateRefTerm = "parameters"), Category = "SWIProlog")
-	void startProlog();
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Assert rule/fact", AutoCreateRefTerm = "parameters"), Category = "SWIProlog")
+	void SWIPLassert(const FString ruleOrFact, bool& bResult);
 
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "retract rule/fact", AutoCreateRefTerm = "parameters"), Category = "SWIProlog")
+	void SWIPLretract(const FString ruleOrFact, bool& bResult);
+
+	//UFUNCTION(BlueprintCallable, meta = (DisplayName = "Start Prolog", AutoCreateRefTerm = "parameters"), Category = "SWIProlog")
+	
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Open Prolog file", AutoCreateRefTerm = "parameters"), Category = "SWIProlog")
 	void openPrologFile(const FString filename);
 
