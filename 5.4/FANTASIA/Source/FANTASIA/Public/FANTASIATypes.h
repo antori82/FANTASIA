@@ -60,6 +60,13 @@ enum class Neo4jOperation : uint8 {
 	ADD_TO_TRANSACTION = 4 UMETA(DisplayName = "Add to transaction")
 };
 
+UENUM(BlueprintType)
+enum class SWIPrologOperation : uint8 {
+	AND = 0 UMETA(DisplayName = "AND (,)"),
+	OR = 1 UMETA(DisplayName = "OR (;)"),
+	CONDITION = 2 UMETA(DisplayName = "IF-THEN-ELSE (->)")
+};
+
 USTRUCT(Blueprintable)
 struct FTTSTimedStruct
 {
@@ -134,6 +141,189 @@ struct FSWIPrologResponse {
 	UPROPERTY(BlueprintReadOnly)
 	TArray<USWIPrologSolution*> results;
 };
+
+/*
+	used to generalize a tail, it can be a full list e.g. [a,b,c],
+	a variable e.g. X
+	or a partial list e.g. [H|T]
+*/
+UINTERFACE(Blueprintable)
+class USWIPrologTailInterface : public UObject {
+	
+	GENERATED_BODY()
+
+};
+
+class ISWIPrologTailInterface {
+
+	GENERATED_BODY()
+
+};
+
+/*
+	used to generalize a rule body which can be a term
+	or another body which is a pair of terms/rules
+*/
+UINTERFACE(Blueprintable)
+class USWIPrologRuleInterface : public UObject {
+
+	GENERATED_BODY()
+
+};
+
+class ISWIPrologRuleInterface {
+
+	GENERATED_BODY()
+
+};
+
+UCLASS(ClassGroup = (SWIProlog), BlueprintType)
+class USWIPrologRuleBody : public UObject, public ISWIPrologRuleInterface {
+
+	GENERATED_BODY()
+
+public:
+
+	USWIPrologRuleBody() {};
+
+	UPROPERTY(BlueprintReadOnly)
+	TPair<ISWIPrologRuleInterface*, ISWIPrologRuleInterface*> rulePair;
+
+	UPROPERTY(BlueprintReadOnly)
+	SWIPrologOperation logicOperator;
+};
+
+UCLASS(ClassGroup = (SWIProlog), BlueprintType)
+class USWIPrologRule : public UObject {
+
+	GENERATED_BODY()
+
+public:
+
+	USWIPrologRule() {};
+
+	UPROPERTY(BlueprintReadOnly)
+	USWIPrologTerm* head;
+
+	UPROPERTY(BlueprintReadOnly)
+	USWIPrologRuleBody* body;
+};
+
+UCLASS(ClassGroup = (SWIProlog), BlueprintType)
+class USWIPrologTerm : public UObject, public ISWIPrologRuleInterface {
+
+	GENERATED_BODY()
+
+public:
+
+	USWIPrologTerm() {};
+
+};
+
+UCLASS(ClassGroup = (SWIProlog), BlueprintType)
+class USWIPrologAtom : public USWIPrologTerm {
+
+	GENERATED_BODY()
+
+public:
+
+	USWIPrologAtom() {};
+
+	UPROPERTY(BlueprintReadOnly)
+	FString atomValue;
+
+};
+
+UCLASS(ClassGroup = (SWIProlog), BlueprintType)
+class USWIPrologVariable : public USWIPrologTerm, public ISWIPrologTailInterface {
+
+	GENERATED_BODY()
+
+public:
+
+	USWIPrologVariable() {};
+
+	UPROPERTY(BlueprintReadOnly)
+	FString varName;
+
+};
+
+UCLASS(ClassGroup = (SWIProlog), BlueprintType)
+class USWIPrologInteger : public USWIPrologTerm {
+
+	GENERATED_BODY()
+
+public:
+
+	USWIPrologInteger() {};
+
+	UPROPERTY(BlueprintReadOnly)
+	int32 intValue;
+
+};
+
+UCLASS(ClassGroup = (SWIProlog), BlueprintType)
+class USWIPrologFloat : public USWIPrologTerm {
+
+	GENERATED_BODY()
+
+public:
+
+	USWIPrologFloat() {};
+
+	UPROPERTY(BlueprintReadOnly)
+	float floatValue;
+
+};
+
+UCLASS(ClassGroup = (SWIProlog), BlueprintType)
+class USWIPrologCompound : public USWIPrologTerm {
+
+	GENERATED_BODY()
+
+public:
+
+	USWIPrologCompound() {};
+
+	UPROPERTY(BlueprintReadOnly)
+	FString compoundName;
+
+	UPROPERTY(BlueprintReadOnly)
+	TArray<USWIPrologTerm*> arguments;
+
+};
+
+UCLASS(ClassGroup = (SWIProlog), BlueprintType)
+class USWIPrologList : public USWIPrologTerm, public ISWIPrologTailInterface {
+
+	GENERATED_BODY()
+
+public:
+
+	USWIPrologList() {};
+
+	UPROPERTY(BlueprintReadOnly)
+	TArray<USWIPrologTerm*> elements;
+
+};
+
+UCLASS(ClassGroup = (SWIProlog), BlueprintType)
+class USWIPrologHeadToTail : public USWIPrologTerm, public ISWIPrologTailInterface {
+
+	GENERATED_BODY()
+
+public:
+
+	USWIPrologHeadToTail() {};
+
+	UPROPERTY(BlueprintReadOnly)
+	TArray<USWIPrologTerm*> headElements;
+
+	UPROPERTY(BlueprintReadOnly)
+	ISWIPrologTailInterface* tail;
+
+};
+
 
 UCLASS(ClassGroup = (SWIProlog), BlueprintType)
 class USWIPrologSolution : public UObject {

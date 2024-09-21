@@ -16,8 +16,8 @@ USWIPrologComponent::USWIPrologComponent()
 	// ...
 }
 
-void USWIPrologComponent::SWIPLsubmitQuery(const FString inRuleOrFact, const TArray<FString> inElements, FSWIPrologResponse& outResponse) {
-
+void USWIPrologComponent::SWIPLsubmitQuery(USWIPrologTerm* inRuleOrFactTerm, const TArray<FString> inElements, FSWIPrologResponse& outResponse) {
+	FString inRuleOrFact = translateTerm(inRuleOrFactTerm);
 	char* queryTerm = TCHAR_TO_ANSI(*inRuleOrFact);
 	int32 airity = inElements.Num();
 	PlTermv queryElements(airity);
@@ -59,7 +59,8 @@ void USWIPrologComponent::SWIPLsubmitQuery(const FString inRuleOrFact, const TAr
 	
 }
 
-void SWIPLassert(const FString ruleOrFact, bool& bResult) {
+void USWIPrologComponent::SWIPLassertFact(USWIPrologTerm* fact, bool& bResult) {
+	FString ruleOrFact = translateTerm(fact);
 	char* stringRuleOrFact = TCHAR_TO_ANSI(*ruleOrFact);
 	try {
 		PlCall("assert", PlTermv(PlCompound(stringRuleOrFact)));
@@ -70,7 +71,20 @@ void SWIPLassert(const FString ruleOrFact, bool& bResult) {
 	}
 }
 
-void SWIPLretract(const FString ruleOrFact, bool& bResult) {
+void USWIPrologComponent::SWIPLassertRule(USWIPrologRule* rule, bool& bResult) {
+	FString ruleOrFact = translateRule(rule);
+	char* stringRuleOrFact = TCHAR_TO_ANSI(*ruleOrFact);
+	try {
+		PlCall("assert", PlTermv(PlCompound(stringRuleOrFact)));
+	}
+	catch (PlException err) {
+		FString FsError = FString(ANSI_TO_TCHAR(err.what()));
+		UE_LOG(LogTemp, Warning, TEXT("error occurred while asserting rule or fact: %s"), *FsError);
+	}
+}
+
+void USWIPrologComponent::SWIPLretract(USWIPrologTerm* ruleOrFactTerm, bool& bResult) {
+	FString ruleOrFact = translateTerm(ruleOrFactTerm);
 	char* stringRuleOrFact = TCHAR_TO_ANSI(*ruleOrFact);
 	try {
 		PlCall("retract", PlTermv(PlCompound(stringRuleOrFact)));
@@ -113,8 +127,98 @@ void USWIPrologComponent::startProlog() {
 		UE_LOG(LogTemp, Display, TEXT("prolog initialised succesfully"));
 		UE_LOG(LogTemp, Display, TEXT("path for prolog: %s"), *FullPath);
 	}
-		
+}
 
+FString USWIPrologComponent::translateTerm(USWIPrologTerm* term) {
+	if (USWIPrologAtom* atom = Cast<USWIPrologAtom>(term)) {
+		return "'" + atom->atomValue + "'";
+	}
+	if (USWIPrologVariable* var = Cast<USWIPrologVariable>(term)) {
+		return "_" + var->varName;
+	}
+	if (USWIPrologInteger* num = Cast<USWIPrologInteger>(term)) {
+		return FString::FromInt(num->intValue);
+	}
+	if (USWIPrologFloat* num = Cast<USWIPrologFloat>(term)) {
+		return FString::FromInt(num->floatValue);
+	}
+	if (USWIPrologCompound* compound = Cast<USWIPrologCompound>(term)) {
+		TArray arguments = compound->arguments;
+		USWIPrologTerm** termRef = arguments.GetData();
+		FString terms = "";
+		for (int i = 0; i < arguments.Num(); i++) {
+			terms = terms + translateTerm(termRef[i]);
+			if ((i+1) < arguments.Num()) terms = terms + ",";
+		}
+		return compound->compoundName + "(" + terms + ")";
+	}
+	if (USWIPrologList* list = Cast<USWIPrologList>(term)) {
+		FString terms = "";
+		for (int i = 0; i < list->elements.Num(); i++) {
+			terms = terms + translateTerm(list->elements[i]);
+			if ((i + 1) < list->elements.Num()) terms = terms + ",";
+		}
+		return "[" + terms + "]";
+	}
+	if (USWIPrologHeadToTail* list = Cast<USWIPrologHeadToTail>(term)) {
+		FString headTerms = "";
+		for (int i = 0; i < list->headElements.Num(); i++) {
+			headTerms = headTerms + translateTerm(list->headElements[i]);
+			if ((i + 1) < list->headElements.Num()) headTerms = headTerms + ",";
+		}
+		FString tailString = "";
+		if (USWIPrologVariable* tailVar = Cast<USWIPrologVariable>(&list->tail)) {
+			tailString = "_" + tailVar->varName;
+		}
+		else if (USWIPrologList* tailList = Cast<USWIPrologList>(&list->tail)) {
+			tailString = translateTerm(tailList);
+		}
+		else {
+			USWIPrologHeadToTail* headToTail = Cast<USWIPrologHeadToTail>(&list->tail);
+			tailString = translateTerm(headToTail);
+		}
+		return "[" + headTerms + "|" + tailString + "]";
+	}
+}
+
+FString USWIPrologComponent::translateRule(USWIPrologRule* rule) {
+	FString head = translateTerm(&rule->head);
+	FString body = translateRuleBody(&rule->body);
+	return head + ":-" + body;
+}
+
+FString USWIPrologComponent::translateRuleBody(USWIPrologRuleBody* ruleBody) {
+	FString swiOperator;
+	switch (ruleBody->logicOperator) {
+	case SWIPrologOperation::OR:
+		swiOperator = ";";
+		break;
+	case SWIPrologOperation::CONDITION:
+		swiOperator = "->";
+		break;
+	case SWIPrologOperation::AND:
+		swiOperator = ",";
+		break;
+	}
+	FString firstString = "";
+	FString secondString = "";
+	ISWIPrologRuleInterface* first = ruleBody->rulePair.Key;
+	ISWIPrologRuleInterface* second = ruleBody->rulePair.Value;
+	if (USWIPrologTerm* firstTerm = Cast<USWIPrologTerm>(first)) {
+		firstString = translateTerm(firstTerm);
+	}
+	else {
+		USWIPrologRuleBody* firstRuleBody = Cast<USWIPrologRuleBody>(first);
+		firstString = translateRuleBody(firstRuleBody);
+	}
+	if (USWIPrologTerm* secondTerm = Cast<USWIPrologTerm>(second)) {
+		secondString = translateTerm(secondTerm);
+	}
+	else {
+		USWIPrologRuleBody* secondRuleBody = Cast<USWIPrologRuleBody>(second);
+		secondString = translateRuleBody(secondRuleBody);
+	}
+	return firstString + swiOperator + secondString;
 }
 
 // Called when the game starts

@@ -42,6 +42,12 @@ private:
 
 	void startProlog();
 
+	FString translateTerm(USWIPrologTerm*);
+
+	FString translateRule(USWIPrologRule*);
+
+	FString translateRuleBody(USWIPrologRuleBody*);
+
 public:
 	// Sets default values for this component's properties
 	USWIPrologComponent();
@@ -70,15 +76,16 @@ public:
 		outResponse: table of results
 	*/
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Submit query", AutoCreateRefTerm = "parameters"), Category = "SWIProlog")
-	void SWIPLsubmitQuery(const FString inRuleOrFact, const TArray<FString> inElements, FSWIPrologResponse& outResponse);
+	void SWIPLsubmitQuery(USWIPrologTerm* inRuleOrFact, const TArray<FString> inElements, FSWIPrologResponse& outResponse);
 
-	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Assert rule/fact", AutoCreateRefTerm = "parameters"), Category = "SWIProlog")
-	void SWIPLassert(const FString ruleOrFact, bool& bResult);
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Assert fact", AutoCreateRefTerm = "parameters"), Category = "SWIProlog")
+	void SWIPLassertFact(USWIPrologTerm* fact, bool& bResult);
+
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Assert rule", AutoCreateRefTerm = "parameters"), Category = "SWIProlog")
+	void SWIPLassertRule(USWIPrologRule* rule, bool& bResult);
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "retract rule/fact", AutoCreateRefTerm = "parameters"), Category = "SWIProlog")
-	void SWIPLretract(const FString ruleOrFact, bool& bResult);
-
-	//UFUNCTION(BlueprintCallable, meta = (DisplayName = "Start Prolog", AutoCreateRefTerm = "parameters"), Category = "SWIProlog")
+	void SWIPLretract(USWIPrologTerm* ruleOrFact, bool& bResult);
 	
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Open Prolog file", AutoCreateRefTerm = "parameters"), Category = "SWIProlog")
 	void openPrologFile(const FString filename);
