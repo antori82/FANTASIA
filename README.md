@@ -17,7 +17,8 @@
     ·
     <a href="https://www.youtube.com/channel/UChH-PYQw-_IZJM7nYJywevg">Youtube channel</a>
     ·
-    <a href="https://www.facebook.com/FantasiaPlugin">Facebook page</a>
+    <a href="https://github.com/antori82/FANTASIATemplate">FANTASIA Interaction Model demo project</a>
+	<br />
   </p>
 </p>
 
