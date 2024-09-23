@@ -42,11 +42,11 @@ private:
 
 	void startProlog();
 
-	FString translateTerm(USWIPrologTerm*);
+	FString translateTerm(UObject*);
 
-	FString translateRule(USWIPrologRule*);
+	FString translateRule(UObject*);
 
-	FString translateRuleBody(USWIPrologRuleBody*);
+	FString translateRuleBody(UObject*);
 
 public:
 	// Sets default values for this component's properties
@@ -89,6 +89,33 @@ public:
 	
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Open Prolog file", AutoCreateRefTerm = "parameters"), Category = "SWIProlog")
 	void openPrologFile(const FString filename);
+
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "set prolog rule", AutoCreateRefTerm = "parameters"), Category = "SWIPrologSetters")
+	void SWIPLSetRule(USWIPrologTerm* head, USWIPrologRuleBody* body, USWIPrologRule*& rule);
+
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "set prolog rule body", AutoCreateRefTerm = "parameters"), Category = "SWIPrologSetters")
+	void SWIPLSetRuleBody(UObject* firstRule, UObject* secondRule, SWIPrologOperation operation, USWIPrologRuleBody*& ruleBody);
+
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "set prolog atom", AutoCreateRefTerm = "parameters"), Category = "SWIPrologSetters")
+	void SWIPLSetAtom(FString atomName, USWIPrologAtom*& atom);
+
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "set prolog variable", AutoCreateRefTerm = "parameters"), Category = "SWIPrologSetters")
+	void SWIPLSetVariable(FString variableName, USWIPrologVariable*& variable);
+
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "set prolog integer", AutoCreateRefTerm = "parameters"), Category = "SWIPrologSetters")
+	void SWIPLSetInteger(int32 value, USWIPrologInteger*& intTerm);
+
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "set prolog float", AutoCreateRefTerm = "parameters"), Category = "SWIPrologSetters")
+	void SWIPLSetFloat(float value, USWIPrologFloat*& floatTerm);
+
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "set prolog compound", AutoCreateRefTerm = "parameters"), Category = "SWIPrologSetters")
+	void SWIPLSetCompound(FString name, TArray<USWIPrologTerm*> terms, USWIPrologCompound*& compound);
+
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "set prolog list", AutoCreateRefTerm = "parameters"), Category = "SWIPrologSetters")
+	void SWIPLSetList(TArray<USWIPrologTerm*> terms, USWIPrologList*& list);
+
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "set prolog head and tail list", AutoCreateRefTerm = "parameters"), Category = "SWIPrologSetters")
+	void SWIPLSetHeadToTail(TArray<USWIPrologTerm*> head, USWIPrologTerm* tail, USWIPrologHeadToTail*& list);
 
 protected:
 	// Called when the game starts

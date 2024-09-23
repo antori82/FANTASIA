@@ -142,43 +142,8 @@ struct FSWIPrologResponse {
 	TArray<USWIPrologSolution*> results;
 };
 
-/*
-	used to generalize a tail, it can be a full list e.g. [a,b,c],
-	a variable e.g. X
-	or a partial list e.g. [H|T]
-*/
-UINTERFACE(Blueprintable)
-class USWIPrologTailInterface : public UObject {
-	
-	GENERATED_BODY()
-
-};
-
-class ISWIPrologTailInterface {
-
-	GENERATED_BODY()
-
-};
-
-/*
-	used to generalize a rule body which can be a term
-	or another body which is a pair of terms/rules
-*/
-UINTERFACE(Blueprintable)
-class USWIPrologRuleInterface : public UObject {
-
-	GENERATED_BODY()
-
-};
-
-class ISWIPrologRuleInterface {
-
-	GENERATED_BODY()
-
-};
-
 UCLASS(ClassGroup = (SWIProlog), BlueprintType)
-class USWIPrologRuleBody : public UObject, public ISWIPrologRuleInterface {
+class USWIPrologRuleBody : public UObject{
 
 	GENERATED_BODY()
 
@@ -186,10 +151,13 @@ public:
 
 	USWIPrologRuleBody() {};
 
-	UPROPERTY(BlueprintReadOnly)
-	TPair<ISWIPrologRuleInterface*, ISWIPrologRuleInterface*> rulePair;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowedClasses = "USWIPrologRuleBody, USWIPrologTerm"))
+	UObject* firstRule;
 
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowedClasses = "USWIPrologRuleBody, USWIPrologTerm"))
+	UObject* secondRule;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	SWIPrologOperation logicOperator;
 };
 
@@ -202,15 +170,15 @@ public:
 
 	USWIPrologRule() {};
 
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	USWIPrologTerm* head;
 
-	UPROPERTY(BlueprintReadOnly)
-	USWIPrologRuleBody* body;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowedClasses = "USWIPrologRuleBody, USWIPrologTerm"))
+	Uobject* body;
 };
 
 UCLASS(ClassGroup = (SWIProlog), BlueprintType)
-class USWIPrologTerm : public UObject, public ISWIPrologRuleInterface {
+class USWIPrologTerm : public UObject {
 
 	GENERATED_BODY()
 
@@ -229,13 +197,13 @@ public:
 
 	USWIPrologAtom() {};
 
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(EditAnywhere)
 	FString atomValue;
 
 };
 
 UCLASS(ClassGroup = (SWIProlog), BlueprintType)
-class USWIPrologVariable : public USWIPrologTerm, public ISWIPrologTailInterface {
+class USWIPrologVariable : public USWIPrologTerm {
 
 	GENERATED_BODY()
 
@@ -243,7 +211,7 @@ public:
 
 	USWIPrologVariable() {};
 
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FString varName;
 
 };
@@ -257,7 +225,7 @@ public:
 
 	USWIPrologInteger() {};
 
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int32 intValue;
 
 };
@@ -271,7 +239,7 @@ public:
 
 	USWIPrologFloat() {};
 
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float floatValue;
 
 };
@@ -285,16 +253,16 @@ public:
 
 	USWIPrologCompound() {};
 
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FString compoundName;
 
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<USWIPrologTerm*> arguments;
 
 };
 
 UCLASS(ClassGroup = (SWIProlog), BlueprintType)
-class USWIPrologList : public USWIPrologTerm, public ISWIPrologTailInterface {
+class USWIPrologList : public USWIPrologTerm {
 
 	GENERATED_BODY()
 
@@ -302,13 +270,13 @@ public:
 
 	USWIPrologList() {};
 
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<USWIPrologTerm*> elements;
 
 };
 
 UCLASS(ClassGroup = (SWIProlog), BlueprintType)
-class USWIPrologHeadToTail : public USWIPrologTerm, public ISWIPrologTailInterface {
+class USWIPrologHeadToTail : public USWIPrologTerm {
 
 	GENERATED_BODY()
 
@@ -316,11 +284,11 @@ public:
 
 	USWIPrologHeadToTail() {};
 
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<USWIPrologTerm*> headElements;
 
-	UPROPERTY(BlueprintReadOnly)
-	ISWIPrologTailInterface* tail;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowedClasses = "USWIPrologTerm, USWIPrologList, USWIPrologHeatToTail"))
+	USWIPrologTerm* tail;
 
 };
 

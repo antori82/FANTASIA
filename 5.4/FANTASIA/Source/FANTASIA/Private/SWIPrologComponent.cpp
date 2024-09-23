@@ -110,6 +110,58 @@ void USWIPrologComponent::openPrologFile(const FString filename) {
 	}
 }
 
+void USWIPrologComponent::SWIPLSetRule(USWIPrologTerm* head, USWIPrologRuleBody* body, USWIPrologRule*& rule)
+{
+	rule->head = head;
+	rule->body = body;
+}
+
+void USWIPrologComponent::SWIPLSetRuleBody(UObject* firstRule, UObject* secondRule, SWIPrologOperation operation, USWIPrologRuleBody*& ruleBody)
+{
+	ruleBody->firstRule = firstRule;
+	ruleBody->secondRule = secondRule;
+	ruleBody->logicOperator = operation;
+}
+
+void USWIPrologComponent::SWIPLSetAtom(FString atomName, USWIPrologAtom*& atom)
+{
+	atom->atomValue = atomName;
+}
+
+void USWIPrologComponent::SWIPLSetVariable(FString variableName, USWIPrologVariable*& variable)
+{
+	variable->varName = variableName;
+}
+
+void USWIPrologComponent::SWIPLSetInteger(int32 value, USWIPrologInteger*& intTerm)
+{
+	intTerm->intValue = value;
+}
+
+void USWIPrologComponent::SWIPLSetFloat(float value, USWIPrologFloat*& floatTerm)
+{
+	floatTerm->floatValue = value;
+}
+
+void USWIPrologComponent::SWIPLSetCompound(FString name, TArray<USWIPrologTerm*> terms, USWIPrologCompound*& compound)
+{
+	compound->compoundName = name;
+	compound->arguments = terms;
+}
+
+void USWIPrologComponent::SWIPLSetList(TArray<USWIPrologTerm*> terms, USWIPrologList*& list)
+{
+	list->elements = terms;
+}
+
+void USWIPrologComponent::SWIPLSetHeadToTail(TArray<USWIPrologTerm*> head, USWIPrologTerm* tail, USWIPrologHeadToTail*& list)
+{
+	list->headElements = head;
+	list->tail = tail;
+}
+
+
+
 void USWIPrologComponent::startProlog() {
 	if (_putenv("SWI_HOME_DIR=C:\\Program Files\\swipl")) return;
 	int argc = 1;
@@ -129,7 +181,7 @@ void USWIPrologComponent::startProlog() {
 	}
 }
 
-FString USWIPrologComponent::translateTerm(USWIPrologTerm* term) {
+FString USWIPrologComponent::translateTerm(UObject* term) {
 	if (USWIPrologAtom* atom = Cast<USWIPrologAtom>(term)) {
 		return "'" + atom->atomValue + "'";
 	}
@@ -166,28 +218,32 @@ FString USWIPrologComponent::translateTerm(USWIPrologTerm* term) {
 			headTerms = headTerms + translateTerm(list->headElements[i]);
 			if ((i + 1) < list->headElements.Num()) headTerms = headTerms + ",";
 		}
+		UObject* tail = list->tail;
 		FString tailString = "";
-		if (USWIPrologVariable* tailVar = Cast<USWIPrologVariable>(&list->tail)) {
+		if (USWIPrologVariable* tailVar = Cast<USWIPrologVariable>(tail)) {
 			tailString = "_" + tailVar->varName;
 		}
-		else if (USWIPrologList* tailList = Cast<USWIPrologList>(&list->tail)) {
+		else if (USWIPrologList* tailList = Cast<USWIPrologList>(tail)) {
 			tailString = translateTerm(tailList);
 		}
 		else {
-			USWIPrologHeadToTail* headToTail = Cast<USWIPrologHeadToTail>(&list->tail);
+			USWIPrologHeadToTail* headToTail = Cast<USWIPrologHeadToTail>(tail);
 			tailString = translateTerm(headToTail);
 		}
 		return "[" + headTerms + "|" + tailString + "]";
 	}
+	return "";
 }
 
-FString USWIPrologComponent::translateRule(USWIPrologRule* rule) {
-	FString head = translateTerm(&rule->head);
-	FString body = translateRuleBody(&rule->body);
+FString USWIPrologComponent::translateRule(UObject* rule) {
+	USWIPrologRule* rulePtr = Cast<USWIPrologRule>(rule);
+	FString head = translateTerm(rulePtr->head);
+	FString body = translateRuleBody(rulePtr->body);
 	return head + ":-" + body;
 }
 
-FString USWIPrologComponent::translateRuleBody(USWIPrologRuleBody* ruleBody) {
+FString USWIPrologComponent::translateRuleBody(UObject* ruleBodyObject) {
+	USWIPrologRuleBody* ruleBody = Cast<USWIPrologRuleBody>(ruleBodyObject);
 	FString swiOperator;
 	switch (ruleBody->logicOperator) {
 	case SWIPrologOperation::OR:
@@ -202,8 +258,8 @@ FString USWIPrologComponent::translateRuleBody(USWIPrologRuleBody* ruleBody) {
 	}
 	FString firstString = "";
 	FString secondString = "";
-	ISWIPrologRuleInterface* first = ruleBody->rulePair.Key;
-	ISWIPrologRuleInterface* second = ruleBody->rulePair.Value;
+	UObject* first = ruleBody->firstRule;
+	UObject* second = ruleBody->secondRule;
 	if (USWIPrologTerm* firstTerm = Cast<USWIPrologTerm>(first)) {
 		firstString = translateTerm(firstTerm);
 	}
