@@ -64,7 +64,14 @@ UENUM(BlueprintType)
 enum class SWIPrologOperation : uint8 {
 	AND = 0 UMETA(DisplayName = "AND (,)"),
 	OR = 1 UMETA(DisplayName = "OR (;)"),
-	CONDITION = 2 UMETA(DisplayName = "IF-THEN-ELSE (->)")
+	CONDITION = 2 UMETA(DisplayName = "IF-THEN-ELSE (->)"),
+	EQUAL = 3 UMETA(DisplayName = "EQUAL (=)"),
+	UNEQUAL = 4 UMETA(DisplayName = "UNEQUAL (\=)"),
+	IS = 5 UMETA(DisplayName = "IS (is)"),
+	PLUS = 6 UMETA(DisplayName = "PLUS (+)"),
+	MINUS = 7 UMETA(DisplayName = "MINUS (-)"),
+	MULTIPLY = 8 UMETA(DisplayName = "MULTIPLY (*)"),
+	DIVIDE = 9 UMETA(DisplayName = "DIVIDE (/)")
 };
 
 USTRUCT(Blueprintable)
@@ -158,7 +165,7 @@ public:
 	UObject* secondRule;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	SWIPrologOperation logicOperator;
+	SWIPrologOperation prologOperator;
 };
 
 UCLASS(ClassGroup = (SWIProlog), BlueprintType)
@@ -174,7 +181,7 @@ public:
 	USWIPrologTerm* head;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowedClasses = "USWIPrologRuleBody, USWIPrologTerm"))
-	Uobject* body;
+	UObject* body;
 };
 
 UCLASS(ClassGroup = (SWIProlog), BlueprintType)
@@ -197,7 +204,7 @@ public:
 
 	USWIPrologAtom() {};
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FString atomValue;
 
 };
@@ -292,6 +299,17 @@ public:
 
 };
 
+UCLASS(ClassGroup= (SWIProlog), BlueprintType)
+class USWIPrologCut : public USWIPrologTerm {
+
+	GENERATED_BODY()
+
+public:
+
+	USWIPrologCut() {};
+
+};
+
 
 UCLASS(ClassGroup = (SWIProlog), BlueprintType)
 class USWIPrologSolution : public UObject {
@@ -304,9 +322,6 @@ public:
 
 	UPROPERTY(BlueprintReadOnly)
 	TArray<FString> resultSet;
-
-	UPROPERTY(BlueprintReadOnly)
-	bool bResult;
 };
 
 UCLASS(ClassGroup = (Azure), BlueprintType)

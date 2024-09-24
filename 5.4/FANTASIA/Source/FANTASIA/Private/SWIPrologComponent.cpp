@@ -16,34 +16,38 @@ USWIPrologComponent::USWIPrologComponent()
 	// ...
 }
 
-void USWIPrologComponent::SWIPLsubmitQuery(USWIPrologTerm* inRuleOrFactTerm, const TArray<FString> inElements, FSWIPrologResponse& outResponse) {
-	FString inRuleOrFact = translateTerm(inRuleOrFactTerm);
-	char* queryTerm = TCHAR_TO_ANSI(*inRuleOrFact);
-	int32 airity = inElements.Num();
+void USWIPrologComponent::SWIPLsubmitQuery(USWIPrologTerm* inRuleOrFactTerm, FSWIPrologResponse& outResponse) {
+	int airity = 0;
+	char* queryTerm;
+	TArray<FString> inElements;
+	if (USWIPrologCompound* compound = Cast<USWIPrologCompound>(inRuleOrFactTerm)) {
+		queryTerm = TCHAR_TO_ANSI(*compound->compoundName);
+		for (USWIPrologTerm* term : compound->arguments) {
+			airity = airity + 1;
+			inElements.Add(translateTerm(term));
+		}
+	}
+	else {
+		USWIPrologAtom* atom = Cast<USWIPrologAtom>(inRuleOrFactTerm);
+		queryTerm = TCHAR_TO_ANSI(*atom->atomValue);
+	}
 	PlTermv queryElements(airity);
 	int32 index = 0;
 	for (FString element : inElements) {
 		char* term = TCHAR_TO_ANSI(*element);
-		if (isupper(term[0])) {
-			queryElements[index] = PlTerm_var();
-			index++;
-		}
-		else {
-			queryElements[index] = PlCompound(term);
-			index++;
-		}
+		queryElements[index] = PlCompound(term);
+		index++;
 	}
 	PlQuery myQuery(queryTerm, queryElements);
 	FSWIPrologResponse currentResponse;
 	currentResponse.airity = airity;
-	currentResponse.queryName = inRuleOrFact;
+	currentResponse.queryName = FString(ANSI_TO_TCHAR(queryTerm));
 	TArray<FString> resultSet;
 	bool bResult;
 	try {
 		bResult = myQuery.next_solution();
 		while (bResult) {
 			USWIPrologSolution currentSolution;
-			currentSolution.bResult = bResult;
 			for (int i = 0; i < queryElements.size(); i++) {
 				FString sResult = FString(ANSI_TO_TCHAR(queryElements[i].as_string().c_str()));
 				currentSolution.resultSet.Add(sResult);
@@ -51,6 +55,7 @@ void USWIPrologComponent::SWIPLsubmitQuery(USWIPrologTerm* inRuleOrFactTerm, con
 			currentResponse.results.Add(&currentSolution);
 			bResult = myQuery.next_solution();
 		}
+		UE_LOG(LogTemp, Display, TEXT("Query performed succesfully"));
 	}
 	catch (PlException err) {
 		FString FsError = FString(ANSI_TO_TCHAR(err.what()));
@@ -64,8 +69,11 @@ void USWIPrologComponent::SWIPLassertFact(USWIPrologTerm* fact, bool& bResult) {
 	char* stringRuleOrFact = TCHAR_TO_ANSI(*ruleOrFact);
 	try {
 		PlCall("assert", PlTermv(PlCompound(stringRuleOrFact)));
+		bResult = true;
+		UE_LOG(LogTemp, Display, TEXT("Assert Fact successful"));
 	}
 	catch (PlException err) {
+		bResult = false;
 		FString FsError = FString(ANSI_TO_TCHAR(err.what()));
 		UE_LOG(LogTemp, Warning, TEXT("error occurred while asserting rule or fact: %s"), *FsError);
 	}
@@ -76,8 +84,11 @@ void USWIPrologComponent::SWIPLassertRule(USWIPrologRule* rule, bool& bResult) {
 	char* stringRuleOrFact = TCHAR_TO_ANSI(*ruleOrFact);
 	try {
 		PlCall("assert", PlTermv(PlCompound(stringRuleOrFact)));
+		bResult = true;
+		UE_LOG(LogTemp, Display, TEXT("Assert Rule successful"));
 	}
 	catch (PlException err) {
+		bResult = false;
 		FString FsError = FString(ANSI_TO_TCHAR(err.what()));
 		UE_LOG(LogTemp, Warning, TEXT("error occurred while asserting rule or fact: %s"), *FsError);
 	}
@@ -88,8 +99,11 @@ void USWIPrologComponent::SWIPLretract(USWIPrologTerm* ruleOrFactTerm, bool& bRe
 	char* stringRuleOrFact = TCHAR_TO_ANSI(*ruleOrFact);
 	try {
 		PlCall("retract", PlTermv(PlCompound(stringRuleOrFact)));
+		bResult = true;
+		UE_LOG(LogTemp, Display, TEXT("Retract successful"));
 	}
 	catch (PlException err) {
+		bResult = false;
 		FString FsError = FString(ANSI_TO_TCHAR(err.what()));
 		UE_LOG(LogTemp, Warning, TEXT("error occurred while asserting rule or fact: %s"), *FsError);
 	}
@@ -109,57 +123,6 @@ void USWIPrologComponent::openPrologFile(const FString filename) {
 		UE_LOG(LogTemp, Warning, TEXT("error occurred while consulting file: %s"), *FsError);
 	}
 }
-
-void USWIPrologComponent::SWIPLSetRule(USWIPrologTerm* head, USWIPrologRuleBody* body, USWIPrologRule*& rule)
-{
-	rule->head = head;
-	rule->body = body;
-}
-
-void USWIPrologComponent::SWIPLSetRuleBody(UObject* firstRule, UObject* secondRule, SWIPrologOperation operation, USWIPrologRuleBody*& ruleBody)
-{
-	ruleBody->firstRule = firstRule;
-	ruleBody->secondRule = secondRule;
-	ruleBody->logicOperator = operation;
-}
-
-void USWIPrologComponent::SWIPLSetAtom(FString atomName, USWIPrologAtom*& atom)
-{
-	atom->atomValue = atomName;
-}
-
-void USWIPrologComponent::SWIPLSetVariable(FString variableName, USWIPrologVariable*& variable)
-{
-	variable->varName = variableName;
-}
-
-void USWIPrologComponent::SWIPLSetInteger(int32 value, USWIPrologInteger*& intTerm)
-{
-	intTerm->intValue = value;
-}
-
-void USWIPrologComponent::SWIPLSetFloat(float value, USWIPrologFloat*& floatTerm)
-{
-	floatTerm->floatValue = value;
-}
-
-void USWIPrologComponent::SWIPLSetCompound(FString name, TArray<USWIPrologTerm*> terms, USWIPrologCompound*& compound)
-{
-	compound->compoundName = name;
-	compound->arguments = terms;
-}
-
-void USWIPrologComponent::SWIPLSetList(TArray<USWIPrologTerm*> terms, USWIPrologList*& list)
-{
-	list->elements = terms;
-}
-
-void USWIPrologComponent::SWIPLSetHeadToTail(TArray<USWIPrologTerm*> head, USWIPrologTerm* tail, USWIPrologHeadToTail*& list)
-{
-	list->headElements = head;
-	list->tail = tail;
-}
-
 
 
 void USWIPrologComponent::startProlog() {
@@ -193,6 +156,9 @@ FString USWIPrologComponent::translateTerm(UObject* term) {
 	}
 	if (USWIPrologFloat* num = Cast<USWIPrologFloat>(term)) {
 		return FString::FromInt(num->floatValue);
+	}
+	if (USWIPrologCut* cut = Cast<USWIPrologCut>(term)) {
+		return "!";
 	}
 	if (USWIPrologCompound* compound = Cast<USWIPrologCompound>(term)) {
 		TArray arguments = compound->arguments;
@@ -243,9 +209,12 @@ FString USWIPrologComponent::translateRule(UObject* rule) {
 }
 
 FString USWIPrologComponent::translateRuleBody(UObject* ruleBodyObject) {
+	if (USWIPrologTerm* term = Cast<USWIPrologTerm>(ruleBodyObject)) {
+		return translateTerm(term);
+	}
 	USWIPrologRuleBody* ruleBody = Cast<USWIPrologRuleBody>(ruleBodyObject);
 	FString swiOperator;
-	switch (ruleBody->logicOperator) {
+	switch (ruleBody->prologOperator) {
 	case SWIPrologOperation::OR:
 		swiOperator = ";";
 		break;
@@ -254,6 +223,27 @@ FString USWIPrologComponent::translateRuleBody(UObject* ruleBodyObject) {
 		break;
 	case SWIPrologOperation::AND:
 		swiOperator = ",";
+		break;
+	case SWIPrologOperation::DIVIDE:
+		swiOperator = "/";
+		break;
+	case SWIPrologOperation::EQUAL:
+		swiOperator = "=";
+		break;
+	case SWIPrologOperation::IS:
+		swiOperator = " is ";
+		break;
+	case SWIPrologOperation::MINUS:
+		swiOperator = "-";
+		break;
+	case SWIPrologOperation::MULTIPLY:
+		swiOperator = "*";
+		break;
+	case SWIPrologOperation::PLUS:
+		swiOperator = "+";
+		break;
+	case SWIPrologOperation::UNEQUAL:
+		swiOperator = "\\=";
 		break;
 	}
 	FString firstString = "";
