@@ -66,12 +66,16 @@ enum class SWIPrologOperation : uint8 {
 	OR = 1 UMETA(DisplayName = "OR (;)"),
 	CONDITION = 2 UMETA(DisplayName = "IF-THEN-ELSE (->)"),
 	EQUAL = 3 UMETA(DisplayName = "EQUAL (=)"),
-	UNEQUAL = 4 UMETA(DisplayName = "UNEQUAL (\=)"),
+	UNEQUAL = 4 UMETA(DisplayName = "UNEQUAL (\\=)"),
 	IS = 5 UMETA(DisplayName = "IS (is)"),
 	PLUS = 6 UMETA(DisplayName = "PLUS (+)"),
 	MINUS = 7 UMETA(DisplayName = "MINUS (-)"),
 	MULTIPLY = 8 UMETA(DisplayName = "MULTIPLY (*)"),
-	DIVIDE = 9 UMETA(DisplayName = "DIVIDE (/)")
+	DIVIDE = 9 UMETA(DisplayName = "DIVIDE (/)"),
+	LESSTHAN = 10 UMETA(DisplayName = "LESS-THAN (<)"),
+	MORETHAN = 11 UMETA(DisplayName = "MORE-THAN (>)"),
+	LESSOREQUAL = 12 UMETA(DisplayName = "LESS-OR-EQUAL (<=)"),
+	MOREOREQUAL = 13 UMETA(DisplayName = "MORE-OR-EQUAL (>=)")
 };
 
 USTRUCT(Blueprintable)

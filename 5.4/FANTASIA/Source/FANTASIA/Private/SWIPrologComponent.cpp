@@ -22,9 +22,11 @@ void USWIPrologComponent::SWIPLsubmitQuery(USWIPrologTerm* inRuleOrFactTerm, FSW
 	TArray<FString> inElements;
 	if (USWIPrologCompound* compound = Cast<USWIPrologCompound>(inRuleOrFactTerm)) {
 		queryTerm = TCHAR_TO_ANSI(*compound->compoundName);
+		UE_LOG(LogTemp, Display, TEXT("nome della query %s parte del compound della query"), *compound->compoundName);
 		for (USWIPrologTerm* term : compound->arguments) {
 			airity = airity + 1;
 			inElements.Add(translateTerm(term));
+			UE_LOG(LogTemp, Display, TEXT("Elemento %s parte del compound della query"), *translateTerm(term));
 		}
 	}
 	else {
@@ -37,6 +39,7 @@ void USWIPrologComponent::SWIPLsubmitQuery(USWIPrologTerm* inRuleOrFactTerm, FSW
 		char* term = TCHAR_TO_ANSI(*element);
 		queryElements[index] = PlCompound(term);
 		index++;
+		UE_LOG(LogTemp, Display, TEXT("Elemento %s inserito nel vettore della query"), *element);
 	}
 	PlQuery myQuery(queryTerm, queryElements);
 	FSWIPrologResponse currentResponse;
@@ -47,15 +50,19 @@ void USWIPrologComponent::SWIPLsubmitQuery(USWIPrologTerm* inRuleOrFactTerm, FSW
 	try {
 		bResult = myQuery.next_solution();
 		while (bResult) {
-			USWIPrologSolution currentSolution;
-			for (int i = 0; i < queryElements.size(); i++) {
+			UE_LOG(LogTemp, Display, TEXT("sviluppo soluzione nella query"));
+			USWIPrologSolution* currentSolution = NewObject<USWIPrologSolution>();
+			for (int i = 0; i < airity; i++) {
 				FString sResult = FString(ANSI_TO_TCHAR(queryElements[i].as_string().c_str()));
-				currentSolution.resultSet.Add(sResult);
+				currentSolution->resultSet.Add(sResult);
 			}
-			currentResponse.results.Add(&currentSolution);
+			UE_LOG(LogTemp, Display, TEXT("Soluzione impostata"));
+			currentResponse.results.Add(currentSolution);
+			UE_LOG(LogTemp, Display, TEXT("Soluzione aggiunta"));
 			bResult = myQuery.next_solution();
 		}
-		UE_LOG(LogTemp, Display, TEXT("Query performed succesfully"));
+		outResponse = currentResponse;
+		UE_LOG(LogTemp, Display, TEXT("Query %s performed succesfully, containing %d results"), *outResponse.queryName, outResponse.results.Num());
 	}
 	catch (PlException err) {
 		FString FsError = FString(ANSI_TO_TCHAR(err.what()));
@@ -70,7 +77,7 @@ void USWIPrologComponent::SWIPLassertFact(USWIPrologTerm* fact, bool& bResult) {
 	try {
 		PlCall("assert", PlTermv(PlCompound(stringRuleOrFact)));
 		bResult = true;
-		UE_LOG(LogTemp, Display, TEXT("Assert Fact successful"));
+		UE_LOG(LogTemp, Display, TEXT("Assert Fact %s successful"), *ruleOrFact);
 	}
 	catch (PlException err) {
 		bResult = false;
@@ -85,7 +92,7 @@ void USWIPrologComponent::SWIPLassertRule(USWIPrologRule* rule, bool& bResult) {
 	try {
 		PlCall("assert", PlTermv(PlCompound(stringRuleOrFact)));
 		bResult = true;
-		UE_LOG(LogTemp, Display, TEXT("Assert Rule successful"));
+		UE_LOG(LogTemp, Display, TEXT("Assert Rule %s successful"), *ruleOrFact);
 	}
 	catch (PlException err) {
 		bResult = false;
@@ -106,6 +113,17 @@ void USWIPrologComponent::SWIPLretract(USWIPrologTerm* ruleOrFactTerm, bool& bRe
 		bResult = false;
 		FString FsError = FString(ANSI_TO_TCHAR(err.what()));
 		UE_LOG(LogTemp, Warning, TEXT("error occurred while asserting rule or fact: %s"), *FsError);
+	}
+}
+
+void USWIPrologComponent::SWIPLresetProlog()
+{
+	try {
+		PL_cleanup(PL_CLEANUP_NO_RECLAIM_MEMORY);
+		startProlog();
+	}
+	catch (PlException e) {
+		UE_LOG(LogTemp, Display, TEXT("cleanup failed"));
 	}
 }
 
@@ -228,7 +246,7 @@ FString USWIPrologComponent::translateRuleBody(UObject* ruleBodyObject) {
 		swiOperator = "/";
 		break;
 	case SWIPrologOperation::EQUAL:
-		swiOperator = "=";
+		swiOperator = "=:=";
 		break;
 	case SWIPrologOperation::IS:
 		swiOperator = " is ";
@@ -243,7 +261,19 @@ FString USWIPrologComponent::translateRuleBody(UObject* ruleBodyObject) {
 		swiOperator = "+";
 		break;
 	case SWIPrologOperation::UNEQUAL:
-		swiOperator = "\\=";
+		swiOperator = "=\\=";
+		break;
+	case SWIPrologOperation::LESSTHAN:
+		swiOperator = "<";
+		break;
+	case SWIPrologOperation::MORETHAN:
+		swiOperator = ">";
+		break;
+	case SWIPrologOperation::LESSOREQUAL:
+		swiOperator = "=<";
+		break;
+	case SWIPrologOperation::MOREOREQUAL:
+		swiOperator = ">=";
 		break;
 	}
 	FString firstString = "";

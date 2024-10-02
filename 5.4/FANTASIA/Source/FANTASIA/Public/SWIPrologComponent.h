@@ -75,6 +75,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "retract rule/fact", AutoCreateRefTerm = "parameters"), Category = "SWIProlog")
 	void SWIPLretract(USWIPrologTerm* ruleOrFact, bool& bResult);
+
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "reset Prolog", AutoCreateRefTerm = "parameters"), Category = "SWIProlog")
+	void SWIPLresetProlog();
 	
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Open Prolog file", AutoCreateRefTerm = "parameters"), Category = "SWIProlog")
 	void openPrologFile(const FString filename);
