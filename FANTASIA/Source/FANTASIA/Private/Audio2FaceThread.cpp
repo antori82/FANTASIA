@@ -50,7 +50,6 @@ FMyThread* FMyThread::setup(FString inPlayerA2F_name, FString inserver_url, TArr
 
 bool FMyThread::Init()
 {
-    StartTime = FDateTime::UtcNow();
     return true;
 }
 
@@ -58,7 +57,6 @@ uint32 FMyThread::Run()
 {
     bIsRunning = true;
     SendToAudio2FaceGrpc();
-    bIsRunning = false;
     return 0;
 }
 
@@ -78,33 +76,17 @@ void FMyThread::Shutdown()
     if (Runnable)
     {
         grpc_shutdown();
-        PrintTimeThread();
         Runnable->StopRecording = false;
         Runnable = NULL;
     }
 }
 
-
-
-void FMyThread::PrintTimeThread()
-{
-    Runnable->EndTime = FDateTime::UtcNow();
-    FTimespan TempoTrascorso = Runnable->EndTime - Runnable->StartTime;
-    int32 MillisecondiTrascorsi = TempoTrascorso.GetTotalMilliseconds();
-}
-
-bool FMyThread::IsThreadRunning() const
-{
-    
-        return bIsRunning;
-    
-   
+bool FMyThread::IsThreadRunning() const {
+    return bIsRunning;
 }
 
 void FMyThread::StopSending() {
-
     StopRecording = true;
-
 }
 void FMyThread::SendToAudio2FaceGrpc()
 {
@@ -113,12 +95,8 @@ void FMyThread::SendToAudio2FaceGrpc()
 
     std::unique_ptr<Audio2Face::Stub> stub2 = Audio2Face::NewStub(channel2);
 
-    int TimeLog = 0;
-    FDateTime TimeInvioPrimoCHunk;
-    //
     string PlayerA2FaceName = TCHAR_TO_UTF8(*PlayerA2F_name);
     int chunk_size = SampleRate / 10;
-    double sleep_between_chunks = (double)chunk_size / SampleRate;//0.10
     bool block_until_playback_is_finished = true;
 
     ClientContext context;
@@ -132,15 +110,12 @@ void FMyThread::SendToAudio2FaceGrpc()
 
     PushAudioStreamResponse response;
     std::unique_ptr<grpc::ClientWriter<PushAudioStreamRequest>> writer(stub2->PushAudioStream(&context, &response));
-    FDateTime TimeInvioStartMarker = FDateTime::UtcNow();
     writer->Write(*request);
 
-  
     for (int32 i = 0; i < AudioData.Num(); i += chunk_size) {
         if (StopRecording == true) {
             break;
         }
-        TimeLog++;
        
         int32 chunk_end = FMath::Min(i + chunk_size, AudioData.Num());
         const float* chunk_data = AudioData.GetData() + i;
@@ -150,32 +125,21 @@ void FMyThread::SendToAudio2FaceGrpc()
         if (!writer->Write(*requestAudio)) {
             break;
         }
-        if (TimeLog == 1) {
-            TimeInvioPrimoCHunk = FDateTime::UtcNow();
-            FTimespan TempoTrascorsoStarterMark = TimeInvioPrimoCHunk - TimeInvioStartMarker;
-            int32 MillisecondiTrascorsiStarterMark = TempoTrascorsoStarterMark.GetTotalMilliseconds();
-
-        }
     }
+
     writer->WritesDone();
     Status status = writer->Finish();
 
-    FDateTime FineInvio = FDateTime::UtcNow();
-    if (TimeInvioPrimoCHunk != NULL) {      
-        FTimespan TempoTrascorsoChunks = FineInvio - TimeInvioPrimoCHunk;
-        int32 MillisecondiTrascorsiChunks = TempoTrascorsoChunks.GetTotalMilliseconds();
+    if (status.ok()) {
+        if (response.success()) {
+            GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Audio stream pushed successfully!"));
+        }
     }
     else {
-        if (status.ok()) {
-            if (response.success()) {
-                GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Audio stream pushed successfully!"));
-            }
-        }
-        else {
-            GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Audio stream failed to push!"));
-        }
+        GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Audio stream failed to push!"));
     }
-   Shutdown();
+    bIsRunning = false;
+    Shutdown();
 }
 
 
