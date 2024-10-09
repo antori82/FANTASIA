@@ -75,7 +75,9 @@ enum class SWIPrologOperation : uint8 {
 	LESSTHAN = 10 UMETA(DisplayName = "LESS-THAN (<)"),
 	MORETHAN = 11 UMETA(DisplayName = "MORE-THAN (>)"),
 	LESSOREQUAL = 12 UMETA(DisplayName = "LESS-OR-EQUAL (<=)"),
-	MOREOREQUAL = 13 UMETA(DisplayName = "MORE-OR-EQUAL (>=)")
+	MOREOREQUAL = 13 UMETA(DisplayName = "MORE-OR-EQUAL (>=)"),
+	TERMNOTEQUAL = 14 UMETA(DisplayName = "TERM-NOT-EQUAL (\\==)"),
+	TERMEQUAL = 15 UMETA(DisplayName = "TERM-EQUAL (==)")
 };
 
 USTRUCT(Blueprintable)

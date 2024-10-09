@@ -22,11 +22,11 @@ void USWIPrologComponent::SWIPLsubmitQuery(USWIPrologTerm* inRuleOrFactTerm, FSW
 	TArray<FString> inElements;
 	if (USWIPrologCompound* compound = Cast<USWIPrologCompound>(inRuleOrFactTerm)) {
 		queryTerm = TCHAR_TO_ANSI(*compound->compoundName);
-		UE_LOG(LogTemp, Display, TEXT("nome della query %s parte del compound della query"), *compound->compoundName);
+		UE_LOG(LogTemp, Display, TEXT("Query name %s part of the compound"), *compound->compoundName);
 		for (USWIPrologTerm* term : compound->arguments) {
 			airity = airity + 1;
 			inElements.Add(translateTerm(term));
-			UE_LOG(LogTemp, Display, TEXT("Elemento %s parte del compound della query"), *translateTerm(term));
+			UE_LOG(LogTemp, Display, TEXT("Query element %s part of the compound"), *translateTerm(term));
 		}
 	}
 	else {
@@ -39,7 +39,7 @@ void USWIPrologComponent::SWIPLsubmitQuery(USWIPrologTerm* inRuleOrFactTerm, FSW
 		char* term = TCHAR_TO_ANSI(*element);
 		queryElements[index] = PlCompound(term);
 		index++;
-		UE_LOG(LogTemp, Display, TEXT("Elemento %s inserito nel vettore della query"), *element);
+		UE_LOG(LogTemp, Display, TEXT("element %s inside query vector"), *element);
 	}
 	PlQuery myQuery(queryTerm, queryElements);
 	FSWIPrologResponse currentResponse;
@@ -50,15 +50,15 @@ void USWIPrologComponent::SWIPLsubmitQuery(USWIPrologTerm* inRuleOrFactTerm, FSW
 	try {
 		bResult = myQuery.next_solution();
 		while (bResult) {
-			UE_LOG(LogTemp, Display, TEXT("sviluppo soluzione nella query"));
+			UE_LOG(LogTemp, Display, TEXT("query solution development"));
 			USWIPrologSolution* currentSolution = NewObject<USWIPrologSolution>();
 			for (int i = 0; i < airity; i++) {
 				FString sResult = FString(ANSI_TO_TCHAR(queryElements[i].as_string().c_str()));
 				currentSolution->resultSet.Add(sResult);
 			}
-			UE_LOG(LogTemp, Display, TEXT("Soluzione impostata"));
+			UE_LOG(LogTemp, Display, TEXT("Solution set"));
 			currentResponse.results.Add(currentSolution);
-			UE_LOG(LogTemp, Display, TEXT("Soluzione aggiunta"));
+			UE_LOG(LogTemp, Display, TEXT("Solution added"));
 			bResult = myQuery.next_solution();
 		}
 		outResponse = currentResponse;
@@ -119,8 +119,25 @@ void USWIPrologComponent::SWIPLretract(USWIPrologTerm* ruleOrFactTerm, bool& bRe
 void USWIPrologComponent::SWIPLresetProlog()
 {
 	try {
-		PL_cleanup(PL_CLEANUP_NO_RECLAIM_MEMORY);
-		startProlog();
+		prologEngine->cleanup();
+		char* result = TCHAR_TO_ANSI(*prologPath);
+		if (!PL_initialise(1, &result)) {
+			PL_halt(1);
+			UE_LOG(LogTemp, Warning, TEXT("failed to initialise prolog"));
+		}
+		else {
+			FString RelativePath = FPaths::GameSourceDir();
+			RelativePath = FPaths::GetPath("../plugins/FANTASIA/ThirdParty/SWIProlog/libs/libswipl.dll");
+			FString ResourcePath = FPaths::GameSourceDir();
+			ResourcePath = FPaths::GetPath("../Resources");
+			FString FullResourcePath = IFileManager::Get().ConvertToAbsolutePathForExternalAppForRead(*RelativePath);
+			char* resourceResult = TCHAR_TO_ANSI(*FullResourcePath);
+			PlTermv pv(2);
+			pv[0] = PlAtom(result);
+			pv[1] = PlAtom(resourceResult);
+			PlCall("working_directory", pv);
+			UE_LOG(LogTemp, Warning, TEXT("prolog restarted succesfully"));
+		}
 	}
 	catch (PlException e) {
 		UE_LOG(LogTemp, Display, TEXT("cleanup failed"));
@@ -129,10 +146,7 @@ void USWIPrologComponent::SWIPLresetProlog()
 
 //TODO:: make sure it works
 void USWIPrologComponent::openPrologFile(const FString filename) {
-	//char* myfile = TCHAR_TO_ANSI(*filename);
-	FString filePath = FPaths::EngineSourceDir();
-	filePath = FPaths::GetPath("./bigProject.pl");
-	char* myfile = TCHAR_TO_ANSI(*filePath);
+	char* myfile = TCHAR_TO_ANSI(*filename);
 	try {
 		PlCall("consult", PlTermv(PlAtom(myfile)));
 	}
@@ -151,12 +165,23 @@ void USWIPrologComponent::startProlog() {
 	FString RelativePath = FPaths::GameSourceDir();
 	RelativePath = FPaths::GetPath("../plugins/FANTASIA/ThirdParty/SWIProlog/libs/libswipl.dll");
 	FString FullPath = IFileManager::Get().ConvertToAbsolutePathForExternalAppForRead(*RelativePath);
+	prologPath = FullPath;
 	char* result = TCHAR_TO_ANSI(*FullPath);
 	if (!PL_initialise(argc, &result)) {
 		PL_halt(1);
 		UE_LOG(LogTemp, Warning, TEXT("failed to initialise prolog"));
 	}
 	else {
+		PlEngine plEngine(result);
+		FString ResourcePath = FPaths::GameSourceDir();
+		ResourcePath = FPaths::GetPath("../Resources");
+		FString FullResourcePath = IFileManager::Get().ConvertToAbsolutePathForExternalAppForRead(*RelativePath);
+		char* resourceResult = TCHAR_TO_ANSI(*FullResourcePath);
+		PlTermv pv(2);
+		pv[0] = PlAtom(result);
+		pv[1] = PlAtom(resourceResult);
+		PlCall("working_directory", pv);
+		prologEngine = &plEngine;
 		UE_LOG(LogTemp, Display, TEXT("prolog initialised succesfully"));
 		UE_LOG(LogTemp, Display, TEXT("path for prolog: %s"), *FullPath);
 	}
@@ -274,6 +299,12 @@ FString USWIPrologComponent::translateRuleBody(UObject* ruleBodyObject) {
 		break;
 	case SWIPrologOperation::MOREOREQUAL:
 		swiOperator = ">=";
+		break;
+	case SWIPrologOperation::TERMEQUAL:
+		swiOperator = "==";
+		break;
+	case SWIPrologOperation::TERMNOTEQUAL:
+		swiOperator = "\\==";
 		break;
 	}
 	FString firstString = "";

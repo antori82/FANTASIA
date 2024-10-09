@@ -18,7 +18,6 @@
 #pragma pop_macro("verify")
 #include "Windows/HideWindowsPlatformAtomics.h"
 #include "Windows/HideWindowsPlatformTypes.h"
-//#include "Windows/WindowsHWrapper.h"
 #include "SWIPrologComponent.generated.h"
 
 #pragma warning (default : 4800)
@@ -27,11 +26,6 @@
 #pragma warning (default : 4668)
 #pragma warning (default : 4834)
 
-//using namespace std;
-
-
-
-//DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FSWITestStruct,SWIPrologResponse);
 
 UCLASS(ClassGroup = (SWIProlog), meta = (BlueprintSpawnableComponent), config = Game)
 class USWIPrologComponent : public UActorComponent
@@ -48,22 +42,16 @@ private:
 
 	FString translateRuleBody(UObject*);
 
+	PlEngine* prologEngine;
+
+	FString prologPath;
+
+	FString resFolderPath;
+
 public:
 	// Sets default values for this component's properties
 	USWIPrologComponent();
 
-
-	UPROPERTY(BlueprintReadOnly, Category = "Configuration", Config)
-	FString resFolderPath;
-
-	/* 
-		inRuleOrFact: Rule or fact the query asks for
-		inElements: Elements within the term requested 
-			(capital letter means prolog variable
-			non capital letter means prolog term
-			elements in brackets means a prolog list [i,am,an,example])
-		outResponse: table of results
-	*/
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Submit query", AutoCreateRefTerm = "parameters"), Category = "SWIProlog")
 	void SWIPLsubmitQuery(USWIPrologTerm* inRuleOrFact, FSWIPrologResponse& outResponse);
 
