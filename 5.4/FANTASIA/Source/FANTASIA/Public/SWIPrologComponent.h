@@ -42,10 +42,6 @@ private:
 
 	FString translateRuleBody(UObject*);
 
-	PlEngine* prologEngine;
-
-	FString prologPath;
-
 	FString resFolderPath;
 
 public:

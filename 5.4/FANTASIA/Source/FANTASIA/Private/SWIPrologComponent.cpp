@@ -119,8 +119,8 @@ void USWIPrologComponent::SWIPLretract(USWIPrologTerm* ruleOrFactTerm, bool& bRe
 void USWIPrologComponent::SWIPLresetProlog()
 {
 	try {
-		prologEngine->cleanup();
-		char* result = TCHAR_TO_ANSI(*prologPath);
+		//prologEngine->cleanup();
+		//char* result = TCHAR_TO_ANSI(*prologPath);
 		if (!PL_initialise(1, &result)) {
 			PL_halt(1);
 			UE_LOG(LogTemp, Warning, TEXT("failed to initialise prolog"));
@@ -161,29 +161,25 @@ void USWIPrologComponent::startProlog() {
 	if (_putenv("SWI_HOME_DIR=C:\\Program Files\\swipl")) return;
 	int argc = 1;
 
-	//TODO:: fix route to path
 	FString RelativePath = FPaths::GameSourceDir();
 	RelativePath = FPaths::GetPath("../plugins/FANTASIA/ThirdParty/SWIProlog/libs/libswipl.dll");
 	FString FullPath = IFileManager::Get().ConvertToAbsolutePathForExternalAppForRead(*RelativePath);
-	prologPath = FullPath;
 	char* result = TCHAR_TO_ANSI(*FullPath);
 	if (!PL_initialise(argc, &result)) {
 		PL_halt(1);
 		UE_LOG(LogTemp, Warning, TEXT("failed to initialise prolog"));
 	}
 	else {
-		PlEngine plEngine(result);
-		FString ResourcePath = FPaths::GameSourceDir();
-		ResourcePath = FPaths::GetPath("../Resources");
-		FString FullResourcePath = IFileManager::Get().ConvertToAbsolutePathForExternalAppForRead(*RelativePath);
-		char* resourceResult = TCHAR_TO_ANSI(*FullResourcePath);
-		PlTermv pv(2);
-		pv[0] = PlAtom(result);
-		pv[1] = PlAtom(resourceResult);
-		PlCall("working_directory", pv);
-		prologEngine = &plEngine;
+		resFolderPath = FPaths::ConvertRelativePathToFull(FPaths::ProjectDir());
+		resFolderPath = resFolderPath + "Resources/";
+		char* resPathString = TCHAR_TO_ANSI(*resFolderPath);
+
+		PlTermv dir(2);
+		dir[1].unify_atom(PlAtom(resPathString));
+		PlCall("working_directory", dir);
+		
 		UE_LOG(LogTemp, Display, TEXT("prolog initialised succesfully"));
-		UE_LOG(LogTemp, Display, TEXT("path for prolog: %s"), *FullPath);
+		UE_LOG(LogTemp, Display, TEXT("path for prolog: %s, working directory: %s"), *FullPath, *resFolderPath);
 	}
 }
 
