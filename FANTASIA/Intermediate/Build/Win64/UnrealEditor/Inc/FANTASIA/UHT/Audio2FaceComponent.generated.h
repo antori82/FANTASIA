@@ -16,7 +16,7 @@ class USoundWave;
 #define FANTASIA_Audio2FaceComponent_generated_h
 
 #define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_Audio2FaceComponent_h_32_RPC_WRAPPERS_NO_PURE_DECLS \
-	DECLARE_FUNCTION(execReadAudioFile);
+	DECLARE_FUNCTION(execPlayAudio);
 
 
 #define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_Audio2FaceComponent_h_32_INCLASS_NO_PURE_DECLS \
