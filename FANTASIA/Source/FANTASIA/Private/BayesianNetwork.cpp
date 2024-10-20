@@ -40,13 +40,18 @@ void UBayesianNetwork::Init() {
 	}
 }
 
+void UBayesianNetwork::inferenceComplete() {
+	//handle->Shutdown();
+	InferenceReady.Broadcast();
+}
+
 void UBayesianNetwork::makeInference() {
-	try {
-		//Init();
-		inference->makeInference();
-	}
-	catch (gum::NotFound& e)
-		UE_LOG(LogTemp, Warning, TEXT("[Bayesian Network] %hs from %hs"), e.errorType().c_str(), e.errorContent().c_str());
+	InferenceAvailableDelegate InferenceAvailableSubscriber;
+
+	InferenceAvailableSubscriber.BindUObject(this, &UBayesianNetwork::inferenceComplete);
+
+	handle = BayesianInferenceThread::setup(inference);
+	InferenceAvailableHandle = handle->InferenceAvailableSubscribeUser(InferenceAvailableSubscriber);
 }
 
 TMap<FString, float> UBayesianNetwork::getPosterior(FString variable) {

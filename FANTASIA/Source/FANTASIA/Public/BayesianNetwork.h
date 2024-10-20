@@ -10,9 +10,12 @@
 #pragma warning (disable : 4264)
 #pragma warning (disable : 4265)
 #pragma warning (disable : 4701)
+#pragma warning (disable : 4996)
 
 #include "FANTASIA.h"
 #include "FANTASIATypes.h"
+#include "CoreMinimal.h"
+#include "BayesianInferenceThreads.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "Runtime\Core\Public\Misc\Paths.h"
 #include "Runtime\Core\Public\Misc\FileHelper.h"
@@ -33,6 +36,7 @@
 #pragma warning (default : 4264)
 #pragma warning (default : 4265)
 #pragma warning (default : 4701)
+#pragma warning (default : 4996)
 
 USTRUCT(BlueprintType)
 struct FMapContainer
@@ -42,8 +46,6 @@ struct FMapContainer
 	UPROPERTY(BlueprintReadOnly)
 	TMap<FString, float> Map;
 };
-
-DECLARE_DYNAMIC_DELEGATE_OneParam(FGetPosteriorDelegate, FMapContainer, outMap);
 
 UENUM(BlueprintType)		//"BlueprintType" is essential to include
 enum class InferenceAlgs : uint8
@@ -84,6 +86,7 @@ struct FBayesianNodeStruct
 	TArray<FString> parents;
 };
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FInferenceAvailableEvent);
 
 UCLASS(Blueprintable, BlueprintType)
 class FANTASIA_API UBayesianNetwork : public UObject
@@ -95,8 +98,16 @@ private:
 	gum::BayesNet<double> bn;
 	gum::JointTargetedInference<double>* inference = new gum::ShaferShenoyInference<double>(&bn);
 	bool initialized = false;
+	FDelegateHandle InferenceAvailableHandle;
+	BayesianInferenceThread* handle;
 
 public:
+	
+	UFUNCTION(BlueprintCallable)
+	virtual void inferenceComplete();
+
+	UPROPERTY(BlueprintAssignable, BlueprintCallable)
+	FInferenceAvailableEvent InferenceReady;
 
 	UPROPERTY(EditAnywhere)
 	TArray<FBayesianNodeStruct> serializedNodes;
