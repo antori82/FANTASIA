@@ -47,6 +47,7 @@ template<> FANTASIA_API UScriptStruct* StaticStruct<struct FBayesianNodeStruct>(
 	DECLARE_FUNCTION(execidFromName); \
 	DECLARE_FUNCTION(execerase); \
 	DECLARE_FUNCTION(execwriteBIF); \
+	DECLARE_FUNCTION(execfillCPT); \
 	DECLARE_FUNCTION(execfillWith); \
 	DECLARE_FUNCTION(execaddArc); \
 	DECLARE_FUNCTION(execaddLabelizedVariable); \
@@ -54,7 +55,7 @@ template<> FANTASIA_API UScriptStruct* StaticStruct<struct FBayesianNodeStruct>(
 	DECLARE_FUNCTION(execgetEntropy); \
 	DECLARE_FUNCTION(execeraseEvidence); \
 	DECLARE_FUNCTION(execeraseAllEvidence); \
-	DECLARE_FUNCTION(execaddEvidence); \
+	DECLARE_FUNCTION(execsetEvidence); \
 	DECLARE_FUNCTION(execgetPosterior); \
 	DECLARE_FUNCTION(execmakeInference); \
 	DECLARE_FUNCTION(execInit);

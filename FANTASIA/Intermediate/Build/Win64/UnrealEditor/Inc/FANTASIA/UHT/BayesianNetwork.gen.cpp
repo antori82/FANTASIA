@@ -481,58 +481,6 @@ DEFINE_FUNCTION(UBayesianNetwork::execaddDiscretizedVariable)
 }
 // End Class UBayesianNetwork Function addDiscretizedVariable
 
-// Begin Class UBayesianNetwork Function addEvidence
-struct Z_Construct_UFunction_UBayesianNetwork_addEvidence_Statics
-{
-	struct BayesianNetwork_eventaddEvidence_Parms
-	{
-		FString variable;
-		TArray<float> data;
-	};
-#if WITH_METADATA
-	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "Category", "Bayesian_Network" },
-		{ "DisplayName", "addEvidence" },
-		{ "ModuleRelativePath", "Public/BayesianNetwork.h" },
-	};
-#endif // WITH_METADATA
-	static const UECodeGen_Private::FStrPropertyParams NewProp_variable;
-	static const UECodeGen_Private::FFloatPropertyParams NewProp_data_Inner;
-	static const UECodeGen_Private::FArrayPropertyParams NewProp_data;
-	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
-	static const UECodeGen_Private::FFunctionParams FuncParams;
-};
-const UECodeGen_Private::FStrPropertyParams Z_Construct_UFunction_UBayesianNetwork_addEvidence_Statics::NewProp_variable = { "variable", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(BayesianNetwork_eventaddEvidence_Parms, variable), METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_UBayesianNetwork_addEvidence_Statics::NewProp_data_Inner = { "data", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FArrayPropertyParams Z_Construct_UFunction_UBayesianNetwork_addEvidence_Statics::NewProp_data = { "data", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(BayesianNetwork_eventaddEvidence_Parms, data), EArrayPropertyFlags::None, METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UBayesianNetwork_addEvidence_Statics::PropPointers[] = {
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UBayesianNetwork_addEvidence_Statics::NewProp_variable,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UBayesianNetwork_addEvidence_Statics::NewProp_data_Inner,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UBayesianNetwork_addEvidence_Statics::NewProp_data,
-};
-static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UBayesianNetwork_addEvidence_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UBayesianNetwork_addEvidence_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UBayesianNetwork, nullptr, "addEvidence", nullptr, nullptr, Z_Construct_UFunction_UBayesianNetwork_addEvidence_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UBayesianNetwork_addEvidence_Statics::PropPointers), sizeof(Z_Construct_UFunction_UBayesianNetwork_addEvidence_Statics::BayesianNetwork_eventaddEvidence_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UBayesianNetwork_addEvidence_Statics::Function_MetaDataParams), Z_Construct_UFunction_UBayesianNetwork_addEvidence_Statics::Function_MetaDataParams) };
-static_assert(sizeof(Z_Construct_UFunction_UBayesianNetwork_addEvidence_Statics::BayesianNetwork_eventaddEvidence_Parms) < MAX_uint16);
-UFunction* Z_Construct_UFunction_UBayesianNetwork_addEvidence()
-{
-	static UFunction* ReturnFunction = nullptr;
-	if (!ReturnFunction)
-	{
-		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UBayesianNetwork_addEvidence_Statics::FuncParams);
-	}
-	return ReturnFunction;
-}
-DEFINE_FUNCTION(UBayesianNetwork::execaddEvidence)
-{
-	P_GET_PROPERTY(FStrProperty,Z_Param_variable);
-	P_GET_TARRAY(float,Z_Param_data);
-	P_FINISH;
-	P_NATIVE_BEGIN;
-	P_THIS->addEvidence(Z_Param_variable,Z_Param_data);
-	P_NATIVE_END;
-}
-// End Class UBayesianNetwork Function addEvidence
-
 // Begin Class UBayesianNetwork Function addLabelizedVariable
 struct Z_Construct_UFunction_UBayesianNetwork_addLabelizedVariable_Statics
 {
@@ -708,6 +656,58 @@ DEFINE_FUNCTION(UBayesianNetwork::execeraseEvidence)
 	P_NATIVE_END;
 }
 // End Class UBayesianNetwork Function eraseEvidence
+
+// Begin Class UBayesianNetwork Function fillCPT
+struct Z_Construct_UFunction_UBayesianNetwork_fillCPT_Statics
+{
+	struct BayesianNetwork_eventfillCPT_Parms
+	{
+		FString variable;
+		TArray<float> values;
+	};
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
+		{ "Category", "Bayesian_Network" },
+		{ "DisplayName", "fillCPT" },
+		{ "ModuleRelativePath", "Public/BayesianNetwork.h" },
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FStrPropertyParams NewProp_variable;
+	static const UECodeGen_Private::FFloatPropertyParams NewProp_values_Inner;
+	static const UECodeGen_Private::FArrayPropertyParams NewProp_values;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+	static const UECodeGen_Private::FFunctionParams FuncParams;
+};
+const UECodeGen_Private::FStrPropertyParams Z_Construct_UFunction_UBayesianNetwork_fillCPT_Statics::NewProp_variable = { "variable", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(BayesianNetwork_eventfillCPT_Parms, variable), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_UBayesianNetwork_fillCPT_Statics::NewProp_values_Inner = { "values", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FArrayPropertyParams Z_Construct_UFunction_UBayesianNetwork_fillCPT_Statics::NewProp_values = { "values", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(BayesianNetwork_eventfillCPT_Parms, values), EArrayPropertyFlags::None, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UBayesianNetwork_fillCPT_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UBayesianNetwork_fillCPT_Statics::NewProp_variable,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UBayesianNetwork_fillCPT_Statics::NewProp_values_Inner,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UBayesianNetwork_fillCPT_Statics::NewProp_values,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UBayesianNetwork_fillCPT_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UBayesianNetwork_fillCPT_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UBayesianNetwork, nullptr, "fillCPT", nullptr, nullptr, Z_Construct_UFunction_UBayesianNetwork_fillCPT_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UBayesianNetwork_fillCPT_Statics::PropPointers), sizeof(Z_Construct_UFunction_UBayesianNetwork_fillCPT_Statics::BayesianNetwork_eventfillCPT_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UBayesianNetwork_fillCPT_Statics::Function_MetaDataParams), Z_Construct_UFunction_UBayesianNetwork_fillCPT_Statics::Function_MetaDataParams) };
+static_assert(sizeof(Z_Construct_UFunction_UBayesianNetwork_fillCPT_Statics::BayesianNetwork_eventfillCPT_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_UBayesianNetwork_fillCPT()
+{
+	static UFunction* ReturnFunction = nullptr;
+	if (!ReturnFunction)
+	{
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UBayesianNetwork_fillCPT_Statics::FuncParams);
+	}
+	return ReturnFunction;
+}
+DEFINE_FUNCTION(UBayesianNetwork::execfillCPT)
+{
+	P_GET_PROPERTY(FStrProperty,Z_Param_variable);
+	P_GET_TARRAY(float,Z_Param_values);
+	P_FINISH;
+	P_NATIVE_BEGIN;
+	P_THIS->fillCPT(Z_Param_variable,Z_Param_values);
+	P_NATIVE_END;
+}
+// End Class UBayesianNetwork Function fillCPT
 
 // Begin Class UBayesianNetwork Function fillWith
 struct Z_Construct_UFunction_UBayesianNetwork_fillWith_Statics
@@ -1025,6 +1025,58 @@ DEFINE_FUNCTION(UBayesianNetwork::execmakeInference)
 }
 // End Class UBayesianNetwork Function makeInference
 
+// Begin Class UBayesianNetwork Function setEvidence
+struct Z_Construct_UFunction_UBayesianNetwork_setEvidence_Statics
+{
+	struct BayesianNetwork_eventsetEvidence_Parms
+	{
+		FString variable;
+		TArray<float> data;
+	};
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
+		{ "Category", "Bayesian_Network" },
+		{ "DisplayName", "setEvidence" },
+		{ "ModuleRelativePath", "Public/BayesianNetwork.h" },
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FStrPropertyParams NewProp_variable;
+	static const UECodeGen_Private::FFloatPropertyParams NewProp_data_Inner;
+	static const UECodeGen_Private::FArrayPropertyParams NewProp_data;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+	static const UECodeGen_Private::FFunctionParams FuncParams;
+};
+const UECodeGen_Private::FStrPropertyParams Z_Construct_UFunction_UBayesianNetwork_setEvidence_Statics::NewProp_variable = { "variable", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(BayesianNetwork_eventsetEvidence_Parms, variable), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_UBayesianNetwork_setEvidence_Statics::NewProp_data_Inner = { "data", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FArrayPropertyParams Z_Construct_UFunction_UBayesianNetwork_setEvidence_Statics::NewProp_data = { "data", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(BayesianNetwork_eventsetEvidence_Parms, data), EArrayPropertyFlags::None, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UBayesianNetwork_setEvidence_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UBayesianNetwork_setEvidence_Statics::NewProp_variable,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UBayesianNetwork_setEvidence_Statics::NewProp_data_Inner,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UBayesianNetwork_setEvidence_Statics::NewProp_data,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UBayesianNetwork_setEvidence_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UBayesianNetwork_setEvidence_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UBayesianNetwork, nullptr, "setEvidence", nullptr, nullptr, Z_Construct_UFunction_UBayesianNetwork_setEvidence_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UBayesianNetwork_setEvidence_Statics::PropPointers), sizeof(Z_Construct_UFunction_UBayesianNetwork_setEvidence_Statics::BayesianNetwork_eventsetEvidence_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UBayesianNetwork_setEvidence_Statics::Function_MetaDataParams), Z_Construct_UFunction_UBayesianNetwork_setEvidence_Statics::Function_MetaDataParams) };
+static_assert(sizeof(Z_Construct_UFunction_UBayesianNetwork_setEvidence_Statics::BayesianNetwork_eventsetEvidence_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_UBayesianNetwork_setEvidence()
+{
+	static UFunction* ReturnFunction = nullptr;
+	if (!ReturnFunction)
+	{
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UBayesianNetwork_setEvidence_Statics::FuncParams);
+	}
+	return ReturnFunction;
+}
+DEFINE_FUNCTION(UBayesianNetwork::execsetEvidence)
+{
+	P_GET_PROPERTY(FStrProperty,Z_Param_variable);
+	P_GET_TARRAY(float,Z_Param_data);
+	P_FINISH;
+	P_NATIVE_BEGIN;
+	P_THIS->setEvidence(Z_Param_variable,Z_Param_data);
+	P_NATIVE_END;
+}
+// End Class UBayesianNetwork Function setEvidence
+
 // Begin Class UBayesianNetwork Function writeBIF
 struct Z_Construct_UFunction_UBayesianNetwork_writeBIF_Statics
 {
@@ -1076,11 +1128,11 @@ void UBayesianNetwork::StaticRegisterNativesUBayesianNetwork()
 	static const FNameNativePtrPair Funcs[] = {
 		{ "addArc", &UBayesianNetwork::execaddArc },
 		{ "addDiscretizedVariable", &UBayesianNetwork::execaddDiscretizedVariable },
-		{ "addEvidence", &UBayesianNetwork::execaddEvidence },
 		{ "addLabelizedVariable", &UBayesianNetwork::execaddLabelizedVariable },
 		{ "erase", &UBayesianNetwork::execerase },
 		{ "eraseAllEvidence", &UBayesianNetwork::execeraseAllEvidence },
 		{ "eraseEvidence", &UBayesianNetwork::execeraseEvidence },
+		{ "fillCPT", &UBayesianNetwork::execfillCPT },
 		{ "fillWith", &UBayesianNetwork::execfillWith },
 		{ "getEntropy", &UBayesianNetwork::execgetEntropy },
 		{ "getMarkovBlanketNodes", &UBayesianNetwork::execgetMarkovBlanketNodes },
@@ -1088,6 +1140,7 @@ void UBayesianNetwork::StaticRegisterNativesUBayesianNetwork()
 		{ "idFromName", &UBayesianNetwork::execidFromName },
 		{ "Init", &UBayesianNetwork::execInit },
 		{ "makeInference", &UBayesianNetwork::execmakeInference },
+		{ "setEvidence", &UBayesianNetwork::execsetEvidence },
 		{ "writeBIF", &UBayesianNetwork::execwriteBIF },
 	};
 	FNativeFunctionRegistrar::RegisterFunctions(Class, Funcs, UE_ARRAY_COUNT(Funcs));
@@ -1143,11 +1196,11 @@ struct Z_Construct_UClass_UBayesianNetwork_Statics
 	static constexpr FClassFunctionLinkInfo FuncInfo[] = {
 		{ &Z_Construct_UFunction_UBayesianNetwork_addArc, "addArc" }, // 3735489808
 		{ &Z_Construct_UFunction_UBayesianNetwork_addDiscretizedVariable, "addDiscretizedVariable" }, // 1956013269
-		{ &Z_Construct_UFunction_UBayesianNetwork_addEvidence, "addEvidence" }, // 2594943928
 		{ &Z_Construct_UFunction_UBayesianNetwork_addLabelizedVariable, "addLabelizedVariable" }, // 4197049394
 		{ &Z_Construct_UFunction_UBayesianNetwork_erase, "erase" }, // 1256025515
 		{ &Z_Construct_UFunction_UBayesianNetwork_eraseAllEvidence, "eraseAllEvidence" }, // 3503794271
 		{ &Z_Construct_UFunction_UBayesianNetwork_eraseEvidence, "eraseEvidence" }, // 66857581
+		{ &Z_Construct_UFunction_UBayesianNetwork_fillCPT, "fillCPT" }, // 3904292755
 		{ &Z_Construct_UFunction_UBayesianNetwork_fillWith, "fillWith" }, // 1831234820
 		{ &Z_Construct_UFunction_UBayesianNetwork_getEntropy, "getEntropy" }, // 26947658
 		{ &Z_Construct_UFunction_UBayesianNetwork_getMarkovBlanketNodes, "getMarkovBlanketNodes" }, // 3031062408
@@ -1155,6 +1208,7 @@ struct Z_Construct_UClass_UBayesianNetwork_Statics
 		{ &Z_Construct_UFunction_UBayesianNetwork_idFromName, "idFromName" }, // 1292974926
 		{ &Z_Construct_UFunction_UBayesianNetwork_Init, "Init" }, // 2178159713
 		{ &Z_Construct_UFunction_UBayesianNetwork_makeInference, "makeInference" }, // 566863579
+		{ &Z_Construct_UFunction_UBayesianNetwork_setEvidence, "setEvidence" }, // 1053697006
 		{ &Z_Construct_UFunction_UBayesianNetwork_writeBIF, "writeBIF" }, // 1789635343
 	};
 	static_assert(UE_ARRAY_COUNT(FuncInfo) < 2048);
@@ -1236,10 +1290,10 @@ struct Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_F
 		{ FBayesianNodeStruct::StaticStruct, Z_Construct_UScriptStruct_FBayesianNodeStruct_Statics::NewStructOps, TEXT("BayesianNodeStruct"), &Z_Registration_Info_UScriptStruct_BayesianNodeStruct, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FBayesianNodeStruct), 2808211742U) },
 	};
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_UBayesianNetwork, UBayesianNetwork::StaticClass, TEXT("UBayesianNetwork"), &Z_Registration_Info_UClass_UBayesianNetwork, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UBayesianNetwork), 3353949285U) },
+		{ Z_Construct_UClass_UBayesianNetwork, UBayesianNetwork::StaticClass, TEXT("UBayesianNetwork"), &Z_Registration_Info_UClass_UBayesianNetwork, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UBayesianNetwork), 3246183045U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_3024042598(TEXT("/Script/FANTASIA"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_3706169785(TEXT("/Script/FANTASIA"),
 	Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_Statics::ClassInfo),
 	Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_Statics::ScriptStructInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_Statics::ScriptStructInfo),
 	Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_Statics::EnumInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_Statics::EnumInfo));

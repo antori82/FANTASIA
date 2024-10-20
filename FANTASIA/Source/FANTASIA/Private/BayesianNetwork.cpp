@@ -129,6 +129,12 @@ void UBayesianNetwork::setBN(const FString& Filename) {
 void UBayesianNetwork::addLabelizedVariable(FString variable, FString description, TArray<FString> labels) {
 	if (!nodeNames.Contains(variable)) {
 		gum::LabelizedVariable newNode(TCHAR_TO_UTF8(*variable), TCHAR_TO_UTF8(*description), 0);
+
+		for (FString label : labels)
+			newNode.addLabel(TCHAR_TO_UTF8(*label));
+
+		bn.add(newNode);
+
 		nodeNames.Add(variable);
 		nodeDescriptions.Add(variable, description);
 	}
@@ -188,7 +194,21 @@ void UBayesianNetwork::fillWith(FString variable, float value) {
 		UE_LOG(LogTemp, Warning, TEXT("[Bayesian Network] %hs from %hs while filling"), e.errorType().c_str(), e.errorContent().c_str());
 }
 
-void UBayesianNetwork::addEvidence(FString variable, TArray<float> data) {
+void UBayesianNetwork::fillCPT(FString variable, TArray<float> values) {
+	const std::string nodeName(TCHAR_TO_UTF8(*variable));
+
+	std::vector<double> cptValues;
+	for (float value : values)
+		cptValues.push_back(value);
+
+	try {
+		bn.cpt(nodeName).fillWith(cptValues);
+	}
+	catch (gum::NotFound& e)
+		UE_LOG(LogTemp, Warning, TEXT("%hs from %hs while filling"), e.errorType().c_str(), e.errorContent().c_str());	
+}
+
+void UBayesianNetwork::setEvidence(FString variable, TArray<float> data) {
 	std::vector<double> vec;
 	for (const float value : data)
 		vec.push_back(value);

@@ -124,8 +124,8 @@ public:
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "getPosterior", Keywords = "Inference", AutoCreateRefTerm = "evidences"), Category = "Bayesian_Network")
 	TMap<FString, float> getPosterior(FString variable);
 	
-	UFUNCTION(BlueprintCallable, meta = (DisplayName = "addEvidence"), Category = "Bayesian_Network")
-	void addEvidence(FString variable, TArray<float> data);
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "setEvidence"), Category = "Bayesian_Network")
+	void setEvidence(FString variable, TArray<float> data);
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "eraseAllEvidence"), Category = "Bayesian_Network")
 	void eraseAllEvidence();
@@ -147,6 +147,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "fillWith"), Category = "Bayesian_Network")
 	void fillWith(FString variable, float value);
+
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "fillCPT"), Category = "Bayesian_Network")
+	void fillCPT(FString variable, TArray<float> values);
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "writeBIF"), Category = "Bayesian_Network")
 	void writeBIF(FString file);
