@@ -38,7 +38,7 @@ template<> FANTASIA_API UScriptStruct* StaticStruct<struct FBayesianArcStruct>()
 template<> FANTASIA_API UScriptStruct* StaticStruct<struct FBayesianNodeStruct>();
 
 #define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_89_DELEGATE \
-FANTASIA_API void FInferenceAvailableEvent_DelegateWrapper(const FMulticastScriptDelegate& InferenceAvailableEvent);
+FANTASIA_API void FBNInferenceAvailableEvent_DelegateWrapper(const FMulticastScriptDelegate& BNInferenceAvailableEvent);
 
 
 #define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_94_RPC_WRAPPERS \
@@ -57,8 +57,7 @@ FANTASIA_API void FInferenceAvailableEvent_DelegateWrapper(const FMulticastScrip
 	DECLARE_FUNCTION(execsetEvidence); \
 	DECLARE_FUNCTION(execgetPosterior); \
 	DECLARE_FUNCTION(execmakeInference); \
-	DECLARE_FUNCTION(execInit); \
-	DECLARE_FUNCTION(execinferenceComplete);
+	DECLARE_FUNCTION(execInit);
 
 
 #define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_94_INCLASS \

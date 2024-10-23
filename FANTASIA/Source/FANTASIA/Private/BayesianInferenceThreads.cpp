@@ -8,6 +8,12 @@ BayesianInferenceThread::BayesianInferenceThread(gum::JointTargetedInference<dou
 	Thread = FRunnableThread::Create(this, TEXT("BayesianInferenceThread"), 0, TPri_BelowNormal);
 }
 
+BayesianInferenceThread::BayesianInferenceThread(gum::InfluenceDiagramInference<double>* inference) : StopTaskCounter(0) {
+	modelType = BayesianModelType::INFLUENCE_DIAGRAM;
+	IDinferenceEngine = inference;
+	Thread = FRunnableThread::Create(this, TEXT("BayesianInferenceThread"), 0, TPri_BelowNormal);
+}
+
 BayesianInferenceThread::~BayesianInferenceThread() {
 	delete Thread;
 	Thread = NULL;
@@ -44,6 +50,13 @@ BayesianInferenceThread* BayesianInferenceThread::setup(gum::JointTargetedInfere
 	return Runnable;
 }
 
+BayesianInferenceThread* BayesianInferenceThread::setup(gum::InfluenceDiagramInference<double>* inference) {
+	if (FPlatformProcess::SupportsMultithreading()) {
+		Runnable = new BayesianInferenceThread(inference);
+	}
+	return Runnable;
+}
+
 void BayesianInferenceThread::makeInference() {
 	switch (modelType) {
 	case BayesianModelType::BAYESIAN_NETWORK:
@@ -54,6 +67,13 @@ void BayesianInferenceThread::makeInference() {
 		catch (gum::NotFound& e)
 			UE_LOG(LogTemp, Warning, TEXT("[Bayesian Network] %hs from %hs"), e.errorType().c_str(), e.errorContent().c_str());
 		break;
+	case BayesianModelType::INFLUENCE_DIAGRAM:
+		try {
+			IDinferenceEngine->makeInference();
+			InferenceAvailable.Broadcast();
+		}
+		catch (gum::NotFound& e)
+			UE_LOG(LogTemp, Warning, TEXT("[Influence Diagram] %hs from %hs"), e.errorType().c_str(), e.errorContent().c_str());
 	}
 }
 

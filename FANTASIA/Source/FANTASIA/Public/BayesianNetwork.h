@@ -86,7 +86,7 @@ struct FBayesianNodeStruct
 	TArray<FString> parents;
 };
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FInferenceAvailableEvent);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FBNInferenceAvailableEvent);
 
 UCLASS(Blueprintable, BlueprintType)
 class FANTASIA_API UBayesianNetwork : public UObject
@@ -101,13 +101,12 @@ private:
 	FDelegateHandle InferenceAvailableHandle;
 	BayesianInferenceThread* handle;
 
+	void inferenceComplete();
+
 public:
-	
-	UFUNCTION(BlueprintCallable)
-	virtual void inferenceComplete();
 
 	UPROPERTY(BlueprintAssignable, BlueprintCallable)
-	FInferenceAvailableEvent InferenceReady;
+	FBNInferenceAvailableEvent InferenceReady;
 
 	UPROPERTY(EditAnywhere)
 	TArray<FBayesianNodeStruct> serializedNodes;
