@@ -15,6 +15,7 @@ FANTASIA_API UClass* Z_Construct_UClass_UInfluenceDiag();
 FANTASIA_API UClass* Z_Construct_UClass_UInfluenceDiag_NoRegister();
 FANTASIA_API UEnum* Z_Construct_UEnum_FANTASIA_InferenceIDAlgs();
 FANTASIA_API UEnum* Z_Construct_UEnum_FANTASIA_InfluenceNodeType();
+FANTASIA_API UFunction* Z_Construct_UDelegateFunction_FANTASIA_IDInferenceAvailableEvent__DelegateSignature();
 FANTASIA_API UScriptStruct* Z_Construct_UScriptStruct_FArrayFloat();
 FANTASIA_API UScriptStruct* Z_Construct_UScriptStruct_FInfluenceDiagArcStruct();
 FANTASIA_API UScriptStruct* Z_Construct_UScriptStruct_FInfluenceDiagNodeStruct();
@@ -310,6 +311,32 @@ UScriptStruct* Z_Construct_UScriptStruct_FArrayFloat()
 	return Z_Registration_Info_UScriptStruct_ArrayFloat.InnerSingleton;
 }
 // End ScriptStruct FArrayFloat
+
+// Begin Delegate FIDInferenceAvailableEvent
+struct Z_Construct_UDelegateFunction_FANTASIA_IDInferenceAvailableEvent__DelegateSignature_Statics
+{
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
+		{ "ModuleRelativePath", "Public/InfluenceDiag.h" },
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FFunctionParams FuncParams;
+};
+const UECodeGen_Private::FFunctionParams Z_Construct_UDelegateFunction_FANTASIA_IDInferenceAvailableEvent__DelegateSignature_Statics::FuncParams = { (UObject*(*)())Z_Construct_UPackage__Script_FANTASIA, nullptr, "IDInferenceAvailableEvent__DelegateSignature", nullptr, nullptr, nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00130000, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_IDInferenceAvailableEvent__DelegateSignature_Statics::Function_MetaDataParams), Z_Construct_UDelegateFunction_FANTASIA_IDInferenceAvailableEvent__DelegateSignature_Statics::Function_MetaDataParams) };
+UFunction* Z_Construct_UDelegateFunction_FANTASIA_IDInferenceAvailableEvent__DelegateSignature()
+{
+	static UFunction* ReturnFunction = nullptr;
+	if (!ReturnFunction)
+	{
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UDelegateFunction_FANTASIA_IDInferenceAvailableEvent__DelegateSignature_Statics::FuncParams);
+	}
+	return ReturnFunction;
+}
+void FIDInferenceAvailableEvent_DelegateWrapper(const FMulticastScriptDelegate& IDInferenceAvailableEvent)
+{
+	IDInferenceAvailableEvent.ProcessMulticastDelegate<UObject>(NULL);
+}
+// End Delegate FIDInferenceAvailableEvent
 
 // Begin Class UInfluenceDiag Function addArc
 struct Z_Construct_UFunction_UInfluenceDiag_addArc_Statics
@@ -1331,6 +1358,9 @@ struct Z_Construct_UClass_UInfluenceDiag_Statics
 		{ "IsBlueprintBase", "true" },
 		{ "ModuleRelativePath", "Public/InfluenceDiag.h" },
 	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_InferenceReady_MetaData[] = {
+		{ "ModuleRelativePath", "Public/InfluenceDiag.h" },
+	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_serializedNodes_MetaData[] = {
 		{ "Category", "InfluenceDiag" },
 		{ "ModuleRelativePath", "Public/InfluenceDiag.h" },
@@ -1348,6 +1378,7 @@ struct Z_Construct_UClass_UInfluenceDiag_Statics
 		{ "ModuleRelativePath", "Public/InfluenceDiag.h" },
 	};
 #endif // WITH_METADATA
+	static const UECodeGen_Private::FMulticastDelegatePropertyParams NewProp_InferenceReady;
 	static const UECodeGen_Private::FStructPropertyParams NewProp_serializedNodes_Inner;
 	static const UECodeGen_Private::FArrayPropertyParams NewProp_serializedNodes;
 	static const UECodeGen_Private::FStrPropertyParams NewProp_nodeNames_Inner;
@@ -1387,6 +1418,7 @@ struct Z_Construct_UClass_UInfluenceDiag_Statics
 	};
 	static const UECodeGen_Private::FClassParams ClassParams;
 };
+const UECodeGen_Private::FMulticastDelegatePropertyParams Z_Construct_UClass_UInfluenceDiag_Statics::NewProp_InferenceReady = { "InferenceReady", nullptr, (EPropertyFlags)0x0010100010080000, UECodeGen_Private::EPropertyGenFlags::InlineMulticastDelegate, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UInfluenceDiag, InferenceReady), Z_Construct_UDelegateFunction_FANTASIA_IDInferenceAvailableEvent__DelegateSignature, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_InferenceReady_MetaData), NewProp_InferenceReady_MetaData) }; // 2647109206
 const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_UInfluenceDiag_Statics::NewProp_serializedNodes_Inner = { "serializedNodes", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, Z_Construct_UScriptStruct_FInfluenceDiagNodeStruct, METADATA_PARAMS(0, nullptr) }; // 1171855057
 const UECodeGen_Private::FArrayPropertyParams Z_Construct_UClass_UInfluenceDiag_Statics::NewProp_serializedNodes = { "serializedNodes", nullptr, (EPropertyFlags)0x0010000000000001, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UInfluenceDiag, serializedNodes), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_serializedNodes_MetaData), NewProp_serializedNodes_MetaData) }; // 1171855057
 const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_UInfluenceDiag_Statics::NewProp_nodeNames_Inner = { "nodeNames", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, METADATA_PARAMS(0, nullptr) };
@@ -1397,6 +1429,7 @@ const UECodeGen_Private::FMapPropertyParams Z_Construct_UClass_UInfluenceDiag_St
 const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_UInfluenceDiag_Statics::NewProp_arcs_Inner = { "arcs", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, METADATA_PARAMS(0, nullptr) };
 const UECodeGen_Private::FArrayPropertyParams Z_Construct_UClass_UInfluenceDiag_Statics::NewProp_arcs = { "arcs", nullptr, (EPropertyFlags)0x0010000000000014, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UInfluenceDiag, arcs), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_arcs_MetaData), NewProp_arcs_MetaData) };
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_UInfluenceDiag_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UInfluenceDiag_Statics::NewProp_InferenceReady,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UInfluenceDiag_Statics::NewProp_serializedNodes_Inner,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UInfluenceDiag_Statics::NewProp_serializedNodes,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UInfluenceDiag_Statics::NewProp_nodeNames_Inner,
@@ -1425,7 +1458,7 @@ const UECodeGen_Private::FClassParams Z_Construct_UClass_UInfluenceDiag_Statics:
 	UE_ARRAY_COUNT(FuncInfo),
 	UE_ARRAY_COUNT(Z_Construct_UClass_UInfluenceDiag_Statics::PropPointers),
 	0,
-	0x001000A0u,
+	0x009000A0u,
 	METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UClass_UInfluenceDiag_Statics::Class_MetaDataParams), Z_Construct_UClass_UInfluenceDiag_Statics::Class_MetaDataParams)
 };
 UClass* Z_Construct_UClass_UInfluenceDiag()
@@ -1445,7 +1478,7 @@ UInfluenceDiag::~UInfluenceDiag() {}
 // End Class UInfluenceDiag
 
 // Begin Registration
-struct Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_Statics
+struct Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_Statics
 {
 	static constexpr FEnumRegisterCompiledInInfo EnumInfo[] = {
 		{ InferenceIDAlgs_StaticEnum, TEXT("InferenceIDAlgs"), &Z_Registration_Info_UEnum_InferenceIDAlgs, CONSTRUCT_RELOAD_VERSION_INFO(FEnumReloadVersionInfo, 3949654803U) },
@@ -1456,12 +1489,12 @@ struct Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_S
 		{ FArrayFloat::StaticStruct, Z_Construct_UScriptStruct_FArrayFloat_Statics::NewStructOps, TEXT("ArrayFloat"), &Z_Registration_Info_UScriptStruct_ArrayFloat, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FArrayFloat), 3045350769U) },
 	};
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_UInfluenceDiag, UInfluenceDiag::StaticClass, TEXT("UInfluenceDiag"), &Z_Registration_Info_UClass_UInfluenceDiag, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UInfluenceDiag), 1307087244U) },
+		{ Z_Construct_UClass_UInfluenceDiag, UInfluenceDiag::StaticClass, TEXT("UInfluenceDiag"), &Z_Registration_Info_UClass_UInfluenceDiag, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UInfluenceDiag), 3640847077U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_693804479(TEXT("/Script/FANTASIA"),
-	Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_Statics::ClassInfo),
-	Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_Statics::ScriptStructInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_Statics::ScriptStructInfo),
-	Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_Statics::EnumInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_Statics::EnumInfo));
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_1386460967(TEXT("/Script/FANTASIA"),
+	Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_Statics::ClassInfo),
+	Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_Statics::ScriptStructInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_Statics::ScriptStructInfo),
+	Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_Statics::EnumInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_Statics::EnumInfo));
 // End Registration
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

@@ -13,6 +13,7 @@
 
 #include "FANTASIA.h"
 #include "FANTASIATypes.h"
+#include "BayesianInferenceThreads.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "Runtime\Core\Public\Misc\Paths.h"
 #include "Runtime\Core\Public\Misc\FileHelper.h"
@@ -83,6 +84,8 @@ public:
 	
 };
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FIDInferenceAvailableEvent);
+
 UCLASS(Blueprintable, BlueprintType)
 class FANTASIA_API UInfluenceDiag : public UObject
 {
@@ -92,8 +95,14 @@ private:
 	gum::InfluenceDiagram<double> id;
 	gum::InfluenceDiagramInference<double>* inference = new gum::ShaferShenoyLIMIDInference<double>(&id);
 	bool initialized = false;
+	FDelegateHandle InferenceAvailableHandle;
+	BayesianInferenceThread* handle;
+
+	void inferenceComplete();
 
 public:
+	UPROPERTY(BlueprintAssignable, BlueprintCallable)
+	FIDInferenceAvailableEvent InferenceReady;
 
 	UPROPERTY(EditAnywhere)
 	TArray<FInfluenceDiagNodeStruct> serializedNodes;
