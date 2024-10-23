@@ -33,13 +33,19 @@ void UInfluenceDiag::Init()
 	inference = new gum::ShaferShenoyLIMIDInference<double>(&id);
 }
 
+void UInfluenceDiag::inferenceComplete() {
+	//handle->Shutdown();
+	InferenceReady.Broadcast();
+}
+
 void UInfluenceDiag::makeInference()
 {
-	try {
-		inference->makeInference();
-	}
-	catch (gum::NotFound& e)
-		UE_LOG(LogTemp, Warning, TEXT("%hs from %hs"), e.errorType().c_str(), e.errorContent().c_str());
+	InferenceAvailableDelegate InferenceAvailableSubscriber;
+
+	InferenceAvailableSubscriber.BindUObject(this, &UInfluenceDiag::inferenceComplete);
+
+	handle = BayesianInferenceThread::setup(inference);
+	InferenceAvailableHandle = handle->InferenceAvailableSubscribeUser(InferenceAvailableSubscriber);
 }
 
 TMap<FString, float> UInfluenceDiag::getPosterior(FString variable)

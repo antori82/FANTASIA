@@ -1,14 +1,14 @@
 {
     "Version": "1.2",
     "Data": {
-        "Source": "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\fantasiaeditor\\module.fantasiaeditor.cpp",
+        "Source": "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\fantasia\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\fantasiaeditor\\module.fantasiaeditor.cpp",
         "ProvidedModule": "",
         "PCH": "d:\\perforce\\fantasiadevelopment\\intermediate\\build\\win64\\x64\\fantasiadevelopmenteditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.cpp20.h.pch",
         "Includes": [
-            "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\fantasiaeditor\\definitions.fantasiaeditor.h",
-            "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\intermediate\\build\\win64\\unrealeditor\\inc\\fantasiaeditor\\uht\\bayesiannetworkfactory.gen.cpp",
-            "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\source\\fantasiaeditor\\public\\bayesiannetworkfactory.h",
-            "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\source\\fantasiaeditor\\public\\fantasiaeditor.h",
+            "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\fantasia\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\fantasiaeditor\\definitions.fantasiaeditor.h",
+            "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\fantasia\\intermediate\\build\\win64\\unrealeditor\\inc\\fantasiaeditor\\uht\\bayesiannetworkfactory.gen.cpp",
+            "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\fantasia\\source\\fantasiaeditor\\public\\bayesiannetworkfactory.h",
+            "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\fantasia\\source\\fantasiaeditor\\public\\fantasiaeditor.h",
             "d:\\programmi\\epic games\\ue_5.4\\engine\\source\\developer\\assettools\\public\\assettypeactions_base.h",
             "d:\\programmi\\epic games\\ue_5.4\\engine\\source\\developer\\assettools\\public\\iassettools.h",
             "d:\\programmi\\epic games\\ue_5.4\\engine\\source\\developer\\assettools\\public\\assettypecategories.h",
@@ -23,8 +23,8 @@
             "d:\\programmi\\epic games\\ue_5.4\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\assettools\\uht\\iassettools.generated.h",
             "d:\\programmi\\epic games\\ue_5.4\\engine\\source\\developer\\assettools\\public\\assettoolsmodule.h",
             "d:\\programmi\\epic games\\ue_5.4\\engine\\source\\editor\\unrealed\\public\\toolkits\\simpleasseteditor.h",
-            "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\intermediate\\build\\win64\\unrealeditor\\inc\\fantasiaeditor\\uht\\bayesiannetworkfactory.generated.h",
-            "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\intermediate\\build\\win64\\unrealeditor\\inc\\fantasiaeditor\\uht\\fantasiaeditor.init.gen.cpp"
+            "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\fantasia\\intermediate\\build\\win64\\unrealeditor\\inc\\fantasiaeditor\\uht\\bayesiannetworkfactory.generated.h",
+            "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\fantasia\\intermediate\\build\\win64\\unrealeditor\\inc\\fantasiaeditor\\uht\\fantasiaeditor.init.gen.cpp"
         ],
         "ImportedModules": [],
         "ImportedHeaderUnits": []

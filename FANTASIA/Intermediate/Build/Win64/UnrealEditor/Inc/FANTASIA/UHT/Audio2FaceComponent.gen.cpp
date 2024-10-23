@@ -17,67 +17,57 @@ FANTASIA_API UClass* Z_Construct_UClass_UAudio2FaceComponent_NoRegister();
 UPackage* Z_Construct_UPackage__Script_FANTASIA();
 // End Cross Module References
 
-// Begin Class UAudio2FaceComponent Function ReadAudioFile
-struct Z_Construct_UFunction_UAudio2FaceComponent_ReadAudioFile_Statics
+// Begin Class UAudio2FaceComponent Function PlayAudio
+struct Z_Construct_UFunction_UAudio2FaceComponent_PlayAudio_Statics
 {
-	struct Audio2FaceComponent_eventReadAudioFile_Parms
+	struct Audio2FaceComponent_eventPlayAudio_Parms
 	{
 		USoundWave* SoundWave;
-		bool tts;
 	};
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
 		{ "Category", "Audio2Face" },
-		{ "DisplayName", "NvidiaReadAudioFile" },
+		{ "DisplayName", "Play Audio" },
 		{ "Keywords", "Nvidia Plugin" },
 		{ "ModuleRelativePath", "Public/Audio2FaceComponent.h" },
 	};
 #endif // WITH_METADATA
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_SoundWave;
-	static void NewProp_tts_SetBit(void* Obj);
-	static const UECodeGen_Private::FBoolPropertyParams NewProp_tts;
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
-const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_UAudio2FaceComponent_ReadAudioFile_Statics::NewProp_SoundWave = { "SoundWave", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(Audio2FaceComponent_eventReadAudioFile_Parms, SoundWave), Z_Construct_UClass_USoundWave_NoRegister, METADATA_PARAMS(0, nullptr) };
-void Z_Construct_UFunction_UAudio2FaceComponent_ReadAudioFile_Statics::NewProp_tts_SetBit(void* Obj)
-{
-	((Audio2FaceComponent_eventReadAudioFile_Parms*)Obj)->tts = 1;
-}
-const UECodeGen_Private::FBoolPropertyParams Z_Construct_UFunction_UAudio2FaceComponent_ReadAudioFile_Statics::NewProp_tts = { "tts", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, sizeof(bool), sizeof(Audio2FaceComponent_eventReadAudioFile_Parms), &Z_Construct_UFunction_UAudio2FaceComponent_ReadAudioFile_Statics::NewProp_tts_SetBit, METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UAudio2FaceComponent_ReadAudioFile_Statics::PropPointers[] = {
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UAudio2FaceComponent_ReadAudioFile_Statics::NewProp_SoundWave,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UAudio2FaceComponent_ReadAudioFile_Statics::NewProp_tts,
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_UAudio2FaceComponent_PlayAudio_Statics::NewProp_SoundWave = { "SoundWave", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(Audio2FaceComponent_eventPlayAudio_Parms, SoundWave), Z_Construct_UClass_USoundWave_NoRegister, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UAudio2FaceComponent_PlayAudio_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UAudio2FaceComponent_PlayAudio_Statics::NewProp_SoundWave,
 };
-static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UAudio2FaceComponent_ReadAudioFile_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UAudio2FaceComponent_ReadAudioFile_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UAudio2FaceComponent, nullptr, "ReadAudioFile", nullptr, nullptr, Z_Construct_UFunction_UAudio2FaceComponent_ReadAudioFile_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UAudio2FaceComponent_ReadAudioFile_Statics::PropPointers), sizeof(Z_Construct_UFunction_UAudio2FaceComponent_ReadAudioFile_Statics::Audio2FaceComponent_eventReadAudioFile_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UAudio2FaceComponent_ReadAudioFile_Statics::Function_MetaDataParams), Z_Construct_UFunction_UAudio2FaceComponent_ReadAudioFile_Statics::Function_MetaDataParams) };
-static_assert(sizeof(Z_Construct_UFunction_UAudio2FaceComponent_ReadAudioFile_Statics::Audio2FaceComponent_eventReadAudioFile_Parms) < MAX_uint16);
-UFunction* Z_Construct_UFunction_UAudio2FaceComponent_ReadAudioFile()
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UAudio2FaceComponent_PlayAudio_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UAudio2FaceComponent_PlayAudio_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UAudio2FaceComponent, nullptr, "PlayAudio", nullptr, nullptr, Z_Construct_UFunction_UAudio2FaceComponent_PlayAudio_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UAudio2FaceComponent_PlayAudio_Statics::PropPointers), sizeof(Z_Construct_UFunction_UAudio2FaceComponent_PlayAudio_Statics::Audio2FaceComponent_eventPlayAudio_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UAudio2FaceComponent_PlayAudio_Statics::Function_MetaDataParams), Z_Construct_UFunction_UAudio2FaceComponent_PlayAudio_Statics::Function_MetaDataParams) };
+static_assert(sizeof(Z_Construct_UFunction_UAudio2FaceComponent_PlayAudio_Statics::Audio2FaceComponent_eventPlayAudio_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_UAudio2FaceComponent_PlayAudio()
 {
 	static UFunction* ReturnFunction = nullptr;
 	if (!ReturnFunction)
 	{
-		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UAudio2FaceComponent_ReadAudioFile_Statics::FuncParams);
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UAudio2FaceComponent_PlayAudio_Statics::FuncParams);
 	}
 	return ReturnFunction;
 }
-DEFINE_FUNCTION(UAudio2FaceComponent::execReadAudioFile)
+DEFINE_FUNCTION(UAudio2FaceComponent::execPlayAudio)
 {
 	P_GET_OBJECT(USoundWave,Z_Param_SoundWave);
-	P_GET_UBOOL(Z_Param_tts);
 	P_FINISH;
 	P_NATIVE_BEGIN;
-	P_THIS->ReadAudioFile(Z_Param_SoundWave,Z_Param_tts);
+	P_THIS->PlayAudio(Z_Param_SoundWave);
 	P_NATIVE_END;
 }
-// End Class UAudio2FaceComponent Function ReadAudioFile
+// End Class UAudio2FaceComponent Function PlayAudio
 
 // Begin Class UAudio2FaceComponent
 void UAudio2FaceComponent::StaticRegisterNativesUAudio2FaceComponent()
 {
 	UClass* Class = UAudio2FaceComponent::StaticClass();
 	static const FNameNativePtrPair Funcs[] = {
-		{ "ReadAudioFile", &UAudio2FaceComponent::execReadAudioFile },
+		{ "PlayAudio", &UAudio2FaceComponent::execPlayAudio },
 	};
 	FNativeFunctionRegistrar::RegisterFunctions(Class, Funcs, UE_ARRAY_COUNT(Funcs));
 }
@@ -109,7 +99,7 @@ struct Z_Construct_UClass_UAudio2FaceComponent_Statics
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static UObject* (*const DependentSingletons[])();
 	static constexpr FClassFunctionLinkInfo FuncInfo[] = {
-		{ &Z_Construct_UFunction_UAudio2FaceComponent_ReadAudioFile, "ReadAudioFile" }, // 2812056720
+		{ &Z_Construct_UFunction_UAudio2FaceComponent_PlayAudio, "PlayAudio" }, // 535899435
 	};
 	static_assert(UE_ARRAY_COUNT(FuncInfo) < 2048);
 	static constexpr FCppClassTypeInfoStatic StaticCppClassTypeInfo = {
@@ -161,14 +151,14 @@ UAudio2FaceComponent::~UAudio2FaceComponent() {}
 // End Class UAudio2FaceComponent
 
 // Begin Registration
-struct Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_Audio2FaceComponent_h_Statics
+struct Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_Audio2FaceComponent_h_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_UAudio2FaceComponent, UAudio2FaceComponent::StaticClass, TEXT("UAudio2FaceComponent"), &Z_Registration_Info_UClass_UAudio2FaceComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UAudio2FaceComponent), 3636786369U) },
+		{ Z_Construct_UClass_UAudio2FaceComponent, UAudio2FaceComponent::StaticClass, TEXT("UAudio2FaceComponent"), &Z_Registration_Info_UClass_UAudio2FaceComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UAudio2FaceComponent), 201309479U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_Audio2FaceComponent_h_3228787954(TEXT("/Script/FANTASIA"),
-	Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_Audio2FaceComponent_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_Source_FANTASIA_Public_Audio2FaceComponent_h_Statics::ClassInfo),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_Audio2FaceComponent_h_1694502293(TEXT("/Script/FANTASIA"),
+	Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_Audio2FaceComponent_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_Audio2FaceComponent_h_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);
 // End Registration
