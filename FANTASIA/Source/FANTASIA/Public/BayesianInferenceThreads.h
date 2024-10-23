@@ -17,6 +17,9 @@
 #include "agrum/BN/inference/lazyPropagation.h"
 #include "agrum/BN/inference/ShaferShenoyInference.h"
 #include "agrum/BN/inference/variableElimination.h"
+#include "agrum/ID/influenceDiagram.h"
+#include "agrum/ID/inference/tools/influenceDiagramInference.h"
+#include "agrum/ID/inference/ShaferShenoyLIMIDInference.h"
 
 #pragma warning (default : 4263)
 #pragma warning (default : 4264)
@@ -49,6 +52,7 @@ private:
 	BayesianModelType modelType;
 	InferenceAvailableEvent InferenceAvailable;
 	gum::JointTargetedInference<double>* BNinferenceEngine;
+	gum::InfluenceDiagramInference<double>* IDinferenceEngine;
 
 public:
 
@@ -56,6 +60,7 @@ public:
 
 	//Constructor
 	BayesianInferenceThread(gum::JointTargetedInference<double>* inference);
+	BayesianInferenceThread(gum::InfluenceDiagramInference<double>* inference);
 
 	virtual ~BayesianInferenceThread();
 
@@ -72,6 +77,7 @@ public:
 	static void Shutdown();
 
 	static BayesianInferenceThread* setup(gum::JointTargetedInference<double>* inference);
+	static BayesianInferenceThread* setup(gum::InfluenceDiagramInference<double>* inference);
 
 	void makeInference();
 

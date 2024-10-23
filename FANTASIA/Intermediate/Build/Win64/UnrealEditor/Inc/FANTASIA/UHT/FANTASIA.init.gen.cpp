@@ -7,13 +7,14 @@
 #include "UObject/GeneratedCppIncludes.h"
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
 void EmptyLinkFunctionForGeneratedCodeFANTASIA_init() {}
+	FANTASIA_API UFunction* Z_Construct_UDelegateFunction_FANTASIA_BNInferenceAvailableEvent__DelegateSignature();
+	FANTASIA_API UFunction* Z_Construct_UDelegateFunction_FANTASIA_IDInferenceAvailableEvent__DelegateSignature();
 	FANTASIA_API UFunction* Z_Construct_UDelegateFunction_FANTASIA_IncomingChatGPTResponseEvent__DelegateSignature();
 	FANTASIA_API UFunction* Z_Construct_UDelegateFunction_FANTASIA_IncomingFinalASREvent__DelegateSignature();
 	FANTASIA_API UFunction* Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature();
 	FANTASIA_API UFunction* Z_Construct_UDelegateFunction_FANTASIA_IncomingNeo4jResponseEvent__DelegateSignature();
 	FANTASIA_API UFunction* Z_Construct_UDelegateFunction_FANTASIA_IncomingNLUEvent__DelegateSignature();
 	FANTASIA_API UFunction* Z_Construct_UDelegateFunction_FANTASIA_IncomingPartialASREvent__DelegateSignature();
-	FANTASIA_API UFunction* Z_Construct_UDelegateFunction_FANTASIA_InferenceAvailableEvent__DelegateSignature();
 	FANTASIA_API UFunction* Z_Construct_UDelegateFunction_FANTASIA_SynthesizedEvent__DelegateSignature();
 	FANTASIA_API UFunction* Z_Construct_UDelegateFunction_FANTASIA_SynthesizedInternalEvent__DelegateSignature();
 	static FPackageRegistrationInfo Z_Registration_Info_UPackage__Script_FANTASIA;
@@ -22,13 +23,14 @@ void EmptyLinkFunctionForGeneratedCodeFANTASIA_init() {}
 		if (!Z_Registration_Info_UPackage__Script_FANTASIA.OuterSingleton)
 		{
 			static UObject* (*const SingletonFuncArray[])() = {
+				(UObject* (*)())Z_Construct_UDelegateFunction_FANTASIA_BNInferenceAvailableEvent__DelegateSignature,
+				(UObject* (*)())Z_Construct_UDelegateFunction_FANTASIA_IDInferenceAvailableEvent__DelegateSignature,
 				(UObject* (*)())Z_Construct_UDelegateFunction_FANTASIA_IncomingChatGPTResponseEvent__DelegateSignature,
 				(UObject* (*)())Z_Construct_UDelegateFunction_FANTASIA_IncomingFinalASREvent__DelegateSignature,
 				(UObject* (*)())Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature,
 				(UObject* (*)())Z_Construct_UDelegateFunction_FANTASIA_IncomingNeo4jResponseEvent__DelegateSignature,
 				(UObject* (*)())Z_Construct_UDelegateFunction_FANTASIA_IncomingNLUEvent__DelegateSignature,
 				(UObject* (*)())Z_Construct_UDelegateFunction_FANTASIA_IncomingPartialASREvent__DelegateSignature,
-				(UObject* (*)())Z_Construct_UDelegateFunction_FANTASIA_InferenceAvailableEvent__DelegateSignature,
 				(UObject* (*)())Z_Construct_UDelegateFunction_FANTASIA_SynthesizedEvent__DelegateSignature,
 				(UObject* (*)())Z_Construct_UDelegateFunction_FANTASIA_SynthesizedInternalEvent__DelegateSignature,
 			};
@@ -37,13 +39,13 @@ void EmptyLinkFunctionForGeneratedCodeFANTASIA_init() {}
 				SingletonFuncArray,
 				UE_ARRAY_COUNT(SingletonFuncArray),
 				PKG_CompiledIn | 0x00000000,
-				0x47DD9A16,
-				0x3AAD236E,
+				0x8E15C8B6,
+				0x257149D0,
 				METADATA_PARAMS(0, nullptr)
 			};
 			UECodeGen_Private::ConstructUPackage(Z_Registration_Info_UPackage__Script_FANTASIA.OuterSingleton, PackageParams);
 		}
 		return Z_Registration_Info_UPackage__Script_FANTASIA.OuterSingleton;
 	}
-	static FRegisterCompiledInInfo Z_CompiledInDeferPackage_UPackage__Script_FANTASIA(Z_Construct_UPackage__Script_FANTASIA, TEXT("/Script/FANTASIA"), Z_Registration_Info_UPackage__Script_FANTASIA, CONSTRUCT_RELOAD_VERSION_INFO(FPackageReloadVersionInfo, 0x47DD9A16, 0x3AAD236E));
+	static FRegisterCompiledInInfo Z_CompiledInDeferPackage_UPackage__Script_FANTASIA(Z_Construct_UPackage__Script_FANTASIA, TEXT("/Script/FANTASIA"), Z_Registration_Info_UPackage__Script_FANTASIA, CONSTRUCT_RELOAD_VERSION_INFO(FPackageReloadVersionInfo, 0x8E15C8B6, 0x257149D0));
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
