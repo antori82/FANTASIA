@@ -13,20 +13,24 @@ class UOpenAIComponent : public UActorComponent
 private:
 
 	void OnGPTResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful);
-	void OnChatGPTResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful);
+
+	void OnGPTPartialResponseReceived(FHttpRequestPtr request, uint64 bytesSent, uint64 bytesReceived);
 
 public:
 	// Sets default values for this component's properties
 	UOpenAIComponent();
 
+	UPROPERTY(BlueprintAssignable, BlueprintCallable)
+	FIncomingGPTStreamResponseEvent IncomingGPTStreamResponse;
+
 	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
 	FString Key;
 
 	UPROPERTY(BlueprintAssignable, BlueprintCallable)
-	FIncomingChatGPTResponseEvent IncomingChatGPTResponse;
+	FIncomingGPTResponseEvent IncomingGPTResponse;
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "GetChatGPTCompletion", AutoCreateRefTerm = "messages"), Category = "GPT")
-	void getChatGPTCompletion(TArray<FChatTurn> messages, FString apiMethod = "gpt-4-turbo-preview");
+	void getGPTCompletion(TArray<FChatTurn> messages, FString apiMethod = "gpt-4-turbo-preview", bool stream = false);
 
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;

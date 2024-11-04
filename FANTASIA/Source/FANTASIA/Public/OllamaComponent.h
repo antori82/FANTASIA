@@ -11,6 +11,12 @@ class UOllamaComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
+private:
+
+	void OnGPTResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful);
+
+	void OnGPTPartialResponseReceived(FHttpRequestPtr request, uint64 bytesSent, uint64 bytesReceived);
+
 public:
 	// Sets default values for this component's properties
 	UOllamaComponent();
@@ -24,22 +30,16 @@ public:
 	FIncomingGPTResponseEvent IncomingGPTResponse;
 
 	UPROPERTY(BlueprintAssignable, BlueprintCallable)
-	FIncomingChatGPTResponseEvent IncomingChatGPTResponse;
+	FIncomingGPTStreamResponseEvent IncomingGPTStreamResponse;
 
-	void OnOllamaGPTResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful);
-	void OnOllamaChatGPTResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful);
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "GetOllamaGPTCompletion", AutoCreateRefTerm = "messages"), Category = "GPT")
+	void getGPTCompletion(TArray<FChatTurn> messages, FString model = "llama3", bool stream = false);
 
-	UFUNCTION(BlueprintCallable, meta = (DisplayName = "GetOllamaGPTCompletion"), Category = "GPT")
-	void getOllamaGPTCompletion(FString prompt, FString model = "llama3");
-
-	UFUNCTION(BlueprintCallable, meta = (DisplayName = "GetOllamaChatGPTCompletion", AutoCreateRefTerm = "messages"), Category = "GPT")
-	void getOllamaChatGPTCompletion(TArray<FChatTurn> messages, FString model = "llama3");
+	// Called every frame
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
-
-public:
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	
 };
