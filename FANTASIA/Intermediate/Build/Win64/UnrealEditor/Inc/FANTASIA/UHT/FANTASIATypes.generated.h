@@ -9,26 +9,27 @@
 #include "UObject/ScriptMacros.h"
 
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
+enum class GPTRoleType : uint8;
 struct FTTSData;
 #ifdef FANTASIA_FANTASIATypes_generated_h
 #error "FANTASIATypes.generated.h already included, missing '#pragma once' in FANTASIATypes.h"
 #endif
 #define FANTASIA_FANTASIATypes_generated_h
 
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_5_DELEGATE \
-FANTASIA_API void FIncomingGPTResponseEvent_DelegateWrapper(const FMulticastScriptDelegate& IncomingGPTResponseEvent, const FString& GPTResponse);
-
-
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_6_DELEGATE \
-FANTASIA_API void FIncomingChatGPTResponseEvent_DelegateWrapper(const FMulticastScriptDelegate& IncomingChatGPTResponseEvent, const FString& chatGPTResponse, const FString& role);
-
-
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_26_GENERATED_BODY \
+#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_23_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FChatTurn_Statics; \
 	FANTASIA_API static class UScriptStruct* StaticStruct();
 
 
 template<> FANTASIA_API UScriptStruct* StaticStruct<struct FChatTurn>();
+
+#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_32_DELEGATE \
+FANTASIA_API void FIncomingGPTResponseEvent_DelegateWrapper(const FMulticastScriptDelegate& IncomingGPTResponseEvent, const FString& GPTResponse, GPTRoleType role);
+
+
+#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_33_DELEGATE \
+FANTASIA_API void FIncomingGPTStreamResponseEvent_DelegateWrapper(const FMulticastScriptDelegate& IncomingGPTStreamResponseEvent, const FString& GPTResponse, GPTRoleType role, bool endStream);
+
 
 #define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_73_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FTTSTimedStruct_Statics; \
@@ -308,15 +309,15 @@ template<> FANTASIA_API UClass* StaticClass<class UNeo4jResultCellSimple>();
 enum EAzureASREnum : uint8;
 template<> FANTASIA_API UEnum* StaticEnum<EAzureASREnum>();
 
-#define FOREACH_ENUM_CHATGPTROLETYPE(op) \
-	op(ChatGPTRoleType::SYSTEM) \
-	op(ChatGPTRoleType::ASSISTANT) \
-	op(ChatGPTRoleType::USER) \
-	op(ChatGPTRoleType::FUNCTION) 
+#define FOREACH_ENUM_GPTROLETYPE(op) \
+	op(GPTRoleType::SYSTEM) \
+	op(GPTRoleType::ASSISTANT) \
+	op(GPTRoleType::USER) \
+	op(GPTRoleType::FUNCTION) 
 
-enum class ChatGPTRoleType : uint8;
-template<> struct TIsUEnumClass<ChatGPTRoleType> { enum { Value = true }; };
-template<> FANTASIA_API UEnum* StaticEnum<ChatGPTRoleType>();
+enum class GPTRoleType : uint8;
+template<> struct TIsUEnumClass<GPTRoleType> { enum { Value = true }; };
+template<> FANTASIA_API UEnum* StaticEnum<GPTRoleType>();
 
 #define FOREACH_ENUM_INFLUENCENODETYPE(op) \
 	op(InfluenceNodeType::CHANCE) \

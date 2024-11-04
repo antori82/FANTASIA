@@ -2,9 +2,6 @@
 #include "CoreMinimal.h"
 #include "FANTASIATypes.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FIncomingGPTResponseEvent, FString, GPTResponse);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FIncomingChatGPTResponseEvent, FString, chatGPTResponse, FString, role);
-
 UENUM(BlueprintType)
 enum EAzureASREnum : uint8
 {
@@ -13,7 +10,7 @@ enum EAzureASREnum : uint8
 };
 
 UENUM(BlueprintType)
-enum class ChatGPTRoleType : uint8 {
+enum class GPTRoleType : uint8 {
 	SYSTEM = 0 UMETA(DisplayName = "SYSTEM"),
 	ASSISTANT = 1 UMETA(DisplayName = "ASSISTANT"),
 	USER = 2 UMETA(DisplayName = "USER"),
@@ -25,12 +22,15 @@ struct FChatTurn
 {
 	GENERATED_USTRUCT_BODY()
 	
-	UPROPERTY(BlueprintReadWrite)
-	ChatGPTRoleType role = ChatGPTRoleType::USER;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	GPTRoleType role = GPTRoleType::USER;
 
-	UPROPERTY(BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FString content = TEXT("");
 };
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FIncomingGPTResponseEvent, FString, GPTResponse, GPTRoleType, role);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FIncomingGPTStreamResponseEvent, FString, GPTResponse, GPTRoleType, role, bool, endStream);
 
 UENUM(BlueprintType)
 enum class InfluenceNodeType : uint8 {

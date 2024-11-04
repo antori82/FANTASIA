@@ -70,7 +70,7 @@ struct FInfluenceDiagNodeStruct
 	TArray<FString> parents;
 
 	UPROPERTY(EditAnywhere)
-	InfluenceNodeType nodeType;
+	InfluenceNodeType nodeType = InfluenceNodeType::CHANCE;
 };
 
 USTRUCT(Blueprintable)

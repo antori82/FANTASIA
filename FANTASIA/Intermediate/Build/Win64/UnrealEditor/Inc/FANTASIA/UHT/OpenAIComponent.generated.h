@@ -16,7 +16,7 @@ struct FChatTurn;
 #define FANTASIA_OpenAIComponent_generated_h
 
 #define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_OpenAIComponent_h_12_RPC_WRAPPERS_NO_PURE_DECLS \
-	DECLARE_FUNCTION(execgetChatGPTCompletion);
+	DECLARE_FUNCTION(execgetGPTCompletion);
 
 
 #define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_OpenAIComponent_h_12_INCLASS_NO_PURE_DECLS \
