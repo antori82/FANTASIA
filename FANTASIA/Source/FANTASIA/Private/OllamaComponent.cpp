@@ -13,11 +13,13 @@ UOllamaComponent::UOllamaComponent()
 	// ...
 }
 
-void UOllamaComponent::OnOllamaGPTResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful) {
+void UOllamaComponent::OnGPTResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful) {
 	if (bWasSuccessful) {
 
 		TSharedPtr<FJsonValue> JsonValue;
 		TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(Response->GetContentAsString());
+		FString checkRole;
+		GPTRoleType role;
 
 		if (FJsonSerializer::Deserialize(Reader, JsonValue))
 		{
@@ -25,59 +27,82 @@ void UOllamaComponent::OnOllamaGPTResponseReceived(FHttpRequestPtr Request, FHtt
 			const TSharedPtr<FJsonObject>* FileMessageObject;
 
 			if (JsonValue->TryGetObject(FileMessageObject)) {
-				IncomingGPTResponse.Broadcast(FileMessageObject->Get()->GetStringField(TEXT("response")));
+				checkRole = FileMessageObject->Get()->GetObjectField(TEXT("message"))->GetStringField(TEXT("role"));
+
+				if (checkRole == "system")
+					role = GPTRoleType::SYSTEM;
+				else if (checkRole == "assistant")
+					role = GPTRoleType::ASSISTANT;
+				else if (checkRole == "function")
+					role = GPTRoleType::FUNCTION;
+				else if (checkRole == "user")
+					role = GPTRoleType::USER;
+
+				IncomingGPTResponse.Broadcast(FileMessageObject->Get()->GetObjectField(TEXT("message"))->GetStringField(TEXT("content")), role);
 			}
 		}
 	}
 }
 
+void UOllamaComponent::OnGPTPartialResponseReceived(FHttpRequestPtr request, uint64 bytesSent, uint64 bytesReceived) {
+	FHttpResponsePtr test;
+	FString message, data, checkRole, outFragment = "";
+	const FRegexPattern myPattern(TEXT("(\\{\"model\":.*\"done\":.*\\})"));
+	static GPTRoleType role = GPTRoleType::ASSISTANT;
+	static int blocksRead = 0;
+	int blocksReading = 0;
+	TArray<TSharedPtr<FJsonValue>> results;
+	bool endStream = false;
 
-void UOllamaComponent::getOllamaGPTCompletion(FString prompt, FString model) {
-	FHttpModule* Http = &FHttpModule::Get();
-	FString payload;
-	TSharedRef<IHttpRequest, ESPMode::ThreadSafe> Request = Http->CreateRequest();
+	if (bytesReceived > 0) {
+		test = request->GetResponse();
+		message = test->GetContentAsString();
+		FRegexMatcher myMatcher(myPattern, message);
 
-	Request->OnProcessRequestComplete().BindUObject(this, &UOllamaComponent::OnOllamaGPTResponseReceived);
-	Request->SetURL(endpoint + ":" + FString::FromInt(port) + "/api/generate");
-	Request->SetVerb("POST");
-	Request->SetHeader(TEXT("Content-Type"), TEXT("application/json"));
-	Request->SetHeader(TEXT("User-Agent"), "X-UnrealEngine-Agent");
-
-	TSharedPtr<FJsonObject> payloadObject = MakeShareable(new FJsonObject());
-	payloadObject->SetStringField("prompt", prompt);
-	payloadObject->SetStringField("model", model);
-	payloadObject->SetBoolField("stream", false);
-
-	FJsonSerializer::Serialize(payloadObject.ToSharedRef(), TJsonWriterFactory<>::Create(&payload));
-
-	Request->SetContentAsString(payload);
-	Request->ProcessRequest();
-}
-
-void UOllamaComponent::OnOllamaChatGPTResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful) {
-	if (bWasSuccessful) {
-
-		TSharedPtr<FJsonValue> JsonValue;
-		TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(Response->GetContentAsString());
-
-		if (FJsonSerializer::Deserialize(Reader, JsonValue))
+		while (myMatcher.FindNext())
 		{
-			FString temp = Response->GetContentAsString();
-			const TSharedPtr<FJsonObject>* FileMessageObject;
+			blocksReading++;
+			if (blocksReading > blocksRead) {
+				data = myMatcher.GetCaptureGroup(1);
 
-			if (JsonValue->TryGetObject(FileMessageObject)) {
-				IncomingChatGPTResponse.Broadcast(FileMessageObject->Get()->GetObjectField(TEXT("message"))->GetStringField(TEXT("content")), FileMessageObject->Get()->GetObjectField(TEXT("message"))->GetStringField(TEXT("role")));
+				TSharedPtr<FJsonValue> JsonValue;
+				TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(data);
+
+				if (FJsonSerializer::Deserialize(Reader, JsonValue)) {
+					const TSharedPtr<FJsonObject>* FileMessageObject;
+
+					if (JsonValue->TryGetObject(FileMessageObject)) {
+						endStream = FileMessageObject->Get()->GetBoolField(TEXT("done"));
+						if (!endStream) {
+							blocksRead++;
+							checkRole = FileMessageObject->Get()->GetObjectField(TEXT("message"))->GetStringField(TEXT("role"));
+
+							if (checkRole == "system")
+								role = GPTRoleType::SYSTEM;
+							else if (checkRole == "assistant")
+								role = GPTRoleType::ASSISTANT;
+							else if (checkRole == "function")
+								role = GPTRoleType::FUNCTION;
+							else if (checkRole == "user")
+								role = GPTRoleType::USER;
+
+							outFragment.Append(FileMessageObject->Get()->GetObjectField(TEXT("message"))->GetStringField(TEXT("content")));
+						}
+						else
+							blocksRead = 0;
+					}
+				}
 			}
 		}
+		IncomingGPTStreamResponse.Broadcast(outFragment, role, endStream);
 	}
 }
 
-void UOllamaComponent::getOllamaChatGPTCompletion(TArray<FChatTurn> messages, FString model) {
+void UOllamaComponent::getGPTCompletion(TArray<FChatTurn> messages, FString model, bool stream) {
 	FHttpModule* Http = &FHttpModule::Get();
 	FString payload;
 	TSharedRef<IHttpRequest, ESPMode::ThreadSafe> Request = Http->CreateRequest();
 
-	Request->OnProcessRequestComplete().BindUObject(this, &UOllamaComponent::OnOllamaChatGPTResponseReceived);
 	Request->SetURL(endpoint + ":" + FString::FromInt(port) + "/api/chat");
 	Request->SetVerb("POST");
 	Request->SetHeader(TEXT("Content-Type"), TEXT("application/json"));
@@ -99,7 +124,11 @@ void UOllamaComponent::getOllamaChatGPTCompletion(TArray<FChatTurn> messages, FS
 	}
 	payloadObject->SetArrayField(TEXT("messages"), jsonMessages);
 	payloadObject->SetStringField("model", model);
-	payloadObject->SetBoolField("stream", false);
+	if (stream)
+		Request->OnRequestProgress64().BindUObject(this, &UOllamaComponent::OnGPTPartialResponseReceived);
+	else
+		Request->OnProcessRequestComplete().BindUObject(this, &UOllamaComponent::OnGPTResponseReceived);
+	payloadObject->SetBoolField("stream", stream);
 
 	FJsonSerializer::Serialize(payloadObject.ToSharedRef(), TJsonWriterFactory<>::Create(&payload));
 
