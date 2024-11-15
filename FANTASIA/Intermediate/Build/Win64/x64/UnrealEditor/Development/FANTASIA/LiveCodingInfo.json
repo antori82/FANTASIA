@@ -21,6 +21,7 @@
 			"paramObject.gen.cpp.obj",
 			"TTSInterface.gen.cpp.obj",
 			"TTSThreadInterface.gen.cpp.obj",
+			"PerModuleInline.gen.cpp.obj",
 			"Audio2FaceComponent.cpp.obj",
 			"Audio2FaceThread.cpp.obj",
 			"AWSPollyComponent.cpp.obj",

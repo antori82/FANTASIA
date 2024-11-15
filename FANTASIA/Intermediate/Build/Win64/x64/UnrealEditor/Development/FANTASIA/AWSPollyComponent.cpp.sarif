@@ -1,0 +1,1187 @@
+{
+    "version": "2.1.0",
+    "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+    "runs": [
+        {
+            "results": [
+                {
+                    "ruleId": "C4996",
+                    "message": {
+                        "text": "'stdext::checked_array_iterator<T *>': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
+                    },
+                    "analysisTarget": {
+                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/AWSPollyComponent.cpp"
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
+                                },
+                                "region": {
+                                    "startLine": 105,
+                                    "startColumn": 94
+                                }
+                            }
+                        }
+                    ],
+                    "relatedLocations": [
+                        {
+                            "id": 0,
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.38.33130/INCLUDE/iterator"
+                                },
+                                "region": {
+                                    "startLine": 1470,
+                                    "startColumn": 1
+                                }
+                            },
+                            "message": {
+                                "text": "vedere la dichiarazione di 'stdext::checked_array_iterator'"
+                            }
+                        },
+                        {
+                            "id": 1,
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
+                                },
+                                "region": {
+                                    "startLine": 105,
+                                    "startColumn": 94
+                                }
+                            },
+                            "message": {
+                                "text": "il contesto di creazione dell'istanza del modello (prima il meno recente) è"
+                            }
+                        },
+                        {
+                            "id": 2,
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
+                                },
+                                "region": {
+                                    "startLine": 228,
+                                    "startColumn": 50
+                                }
+                            },
+                            "message": {
+                                "text": "vedere il riferimento all'istanza 'Aws::Utils::Array<unsigned char>' di modello classe di cui è in corso la compilazione"
+                            },
+                            "properties": {
+                                "nestingLevel": 1
+                            }
+                        },
+                        {
+                            "id": 3,
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
+                                },
+                                "region": {
+                                    "startLine": 95,
+                                    "startColumn": 13
+                                }
+                            },
+                            "message": {
+                                "text": "durante la compilazione della funzione membro 'Aws::Utils::Array<unsigned char>::Array(const Aws::Utils::Array<unsigned char> &)' di modello classe"
+                            },
+                            "properties": {
+                                "nestingLevel": 1
+                            }
+                        },
+                        {
+                            "id": 4,
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
+                                },
+                                "region": {
+                                    "startLine": 234,
+                                    "startColumn": 63
+                                }
+                            },
+                            "message": {
+                                "text": "vedere il primo riferimento a 'Aws::Utils::Array<unsigned char>::Array' in 'Aws::Utils::CryptoBuffer::CryptoBuffer'"
+                            },
+                            "properties": {
+                                "nestingLevel": 2
+                            }
+                        }
+                    ]
+                },
+                {
+                    "ruleId": "C4996",
+                    "message": {
+                        "text": "'stdext::checked_array_iterator<T *>::checked_array_iterator': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
+                    },
+                    "analysisTarget": {
+                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/AWSPollyComponent.cpp"
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
+                                },
+                                "region": {
+                                    "startLine": 105,
+                                    "startColumn": 123
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "ruleId": "C4996",
+                    "message": {
+                        "text": "'stdext::checked_array_iterator<T *>': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
+                    },
+                    "analysisTarget": {
+                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/AWSPollyComponent.cpp"
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
+                                },
+                                "region": {
+                                    "startLine": 86,
+                                    "startColumn": 93
+                                }
+                            }
+                        }
+                    ],
+                    "relatedLocations": [
+                        {
+                            "id": 0,
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.38.33130/INCLUDE/iterator"
+                                },
+                                "region": {
+                                    "startLine": 1470,
+                                    "startColumn": 1
+                                }
+                            },
+                            "message": {
+                                "text": "vedere la dichiarazione di 'stdext::checked_array_iterator'"
+                            }
+                        },
+                        {
+                            "id": 1,
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
+                                },
+                                "region": {
+                                    "startLine": 86,
+                                    "startColumn": 93
+                                }
+                            },
+                            "message": {
+                                "text": "il contesto di creazione dell'istanza del modello (prima il meno recente) è"
+                            }
+                        },
+                        {
+                            "id": 2,
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
+                                },
+                                "region": {
+                                    "startLine": 68,
+                                    "startColumn": 13
+                                }
+                            },
+                            "message": {
+                                "text": "durante la compilazione della funzione membro 'Aws::Utils::Array<unsigned char>::Array(std::vector<Aws::Utils::Array<unsigned char> *,Aws::Allocator<Aws::Utils::Array<unsigned char> *>> &&)' di modello classe"
+                            },
+                            "properties": {
+                                "nestingLevel": 1
+                            }
+                        },
+                        {
+                            "id": 3,
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
+                                },
+                                "region": {
+                                    "startLine": 233,
+                                    "startColumn": 74
+                                }
+                            },
+                            "message": {
+                                "text": "vedere il primo riferimento a 'Aws::Utils::Array<unsigned char>::Array' in 'Aws::Utils::CryptoBuffer::CryptoBuffer'"
+                            },
+                            "properties": {
+                                "nestingLevel": 2
+                            }
+                        }
+                    ]
+                },
+                {
+                    "ruleId": "C4996",
+                    "message": {
+                        "text": "'stdext::checked_array_iterator<T *>::checked_array_iterator': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
+                    },
+                    "analysisTarget": {
+                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/AWSPollyComponent.cpp"
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
+                                },
+                                "region": {
+                                    "startLine": 86,
+                                    "startColumn": 122
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "ruleId": "C4996",
+                    "message": {
+                        "text": "'stdext::checked_array_iterator<T *>': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
+                    },
+                    "analysisTarget": {
+                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/AWSPollyComponent.cpp"
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
+                                },
+                                "region": {
+                                    "startLine": 58,
+                                    "startColumn": 77
+                                }
+                            }
+                        }
+                    ],
+                    "relatedLocations": [
+                        {
+                            "id": 0,
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.38.33130/INCLUDE/iterator"
+                                },
+                                "region": {
+                                    "startLine": 1470,
+                                    "startColumn": 1
+                                }
+                            },
+                            "message": {
+                                "text": "vedere la dichiarazione di 'stdext::checked_array_iterator'"
+                            }
+                        },
+                        {
+                            "id": 1,
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
+                                },
+                                "region": {
+                                    "startLine": 58,
+                                    "startColumn": 77
+                                }
+                            },
+                            "message": {
+                                "text": "il contesto di creazione dell'istanza del modello (prima il meno recente) è"
+                            }
+                        },
+                        {
+                            "id": 2,
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
+                                },
+                                "region": {
+                                    "startLine": 49,
+                                    "startColumn": 13
+                                }
+                            },
+                            "message": {
+                                "text": "durante la compilazione della funzione membro 'Aws::Utils::Array<unsigned char>::Array(const T *,size_t)' di modello classe\n        with\n        [\n            T=unsigned char\n        ]"
+                            },
+                            "properties": {
+                                "nestingLevel": 1
+                            }
+                        },
+                        {
+                            "id": 3,
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
+                                },
+                                "region": {
+                                    "startLine": 232,
+                                    "startColumn": 90
+                                }
+                            },
+                            "message": {
+                                "text": "vedere il primo riferimento a 'Aws::Utils::Array<unsigned char>::Array' in 'Aws::Utils::CryptoBuffer::CryptoBuffer'"
+                            },
+                            "properties": {
+                                "nestingLevel": 2
+                            }
+                        }
+                    ]
+                },
+                {
+                    "ruleId": "C4996",
+                    "message": {
+                        "text": "'stdext::checked_array_iterator<T *>::checked_array_iterator': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
+                    },
+                    "analysisTarget": {
+                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/AWSPollyComponent.cpp"
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
+                                },
+                                "region": {
+                                    "startLine": 58,
+                                    "startColumn": 106
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "ruleId": "C4996",
+                    "message": {
+                        "text": "'stdext::checked_array_iterator<T *>': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
+                    },
+                    "analysisTarget": {
+                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/AWSPollyComponent.cpp"
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.38.33130/INCLUDE/xutility"
+                                },
+                                "region": {
+                                    "startLine": 1141,
+                                    "startColumn": 31
+                                }
+                            }
+                        }
+                    ],
+                    "relatedLocations": [
+                        {
+                            "id": 0,
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.38.33130/INCLUDE/iterator"
+                                },
+                                "region": {
+                                    "startLine": 1470,
+                                    "startColumn": 1
+                                }
+                            },
+                            "message": {
+                                "text": "vedere la dichiarazione di 'stdext::checked_array_iterator'"
+                            }
+                        },
+                        {
+                            "id": 1,
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.38.33130/INCLUDE/xutility"
+                                },
+                                "region": {
+                                    "startLine": 1141,
+                                    "startColumn": 31
+                                }
+                            },
+                            "message": {
+                                "text": "il contesto di creazione dell'istanza del modello (prima il meno recente) è"
+                            }
+                        },
+                        {
+                            "id": 2,
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
+                                },
+                                "region": {
+                                    "startLine": 95,
+                                    "startColumn": 13
+                                }
+                            },
+                            "message": {
+                                "text": "durante la compilazione della funzione membro 'Aws::Utils::Array<unsigned char>::Array(const Aws::Utils::Array<unsigned char> &)' di modello classe"
+                            },
+                            "properties": {
+                                "nestingLevel": 1
+                            }
+                        },
+                        {
+                            "id": 3,
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
+                                },
+                                "region": {
+                                    "startLine": 234,
+                                    "startColumn": 63
+                                }
+                            },
+                            "message": {
+                                "text": "vedere il primo riferimento a 'Aws::Utils::Array<unsigned char>::Array' in 'Aws::Utils::CryptoBuffer::CryptoBuffer'"
+                            },
+                            "properties": {
+                                "nestingLevel": 2
+                            }
+                        },
+                        {
+                            "id": 4,
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
+                                },
+                                "region": {
+                                    "startLine": 105,
+                                    "startColumn": 26
+                                }
+                            },
+                            "message": {
+                                "text": "vedere il riferimento all'istanza '_OutIt std::copy<unsigned char*,stdext::checked_array_iterator<T *>>(_InIt,_InIt,_OutIt)' della funzione modello di cui è in corso la compilazione\n        with\n        [\n            _OutIt=stdext::checked_array_iterator<unsigned char *>,\n            T=unsigned char,\n            _InIt=unsigned char *\n        ]"
+                            },
+                            "properties": {
+                                "nestingLevel": 1
+                            }
+                        },
+                        {
+                            "id": 5,
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.38.33130/INCLUDE/xutility"
+                                },
+                                "region": {
+                                    "startLine": 4610,
+                                    "startColumn": 26
+                                }
+                            },
+                            "message": {
+                                "text": "vedere il riferimento all'istanza 'decltype(auto) std::_Get_unwrapped_n<_OutIt&,__int64>(_Iter,const _Diff)' della funzione modello di cui è in corso la compilazione\n        with\n        [\n            _OutIt=stdext::checked_array_iterator<unsigned char *>,\n            _Iter=stdext::checked_array_iterator<unsigned char *> &,\n            _Diff=__int64\n        ]"
+                            },
+                            "properties": {
+                                "nestingLevel": 1
+                            }
+                        },
+                        {
+                            "id": 6,
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.38.33130/INCLUDE/xutility"
+                                },
+                                "region": {
+                                    "startLine": 1244,
+                                    "startColumn": 26
+                                }
+                            },
+                            "message": {
+                                "text": "vedere il riferimento al modello di variabile 'const bool _Unwrappable_for_offset_v<stdext::checked_array_iterator<unsigned char *> &>' di cui è in corso la compilazione"
+                            },
+                            "properties": {
+                                "nestingLevel": 1
+                            }
+                        },
+                        {
+                            "id": 7,
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.38.33130/INCLUDE/xutility"
+                                },
+                                "region": {
+                                    "startLine": 1238,
+                                    "startColumn": 5
+                                }
+                            },
+                            "message": {
+                                "text": "vedere il riferimento al modello di variabile 'const bool _Unwrappable_v<stdext::checked_array_iterator<unsigned char *> &,void>' di cui è in corso la compilazione"
+                            },
+                            "properties": {
+                                "nestingLevel": 1
+                            }
+                        },
+                        {
+                            "id": 8,
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.38.33130/INCLUDE/xutility"
+                                },
+                                "region": {
+                                    "startLine": 1165,
+                                    "startColumn": 5
+                                }
+                            },
+                            "message": {
+                                "text": "vedere il riferimento al modello di variabile 'const bool _Allow_inheriting_unwrap_v<stdext::checked_array_iterator<unsigned char *>,void>' di cui è in corso la compilazione"
+                            },
+                            "properties": {
+                                "nestingLevel": 1
+                            }
+                        }
+                    ]
+                },
+                {
+                    "ruleId": "C4996",
+                    "message": {
+                        "text": "'stdext::checked_array_iterator<T *>': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
+                    },
+                    "analysisTarget": {
+                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/AWSPollyComponent.cpp"
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.38.33130/INCLUDE/__msvc_iter_core.hpp"
+                                },
+                                "region": {
+                                    "startLine": 184,
+                                    "startColumn": 40
+                                }
+                            }
+                        }
+                    ],
+                    "relatedLocations": [
+                        {
+                            "id": 0,
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.38.33130/INCLUDE/iterator"
+                                },
+                                "region": {
+                                    "startLine": 1470,
+                                    "startColumn": 1
+                                }
+                            },
+                            "message": {
+                                "text": "vedere la dichiarazione di 'stdext::checked_array_iterator'"
+                            }
+                        },
+                        {
+                            "id": 1,
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.38.33130/INCLUDE/__msvc_iter_core.hpp"
+                                },
+                                "region": {
+                                    "startLine": 184,
+                                    "startColumn": 40
+                                }
+                            },
+                            "message": {
+                                "text": "il contesto di creazione dell'istanza del modello (prima il meno recente) è"
+                            }
+                        },
+                        {
+                            "id": 2,
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.38.33130/INCLUDE/xutility"
+                                },
+                                "region": {
+                                    "startLine": 1233,
+                                    "startColumn": 93
+                                }
+                            },
+                            "message": {
+                                "text": "vedere il riferimento all'istanza 'std::_Iter_diff_t<stdext::checked_array_iterator<T *>>' di modello alias di cui è in corso la compilazione\n        with\n        [\n            T=unsigned char\n        ]"
+                            },
+                            "properties": {
+                                "nestingLevel": 1
+                            }
+                        },
+                        {
+                            "id": 3,
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.38.33130/INCLUDE/xutility"
+                                },
+                                "region": {
+                                    "startLine": 1046,
+                                    "startColumn": 22
+                                }
+                            },
+                            "message": {
+                                "text": "vedere il riferimento all'istanza 'std::iter_difference_t<stdext::checked_array_iterator<T *>>' di modello alias di cui è in corso la compilazione\n        with\n        [\n            T=unsigned char\n        ]"
+                            },
+                            "properties": {
+                                "nestingLevel": 1
+                            }
+                        },
+                        {
+                            "id": 4,
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.38.33130/INCLUDE/__msvc_iter_core.hpp"
+                                },
+                                "region": {
+                                    "startLine": 114,
+                                    "startColumn": 50
+                                }
+                            },
+                            "message": {
+                                "text": "vedere il riferimento al modello di variabile 'bool _Is_from_primary<std::iterator_traits<stdext::checked_array_iterator<unsigned char *> > >' di cui è in corso la compilazione"
+                            },
+                            "properties": {
+                                "nestingLevel": 1
+                            }
+                        },
+                        {
+                            "id": 5,
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.38.33130/INCLUDE/__msvc_iter_core.hpp"
+                                },
+                                "region": {
+                                    "startLine": 108,
+                                    "startColumn": 28
+                                }
+                            },
+                            "message": {
+                                "text": "vedere il riferimento all'istanza 'std::iterator_traits<stdext::checked_array_iterator<T *>>' di modello classe di cui è in corso la compilazione\n        with\n        [\n            T=unsigned char\n        ]"
+                            },
+                            "properties": {
+                                "nestingLevel": 1
+                            }
+                        },
+                        {
+                            "id": 6,
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.38.33130/INCLUDE/__msvc_iter_core.hpp"
+                                },
+                                "region": {
+                                    "startLine": 367,
+                                    "startColumn": 26
+                                }
+                            },
+                            "message": {
+                                "text": "vedere il riferimento all'istanza 'std::_Iterator_traits_base<_Ty>' di modello classe di cui è in corso la compilazione\n        with\n        [\n            _Ty=stdext::checked_array_iterator<unsigned char *>\n        ]"
+                            },
+                            "properties": {
+                                "nestingLevel": 1
+                            }
+                        }
+                    ]
+                },
+                {
+                    "ruleId": "C4996",
+                    "message": {
+                        "text": "'stdext::checked_array_iterator<T *>::iterator_category': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
+                    },
+                    "analysisTarget": {
+                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/AWSPollyComponent.cpp"
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.38.33130/INCLUDE/__msvc_iter_core.hpp"
+                                },
+                                "region": {
+                                    "startLine": 184,
+                                    "startColumn": 31
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "ruleId": "C4996",
+                    "message": {
+                        "text": "'stdext::checked_array_iterator<T *>': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
+                    },
+                    "analysisTarget": {
+                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/AWSPollyComponent.cpp"
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.38.33130/INCLUDE/__msvc_iter_core.hpp"
+                                },
+                                "region": {
+                                    "startLine": 185,
+                                    "startColumn": 40
+                                }
+                            }
+                        }
+                    ],
+                    "relatedLocations": [
+                        {
+                            "id": 0,
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.38.33130/INCLUDE/iterator"
+                                },
+                                "region": {
+                                    "startLine": 1470,
+                                    "startColumn": 1
+                                }
+                            },
+                            "message": {
+                                "text": "vedere la dichiarazione di 'stdext::checked_array_iterator'"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "ruleId": "C4996",
+                    "message": {
+                        "text": "'stdext::checked_array_iterator<T *>::value_type': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
+                    },
+                    "analysisTarget": {
+                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/AWSPollyComponent.cpp"
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.38.33130/INCLUDE/__msvc_iter_core.hpp"
+                                },
+                                "region": {
+                                    "startLine": 185,
+                                    "startColumn": 31
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "ruleId": "C4996",
+                    "message": {
+                        "text": "'stdext::checked_array_iterator<T *>': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
+                    },
+                    "analysisTarget": {
+                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/AWSPollyComponent.cpp"
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.38.33130/INCLUDE/__msvc_iter_core.hpp"
+                                },
+                                "region": {
+                                    "startLine": 186,
+                                    "startColumn": 40
+                                }
+                            }
+                        }
+                    ],
+                    "relatedLocations": [
+                        {
+                            "id": 0,
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.38.33130/INCLUDE/iterator"
+                                },
+                                "region": {
+                                    "startLine": 1470,
+                                    "startColumn": 1
+                                }
+                            },
+                            "message": {
+                                "text": "vedere la dichiarazione di 'stdext::checked_array_iterator'"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "ruleId": "C4996",
+                    "message": {
+                        "text": "'stdext::checked_array_iterator<T *>::difference_type': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
+                    },
+                    "analysisTarget": {
+                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/AWSPollyComponent.cpp"
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.38.33130/INCLUDE/__msvc_iter_core.hpp"
+                                },
+                                "region": {
+                                    "startLine": 186,
+                                    "startColumn": 31
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "ruleId": "C4996",
+                    "message": {
+                        "text": "'stdext::checked_array_iterator<T *>': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
+                    },
+                    "analysisTarget": {
+                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/AWSPollyComponent.cpp"
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.38.33130/INCLUDE/__msvc_iter_core.hpp"
+                                },
+                                "region": {
+                                    "startLine": 173,
+                                    "startColumn": 29
+                                }
+                            }
+                        }
+                    ],
+                    "relatedLocations": [
+                        {
+                            "id": 0,
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.38.33130/INCLUDE/iterator"
+                                },
+                                "region": {
+                                    "startLine": 1470,
+                                    "startColumn": 1
+                                }
+                            },
+                            "message": {
+                                "text": "vedere la dichiarazione di 'stdext::checked_array_iterator'"
+                            }
+                        },
+                        {
+                            "id": 1,
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.38.33130/INCLUDE/__msvc_iter_core.hpp"
+                                },
+                                "region": {
+                                    "startLine": 173,
+                                    "startColumn": 29
+                                }
+                            },
+                            "message": {
+                                "text": "il contesto di creazione dell'istanza del modello (prima il meno recente) è"
+                            }
+                        },
+                        {
+                            "id": 2,
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.38.33130/INCLUDE/__msvc_iter_core.hpp"
+                                },
+                                "region": {
+                                    "startLine": 187,
+                                    "startColumn": 101
+                                }
+                            },
+                            "message": {
+                                "text": "vedere il riferimento all'istanza 'std::_Old_iter_traits_pointer<true>::_Apply<_It>' di modello alias di cui è in corso la compilazione\n        with\n        [\n            _It=stdext::checked_array_iterator<unsigned char *>\n        ]"
+                            },
+                            "properties": {
+                                "nestingLevel": 1
+                            }
+                        }
+                    ]
+                },
+                {
+                    "ruleId": "C4996",
+                    "message": {
+                        "text": "'stdext::checked_array_iterator<T *>': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
+                    },
+                    "analysisTarget": {
+                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/AWSPollyComponent.cpp"
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.38.33130/INCLUDE/__msvc_iter_core.hpp"
+                                },
+                                "region": {
+                                    "startLine": 188,
+                                    "startColumn": 40
+                                }
+                            }
+                        }
+                    ],
+                    "relatedLocations": [
+                        {
+                            "id": 0,
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.38.33130/INCLUDE/iterator"
+                                },
+                                "region": {
+                                    "startLine": 1470,
+                                    "startColumn": 1
+                                }
+                            },
+                            "message": {
+                                "text": "vedere la dichiarazione di 'stdext::checked_array_iterator'"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "ruleId": "C4996",
+                    "message": {
+                        "text": "'stdext::checked_array_iterator<T *>::reference': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
+                    },
+                    "analysisTarget": {
+                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/AWSPollyComponent.cpp"
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.38.33130/INCLUDE/__msvc_iter_core.hpp"
+                                },
+                                "region": {
+                                    "startLine": 188,
+                                    "startColumn": 31
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "ruleId": "C4996",
+                    "message": {
+                        "text": "'stdext::checked_array_iterator<T *>': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
+                    },
+                    "analysisTarget": {
+                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/AWSPollyComponent.cpp"
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.38.33130/INCLUDE/__msvc_iter_core.hpp"
+                                },
+                                "region": {
+                                    "startLine": 93,
+                                    "startColumn": 38
+                                }
+                            }
+                        }
+                    ],
+                    "relatedLocations": [
+                        {
+                            "id": 0,
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.38.33130/INCLUDE/iterator"
+                                },
+                                "region": {
+                                    "startLine": 1470,
+                                    "startColumn": 1
+                                }
+                            },
+                            "message": {
+                                "text": "vedere la dichiarazione di 'stdext::checked_array_iterator'"
+                            }
+                        },
+                        {
+                            "id": 1,
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.38.33130/INCLUDE/__msvc_iter_core.hpp"
+                                },
+                                "region": {
+                                    "startLine": 93,
+                                    "startColumn": 38
+                                }
+                            },
+                            "message": {
+                                "text": "il contesto di creazione dell'istanza del modello (prima il meno recente) è"
+                            }
+                        },
+                        {
+                            "id": 2,
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.38.33130/INCLUDE/xutility"
+                                },
+                                "region": {
+                                    "startLine": 1046,
+                                    "startColumn": 22
+                                }
+                            },
+                            "message": {
+                                "text": "vedere il riferimento all'istanza 'std::incrementable_traits<stdext::checked_array_iterator<T *>>' di modello classe di cui è in corso la compilazione\n        with\n        [\n            T=unsigned char\n        ]"
+                            },
+                            "properties": {
+                                "nestingLevel": 1
+                            }
+                        }
+                    ]
+                },
+                {
+                    "ruleId": "C4996",
+                    "message": {
+                        "text": "'stdext::checked_array_iterator<T *>::difference_type': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
+                    },
+                    "analysisTarget": {
+                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/AWSPollyComponent.cpp"
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.38.33130/INCLUDE/__msvc_iter_core.hpp"
+                                },
+                                "region": {
+                                    "startLine": 93,
+                                    "startColumn": 29
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "ruleId": "C4996",
+                    "message": {
+                        "text": "'stdext::checked_array_iterator<T *>::_Verify_offset': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
+                    },
+                    "analysisTarget": {
+                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/AWSPollyComponent.cpp"
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.38.33130/INCLUDE/xutility"
+                                },
+                                "region": {
+                                    "startLine": 1255,
+                                    "startColumn": 12
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "ruleId": "C4996",
+                    "message": {
+                        "text": "'stdext::checked_array_iterator<T *>::_Unwrapped': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
+                    },
+                    "analysisTarget": {
+                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/AWSPollyComponent.cpp"
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.38.33130/INCLUDE/xutility"
+                                },
+                                "region": {
+                                    "startLine": 1256,
+                                    "startColumn": 41
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "ruleId": "C4996",
+                    "message": {
+                        "text": "'stdext::checked_array_iterator<T *>::_Seek_to': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
+                    },
+                    "analysisTarget": {
+                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/AWSPollyComponent.cpp"
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.38.33130/INCLUDE/xutility"
+                                },
+                                "region": {
+                                    "startLine": 1277,
+                                    "startColumn": 12
+                                }
+                            }
+                        }
+                    ],
+                    "relatedLocations": [
+                        {
+                            "id": 0,
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.38.33130/INCLUDE/xutility"
+                                },
+                                "region": {
+                                    "startLine": 1277,
+                                    "startColumn": 12
+                                }
+                            },
+                            "message": {
+                                "text": "il contesto di creazione dell'istanza del modello (prima il meno recente) è"
+                            }
+                        },
+                        {
+                            "id": 1,
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
+                                },
+                                "region": {
+                                    "startLine": 105,
+                                    "startColumn": 26
+                                }
+                            },
+                            "message": {
+                                "text": "vedere il riferimento all'istanza '_OutIt std::copy<unsigned char*,stdext::checked_array_iterator<T *>>(_InIt,_InIt,_OutIt)' della funzione modello di cui è in corso la compilazione\n        with\n        [\n            _OutIt=stdext::checked_array_iterator<unsigned char *>,\n            T=unsigned char,\n            _InIt=unsigned char *\n        ]"
+                            },
+                            "properties": {
+                                "nestingLevel": 1
+                            }
+                        },
+                        {
+                            "id": 2,
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.38.33130/INCLUDE/xutility"
+                                },
+                                "region": {
+                                    "startLine": 4611,
+                                    "startColumn": 5
+                                }
+                            },
+                            "message": {
+                                "text": "vedere il riferimento all'istanza 'void std::_Seek_wrapped<_OutIt,unsigned char*>(_Iter &,_UIter &&)' della funzione modello di cui è in corso la compilazione\n        with\n        [\n            _OutIt=stdext::checked_array_iterator<unsigned char *>,\n            _Iter=stdext::checked_array_iterator<unsigned char *>,\n            _UIter=unsigned char *\n        ]"
+                            },
+                            "properties": {
+                                "nestingLevel": 1
+                            }
+                        }
+                    ]
+                }
+            ],
+            "tool": {
+                "driver": {
+                    "name": "MSVC",
+                    "shortDescription": {
+                        "text": "Microsoft Visual C++ Compiler Warnings/Errors"
+                    },
+                    "informationUri": "https://docs.microsoft.com/cpp/error-messages/compiler-errors-1/c-cpp-build-errors"
+                }
+            }
+        }
+    ]
+}
