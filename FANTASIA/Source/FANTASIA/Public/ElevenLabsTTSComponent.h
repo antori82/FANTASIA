@@ -76,5 +76,5 @@ public:
 	void TTSSynthesize(FString ssml, FString id);
 
 	UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Sound", Keywords = "ElevenLabs TTS"), Category = "TTS")
-	USoundWave* TTSGetSound(FString id);
+	USoundWaveProcedural* TTSGetSound(FString id);
 };

@@ -12,7 +12,7 @@ void EmptyLinkFunctionForGeneratedCodeElevenLabsTTSComponent() {}
 // Begin Cross Module References
 ENGINE_API UClass* Z_Construct_UClass_UActorComponent();
 ENGINE_API UClass* Z_Construct_UClass_UAudioComponent_NoRegister();
-ENGINE_API UClass* Z_Construct_UClass_USoundWave_NoRegister();
+ENGINE_API UClass* Z_Construct_UClass_USoundWaveProcedural_NoRegister();
 FANTASIA_API UClass* Z_Construct_UClass_UElevenLabsTTSComponent();
 FANTASIA_API UClass* Z_Construct_UClass_UElevenLabsTTSComponent_NoRegister();
 FANTASIA_API UFunction* Z_Construct_UDelegateFunction_FANTASIA_SynthesizedEvent__DelegateSignature();
@@ -25,7 +25,7 @@ struct Z_Construct_UFunction_UElevenLabsTTSComponent_TTSGetSound_Statics
 	struct ElevenLabsTTSComponent_eventTTSGetSound_Parms
 	{
 		FString id;
-		USoundWave* ReturnValue;
+		USoundWaveProcedural* ReturnValue;
 	};
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
@@ -41,7 +41,7 @@ struct Z_Construct_UFunction_UElevenLabsTTSComponent_TTSGetSound_Statics
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
 const UECodeGen_Private::FStrPropertyParams Z_Construct_UFunction_UElevenLabsTTSComponent_TTSGetSound_Statics::NewProp_id = { "id", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(ElevenLabsTTSComponent_eventTTSGetSound_Parms, id), METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_UElevenLabsTTSComponent_TTSGetSound_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(ElevenLabsTTSComponent_eventTTSGetSound_Parms, ReturnValue), Z_Construct_UClass_USoundWave_NoRegister, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_UElevenLabsTTSComponent_TTSGetSound_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(ElevenLabsTTSComponent_eventTTSGetSound_Parms, ReturnValue), Z_Construct_UClass_USoundWaveProcedural_NoRegister, METADATA_PARAMS(0, nullptr) };
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UElevenLabsTTSComponent_TTSGetSound_Statics::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UElevenLabsTTSComponent_TTSGetSound_Statics::NewProp_id,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UElevenLabsTTSComponent_TTSGetSound_Statics::NewProp_ReturnValue,
@@ -63,7 +63,7 @@ DEFINE_FUNCTION(UElevenLabsTTSComponent::execTTSGetSound)
 	P_GET_PROPERTY(FStrProperty,Z_Param_id);
 	P_FINISH;
 	P_NATIVE_BEGIN;
-	*(USoundWave**)Z_Param__Result=P_THIS->TTSGetSound(Z_Param_id);
+	*(USoundWaveProcedural**)Z_Param__Result=P_THIS->TTSGetSound(Z_Param_id);
 	P_NATIVE_END;
 }
 // End Class UElevenLabsTTSComponent Function TTSGetSound
@@ -200,7 +200,7 @@ struct Z_Construct_UClass_UElevenLabsTTSComponent_Statics
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static UObject* (*const DependentSingletons[])();
 	static constexpr FClassFunctionLinkInfo FuncInfo[] = {
-		{ &Z_Construct_UFunction_UElevenLabsTTSComponent_TTSGetSound, "TTSGetSound" }, // 721914224
+		{ &Z_Construct_UFunction_UElevenLabsTTSComponent_TTSGetSound, "TTSGetSound" }, // 3608558600
 		{ &Z_Construct_UFunction_UElevenLabsTTSComponent_TTSSynthesize, "TTSSynthesize" }, // 2278407692
 	};
 	static_assert(UE_ARRAY_COUNT(FuncInfo) < 2048);
@@ -274,10 +274,10 @@ UElevenLabsTTSComponent::~UElevenLabsTTSComponent() {}
 struct Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_ElevenLabsTTSComponent_h_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_UElevenLabsTTSComponent, UElevenLabsTTSComponent::StaticClass, TEXT("UElevenLabsTTSComponent"), &Z_Registration_Info_UClass_UElevenLabsTTSComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UElevenLabsTTSComponent), 3833763160U) },
+		{ Z_Construct_UClass_UElevenLabsTTSComponent, UElevenLabsTTSComponent::StaticClass, TEXT("UElevenLabsTTSComponent"), &Z_Registration_Info_UClass_UElevenLabsTTSComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UElevenLabsTTSComponent), 918121773U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_ElevenLabsTTSComponent_h_2868936238(TEXT("/Script/FANTASIA"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_ElevenLabsTTSComponent_h_68100203(TEXT("/Script/FANTASIA"),
 	Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_ElevenLabsTTSComponent_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_ElevenLabsTTSComponent_h_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);

@@ -37,11 +37,11 @@ void UElevenLabsTTSComponent::TickComponent(float DeltaTime, ELevelTick TickType
 void UElevenLabsTTSComponent::getResult(FTTSData response, FString id)
 {
 	handle->TTSResultAvailableUnsubscribeUser(TTSResultAvailableHandle);
-	handle->Shutdown();
 
 	Buffer.Remove(id);
 	Buffer.Add(id, response);
 	idSynthesisReady = id;
+	handle->Shutdown();
 }
 
 void UElevenLabsTTSComponent::TTSSynthesize(FString text, FString id)
@@ -53,8 +53,8 @@ void UElevenLabsTTSComponent::TTSSynthesize(FString text, FString id)
 	TTSResultAvailableHandle = handle->TTSResultAvailableSubscribeUser(TTSResultSubscriber);
 }
 
-USoundWave* UElevenLabsTTSComponent::TTSGetSound(FString id) {
-	USoundWave* SyntheticVoice = NewObject<USoundWave>();
+USoundWaveProcedural* UElevenLabsTTSComponent::TTSGetSound(FString id) {
+	USoundWaveProcedural* SyntheticVoice = NewObject<USoundWaveProcedural>();
 	float SamplingRate = 16000;
 
 	SyntheticVoice->SetSampleRate(SamplingRate);
@@ -62,7 +62,7 @@ USoundWave* UElevenLabsTTSComponent::TTSGetSound(FString id) {
 	const int32 BytesDataPerSecond = SamplingRate;
 	SyntheticVoice->RawPCMDataSize = Buffer[id].AudioData.Num() * sizeof(uint8);
 	SyntheticVoice->Duration = (float)Buffer[id].AudioData.Num() / (2 * (float)SamplingRate);
-	SyntheticVoice->RawPCMData = static_cast<uint8*>(FMemory::Malloc(SyntheticVoice->RawPCMDataSize));
-	FMemory::Memcpy(SyntheticVoice->RawPCMData, Buffer[id].AudioData.GetData(), SyntheticVoice->RawPCMDataSize);
+	SyntheticVoice->QueueAudio((const uint8*) Buffer[id].AudioData.GetData(), SyntheticVoice->RawPCMDataSize);
+	
 	return SyntheticVoice;
 }

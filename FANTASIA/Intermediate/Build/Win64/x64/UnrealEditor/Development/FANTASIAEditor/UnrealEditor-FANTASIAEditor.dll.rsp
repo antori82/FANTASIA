@@ -35,6 +35,7 @@
 /NODEFAULTLIB:"LIBCD"
 /NODEFAULTLIB:"LIBCPD"
 /FUNCTIONPADMIN:6
+/NOIMPLIB
 "D:\Perforce\FANTASIADevelopment\Intermediate\Build\Win64\x64\FANTASIADevelopmentEditor\Development\UnrealEd\SharedPCH.UnrealEd.Project.ValApi.Cpp20.h.obj"
 "D:\Perforce\FANTASIADevelopment\Plugins\FANTASIA\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIAEditor\Module.FANTASIAEditor.cpp.obj"
 "D:\Perforce\FANTASIADevelopment\Plugins\FANTASIA\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIAEditor\BayesianNetworkFactory.cpp.obj"
@@ -164,6 +165,5 @@
 "dwmapi.lib"
 "imm32.lib"
 /OUT:"D:\Perforce\FANTASIADevelopment\Plugins\FANTASIA\FANTASIA\Binaries\Win64\UnrealEditor-FANTASIAEditor.dll"
-/IMPLIB:"D:\Perforce\FANTASIADevelopment\Plugins\FANTASIA\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIAEditor\UnrealEditor-FANTASIAEditor.sup.lib"
 /PDB:"D:\Perforce\FANTASIADevelopment\Plugins\FANTASIA\FANTASIA\Binaries\Win64\UnrealEditor-FANTASIAEditor.pdb"
 /ignore:4078
