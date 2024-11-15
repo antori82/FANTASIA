@@ -15,12 +15,12 @@ class USoundWave;
 #endif
 #define FANTASIA_TTSInterface_generated_h
 
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_TTSInterface_h_10_RPC_WRAPPERS_NO_PURE_DECLS \
+#define FID_Perforce_MetaFamily_Alice_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_TTSInterface_h_10_RPC_WRAPPERS_NO_PURE_DECLS \
 	DECLARE_FUNCTION(execTTSGetSound); \
 	DECLARE_FUNCTION(execTTSSynthesize);
 
 
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_TTSInterface_h_10_ENHANCED_CONSTRUCTORS \
+#define FID_Perforce_MetaFamily_Alice_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_TTSInterface_h_10_ENHANCED_CONSTRUCTORS \
 	/** Standard constructor, called after all reflected properties have been initialized */ \
 	FANTASIA_API UTTSInterface(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get()); \
 private: \
@@ -34,7 +34,7 @@ public: \
 	FANTASIA_API virtual ~UTTSInterface();
 
 
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_TTSInterface_h_10_GENERATED_UINTERFACE_BODY() \
+#define FID_Perforce_MetaFamily_Alice_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_TTSInterface_h_10_GENERATED_UINTERFACE_BODY() \
 private: \
 	static void StaticRegisterNativesUTTSInterface(); \
 	friend struct Z_Construct_UClass_UTTSInterface_Statics; \
@@ -43,15 +43,15 @@ public: \
 	DECLARE_SERIALIZER(UTTSInterface)
 
 
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_TTSInterface_h_10_GENERATED_BODY \
+#define FID_Perforce_MetaFamily_Alice_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_TTSInterface_h_10_GENERATED_BODY \
 	PRAGMA_DISABLE_DEPRECATION_WARNINGS \
-	FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_TTSInterface_h_10_GENERATED_UINTERFACE_BODY() \
-	FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_TTSInterface_h_10_ENHANCED_CONSTRUCTORS \
+	FID_Perforce_MetaFamily_Alice_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_TTSInterface_h_10_GENERATED_UINTERFACE_BODY() \
+	FID_Perforce_MetaFamily_Alice_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_TTSInterface_h_10_ENHANCED_CONSTRUCTORS \
 private: \
 	PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_TTSInterface_h_10_INCLASS_IINTERFACE_NO_PURE_DECLS \
+#define FID_Perforce_MetaFamily_Alice_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_TTSInterface_h_10_INCLASS_IINTERFACE_NO_PURE_DECLS \
 protected: \
 	virtual ~ITTSInterface() {} \
 public: \
@@ -60,12 +60,12 @@ public: \
 	virtual UObject* _getUObject() const { return nullptr; }
 
 
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_TTSInterface_h_7_PROLOG
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_TTSInterface_h_18_GENERATED_BODY \
+#define FID_Perforce_MetaFamily_Alice_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_TTSInterface_h_7_PROLOG
+#define FID_Perforce_MetaFamily_Alice_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_TTSInterface_h_18_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_TTSInterface_h_10_RPC_WRAPPERS_NO_PURE_DECLS \
-	FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_TTSInterface_h_10_INCLASS_IINTERFACE_NO_PURE_DECLS \
+	FID_Perforce_MetaFamily_Alice_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_TTSInterface_h_10_RPC_WRAPPERS_NO_PURE_DECLS \
+	FID_Perforce_MetaFamily_Alice_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_TTSInterface_h_10_INCLASS_IINTERFACE_NO_PURE_DECLS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
@@ -73,7 +73,7 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 template<> FANTASIA_API UClass* StaticClass<class UTTSInterface>();
 
 #undef CURRENT_FILE_ID
-#define CURRENT_FILE_ID FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_TTSInterface_h
+#define CURRENT_FILE_ID FID_Perforce_MetaFamily_Alice_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_TTSInterface_h
 
 
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
