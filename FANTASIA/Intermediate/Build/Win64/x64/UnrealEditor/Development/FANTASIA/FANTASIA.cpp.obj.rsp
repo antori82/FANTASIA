@@ -4,8 +4,10 @@
 /Yu"D:\Perforce\FANTASIADevelopment\Intermediate\Build\Win64\x64\FANTASIADevelopmentEditor\Development\UnrealEd\SharedPCH.UnrealEd.Project.ValApi.Cpp20.h"
 /Fp"D:\Perforce\FANTASIADevelopment\Intermediate\Build\Win64\x64\FANTASIADevelopmentEditor\Development\UnrealEd\SharedPCH.UnrealEd.Project.ValApi.Cpp20.h.pch"
 /Fo"D:\Perforce\FANTASIADevelopment\Plugins\FANTASIA\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIA\FANTASIA.cpp.obj"
+/experimental:log "D:\Perforce\FANTASIADevelopment\Plugins\FANTASIA\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIA\FANTASIA.cpp.sarif"
 /sourceDependencies "D:\Perforce\FANTASIADevelopment\Plugins\FANTASIA\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIA\FANTASIA.cpp.dep.json"
 @"D:\Perforce\FANTASIADevelopment\Plugins\FANTASIA\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIA\FANTASIA.Shared.rsp"
+/d2ssa-cfg-question-
 /Zc:inline
 /nologo
 /Oi

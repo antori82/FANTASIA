@@ -35,6 +35,7 @@
 /NODEFAULTLIB:"LIBCD"
 /NODEFAULTLIB:"LIBCPD"
 /FUNCTIONPADMIN:6
+/NOIMPLIB
 "D:\Perforce\FANTASIADevelopment\Intermediate\Build\Win64\x64\FANTASIADevelopmentEditor\Development\UnrealEd\SharedPCH.UnrealEd.Project.ValApi.Cpp20.h.obj"
 "D:\Perforce\FANTASIADevelopment\Plugins\FANTASIA\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIA\Module.FANTASIA.cpp.obj"
 "D:\Perforce\FANTASIADevelopment\Plugins\FANTASIA\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIA\Audio2FaceComponent.cpp.obj"
@@ -194,6 +195,5 @@
 "imm32.lib"
 "crypt32.lib"
 /OUT:"D:\Perforce\FANTASIADevelopment\Plugins\FANTASIA\FANTASIA\Binaries\Win64\UnrealEditor-FANTASIA.dll"
-/IMPLIB:"D:\Perforce\FANTASIADevelopment\Plugins\FANTASIA\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIA\UnrealEditor-FANTASIA.sup.lib"
 /PDB:"D:\Perforce\FANTASIADevelopment\Plugins\FANTASIA\FANTASIA\Binaries\Win64\UnrealEditor-FANTASIA.pdb"
 /ignore:4078
