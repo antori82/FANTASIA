@@ -162,6 +162,7 @@
 /I "Editor\ContentBrowser\Public"
 /I "..\Intermediate\Build\Win64\UnrealEditor\Inc\AssetTools\UHT"
 /I "Developer\AssetTools\Public"
+/I "Developer\AssetTools\Internal"
 /I "..\Intermediate\Build\Win64\UnrealEditor\Inc\AssetDefinition\UHT"
 /I "Editor\AssetDefinition\Public"
 /I "Developer\Merge\Public"

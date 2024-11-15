@@ -9,10 +9,12 @@ UOpenAIComponent::UOpenAIComponent() {
 	PrimaryComponentTick.bCanEverTick = false;
 }
 
-void UOpenAIComponent::OnChatGPTResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful) {
+void UOpenAIComponent::OnGPTResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful) {
 	if (bWasSuccessful) {
 		TSharedPtr<FJsonValue> JsonValue;
 		TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(Response->GetContentAsString());
+		FString checkRole;
+		GPTRoleType role;
 
 		if (FJsonSerializer::Deserialize(Reader, JsonValue)) {
 			FString temp = Response->GetContentAsString();
@@ -24,13 +26,80 @@ void UOpenAIComponent::OnChatGPTResponseReceived(FHttpRequestPtr Request, FHttpR
 					return;
 				}
 				TArray<TSharedPtr<FJsonValue>> results = FileMessageObject->Get()->GetArrayField(TEXT("choices"));
-				IncomingChatGPTResponse.Broadcast(results[0]->AsObject()->GetObjectField(TEXT("message"))->GetStringField(TEXT("content")), results[0]->AsObject()->GetObjectField(TEXT("message"))->GetStringField(TEXT("role")));
+
+				checkRole = results[0]->AsObject()->GetObjectField(TEXT("message"))->GetStringField(TEXT("role"));
+
+				if (checkRole == "system")
+					role = GPTRoleType::SYSTEM;
+				else if (checkRole == "assistant")
+					role = GPTRoleType::ASSISTANT;
+				else if (checkRole == "function")
+					role = GPTRoleType::FUNCTION;
+				else if (checkRole == "user")
+					role = GPTRoleType::USER;
+
+				IncomingGPTResponse.Broadcast(results[0]->AsObject()->GetObjectField(TEXT("message"))->GetStringField(TEXT("content")), role);
 			}
 		}
 	}
 }
 
-void UOpenAIComponent::getChatGPTCompletion(TArray<FChatTurn> messages, FString apiMethod) {
+void UOpenAIComponent::OnGPTPartialResponseReceived(FHttpRequestPtr request, uint64 bytesSent, uint64 bytesReceived) {
+	FHttpResponsePtr test;
+	FString message, data, checkRole, outFragment = "";
+	const FRegexPattern myPattern(TEXT("data: (\\{.*\\})"));
+	static GPTRoleType role = GPTRoleType::ASSISTANT;
+	static int blocksRead = 0;
+	int blocksReading = 0;
+	TArray<TSharedPtr<FJsonValue>> results;
+	FString endStream = "";
+
+	if (bytesReceived > 0) {
+		test = request->GetResponse();
+		message = test->GetContentAsString();
+		FRegexMatcher myMatcher(myPattern, message);
+
+		while (myMatcher.FindNext())
+		{
+			blocksReading++;
+			if (blocksReading > blocksRead) {
+				data = myMatcher.GetCaptureGroup(1);
+
+				TSharedPtr<FJsonValue> JsonValue;
+				TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(data);
+
+				if (FJsonSerializer::Deserialize(Reader, JsonValue)) {
+					const TSharedPtr<FJsonObject>* FileMessageObject;
+
+					if (JsonValue->TryGetObject(FileMessageObject)) {
+						results = FileMessageObject->Get()->GetArrayField(TEXT("choices"));
+						results[0]->AsObject()->TryGetStringField(TEXT("finish_reason"), endStream);
+						if (endStream != "stop") {
+							blocksRead++;
+
+							results[0]->AsObject()->TryGetStringField(TEXT("role"), checkRole);
+							if (checkRole == "system")
+								role = GPTRoleType::SYSTEM;
+							else if (checkRole == "assistant")
+								role = GPTRoleType::ASSISTANT;
+							else if (checkRole == "function")
+								role = GPTRoleType::FUNCTION;
+							else if (checkRole == "user")
+								role = GPTRoleType::USER;
+
+							outFragment.Append(results[0]->AsObject()->GetObjectField(TEXT("delta"))->GetStringField(TEXT("content")));
+						}
+						else
+							blocksRead = 0;
+					}
+				}
+			}
+		}
+		IncomingGPTStreamResponse.Broadcast(outFragment, role, endStream == "stop");
+	}
+}
+
+void UOpenAIComponent::getGPTCompletion(TArray<FChatTurn> messages, FString apiMethod, bool stream) {
 	FHttpModule* Http = &FHttpModule::Get();
 	FString payload;
 	TSharedRef<IHttpRequest, ESPMode::ThreadSafe> Request = Http->CreateRequest();
@@ -40,7 +109,10 @@ void UOpenAIComponent::getChatGPTCompletion(TArray<FChatTurn> messages, FString 
 		return;
 	}
 
-	Request->OnProcessRequestComplete().BindUObject(this, &UOpenAIComponent::OnChatGPTResponseReceived);
+	if (stream)
+		Request->OnRequestProgress64().BindUObject(this, &UOpenAIComponent::OnGPTPartialResponseReceived);
+	else
+		Request->OnProcessRequestComplete().BindUObject(this, &UOpenAIComponent::OnGPTResponseReceived);
 	Request->SetURL("https://api.openai.com/v1/chat/completions");
 	Request->SetVerb("POST");
 	Request->SetHeader(TEXT("Content-Type"), TEXT("application/json"));
@@ -61,6 +133,7 @@ void UOpenAIComponent::getChatGPTCompletion(TArray<FChatTurn> messages, FString 
 	}
 	payloadObject->SetArrayField(TEXT("messages"), jsonMessages);
 	payloadObject->SetStringField(TEXT("model"), apiMethod);
+	payloadObject->SetBoolField("stream", stream);
 
 	FJsonSerializer::Serialize(payloadObject.ToSharedRef(), TJsonWriterFactory<>::Create(&payload));
 

@@ -36,7 +36,6 @@
 /NODEFAULTLIB:"LIBCPD"
 /FUNCTIONPADMIN:6
 /NOIMPLIB
-/NOEXP
 "D:\Perforce\MetaFamily\Alice\Intermediate\Build\Win64\x64\AliceEditor\Development\UnrealEd\SharedPCH.UnrealEd.Project.ValApi.Cpp20.h.obj"
 "D:\Perforce\MetaFamily\Alice\Plugins\FANTASIA\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIAEditor\Module.FANTASIAEditor.cpp.obj"
 "D:\Perforce\MetaFamily\Alice\Plugins\FANTASIA\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIAEditor\BayesianNetworkFactory.cpp.obj"

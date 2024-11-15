@@ -16,7 +16,7 @@ struct FChatTurn;
 #define FANTASIA_GroqComponent_generated_h
 
 #define FID_Perforce_MetaFamily_Alice_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_GroqComponent_h_12_RPC_WRAPPERS_NO_PURE_DECLS \
-	DECLARE_FUNCTION(execgetChatGPTCompletion);
+	DECLARE_FUNCTION(execgetGPTCompletion);
 
 
 #define FID_Perforce_MetaFamily_Alice_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_GroqComponent_h_12_INCLASS_NO_PURE_DECLS \

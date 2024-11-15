@@ -11,6 +11,12 @@ class UGroqComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
+private:
+
+	void OnGPTResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful);
+
+	void OnGPTPartialResponseReceived(FHttpRequestPtr request, uint64 bytesSent, uint64 bytesReceived);
+
 public:
 	// Sets default values for this component's properties
 	UGroqComponent();
@@ -22,12 +28,13 @@ public:
 	FIncomingGPTResponseEvent IncomingGPTResponse;
 
 	UPROPERTY(BlueprintAssignable, BlueprintCallable)
-	FIncomingChatGPTResponseEvent IncomingChatGPTResponse;
+	FIncomingGPTResponseEvent IncomingChatGPTResponse;
 
-	UFUNCTION(BlueprintCallable, meta = (DisplayName = "GetChatGPTCompletion", AutoCreateRefTerm = "messages"), Category = "GPT")
-	void getChatGPTCompletion(TArray<FChatTurn> messages, FString apiMethod = "llama3-8b-8192");
+	UPROPERTY(BlueprintAssignable, BlueprintCallable)
+	FIncomingGPTStreamResponseEvent IncomingGPTStreamResponse;
 
-	void OnChatGPTResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful);
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "GetGroqGPTCompletion", AutoCreateRefTerm = "messages"), Category = "GPT")
+	void getGPTCompletion(TArray<FChatTurn> messages, FString apiMethod = "llama3-8b-8192", bool stream = false);
 
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;

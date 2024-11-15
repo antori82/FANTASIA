@@ -11,10 +11,12 @@ UGroqComponent::UGroqComponent()
 	PrimaryComponentTick.bCanEverTick = false;
 }
 
-void UGroqComponent::OnChatGPTResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful) {
+void UGroqComponent::OnGPTResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful) {
 	if (bWasSuccessful) {
 		TSharedPtr<FJsonValue> JsonValue;
 		TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(Response->GetContentAsString());
+		FString checkRole;
+		GPTRoleType role = GPTRoleType::ASSISTANT;
 
 		if (FJsonSerializer::Deserialize(Reader, JsonValue)) {
 			FString temp = Response->GetContentAsString();
@@ -22,18 +24,85 @@ void UGroqComponent::OnChatGPTResponseReceived(FHttpRequestPtr Request, FHttpRes
 
 			if (JsonValue->TryGetObject(FileMessageObject)) {
 				TArray<TSharedPtr<FJsonValue>> results = FileMessageObject->Get()->GetArrayField(TEXT("choices"));
-				IncomingChatGPTResponse.Broadcast(results[0]->AsObject()->GetObjectField(TEXT("message"))->GetStringField(TEXT("content")), results[0]->AsObject()->GetObjectField(TEXT("message"))->GetStringField(TEXT("role")));
+
+				checkRole = results[0]->AsObject()->GetObjectField(TEXT("message"))->GetStringField(TEXT("role"));
+
+				if (checkRole == "system")
+					role = GPTRoleType::SYSTEM;
+				else if (checkRole == "assistant")
+					role = GPTRoleType::ASSISTANT;
+				else if (checkRole == "function")
+					role = GPTRoleType::FUNCTION;
+				else if (checkRole == "user")
+					role = GPTRoleType::USER;
+
+				IncomingChatGPTResponse.Broadcast(results[0]->AsObject()->GetObjectField(TEXT("message"))->GetStringField(TEXT("content")), role);
 			}
 		}
 	}
 }
 
-void UGroqComponent::getChatGPTCompletion(TArray<FChatTurn> messages, FString apiMethod) {
+void UGroqComponent::OnGPTPartialResponseReceived(FHttpRequestPtr request, uint64 bytesSent, uint64 bytesReceived) {
+	FHttpResponsePtr test;
+	FString message, data, checkRole, outFragment = "";
+	const FRegexPattern myPattern(TEXT("data: (\\{.*\\})"));
+	static GPTRoleType role = GPTRoleType::ASSISTANT;
+	static int blocksRead = 0;
+	int blocksReading = 0;
+	TArray<TSharedPtr<FJsonValue>> results;
+	FString endStream = "";
+
+	if (bytesReceived > 0) {
+		test = request->GetResponse();
+		message = test->GetContentAsString();
+		FRegexMatcher myMatcher(myPattern, message);
+
+		while (myMatcher.FindNext())
+		{
+			blocksReading++;
+			if (blocksReading > blocksRead) {
+				data = myMatcher.GetCaptureGroup(1);
+
+				TSharedPtr<FJsonValue> JsonValue;
+				TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(data);
+
+				if (FJsonSerializer::Deserialize(Reader, JsonValue)) {
+					const TSharedPtr<FJsonObject>* FileMessageObject;
+
+					if (JsonValue->TryGetObject(FileMessageObject)) {
+						results = FileMessageObject->Get()->GetArrayField(TEXT("choices"));
+						results[0]->AsObject()->TryGetStringField(TEXT("finish_reason"), endStream);
+						if (endStream != "stop") {
+							blocksRead++;
+
+							results[0]->AsObject()->TryGetStringField(TEXT("role"), checkRole);
+							if (checkRole == "system")
+								role = GPTRoleType::SYSTEM;
+							else if (checkRole == "assistant")
+								role = GPTRoleType::ASSISTANT;
+							else if (checkRole == "function")
+								role = GPTRoleType::FUNCTION;
+							else if (checkRole == "user")
+								role = GPTRoleType::USER;
+
+							outFragment.Append(results[0]->AsObject()->GetObjectField(TEXT("delta"))->GetStringField(TEXT("content")));
+						}
+						else
+							blocksRead = 0;
+					}
+				}
+			}
+		}
+		IncomingGPTStreamResponse.Broadcast(outFragment, role, endStream == "stop");
+	}
+}
+
+void UGroqComponent::getGPTCompletion(TArray<FChatTurn> messages, FString apiMethod, bool stream) {
 	FHttpModule* Http = &FHttpModule::Get();
 	FString payload;
 	TSharedRef<IHttpRequest, ESPMode::ThreadSafe> Request = Http->CreateRequest();
 
-	Request->OnProcessRequestComplete().BindUObject(this, &UGroqComponent::OnChatGPTResponseReceived);
+	
 	Request->SetURL("https://api.groq.com/openai/v1/chat/completions");
 	Request->SetVerb("POST");
 	Request->SetHeader(TEXT("Content-Type"), TEXT("application/json"));
@@ -49,11 +118,16 @@ void UGroqComponent::getChatGPTCompletion(TArray<FChatTurn> messages, FString ap
 		UEnum::GetDisplayValueAsText(messages[i].role, enumValueText);
 		turn->SetStringField("role", enumValueText.ToString().ToLower());
 		turn->SetStringField("content", messages[i].content);
+		if (stream)
+			Request->OnRequestProgress64().BindUObject(this, &UGroqComponent::OnGPTPartialResponseReceived);
+		else
+			Request->OnProcessRequestComplete().BindUObject(this, &UGroqComponent::OnGPTResponseReceived);
 
 		jsonMessages.Add(MakeShareable(new FJsonValueObject(turn)));
 	}
 	payloadObject->SetArrayField(TEXT("messages"), jsonMessages);
 	payloadObject->SetStringField("model", apiMethod);
+	payloadObject->SetBoolField("stream", stream);
 
 	FJsonSerializer::Serialize(payloadObject.ToSharedRef(), TJsonWriterFactory<>::Create(&payload));
 
