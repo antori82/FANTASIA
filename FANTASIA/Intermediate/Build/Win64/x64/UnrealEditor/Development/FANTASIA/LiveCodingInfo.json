@@ -19,6 +19,7 @@
 			"OllamaComponent.gen.cpp.obj",
 			"OpenAIComponent.gen.cpp.obj",
 			"paramObject.gen.cpp.obj",
+			"SWIPrologComponent.gen.cpp.obj",
 			"TTSInterface.gen.cpp.obj",
 			"TTSThreadInterface.gen.cpp.obj",
 			"PerModuleInline.gen.cpp.obj",
@@ -44,7 +45,8 @@
 			"MathUtilities.cpp.obj",
 			"Neo4jComponent.cpp.obj",
 			"OllamaComponent.cpp.obj",
-			"OpenAIComponent.cpp.obj"
+			"OpenAIComponent.cpp.obj",
+			"SWIPrologComponent.cpp.obj"
 		]
 	}
 }

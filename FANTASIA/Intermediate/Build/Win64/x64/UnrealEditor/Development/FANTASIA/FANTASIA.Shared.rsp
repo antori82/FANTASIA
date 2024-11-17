@@ -294,6 +294,7 @@
 /I "D:\Perforce\FANTASIADevelopment\Plugins\FANTASIA\FANTASIA\ThirdParty\AWS\Polly"
 /I "D:\Perforce\FANTASIADevelopment\Plugins\FANTASIA\FANTASIA\ThirdParty\AWS\TTS"
 /I "D:\Perforce\FANTASIADevelopment\Plugins\FANTASIA\FANTASIA\ThirdParty\kdepp"
+/I "D:\Perforce\FANTASIADevelopment\Plugins\FANTASIA\FANTASIA\ThirdParty\SWIProlog\headers"
 /I "D:\Perforce\FANTASIADevelopment\Plugins\FANTASIA\FANTASIA\ThirdParty\aGrUM\Includes"
 /I "D:\Perforce\FANTASIADevelopment\Plugins\FANTASIA\FANTASIA\ThirdParty\nlohmann"
 /I "D:\Perforce\FANTASIADevelopment\Plugins\FANTASIA\FANTASIA\ThirdParty\OpenSSL\1.1.1t\include\Win64\VS2015"
