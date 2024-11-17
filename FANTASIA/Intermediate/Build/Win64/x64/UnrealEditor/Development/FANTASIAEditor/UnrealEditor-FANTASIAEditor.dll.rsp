@@ -45,6 +45,8 @@
 "D:\Perforce\FANTASIADevelopment\Plugins\FANTASIA\FANTASIA\ThirdParty\AWS\lib\aws-cpp-sdk-core.lib"
 "D:\Perforce\FANTASIADevelopment\Plugins\FANTASIA\FANTASIA\ThirdParty\AWS\lib\aws-cpp-sdk-polly.lib"
 "D:\Perforce\FANTASIADevelopment\Plugins\FANTASIA\FANTASIA\ThirdParty\AWS\lib\aws-cpp-sdk-text-to-speech.lib"
+"D:\Perforce\FANTASIADevelopment\Plugins\FANTASIA\FANTASIA\ThirdParty\SWIProlog\libs\libswipl.dll.a"
+"D:\Perforce\FANTASIADevelopment\Plugins\FANTASIA\FANTASIA\ThirdParty\SWIProlog\libs\libswipl.lib"
 "D:\Perforce\FANTASIADevelopment\Plugins\FANTASIA\FANTASIA\ThirdParty\aGrUM\Libraries\aGrUM.x64.lib"
 "D:\Perforce\FANTASIADevelopment\Plugins\FANTASIA\FANTASIA\ThirdParty\OpenSSL\1.1.1t\lib\Win64\VS2015\Release\libcrypto.lib"
 "D:\Perforce\FANTASIADevelopment\Plugins\FANTASIA\FANTASIA\ThirdParty\OpenSSL\1.1.1t\lib\Win64\VS2015\Release\libssl.lib"
