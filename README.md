@@ -117,6 +117,7 @@ Special thanks to the students who contributed to FANTASIA
 * <a href="https://www.linkedin.com/in/rbgdotbrush/">Roberto Basile Giannini</a> - General improvements and aGrUM updates (Influence Diagrams integration)
 * <a href="https://www.linkedin.com/in/marco-galantino-232a07300">Marco Galantino</a> - TTS General interface
 * <a href="https://www.linkedin.com/in/yegor-napadystyy-b5482b2bb/">Yegor Napadystyy</a> - Audio2Face prototype connector
+* <a href="https://www.linkedin.com/in/lorenzo-bracale-6001b1331/">Lorenzo Bracale</a> - Prolog component prototype development
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
