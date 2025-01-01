@@ -81,7 +81,7 @@ struct Z_Construct_UFunction_USWIPrologComponent_SWIPLassert_Statics
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
 		{ "AutoCreateRefTerm", "parameters" },
 		{ "Category", "SWIProlog" },
-		{ "DisplayName", "Assert fact" },
+		{ "DisplayName", "Assert" },
 		{ "ModuleRelativePath", "Public/SWIPrologComponent.h" },
 	};
 #endif // WITH_METADATA
@@ -140,7 +140,7 @@ struct Z_Construct_UFunction_USWIPrologComponent_SWIPLresetProlog_Statics
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
 		{ "AutoCreateRefTerm", "parameters" },
 		{ "Category", "SWIProlog" },
-		{ "DisplayName", "reset Prolog" },
+		{ "DisplayName", "Reset Prolog" },
 		{ "ModuleRelativePath", "Public/SWIPrologComponent.h" },
 	};
 #endif // WITH_METADATA
@@ -177,7 +177,7 @@ struct Z_Construct_UFunction_USWIPrologComponent_SWIPLretract_Statics
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
 		{ "AutoCreateRefTerm", "parameters" },
 		{ "Category", "SWIProlog" },
-		{ "DisplayName", "retract rule/fact" },
+		{ "DisplayName", "Retract" },
 		{ "ModuleRelativePath", "Public/SWIPrologComponent.h" },
 	};
 #endif // WITH_METADATA
@@ -301,9 +301,9 @@ struct Z_Construct_UClass_USWIPrologComponent_Statics
 	static UObject* (*const DependentSingletons[])();
 	static constexpr FClassFunctionLinkInfo FuncInfo[] = {
 		{ &Z_Construct_UFunction_USWIPrologComponent_openPrologFile, "openPrologFile" }, // 1331636385
-		{ &Z_Construct_UFunction_USWIPrologComponent_SWIPLassert, "SWIPLassert" }, // 512540871
-		{ &Z_Construct_UFunction_USWIPrologComponent_SWIPLresetProlog, "SWIPLresetProlog" }, // 2226812661
-		{ &Z_Construct_UFunction_USWIPrologComponent_SWIPLretract, "SWIPLretract" }, // 25202775
+		{ &Z_Construct_UFunction_USWIPrologComponent_SWIPLassert, "SWIPLassert" }, // 901108155
+		{ &Z_Construct_UFunction_USWIPrologComponent_SWIPLresetProlog, "SWIPLresetProlog" }, // 4223325723
+		{ &Z_Construct_UFunction_USWIPrologComponent_SWIPLretract, "SWIPLretract" }, // 3558670054
 		{ &Z_Construct_UFunction_USWIPrologComponent_SWIPLsubmitQuery, "SWIPLsubmitQuery" }, // 3827036387
 	};
 	static_assert(UE_ARRAY_COUNT(FuncInfo) < 2048);
@@ -352,10 +352,10 @@ USWIPrologComponent::~USWIPrologComponent() {}
 struct Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_SWIPrologComponent_h_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_USWIPrologComponent, USWIPrologComponent::StaticClass, TEXT("USWIPrologComponent"), &Z_Registration_Info_UClass_USWIPrologComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(USWIPrologComponent), 2702071236U) },
+		{ Z_Construct_UClass_USWIPrologComponent, USWIPrologComponent::StaticClass, TEXT("USWIPrologComponent"), &Z_Registration_Info_UClass_USWIPrologComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(USWIPrologComponent), 3962328257U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_SWIPrologComponent_h_1764771136(TEXT("/Script/FANTASIA"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_SWIPrologComponent_h_1037438509(TEXT("/Script/FANTASIA"),
 	Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_SWIPrologComponent_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_SWIPrologComponent_h_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);
