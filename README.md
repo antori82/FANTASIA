@@ -108,7 +108,7 @@ Project Link: [https://github.com/antori82/FANTASIA](https://github.com/antori82
 FANTASIA would not be the same without the precious contribution from the Linguistics field provided by
 
 * <a href="https://www.linkedin.com/in/maria-di-maro-b43261120/">Dr. Maria Di Maro</a> - (PhD) Common ground management and Clarification Requests generation
-* <a href="https://www.linkedin.com/in/martina-di-bratto-95034322b/">Martina Di Bratto</a> - (PhD Student) Argumentative Dialogue Management
+* <a href="https://www.linkedin.com/in/martina-di-bratto-95034322b/">Dr. Martina Di Bratto</a> - (PhD) Argumentative Dialogue Management
 
 Special thanks to the students who contributed to FANTASIA
 
