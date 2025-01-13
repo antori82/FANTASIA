@@ -72,6 +72,9 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Configuration")
 	FString Endpoint;
 
+	UPROPERTY(EditAnywhere, Category = "Configuration")
+	bool Streaming;
+
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 

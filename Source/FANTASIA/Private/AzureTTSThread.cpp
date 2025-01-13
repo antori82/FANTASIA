@@ -83,7 +83,7 @@ void AzureTTSThread::Synthesize()
 		}
 
 		newData.ssml = ssml;
-		
+
 		TTSResultAvailable.Broadcast(newData, id);
 		//Shutdown();
 	}
@@ -92,7 +92,7 @@ void AzureTTSThread::Synthesize()
 		auto cancellation = SpeechSynthesisCancellationDetails::FromResult(result);
 
 		if (cancellation->Reason == CancellationReason::Error)
-			FString  error= UTF8_TO_TCHAR(cancellation->ErrorDetails.c_str());
+			FString  error = UTF8_TO_TCHAR(cancellation->ErrorDetails.c_str());
 	}
 }
 

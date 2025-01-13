@@ -1,6 +1,5 @@
 #pragma once
 #include "FANTASIATypes.h"
-#include <speechapi_cxx.h>
 #include "Http.h"
 #include "Runtime/Json/Public/Json.h"
 #include "TTSThreadInterface.h"
@@ -25,9 +24,6 @@ private:
 	FRunnableThread* Thread;
 
 	ResultAvailableEvent TTSResultAvailable;
-
-	shared_ptr<SpeechConfig> TTSConfig;
-	shared_ptr<SpeechSynthesizer> synthesizer;
 
 	FString ssml;
 	FString id;

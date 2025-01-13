@@ -550,7 +550,7 @@ static WIN32_FIND_DATAW* dirent_next(_WDIR* dirp) {
 
   } else if (dirp->handle != INVALID_HANDLE_VALUE) {
     /* Get the next directory entry from stream */
-    if (FindNextFileW(dirp->handle, &dirp->data) != FALSE) {
+    if (FindNextFileW(dirp->handle, &dirp->data) != false) {
       /* Got a file */
       p = &dirp->data;
     } else {

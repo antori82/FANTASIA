@@ -8,11 +8,8 @@ UNeo4jComponent::UNeo4jComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
-
-	// ...
+	PrimaryComponentTick.bCanEverTick = false;
 }
-
 
 void UNeo4jComponent::OnResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful)
 {
@@ -38,20 +35,20 @@ void UNeo4jComponent::OnResponseReceived(FHttpRequestPtr Request, FHttpResponseP
 				const TSharedPtr<FJsonObject>* FileMessageObject;
 
  				if (JsonValue->TryGetObject(FileMessageObject)) {
-					TArray<TSharedPtr<FJsonValue>> results = FileMessageObject->Get()->GetArrayField("results");
+					TArray<TSharedPtr<FJsonValue>> results = FileMessageObject->Get()->GetArrayField(TEXT("results"));
 					for (TSharedPtr<FJsonValue> result : results) {
-						TArray<TSharedPtr<FJsonValue>> columns = result->AsObject()->GetArrayField("columns");
+						TArray<TSharedPtr<FJsonValue>> columns = result->AsObject()->GetArrayField(TEXT("columns"));
 						if (neo4jResponse.headers.Num() == 0)
 							for (TSharedPtr<FJsonValue> header : columns)
 								neo4jResponse.headers.Add(header->AsString());
 
-						TArray<TSharedPtr<FJsonValue>> data = result->AsObject()->GetArrayField("data");
+						TArray<TSharedPtr<FJsonValue>> data = result->AsObject()->GetArrayField(TEXT("data"));
 
 						for (TSharedPtr<FJsonValue> datum : data) {
-							TArray<TSharedPtr<FJsonValue>> jsonRow = datum->AsObject()->GetArrayField("row");
-							TArray<TSharedPtr<FJsonValue>> jsonMeta = datum->AsObject()->GetArrayField("meta");
-							TArray<TSharedPtr<FJsonValue>> jsonNodes = datum->AsObject()->GetObjectField("graph")->GetArrayField("nodes");
-							TArray<TSharedPtr<FJsonValue>> jsonRelationships = datum->AsObject()->GetObjectField("graph")->GetArrayField("relationships");
+							TArray<TSharedPtr<FJsonValue>> jsonRow = datum->AsObject()->GetArrayField(TEXT("row"));
+							TArray<TSharedPtr<FJsonValue>> jsonMeta = datum->AsObject()->GetArrayField(TEXT("meta"));
+							TArray<TSharedPtr<FJsonValue>> jsonNodes = datum->AsObject()->GetObjectField(TEXT("graph"))->GetArrayField(TEXT("nodes"));
+							TArray<TSharedPtr<FJsonValue>> jsonRelationships = datum->AsObject()->GetObjectField(TEXT("graph"))->GetArrayField(TEXT("relationships"));
 
 							FString list = "";
 
@@ -61,19 +58,19 @@ void UNeo4jComponent::OnResponseReceived(FHttpRequestPtr Request, FHttpResponseP
 								//TSharedPtr<FJsonObject> metaData = jsonMeta[i]->AsObject();
 
 								if (jsonMeta[i]->TryGetObject(FileMessageObject)) {
-									if (!FileMessageObject->Get()->TryGetField("type").IsValid()) {
+									if (!FileMessageObject->Get()->TryGetField(TEXT("type")).IsValid()) {
 										neo4jResponse.rows.Last()->cells.Add(neo4jResponse.headers[i], NewObject<UNeo4jResultCellSimple>());
 										((UNeo4jResultCellSimple*)neo4jResponse.rows.Last()->cells[neo4jResponse.headers[i]])->value = jsonRow[i]->AsString();
 									}
-									else if (FileMessageObject->Get()->GetStringField("type") == "node") {
+									else if (FileMessageObject->Get()->GetStringField(TEXT("type")) == "node") {
 										neo4jResponse.rows.Last()->cells.Add(neo4jResponse.headers[i], NewObject<UNeo4jResultCellNode>());
-										((UNeo4jResultCellNode*)neo4jResponse.rows.Last()->cells[neo4jResponse.headers[i]])->id = FileMessageObject->Get()->GetIntegerField("id");
+										((UNeo4jResultCellNode*)neo4jResponse.rows.Last()->cells[neo4jResponse.headers[i]])->id = FileMessageObject->Get()->GetIntegerField(TEXT("id"));
 
 										for (int j = 0; j < jsonNodes.Num() && ((UNeo4jResultCellNode*)neo4jResponse.rows.Last()->cells[neo4jResponse.headers[i]])->labels.Num() == 0 && ((UNeo4jResultCellNode*)neo4jResponse.rows.Last()->cells[neo4jResponse.headers[i]])->properties.Num() == 0; j++) {
-											if (FCString::Atoi(*jsonNodes[j]->AsObject()->GetStringField("id")) == FileMessageObject->Get()->GetIntegerField("id")) {
-												for (TSharedPtr<FJsonValue> label : jsonNodes[j]->AsObject()->GetArrayField("labels"))
+											if (FCString::Atoi(*jsonNodes[j]->AsObject()->GetStringField(TEXT("id"))) == FileMessageObject->Get()->GetIntegerField(TEXT("id"))) {
+												for (TSharedPtr<FJsonValue> label : jsonNodes[j]->AsObject()->GetArrayField(TEXT("labels")))
 													((UNeo4jResultCellNode*)neo4jResponse.rows.Last()->cells[neo4jResponse.headers[i]])->labels.Add(label->AsString());
-												for (TMap<FString, TSharedPtr<FJsonValue>>::TIterator nodesIt = jsonNodes[j]->AsObject()->GetObjectField("properties")->Values.CreateIterator(); nodesIt; ++nodesIt) {
+												for (TMap<FString, TSharedPtr<FJsonValue>>::TIterator nodesIt = jsonNodes[j]->AsObject()->GetObjectField(TEXT("properties"))->Values.CreateIterator(); nodesIt; ++nodesIt) {
 													if (nodesIt.Value()->AsArray().Num() == 0)
 														((UNeo4jResultCellNode*)neo4jResponse.rows.Last()->cells[neo4jResponse.headers[i]])->properties.Add(*nodesIt.Key(), *nodesIt.Value()->AsString());
 													else {
@@ -86,14 +83,14 @@ void UNeo4jComponent::OnResponseReceived(FHttpRequestPtr Request, FHttpResponseP
 											}
 										}
 									}
-									else if (FileMessageObject->Get()->GetStringField("type") == "relationship") {
+									else if (FileMessageObject->Get()->GetStringField(TEXT("type")) == "relationship") {
 										neo4jResponse.rows.Last()->cells.Add(neo4jResponse.headers[i], NewObject<UNeo4jResultCellRelationship>());
-										((UNeo4jResultCellRelationship*)neo4jResponse.rows.Last()->cells[neo4jResponse.headers[i]])->id = FileMessageObject->Get()->GetIntegerField("id");
+										((UNeo4jResultCellRelationship*)neo4jResponse.rows.Last()->cells[neo4jResponse.headers[i]])->id = FileMessageObject->Get()->GetIntegerField(TEXT("id"));
 
 										for (int j = 0; j < jsonRelationships.Num() && ((UNeo4jResultCellRelationship*)neo4jResponse.rows.Last()->cells[neo4jResponse.headers[i]])->label.IsEmpty() && ((UNeo4jResultCellRelationship*)neo4jResponse.rows.Last()->cells[neo4jResponse.headers[i]])->properties.Num() == 0; j++) {
-											if (FCString::Atoi(*jsonRelationships[j]->AsObject()->GetStringField("id")) == FileMessageObject->Get()->GetIntegerField("id")) {
-												((UNeo4jResultCellRelationship*)neo4jResponse.rows.Last()->cells[neo4jResponse.headers[i]])->label = jsonRelationships[j]->AsObject()->GetStringField("label");
-												for (TMap<FString, TSharedPtr<FJsonValue>>::TIterator RelsIt = jsonRelationships[j]->AsObject()->GetObjectField("properties")->Values.CreateIterator(); RelsIt; ++RelsIt) {
+											if (FCString::Atoi(*jsonRelationships[j]->AsObject()->GetStringField(TEXT("id"))) == FileMessageObject->Get()->GetIntegerField(TEXT("id"))) {
+												((UNeo4jResultCellRelationship*)neo4jResponse.rows.Last()->cells[neo4jResponse.headers[i]])->label = jsonRelationships[j]->AsObject()->GetStringField(TEXT("label"));
+												for (TMap<FString, TSharedPtr<FJsonValue>>::TIterator RelsIt = jsonRelationships[j]->AsObject()->GetObjectField(TEXT("properties"))->Values.CreateIterator(); RelsIt; ++RelsIt) {
 													if (RelsIt.Value()->AsArray().Num() == 0)
 														((UNeo4jResultCellNode*)neo4jResponse.rows.Last()->cells[neo4jResponse.headers[i]])->properties.Add(*RelsIt.Key(), *RelsIt.Value()->AsString());
 													else {
@@ -114,13 +111,11 @@ void UNeo4jComponent::OnResponseReceived(FHttpRequestPtr Request, FHttpResponseP
 							}
 						}
 					}
-					//IncomingResponse.Broadcast(neo4jResponse);
 				}
 				IncomingResponse.Broadcast(neo4jResponse);
 			}
 		}
 	}
-
 }
 
 void UNeo4jComponent::submitQuery(FString query, Neo4jOperation operation, FString transactionID, TMap<FString, FString> parameters, FString database = "neo4j") {
@@ -137,8 +132,7 @@ void UNeo4jComponent::submitQuery(FString query, Neo4jOperation operation, FStri
 	else
 		prefix = "/db/" + database + "/tx";
 
-	switch (operation)
-	{
+	switch (operation) {
 	case Neo4jOperation::SINGLE_REQUEST:
 		path = prefix + "/commit";
 		method = "POST";
@@ -191,25 +185,16 @@ void UNeo4jComponent::submitQuery(FString query, Neo4jOperation operation, FStri
 		}
 		payload = payload.LeftChop(2) + "}, ";
 	}
-	//payload = payload + "\"database\": { name: \"" + database + "\"}}, ";
-
 	Request->SetContentAsString(payload + "\"resultDataContents\" : [ \"row\", \"graph\" ]}]}");
 	Request->ProcessRequest();
 }
 
 // Called when the game starts
-void UNeo4jComponent::BeginPlay()
-{
+void UNeo4jComponent::BeginPlay() {
 	Super::BeginPlay();
-
-	// ...
-
 }
 
 // Called every frame
-void UNeo4jComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
+void UNeo4jComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	// ...
 }

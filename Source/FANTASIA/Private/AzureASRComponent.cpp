@@ -30,23 +30,43 @@ void UAzureASRComponent::BeginPlay()
 
 void UAzureASRComponent::getPartialRecognition(FString text)
 {
-	IncomingMessage.Broadcast(text);
+	outPartialResponse = text;
+	partialResponseReady = true;
+}
+
+void UAzureASRComponent::getFinalRecognition(FString text){
 	handle->Shutdown();
-	//AzureASRThread::Shutdown();
+
+	outResponse = text;
+	responseReady = true;
 }
 
 // Called every frame
 void UAzureASRComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+
+	if (partialResponseReady) {
+		IncomingPartialMessage.Broadcast(outPartialResponse);
+		partialResponseReady = false;
+	}
+	
+	if (responseReady) {
+		IncomingFinalMessage.Broadcast(outResponse);
+		responseReady = false;
+	}
 }
 
-void UAzureASRComponent::AzureASRStart()
+void UAzureASRComponent::AzureASRStart(EAzureASREnum mode)
 {
 	FPartialRecognitionAvailableDelegate PartialRecognitionSubscriber;
+	FFinalRecognitionAvailableDelegate FinalRecognitionSubscriber;
+
 	PartialRecognitionSubscriber.BindUObject(this, &UAzureASRComponent::getPartialRecognition);
-	handle = AzureASRThread::setup(config, audioInput, EAzureASREnum::ASR_ONESHOT);
+	FinalRecognitionSubscriber.BindUObject(this, &UAzureASRComponent::getFinalRecognition);
+	handle = AzureASRThread::setup(config, audioInput, mode);
 	PartialRecognitionAvailableHandle = handle->PartialRecognitionAvailableSubscribeUser(PartialRecognitionSubscriber);
+	FinalRecognitionAvailableHandle = handle->FinalRecognitionAvailableSubscribeUser(FinalRecognitionSubscriber);
 }
 
 void UAzureASRComponent::AzureASRStop() {

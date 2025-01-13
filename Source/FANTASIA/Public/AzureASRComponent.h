@@ -7,6 +7,7 @@
 #include "Components/ActorComponent.h"
 #include "Runtime/Online/Voice/Public/VoiceModule.h"
 #include "AzureASRThread.h"
+#include "FANTASIATypes.h"
 #include <iostream>
 #include "Voice.h"
 #include <string>
@@ -18,7 +19,8 @@ using namespace std;
 using namespace Microsoft::CognitiveServices::Speech;
 using namespace Microsoft::CognitiveServices::Speech::Audio;
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FIncomingASREvent, FString, message);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FIncomingPartialASREvent, FString, message);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FIncomingFinalASREvent, FString, message);
 
 UCLASS( ClassGroup=(Azure), meta=(BlueprintSpawnableComponent), config= Game)
 class UAzureASRComponent : public UActorComponent
@@ -41,9 +43,15 @@ private:
 	AzureASRThread* handle;
 	shared_ptr<SpeechConfig> config;
 	FDelegateHandle PartialRecognitionAvailableHandle;
+	FDelegateHandle FinalRecognitionAvailableHandle;
 	bool dataSent = false;
+	bool responseReady = false;
+	bool partialResponseReady = false;
+	FString outResponse;
+	FString outPartialResponse;
 
 	void getPartialRecognition(FString text);
+	void getFinalRecognition(FString text);
 
 public:	
 
@@ -66,11 +74,14 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	UPROPERTY(BlueprintAssignable, Category = "Speech Recognition")
-		FIncomingASREvent IncomingMessage;
+		FIncomingFinalASREvent IncomingFinalMessage;
+
+	UPROPERTY(BlueprintAssignable, Category = "Speech Recognition")
+		FIncomingPartialASREvent IncomingPartialMessage;
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "ASR Start", Keywords = "AzureASRPlugin ASR"), Category = "ASR")
-		void AzureASRStart();
+	void AzureASRStart(EAzureASREnum mode = EAzureASREnum::ASR_ONESHOT);
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "ASR Stop", Keywords = "AzureASRPlugin ASR"), Category = "ASR")
-		void AzureASRStop();
+	void AzureASRStop();
 };

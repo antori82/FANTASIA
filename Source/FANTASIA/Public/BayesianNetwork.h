@@ -6,8 +6,16 @@
 #define NOMINMAX
 #endif
 
+#pragma warning (disable : 4263)
+#pragma warning (disable : 4264)
+#pragma warning (disable : 4265)
+#pragma warning (disable : 4701)
+#pragma warning (disable : 4996)
+
 #include "FANTASIA.h"
 #include "FANTASIATypes.h"
+#include "CoreMinimal.h"
+#include "BayesianInferenceThreads.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "Runtime\Core\Public\Misc\Paths.h"
 #include "Runtime\Core\Public\Misc\FileHelper.h"
@@ -24,6 +32,12 @@
 #include "MathUtilities.h"
 #include "BayesianNetwork.generated.h"
 
+#pragma warning (default : 4263)
+#pragma warning (default : 4264)
+#pragma warning (default : 4265)
+#pragma warning (default : 4701)
+#pragma warning (default : 4996)
+
 USTRUCT(BlueprintType)
 struct FMapContainer
 {
@@ -32,8 +46,6 @@ struct FMapContainer
 	UPROPERTY(BlueprintReadOnly)
 	TMap<FString, float> Map;
 };
-
-DECLARE_DYNAMIC_DELEGATE_OneParam(FGetPosteriorDelegate, FMapContainer, outMap);
 
 UENUM(BlueprintType)		//"BlueprintType" is essential to include
 enum class InferenceAlgs : uint8
@@ -74,6 +86,7 @@ struct FBayesianNodeStruct
 	TArray<FString> parents;
 };
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FBNInferenceAvailableEvent);
 
 UCLASS(Blueprintable, BlueprintType)
 class FANTASIA_API UBayesianNetwork : public UObject
@@ -85,8 +98,15 @@ private:
 	gum::BayesNet<double> bn;
 	gum::JointTargetedInference<double>* inference = new gum::ShaferShenoyInference<double>(&bn);
 	bool initialized = false;
+	FDelegateHandle InferenceAvailableHandle;
+	BayesianInferenceThread* handle;
+
+	void inferenceComplete();
 
 public:
+
+	UPROPERTY(BlueprintAssignable, BlueprintCallable)
+	FBNInferenceAvailableEvent InferenceReady;
 
 	UPROPERTY(EditAnywhere)
 	TArray<FBayesianNodeStruct> serializedNodes;
@@ -113,12 +133,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "getPosterior", Keywords = "Inference", AutoCreateRefTerm = "evidences"), Category = "Bayesian_Network")
 	TMap<FString, float> getPosterior(FString variable);
-
-	//UFUNCTION(BlueprintCallable, meta = (DisplayName = "getPosterior", Keywords = "Inference", AutoCreateRefTerm = "evidences"), Category = "Bayesian_Network")
-	//void getPosterior(FGetPosteriorDelegate outMap, FString variable);
 	
-	UFUNCTION(BlueprintCallable, meta = (DisplayName = "addEvidence"), Category = "Bayesian_Network")
-	void addEvidence(FString variable, TArray<float> data);
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "setEvidence"), Category = "Bayesian_Network")
+	void setEvidence(FString variable, TArray<float> data);
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "eraseAllEvidence"), Category = "Bayesian_Network")
 	void eraseAllEvidence();
@@ -140,6 +157,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "fillWith"), Category = "Bayesian_Network")
 	void fillWith(FString variable, float value);
+
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "fillCPT"), Category = "Bayesian_Network")
+	void fillCPT(FString variable, TArray<float> values);
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "writeBIF"), Category = "Bayesian_Network")
 	void writeBIF(FString file);

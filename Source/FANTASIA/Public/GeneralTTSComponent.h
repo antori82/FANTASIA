@@ -6,7 +6,6 @@
 #include "Components/ActorComponent.h"
 #include "FANTASIATypes.h"
 #include "GeneralTTSThread.h"
-#include <speechapi_cxx.h>
 #include <iostream>
 #include <string>
 #include "Runtime/Engine/Classes/Sound/SoundWaveProcedural.h"
@@ -35,7 +34,6 @@ private:
 
 	TMap<FString, FTTSData> Buffer;
 	TMap<FString, FString> PendingSSML;
-	shared_ptr<SpeechConfig> config;
 	GeneralTTSThread* handle;
 
 	FDelegateHandle TTSResultAvailableHandle;

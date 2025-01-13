@@ -13,7 +13,6 @@ public class FANTASIAEditor : ModuleRules
 
         PublicIncludePaths.AddRange(
 			new string[] {
-				"FANTASIAEditor/Public"
 			}
 			);
 				

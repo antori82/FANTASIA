@@ -25,18 +25,1485 @@ FANTASIA_API UClass* Z_Construct_UClass_UNLUEntity();
 FANTASIA_API UClass* Z_Construct_UClass_UNLUEntity_NoRegister();
 FANTASIA_API UClass* Z_Construct_UClass_UNLUIntent();
 FANTASIA_API UClass* Z_Construct_UClass_UNLUIntent_NoRegister();
+FANTASIA_API UClass* Z_Construct_UClass_USWIPrologAtom();
+FANTASIA_API UClass* Z_Construct_UClass_USWIPrologAtom_NoRegister();
+FANTASIA_API UClass* Z_Construct_UClass_USWIPrologCompound();
+FANTASIA_API UClass* Z_Construct_UClass_USWIPrologCompound_NoRegister();
+FANTASIA_API UClass* Z_Construct_UClass_USWIPrologCut();
+FANTASIA_API UClass* Z_Construct_UClass_USWIPrologCut_NoRegister();
+FANTASIA_API UClass* Z_Construct_UClass_USWIPrologFloat();
+FANTASIA_API UClass* Z_Construct_UClass_USWIPrologFloat_NoRegister();
+FANTASIA_API UClass* Z_Construct_UClass_USWIPrologHeadToTail();
+FANTASIA_API UClass* Z_Construct_UClass_USWIPrologHeadToTail_NoRegister();
+FANTASIA_API UClass* Z_Construct_UClass_USWIPrologInteger();
+FANTASIA_API UClass* Z_Construct_UClass_USWIPrologInteger_NoRegister();
+FANTASIA_API UClass* Z_Construct_UClass_USWIPrologList();
+FANTASIA_API UClass* Z_Construct_UClass_USWIPrologList_NoRegister();
+FANTASIA_API UClass* Z_Construct_UClass_USWIPrologObject();
+FANTASIA_API UClass* Z_Construct_UClass_USWIPrologObject_NoRegister();
+FANTASIA_API UClass* Z_Construct_UClass_USWIPrologRule();
+FANTASIA_API UClass* Z_Construct_UClass_USWIPrologRule_NoRegister();
+FANTASIA_API UClass* Z_Construct_UClass_USWIPrologRuleBody();
+FANTASIA_API UClass* Z_Construct_UClass_USWIPrologRuleBody_NoRegister();
+FANTASIA_API UClass* Z_Construct_UClass_USWIPrologSolution();
+FANTASIA_API UClass* Z_Construct_UClass_USWIPrologSolution_NoRegister();
+FANTASIA_API UClass* Z_Construct_UClass_USWIPrologTerm();
+FANTASIA_API UClass* Z_Construct_UClass_USWIPrologTerm_NoRegister();
+FANTASIA_API UClass* Z_Construct_UClass_USWIPrologVariable();
+FANTASIA_API UClass* Z_Construct_UClass_USWIPrologVariable_NoRegister();
 FANTASIA_API UEnum* Z_Construct_UEnum_FANTASIA_BayesianNodeType();
+FANTASIA_API UEnum* Z_Construct_UEnum_FANTASIA_EAzureASREnum();
+FANTASIA_API UEnum* Z_Construct_UEnum_FANTASIA_GPTRoleType();
 FANTASIA_API UEnum* Z_Construct_UEnum_FANTASIA_InfluenceNodeType();
 FANTASIA_API UEnum* Z_Construct_UEnum_FANTASIA_Neo4jOperation();
+FANTASIA_API UEnum* Z_Construct_UEnum_FANTASIA_SWIPrologOperation();
 FANTASIA_API UEnum* Z_Construct_UEnum_FANTASIA_TTSVoiceType();
+FANTASIA_API UFunction* Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature();
+FANTASIA_API UFunction* Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTStreamResponseEvent__DelegateSignature();
 FANTASIA_API UFunction* Z_Construct_UDelegateFunction_FANTASIA_SynthesizedEvent__DelegateSignature();
 FANTASIA_API UFunction* Z_Construct_UDelegateFunction_FANTASIA_SynthesizedInternalEvent__DelegateSignature();
+FANTASIA_API UScriptStruct* Z_Construct_UScriptStruct_FChatTurn();
 FANTASIA_API UScriptStruct* Z_Construct_UScriptStruct_FNeo4jResponse();
 FANTASIA_API UScriptStruct* Z_Construct_UScriptStruct_FNLUResponse();
+FANTASIA_API UScriptStruct* Z_Construct_UScriptStruct_FSWIPrologResponse();
 FANTASIA_API UScriptStruct* Z_Construct_UScriptStruct_FTTSData();
 FANTASIA_API UScriptStruct* Z_Construct_UScriptStruct_FTTSTimedStruct();
 UPackage* Z_Construct_UPackage__Script_FANTASIA();
 // End Cross Module References
+
+// Begin Enum SWIPrologOperation
+static FEnumRegistrationInfo Z_Registration_Info_UEnum_SWIPrologOperation;
+static UEnum* SWIPrologOperation_StaticEnum()
+{
+	if (!Z_Registration_Info_UEnum_SWIPrologOperation.OuterSingleton)
+	{
+		Z_Registration_Info_UEnum_SWIPrologOperation.OuterSingleton = GetStaticEnum(Z_Construct_UEnum_FANTASIA_SWIPrologOperation, (UObject*)Z_Construct_UPackage__Script_FANTASIA(), TEXT("SWIPrologOperation"));
+	}
+	return Z_Registration_Info_UEnum_SWIPrologOperation.OuterSingleton;
+}
+template<> FANTASIA_API UEnum* StaticEnum<SWIPrologOperation>()
+{
+	return SWIPrologOperation_StaticEnum();
+}
+struct Z_Construct_UEnum_FANTASIA_SWIPrologOperation_Statics
+{
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Enum_MetaDataParams[] = {
+		{ "AND.DisplayName", "AND (,)" },
+		{ "AND.Name", "SWIPrologOperation::AND" },
+		{ "BlueprintType", "true" },
+		{ "CONDITION.DisplayName", "IF-THEN-ELSE (->)" },
+		{ "CONDITION.Name", "SWIPrologOperation::CONDITION" },
+		{ "DIVIDE.DisplayName", "DIVIDE (/)" },
+		{ "DIVIDE.Name", "SWIPrologOperation::DIVIDE" },
+		{ "EQUAL.DisplayName", "EQUAL (=)" },
+		{ "EQUAL.Name", "SWIPrologOperation::EQUAL" },
+		{ "IS.DisplayName", "IS (is)" },
+		{ "IS.Name", "SWIPrologOperation::IS" },
+		{ "LESSOREQUAL.DisplayName", "LESS-OR-EQUAL (<=)" },
+		{ "LESSOREQUAL.Name", "SWIPrologOperation::LESSOREQUAL" },
+		{ "LESSTHAN.DisplayName", "LESS-THAN (<)" },
+		{ "LESSTHAN.Name", "SWIPrologOperation::LESSTHAN" },
+		{ "MINUS.DisplayName", "MINUS (-)" },
+		{ "MINUS.Name", "SWIPrologOperation::MINUS" },
+		{ "ModuleRelativePath", "Public/FANTASIATypes.h" },
+		{ "MOREOREQUAL.DisplayName", "MORE-OR-EQUAL (>=)" },
+		{ "MOREOREQUAL.Name", "SWIPrologOperation::MOREOREQUAL" },
+		{ "MORETHAN.DisplayName", "MORE-THAN (>)" },
+		{ "MORETHAN.Name", "SWIPrologOperation::MORETHAN" },
+		{ "MULTIPLY.DisplayName", "MULTIPLY (*)" },
+		{ "MULTIPLY.Name", "SWIPrologOperation::MULTIPLY" },
+		{ "OR.DisplayName", "OR (;)" },
+		{ "OR.Name", "SWIPrologOperation::OR" },
+		{ "PLUS.DisplayName", "PLUS (+)" },
+		{ "PLUS.Name", "SWIPrologOperation::PLUS" },
+		{ "TERMEQUAL.DisplayName", "TERM-EQUAL (==)" },
+		{ "TERMEQUAL.Name", "SWIPrologOperation::TERMEQUAL" },
+		{ "TERMNOTEQUAL.DisplayName", "TERM-NOT-EQUAL (\\==)" },
+		{ "TERMNOTEQUAL.Name", "SWIPrologOperation::TERMNOTEQUAL" },
+		{ "UNEQUAL.DisplayName", "UNEQUAL (\\=)" },
+		{ "UNEQUAL.Name", "SWIPrologOperation::UNEQUAL" },
+	};
+#endif // WITH_METADATA
+	static constexpr UECodeGen_Private::FEnumeratorParam Enumerators[] = {
+		{ "SWIPrologOperation::AND", (int64)SWIPrologOperation::AND },
+		{ "SWIPrologOperation::OR", (int64)SWIPrologOperation::OR },
+		{ "SWIPrologOperation::CONDITION", (int64)SWIPrologOperation::CONDITION },
+		{ "SWIPrologOperation::EQUAL", (int64)SWIPrologOperation::EQUAL },
+		{ "SWIPrologOperation::UNEQUAL", (int64)SWIPrologOperation::UNEQUAL },
+		{ "SWIPrologOperation::IS", (int64)SWIPrologOperation::IS },
+		{ "SWIPrologOperation::PLUS", (int64)SWIPrologOperation::PLUS },
+		{ "SWIPrologOperation::MINUS", (int64)SWIPrologOperation::MINUS },
+		{ "SWIPrologOperation::MULTIPLY", (int64)SWIPrologOperation::MULTIPLY },
+		{ "SWIPrologOperation::DIVIDE", (int64)SWIPrologOperation::DIVIDE },
+		{ "SWIPrologOperation::LESSTHAN", (int64)SWIPrologOperation::LESSTHAN },
+		{ "SWIPrologOperation::MORETHAN", (int64)SWIPrologOperation::MORETHAN },
+		{ "SWIPrologOperation::LESSOREQUAL", (int64)SWIPrologOperation::LESSOREQUAL },
+		{ "SWIPrologOperation::MOREOREQUAL", (int64)SWIPrologOperation::MOREOREQUAL },
+		{ "SWIPrologOperation::TERMNOTEQUAL", (int64)SWIPrologOperation::TERMNOTEQUAL },
+		{ "SWIPrologOperation::TERMEQUAL", (int64)SWIPrologOperation::TERMEQUAL },
+	};
+	static const UECodeGen_Private::FEnumParams EnumParams;
+};
+const UECodeGen_Private::FEnumParams Z_Construct_UEnum_FANTASIA_SWIPrologOperation_Statics::EnumParams = {
+	(UObject*(*)())Z_Construct_UPackage__Script_FANTASIA,
+	nullptr,
+	"SWIPrologOperation",
+	"SWIPrologOperation",
+	Z_Construct_UEnum_FANTASIA_SWIPrologOperation_Statics::Enumerators,
+	RF_Public|RF_Transient|RF_MarkAsNative,
+	UE_ARRAY_COUNT(Z_Construct_UEnum_FANTASIA_SWIPrologOperation_Statics::Enumerators),
+	EEnumFlags::None,
+	(uint8)UEnum::ECppForm::EnumClass,
+	METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UEnum_FANTASIA_SWIPrologOperation_Statics::Enum_MetaDataParams), Z_Construct_UEnum_FANTASIA_SWIPrologOperation_Statics::Enum_MetaDataParams)
+};
+UEnum* Z_Construct_UEnum_FANTASIA_SWIPrologOperation()
+{
+	if (!Z_Registration_Info_UEnum_SWIPrologOperation.InnerSingleton)
+	{
+		UECodeGen_Private::ConstructUEnum(Z_Registration_Info_UEnum_SWIPrologOperation.InnerSingleton, Z_Construct_UEnum_FANTASIA_SWIPrologOperation_Statics::EnumParams);
+	}
+	return Z_Registration_Info_UEnum_SWIPrologOperation.InnerSingleton;
+}
+// End Enum SWIPrologOperation
+
+// Begin ScriptStruct FSWIPrologResponse
+static FStructRegistrationInfo Z_Registration_Info_UScriptStruct_SWIPrologResponse;
+class UScriptStruct* FSWIPrologResponse::StaticStruct()
+{
+	if (!Z_Registration_Info_UScriptStruct_SWIPrologResponse.OuterSingleton)
+	{
+		Z_Registration_Info_UScriptStruct_SWIPrologResponse.OuterSingleton = GetStaticStruct(Z_Construct_UScriptStruct_FSWIPrologResponse, (UObject*)Z_Construct_UPackage__Script_FANTASIA(), TEXT("SWIPrologResponse"));
+	}
+	return Z_Registration_Info_UScriptStruct_SWIPrologResponse.OuterSingleton;
+}
+template<> FANTASIA_API UScriptStruct* StaticStruct<FSWIPrologResponse>()
+{
+	return FSWIPrologResponse::StaticStruct();
+}
+struct Z_Construct_UScriptStruct_FSWIPrologResponse_Statics
+{
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Struct_MetaDataParams[] = {
+		{ "BlueprintType", "true" },
+		{ "ModuleRelativePath", "Public/FANTASIATypes.h" },
+	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_queryName_MetaData[] = {
+		{ "Category", "SWIPrologResponse" },
+		{ "ModuleRelativePath", "Public/FANTASIATypes.h" },
+	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_arity_MetaData[] = {
+		{ "Category", "SWIPrologResponse" },
+		{ "ModuleRelativePath", "Public/FANTASIATypes.h" },
+	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_results_MetaData[] = {
+		{ "Category", "SWIPrologResponse" },
+		{ "ModuleRelativePath", "Public/FANTASIATypes.h" },
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FStrPropertyParams NewProp_queryName;
+	static const UECodeGen_Private::FBytePropertyParams NewProp_arity;
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_results_Inner;
+	static const UECodeGen_Private::FArrayPropertyParams NewProp_results;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+	static void* NewStructOps()
+	{
+		return (UScriptStruct::ICppStructOps*)new UScriptStruct::TCppStructOps<FSWIPrologResponse>();
+	}
+	static const UECodeGen_Private::FStructParams StructParams;
+};
+const UECodeGen_Private::FStrPropertyParams Z_Construct_UScriptStruct_FSWIPrologResponse_Statics::NewProp_queryName = { "queryName", nullptr, (EPropertyFlags)0x0010000000000014, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(FSWIPrologResponse, queryName), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_queryName_MetaData), NewProp_queryName_MetaData) };
+const UECodeGen_Private::FBytePropertyParams Z_Construct_UScriptStruct_FSWIPrologResponse_Statics::NewProp_arity = { "arity", nullptr, (EPropertyFlags)0x0010000000000014, UECodeGen_Private::EPropertyGenFlags::Byte, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(FSWIPrologResponse, arity), nullptr, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_arity_MetaData), NewProp_arity_MetaData) };
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UScriptStruct_FSWIPrologResponse_Statics::NewProp_results_Inner = { "results", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, Z_Construct_UClass_USWIPrologSolution_NoRegister, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FArrayPropertyParams Z_Construct_UScriptStruct_FSWIPrologResponse_Statics::NewProp_results = { "results", nullptr, (EPropertyFlags)0x0010000000000014, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(FSWIPrologResponse, results), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_results_MetaData), NewProp_results_MetaData) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UScriptStruct_FSWIPrologResponse_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FSWIPrologResponse_Statics::NewProp_queryName,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FSWIPrologResponse_Statics::NewProp_arity,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FSWIPrologResponse_Statics::NewProp_results_Inner,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FSWIPrologResponse_Statics::NewProp_results,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FSWIPrologResponse_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FStructParams Z_Construct_UScriptStruct_FSWIPrologResponse_Statics::StructParams = {
+	(UObject* (*)())Z_Construct_UPackage__Script_FANTASIA,
+	nullptr,
+	&NewStructOps,
+	"SWIPrologResponse",
+	Z_Construct_UScriptStruct_FSWIPrologResponse_Statics::PropPointers,
+	UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FSWIPrologResponse_Statics::PropPointers),
+	sizeof(FSWIPrologResponse),
+	alignof(FSWIPrologResponse),
+	RF_Public|RF_Transient|RF_MarkAsNative,
+	EStructFlags(0x00000001),
+	METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FSWIPrologResponse_Statics::Struct_MetaDataParams), Z_Construct_UScriptStruct_FSWIPrologResponse_Statics::Struct_MetaDataParams)
+};
+UScriptStruct* Z_Construct_UScriptStruct_FSWIPrologResponse()
+{
+	if (!Z_Registration_Info_UScriptStruct_SWIPrologResponse.InnerSingleton)
+	{
+		UECodeGen_Private::ConstructUScriptStruct(Z_Registration_Info_UScriptStruct_SWIPrologResponse.InnerSingleton, Z_Construct_UScriptStruct_FSWIPrologResponse_Statics::StructParams);
+	}
+	return Z_Registration_Info_UScriptStruct_SWIPrologResponse.InnerSingleton;
+}
+// End ScriptStruct FSWIPrologResponse
+
+// Begin Class USWIPrologObject
+void USWIPrologObject::StaticRegisterNativesUSWIPrologObject()
+{
+}
+IMPLEMENT_CLASS_NO_AUTO_REGISTRATION(USWIPrologObject);
+UClass* Z_Construct_UClass_USWIPrologObject_NoRegister()
+{
+	return USWIPrologObject::StaticClass();
+}
+struct Z_Construct_UClass_USWIPrologObject_Statics
+{
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Class_MetaDataParams[] = {
+		{ "BlueprintType", "true" },
+		{ "ClassGroupNames", "SWIProlog" },
+		{ "IncludePath", "FANTASIATypes.h" },
+		{ "ModuleRelativePath", "Public/FANTASIATypes.h" },
+	};
+#endif // WITH_METADATA
+	static UObject* (*const DependentSingletons[])();
+	static constexpr FCppClassTypeInfoStatic StaticCppClassTypeInfo = {
+		TCppClassTypeTraits<USWIPrologObject>::IsAbstract,
+	};
+	static const UECodeGen_Private::FClassParams ClassParams;
+};
+UObject* (*const Z_Construct_UClass_USWIPrologObject_Statics::DependentSingletons[])() = {
+	(UObject* (*)())Z_Construct_UClass_UObject,
+	(UObject* (*)())Z_Construct_UPackage__Script_FANTASIA,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_USWIPrologObject_Statics::DependentSingletons) < 16);
+const UECodeGen_Private::FClassParams Z_Construct_UClass_USWIPrologObject_Statics::ClassParams = {
+	&USWIPrologObject::StaticClass,
+	nullptr,
+	&StaticCppClassTypeInfo,
+	DependentSingletons,
+	nullptr,
+	nullptr,
+	nullptr,
+	UE_ARRAY_COUNT(DependentSingletons),
+	0,
+	0,
+	0,
+	0x000000A0u,
+	METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UClass_USWIPrologObject_Statics::Class_MetaDataParams), Z_Construct_UClass_USWIPrologObject_Statics::Class_MetaDataParams)
+};
+UClass* Z_Construct_UClass_USWIPrologObject()
+{
+	if (!Z_Registration_Info_UClass_USWIPrologObject.OuterSingleton)
+	{
+		UECodeGen_Private::ConstructUClass(Z_Registration_Info_UClass_USWIPrologObject.OuterSingleton, Z_Construct_UClass_USWIPrologObject_Statics::ClassParams);
+	}
+	return Z_Registration_Info_UClass_USWIPrologObject.OuterSingleton;
+}
+template<> FANTASIA_API UClass* StaticClass<USWIPrologObject>()
+{
+	return USWIPrologObject::StaticClass();
+}
+DEFINE_VTABLE_PTR_HELPER_CTOR(USWIPrologObject);
+USWIPrologObject::~USWIPrologObject() {}
+// End Class USWIPrologObject
+
+// Begin Class USWIPrologRuleBody
+void USWIPrologRuleBody::StaticRegisterNativesUSWIPrologRuleBody()
+{
+}
+IMPLEMENT_CLASS_NO_AUTO_REGISTRATION(USWIPrologRuleBody);
+UClass* Z_Construct_UClass_USWIPrologRuleBody_NoRegister()
+{
+	return USWIPrologRuleBody::StaticClass();
+}
+struct Z_Construct_UClass_USWIPrologRuleBody_Statics
+{
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Class_MetaDataParams[] = {
+		{ "BlueprintType", "true" },
+		{ "ClassGroupNames", "SWIProlog" },
+		{ "IncludePath", "FANTASIATypes.h" },
+		{ "ModuleRelativePath", "Public/FANTASIATypes.h" },
+	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_firstRule_MetaData[] = {
+		{ "AllowedClasses", "USWIPrologRuleBody, USWIPrologTerm" },
+		{ "Category", "SWIPrologRuleBody" },
+		{ "ModuleRelativePath", "Public/FANTASIATypes.h" },
+	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_secondRule_MetaData[] = {
+		{ "AllowedClasses", "USWIPrologRuleBody, USWIPrologTerm" },
+		{ "Category", "SWIPrologRuleBody" },
+		{ "ModuleRelativePath", "Public/FANTASIATypes.h" },
+	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_prologOperator_MetaData[] = {
+		{ "Category", "SWIPrologRuleBody" },
+		{ "ModuleRelativePath", "Public/FANTASIATypes.h" },
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_firstRule;
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_secondRule;
+	static const UECodeGen_Private::FBytePropertyParams NewProp_prologOperator_Underlying;
+	static const UECodeGen_Private::FEnumPropertyParams NewProp_prologOperator;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+	static UObject* (*const DependentSingletons[])();
+	static constexpr FCppClassTypeInfoStatic StaticCppClassTypeInfo = {
+		TCppClassTypeTraits<USWIPrologRuleBody>::IsAbstract,
+	};
+	static const UECodeGen_Private::FClassParams ClassParams;
+};
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_USWIPrologRuleBody_Statics::NewProp_firstRule = { "firstRule", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(USWIPrologRuleBody, firstRule), Z_Construct_UClass_USWIPrologObject_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_firstRule_MetaData), NewProp_firstRule_MetaData) };
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_USWIPrologRuleBody_Statics::NewProp_secondRule = { "secondRule", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(USWIPrologRuleBody, secondRule), Z_Construct_UClass_USWIPrologObject_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_secondRule_MetaData), NewProp_secondRule_MetaData) };
+const UECodeGen_Private::FBytePropertyParams Z_Construct_UClass_USWIPrologRuleBody_Statics::NewProp_prologOperator_Underlying = { "UnderlyingType", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Byte, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, nullptr, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FEnumPropertyParams Z_Construct_UClass_USWIPrologRuleBody_Statics::NewProp_prologOperator = { "prologOperator", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Enum, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(USWIPrologRuleBody, prologOperator), Z_Construct_UEnum_FANTASIA_SWIPrologOperation, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_prologOperator_MetaData), NewProp_prologOperator_MetaData) }; // 1261065449
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_USWIPrologRuleBody_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_USWIPrologRuleBody_Statics::NewProp_firstRule,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_USWIPrologRuleBody_Statics::NewProp_secondRule,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_USWIPrologRuleBody_Statics::NewProp_prologOperator_Underlying,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_USWIPrologRuleBody_Statics::NewProp_prologOperator,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_USWIPrologRuleBody_Statics::PropPointers) < 2048);
+UObject* (*const Z_Construct_UClass_USWIPrologRuleBody_Statics::DependentSingletons[])() = {
+	(UObject* (*)())Z_Construct_UClass_USWIPrologObject,
+	(UObject* (*)())Z_Construct_UPackage__Script_FANTASIA,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_USWIPrologRuleBody_Statics::DependentSingletons) < 16);
+const UECodeGen_Private::FClassParams Z_Construct_UClass_USWIPrologRuleBody_Statics::ClassParams = {
+	&USWIPrologRuleBody::StaticClass,
+	nullptr,
+	&StaticCppClassTypeInfo,
+	DependentSingletons,
+	nullptr,
+	Z_Construct_UClass_USWIPrologRuleBody_Statics::PropPointers,
+	nullptr,
+	UE_ARRAY_COUNT(DependentSingletons),
+	0,
+	UE_ARRAY_COUNT(Z_Construct_UClass_USWIPrologRuleBody_Statics::PropPointers),
+	0,
+	0x000000A0u,
+	METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UClass_USWIPrologRuleBody_Statics::Class_MetaDataParams), Z_Construct_UClass_USWIPrologRuleBody_Statics::Class_MetaDataParams)
+};
+UClass* Z_Construct_UClass_USWIPrologRuleBody()
+{
+	if (!Z_Registration_Info_UClass_USWIPrologRuleBody.OuterSingleton)
+	{
+		UECodeGen_Private::ConstructUClass(Z_Registration_Info_UClass_USWIPrologRuleBody.OuterSingleton, Z_Construct_UClass_USWIPrologRuleBody_Statics::ClassParams);
+	}
+	return Z_Registration_Info_UClass_USWIPrologRuleBody.OuterSingleton;
+}
+template<> FANTASIA_API UClass* StaticClass<USWIPrologRuleBody>()
+{
+	return USWIPrologRuleBody::StaticClass();
+}
+DEFINE_VTABLE_PTR_HELPER_CTOR(USWIPrologRuleBody);
+USWIPrologRuleBody::~USWIPrologRuleBody() {}
+// End Class USWIPrologRuleBody
+
+// Begin Class USWIPrologRule
+void USWIPrologRule::StaticRegisterNativesUSWIPrologRule()
+{
+}
+IMPLEMENT_CLASS_NO_AUTO_REGISTRATION(USWIPrologRule);
+UClass* Z_Construct_UClass_USWIPrologRule_NoRegister()
+{
+	return USWIPrologRule::StaticClass();
+}
+struct Z_Construct_UClass_USWIPrologRule_Statics
+{
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Class_MetaDataParams[] = {
+		{ "BlueprintType", "true" },
+		{ "ClassGroupNames", "SWIProlog" },
+		{ "IncludePath", "FANTASIATypes.h" },
+		{ "ModuleRelativePath", "Public/FANTASIATypes.h" },
+	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_head_MetaData[] = {
+		{ "Category", "SWIPrologRule" },
+		{ "ModuleRelativePath", "Public/FANTASIATypes.h" },
+	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_body_MetaData[] = {
+		{ "AllowedClasses", "USWIPrologRuleBody, USWIPrologTerm" },
+		{ "Category", "SWIPrologRule" },
+		{ "ModuleRelativePath", "Public/FANTASIATypes.h" },
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_head;
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_body;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+	static UObject* (*const DependentSingletons[])();
+	static constexpr FCppClassTypeInfoStatic StaticCppClassTypeInfo = {
+		TCppClassTypeTraits<USWIPrologRule>::IsAbstract,
+	};
+	static const UECodeGen_Private::FClassParams ClassParams;
+};
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_USWIPrologRule_Statics::NewProp_head = { "head", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(USWIPrologRule, head), Z_Construct_UClass_USWIPrologTerm_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_head_MetaData), NewProp_head_MetaData) };
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_USWIPrologRule_Statics::NewProp_body = { "body", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(USWIPrologRule, body), Z_Construct_UClass_USWIPrologObject_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_body_MetaData), NewProp_body_MetaData) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_USWIPrologRule_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_USWIPrologRule_Statics::NewProp_head,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_USWIPrologRule_Statics::NewProp_body,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_USWIPrologRule_Statics::PropPointers) < 2048);
+UObject* (*const Z_Construct_UClass_USWIPrologRule_Statics::DependentSingletons[])() = {
+	(UObject* (*)())Z_Construct_UClass_USWIPrologObject,
+	(UObject* (*)())Z_Construct_UPackage__Script_FANTASIA,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_USWIPrologRule_Statics::DependentSingletons) < 16);
+const UECodeGen_Private::FClassParams Z_Construct_UClass_USWIPrologRule_Statics::ClassParams = {
+	&USWIPrologRule::StaticClass,
+	nullptr,
+	&StaticCppClassTypeInfo,
+	DependentSingletons,
+	nullptr,
+	Z_Construct_UClass_USWIPrologRule_Statics::PropPointers,
+	nullptr,
+	UE_ARRAY_COUNT(DependentSingletons),
+	0,
+	UE_ARRAY_COUNT(Z_Construct_UClass_USWIPrologRule_Statics::PropPointers),
+	0,
+	0x000000A0u,
+	METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UClass_USWIPrologRule_Statics::Class_MetaDataParams), Z_Construct_UClass_USWIPrologRule_Statics::Class_MetaDataParams)
+};
+UClass* Z_Construct_UClass_USWIPrologRule()
+{
+	if (!Z_Registration_Info_UClass_USWIPrologRule.OuterSingleton)
+	{
+		UECodeGen_Private::ConstructUClass(Z_Registration_Info_UClass_USWIPrologRule.OuterSingleton, Z_Construct_UClass_USWIPrologRule_Statics::ClassParams);
+	}
+	return Z_Registration_Info_UClass_USWIPrologRule.OuterSingleton;
+}
+template<> FANTASIA_API UClass* StaticClass<USWIPrologRule>()
+{
+	return USWIPrologRule::StaticClass();
+}
+DEFINE_VTABLE_PTR_HELPER_CTOR(USWIPrologRule);
+USWIPrologRule::~USWIPrologRule() {}
+// End Class USWIPrologRule
+
+// Begin Class USWIPrologTerm
+void USWIPrologTerm::StaticRegisterNativesUSWIPrologTerm()
+{
+}
+IMPLEMENT_CLASS_NO_AUTO_REGISTRATION(USWIPrologTerm);
+UClass* Z_Construct_UClass_USWIPrologTerm_NoRegister()
+{
+	return USWIPrologTerm::StaticClass();
+}
+struct Z_Construct_UClass_USWIPrologTerm_Statics
+{
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Class_MetaDataParams[] = {
+		{ "BlueprintType", "true" },
+		{ "ClassGroupNames", "SWIProlog" },
+		{ "IncludePath", "FANTASIATypes.h" },
+		{ "ModuleRelativePath", "Public/FANTASIATypes.h" },
+	};
+#endif // WITH_METADATA
+	static UObject* (*const DependentSingletons[])();
+	static constexpr FCppClassTypeInfoStatic StaticCppClassTypeInfo = {
+		TCppClassTypeTraits<USWIPrologTerm>::IsAbstract,
+	};
+	static const UECodeGen_Private::FClassParams ClassParams;
+};
+UObject* (*const Z_Construct_UClass_USWIPrologTerm_Statics::DependentSingletons[])() = {
+	(UObject* (*)())Z_Construct_UClass_USWIPrologObject,
+	(UObject* (*)())Z_Construct_UPackage__Script_FANTASIA,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_USWIPrologTerm_Statics::DependentSingletons) < 16);
+const UECodeGen_Private::FClassParams Z_Construct_UClass_USWIPrologTerm_Statics::ClassParams = {
+	&USWIPrologTerm::StaticClass,
+	nullptr,
+	&StaticCppClassTypeInfo,
+	DependentSingletons,
+	nullptr,
+	nullptr,
+	nullptr,
+	UE_ARRAY_COUNT(DependentSingletons),
+	0,
+	0,
+	0,
+	0x000000A0u,
+	METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UClass_USWIPrologTerm_Statics::Class_MetaDataParams), Z_Construct_UClass_USWIPrologTerm_Statics::Class_MetaDataParams)
+};
+UClass* Z_Construct_UClass_USWIPrologTerm()
+{
+	if (!Z_Registration_Info_UClass_USWIPrologTerm.OuterSingleton)
+	{
+		UECodeGen_Private::ConstructUClass(Z_Registration_Info_UClass_USWIPrologTerm.OuterSingleton, Z_Construct_UClass_USWIPrologTerm_Statics::ClassParams);
+	}
+	return Z_Registration_Info_UClass_USWIPrologTerm.OuterSingleton;
+}
+template<> FANTASIA_API UClass* StaticClass<USWIPrologTerm>()
+{
+	return USWIPrologTerm::StaticClass();
+}
+DEFINE_VTABLE_PTR_HELPER_CTOR(USWIPrologTerm);
+USWIPrologTerm::~USWIPrologTerm() {}
+// End Class USWIPrologTerm
+
+// Begin Class USWIPrologAtom
+void USWIPrologAtom::StaticRegisterNativesUSWIPrologAtom()
+{
+}
+IMPLEMENT_CLASS_NO_AUTO_REGISTRATION(USWIPrologAtom);
+UClass* Z_Construct_UClass_USWIPrologAtom_NoRegister()
+{
+	return USWIPrologAtom::StaticClass();
+}
+struct Z_Construct_UClass_USWIPrologAtom_Statics
+{
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Class_MetaDataParams[] = {
+		{ "BlueprintType", "true" },
+		{ "ClassGroupNames", "SWIProlog" },
+		{ "IncludePath", "FANTASIATypes.h" },
+		{ "ModuleRelativePath", "Public/FANTASIATypes.h" },
+	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_atomValue_MetaData[] = {
+		{ "Category", "SWIPrologAtom" },
+		{ "ModuleRelativePath", "Public/FANTASIATypes.h" },
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FStrPropertyParams NewProp_atomValue;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+	static UObject* (*const DependentSingletons[])();
+	static constexpr FCppClassTypeInfoStatic StaticCppClassTypeInfo = {
+		TCppClassTypeTraits<USWIPrologAtom>::IsAbstract,
+	};
+	static const UECodeGen_Private::FClassParams ClassParams;
+};
+const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_USWIPrologAtom_Statics::NewProp_atomValue = { "atomValue", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(USWIPrologAtom, atomValue), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_atomValue_MetaData), NewProp_atomValue_MetaData) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_USWIPrologAtom_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_USWIPrologAtom_Statics::NewProp_atomValue,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_USWIPrologAtom_Statics::PropPointers) < 2048);
+UObject* (*const Z_Construct_UClass_USWIPrologAtom_Statics::DependentSingletons[])() = {
+	(UObject* (*)())Z_Construct_UClass_USWIPrologTerm,
+	(UObject* (*)())Z_Construct_UPackage__Script_FANTASIA,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_USWIPrologAtom_Statics::DependentSingletons) < 16);
+const UECodeGen_Private::FClassParams Z_Construct_UClass_USWIPrologAtom_Statics::ClassParams = {
+	&USWIPrologAtom::StaticClass,
+	nullptr,
+	&StaticCppClassTypeInfo,
+	DependentSingletons,
+	nullptr,
+	Z_Construct_UClass_USWIPrologAtom_Statics::PropPointers,
+	nullptr,
+	UE_ARRAY_COUNT(DependentSingletons),
+	0,
+	UE_ARRAY_COUNT(Z_Construct_UClass_USWIPrologAtom_Statics::PropPointers),
+	0,
+	0x000000A0u,
+	METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UClass_USWIPrologAtom_Statics::Class_MetaDataParams), Z_Construct_UClass_USWIPrologAtom_Statics::Class_MetaDataParams)
+};
+UClass* Z_Construct_UClass_USWIPrologAtom()
+{
+	if (!Z_Registration_Info_UClass_USWIPrologAtom.OuterSingleton)
+	{
+		UECodeGen_Private::ConstructUClass(Z_Registration_Info_UClass_USWIPrologAtom.OuterSingleton, Z_Construct_UClass_USWIPrologAtom_Statics::ClassParams);
+	}
+	return Z_Registration_Info_UClass_USWIPrologAtom.OuterSingleton;
+}
+template<> FANTASIA_API UClass* StaticClass<USWIPrologAtom>()
+{
+	return USWIPrologAtom::StaticClass();
+}
+DEFINE_VTABLE_PTR_HELPER_CTOR(USWIPrologAtom);
+USWIPrologAtom::~USWIPrologAtom() {}
+// End Class USWIPrologAtom
+
+// Begin Class USWIPrologVariable
+void USWIPrologVariable::StaticRegisterNativesUSWIPrologVariable()
+{
+}
+IMPLEMENT_CLASS_NO_AUTO_REGISTRATION(USWIPrologVariable);
+UClass* Z_Construct_UClass_USWIPrologVariable_NoRegister()
+{
+	return USWIPrologVariable::StaticClass();
+}
+struct Z_Construct_UClass_USWIPrologVariable_Statics
+{
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Class_MetaDataParams[] = {
+		{ "BlueprintType", "true" },
+		{ "ClassGroupNames", "SWIProlog" },
+		{ "IncludePath", "FANTASIATypes.h" },
+		{ "ModuleRelativePath", "Public/FANTASIATypes.h" },
+	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_varName_MetaData[] = {
+		{ "Category", "SWIPrologVariable" },
+		{ "ModuleRelativePath", "Public/FANTASIATypes.h" },
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FStrPropertyParams NewProp_varName;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+	static UObject* (*const DependentSingletons[])();
+	static constexpr FCppClassTypeInfoStatic StaticCppClassTypeInfo = {
+		TCppClassTypeTraits<USWIPrologVariable>::IsAbstract,
+	};
+	static const UECodeGen_Private::FClassParams ClassParams;
+};
+const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_USWIPrologVariable_Statics::NewProp_varName = { "varName", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(USWIPrologVariable, varName), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_varName_MetaData), NewProp_varName_MetaData) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_USWIPrologVariable_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_USWIPrologVariable_Statics::NewProp_varName,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_USWIPrologVariable_Statics::PropPointers) < 2048);
+UObject* (*const Z_Construct_UClass_USWIPrologVariable_Statics::DependentSingletons[])() = {
+	(UObject* (*)())Z_Construct_UClass_USWIPrologTerm,
+	(UObject* (*)())Z_Construct_UPackage__Script_FANTASIA,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_USWIPrologVariable_Statics::DependentSingletons) < 16);
+const UECodeGen_Private::FClassParams Z_Construct_UClass_USWIPrologVariable_Statics::ClassParams = {
+	&USWIPrologVariable::StaticClass,
+	nullptr,
+	&StaticCppClassTypeInfo,
+	DependentSingletons,
+	nullptr,
+	Z_Construct_UClass_USWIPrologVariable_Statics::PropPointers,
+	nullptr,
+	UE_ARRAY_COUNT(DependentSingletons),
+	0,
+	UE_ARRAY_COUNT(Z_Construct_UClass_USWIPrologVariable_Statics::PropPointers),
+	0,
+	0x000000A0u,
+	METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UClass_USWIPrologVariable_Statics::Class_MetaDataParams), Z_Construct_UClass_USWIPrologVariable_Statics::Class_MetaDataParams)
+};
+UClass* Z_Construct_UClass_USWIPrologVariable()
+{
+	if (!Z_Registration_Info_UClass_USWIPrologVariable.OuterSingleton)
+	{
+		UECodeGen_Private::ConstructUClass(Z_Registration_Info_UClass_USWIPrologVariable.OuterSingleton, Z_Construct_UClass_USWIPrologVariable_Statics::ClassParams);
+	}
+	return Z_Registration_Info_UClass_USWIPrologVariable.OuterSingleton;
+}
+template<> FANTASIA_API UClass* StaticClass<USWIPrologVariable>()
+{
+	return USWIPrologVariable::StaticClass();
+}
+DEFINE_VTABLE_PTR_HELPER_CTOR(USWIPrologVariable);
+USWIPrologVariable::~USWIPrologVariable() {}
+// End Class USWIPrologVariable
+
+// Begin Class USWIPrologInteger
+void USWIPrologInteger::StaticRegisterNativesUSWIPrologInteger()
+{
+}
+IMPLEMENT_CLASS_NO_AUTO_REGISTRATION(USWIPrologInteger);
+UClass* Z_Construct_UClass_USWIPrologInteger_NoRegister()
+{
+	return USWIPrologInteger::StaticClass();
+}
+struct Z_Construct_UClass_USWIPrologInteger_Statics
+{
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Class_MetaDataParams[] = {
+		{ "BlueprintType", "true" },
+		{ "ClassGroupNames", "SWIProlog" },
+		{ "IncludePath", "FANTASIATypes.h" },
+		{ "ModuleRelativePath", "Public/FANTASIATypes.h" },
+	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_intValue_MetaData[] = {
+		{ "Category", "SWIPrologInteger" },
+		{ "ModuleRelativePath", "Public/FANTASIATypes.h" },
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FIntPropertyParams NewProp_intValue;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+	static UObject* (*const DependentSingletons[])();
+	static constexpr FCppClassTypeInfoStatic StaticCppClassTypeInfo = {
+		TCppClassTypeTraits<USWIPrologInteger>::IsAbstract,
+	};
+	static const UECodeGen_Private::FClassParams ClassParams;
+};
+const UECodeGen_Private::FIntPropertyParams Z_Construct_UClass_USWIPrologInteger_Statics::NewProp_intValue = { "intValue", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(USWIPrologInteger, intValue), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_intValue_MetaData), NewProp_intValue_MetaData) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_USWIPrologInteger_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_USWIPrologInteger_Statics::NewProp_intValue,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_USWIPrologInteger_Statics::PropPointers) < 2048);
+UObject* (*const Z_Construct_UClass_USWIPrologInteger_Statics::DependentSingletons[])() = {
+	(UObject* (*)())Z_Construct_UClass_USWIPrologTerm,
+	(UObject* (*)())Z_Construct_UPackage__Script_FANTASIA,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_USWIPrologInteger_Statics::DependentSingletons) < 16);
+const UECodeGen_Private::FClassParams Z_Construct_UClass_USWIPrologInteger_Statics::ClassParams = {
+	&USWIPrologInteger::StaticClass,
+	nullptr,
+	&StaticCppClassTypeInfo,
+	DependentSingletons,
+	nullptr,
+	Z_Construct_UClass_USWIPrologInteger_Statics::PropPointers,
+	nullptr,
+	UE_ARRAY_COUNT(DependentSingletons),
+	0,
+	UE_ARRAY_COUNT(Z_Construct_UClass_USWIPrologInteger_Statics::PropPointers),
+	0,
+	0x000000A0u,
+	METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UClass_USWIPrologInteger_Statics::Class_MetaDataParams), Z_Construct_UClass_USWIPrologInteger_Statics::Class_MetaDataParams)
+};
+UClass* Z_Construct_UClass_USWIPrologInteger()
+{
+	if (!Z_Registration_Info_UClass_USWIPrologInteger.OuterSingleton)
+	{
+		UECodeGen_Private::ConstructUClass(Z_Registration_Info_UClass_USWIPrologInteger.OuterSingleton, Z_Construct_UClass_USWIPrologInteger_Statics::ClassParams);
+	}
+	return Z_Registration_Info_UClass_USWIPrologInteger.OuterSingleton;
+}
+template<> FANTASIA_API UClass* StaticClass<USWIPrologInteger>()
+{
+	return USWIPrologInteger::StaticClass();
+}
+DEFINE_VTABLE_PTR_HELPER_CTOR(USWIPrologInteger);
+USWIPrologInteger::~USWIPrologInteger() {}
+// End Class USWIPrologInteger
+
+// Begin Class USWIPrologFloat
+void USWIPrologFloat::StaticRegisterNativesUSWIPrologFloat()
+{
+}
+IMPLEMENT_CLASS_NO_AUTO_REGISTRATION(USWIPrologFloat);
+UClass* Z_Construct_UClass_USWIPrologFloat_NoRegister()
+{
+	return USWIPrologFloat::StaticClass();
+}
+struct Z_Construct_UClass_USWIPrologFloat_Statics
+{
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Class_MetaDataParams[] = {
+		{ "BlueprintType", "true" },
+		{ "ClassGroupNames", "SWIProlog" },
+		{ "IncludePath", "FANTASIATypes.h" },
+		{ "ModuleRelativePath", "Public/FANTASIATypes.h" },
+	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_floatValue_MetaData[] = {
+		{ "Category", "SWIPrologFloat" },
+		{ "ModuleRelativePath", "Public/FANTASIATypes.h" },
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FFloatPropertyParams NewProp_floatValue;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+	static UObject* (*const DependentSingletons[])();
+	static constexpr FCppClassTypeInfoStatic StaticCppClassTypeInfo = {
+		TCppClassTypeTraits<USWIPrologFloat>::IsAbstract,
+	};
+	static const UECodeGen_Private::FClassParams ClassParams;
+};
+const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_USWIPrologFloat_Statics::NewProp_floatValue = { "floatValue", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(USWIPrologFloat, floatValue), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_floatValue_MetaData), NewProp_floatValue_MetaData) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_USWIPrologFloat_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_USWIPrologFloat_Statics::NewProp_floatValue,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_USWIPrologFloat_Statics::PropPointers) < 2048);
+UObject* (*const Z_Construct_UClass_USWIPrologFloat_Statics::DependentSingletons[])() = {
+	(UObject* (*)())Z_Construct_UClass_USWIPrologTerm,
+	(UObject* (*)())Z_Construct_UPackage__Script_FANTASIA,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_USWIPrologFloat_Statics::DependentSingletons) < 16);
+const UECodeGen_Private::FClassParams Z_Construct_UClass_USWIPrologFloat_Statics::ClassParams = {
+	&USWIPrologFloat::StaticClass,
+	nullptr,
+	&StaticCppClassTypeInfo,
+	DependentSingletons,
+	nullptr,
+	Z_Construct_UClass_USWIPrologFloat_Statics::PropPointers,
+	nullptr,
+	UE_ARRAY_COUNT(DependentSingletons),
+	0,
+	UE_ARRAY_COUNT(Z_Construct_UClass_USWIPrologFloat_Statics::PropPointers),
+	0,
+	0x000000A0u,
+	METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UClass_USWIPrologFloat_Statics::Class_MetaDataParams), Z_Construct_UClass_USWIPrologFloat_Statics::Class_MetaDataParams)
+};
+UClass* Z_Construct_UClass_USWIPrologFloat()
+{
+	if (!Z_Registration_Info_UClass_USWIPrologFloat.OuterSingleton)
+	{
+		UECodeGen_Private::ConstructUClass(Z_Registration_Info_UClass_USWIPrologFloat.OuterSingleton, Z_Construct_UClass_USWIPrologFloat_Statics::ClassParams);
+	}
+	return Z_Registration_Info_UClass_USWIPrologFloat.OuterSingleton;
+}
+template<> FANTASIA_API UClass* StaticClass<USWIPrologFloat>()
+{
+	return USWIPrologFloat::StaticClass();
+}
+DEFINE_VTABLE_PTR_HELPER_CTOR(USWIPrologFloat);
+USWIPrologFloat::~USWIPrologFloat() {}
+// End Class USWIPrologFloat
+
+// Begin Class USWIPrologCompound
+void USWIPrologCompound::StaticRegisterNativesUSWIPrologCompound()
+{
+}
+IMPLEMENT_CLASS_NO_AUTO_REGISTRATION(USWIPrologCompound);
+UClass* Z_Construct_UClass_USWIPrologCompound_NoRegister()
+{
+	return USWIPrologCompound::StaticClass();
+}
+struct Z_Construct_UClass_USWIPrologCompound_Statics
+{
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Class_MetaDataParams[] = {
+		{ "BlueprintType", "true" },
+		{ "ClassGroupNames", "SWIProlog" },
+		{ "IncludePath", "FANTASIATypes.h" },
+		{ "ModuleRelativePath", "Public/FANTASIATypes.h" },
+	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_compoundName_MetaData[] = {
+		{ "Category", "SWIPrologCompound" },
+		{ "ModuleRelativePath", "Public/FANTASIATypes.h" },
+	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_arguments_MetaData[] = {
+		{ "Category", "SWIPrologCompound" },
+		{ "ModuleRelativePath", "Public/FANTASIATypes.h" },
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FStrPropertyParams NewProp_compoundName;
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_arguments_Inner;
+	static const UECodeGen_Private::FArrayPropertyParams NewProp_arguments;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+	static UObject* (*const DependentSingletons[])();
+	static constexpr FCppClassTypeInfoStatic StaticCppClassTypeInfo = {
+		TCppClassTypeTraits<USWIPrologCompound>::IsAbstract,
+	};
+	static const UECodeGen_Private::FClassParams ClassParams;
+};
+const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_USWIPrologCompound_Statics::NewProp_compoundName = { "compoundName", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(USWIPrologCompound, compoundName), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_compoundName_MetaData), NewProp_compoundName_MetaData) };
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_USWIPrologCompound_Statics::NewProp_arguments_Inner = { "arguments", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, Z_Construct_UClass_USWIPrologTerm_NoRegister, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FArrayPropertyParams Z_Construct_UClass_USWIPrologCompound_Statics::NewProp_arguments = { "arguments", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(USWIPrologCompound, arguments), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_arguments_MetaData), NewProp_arguments_MetaData) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_USWIPrologCompound_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_USWIPrologCompound_Statics::NewProp_compoundName,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_USWIPrologCompound_Statics::NewProp_arguments_Inner,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_USWIPrologCompound_Statics::NewProp_arguments,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_USWIPrologCompound_Statics::PropPointers) < 2048);
+UObject* (*const Z_Construct_UClass_USWIPrologCompound_Statics::DependentSingletons[])() = {
+	(UObject* (*)())Z_Construct_UClass_USWIPrologTerm,
+	(UObject* (*)())Z_Construct_UPackage__Script_FANTASIA,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_USWIPrologCompound_Statics::DependentSingletons) < 16);
+const UECodeGen_Private::FClassParams Z_Construct_UClass_USWIPrologCompound_Statics::ClassParams = {
+	&USWIPrologCompound::StaticClass,
+	nullptr,
+	&StaticCppClassTypeInfo,
+	DependentSingletons,
+	nullptr,
+	Z_Construct_UClass_USWIPrologCompound_Statics::PropPointers,
+	nullptr,
+	UE_ARRAY_COUNT(DependentSingletons),
+	0,
+	UE_ARRAY_COUNT(Z_Construct_UClass_USWIPrologCompound_Statics::PropPointers),
+	0,
+	0x000000A0u,
+	METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UClass_USWIPrologCompound_Statics::Class_MetaDataParams), Z_Construct_UClass_USWIPrologCompound_Statics::Class_MetaDataParams)
+};
+UClass* Z_Construct_UClass_USWIPrologCompound()
+{
+	if (!Z_Registration_Info_UClass_USWIPrologCompound.OuterSingleton)
+	{
+		UECodeGen_Private::ConstructUClass(Z_Registration_Info_UClass_USWIPrologCompound.OuterSingleton, Z_Construct_UClass_USWIPrologCompound_Statics::ClassParams);
+	}
+	return Z_Registration_Info_UClass_USWIPrologCompound.OuterSingleton;
+}
+template<> FANTASIA_API UClass* StaticClass<USWIPrologCompound>()
+{
+	return USWIPrologCompound::StaticClass();
+}
+DEFINE_VTABLE_PTR_HELPER_CTOR(USWIPrologCompound);
+USWIPrologCompound::~USWIPrologCompound() {}
+// End Class USWIPrologCompound
+
+// Begin Class USWIPrologList
+void USWIPrologList::StaticRegisterNativesUSWIPrologList()
+{
+}
+IMPLEMENT_CLASS_NO_AUTO_REGISTRATION(USWIPrologList);
+UClass* Z_Construct_UClass_USWIPrologList_NoRegister()
+{
+	return USWIPrologList::StaticClass();
+}
+struct Z_Construct_UClass_USWIPrologList_Statics
+{
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Class_MetaDataParams[] = {
+		{ "BlueprintType", "true" },
+		{ "ClassGroupNames", "SWIProlog" },
+		{ "IncludePath", "FANTASIATypes.h" },
+		{ "ModuleRelativePath", "Public/FANTASIATypes.h" },
+	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_elements_MetaData[] = {
+		{ "Category", "SWIPrologList" },
+		{ "ModuleRelativePath", "Public/FANTASIATypes.h" },
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_elements_Inner;
+	static const UECodeGen_Private::FArrayPropertyParams NewProp_elements;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+	static UObject* (*const DependentSingletons[])();
+	static constexpr FCppClassTypeInfoStatic StaticCppClassTypeInfo = {
+		TCppClassTypeTraits<USWIPrologList>::IsAbstract,
+	};
+	static const UECodeGen_Private::FClassParams ClassParams;
+};
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_USWIPrologList_Statics::NewProp_elements_Inner = { "elements", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, Z_Construct_UClass_USWIPrologTerm_NoRegister, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FArrayPropertyParams Z_Construct_UClass_USWIPrologList_Statics::NewProp_elements = { "elements", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(USWIPrologList, elements), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_elements_MetaData), NewProp_elements_MetaData) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_USWIPrologList_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_USWIPrologList_Statics::NewProp_elements_Inner,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_USWIPrologList_Statics::NewProp_elements,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_USWIPrologList_Statics::PropPointers) < 2048);
+UObject* (*const Z_Construct_UClass_USWIPrologList_Statics::DependentSingletons[])() = {
+	(UObject* (*)())Z_Construct_UClass_USWIPrologTerm,
+	(UObject* (*)())Z_Construct_UPackage__Script_FANTASIA,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_USWIPrologList_Statics::DependentSingletons) < 16);
+const UECodeGen_Private::FClassParams Z_Construct_UClass_USWIPrologList_Statics::ClassParams = {
+	&USWIPrologList::StaticClass,
+	nullptr,
+	&StaticCppClassTypeInfo,
+	DependentSingletons,
+	nullptr,
+	Z_Construct_UClass_USWIPrologList_Statics::PropPointers,
+	nullptr,
+	UE_ARRAY_COUNT(DependentSingletons),
+	0,
+	UE_ARRAY_COUNT(Z_Construct_UClass_USWIPrologList_Statics::PropPointers),
+	0,
+	0x000000A0u,
+	METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UClass_USWIPrologList_Statics::Class_MetaDataParams), Z_Construct_UClass_USWIPrologList_Statics::Class_MetaDataParams)
+};
+UClass* Z_Construct_UClass_USWIPrologList()
+{
+	if (!Z_Registration_Info_UClass_USWIPrologList.OuterSingleton)
+	{
+		UECodeGen_Private::ConstructUClass(Z_Registration_Info_UClass_USWIPrologList.OuterSingleton, Z_Construct_UClass_USWIPrologList_Statics::ClassParams);
+	}
+	return Z_Registration_Info_UClass_USWIPrologList.OuterSingleton;
+}
+template<> FANTASIA_API UClass* StaticClass<USWIPrologList>()
+{
+	return USWIPrologList::StaticClass();
+}
+DEFINE_VTABLE_PTR_HELPER_CTOR(USWIPrologList);
+USWIPrologList::~USWIPrologList() {}
+// End Class USWIPrologList
+
+// Begin Class USWIPrologHeadToTail
+void USWIPrologHeadToTail::StaticRegisterNativesUSWIPrologHeadToTail()
+{
+}
+IMPLEMENT_CLASS_NO_AUTO_REGISTRATION(USWIPrologHeadToTail);
+UClass* Z_Construct_UClass_USWIPrologHeadToTail_NoRegister()
+{
+	return USWIPrologHeadToTail::StaticClass();
+}
+struct Z_Construct_UClass_USWIPrologHeadToTail_Statics
+{
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Class_MetaDataParams[] = {
+		{ "BlueprintType", "true" },
+		{ "ClassGroupNames", "SWIProlog" },
+		{ "IncludePath", "FANTASIATypes.h" },
+		{ "ModuleRelativePath", "Public/FANTASIATypes.h" },
+	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_headElements_MetaData[] = {
+		{ "Category", "SWIPrologHeadToTail" },
+		{ "ModuleRelativePath", "Public/FANTASIATypes.h" },
+	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_tail_MetaData[] = {
+		{ "AllowedClasses", "USWIPrologTerm, USWIPrologList, USWIPrologHeatToTail" },
+		{ "Category", "SWIPrologHeadToTail" },
+		{ "ModuleRelativePath", "Public/FANTASIATypes.h" },
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_headElements_Inner;
+	static const UECodeGen_Private::FArrayPropertyParams NewProp_headElements;
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_tail;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+	static UObject* (*const DependentSingletons[])();
+	static constexpr FCppClassTypeInfoStatic StaticCppClassTypeInfo = {
+		TCppClassTypeTraits<USWIPrologHeadToTail>::IsAbstract,
+	};
+	static const UECodeGen_Private::FClassParams ClassParams;
+};
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_USWIPrologHeadToTail_Statics::NewProp_headElements_Inner = { "headElements", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, Z_Construct_UClass_USWIPrologTerm_NoRegister, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FArrayPropertyParams Z_Construct_UClass_USWIPrologHeadToTail_Statics::NewProp_headElements = { "headElements", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(USWIPrologHeadToTail, headElements), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_headElements_MetaData), NewProp_headElements_MetaData) };
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_USWIPrologHeadToTail_Statics::NewProp_tail = { "tail", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(USWIPrologHeadToTail, tail), Z_Construct_UClass_USWIPrologTerm_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_tail_MetaData), NewProp_tail_MetaData) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_USWIPrologHeadToTail_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_USWIPrologHeadToTail_Statics::NewProp_headElements_Inner,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_USWIPrologHeadToTail_Statics::NewProp_headElements,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_USWIPrologHeadToTail_Statics::NewProp_tail,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_USWIPrologHeadToTail_Statics::PropPointers) < 2048);
+UObject* (*const Z_Construct_UClass_USWIPrologHeadToTail_Statics::DependentSingletons[])() = {
+	(UObject* (*)())Z_Construct_UClass_USWIPrologTerm,
+	(UObject* (*)())Z_Construct_UPackage__Script_FANTASIA,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_USWIPrologHeadToTail_Statics::DependentSingletons) < 16);
+const UECodeGen_Private::FClassParams Z_Construct_UClass_USWIPrologHeadToTail_Statics::ClassParams = {
+	&USWIPrologHeadToTail::StaticClass,
+	nullptr,
+	&StaticCppClassTypeInfo,
+	DependentSingletons,
+	nullptr,
+	Z_Construct_UClass_USWIPrologHeadToTail_Statics::PropPointers,
+	nullptr,
+	UE_ARRAY_COUNT(DependentSingletons),
+	0,
+	UE_ARRAY_COUNT(Z_Construct_UClass_USWIPrologHeadToTail_Statics::PropPointers),
+	0,
+	0x000000A0u,
+	METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UClass_USWIPrologHeadToTail_Statics::Class_MetaDataParams), Z_Construct_UClass_USWIPrologHeadToTail_Statics::Class_MetaDataParams)
+};
+UClass* Z_Construct_UClass_USWIPrologHeadToTail()
+{
+	if (!Z_Registration_Info_UClass_USWIPrologHeadToTail.OuterSingleton)
+	{
+		UECodeGen_Private::ConstructUClass(Z_Registration_Info_UClass_USWIPrologHeadToTail.OuterSingleton, Z_Construct_UClass_USWIPrologHeadToTail_Statics::ClassParams);
+	}
+	return Z_Registration_Info_UClass_USWIPrologHeadToTail.OuterSingleton;
+}
+template<> FANTASIA_API UClass* StaticClass<USWIPrologHeadToTail>()
+{
+	return USWIPrologHeadToTail::StaticClass();
+}
+DEFINE_VTABLE_PTR_HELPER_CTOR(USWIPrologHeadToTail);
+USWIPrologHeadToTail::~USWIPrologHeadToTail() {}
+// End Class USWIPrologHeadToTail
+
+// Begin Class USWIPrologCut
+void USWIPrologCut::StaticRegisterNativesUSWIPrologCut()
+{
+}
+IMPLEMENT_CLASS_NO_AUTO_REGISTRATION(USWIPrologCut);
+UClass* Z_Construct_UClass_USWIPrologCut_NoRegister()
+{
+	return USWIPrologCut::StaticClass();
+}
+struct Z_Construct_UClass_USWIPrologCut_Statics
+{
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Class_MetaDataParams[] = {
+		{ "BlueprintType", "true" },
+		{ "ClassGroupNames", "SWIProlog" },
+		{ "IncludePath", "FANTASIATypes.h" },
+		{ "ModuleRelativePath", "Public/FANTASIATypes.h" },
+	};
+#endif // WITH_METADATA
+	static UObject* (*const DependentSingletons[])();
+	static constexpr FCppClassTypeInfoStatic StaticCppClassTypeInfo = {
+		TCppClassTypeTraits<USWIPrologCut>::IsAbstract,
+	};
+	static const UECodeGen_Private::FClassParams ClassParams;
+};
+UObject* (*const Z_Construct_UClass_USWIPrologCut_Statics::DependentSingletons[])() = {
+	(UObject* (*)())Z_Construct_UClass_USWIPrologTerm,
+	(UObject* (*)())Z_Construct_UPackage__Script_FANTASIA,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_USWIPrologCut_Statics::DependentSingletons) < 16);
+const UECodeGen_Private::FClassParams Z_Construct_UClass_USWIPrologCut_Statics::ClassParams = {
+	&USWIPrologCut::StaticClass,
+	nullptr,
+	&StaticCppClassTypeInfo,
+	DependentSingletons,
+	nullptr,
+	nullptr,
+	nullptr,
+	UE_ARRAY_COUNT(DependentSingletons),
+	0,
+	0,
+	0,
+	0x000000A0u,
+	METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UClass_USWIPrologCut_Statics::Class_MetaDataParams), Z_Construct_UClass_USWIPrologCut_Statics::Class_MetaDataParams)
+};
+UClass* Z_Construct_UClass_USWIPrologCut()
+{
+	if (!Z_Registration_Info_UClass_USWIPrologCut.OuterSingleton)
+	{
+		UECodeGen_Private::ConstructUClass(Z_Registration_Info_UClass_USWIPrologCut.OuterSingleton, Z_Construct_UClass_USWIPrologCut_Statics::ClassParams);
+	}
+	return Z_Registration_Info_UClass_USWIPrologCut.OuterSingleton;
+}
+template<> FANTASIA_API UClass* StaticClass<USWIPrologCut>()
+{
+	return USWIPrologCut::StaticClass();
+}
+DEFINE_VTABLE_PTR_HELPER_CTOR(USWIPrologCut);
+USWIPrologCut::~USWIPrologCut() {}
+// End Class USWIPrologCut
+
+// Begin Class USWIPrologSolution
+void USWIPrologSolution::StaticRegisterNativesUSWIPrologSolution()
+{
+}
+IMPLEMENT_CLASS_NO_AUTO_REGISTRATION(USWIPrologSolution);
+UClass* Z_Construct_UClass_USWIPrologSolution_NoRegister()
+{
+	return USWIPrologSolution::StaticClass();
+}
+struct Z_Construct_UClass_USWIPrologSolution_Statics
+{
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Class_MetaDataParams[] = {
+		{ "BlueprintType", "true" },
+		{ "ClassGroupNames", "SWIProlog" },
+		{ "IncludePath", "FANTASIATypes.h" },
+		{ "ModuleRelativePath", "Public/FANTASIATypes.h" },
+	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_resultSet_MetaData[] = {
+		{ "Category", "SWIPrologSolution" },
+		{ "ModuleRelativePath", "Public/FANTASIATypes.h" },
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FStrPropertyParams NewProp_resultSet_Inner;
+	static const UECodeGen_Private::FArrayPropertyParams NewProp_resultSet;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+	static UObject* (*const DependentSingletons[])();
+	static constexpr FCppClassTypeInfoStatic StaticCppClassTypeInfo = {
+		TCppClassTypeTraits<USWIPrologSolution>::IsAbstract,
+	};
+	static const UECodeGen_Private::FClassParams ClassParams;
+};
+const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_USWIPrologSolution_Statics::NewProp_resultSet_Inner = { "resultSet", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FArrayPropertyParams Z_Construct_UClass_USWIPrologSolution_Statics::NewProp_resultSet = { "resultSet", nullptr, (EPropertyFlags)0x0010000000000014, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(USWIPrologSolution, resultSet), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_resultSet_MetaData), NewProp_resultSet_MetaData) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_USWIPrologSolution_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_USWIPrologSolution_Statics::NewProp_resultSet_Inner,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_USWIPrologSolution_Statics::NewProp_resultSet,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_USWIPrologSolution_Statics::PropPointers) < 2048);
+UObject* (*const Z_Construct_UClass_USWIPrologSolution_Statics::DependentSingletons[])() = {
+	(UObject* (*)())Z_Construct_UClass_UObject,
+	(UObject* (*)())Z_Construct_UPackage__Script_FANTASIA,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_USWIPrologSolution_Statics::DependentSingletons) < 16);
+const UECodeGen_Private::FClassParams Z_Construct_UClass_USWIPrologSolution_Statics::ClassParams = {
+	&USWIPrologSolution::StaticClass,
+	nullptr,
+	&StaticCppClassTypeInfo,
+	DependentSingletons,
+	nullptr,
+	Z_Construct_UClass_USWIPrologSolution_Statics::PropPointers,
+	nullptr,
+	UE_ARRAY_COUNT(DependentSingletons),
+	0,
+	UE_ARRAY_COUNT(Z_Construct_UClass_USWIPrologSolution_Statics::PropPointers),
+	0,
+	0x000000A0u,
+	METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UClass_USWIPrologSolution_Statics::Class_MetaDataParams), Z_Construct_UClass_USWIPrologSolution_Statics::Class_MetaDataParams)
+};
+UClass* Z_Construct_UClass_USWIPrologSolution()
+{
+	if (!Z_Registration_Info_UClass_USWIPrologSolution.OuterSingleton)
+	{
+		UECodeGen_Private::ConstructUClass(Z_Registration_Info_UClass_USWIPrologSolution.OuterSingleton, Z_Construct_UClass_USWIPrologSolution_Statics::ClassParams);
+	}
+	return Z_Registration_Info_UClass_USWIPrologSolution.OuterSingleton;
+}
+template<> FANTASIA_API UClass* StaticClass<USWIPrologSolution>()
+{
+	return USWIPrologSolution::StaticClass();
+}
+DEFINE_VTABLE_PTR_HELPER_CTOR(USWIPrologSolution);
+USWIPrologSolution::~USWIPrologSolution() {}
+// End Class USWIPrologSolution
+
+// Begin Enum EAzureASREnum
+static FEnumRegistrationInfo Z_Registration_Info_UEnum_EAzureASREnum;
+static UEnum* EAzureASREnum_StaticEnum()
+{
+	if (!Z_Registration_Info_UEnum_EAzureASREnum.OuterSingleton)
+	{
+		Z_Registration_Info_UEnum_EAzureASREnum.OuterSingleton = GetStaticEnum(Z_Construct_UEnum_FANTASIA_EAzureASREnum, (UObject*)Z_Construct_UPackage__Script_FANTASIA(), TEXT("EAzureASREnum"));
+	}
+	return Z_Registration_Info_UEnum_EAzureASREnum.OuterSingleton;
+}
+template<> FANTASIA_API UEnum* StaticEnum<EAzureASREnum>()
+{
+	return EAzureASREnum_StaticEnum();
+}
+struct Z_Construct_UEnum_FANTASIA_EAzureASREnum_Statics
+{
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Enum_MetaDataParams[] = {
+		{ "ASR_CONTINUOUS.Name", "ASR_CONTINUOUS" },
+		{ "ASR_ONESHOT.Name", "ASR_ONESHOT" },
+		{ "BlueprintType", "true" },
+		{ "ModuleRelativePath", "Public/FANTASIATypes.h" },
+	};
+#endif // WITH_METADATA
+	static constexpr UECodeGen_Private::FEnumeratorParam Enumerators[] = {
+		{ "ASR_CONTINUOUS", (int64)ASR_CONTINUOUS },
+		{ "ASR_ONESHOT", (int64)ASR_ONESHOT },
+	};
+	static const UECodeGen_Private::FEnumParams EnumParams;
+};
+const UECodeGen_Private::FEnumParams Z_Construct_UEnum_FANTASIA_EAzureASREnum_Statics::EnumParams = {
+	(UObject*(*)())Z_Construct_UPackage__Script_FANTASIA,
+	nullptr,
+	"EAzureASREnum",
+	"EAzureASREnum",
+	Z_Construct_UEnum_FANTASIA_EAzureASREnum_Statics::Enumerators,
+	RF_Public|RF_Transient|RF_MarkAsNative,
+	UE_ARRAY_COUNT(Z_Construct_UEnum_FANTASIA_EAzureASREnum_Statics::Enumerators),
+	EEnumFlags::None,
+	(uint8)UEnum::ECppForm::Regular,
+	METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UEnum_FANTASIA_EAzureASREnum_Statics::Enum_MetaDataParams), Z_Construct_UEnum_FANTASIA_EAzureASREnum_Statics::Enum_MetaDataParams)
+};
+UEnum* Z_Construct_UEnum_FANTASIA_EAzureASREnum()
+{
+	if (!Z_Registration_Info_UEnum_EAzureASREnum.InnerSingleton)
+	{
+		UECodeGen_Private::ConstructUEnum(Z_Registration_Info_UEnum_EAzureASREnum.InnerSingleton, Z_Construct_UEnum_FANTASIA_EAzureASREnum_Statics::EnumParams);
+	}
+	return Z_Registration_Info_UEnum_EAzureASREnum.InnerSingleton;
+}
+// End Enum EAzureASREnum
+
+// Begin Enum GPTRoleType
+static FEnumRegistrationInfo Z_Registration_Info_UEnum_GPTRoleType;
+static UEnum* GPTRoleType_StaticEnum()
+{
+	if (!Z_Registration_Info_UEnum_GPTRoleType.OuterSingleton)
+	{
+		Z_Registration_Info_UEnum_GPTRoleType.OuterSingleton = GetStaticEnum(Z_Construct_UEnum_FANTASIA_GPTRoleType, (UObject*)Z_Construct_UPackage__Script_FANTASIA(), TEXT("GPTRoleType"));
+	}
+	return Z_Registration_Info_UEnum_GPTRoleType.OuterSingleton;
+}
+template<> FANTASIA_API UEnum* StaticEnum<GPTRoleType>()
+{
+	return GPTRoleType_StaticEnum();
+}
+struct Z_Construct_UEnum_FANTASIA_GPTRoleType_Statics
+{
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Enum_MetaDataParams[] = {
+		{ "ASSISTANT.DisplayName", "ASSISTANT" },
+		{ "ASSISTANT.Name", "GPTRoleType::ASSISTANT" },
+		{ "BlueprintType", "true" },
+		{ "FUNCTION.DisplayName", "FUNCTION" },
+		{ "FUNCTION.Name", "GPTRoleType::FUNCTION" },
+		{ "ModuleRelativePath", "Public/FANTASIATypes.h" },
+		{ "SYSTEM.DisplayName", "SYSTEM" },
+		{ "SYSTEM.Name", "GPTRoleType::SYSTEM" },
+		{ "USER.DisplayName", "USER" },
+		{ "USER.Name", "GPTRoleType::USER" },
+	};
+#endif // WITH_METADATA
+	static constexpr UECodeGen_Private::FEnumeratorParam Enumerators[] = {
+		{ "GPTRoleType::SYSTEM", (int64)GPTRoleType::SYSTEM },
+		{ "GPTRoleType::ASSISTANT", (int64)GPTRoleType::ASSISTANT },
+		{ "GPTRoleType::USER", (int64)GPTRoleType::USER },
+		{ "GPTRoleType::FUNCTION", (int64)GPTRoleType::FUNCTION },
+	};
+	static const UECodeGen_Private::FEnumParams EnumParams;
+};
+const UECodeGen_Private::FEnumParams Z_Construct_UEnum_FANTASIA_GPTRoleType_Statics::EnumParams = {
+	(UObject*(*)())Z_Construct_UPackage__Script_FANTASIA,
+	nullptr,
+	"GPTRoleType",
+	"GPTRoleType",
+	Z_Construct_UEnum_FANTASIA_GPTRoleType_Statics::Enumerators,
+	RF_Public|RF_Transient|RF_MarkAsNative,
+	UE_ARRAY_COUNT(Z_Construct_UEnum_FANTASIA_GPTRoleType_Statics::Enumerators),
+	EEnumFlags::None,
+	(uint8)UEnum::ECppForm::EnumClass,
+	METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UEnum_FANTASIA_GPTRoleType_Statics::Enum_MetaDataParams), Z_Construct_UEnum_FANTASIA_GPTRoleType_Statics::Enum_MetaDataParams)
+};
+UEnum* Z_Construct_UEnum_FANTASIA_GPTRoleType()
+{
+	if (!Z_Registration_Info_UEnum_GPTRoleType.InnerSingleton)
+	{
+		UECodeGen_Private::ConstructUEnum(Z_Registration_Info_UEnum_GPTRoleType.InnerSingleton, Z_Construct_UEnum_FANTASIA_GPTRoleType_Statics::EnumParams);
+	}
+	return Z_Registration_Info_UEnum_GPTRoleType.InnerSingleton;
+}
+// End Enum GPTRoleType
+
+// Begin ScriptStruct FChatTurn
+static FStructRegistrationInfo Z_Registration_Info_UScriptStruct_ChatTurn;
+class UScriptStruct* FChatTurn::StaticStruct()
+{
+	if (!Z_Registration_Info_UScriptStruct_ChatTurn.OuterSingleton)
+	{
+		Z_Registration_Info_UScriptStruct_ChatTurn.OuterSingleton = GetStaticStruct(Z_Construct_UScriptStruct_FChatTurn, (UObject*)Z_Construct_UPackage__Script_FANTASIA(), TEXT("ChatTurn"));
+	}
+	return Z_Registration_Info_UScriptStruct_ChatTurn.OuterSingleton;
+}
+template<> FANTASIA_API UScriptStruct* StaticStruct<FChatTurn>()
+{
+	return FChatTurn::StaticStruct();
+}
+struct Z_Construct_UScriptStruct_FChatTurn_Statics
+{
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Struct_MetaDataParams[] = {
+		{ "BlueprintType", "true" },
+		{ "IsBlueprintBase", "true" },
+		{ "ModuleRelativePath", "Public/FANTASIATypes.h" },
+	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_role_MetaData[] = {
+		{ "Category", "ChatTurn" },
+		{ "ModuleRelativePath", "Public/FANTASIATypes.h" },
+	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_content_MetaData[] = {
+		{ "Category", "ChatTurn" },
+		{ "ModuleRelativePath", "Public/FANTASIATypes.h" },
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FBytePropertyParams NewProp_role_Underlying;
+	static const UECodeGen_Private::FEnumPropertyParams NewProp_role;
+	static const UECodeGen_Private::FStrPropertyParams NewProp_content;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+	static void* NewStructOps()
+	{
+		return (UScriptStruct::ICppStructOps*)new UScriptStruct::TCppStructOps<FChatTurn>();
+	}
+	static const UECodeGen_Private::FStructParams StructParams;
+};
+const UECodeGen_Private::FBytePropertyParams Z_Construct_UScriptStruct_FChatTurn_Statics::NewProp_role_Underlying = { "UnderlyingType", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Byte, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, nullptr, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FEnumPropertyParams Z_Construct_UScriptStruct_FChatTurn_Statics::NewProp_role = { "role", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Enum, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(FChatTurn, role), Z_Construct_UEnum_FANTASIA_GPTRoleType, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_role_MetaData), NewProp_role_MetaData) }; // 1459499313
+const UECodeGen_Private::FStrPropertyParams Z_Construct_UScriptStruct_FChatTurn_Statics::NewProp_content = { "content", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(FChatTurn, content), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_content_MetaData), NewProp_content_MetaData) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UScriptStruct_FChatTurn_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FChatTurn_Statics::NewProp_role_Underlying,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FChatTurn_Statics::NewProp_role,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FChatTurn_Statics::NewProp_content,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FChatTurn_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FStructParams Z_Construct_UScriptStruct_FChatTurn_Statics::StructParams = {
+	(UObject* (*)())Z_Construct_UPackage__Script_FANTASIA,
+	nullptr,
+	&NewStructOps,
+	"ChatTurn",
+	Z_Construct_UScriptStruct_FChatTurn_Statics::PropPointers,
+	UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FChatTurn_Statics::PropPointers),
+	sizeof(FChatTurn),
+	alignof(FChatTurn),
+	RF_Public|RF_Transient|RF_MarkAsNative,
+	EStructFlags(0x00000001),
+	METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FChatTurn_Statics::Struct_MetaDataParams), Z_Construct_UScriptStruct_FChatTurn_Statics::Struct_MetaDataParams)
+};
+UScriptStruct* Z_Construct_UScriptStruct_FChatTurn()
+{
+	if (!Z_Registration_Info_UScriptStruct_ChatTurn.InnerSingleton)
+	{
+		UECodeGen_Private::ConstructUScriptStruct(Z_Registration_Info_UScriptStruct_ChatTurn.InnerSingleton, Z_Construct_UScriptStruct_FChatTurn_Statics::StructParams);
+	}
+	return Z_Registration_Info_UScriptStruct_ChatTurn.InnerSingleton;
+}
+// End ScriptStruct FChatTurn
+
+// Begin Delegate FIncomingGPTResponseEvent
+struct Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature_Statics
+{
+	struct _Script_FANTASIA_eventIncomingGPTResponseEvent_Parms
+	{
+		FString GPTResponse;
+		GPTRoleType role;
+	};
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
+		{ "ModuleRelativePath", "Public/FANTASIATypes.h" },
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FStrPropertyParams NewProp_GPTResponse;
+	static const UECodeGen_Private::FBytePropertyParams NewProp_role_Underlying;
+	static const UECodeGen_Private::FEnumPropertyParams NewProp_role;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+	static const UECodeGen_Private::FFunctionParams FuncParams;
+};
+const UECodeGen_Private::FStrPropertyParams Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature_Statics::NewProp_GPTResponse = { "GPTResponse", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(_Script_FANTASIA_eventIncomingGPTResponseEvent_Parms, GPTResponse), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FBytePropertyParams Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature_Statics::NewProp_role_Underlying = { "UnderlyingType", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Byte, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, nullptr, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FEnumPropertyParams Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature_Statics::NewProp_role = { "role", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Enum, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(_Script_FANTASIA_eventIncomingGPTResponseEvent_Parms, role), Z_Construct_UEnum_FANTASIA_GPTRoleType, METADATA_PARAMS(0, nullptr) }; // 1459499313
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature_Statics::NewProp_GPTResponse,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature_Statics::NewProp_role_Underlying,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature_Statics::NewProp_role,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature_Statics::FuncParams = { (UObject*(*)())Z_Construct_UPackage__Script_FANTASIA, nullptr, "IncomingGPTResponseEvent__DelegateSignature", nullptr, nullptr, Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature_Statics::PropPointers), sizeof(Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature_Statics::_Script_FANTASIA_eventIncomingGPTResponseEvent_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00130000, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature_Statics::Function_MetaDataParams), Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature_Statics::Function_MetaDataParams) };
+static_assert(sizeof(Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature_Statics::_Script_FANTASIA_eventIncomingGPTResponseEvent_Parms) < MAX_uint16);
+UFunction* Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature()
+{
+	static UFunction* ReturnFunction = nullptr;
+	if (!ReturnFunction)
+	{
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature_Statics::FuncParams);
+	}
+	return ReturnFunction;
+}
+void FIncomingGPTResponseEvent_DelegateWrapper(const FMulticastScriptDelegate& IncomingGPTResponseEvent, const FString& GPTResponse, GPTRoleType role)
+{
+	struct _Script_FANTASIA_eventIncomingGPTResponseEvent_Parms
+	{
+		FString GPTResponse;
+		GPTRoleType role;
+	};
+	_Script_FANTASIA_eventIncomingGPTResponseEvent_Parms Parms;
+	Parms.GPTResponse=GPTResponse;
+	Parms.role=role;
+	IncomingGPTResponseEvent.ProcessMulticastDelegate<UObject>(&Parms);
+}
+// End Delegate FIncomingGPTResponseEvent
+
+// Begin Delegate FIncomingGPTStreamResponseEvent
+struct Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTStreamResponseEvent__DelegateSignature_Statics
+{
+	struct _Script_FANTASIA_eventIncomingGPTStreamResponseEvent_Parms
+	{
+		FString GPTResponse;
+		GPTRoleType role;
+		bool endStream;
+	};
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
+		{ "ModuleRelativePath", "Public/FANTASIATypes.h" },
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FStrPropertyParams NewProp_GPTResponse;
+	static const UECodeGen_Private::FBytePropertyParams NewProp_role_Underlying;
+	static const UECodeGen_Private::FEnumPropertyParams NewProp_role;
+	static void NewProp_endStream_SetBit(void* Obj);
+	static const UECodeGen_Private::FBoolPropertyParams NewProp_endStream;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+	static const UECodeGen_Private::FFunctionParams FuncParams;
+};
+const UECodeGen_Private::FStrPropertyParams Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTStreamResponseEvent__DelegateSignature_Statics::NewProp_GPTResponse = { "GPTResponse", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(_Script_FANTASIA_eventIncomingGPTStreamResponseEvent_Parms, GPTResponse), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FBytePropertyParams Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTStreamResponseEvent__DelegateSignature_Statics::NewProp_role_Underlying = { "UnderlyingType", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Byte, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, nullptr, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FEnumPropertyParams Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTStreamResponseEvent__DelegateSignature_Statics::NewProp_role = { "role", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Enum, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(_Script_FANTASIA_eventIncomingGPTStreamResponseEvent_Parms, role), Z_Construct_UEnum_FANTASIA_GPTRoleType, METADATA_PARAMS(0, nullptr) }; // 1459499313
+void Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTStreamResponseEvent__DelegateSignature_Statics::NewProp_endStream_SetBit(void* Obj)
+{
+	((_Script_FANTASIA_eventIncomingGPTStreamResponseEvent_Parms*)Obj)->endStream = 1;
+}
+const UECodeGen_Private::FBoolPropertyParams Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTStreamResponseEvent__DelegateSignature_Statics::NewProp_endStream = { "endStream", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, sizeof(bool), sizeof(_Script_FANTASIA_eventIncomingGPTStreamResponseEvent_Parms), &Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTStreamResponseEvent__DelegateSignature_Statics::NewProp_endStream_SetBit, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTStreamResponseEvent__DelegateSignature_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTStreamResponseEvent__DelegateSignature_Statics::NewProp_GPTResponse,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTStreamResponseEvent__DelegateSignature_Statics::NewProp_role_Underlying,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTStreamResponseEvent__DelegateSignature_Statics::NewProp_role,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTStreamResponseEvent__DelegateSignature_Statics::NewProp_endStream,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTStreamResponseEvent__DelegateSignature_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTStreamResponseEvent__DelegateSignature_Statics::FuncParams = { (UObject*(*)())Z_Construct_UPackage__Script_FANTASIA, nullptr, "IncomingGPTStreamResponseEvent__DelegateSignature", nullptr, nullptr, Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTStreamResponseEvent__DelegateSignature_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTStreamResponseEvent__DelegateSignature_Statics::PropPointers), sizeof(Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTStreamResponseEvent__DelegateSignature_Statics::_Script_FANTASIA_eventIncomingGPTStreamResponseEvent_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00130000, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTStreamResponseEvent__DelegateSignature_Statics::Function_MetaDataParams), Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTStreamResponseEvent__DelegateSignature_Statics::Function_MetaDataParams) };
+static_assert(sizeof(Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTStreamResponseEvent__DelegateSignature_Statics::_Script_FANTASIA_eventIncomingGPTStreamResponseEvent_Parms) < MAX_uint16);
+UFunction* Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTStreamResponseEvent__DelegateSignature()
+{
+	static UFunction* ReturnFunction = nullptr;
+	if (!ReturnFunction)
+	{
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTStreamResponseEvent__DelegateSignature_Statics::FuncParams);
+	}
+	return ReturnFunction;
+}
+void FIncomingGPTStreamResponseEvent_DelegateWrapper(const FMulticastScriptDelegate& IncomingGPTStreamResponseEvent, const FString& GPTResponse, GPTRoleType role, bool endStream)
+{
+	struct _Script_FANTASIA_eventIncomingGPTStreamResponseEvent_Parms
+	{
+		FString GPTResponse;
+		GPTRoleType role;
+		bool endStream;
+	};
+	_Script_FANTASIA_eventIncomingGPTStreamResponseEvent_Parms Parms;
+	Parms.GPTResponse=GPTResponse;
+	Parms.role=role;
+	Parms.endStream=endStream ? true : false;
+	IncomingGPTStreamResponseEvent.ProcessMulticastDelegate<UObject>(&Parms);
+}
+// End Delegate FIncomingGPTStreamResponseEvent
 
 // Begin Enum InfluenceNodeType
 static FEnumRegistrationInfo Z_Registration_Info_UEnum_InfluenceNodeType;
@@ -782,6 +2249,10 @@ struct Z_Construct_UClass_UNLUEntity_Statics
 		{ "Category", "NLUEntity" },
 		{ "ModuleRelativePath", "Public/FANTASIATypes.h" },
 	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_childName_MetaData[] = {
+		{ "Category", "NLUEntity" },
+		{ "ModuleRelativePath", "Public/FANTASIATypes.h" },
+	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_children_MetaData[] = {
 		{ "Category", "NLUEntity" },
 		{ "ModuleRelativePath", "Public/FANTASIATypes.h" },
@@ -792,6 +2263,7 @@ struct Z_Construct_UClass_UNLUEntity_Statics
 	static const UECodeGen_Private::FBytePropertyParams NewProp_startIndex;
 	static const UECodeGen_Private::FBytePropertyParams NewProp_endIndex;
 	static const UECodeGen_Private::FFloatPropertyParams NewProp_score;
+	static const UECodeGen_Private::FStrPropertyParams NewProp_childName;
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_children_Inner;
 	static const UECodeGen_Private::FArrayPropertyParams NewProp_children;
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
@@ -806,6 +2278,7 @@ const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_UNLUEntity_Static
 const UECodeGen_Private::FBytePropertyParams Z_Construct_UClass_UNLUEntity_Statics::NewProp_startIndex = { "startIndex", nullptr, (EPropertyFlags)0x0010000000000004, UECodeGen_Private::EPropertyGenFlags::Byte, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UNLUEntity, startIndex), nullptr, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_startIndex_MetaData), NewProp_startIndex_MetaData) };
 const UECodeGen_Private::FBytePropertyParams Z_Construct_UClass_UNLUEntity_Statics::NewProp_endIndex = { "endIndex", nullptr, (EPropertyFlags)0x0010000000000004, UECodeGen_Private::EPropertyGenFlags::Byte, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UNLUEntity, endIndex), nullptr, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_endIndex_MetaData), NewProp_endIndex_MetaData) };
 const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_UNLUEntity_Statics::NewProp_score = { "score", nullptr, (EPropertyFlags)0x0010000000000004, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UNLUEntity, score), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_score_MetaData), NewProp_score_MetaData) };
+const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_UNLUEntity_Statics::NewProp_childName = { "childName", nullptr, (EPropertyFlags)0x0010000000000004, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UNLUEntity, childName), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_childName_MetaData), NewProp_childName_MetaData) };
 const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_UNLUEntity_Statics::NewProp_children_Inner = { "children", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, Z_Construct_UClass_UNLUEntity_NoRegister, METADATA_PARAMS(0, nullptr) };
 const UECodeGen_Private::FArrayPropertyParams Z_Construct_UClass_UNLUEntity_Statics::NewProp_children = { "children", nullptr, (EPropertyFlags)0x0010000000000004, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UNLUEntity, children), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_children_MetaData), NewProp_children_MetaData) };
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_UNLUEntity_Statics::PropPointers[] = {
@@ -814,6 +2287,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_UNLUEntit
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UNLUEntity_Statics::NewProp_startIndex,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UNLUEntity_Statics::NewProp_endIndex,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UNLUEntity_Statics::NewProp_score,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UNLUEntity_Statics::NewProp_childName,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UNLUEntity_Statics::NewProp_children_Inner,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UNLUEntity_Statics::NewProp_children,
 };
@@ -1256,20 +2730,38 @@ UNeo4jResultCellSimple::~UNeo4jResultCellSimple() {}
 struct Z_CompiledInDeferFile_FID_Perforce_MetaFamily_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_Statics
 {
 	static constexpr FEnumRegisterCompiledInInfo EnumInfo[] = {
+		{ SWIPrologOperation_StaticEnum, TEXT("SWIPrologOperation"), &Z_Registration_Info_UEnum_SWIPrologOperation, CONSTRUCT_RELOAD_VERSION_INFO(FEnumReloadVersionInfo, 1261065449U) },
+		{ EAzureASREnum_StaticEnum, TEXT("EAzureASREnum"), &Z_Registration_Info_UEnum_EAzureASREnum, CONSTRUCT_RELOAD_VERSION_INFO(FEnumReloadVersionInfo, 2771402611U) },
+		{ GPTRoleType_StaticEnum, TEXT("GPTRoleType"), &Z_Registration_Info_UEnum_GPTRoleType, CONSTRUCT_RELOAD_VERSION_INFO(FEnumReloadVersionInfo, 1459499313U) },
 		{ InfluenceNodeType_StaticEnum, TEXT("InfluenceNodeType"), &Z_Registration_Info_UEnum_InfluenceNodeType, CONSTRUCT_RELOAD_VERSION_INFO(FEnumReloadVersionInfo, 3896454705U) },
 		{ BayesianNodeType_StaticEnum, TEXT("BayesianNodeType"), &Z_Registration_Info_UEnum_BayesianNodeType, CONSTRUCT_RELOAD_VERSION_INFO(FEnumReloadVersionInfo, 2887683997U) },
 		{ TTSVoiceType_StaticEnum, TEXT("TTSVoiceType"), &Z_Registration_Info_UEnum_TTSVoiceType, CONSTRUCT_RELOAD_VERSION_INFO(FEnumReloadVersionInfo, 851191106U) },
 		{ Neo4jOperation_StaticEnum, TEXT("Neo4jOperation"), &Z_Registration_Info_UEnum_Neo4jOperation, CONSTRUCT_RELOAD_VERSION_INFO(FEnumReloadVersionInfo, 652439313U) },
 	};
 	static constexpr FStructRegisterCompiledInInfo ScriptStructInfo[] = {
+		{ FSWIPrologResponse::StaticStruct, Z_Construct_UScriptStruct_FSWIPrologResponse_Statics::NewStructOps, TEXT("SWIPrologResponse"), &Z_Registration_Info_UScriptStruct_SWIPrologResponse, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FSWIPrologResponse), 1392627495U) },
+		{ FChatTurn::StaticStruct, Z_Construct_UScriptStruct_FChatTurn_Statics::NewStructOps, TEXT("ChatTurn"), &Z_Registration_Info_UScriptStruct_ChatTurn, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FChatTurn), 4210891163U) },
 		{ FTTSTimedStruct::StaticStruct, Z_Construct_UScriptStruct_FTTSTimedStruct_Statics::NewStructOps, TEXT("TTSTimedStruct"), &Z_Registration_Info_UScriptStruct_TTSTimedStruct, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FTTSTimedStruct), 3581234331U) },
 		{ FTTSData::StaticStruct, Z_Construct_UScriptStruct_FTTSData_Statics::NewStructOps, TEXT("TTSData"), &Z_Registration_Info_UScriptStruct_TTSData, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FTTSData), 983459605U) },
 		{ FNeo4jResponse::StaticStruct, Z_Construct_UScriptStruct_FNeo4jResponse_Statics::NewStructOps, TEXT("Neo4jResponse"), &Z_Registration_Info_UScriptStruct_Neo4jResponse, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FNeo4jResponse), 26987846U) },
 		{ FNLUResponse::StaticStruct, Z_Construct_UScriptStruct_FNLUResponse_Statics::NewStructOps, TEXT("NLUResponse"), &Z_Registration_Info_UScriptStruct_NLUResponse, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FNLUResponse), 667433752U) },
 	};
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
+		{ Z_Construct_UClass_USWIPrologObject, USWIPrologObject::StaticClass, TEXT("USWIPrologObject"), &Z_Registration_Info_UClass_USWIPrologObject, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(USWIPrologObject), 2336694148U) },
+		{ Z_Construct_UClass_USWIPrologRuleBody, USWIPrologRuleBody::StaticClass, TEXT("USWIPrologRuleBody"), &Z_Registration_Info_UClass_USWIPrologRuleBody, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(USWIPrologRuleBody), 341958105U) },
+		{ Z_Construct_UClass_USWIPrologRule, USWIPrologRule::StaticClass, TEXT("USWIPrologRule"), &Z_Registration_Info_UClass_USWIPrologRule, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(USWIPrologRule), 3691889708U) },
+		{ Z_Construct_UClass_USWIPrologTerm, USWIPrologTerm::StaticClass, TEXT("USWIPrologTerm"), &Z_Registration_Info_UClass_USWIPrologTerm, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(USWIPrologTerm), 3803756213U) },
+		{ Z_Construct_UClass_USWIPrologAtom, USWIPrologAtom::StaticClass, TEXT("USWIPrologAtom"), &Z_Registration_Info_UClass_USWIPrologAtom, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(USWIPrologAtom), 1616504834U) },
+		{ Z_Construct_UClass_USWIPrologVariable, USWIPrologVariable::StaticClass, TEXT("USWIPrologVariable"), &Z_Registration_Info_UClass_USWIPrologVariable, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(USWIPrologVariable), 1997011316U) },
+		{ Z_Construct_UClass_USWIPrologInteger, USWIPrologInteger::StaticClass, TEXT("USWIPrologInteger"), &Z_Registration_Info_UClass_USWIPrologInteger, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(USWIPrologInteger), 3958549796U) },
+		{ Z_Construct_UClass_USWIPrologFloat, USWIPrologFloat::StaticClass, TEXT("USWIPrologFloat"), &Z_Registration_Info_UClass_USWIPrologFloat, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(USWIPrologFloat), 3764542981U) },
+		{ Z_Construct_UClass_USWIPrologCompound, USWIPrologCompound::StaticClass, TEXT("USWIPrologCompound"), &Z_Registration_Info_UClass_USWIPrologCompound, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(USWIPrologCompound), 3619933292U) },
+		{ Z_Construct_UClass_USWIPrologList, USWIPrologList::StaticClass, TEXT("USWIPrologList"), &Z_Registration_Info_UClass_USWIPrologList, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(USWIPrologList), 3474724491U) },
+		{ Z_Construct_UClass_USWIPrologHeadToTail, USWIPrologHeadToTail::StaticClass, TEXT("USWIPrologHeadToTail"), &Z_Registration_Info_UClass_USWIPrologHeadToTail, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(USWIPrologHeadToTail), 2290551282U) },
+		{ Z_Construct_UClass_USWIPrologCut, USWIPrologCut::StaticClass, TEXT("USWIPrologCut"), &Z_Registration_Info_UClass_USWIPrologCut, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(USWIPrologCut), 4183630570U) },
+		{ Z_Construct_UClass_USWIPrologSolution, USWIPrologSolution::StaticClass, TEXT("USWIPrologSolution"), &Z_Registration_Info_UClass_USWIPrologSolution, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(USWIPrologSolution), 3500098461U) },
 		{ Z_Construct_UClass_UNLUIntent, UNLUIntent::StaticClass, TEXT("UNLUIntent"), &Z_Registration_Info_UClass_UNLUIntent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UNLUIntent), 980026208U) },
-		{ Z_Construct_UClass_UNLUEntity, UNLUEntity::StaticClass, TEXT("UNLUEntity"), &Z_Registration_Info_UClass_UNLUEntity, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UNLUEntity), 1180460484U) },
+		{ Z_Construct_UClass_UNLUEntity, UNLUEntity::StaticClass, TEXT("UNLUEntity"), &Z_Registration_Info_UClass_UNLUEntity, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UNLUEntity), 937203255U) },
 		{ Z_Construct_UClass_UNeo4jResultRow, UNeo4jResultRow::StaticClass, TEXT("UNeo4jResultRow"), &Z_Registration_Info_UClass_UNeo4jResultRow, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UNeo4jResultRow), 3460069060U) },
 		{ Z_Construct_UClass_UNeo4jResultCell, UNeo4jResultCell::StaticClass, TEXT("UNeo4jResultCell"), &Z_Registration_Info_UClass_UNeo4jResultCell, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UNeo4jResultCell), 3803135964U) },
 		{ Z_Construct_UClass_UNeo4jResultCellNode, UNeo4jResultCellNode::StaticClass, TEXT("UNeo4jResultCellNode"), &Z_Registration_Info_UClass_UNeo4jResultCellNode, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UNeo4jResultCellNode), 38539807U) },
@@ -1277,7 +2769,7 @@ struct Z_CompiledInDeferFile_FID_Perforce_MetaFamily_Bastian_Plugins_FANTASIA_So
 		{ Z_Construct_UClass_UNeo4jResultCellSimple, UNeo4jResultCellSimple::StaticClass, TEXT("UNeo4jResultCellSimple"), &Z_Registration_Info_UClass_UNeo4jResultCellSimple, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UNeo4jResultCellSimple), 3829507120U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_MetaFamily_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_679101681(TEXT("/Script/FANTASIA"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_MetaFamily_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_3528130042(TEXT("/Script/FANTASIA"),
 	Z_CompiledInDeferFile_FID_Perforce_MetaFamily_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Perforce_MetaFamily_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_Statics::ClassInfo),
 	Z_CompiledInDeferFile_FID_Perforce_MetaFamily_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_Statics::ScriptStructInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Perforce_MetaFamily_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_Statics::ScriptStructInfo),
 	Z_CompiledInDeferFile_FID_Perforce_MetaFamily_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_Statics::EnumInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Perforce_MetaFamily_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_Statics::EnumInfo));

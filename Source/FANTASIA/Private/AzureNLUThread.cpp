@@ -33,15 +33,10 @@ uint32 AzureNLUThread::Run()
 void AzureNLUThread::Stop()
 {
 	StopTaskCounter.Increment();
-	//switch (ASRMode) {
-	//case EAzureASREnum::ASR_CONTINUOUS:
-	//	StopContinuousRecognition();
-	//}
 }
 
 AzureNLUThread* AzureNLUThread::setup(shared_ptr<SpeechConfig> config, std::vector<std::shared_ptr<LanguageUnderstandingModel>> models)
 {
-	//if (!Runnable && FPlatformProcess::SupportsMultithreading())
 	if (FPlatformProcess::SupportsMultithreading())
 	{
 		Runnable = new AzureNLUThread(config, models);
@@ -59,8 +54,6 @@ void AzureNLUThread::Shutdown()
 {
 	if (Runnable)
 	{
-		//Runnable->EnsureCompletion();
-		//delete Runnable;
 		Runnable = NULL;
 	}
 }
@@ -73,33 +66,33 @@ TArray<UNLUEntity*> AzureNLUThread::BuildEntities(TArray<TSharedPtr<FJsonValue>>
 
 		uint8 index = entities.Add(NewObject <UNLUEntity>());
 
-		entities[index]->entity = item->AsObject()->GetStringField("text");
-		entities[index]->type = item->AsObject()->GetStringField("category");
-		entities[index]->startIndex = item->AsObject()->GetIntegerField("offset");
-		entities[index]->endIndex = item->AsObject()->GetIntegerField("offset") + item->AsObject()->GetIntegerField("length");
-		entities[index]->score = item->AsObject()->GetNumberField("confidenceScore");
+		entities[index]->entity = item->AsObject()->GetStringField(TEXT("text"));
+		entities[index]->type = item->AsObject()->GetStringField(TEXT("category"));
+		entities[index]->startIndex = item->AsObject()->GetIntegerField(TEXT("offset"));
+		entities[index]->endIndex = item->AsObject()->GetIntegerField(TEXT("offset")) + item->AsObject()->GetIntegerField(TEXT("length"));
+		entities[index]->score = item->AsObject()->GetNumberField(TEXT("confidenceScore"));
 
-		if (item->AsObject()->TryGetArrayField("resolutions", arrayField)) {
-			children = item->AsObject()->GetArrayField("resolutions");
+		if (item->AsObject()->TryGetArrayField(TEXT("resolutions"), arrayField)) {
+			children = item->AsObject()->GetArrayField(TEXT("resolutions"));
 			for (TSharedPtr<FJsonValue> child : children) {
 				uint8 childIndex = entities[index]->children.Add(NewObject <UNLUEntity>());
 
-				entities[index]->children[childIndex]->entity = child->AsObject()->GetStringField("value");
-				entities[index]->children[childIndex]->type = child->AsObject()->GetStringField("resolutionKind");
+				entities[index]->children[childIndex]->entity = child->AsObject()->GetStringField(TEXT("value"));
+				entities[index]->children[childIndex]->type = child->AsObject()->GetStringField(TEXT("resolutionKind"));
 			}
 		}
 
-		if (item->AsObject()->TryGetArrayField("extraInformation", arrayField)) {
-			children = item->AsObject()->GetArrayField("extraInformation");
+		if (item->AsObject()->TryGetArrayField(TEXT("extraInformation"), arrayField)) {
+			children = item->AsObject()->GetArrayField(TEXT("extraInformation"));
 			for (TSharedPtr<FJsonValue> child : children) {
 				uint8 childIndex = entities[index]->children.Add(NewObject <UNLUEntity>());
 
-				entities[index]->children[childIndex]->type = child->AsObject()->GetStringField("extraInformationKind");
+				entities[index]->children[childIndex]->type = child->AsObject()->GetStringField(TEXT("extraInformationKind"));
 
 				if (entities[index]->children[childIndex]->type == "ListKey")
-					entities[index]->children[childIndex]->entity = child->AsObject()->GetStringField("key");
+					entities[index]->children[childIndex]->entity = child->AsObject()->GetStringField(TEXT("key"));
 				else
-					entities[index]->children[childIndex]->entity = child->AsObject()->GetStringField("value");
+					entities[index]->children[childIndex]->entity = child->AsObject()->GetStringField(TEXT("value"));
 			}
 		}
 	}
@@ -112,8 +105,8 @@ TArray<UNLUIntent*> AzureNLUThread::BuildIntents(TArray<TSharedPtr<FJsonValue>> 
 
 		uint8 index = intents.Add(NewObject <UNLUIntent>());
 
-		intents[index]->intent = item->AsObject()->GetStringField("category");
-		intents[index]->confidence = item->AsObject()->GetStringField("confidenceScore");
+		intents[index]->intent = item->AsObject()->GetStringField(TEXT("category"));
+		intents[index]->confidence = item->AsObject()->GetStringField(TEXT("confidenceScore"));
 	}
 	return intents;
 }
@@ -123,11 +116,6 @@ void AzureNLUThread::StartOneShotRecognition()
 	auto audioConfig = AudioConfig::FromDefaultMicrophoneInput();
 	recognizer = IntentRecognizer::FromConfig(NLUConfig, audioConfig);
 	recognizer->ApplyLanguageModels(NLUModels);
-
-	//recognizer = IntentRecognizer::FromConfig(NLUConfig);
-	//recognizer->AddAllIntents(NLUModel);
-	//recognizer->Properties.SetProperty("show-all-intents", "true");
-	//recognizer->Properties.SetProperty("verbose", "true");
 
 	auto result = recognizer->RecognizeOnceAsync().get();
 
@@ -144,14 +132,14 @@ void AzureNLUThread::StartOneShotRecognition()
 			FNLUResponse NLUResponse;
 
 			if (JsonValue->TryGetObject(FileMessageObject)) {
-				if (FileMessageObject->Get()->GetObjectField("result")->TryGetStringField("query", stringField)) {
+				if (FileMessageObject->Get()->GetObjectField(TEXT("result"))->TryGetStringField(TEXT("query"), stringField)) {
 
-					NLUResponse.query = FileMessageObject->Get()->GetObjectField("result")->GetStringField("query");
-					NLUResponse.intents = BuildIntents(FileMessageObject->Get()->GetObjectField("result")->GetObjectField("prediction")->GetArrayField("intents"), NLUResponse.intents);
+					NLUResponse.query = FileMessageObject->Get()->GetObjectField(TEXT("result"))->GetStringField(TEXT("query"));
+					NLUResponse.intents = BuildIntents(FileMessageObject->Get()->GetObjectField(TEXT("result"))->GetObjectField(TEXT("prediction"))->GetArrayField(TEXT("intents")), NLUResponse.intents);
 
-					if (FileMessageObject->Get()->GetObjectField("result")->GetObjectField("prediction")->TryGetArrayField("entities", arrayField)) {
+					if (FileMessageObject->Get()->GetObjectField(TEXT("result"))->GetObjectField(TEXT("prediction"))->TryGetArrayField(TEXT("entities"), arrayField)) {
 
-						TArray<TSharedPtr<FJsonValue>> jsonEntities = FileMessageObject->Get()->GetObjectField("result")->GetObjectField("prediction")->GetArrayField("entities");
+						TArray<TSharedPtr<FJsonValue>> jsonEntities = FileMessageObject->Get()->GetObjectField(TEXT("result"))->GetObjectField(TEXT("prediction"))->GetArrayField(TEXT("entities"));
 						TArray<UNLUEntity*> entities;
 
 						NLUResponse.entities = BuildEntities(jsonEntities, NLUResponse.entities);
@@ -163,24 +151,26 @@ void AzureNLUThread::StartOneShotRecognition()
 	}
 	else if (result->Reason == ResultReason::RecognizedSpeech)
 	{
-		FString test = UTF8_TO_TCHAR(result->Text.c_str());
-		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Could not recognise intent for \"%s\""), result->Text);
+		UE_LOG(LogTemp, Warning, TEXT("[AzureNLUComponent] Could not recognise intent for \"%hs\""), result->Text.c_str());
 	}
 	else if (result->Reason == ResultReason::NoMatch)
 	{
-		//cout << "NOMATCH: Speech could not be recognized." << std::endl;
+		UE_LOG(LogTemp, Warning, TEXT("[AzureNLUComponent] NOMATCH: Speech could not be recognized."));
+		FNLUResponse noMatchResponse;
+		UNLUIntent *noMatchIntent = NewObject<UNLUIntent>();
+
+		noMatchResponse.query = "NOMATCH";
+		noMatchIntent->intent = "None";
+		noMatchIntent->confidence = "1.0";
+		noMatchResponse.intents.Add(noMatchIntent);
+
+		TArray<UNLUEntity*> entities;
+		noMatchResponse.entities = entities;
+		NLUResultAvailable.Broadcast(noMatchResponse);
 	}
 	else if (result->Reason == ResultReason::Canceled)
 	{
-		/*auto cancellation = CancellationDetails::FromResult(result);
-		cout << "CANCELED: Reason=" << (int)cancellation->Reason << std::endl;
-
-		if (cancellation->Reason == CancellationReason::Error)
-		{
-			cout << "CANCELED: ErrorCode=" << (int)cancellation->ErrorCode << std::endl;
-			cout << "CANCELED: ErrorDetails=" << cancellation->ErrorDetails << std::endl;
-			cout << "CANCELED: Did you update the subscription info?" << std::endl;
-		}*/
+		UE_LOG(LogTemp, Warning, TEXT("[AzureNLUComponent] CANCELED: %hs"), CancellationDetails::FromResult(result)->ErrorDetails.c_str());
 	}
 }
 

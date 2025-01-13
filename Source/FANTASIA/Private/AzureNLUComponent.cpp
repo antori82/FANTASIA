@@ -1,6 +1,4 @@
 // Fill out your copyright notice in the Description page of Project Settings.
-
-
 #include "AzureNLUComponent.h"
 
 using namespace std;
@@ -16,24 +14,63 @@ UAzureNLUComponent::UAzureNLUComponent()
 	VoiceCapture = FVoiceModule::Get().CreateVoiceCapture("");
 }
 
+bool UAzureNLUComponent::checkConfigIsValid() {
+	if (SpeechKey.IsEmpty()) {
+		UE_LOG(LogTemp, Error, TEXT("[AzureNLUComponent] SpeechKey field cannot be empty"));
+		return false;
+	}
+
+	if (Region.IsEmpty()) {
+		UE_LOG(LogTemp, Error, TEXT("[AzureNLUComponent] Region field cannot be empty"));
+		return false;
+	}
+
+	if (Language.IsEmpty()) {
+		UE_LOG(LogTemp, Error, TEXT("[AzureNLUComponent] Language field cannot be empty"));
+		return false;
+	}
+
+	if (LanguageKey.IsEmpty()) {
+		UE_LOG(LogTemp, Error, TEXT("[AzureNLUComponent] LanguageKey field cannot be empty"));
+		return false;
+	}
+
+	if (Endpoint.IsEmpty()) {
+		UE_LOG(LogTemp, Error, TEXT("[AzureNLUComponent] Endpoint field cannot be empty"));
+		return false;
+	}
+
+	if (ProjectName.IsEmpty()) {
+		UE_LOG(LogTemp, Error, TEXT("[AzureNLUComponent] ProjectName field cannot be empty"));
+		return false;
+	}
+
+	if (DeploymentName.IsEmpty()) {
+		UE_LOG(LogTemp, Error, TEXT("[AzureNLUComponent] Deploymentname field cannot be empty"));
+		return false;
+	}
+
+	return true;
+}
 
 // Called when the game starts
 void UAzureNLUComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
+	if (!checkConfigIsValid())
+		return;
+
 	config = SpeechConfig::FromSubscription(std::string(TCHAR_TO_UTF8(*SpeechKey)), std::string(TCHAR_TO_UTF8(*Region)));
 	config->SetSpeechRecognitionLanguage(std::string(TCHAR_TO_UTF8(*Language)));
-
 
 	auto cluModel = ConversationalLanguageUnderstandingModel::FromResource(
 		std::string(TCHAR_TO_UTF8(*LanguageKey)),
 		std::string(TCHAR_TO_UTF8(*Endpoint)),
-		std::string(TCHAR_TO_UTF8(*projectName)),
-		std::string(TCHAR_TO_UTF8(*deploymentName)));
+		std::string(TCHAR_TO_UTF8(*ProjectName)),
+		std::string(TCHAR_TO_UTF8(*DeploymentName)));
 
 	models.push_back(cluModel);
-	
 }
 
 void UAzureNLUComponent::getResult(FNLUResponse response)
@@ -58,6 +95,9 @@ void UAzureNLUComponent::TickComponent(float DeltaTime, ELevelTick TickType, FAc
 
 void UAzureNLUComponent::AzureNLUStart()
 {
+	if (!checkConfigIsValid())
+		return;
+
 	FNLUResultAvailableDelegate NLUResultSubscriber;
 	NLUResultSubscriber.BindUObject(this, &UAzureNLUComponent::getResult);
 	handle = AzureNLUThread::setup(config, models);

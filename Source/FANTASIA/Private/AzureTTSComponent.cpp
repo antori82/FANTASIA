@@ -21,6 +21,8 @@ void UAzureTTSComponent::BeginPlay()
 
 	config = SpeechConfig::FromSubscription(std::string(TCHAR_TO_UTF8(*Key)), std::string(TCHAR_TO_UTF8(*Region)));
 	config->SetEndpointId(std::string(TCHAR_TO_UTF8(*Endpoint)));
+	if (Streaming)
+		config->SetSpeechSynthesisOutputFormat(SpeechSynthesisOutputFormat::Raw16Khz16BitMonoPcm);
 	//config-> SpeechSynthesisLanguage = std::string(TCHAR_TO_UTF8(*Language));
 }
 
@@ -56,13 +58,12 @@ void UAzureTTSComponent::TTSSynthesize(FString ssml, FString id)
 USoundWave* UAzureTTSComponent::TTSGetSound(FString id) {
 	uint32 SAMPLING_RATE = 16000;
 
-	USoundWave* SyntheticVoice = NewObject<USoundWave>();
+	USoundWaveProcedural* SyntheticVoice = NewObject<USoundWaveProcedural>();
 	SyntheticVoice->SetSampleRate(SAMPLING_RATE);
 	SyntheticVoice->NumChannels = 1;
 	const int32 BytesDataPerSecond = SAMPLING_RATE;
 	SyntheticVoice->RawPCMDataSize = Buffer[id].AudioData.Num() * sizeof(uint8);
 	SyntheticVoice->Duration = (float)Buffer[id].AudioData.Num() / (2 * (float)SAMPLING_RATE);
-	SyntheticVoice->RawPCMData = static_cast<uint8*>(FMemory::Malloc(SyntheticVoice->RawPCMDataSize));
-	FMemory::Memcpy(SyntheticVoice->RawPCMData, Buffer[id].AudioData.GetData(), SyntheticVoice->RawPCMDataSize);
+	SyntheticVoice->QueueAudio((const uint8*)Buffer[id].AudioData.GetData(), SyntheticVoice->RawPCMDataSize);
 	return SyntheticVoice;
 }

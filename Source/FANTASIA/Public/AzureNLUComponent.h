@@ -49,35 +49,37 @@ private:
 
 	void getResult(FNLUResponse response);
 
+	bool checkConfigIsValid();
+
 public:
 
 	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
-		FString SpeechKey;
+	FString SpeechKey;
 
 	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
-		FString Region;
+	FString Region;
 
 	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
-		FString Language;
+	FString Language;
 
 	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
-		FString LanguageKey;
+	FString LanguageKey;
 
 	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
-		FString Endpoint;
+	FString Endpoint;
 
 	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
-	FString projectName;
+	FString ProjectName;
 
 	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
-	FString deploymentName;
+	FString DeploymentName;
 
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	UPROPERTY(BlueprintAssignable, Category = "Speech Understanding")
-		FIncomingNLUEvent IncomingMessage;
+	FIncomingNLUEvent IncomingMessage;
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "NLU Start", Keywords = "Azure Plugin NLU"), Category = "NLU")
-		void AzureNLUStart();
+	void AzureNLUStart();
 };

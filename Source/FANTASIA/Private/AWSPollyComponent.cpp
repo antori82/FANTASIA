@@ -5,8 +5,7 @@
 using namespace std;
 
 // Sets default values for this component's properties
-UAWSPollyComponent::UAWSPollyComponent()
-{
+UAWSPollyComponent::UAWSPollyComponent() {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
@@ -14,14 +13,12 @@ UAWSPollyComponent::UAWSPollyComponent()
 
 
 // Called when the game starts
-void UAWSPollyComponent::BeginPlay()
-{
+void UAWSPollyComponent::BeginPlay() {
 	Super::BeginPlay();
 }
 
 // Called every frame
-void UAWSPollyComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
+void UAWSPollyComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	if (idSynthesisReady != "") {
@@ -31,8 +28,7 @@ void UAWSPollyComponent::TickComponent(float DeltaTime, ELevelTick TickType, FAc
 		
 }
 
-void UAWSPollyComponent::getResult(FTTSData response, FString id)
-{
+void UAWSPollyComponent::getResult(FTTSData response, FString id) {
 	handle->TTSResultAvailableUnsubscribeUser(TTSResultAvailableHandle);
 	handle->Shutdown();
 
@@ -40,32 +36,13 @@ void UAWSPollyComponent::getResult(FTTSData response, FString id)
 	idSynthesisReady = id;
 }
 
-void UAWSPollyComponent::AWSPollySynthesize(FString ssml, FString id, bool getLipSync)
-{
+void UAWSPollyComponent::AWSPollySynthesize(FString ssml, FString id, bool getLipSync) {
 	ssml = "<speak>" + ssml + "</speak>";
 	FTTSResultAvailableDelegate TTSResultSubscriber;
 	TTSResultSubscriber.BindUObject(this, &UAWSPollyComponent::getResult);
 	handle = AWSPollyThread::setup(voiceType, Voice, AccessKey, SecretAccessKey, ssml, id, getLipSync);
 	TTSResultAvailableHandle = handle->TTSResultAvailableSubscribeUser(TTSResultSubscriber);
 }
-
-/*
-USoundWaveProcedural* UAWSPollyComponent::AWSPollyGetSound(FString id) {
-	uint32 SAMPLING_RATE = 16000;
-
-	SyntheticVoice = NewObject<USoundWaveProcedural>();
-	SyntheticVoice->SetSampleRate(SAMPLING_RATE);
-	SyntheticVoice->NumChannels = 1;
-	SyntheticVoice->SoundGroup = SOUNDGROUP_Voice;
-	SyntheticVoice->bLooping = false;
-	SyntheticVoice->bProcedural = true;
-
-	SyntheticVoice->Duration = (float)Buffer[id].AudioData.Num() / (2 * (float)SAMPLING_RATE);
-	SyntheticVoice->QueueAudio(Buffer[id].AudioData.GetData(), Buffer[id].AudioData.Num() * sizeof(int8));
-
-	return SyntheticVoice;
-}
-*/
 
 TArray<FTTSTimedStruct> UAWSPollyComponent::AWSPollyGetLipSync(FString id) {
 	TArray<FTTSTimedStruct> outStruct = Buffer[id].lipsync;
@@ -82,13 +59,12 @@ TArray<FTTSTimedStruct> UAWSPollyComponent::AWSPollyGetNotifies(FString id) {
 USoundWave* UAWSPollyComponent::AWSPollyGetSound(FString id) {
 	uint32 SAMPLING_RATE = 16000;
 
-	USoundWave* SyntheticVoice = NewObject<USoundWave>();
+	USoundWaveProcedural* SyntheticVoice = NewObject<USoundWaveProcedural>();
 	SyntheticVoice->SetSampleRate(SAMPLING_RATE);
 	SyntheticVoice->NumChannels = 1;
 	const int32 BytesDataPerSecond = SAMPLING_RATE;
 	SyntheticVoice->RawPCMDataSize = Buffer[id].AudioData.Num() * sizeof(uint8);
 	SyntheticVoice->Duration = (float)Buffer[id].AudioData.Num() / (2 * (float)SAMPLING_RATE);
-	SyntheticVoice->RawPCMData = static_cast<uint8*>(FMemory::Malloc(SyntheticVoice->RawPCMDataSize));
-	FMemory::Memcpy(SyntheticVoice->RawPCMData, Buffer[id].AudioData.GetData(), SyntheticVoice->RawPCMDataSize);
+	SyntheticVoice->QueueAudio((const uint8*)Buffer[id].AudioData.GetData(), SyntheticVoice->RawPCMDataSize);
 	return SyntheticVoice;
 }
