@@ -17,36 +17,32 @@ struct FMapContainer;
 #endif
 #define FANTASIA_BayesianNetwork_generated_h
 
-#define FID_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_30_GENERATED_BODY \
+#define FID_Perforce_MetaFamily_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_30_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FMapContainer_Statics; \
 	FANTASIA_API static class UScriptStruct* StaticStruct();
 
 
 template<> FANTASIA_API UScriptStruct* StaticStruct<struct FMapContainer>();
 
-#define FID_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_36_DELEGATE \
+#define FID_Perforce_MetaFamily_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_36_DELEGATE \
 FANTASIA_API void FGetPosteriorDelegate_DelegateWrapper(const FScriptDelegate& GetPosteriorDelegate, FMapContainer outMap);
 
 
-#define FID_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_50_GENERATED_BODY \
+#define FID_Perforce_MetaFamily_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_50_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FBayesianArcStruct_Statics; \
 	FANTASIA_API static class UScriptStruct* StaticStruct();
 
 
 template<> FANTASIA_API UScriptStruct* StaticStruct<struct FBayesianArcStruct>();
 
-#define FID_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_62_GENERATED_BODY \
+#define FID_Perforce_MetaFamily_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_62_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FBayesianNodeStruct_Statics; \
 	FANTASIA_API static class UScriptStruct* StaticStruct();
 
 
 template<> FANTASIA_API UScriptStruct* StaticStruct<struct FBayesianNodeStruct>();
 
-#define FID_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_81_SPARSE_DATA
-#define FID_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_81_SPARSE_DATA_PROPERTY_ACCESSORS
-#define FID_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_81_EDITOR_ONLY_SPARSE_DATA_PROPERTY_ACCESSORS
-#define FID_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_81_RPC_WRAPPERS \
- \
+#define FID_Perforce_MetaFamily_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_81_RPC_WRAPPERS \
 	DECLARE_FUNCTION(execgetMarkovBlanketNodes); \
 	DECLARE_FUNCTION(execidFromName); \
 	DECLARE_FUNCTION(execerase); \
@@ -64,8 +60,7 @@ template<> FANTASIA_API UScriptStruct* StaticStruct<struct FBayesianNodeStruct>(
 	DECLARE_FUNCTION(execInit);
 
 
-#define FID_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_81_ACCESSORS
-#define FID_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_81_INCLASS \
+#define FID_Perforce_MetaFamily_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_81_INCLASS \
 private: \
 	static void StaticRegisterNativesUBayesianNetwork(); \
 	friend struct Z_Construct_UClass_UBayesianNetwork_Statics; \
@@ -74,7 +69,7 @@ public: \
 	DECLARE_SERIALIZER(UBayesianNetwork)
 
 
-#define FID_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_81_STANDARD_CONSTRUCTORS \
+#define FID_Perforce_MetaFamily_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_81_STANDARD_CONSTRUCTORS \
 	/** Standard constructor, called after all reflected properties have been initialized */ \
 	NO_API UBayesianNetwork(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get()); \
 	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(UBayesianNetwork) \
@@ -82,23 +77,19 @@ public: \
 	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(UBayesianNetwork); \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
-	NO_API UBayesianNetwork(UBayesianNetwork&&); \
-	NO_API UBayesianNetwork(const UBayesianNetwork&); \
+	UBayesianNetwork(UBayesianNetwork&&); \
+	UBayesianNetwork(const UBayesianNetwork&); \
 public: \
 	NO_API virtual ~UBayesianNetwork();
 
 
-#define FID_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_78_PROLOG
-#define FID_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_81_GENERATED_BODY_LEGACY \
+#define FID_Perforce_MetaFamily_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_78_PROLOG
+#define FID_Perforce_MetaFamily_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_81_GENERATED_BODY_LEGACY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_81_SPARSE_DATA \
-	FID_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_81_SPARSE_DATA_PROPERTY_ACCESSORS \
-	FID_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_81_EDITOR_ONLY_SPARSE_DATA_PROPERTY_ACCESSORS \
-	FID_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_81_RPC_WRAPPERS \
-	FID_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_81_ACCESSORS \
-	FID_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_81_INCLASS \
-	FID_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_81_STANDARD_CONSTRUCTORS \
+	FID_Perforce_MetaFamily_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_81_RPC_WRAPPERS \
+	FID_Perforce_MetaFamily_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_81_INCLASS \
+	FID_Perforce_MetaFamily_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_81_STANDARD_CONSTRUCTORS \
 public: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
@@ -106,7 +97,7 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 template<> FANTASIA_API UClass* StaticClass<class UBayesianNetwork>();
 
 #undef CURRENT_FILE_ID
-#define CURRENT_FILE_ID FID_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h
+#define CURRENT_FILE_ID FID_Perforce_MetaFamily_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h
 
 
 #define FOREACH_ENUM_INFERENCEALGS(op) \

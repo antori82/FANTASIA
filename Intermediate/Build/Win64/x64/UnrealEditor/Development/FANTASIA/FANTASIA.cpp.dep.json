@@ -1,0 +1,14 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "d:\\perforce\\metafamily\\bastian\\plugins\\fantasia\\source\\fantasia\\private\\fantasia.cpp",
+        "ProvidedModule": "",
+        "PCH": "d:\\perforce\\metafamily\\bastian\\intermediate\\build\\win64\\x64\\bastianeditor\\development\\unrealed\\sharedpch.unrealed.project.novalfmtstr.valapi.cpp20.inclorderunreal5_3.h.pch",
+        "Includes": [
+            "d:\\perforce\\metafamily\\bastian\\plugins\\fantasia\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\fantasia\\definitions.fantasia.h",
+            "d:\\perforce\\metafamily\\bastian\\plugins\\fantasia\\source\\fantasia\\public\\fantasia.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

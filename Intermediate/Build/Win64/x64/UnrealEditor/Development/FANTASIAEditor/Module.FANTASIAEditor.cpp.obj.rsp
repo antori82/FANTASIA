@@ -1,11 +1,13 @@
 "D:\Perforce\MetaFamily\Bastian\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIAEditor\Module.FANTASIAEditor.cpp"
-/FI"D:\Perforce\MetaFamily\Bastian\Intermediate\Build\Win64\x64\BastianEditor\Development\UnrealEd\SharedPCH.UnrealEd.Cpp20.InclOrderUnreal5_0.h"
+/FI"D:\Perforce\MetaFamily\Bastian\Intermediate\Build\Win64\x64\BastianEditor\Development\UnrealEd\SharedPCH.UnrealEd.Project.NoValFmtStr.ValApi.Cpp20.InclOrderUnreal5_3.h"
 /FI"D:\Perforce\MetaFamily\Bastian\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIAEditor\Definitions.FANTASIAEditor.h"
-/Yu"D:\Perforce\MetaFamily\Bastian\Intermediate\Build\Win64\x64\BastianEditor\Development\UnrealEd\SharedPCH.UnrealEd.Cpp20.InclOrderUnreal5_0.h"
-/Fp"D:\Perforce\MetaFamily\Bastian\Intermediate\Build\Win64\x64\BastianEditor\Development\UnrealEd\SharedPCH.UnrealEd.Cpp20.InclOrderUnreal5_0.h.pch"
+/Yu"D:\Perforce\MetaFamily\Bastian\Intermediate\Build\Win64\x64\BastianEditor\Development\UnrealEd\SharedPCH.UnrealEd.Project.NoValFmtStr.ValApi.Cpp20.InclOrderUnreal5_3.h"
+/Fp"D:\Perforce\MetaFamily\Bastian\Intermediate\Build\Win64\x64\BastianEditor\Development\UnrealEd\SharedPCH.UnrealEd.Project.NoValFmtStr.ValApi.Cpp20.InclOrderUnreal5_3.h.pch"
 /Fo"D:\Perforce\MetaFamily\Bastian\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIAEditor\Module.FANTASIAEditor.cpp.obj"
+/experimental:log "D:\Perforce\MetaFamily\Bastian\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIAEditor\Module.FANTASIAEditor.cpp.sarif"
 /sourceDependencies "D:\Perforce\MetaFamily\Bastian\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIAEditor\Module.FANTASIAEditor.cpp.dep.json"
 @"D:\Perforce\MetaFamily\Bastian\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIAEditor\FANTASIAEditor.Shared.rsp"
+/d2ssa-cfg-question-
 /Zc:inline
 /nologo
 /Oi
@@ -24,6 +26,7 @@
 /D_WINDLL
 /D_DISABLE_EXTENDED_ALIGNED_STORAGE
 /Ob2
+/d2ExtendedWarningInfo
 /Ox
 /Ot
 /GF

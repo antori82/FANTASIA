@@ -11,6 +11,7 @@
 /DELAY:UNLOAD
 /DLL
 /PDBALTPATH:%_PDB%
+/d2:-ExtendedWarningInfo
 /OPT:NOREF
 /OPT:NOICF
 /INCREMENTAL:NO
@@ -20,7 +21,7 @@
 /ALTERNATENAME:__imp___std_init_once_complete=__imp_InitOnceComplete
 /DELAYLOAD:"d3d12.dll"
 /DELAYLOAD:"DBGHELP.DLL"
-/LIBPATH:"C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\lib\x64"
+/LIBPATH:"C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\lib\x64"
 /LIBPATH:"C:\Program Files (x86)\Windows Kits\10\lib\10.0.22621.0\ucrt\x64"
 /LIBPATH:"C:\Program Files (x86)\Windows Kits\10\lib\10.0.22621.0\um\x64"
 /NODEFAULTLIB:"LIBCMT"
@@ -34,8 +35,24 @@
 /NODEFAULTLIB:"LIBCD"
 /NODEFAULTLIB:"LIBCPD"
 /FUNCTIONPADMIN:6
-"D:\Perforce\MetaFamily\Bastian\Intermediate\Build\Win64\x64\BastianEditor\Development\UnrealEd\SharedPCH.UnrealEd.Cpp20.InclOrderUnreal5_0.h.obj"
+/NOIMPLIB
+"D:\Perforce\MetaFamily\Bastian\Intermediate\Build\Win64\x64\BastianEditor\Development\UnrealEd\SharedPCH.UnrealEd.Project.NoValFmtStr.ValApi.Cpp20.InclOrderUnreal5_3.h.obj"
 "D:\Perforce\MetaFamily\Bastian\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIA\Module.FANTASIA.cpp.obj"
+"D:\Perforce\MetaFamily\Bastian\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIA\AWSPollyComponent.cpp.obj"
+"D:\Perforce\MetaFamily\Bastian\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIA\AWSPollyThread.cpp.obj"
+"D:\Perforce\MetaFamily\Bastian\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIA\AzureASRComponent.cpp.obj"
+"D:\Perforce\MetaFamily\Bastian\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIA\AzureASRThread.cpp.obj"
+"D:\Perforce\MetaFamily\Bastian\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIA\AzureNLUComponent.cpp.obj"
+"D:\Perforce\MetaFamily\Bastian\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIA\AzureNLUThread.cpp.obj"
+"D:\Perforce\MetaFamily\Bastian\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIA\AzureTTSComponent.cpp.obj"
+"D:\Perforce\MetaFamily\Bastian\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIA\AzureTTSThread.cpp.obj"
+"D:\Perforce\MetaFamily\Bastian\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIA\BayesianNetwork.cpp.obj"
+"D:\Perforce\MetaFamily\Bastian\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIA\FANTASIA.cpp.obj"
+"D:\Perforce\MetaFamily\Bastian\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIA\GeneralTTSComponent.cpp.obj"
+"D:\Perforce\MetaFamily\Bastian\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIA\GeneralTTSThread.cpp.obj"
+"D:\Perforce\MetaFamily\Bastian\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIA\MathUtilities.cpp.obj"
+"D:\Perforce\MetaFamily\Bastian\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIA\Neo4jComponent.cpp.obj"
+"D:\Perforce\MetaFamily\Bastian\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIA\OpenAIComponent.cpp.obj"
 "D:\Perforce\MetaFamily\Bastian\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIA\Default.rc2.res"
 "D:\Perforce\MetaFamily\Bastian\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.32.1\build\native\x64\Release\Microsoft.CognitiveServices.Speech.core.lib"
 "D:\Perforce\MetaFamily\Bastian\Plugins\FANTASIA\ThirdParty\AWS\lib\aws-cpp-sdk-core.lib"
@@ -79,6 +96,5 @@
 "dwmapi.lib"
 "imm32.lib"
 /OUT:"D:\Perforce\MetaFamily\Bastian\Plugins\FANTASIA\Binaries\Win64\UnrealEditor-FANTASIA.dll"
-/IMPLIB:"D:\Perforce\MetaFamily\Bastian\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIA\UnrealEditor-FANTASIA.sup.lib"
 /PDB:"D:\Perforce\MetaFamily\Bastian\Plugins\FANTASIA\Binaries\Win64\UnrealEditor-FANTASIA.pdb"
 /ignore:4078

@@ -15,17 +15,12 @@ class USoundWave;
 #endif
 #define FANTASIA_AzureTTSComponent_generated_h
 
-#define FID_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_27_SPARSE_DATA
-#define FID_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_27_SPARSE_DATA_PROPERTY_ACCESSORS
-#define FID_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_27_EDITOR_ONLY_SPARSE_DATA_PROPERTY_ACCESSORS
-#define FID_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_27_RPC_WRAPPERS_NO_PURE_DECLS \
- \
+#define FID_Perforce_MetaFamily_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_27_RPC_WRAPPERS_NO_PURE_DECLS \
 	DECLARE_FUNCTION(execTTSGetSound); \
 	DECLARE_FUNCTION(execTTSSynthesize);
 
 
-#define FID_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_27_ACCESSORS
-#define FID_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_27_INCLASS_NO_PURE_DECLS \
+#define FID_Perforce_MetaFamily_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_27_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUAzureTTSComponent(); \
 	friend struct Z_Construct_UClass_UAzureTTSComponent_Statics; \
@@ -35,11 +30,11 @@ public: \
 	virtual UObject* _getUObject() const override { return const_cast<UAzureTTSComponent*>(this); }
 
 
-#define FID_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_27_ENHANCED_CONSTRUCTORS \
+#define FID_Perforce_MetaFamily_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_27_ENHANCED_CONSTRUCTORS \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
-	NO_API UAzureTTSComponent(UAzureTTSComponent&&); \
-	NO_API UAzureTTSComponent(const UAzureTTSComponent&); \
+	UAzureTTSComponent(UAzureTTSComponent&&); \
+	UAzureTTSComponent(const UAzureTTSComponent&); \
 public: \
 	DECLARE_VTABLE_PTR_HELPER_CTOR(NO_API, UAzureTTSComponent); \
 	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(UAzureTTSComponent); \
@@ -47,17 +42,13 @@ public: \
 	NO_API virtual ~UAzureTTSComponent();
 
 
-#define FID_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_24_PROLOG
-#define FID_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_27_GENERATED_BODY \
+#define FID_Perforce_MetaFamily_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_24_PROLOG
+#define FID_Perforce_MetaFamily_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_27_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_27_SPARSE_DATA \
-	FID_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_27_SPARSE_DATA_PROPERTY_ACCESSORS \
-	FID_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_27_EDITOR_ONLY_SPARSE_DATA_PROPERTY_ACCESSORS \
-	FID_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_27_RPC_WRAPPERS_NO_PURE_DECLS \
-	FID_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_27_ACCESSORS \
-	FID_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_27_INCLASS_NO_PURE_DECLS \
-	FID_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_27_ENHANCED_CONSTRUCTORS \
+	FID_Perforce_MetaFamily_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_27_RPC_WRAPPERS_NO_PURE_DECLS \
+	FID_Perforce_MetaFamily_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_27_INCLASS_NO_PURE_DECLS \
+	FID_Perforce_MetaFamily_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_27_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
@@ -65,7 +56,7 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 template<> FANTASIA_API UClass* StaticClass<class UAzureTTSComponent>();
 
 #undef CURRENT_FILE_ID
-#define CURRENT_FILE_ID FID_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h
+#define CURRENT_FILE_ID FID_Perforce_MetaFamily_Bastian_Plugins_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h
 
 
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

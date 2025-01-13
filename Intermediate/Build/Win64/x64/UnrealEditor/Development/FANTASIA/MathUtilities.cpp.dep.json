@@ -1,0 +1,21 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "d:\\perforce\\metafamily\\bastian\\plugins\\fantasia\\source\\fantasia\\private\\mathutilities.cpp",
+        "ProvidedModule": "",
+        "PCH": "d:\\perforce\\metafamily\\bastian\\intermediate\\build\\win64\\x64\\bastianeditor\\development\\unrealed\\sharedpch.unrealed.project.novalfmtstr.valapi.cpp20.inclorderunreal5_3.h.pch",
+        "Includes": [
+            "d:\\perforce\\metafamily\\bastian\\plugins\\fantasia\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\fantasia\\definitions.fantasia.h",
+            "d:\\perforce\\metafamily\\bastian\\plugins\\fantasia\\source\\fantasia\\public\\mathutilities.h",
+            "d:\\perforce\\metafamily\\bastian\\plugins\\fantasia\\source\\fantasia\\public\\fantasia.h",
+            "d:\\perforce\\metafamily\\bastian\\plugins\\fantasia\\thirdparty\\kdepp\\kde.h",
+            "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.38.33130\\include\\array",
+            "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.38.33130\\include\\numeric",
+            "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.38.33130\\include\\string",
+            "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.38.33130\\include\\cctype",
+            "d:\\perforce\\metafamily\\bastian\\plugins\\fantasia\\intermediate\\build\\win64\\unrealeditor\\inc\\fantasia\\uht\\mathutilities.generated.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

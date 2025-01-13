@@ -11,6 +11,7 @@
 /DELAY:UNLOAD
 /DLL
 /PDBALTPATH:%_PDB%
+/d2:-ExtendedWarningInfo
 /OPT:NOREF
 /OPT:NOICF
 /INCREMENTAL:NO
@@ -20,7 +21,7 @@
 /ALTERNATENAME:__imp___std_init_once_complete=__imp_InitOnceComplete
 /DELAYLOAD:"d3d12.dll"
 /DELAYLOAD:"DBGHELP.DLL"
-/LIBPATH:"C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\lib\x64"
+/LIBPATH:"C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\lib\x64"
 /LIBPATH:"C:\Program Files (x86)\Windows Kits\10\lib\10.0.22621.0\ucrt\x64"
 /LIBPATH:"C:\Program Files (x86)\Windows Kits\10\lib\10.0.22621.0\um\x64"
 /NODEFAULTLIB:"LIBCMT"
@@ -34,8 +35,11 @@
 /NODEFAULTLIB:"LIBCD"
 /NODEFAULTLIB:"LIBCPD"
 /FUNCTIONPADMIN:6
-"D:\Perforce\MetaFamily\Bastian\Intermediate\Build\Win64\x64\BastianEditor\Development\UnrealEd\SharedPCH.UnrealEd.Cpp20.InclOrderUnreal5_0.h.obj"
+/NOIMPLIB
+"D:\Perforce\MetaFamily\Bastian\Intermediate\Build\Win64\x64\BastianEditor\Development\UnrealEd\SharedPCH.UnrealEd.Project.NoValFmtStr.ValApi.Cpp20.InclOrderUnreal5_3.h.obj"
 "D:\Perforce\MetaFamily\Bastian\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIAEditor\Module.FANTASIAEditor.cpp.obj"
+"D:\Perforce\MetaFamily\Bastian\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIAEditor\BayesianNetworkFactory.cpp.obj"
+"D:\Perforce\MetaFamily\Bastian\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIAEditor\FANTASIAEditor.cpp.obj"
 "D:\Perforce\MetaFamily\Bastian\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIAEditor\Default.rc2.res"
 "D:\Perforce\MetaFamily\Bastian\Plugins\FANTASIA\ThirdParty\Microsoft.CognitiveServices.Speech.1.32.1\build\native\x64\Release\Microsoft.CognitiveServices.Speech.core.lib"
 "D:\Perforce\MetaFamily\Bastian\Plugins\FANTASIA\ThirdParty\AWS\lib\aws-cpp-sdk-core.lib"
@@ -76,6 +80,5 @@
 "dwmapi.lib"
 "imm32.lib"
 /OUT:"D:\Perforce\MetaFamily\Bastian\Plugins\FANTASIA\Binaries\Win64\UnrealEditor-FANTASIAEditor.dll"
-/IMPLIB:"D:\Perforce\MetaFamily\Bastian\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIAEditor\UnrealEditor-FANTASIAEditor.sup.lib"
 /PDB:"D:\Perforce\MetaFamily\Bastian\Plugins\FANTASIA\Binaries\Win64\UnrealEditor-FANTASIAEditor.pdb"
 /ignore:4078
