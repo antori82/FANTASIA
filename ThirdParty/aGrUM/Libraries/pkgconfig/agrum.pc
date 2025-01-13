@@ -1,0 +1,9 @@
+libdir=INSTALL_PATH/lib
+includedir=INSTALL_PATH/include
+
+Name: aGrUM 1.7.1 (RELEASE)
+Description: C++ library designed for easily building applications using graphical models.
+Requires: 
+Version: 1.7.1
+Libs: -lagrum
+Cflags: 
