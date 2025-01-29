@@ -10,11 +10,7 @@
                         "text": "'stdext::checked_array_iterator<T *>': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
                     },
                     "analysisTarget": {
-<<<<<<< HEAD:FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.cpp.sarif
-                        "uri": "file:///D:/Perforce/MetaFamily/Alice/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.cpp"
-=======
-                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
->>>>>>> main:FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp.sarif
+                        "uri": "file:///D:/Perforce/MetaFamily/Alice/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
                     },
                     "locations": [
                         {
@@ -122,11 +118,7 @@
                         "text": "'stdext::checked_array_iterator<T *>::checked_array_iterator': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
                     },
                     "analysisTarget": {
-<<<<<<< HEAD:FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.cpp.sarif
-                        "uri": "file:///D:/Perforce/MetaFamily/Alice/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.cpp"
-=======
-                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
->>>>>>> main:FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp.sarif
+                        "uri": "file:///D:/Perforce/MetaFamily/Alice/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
                     },
                     "locations": [
                         {
@@ -148,11 +140,7 @@
                         "text": "'stdext::checked_array_iterator<T *>': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
                     },
                     "analysisTarget": {
-<<<<<<< HEAD:FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.cpp.sarif
-                        "uri": "file:///D:/Perforce/MetaFamily/Alice/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.cpp"
-=======
-                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
->>>>>>> main:FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp.sarif
+                        "uri": "file:///D:/Perforce/MetaFamily/Alice/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
                     },
                     "locations": [
                         {
@@ -242,11 +230,7 @@
                         "text": "'stdext::checked_array_iterator<T *>::checked_array_iterator': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
                     },
                     "analysisTarget": {
-<<<<<<< HEAD:FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.cpp.sarif
-                        "uri": "file:///D:/Perforce/MetaFamily/Alice/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.cpp"
-=======
-                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
->>>>>>> main:FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp.sarif
+                        "uri": "file:///D:/Perforce/MetaFamily/Alice/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
                     },
                     "locations": [
                         {
@@ -268,11 +252,7 @@
                         "text": "'stdext::checked_array_iterator<T *>': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
                     },
                     "analysisTarget": {
-<<<<<<< HEAD:FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.cpp.sarif
-                        "uri": "file:///D:/Perforce/MetaFamily/Alice/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.cpp"
-=======
-                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
->>>>>>> main:FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp.sarif
+                        "uri": "file:///D:/Perforce/MetaFamily/Alice/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
                     },
                     "locations": [
                         {
@@ -362,11 +342,7 @@
                         "text": "'stdext::checked_array_iterator<T *>::checked_array_iterator': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
                     },
                     "analysisTarget": {
-<<<<<<< HEAD:FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.cpp.sarif
-                        "uri": "file:///D:/Perforce/MetaFamily/Alice/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.cpp"
-=======
-                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
->>>>>>> main:FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp.sarif
+                        "uri": "file:///D:/Perforce/MetaFamily/Alice/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
                     },
                     "locations": [
                         {
@@ -388,11 +364,7 @@
                         "text": "'stdext::checked_array_iterator<T *>': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
                     },
                     "analysisTarget": {
-<<<<<<< HEAD:FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.cpp.sarif
-                        "uri": "file:///D:/Perforce/MetaFamily/Alice/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.cpp"
-=======
-                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
->>>>>>> main:FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp.sarif
+                        "uri": "file:///D:/Perforce/MetaFamily/Alice/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
                     },
                     "locations": [
                         {
@@ -572,11 +544,7 @@
                         "text": "'stdext::checked_array_iterator<T *>': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
                     },
                     "analysisTarget": {
-<<<<<<< HEAD:FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.cpp.sarif
-                        "uri": "file:///D:/Perforce/MetaFamily/Alice/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.cpp"
-=======
-                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
->>>>>>> main:FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp.sarif
+                        "uri": "file:///D:/Perforce/MetaFamily/Alice/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
                     },
                     "locations": [
                         {
@@ -720,11 +688,7 @@
                         "text": "'stdext::checked_array_iterator<T *>::iterator_category': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
                     },
                     "analysisTarget": {
-<<<<<<< HEAD:FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.cpp.sarif
-                        "uri": "file:///D:/Perforce/MetaFamily/Alice/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.cpp"
-=======
-                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
->>>>>>> main:FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp.sarif
+                        "uri": "file:///D:/Perforce/MetaFamily/Alice/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
                     },
                     "locations": [
                         {
@@ -746,11 +710,7 @@
                         "text": "'stdext::checked_array_iterator<T *>': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
                     },
                     "analysisTarget": {
-<<<<<<< HEAD:FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.cpp.sarif
-                        "uri": "file:///D:/Perforce/MetaFamily/Alice/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.cpp"
-=======
-                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
->>>>>>> main:FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp.sarif
+                        "uri": "file:///D:/Perforce/MetaFamily/Alice/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
                     },
                     "locations": [
                         {
@@ -789,11 +749,7 @@
                         "text": "'stdext::checked_array_iterator<T *>::value_type': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
                     },
                     "analysisTarget": {
-<<<<<<< HEAD:FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.cpp.sarif
-                        "uri": "file:///D:/Perforce/MetaFamily/Alice/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.cpp"
-=======
-                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
->>>>>>> main:FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp.sarif
+                        "uri": "file:///D:/Perforce/MetaFamily/Alice/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
                     },
                     "locations": [
                         {
@@ -815,11 +771,7 @@
                         "text": "'stdext::checked_array_iterator<T *>': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
                     },
                     "analysisTarget": {
-<<<<<<< HEAD:FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.cpp.sarif
-                        "uri": "file:///D:/Perforce/MetaFamily/Alice/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.cpp"
-=======
-                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
->>>>>>> main:FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp.sarif
+                        "uri": "file:///D:/Perforce/MetaFamily/Alice/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
                     },
                     "locations": [
                         {
@@ -858,11 +810,7 @@
                         "text": "'stdext::checked_array_iterator<T *>::difference_type': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
                     },
                     "analysisTarget": {
-<<<<<<< HEAD:FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.cpp.sarif
-                        "uri": "file:///D:/Perforce/MetaFamily/Alice/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.cpp"
-=======
-                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
->>>>>>> main:FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp.sarif
+                        "uri": "file:///D:/Perforce/MetaFamily/Alice/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
                     },
                     "locations": [
                         {
@@ -884,11 +832,7 @@
                         "text": "'stdext::checked_array_iterator<T *>': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
                     },
                     "analysisTarget": {
-<<<<<<< HEAD:FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.cpp.sarif
-                        "uri": "file:///D:/Perforce/MetaFamily/Alice/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.cpp"
-=======
-                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
->>>>>>> main:FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp.sarif
+                        "uri": "file:///D:/Perforce/MetaFamily/Alice/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
                     },
                     "locations": [
                         {
@@ -960,11 +904,7 @@
                         "text": "'stdext::checked_array_iterator<T *>': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
                     },
                     "analysisTarget": {
-<<<<<<< HEAD:FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.cpp.sarif
-                        "uri": "file:///D:/Perforce/MetaFamily/Alice/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.cpp"
-=======
-                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
->>>>>>> main:FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp.sarif
+                        "uri": "file:///D:/Perforce/MetaFamily/Alice/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
                     },
                     "locations": [
                         {
@@ -1003,11 +943,7 @@
                         "text": "'stdext::checked_array_iterator<T *>::reference': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
                     },
                     "analysisTarget": {
-<<<<<<< HEAD:FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.cpp.sarif
-                        "uri": "file:///D:/Perforce/MetaFamily/Alice/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.cpp"
-=======
-                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
->>>>>>> main:FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp.sarif
+                        "uri": "file:///D:/Perforce/MetaFamily/Alice/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
                     },
                     "locations": [
                         {
@@ -1029,11 +965,7 @@
                         "text": "'stdext::checked_array_iterator<T *>': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
                     },
                     "analysisTarget": {
-<<<<<<< HEAD:FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.cpp.sarif
-                        "uri": "file:///D:/Perforce/MetaFamily/Alice/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.cpp"
-=======
-                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
->>>>>>> main:FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp.sarif
+                        "uri": "file:///D:/Perforce/MetaFamily/Alice/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
                     },
                     "locations": [
                         {
@@ -1105,11 +1037,7 @@
                         "text": "'stdext::checked_array_iterator<T *>::difference_type': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
                     },
                     "analysisTarget": {
-<<<<<<< HEAD:FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.cpp.sarif
-                        "uri": "file:///D:/Perforce/MetaFamily/Alice/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.cpp"
-=======
-                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
->>>>>>> main:FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp.sarif
+                        "uri": "file:///D:/Perforce/MetaFamily/Alice/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
                     },
                     "locations": [
                         {
@@ -1131,11 +1059,7 @@
                         "text": "'stdext::checked_array_iterator<T *>::_Verify_offset': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
                     },
                     "analysisTarget": {
-<<<<<<< HEAD:FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.cpp.sarif
-                        "uri": "file:///D:/Perforce/MetaFamily/Alice/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.cpp"
-=======
-                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
->>>>>>> main:FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp.sarif
+                        "uri": "file:///D:/Perforce/MetaFamily/Alice/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
                     },
                     "locations": [
                         {
@@ -1157,11 +1081,7 @@
                         "text": "'stdext::checked_array_iterator<T *>::_Unwrapped': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
                     },
                     "analysisTarget": {
-<<<<<<< HEAD:FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.cpp.sarif
-                        "uri": "file:///D:/Perforce/MetaFamily/Alice/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.cpp"
-=======
-                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
->>>>>>> main:FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp.sarif
+                        "uri": "file:///D:/Perforce/MetaFamily/Alice/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
                     },
                     "locations": [
                         {
@@ -1183,11 +1103,7 @@
                         "text": "'stdext::checked_array_iterator<T *>::_Seek_to': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
                     },
                     "analysisTarget": {
-<<<<<<< HEAD:FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.cpp.sarif
-                        "uri": "file:///D:/Perforce/MetaFamily/Alice/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.cpp"
-=======
-                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
->>>>>>> main:FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp.sarif
+                        "uri": "file:///D:/Perforce/MetaFamily/Alice/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
                     },
                     "locations": [
                         {

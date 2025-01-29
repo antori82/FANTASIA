@@ -1,12 +1,12 @@
 {
     "Version": "1.2",
     "Data": {
-        "Source": "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\fantasia\\source\\fantasia\\private\\langgraphcomponent.cpp",
+        "Source": "d:\\perforce\\metafamily\\alice\\plugins\\fantasia\\fantasia\\source\\fantasia\\private\\langgraphcomponent.cpp",
         "ProvidedModule": "",
-        "PCH": "d:\\perforce\\fantasiadevelopment\\intermediate\\build\\win64\\x64\\fantasiadevelopmenteditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.cpp20.h.pch",
+        "PCH": "d:\\perforce\\metafamily\\alice\\intermediate\\build\\win64\\x64\\aliceeditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.cpp20.h.pch",
         "Includes": [
-            "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\fantasia\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\fantasia\\definitions.fantasia.h",
-            "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\fantasia\\source\\fantasia\\public\\langgraphcomponent.h",
+            "d:\\perforce\\metafamily\\alice\\plugins\\fantasia\\fantasia\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\fantasia\\definitions.fantasia.h",
+            "d:\\perforce\\metafamily\\alice\\plugins\\fantasia\\fantasia\\source\\fantasia\\public\\langgraphcomponent.h",
             "d:\\programmi\\epic games\\ue_5.5\\engine\\source\\runtime\\json\\public\\json.h",
             "d:\\programmi\\epic games\\ue_5.5\\engine\\source\\runtime\\core\\public\\misc\\monolithicheaderboilerplate.h",
             "d:\\programmi\\epic games\\ue_5.5\\engine\\source\\runtime\\core\\public\\core.h",
@@ -72,9 +72,9 @@
             "d:\\programmi\\epic games\\ue_5.5\\engine\\source\\runtime\\online\\http\\public\\platformhttp.h",
             "d:\\programmi\\epic games\\ue_5.5\\engine\\source\\runtime\\online\\http\\public\\windows\\windowsplatformhttp.h",
             "d:\\programmi\\epic games\\ue_5.5\\engine\\source\\runtime\\online\\http\\public\\genericplatform\\genericplatformhttp.h",
-            "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\fantasia\\source\\fantasia\\public\\fantasiatypes.h",
-            "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\fantasia\\intermediate\\build\\win64\\unrealeditor\\inc\\fantasia\\uht\\fantasiatypes.generated.h",
-            "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\fantasia\\intermediate\\build\\win64\\unrealeditor\\inc\\fantasia\\uht\\langgraphcomponent.generated.h"
+            "d:\\perforce\\metafamily\\alice\\plugins\\fantasia\\fantasia\\source\\fantasia\\public\\fantasiatypes.h",
+            "d:\\perforce\\metafamily\\alice\\plugins\\fantasia\\fantasia\\intermediate\\build\\win64\\unrealeditor\\inc\\fantasia\\uht\\fantasiatypes.generated.h",
+            "d:\\perforce\\metafamily\\alice\\plugins\\fantasia\\fantasia\\intermediate\\build\\win64\\unrealeditor\\inc\\fantasia\\uht\\langgraphcomponent.generated.h"
         ],
         "ImportedModules": [],
         "ImportedHeaderUnits": []
