@@ -46,12 +46,15 @@ void UBayesianNetwork::inferenceComplete() {
 }
 
 void UBayesianNetwork::makeInference() {
-	InferenceAvailableDelegate InferenceAvailableSubscriber;
+	if (!handle) {
+		InferenceAvailableDelegate InferenceAvailableSubscriber;
 
-	InferenceAvailableSubscriber.BindUObject(this, &UBayesianNetwork::inferenceComplete);
+		InferenceAvailableSubscriber.BindUObject(this, &UBayesianNetwork::inferenceComplete);
 
-	handle = BayesianInferenceThread::setup(inference);
-	InferenceAvailableHandle = handle->InferenceAvailableSubscribeUser(InferenceAvailableSubscriber);
+		handle = BayesianInferenceThread::setup(inference);
+		InferenceAvailableHandle = handle->InferenceAvailableSubscribeUser(InferenceAvailableSubscriber);
+	}
+	handle->makeInference();
 }
 
 TMap<FString, float> UBayesianNetwork::getPosterior(FString variable) {
