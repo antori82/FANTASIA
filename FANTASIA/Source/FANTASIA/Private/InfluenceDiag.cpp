@@ -40,12 +40,15 @@ void UInfluenceDiag::inferenceComplete() {
 
 void UInfluenceDiag::makeInference()
 {
-	InferenceAvailableDelegate InferenceAvailableSubscriber;
+	if (!handle) {
+		InferenceAvailableDelegate InferenceAvailableSubscriber;
 
-	InferenceAvailableSubscriber.BindUObject(this, &UInfluenceDiag::inferenceComplete);
+		InferenceAvailableSubscriber.BindUObject(this, &UInfluenceDiag::inferenceComplete);
 
-	handle = BayesianInferenceThread::setup(inference);
-	InferenceAvailableHandle = handle->InferenceAvailableSubscribeUser(InferenceAvailableSubscriber);
+		handle = BayesianInferenceThread::setup(inference);
+		InferenceAvailableHandle = handle->InferenceAvailableSubscribeUser(InferenceAvailableSubscriber);
+	}
+	handle->makeInference();
 }
 
 TMap<FString, float> UInfluenceDiag::getPosterior(FString variable)
