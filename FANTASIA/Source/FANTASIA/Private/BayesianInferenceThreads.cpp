@@ -24,7 +24,7 @@ bool BayesianInferenceThread::Init() {
 }
 
 uint32 BayesianInferenceThread::Run() {
-	makeInference();
+	//makeInference();
 	return 0;
 }
 
