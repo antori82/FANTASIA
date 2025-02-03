@@ -66,4 +66,7 @@ public:
 
 	UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Sound General", Keywords = "Plugin TTS"), Category = "TTS")
 	USoundWave* TTSGetSound(FString id) override;
+
+	UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Raw Sound", Keywords = "Azure Plugin TTS"), Category = "TTS")
+	TArray<float> TTSGetRawSound(FString id);
 };

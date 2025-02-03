@@ -77,4 +77,7 @@ public:
 
 	UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Sound", Keywords = "ElevenLabs TTS"), Category = "TTS")
 	USoundWaveProcedural* TTSGetSound(FString id);
+
+	UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Raw Sound", Keywords = "Azure Plugin TTS"), Category = "TTS")
+	TArray<float> TTSGetRawSound(FString id);
 };

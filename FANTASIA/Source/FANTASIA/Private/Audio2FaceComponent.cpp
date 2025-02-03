@@ -10,11 +10,11 @@ UAudio2FaceComponent::UAudio2FaceComponent() {
 }
 
 
-void UAudio2FaceComponent::PlayAudio(USoundWave* SoundWave)
+void UAudio2FaceComponent::PlayAudio(TArray<float> data)
 {
 	int32 sampleRate = 16000;
    
-    LoadSoundWaveFromTTS(SoundWave);
+    LoadRawSoundFromTTS(data);
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("sending audio.."));
   
 	A2FaceFMyThread(sampleRate);
@@ -29,16 +29,17 @@ void UAudio2FaceComponent::A2FaceFMyThread(int32 sampleRate) {
     }
 }
 
-void UAudio2FaceComponent::LoadSoundWaveFromTTS(USoundWave* sound) {
+void UAudio2FaceComponent::LoadRawSoundFromTTS(TArray<float> soundData) {
     AudioData.Empty();
-    for (int i = 0; i < sound->RawPCMDataSize; i += 2) {
-        float NormalizedSample = 0.0f;
+    AudioData = soundData;
 
-        int16 Sample = *reinterpret_cast<int16*>(&sound->RawPCMData[i]);
-        NormalizedSample = Sample / 32768.0f;
+    //for (int i = 0; i < size; i += 2) {
+    //    float NormalizedSample = 0.0f;
+    //    int16 Sample = *reinterpret_cast<int16*>(&rawSound[i]);
+    //    NormalizedSample = Sample / 32768.0f;
 
-        AudioData.Add(NormalizedSample);
-    }
+    //    AudioData.Add(NormalizedSample);
+    //}
 }
 
 // Called when the game starts

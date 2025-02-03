@@ -16,6 +16,7 @@ class USoundWaveProcedural;
 #define FANTASIA_ElevenLabsTTSComponent_generated_h
 
 #define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_ElevenLabsTTSComponent_h_22_RPC_WRAPPERS_NO_PURE_DECLS \
+	DECLARE_FUNCTION(execTTSGetRawSound); \
 	DECLARE_FUNCTION(execTTSGetSound); \
 	DECLARE_FUNCTION(execTTSSynthesize);
 

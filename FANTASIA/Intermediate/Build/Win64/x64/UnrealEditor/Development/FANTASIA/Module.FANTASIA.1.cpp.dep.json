@@ -2038,11 +2038,7 @@
             "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\fantasia\\source\\fantasia\\public\\elevenlabsttsthread.h",
             "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\fantasia\\intermediate\\build\\win64\\unrealeditor\\inc\\fantasia\\uht\\elevenlabsttscomponent.generated.h",
             "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\fantasia\\intermediate\\build\\win64\\unrealeditor\\inc\\fantasia\\uht\\fantasia.init.gen.cpp",
-            "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\fantasia\\intermediate\\build\\win64\\unrealeditor\\inc\\fantasia\\uht\\fantasiatypes.gen.cpp",
-            "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\fantasia\\intermediate\\build\\win64\\unrealeditor\\inc\\fantasia\\uht\\generalttscomponent.gen.cpp",
-            "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\fantasia\\source\\fantasia\\public\\generalttscomponent.h",
-            "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\fantasia\\source\\fantasia\\public\\generalttsthread.h",
-            "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\fantasia\\intermediate\\build\\win64\\unrealeditor\\inc\\fantasia\\uht\\generalttscomponent.generated.h"
+            "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\fantasia\\intermediate\\build\\win64\\unrealeditor\\inc\\fantasia\\uht\\fantasiatypes.gen.cpp"
         ],
         "ImportedModules": [],
         "ImportedHeaderUnits": []

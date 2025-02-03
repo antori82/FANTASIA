@@ -235,6 +235,58 @@ DEFINE_FUNCTION(UAWSPollyComponent::execAWSPollySynthesize)
 }
 // End Class UAWSPollyComponent Function AWSPollySynthesize
 
+// Begin Class UAWSPollyComponent Function TTSGetRawSound
+struct Z_Construct_UFunction_UAWSPollyComponent_TTSGetRawSound_Statics
+{
+	struct AWSPollyComponent_eventTTSGetRawSound_Parms
+	{
+		FString id;
+		TArray<float> ReturnValue;
+	};
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
+		{ "Category", "TTS" },
+		{ "DisplayName", "Get Raw Sound" },
+		{ "Keywords", "Azure Plugin TTS" },
+		{ "ModuleRelativePath", "Public/AWSPollyComponent.h" },
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FStrPropertyParams NewProp_id;
+	static const UECodeGen_Private::FFloatPropertyParams NewProp_ReturnValue_Inner;
+	static const UECodeGen_Private::FArrayPropertyParams NewProp_ReturnValue;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+	static const UECodeGen_Private::FFunctionParams FuncParams;
+};
+const UECodeGen_Private::FStrPropertyParams Z_Construct_UFunction_UAWSPollyComponent_TTSGetRawSound_Statics::NewProp_id = { "id", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AWSPollyComponent_eventTTSGetRawSound_Parms, id), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_UAWSPollyComponent_TTSGetRawSound_Statics::NewProp_ReturnValue_Inner = { "ReturnValue", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FArrayPropertyParams Z_Construct_UFunction_UAWSPollyComponent_TTSGetRawSound_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AWSPollyComponent_eventTTSGetRawSound_Parms, ReturnValue), EArrayPropertyFlags::None, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UAWSPollyComponent_TTSGetRawSound_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UAWSPollyComponent_TTSGetRawSound_Statics::NewProp_id,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UAWSPollyComponent_TTSGetRawSound_Statics::NewProp_ReturnValue_Inner,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UAWSPollyComponent_TTSGetRawSound_Statics::NewProp_ReturnValue,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UAWSPollyComponent_TTSGetRawSound_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UAWSPollyComponent_TTSGetRawSound_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UAWSPollyComponent, nullptr, "TTSGetRawSound", nullptr, nullptr, Z_Construct_UFunction_UAWSPollyComponent_TTSGetRawSound_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UAWSPollyComponent_TTSGetRawSound_Statics::PropPointers), sizeof(Z_Construct_UFunction_UAWSPollyComponent_TTSGetRawSound_Statics::AWSPollyComponent_eventTTSGetRawSound_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x14020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UAWSPollyComponent_TTSGetRawSound_Statics::Function_MetaDataParams), Z_Construct_UFunction_UAWSPollyComponent_TTSGetRawSound_Statics::Function_MetaDataParams) };
+static_assert(sizeof(Z_Construct_UFunction_UAWSPollyComponent_TTSGetRawSound_Statics::AWSPollyComponent_eventTTSGetRawSound_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_UAWSPollyComponent_TTSGetRawSound()
+{
+	static UFunction* ReturnFunction = nullptr;
+	if (!ReturnFunction)
+	{
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UAWSPollyComponent_TTSGetRawSound_Statics::FuncParams);
+	}
+	return ReturnFunction;
+}
+DEFINE_FUNCTION(UAWSPollyComponent::execTTSGetRawSound)
+{
+	P_GET_PROPERTY(FStrProperty,Z_Param_id);
+	P_FINISH;
+	P_NATIVE_BEGIN;
+	*(TArray<float>*)Z_Param__Result=P_THIS->TTSGetRawSound(Z_Param_id);
+	P_NATIVE_END;
+}
+// End Class UAWSPollyComponent Function TTSGetRawSound
+
 // Begin Class UAWSPollyComponent
 void UAWSPollyComponent::StaticRegisterNativesUAWSPollyComponent()
 {
@@ -244,6 +296,7 @@ void UAWSPollyComponent::StaticRegisterNativesUAWSPollyComponent()
 		{ "AWSPollyGetNotifies", &UAWSPollyComponent::execAWSPollyGetNotifies },
 		{ "AWSPollyGetSound", &UAWSPollyComponent::execAWSPollyGetSound },
 		{ "AWSPollySynthesize", &UAWSPollyComponent::execAWSPollySynthesize },
+		{ "TTSGetRawSound", &UAWSPollyComponent::execTTSGetRawSound },
 	};
 	FNativeFunctionRegistrar::RegisterFunctions(Class, Funcs, UE_ARRAY_COUNT(Funcs));
 }
@@ -307,6 +360,7 @@ struct Z_Construct_UClass_UAWSPollyComponent_Statics
 		{ &Z_Construct_UFunction_UAWSPollyComponent_AWSPollyGetNotifies, "AWSPollyGetNotifies" }, // 4029440757
 		{ &Z_Construct_UFunction_UAWSPollyComponent_AWSPollyGetSound, "AWSPollyGetSound" }, // 2348105539
 		{ &Z_Construct_UFunction_UAWSPollyComponent_AWSPollySynthesize, "AWSPollySynthesize" }, // 3969860563
+		{ &Z_Construct_UFunction_UAWSPollyComponent_TTSGetRawSound, "TTSGetRawSound" }, // 3308230148
 	};
 	static_assert(UE_ARRAY_COUNT(FuncInfo) < 2048);
 	static constexpr FCppClassTypeInfoStatic StaticCppClassTypeInfo = {
@@ -371,10 +425,10 @@ UAWSPollyComponent::~UAWSPollyComponent() {}
 struct Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_AWSPollyComponent_h_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_UAWSPollyComponent, UAWSPollyComponent::StaticClass, TEXT("UAWSPollyComponent"), &Z_Registration_Info_UClass_UAWSPollyComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UAWSPollyComponent), 2685614184U) },
+		{ Z_Construct_UClass_UAWSPollyComponent, UAWSPollyComponent::StaticClass, TEXT("UAWSPollyComponent"), &Z_Registration_Info_UClass_UAWSPollyComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UAWSPollyComponent), 2061977612U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_AWSPollyComponent_h_964796505(TEXT("/Script/FANTASIA"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_AWSPollyComponent_h_4045918584(TEXT("/Script/FANTASIA"),
 	Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_AWSPollyComponent_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_AWSPollyComponent_h_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);

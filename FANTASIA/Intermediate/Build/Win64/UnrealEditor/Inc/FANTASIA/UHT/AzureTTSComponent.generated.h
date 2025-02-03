@@ -16,6 +16,7 @@ class USoundWave;
 #define FANTASIA_AzureTTSComponent_generated_h
 
 #define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_27_RPC_WRAPPERS_NO_PURE_DECLS \
+	DECLARE_FUNCTION(execTTSGetRawSound); \
 	DECLARE_FUNCTION(execTTSGetSound); \
 	DECLARE_FUNCTION(execTTSSynthesize);
 
