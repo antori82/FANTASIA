@@ -68,3 +68,16 @@ USoundWave* UAWSPollyComponent::AWSPollyGetSound(FString id) {
 	SyntheticVoice->QueueAudio((const uint8*)Buffer[id].AudioData.GetData(), SyntheticVoice->RawPCMDataSize);
 	return SyntheticVoice;
 }
+
+TArray<float> UAWSPollyComponent::TTSGetRawSound(FString id) {
+	TArray<float> AudioData;
+
+	for (int i = 0; i < Buffer[id].AudioData.Num() * sizeof(uint8); i += 2) {
+		float NormalizedSample = 0.0f;
+		int16 Sample = *reinterpret_cast<int16*>(&Buffer[id].AudioData.GetData()[i]);
+		NormalizedSample = Sample / 32768.0f;
+
+		AudioData.Add(NormalizedSample);
+	}
+	return AudioData;
+}

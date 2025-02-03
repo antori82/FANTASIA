@@ -47,4 +47,7 @@ public:
 	**/
 	UFUNCTION(Category = "TTS")
 	virtual USoundWave* TTSGetSound(FString id) PURE_VIRTUAL(ITTSInterface::TTSGetSound, return nullptr;);
+
+	UFUNCTION(Category = "TTS")
+	virtual TArray<float> TTSGetRawSound(FString id) PURE_VIRTUAL(ITTSInterface::TTSGetRawSound, TArray<float> empty; return empty;);
 };
