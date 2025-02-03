@@ -10,10 +10,10 @@
 			"BayesianNetwork.gen.cpp.obj",
 			"ElevenLabsTTSComponent.gen.cpp.obj",
 			"FANTASIA.init.gen.cpp.obj",
-			"FANTASIATypes.gen.cpp.obj",
-			"GeneralTTSComponent.gen.cpp.obj"
+			"FANTASIATypes.gen.cpp.obj"
 		],
 		"Module.FANTASIA.2.cpp.obj": [
+			"GeneralTTSComponent.gen.cpp.obj",
 			"GroqComponent.gen.cpp.obj",
 			"InfluenceDiag.gen.cpp.obj",
 			"LangGraphComponent.gen.cpp.obj",
@@ -47,10 +47,7 @@
 			"InfluenceDiag.cpp.obj",
 			"LangGraphComponent.cpp.obj",
 			"MathUtilities.cpp.obj",
-			"Neo4jComponent.cpp.obj",
-			"OllamaComponent.cpp.obj",
-			"OpenAIComponent.cpp.obj",
-			"SWIPrologComponent.cpp.obj"
+			"Neo4jComponent.cpp.obj"
 		]
 	}
 }
