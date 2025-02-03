@@ -45,10 +45,10 @@ public:
 	FDateTime Inizio;
 	FDateTime Fine;
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Play Audio", Keywords = "Nvidia Plugin"), Category = "Audio2Face")
-	void PlayAudio(USoundWave* SoundWave);
+	void PlayAudio(TArray<float> data);
 
 	void A2FaceFMyThread(int32 sampleRate);
-	void LoadSoundWaveFromTTS(USoundWave* sound);
+	void LoadRawSoundFromTTS(TArray<float> soundData);
 
 protected:
 	// Called when the game starts

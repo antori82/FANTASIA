@@ -56,6 +56,9 @@ public:
 	UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Notifies", Keywords = "AWS Plugin TTS"), Category = "TTS")
 	TArray<FTTSTimedStruct> AWSPollyGetNotifies(FString id);
 
+	UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Raw Sound", Keywords = "Azure Plugin TTS"), Category = "TTS")
+	TArray<float> TTSGetRawSound(FString id);
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
