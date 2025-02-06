@@ -17,6 +17,7 @@ struct FTTSTimedStruct;
 #define FANTASIA_AWSPollyComponent_generated_h
 
 #define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_AWSPollyComponent_h_20_RPC_WRAPPERS_NO_PURE_DECLS \
+	DECLARE_FUNCTION(execTTSGetRawSound); \
 	DECLARE_FUNCTION(execAWSPollyGetNotifies); \
 	DECLARE_FUNCTION(execAWSPollyGetLipSync); \
 	DECLARE_FUNCTION(execAWSPollyGetSound); \

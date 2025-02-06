@@ -9,7 +9,6 @@
 #include "UObject/ScriptMacros.h"
 
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
-class USoundWave;
 #ifdef FANTASIA_Audio2FaceComponent_generated_h
 #error "Audio2FaceComponent.generated.h already included, missing '#pragma once' in Audio2FaceComponent.h"
 #endif
