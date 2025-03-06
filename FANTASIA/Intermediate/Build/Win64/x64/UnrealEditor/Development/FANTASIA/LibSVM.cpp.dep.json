@@ -1,15 +1,15 @@
 {
     "Version": "1.2",
     "Data": {
-        "Source": "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\fantasia\\source\\fantasia\\private\\libsvm.cpp",
+        "Source": "c:\\users\\alex\\documents\\unreal projects\\myproject\\plugins\\fantasia\\source\\fantasia\\private\\libsvm.cpp",
         "ProvidedModule": "",
-        "PCH": "d:\\perforce\\fantasiadevelopment\\intermediate\\build\\win64\\x64\\fantasiadevelopmenteditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.cpp20.h.pch",
+        "PCH": "c:\\users\\alex\\documents\\unreal projects\\myproject\\intermediate\\build\\win64\\x64\\myprojecteditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.cpp20.h.pch",
         "Includes": [
-            "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\fantasia\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\fantasia\\definitions.fantasia.h",
-            "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\fantasia\\source\\fantasia\\public\\libsvm.h",
-            "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\fantasia\\source\\fantasia\\public\\fantasia.h",
-            "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\fantasia\\source\\fantasia\\public\\svm.h",
-            "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\fantasia\\intermediate\\build\\win64\\unrealeditor\\inc\\fantasia\\uht\\libsvm.generated.h"
+            "c:\\users\\alex\\documents\\unreal projects\\myproject\\plugins\\fantasia\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\fantasia\\definitions.fantasia.h",
+            "c:\\users\\alex\\documents\\unreal projects\\myproject\\plugins\\fantasia\\source\\fantasia\\public\\libsvm.h",
+            "c:\\users\\alex\\documents\\unreal projects\\myproject\\plugins\\fantasia\\source\\fantasia\\public\\fantasia.h",
+            "c:\\users\\alex\\documents\\unreal projects\\myproject\\plugins\\fantasia\\source\\fantasia\\public\\svm.h",
+            "c:\\users\\alex\\documents\\unreal projects\\myproject\\plugins\\fantasia\\intermediate\\build\\win64\\unrealeditor\\inc\\fantasia\\uht\\libsvm.generated.h"
         ],
         "ImportedModules": [],
         "ImportedHeaderUnits": []

@@ -14,7 +14,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #endif
 #define FANTASIA_paramObject_generated_h
 
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_paramObject_h_11_GENERATED_BODY \
+#define FID_Users_Alex_Documents_Unreal_Projects_MyProject_Plugins_FANTASIA_Source_FANTASIA_Public_paramObject_h_11_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FparamValues_Statics; \
 	FANTASIA_API static class UScriptStruct* StaticStruct();
 
@@ -22,7 +22,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 template<> FANTASIA_API UScriptStruct* StaticStruct<struct FparamValues>();
 
 #undef CURRENT_FILE_ID
-#define CURRENT_FILE_ID FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_paramObject_h
+#define CURRENT_FILE_ID FID_Users_Alex_Documents_Unreal_Projects_MyProject_Plugins_FANTASIA_Source_FANTASIA_Public_paramObject_h
 
 
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
