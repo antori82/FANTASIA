@@ -152,8 +152,8 @@ void USWIPrologComponent::startProlog() {
 	if (_putenv("SWI_HOME_DIR=C:\\Program Files\\swipl")) return;
 	int argc = 1;
 
-	FString RelativePath = FPaths::GameSourceDir();
-	RelativePath = FPaths::GetPath("../plugins/FANTASIA/ThirdParty/SWIProlog/libs/libswipl.dll");
+	FString RelativePath = FPaths::ProjectDir();
+	RelativePath = FPaths::GetPath(RelativePath + "Plugins/FANTASIA/FANTASIA/Binaries/Win64/libswipl.dll");
 	FString FullPath = IFileManager::Get().ConvertToAbsolutePathForExternalAppForRead(*RelativePath);
 	char* result = TCHAR_TO_ANSI(*FullPath);
 	if (!PL_initialise(argc, &result)) {

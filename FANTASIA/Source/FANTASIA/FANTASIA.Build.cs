@@ -144,19 +144,16 @@ public class FANTASIA : ModuleRules
         PublicIncludePaths.AddRange(new string[] {IncludePath3, IncludePath4, IncludePath5 });
     }
 
-    public void DllLoad(string Redist)//DLL load TODO better
+    public void DllLoad(string Redist)
     {
-        RuntimeDependencies.Add(Path.Combine(Redist, "aws-c-common.dll"));
-        RuntimeDependencies.Add(Path.Combine(Redist, "aws-c-event-stream.dll"));
-        RuntimeDependencies.Add(Path.Combine(Redist, "aws-checksums.dll"));
-        RuntimeDependencies.Add(Path.Combine(Redist, "aws-cpp-sdk-core.dll"));
-        RuntimeDependencies.Add(Path.Combine(Redist, "aws-cpp-sdk-polly.dll"));
-        RuntimeDependencies.Add(Path.Combine(Redist, "aws-cpp-sdk-text-to-speech.dll"));
-        RuntimeDependencies.Add(Path.Combine(Redist, "Microsoft.CognitiveServices.Speech.core.dll"));
-        RuntimeDependencies.Add(Path.Combine(Redist, "Microsoft.CognitiveServices.Speech.extension.kws.dll"));
+        foreach (string dllFile in Directory.GetFiles(Redist, "*"))
+        {
+            string destPath = Path.Combine("$(PluginDir)", "Binaries", "Win64", Path.GetFileName(dllFile));
+            RuntimeDependencies.Add(destPath, dllFile);
+        }
     }
 
-    public void PrologLibs(string ThirdParty)//Prolog libraries and adding of additional dll support for Prolog to run correctly in case the system does not have SWiProlog installed
+    public void PrologLibs(string ThirdParty)//Prolog libraries
     {
         string PrologDllPath = Path.Combine(ThirdParty, "SWIProlog", "PrologDlls");
         string PrologCpp = Path.Combine(ThirdParty, "SWIProlog", "libs");
@@ -166,20 +163,14 @@ public class FANTASIA : ModuleRules
         PublicAdditionalLibraries.Add(PrologCpp + "/libswipl.lib");
 
         PublicIncludePaths.Add(Path.Combine(ThirdParty, "SWIProlog", "headers"));
-        PublicIncludePaths.Add(Path.Combine(ThirdParty, "kdepp"));//kdepp
 
         RuntimeDependencies.Add(Path.Combine(PrologCpp, "/libswipl.dll"));
 
-        foreach (string dllFile in Directory.GetFiles(PrologDllPath, "*.dll"))
+        foreach (string dllFile in Directory.GetFiles(PrologDllPath, "*"))
         {
             string destPath = Path.Combine("$(PluginDir)", "Binaries", "Win64", Path.GetFileName(dllFile));
-            Console.WriteLine("PrologDll : " + dllFile);
             RuntimeDependencies.Add(destPath, dllFile);
-            PublicDelayLoadDLLs.Add(dllFile);
-
         }
-
-
     }
 
 
@@ -216,6 +207,8 @@ public class FANTASIA : ModuleRules
 
         LoadAgrum(Target, ThirdParty);
         LoadGrpc(Target, ThirdParty);
+
+        PublicIncludePaths.Add(Path.Combine(ThirdParty, "kdepp"));//kdepp
 
         DynamicallyLoadedModuleNames.AddRange(
         new string[]
