@@ -6,9 +6,9 @@
 /NAME:"UnrealEditor-FANTASIAEditor.dll"
 /IGNORE:4221
 /NODEFAULTLIB
-"C:\Users\Alex\Documents\Unreal Projects\MyProject\Intermediate\Build\Win64\x64\MyProjectEditor\Development\UnrealEd\SharedPCH.UnrealEd.Project.ValApi.Cpp20.h.obj"
-"C:\Users\Alex\Documents\Unreal Projects\MyProject\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIAEditor\Module.FANTASIAEditor.cpp.obj"
-"C:\Users\Alex\Documents\Unreal Projects\MyProject\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIAEditor\BayesianNetworkFactory.cpp.obj"
-"C:\Users\Alex\Documents\Unreal Projects\MyProject\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIAEditor\FANTASIAEditor.cpp.obj"
-"C:\Users\Alex\Documents\Unreal Projects\MyProject\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIAEditor\Default.rc2.res"
-/OUT:"C:\Users\Alex\Documents\Unreal Projects\MyProject\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIAEditor\UnrealEditor-FANTASIAEditor.lib"
+"D:\Perforce\FANTASIADevelopment\Intermediate\Build\Win64\x64\FANTASIADevelopmentEditor\Development\UnrealEd\SharedPCH.UnrealEd.Project.ValApi.Cpp20.h.obj"
+"D:\Perforce\FANTASIADevelopment\Plugins\FANTASIA\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIAEditor\Module.FANTASIAEditor.cpp.obj"
+"D:\Perforce\FANTASIADevelopment\Plugins\FANTASIA\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIAEditor\BayesianNetworkFactory.cpp.obj"
+"D:\Perforce\FANTASIADevelopment\Plugins\FANTASIA\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIAEditor\FANTASIAEditor.cpp.obj"
+"D:\Perforce\FANTASIADevelopment\Plugins\FANTASIA\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIAEditor\Default.rc2.res"
+/OUT:"D:\Perforce\FANTASIADevelopment\Plugins\FANTASIA\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\Development\FANTASIAEditor\UnrealEditor-FANTASIAEditor.lib"
