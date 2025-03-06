@@ -1,0 +1,16 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "c:\\users\\alex\\documents\\unreal projects\\myproject\\plugins\\fantasia\\source\\fantasia\\private\\svm.cpp",
+        "ProvidedModule": "",
+        "PCH": "c:\\users\\alex\\documents\\unreal projects\\myproject\\intermediate\\build\\win64\\x64\\myprojecteditor\\debuggame\\unrealed\\sharedpch.unrealed.project.nonoptimized.valapi.cpp20.h.pch",
+        "Includes": [
+            "c:\\users\\alex\\documents\\unreal projects\\myproject\\plugins\\fantasia\\intermediate\\build\\win64\\x64\\unrealeditor\\debuggame\\fantasia\\definitions.fantasia.h",
+            "c:\\users\\alex\\documents\\unreal projects\\myproject\\plugins\\fantasia\\source\\fantasia\\public\\svm.h",
+            "c:\\program files (x86)\\windows kits\\10\\include\\10.0.22621.0\\ucrt\\math.h",
+            "c:\\program files (x86)\\windows kits\\10\\include\\10.0.22621.0\\ucrt\\locale.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

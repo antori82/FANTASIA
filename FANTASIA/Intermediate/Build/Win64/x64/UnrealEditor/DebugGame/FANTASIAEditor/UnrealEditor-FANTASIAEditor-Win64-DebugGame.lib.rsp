@@ -1,0 +1,14 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UnrealEditor-FANTASIAEditor-Win64-DebugGame.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"C:\Users\Alex\Documents\Unreal Projects\MyProject\Intermediate\Build\Win64\x64\MyProjectEditor\DebugGame\UnrealEd\SharedPCH.UnrealEd.Project.NonOptimized.ValApi.Cpp20.h.obj"
+"C:\Users\Alex\Documents\Unreal Projects\MyProject\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\DebugGame\FANTASIAEditor\Module.FANTASIAEditor.cpp.obj"
+"C:\Users\Alex\Documents\Unreal Projects\MyProject\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\DebugGame\FANTASIAEditor\BayesianNetworkFactory.cpp.obj"
+"C:\Users\Alex\Documents\Unreal Projects\MyProject\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\DebugGame\FANTASIAEditor\FANTASIAEditor.cpp.obj"
+"C:\Users\Alex\Documents\Unreal Projects\MyProject\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\DebugGame\FANTASIAEditor\Default.rc2.res"
+/OUT:"C:\Users\Alex\Documents\Unreal Projects\MyProject\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\DebugGame\FANTASIAEditor\UnrealEditor-FANTASIAEditor-Win64-DebugGame.lib"

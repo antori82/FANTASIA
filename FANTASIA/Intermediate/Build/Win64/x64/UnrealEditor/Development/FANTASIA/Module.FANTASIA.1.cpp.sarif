@@ -10,13 +10,13 @@
                         "text": "'stdext::checked_array_iterator<T *>': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
                     },
                     "analysisTarget": {
-                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
+                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
                     },
                     "locations": [
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
+                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
                                 },
                                 "region": {
                                     "startLine": 105,
@@ -38,14 +38,14 @@
                                 }
                             },
                             "message": {
-                                "text": "vedere la dichiarazione di 'stdext::checked_array_iterator'"
+                                "text": "see declaration of 'stdext::checked_array_iterator'"
                             }
                         },
                         {
                             "id": 1,
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
+                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
                                 },
                                 "region": {
                                     "startLine": 105,
@@ -53,14 +53,14 @@
                                 }
                             },
                             "message": {
-                                "text": "il contesto di creazione dell'istanza del modello (prima il meno recente) è"
+                                "text": "the template instantiation context (the oldest one first) is"
                             }
                         },
                         {
                             "id": 2,
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
+                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
                                 },
                                 "region": {
                                     "startLine": 228,
@@ -68,7 +68,7 @@
                                 }
                             },
                             "message": {
-                                "text": "vedere il riferimento all'istanza 'Aws::Utils::Array<unsigned char>' di modello classe di cui è in corso la compilazione"
+                                "text": "see reference to class template instantiation 'Aws::Utils::Array<unsigned char>' being compiled"
                             },
                             "properties": {
                                 "nestingLevel": 1
@@ -78,7 +78,7 @@
                             "id": 3,
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
+                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
                                 },
                                 "region": {
                                     "startLine": 95,
@@ -86,7 +86,7 @@
                                 }
                             },
                             "message": {
-                                "text": "durante la compilazione della funzione membro 'Aws::Utils::Array<unsigned char>::Array(const Aws::Utils::Array<unsigned char> &)' di modello classe"
+                                "text": "while compiling class template member function 'Aws::Utils::Array<unsigned char>::Array(const Aws::Utils::Array<unsigned char> &)'"
                             },
                             "properties": {
                                 "nestingLevel": 1
@@ -96,7 +96,7 @@
                             "id": 4,
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
+                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
                                 },
                                 "region": {
                                     "startLine": 234,
@@ -104,7 +104,7 @@
                                 }
                             },
                             "message": {
-                                "text": "vedere il primo riferimento a 'Aws::Utils::Array<unsigned char>::Array' in 'Aws::Utils::CryptoBuffer::CryptoBuffer'"
+                                "text": "see the first reference to 'Aws::Utils::Array<unsigned char>::Array' in 'Aws::Utils::CryptoBuffer::CryptoBuffer'"
                             },
                             "properties": {
                                 "nestingLevel": 2
@@ -118,13 +118,13 @@
                         "text": "'stdext::checked_array_iterator<T *>::checked_array_iterator': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
                     },
                     "analysisTarget": {
-                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
+                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
                     },
                     "locations": [
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
+                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
                                 },
                                 "region": {
                                     "startLine": 105,
@@ -140,13 +140,13 @@
                         "text": "'stdext::checked_array_iterator<T *>': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
                     },
                     "analysisTarget": {
-                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
+                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
                     },
                     "locations": [
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
+                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
                                 },
                                 "region": {
                                     "startLine": 86,
@@ -168,14 +168,14 @@
                                 }
                             },
                             "message": {
-                                "text": "vedere la dichiarazione di 'stdext::checked_array_iterator'"
+                                "text": "see declaration of 'stdext::checked_array_iterator'"
                             }
                         },
                         {
                             "id": 1,
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
+                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
                                 },
                                 "region": {
                                     "startLine": 86,
@@ -183,14 +183,14 @@
                                 }
                             },
                             "message": {
-                                "text": "il contesto di creazione dell'istanza del modello (prima il meno recente) è"
+                                "text": "the template instantiation context (the oldest one first) is"
                             }
                         },
                         {
                             "id": 2,
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
+                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
                                 },
                                 "region": {
                                     "startLine": 68,
@@ -198,7 +198,7 @@
                                 }
                             },
                             "message": {
-                                "text": "durante la compilazione della funzione membro 'Aws::Utils::Array<unsigned char>::Array(std::vector<Aws::Utils::Array<unsigned char> *,Aws::Allocator<Aws::Utils::Array<unsigned char> *>> &&)' di modello classe"
+                                "text": "while compiling class template member function 'Aws::Utils::Array<unsigned char>::Array(std::vector<Aws::Utils::Array<unsigned char> *,Aws::Allocator<Aws::Utils::Array<unsigned char> *>> &&)'"
                             },
                             "properties": {
                                 "nestingLevel": 1
@@ -208,7 +208,7 @@
                             "id": 3,
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
+                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
                                 },
                                 "region": {
                                     "startLine": 233,
@@ -216,7 +216,7 @@
                                 }
                             },
                             "message": {
-                                "text": "vedere il primo riferimento a 'Aws::Utils::Array<unsigned char>::Array' in 'Aws::Utils::CryptoBuffer::CryptoBuffer'"
+                                "text": "see the first reference to 'Aws::Utils::Array<unsigned char>::Array' in 'Aws::Utils::CryptoBuffer::CryptoBuffer'"
                             },
                             "properties": {
                                 "nestingLevel": 2
@@ -230,13 +230,13 @@
                         "text": "'stdext::checked_array_iterator<T *>::checked_array_iterator': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
                     },
                     "analysisTarget": {
-                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
+                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
                     },
                     "locations": [
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
+                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
                                 },
                                 "region": {
                                     "startLine": 86,
@@ -252,13 +252,13 @@
                         "text": "'stdext::checked_array_iterator<T *>': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
                     },
                     "analysisTarget": {
-                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
+                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
                     },
                     "locations": [
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
+                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
                                 },
                                 "region": {
                                     "startLine": 58,
@@ -280,14 +280,14 @@
                                 }
                             },
                             "message": {
-                                "text": "vedere la dichiarazione di 'stdext::checked_array_iterator'"
+                                "text": "see declaration of 'stdext::checked_array_iterator'"
                             }
                         },
                         {
                             "id": 1,
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
+                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
                                 },
                                 "region": {
                                     "startLine": 58,
@@ -295,14 +295,14 @@
                                 }
                             },
                             "message": {
-                                "text": "il contesto di creazione dell'istanza del modello (prima il meno recente) è"
+                                "text": "the template instantiation context (the oldest one first) is"
                             }
                         },
                         {
                             "id": 2,
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
+                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
                                 },
                                 "region": {
                                     "startLine": 49,
@@ -310,7 +310,7 @@
                                 }
                             },
                             "message": {
-                                "text": "durante la compilazione della funzione membro 'Aws::Utils::Array<unsigned char>::Array(const T *,size_t)' di modello classe\n        with\n        [\n            T=unsigned char\n        ]"
+                                "text": "while compiling class template member function 'Aws::Utils::Array<unsigned char>::Array(const T *,size_t)'\n        with\n        [\n            T=unsigned char\n        ]"
                             },
                             "properties": {
                                 "nestingLevel": 1
@@ -320,7 +320,7 @@
                             "id": 3,
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
+                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
                                 },
                                 "region": {
                                     "startLine": 232,
@@ -328,7 +328,7 @@
                                 }
                             },
                             "message": {
-                                "text": "vedere il primo riferimento a 'Aws::Utils::Array<unsigned char>::Array' in 'Aws::Utils::CryptoBuffer::CryptoBuffer'"
+                                "text": "see the first reference to 'Aws::Utils::Array<unsigned char>::Array' in 'Aws::Utils::CryptoBuffer::CryptoBuffer'"
                             },
                             "properties": {
                                 "nestingLevel": 2
@@ -342,13 +342,13 @@
                         "text": "'stdext::checked_array_iterator<T *>::checked_array_iterator': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
                     },
                     "analysisTarget": {
-                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
+                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
                     },
                     "locations": [
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
+                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
                                 },
                                 "region": {
                                     "startLine": 58,
@@ -364,7 +364,7 @@
                         "text": "'stdext::checked_array_iterator<T *>': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
                     },
                     "analysisTarget": {
-                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
+                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
                     },
                     "locations": [
                         {
@@ -392,7 +392,7 @@
                                 }
                             },
                             "message": {
-                                "text": "vedere la dichiarazione di 'stdext::checked_array_iterator'"
+                                "text": "see declaration of 'stdext::checked_array_iterator'"
                             }
                         },
                         {
@@ -407,14 +407,14 @@
                                 }
                             },
                             "message": {
-                                "text": "il contesto di creazione dell'istanza del modello (prima il meno recente) è"
+                                "text": "the template instantiation context (the oldest one first) is"
                             }
                         },
                         {
                             "id": 2,
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
+                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
                                 },
                                 "region": {
                                     "startLine": 95,
@@ -422,7 +422,7 @@
                                 }
                             },
                             "message": {
-                                "text": "durante la compilazione della funzione membro 'Aws::Utils::Array<unsigned char>::Array(const Aws::Utils::Array<unsigned char> &)' di modello classe"
+                                "text": "while compiling class template member function 'Aws::Utils::Array<unsigned char>::Array(const Aws::Utils::Array<unsigned char> &)'"
                             },
                             "properties": {
                                 "nestingLevel": 1
@@ -432,7 +432,7 @@
                             "id": 3,
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
+                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
                                 },
                                 "region": {
                                     "startLine": 234,
@@ -440,7 +440,7 @@
                                 }
                             },
                             "message": {
-                                "text": "vedere il primo riferimento a 'Aws::Utils::Array<unsigned char>::Array' in 'Aws::Utils::CryptoBuffer::CryptoBuffer'"
+                                "text": "see the first reference to 'Aws::Utils::Array<unsigned char>::Array' in 'Aws::Utils::CryptoBuffer::CryptoBuffer'"
                             },
                             "properties": {
                                 "nestingLevel": 2
@@ -450,7 +450,7 @@
                             "id": 4,
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
+                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
                                 },
                                 "region": {
                                     "startLine": 105,
@@ -458,7 +458,7 @@
                                 }
                             },
                             "message": {
-                                "text": "vedere il riferimento all'istanza '_OutIt std::copy<unsigned char*,stdext::checked_array_iterator<T *>>(_InIt,_InIt,_OutIt)' della funzione modello di cui è in corso la compilazione\n        with\n        [\n            _OutIt=stdext::checked_array_iterator<unsigned char *>,\n            T=unsigned char,\n            _InIt=unsigned char *\n        ]"
+                                "text": "see reference to function template instantiation '_OutIt std::copy<unsigned char*,stdext::checked_array_iterator<T *>>(_InIt,_InIt,_OutIt)' being compiled\n        with\n        [\n            _OutIt=stdext::checked_array_iterator<unsigned char *>,\n            T=unsigned char,\n            _InIt=unsigned char *\n        ]"
                             },
                             "properties": {
                                 "nestingLevel": 1
@@ -476,7 +476,7 @@
                                 }
                             },
                             "message": {
-                                "text": "vedere il riferimento all'istanza 'decltype(auto) std::_Get_unwrapped_n<_OutIt&,__int64>(_Iter,const _Diff)' della funzione modello di cui è in corso la compilazione\n        with\n        [\n            _OutIt=stdext::checked_array_iterator<unsigned char *>,\n            _Iter=stdext::checked_array_iterator<unsigned char *> &,\n            _Diff=__int64\n        ]"
+                                "text": "see reference to function template instantiation 'decltype(auto) std::_Get_unwrapped_n<_OutIt&,__int64>(_Iter,const _Diff)' being compiled\n        with\n        [\n            _OutIt=stdext::checked_array_iterator<unsigned char *>,\n            _Iter=stdext::checked_array_iterator<unsigned char *> &,\n            _Diff=__int64\n        ]"
                             },
                             "properties": {
                                 "nestingLevel": 1
@@ -494,7 +494,7 @@
                                 }
                             },
                             "message": {
-                                "text": "vedere il riferimento al modello di variabile 'const bool _Unwrappable_for_offset_v<stdext::checked_array_iterator<unsigned char *> &>' di cui è in corso la compilazione"
+                                "text": "see reference to variable template 'const bool _Unwrappable_for_offset_v<stdext::checked_array_iterator<unsigned char *> &>' being compiled"
                             },
                             "properties": {
                                 "nestingLevel": 1
@@ -512,7 +512,7 @@
                                 }
                             },
                             "message": {
-                                "text": "vedere il riferimento al modello di variabile 'const bool _Unwrappable_v<stdext::checked_array_iterator<unsigned char *> &,void>' di cui è in corso la compilazione"
+                                "text": "see reference to variable template 'const bool _Unwrappable_v<stdext::checked_array_iterator<unsigned char *> &,void>' being compiled"
                             },
                             "properties": {
                                 "nestingLevel": 1
@@ -530,7 +530,7 @@
                                 }
                             },
                             "message": {
-                                "text": "vedere il riferimento al modello di variabile 'const bool _Allow_inheriting_unwrap_v<stdext::checked_array_iterator<unsigned char *>,void>' di cui è in corso la compilazione"
+                                "text": "see reference to variable template 'const bool _Allow_inheriting_unwrap_v<stdext::checked_array_iterator<unsigned char *>,void>' being compiled"
                             },
                             "properties": {
                                 "nestingLevel": 1
@@ -544,7 +544,7 @@
                         "text": "'stdext::checked_array_iterator<T *>': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
                     },
                     "analysisTarget": {
-                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
+                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
                     },
                     "locations": [
                         {
@@ -572,7 +572,7 @@
                                 }
                             },
                             "message": {
-                                "text": "vedere la dichiarazione di 'stdext::checked_array_iterator'"
+                                "text": "see declaration of 'stdext::checked_array_iterator'"
                             }
                         },
                         {
@@ -587,7 +587,7 @@
                                 }
                             },
                             "message": {
-                                "text": "il contesto di creazione dell'istanza del modello (prima il meno recente) è"
+                                "text": "the template instantiation context (the oldest one first) is"
                             }
                         },
                         {
@@ -602,7 +602,7 @@
                                 }
                             },
                             "message": {
-                                "text": "vedere il riferimento all'istanza 'std::_Iter_diff_t<stdext::checked_array_iterator<T *>>' di modello alias di cui è in corso la compilazione\n        with\n        [\n            T=unsigned char\n        ]"
+                                "text": "see reference to alias template instantiation 'std::_Iter_diff_t<stdext::checked_array_iterator<T *>>' being compiled\n        with\n        [\n            T=unsigned char\n        ]"
                             },
                             "properties": {
                                 "nestingLevel": 1
@@ -620,7 +620,7 @@
                                 }
                             },
                             "message": {
-                                "text": "vedere il riferimento all'istanza 'std::iter_difference_t<stdext::checked_array_iterator<T *>>' di modello alias di cui è in corso la compilazione\n        with\n        [\n            T=unsigned char\n        ]"
+                                "text": "see reference to alias template instantiation 'std::iter_difference_t<stdext::checked_array_iterator<T *>>' being compiled\n        with\n        [\n            T=unsigned char\n        ]"
                             },
                             "properties": {
                                 "nestingLevel": 1
@@ -638,7 +638,7 @@
                                 }
                             },
                             "message": {
-                                "text": "vedere il riferimento al modello di variabile 'bool _Is_from_primary<std::iterator_traits<stdext::checked_array_iterator<unsigned char *> > >' di cui è in corso la compilazione"
+                                "text": "see reference to variable template 'bool _Is_from_primary<std::iterator_traits<stdext::checked_array_iterator<unsigned char *> > >' being compiled"
                             },
                             "properties": {
                                 "nestingLevel": 1
@@ -656,7 +656,7 @@
                                 }
                             },
                             "message": {
-                                "text": "vedere il riferimento all'istanza 'std::iterator_traits<stdext::checked_array_iterator<T *>>' di modello classe di cui è in corso la compilazione\n        with\n        [\n            T=unsigned char\n        ]"
+                                "text": "see reference to class template instantiation 'std::iterator_traits<stdext::checked_array_iterator<T *>>' being compiled\n        with\n        [\n            T=unsigned char\n        ]"
                             },
                             "properties": {
                                 "nestingLevel": 1
@@ -674,7 +674,7 @@
                                 }
                             },
                             "message": {
-                                "text": "vedere il riferimento all'istanza 'std::_Iterator_traits_base<_Ty>' di modello classe di cui è in corso la compilazione\n        with\n        [\n            _Ty=stdext::checked_array_iterator<unsigned char *>\n        ]"
+                                "text": "see reference to class template instantiation 'std::_Iterator_traits_base<_Ty>' being compiled\n        with\n        [\n            _Ty=stdext::checked_array_iterator<unsigned char *>\n        ]"
                             },
                             "properties": {
                                 "nestingLevel": 1
@@ -688,7 +688,7 @@
                         "text": "'stdext::checked_array_iterator<T *>::iterator_category': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
                     },
                     "analysisTarget": {
-                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
+                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
                     },
                     "locations": [
                         {
@@ -710,7 +710,7 @@
                         "text": "'stdext::checked_array_iterator<T *>': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
                     },
                     "analysisTarget": {
-                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
+                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
                     },
                     "locations": [
                         {
@@ -738,7 +738,7 @@
                                 }
                             },
                             "message": {
-                                "text": "vedere la dichiarazione di 'stdext::checked_array_iterator'"
+                                "text": "see declaration of 'stdext::checked_array_iterator'"
                             }
                         }
                     ]
@@ -749,7 +749,7 @@
                         "text": "'stdext::checked_array_iterator<T *>::value_type': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
                     },
                     "analysisTarget": {
-                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
+                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
                     },
                     "locations": [
                         {
@@ -771,7 +771,7 @@
                         "text": "'stdext::checked_array_iterator<T *>': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
                     },
                     "analysisTarget": {
-                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
+                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
                     },
                     "locations": [
                         {
@@ -799,7 +799,7 @@
                                 }
                             },
                             "message": {
-                                "text": "vedere la dichiarazione di 'stdext::checked_array_iterator'"
+                                "text": "see declaration of 'stdext::checked_array_iterator'"
                             }
                         }
                     ]
@@ -810,7 +810,7 @@
                         "text": "'stdext::checked_array_iterator<T *>::difference_type': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
                     },
                     "analysisTarget": {
-                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
+                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
                     },
                     "locations": [
                         {
@@ -832,7 +832,7 @@
                         "text": "'stdext::checked_array_iterator<T *>': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
                     },
                     "analysisTarget": {
-                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
+                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
                     },
                     "locations": [
                         {
@@ -860,7 +860,7 @@
                                 }
                             },
                             "message": {
-                                "text": "vedere la dichiarazione di 'stdext::checked_array_iterator'"
+                                "text": "see declaration of 'stdext::checked_array_iterator'"
                             }
                         },
                         {
@@ -875,7 +875,7 @@
                                 }
                             },
                             "message": {
-                                "text": "il contesto di creazione dell'istanza del modello (prima il meno recente) è"
+                                "text": "the template instantiation context (the oldest one first) is"
                             }
                         },
                         {
@@ -890,7 +890,7 @@
                                 }
                             },
                             "message": {
-                                "text": "vedere il riferimento all'istanza 'std::_Old_iter_traits_pointer<true>::_Apply<_It>' di modello alias di cui è in corso la compilazione\n        with\n        [\n            _It=stdext::checked_array_iterator<unsigned char *>\n        ]"
+                                "text": "see reference to alias template instantiation 'std::_Old_iter_traits_pointer<true>::_Apply<_It>' being compiled\n        with\n        [\n            _It=stdext::checked_array_iterator<unsigned char *>\n        ]"
                             },
                             "properties": {
                                 "nestingLevel": 1
@@ -904,7 +904,7 @@
                         "text": "'stdext::checked_array_iterator<T *>': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
                     },
                     "analysisTarget": {
-                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
+                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
                     },
                     "locations": [
                         {
@@ -932,7 +932,7 @@
                                 }
                             },
                             "message": {
-                                "text": "vedere la dichiarazione di 'stdext::checked_array_iterator'"
+                                "text": "see declaration of 'stdext::checked_array_iterator'"
                             }
                         }
                     ]
@@ -943,7 +943,7 @@
                         "text": "'stdext::checked_array_iterator<T *>::reference': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
                     },
                     "analysisTarget": {
-                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
+                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
                     },
                     "locations": [
                         {
@@ -965,7 +965,7 @@
                         "text": "'stdext::checked_array_iterator<T *>': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
                     },
                     "analysisTarget": {
-                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
+                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
                     },
                     "locations": [
                         {
@@ -993,7 +993,7 @@
                                 }
                             },
                             "message": {
-                                "text": "vedere la dichiarazione di 'stdext::checked_array_iterator'"
+                                "text": "see declaration of 'stdext::checked_array_iterator'"
                             }
                         },
                         {
@@ -1008,7 +1008,7 @@
                                 }
                             },
                             "message": {
-                                "text": "il contesto di creazione dell'istanza del modello (prima il meno recente) è"
+                                "text": "the template instantiation context (the oldest one first) is"
                             }
                         },
                         {
@@ -1023,7 +1023,7 @@
                                 }
                             },
                             "message": {
-                                "text": "vedere il riferimento all'istanza 'std::incrementable_traits<stdext::checked_array_iterator<T *>>' di modello classe di cui è in corso la compilazione\n        with\n        [\n            T=unsigned char\n        ]"
+                                "text": "see reference to class template instantiation 'std::incrementable_traits<stdext::checked_array_iterator<T *>>' being compiled\n        with\n        [\n            T=unsigned char\n        ]"
                             },
                             "properties": {
                                 "nestingLevel": 1
@@ -1037,7 +1037,7 @@
                         "text": "'stdext::checked_array_iterator<T *>::difference_type': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
                     },
                     "analysisTarget": {
-                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
+                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
                     },
                     "locations": [
                         {
@@ -1059,7 +1059,7 @@
                         "text": "'stdext::checked_array_iterator<T *>::_Verify_offset': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
                     },
                     "analysisTarget": {
-                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
+                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
                     },
                     "locations": [
                         {
@@ -1081,7 +1081,7 @@
                         "text": "'stdext::checked_array_iterator<T *>::_Unwrapped': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
                     },
                     "analysisTarget": {
-                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
+                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
                     },
                     "locations": [
                         {
@@ -1103,7 +1103,7 @@
                         "text": "'stdext::checked_array_iterator<T *>::_Seek_to': warning STL4043: stdext::checked_array_iterator, stdext::unchecked_array_iterator, and related factory functions are non-Standard extensions and will be removed in the future. std::span (since C++20) and gsl::span can be used instead. You can define _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING or _SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS to suppress this warning.\n        with\n        [\n            T=unsigned char\n        ]"
                     },
                     "analysisTarget": {
-                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
+                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Module.FANTASIA.1.cpp"
                     },
                     "locations": [
                         {
@@ -1131,14 +1131,14 @@
                                 }
                             },
                             "message": {
-                                "text": "il contesto di creazione dell'istanza del modello (prima il meno recente) è"
+                                "text": "the template instantiation context (the oldest one first) is"
                             }
                         },
                         {
                             "id": 1,
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
+                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/ThirdParty/AWS/Core/aws/core/utils/Array.h"
                                 },
                                 "region": {
                                     "startLine": 105,
@@ -1146,7 +1146,7 @@
                                 }
                             },
                             "message": {
-                                "text": "vedere il riferimento all'istanza '_OutIt std::copy<unsigned char*,stdext::checked_array_iterator<T *>>(_InIt,_InIt,_OutIt)' della funzione modello di cui è in corso la compilazione\n        with\n        [\n            _OutIt=stdext::checked_array_iterator<unsigned char *>,\n            T=unsigned char,\n            _InIt=unsigned char *\n        ]"
+                                "text": "see reference to function template instantiation '_OutIt std::copy<unsigned char*,stdext::checked_array_iterator<T *>>(_InIt,_InIt,_OutIt)' being compiled\n        with\n        [\n            _OutIt=stdext::checked_array_iterator<unsigned char *>,\n            T=unsigned char,\n            _InIt=unsigned char *\n        ]"
                             },
                             "properties": {
                                 "nestingLevel": 1
@@ -1164,7 +1164,7 @@
                                 }
                             },
                             "message": {
-                                "text": "vedere il riferimento all'istanza 'void std::_Seek_wrapped<_OutIt,unsigned char*>(_Iter &,_UIter &&)' della funzione modello di cui è in corso la compilazione\n        with\n        [\n            _OutIt=stdext::checked_array_iterator<unsigned char *>,\n            _Iter=stdext::checked_array_iterator<unsigned char *>,\n            _UIter=unsigned char *\n        ]"
+                                "text": "see reference to function template instantiation 'void std::_Seek_wrapped<_OutIt,unsigned char*>(_Iter &,_UIter &&)' being compiled\n        with\n        [\n            _OutIt=stdext::checked_array_iterator<unsigned char *>,\n            _Iter=stdext::checked_array_iterator<unsigned char *>,\n            _UIter=unsigned char *\n        ]"
                             },
                             "properties": {
                                 "nestingLevel": 1

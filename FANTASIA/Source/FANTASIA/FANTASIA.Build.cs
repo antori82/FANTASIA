@@ -3,6 +3,7 @@
 using UnrealBuildTool;
 using System.IO;
 using EpicGames.Core;
+using System;
 
 public class FANTASIA : ModuleRules
 {
@@ -70,15 +71,15 @@ public class FANTASIA : ModuleRules
         PublicDefinitions.Add("WITH_GRPC_BINDING=1");
     }
 
-
-
-
-
-    public FANTASIA(ReadOnlyTargetRules Target) : base(Target)
+    public void InitialUeConfig()//Config for  UE usage
     {
         PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
 
         bEnableExceptions = true;
+    }
+
+    public void DependeciesAndPaths()//Standard dipendencies and paths, if needed
+    {
 
         PublicIncludePaths.AddRange(
             new string[] {
@@ -92,7 +93,6 @@ public class FANTASIA : ModuleRules
 				// ... add other private include paths required here ...
 			}
             );
-
 
         PublicDependencyModuleNames.AddRange(
             new string[]
@@ -117,6 +117,84 @@ public class FANTASIA : ModuleRules
 				// ... add private dependencies that you statically link with here ...	
 			}
             );
+    }
+    //TODO better include paths maybe with loops
+    public void MicrosoftLibs(string ThirdParty)//Microsoft Libraries Paths
+    {
+        string LibraryPath = Path.Combine(ThirdParty, "Microsoft.CognitiveServices.Speech.1.32.1", "build", "native", "x64", "Release");
+        string IncludePath1 = Path.Combine(ThirdParty, "Microsoft.CognitiveServices.Speech.1.32.1", "build", "native", "include", "cxx_api");
+        string IncludePath2 = Path.Combine(ThirdParty, "Microsoft.CognitiveServices.Speech.1.32.1", "build", "native", "include", "c_api");
+        //...include other Libraries from Microsoft
+
+        PublicAdditionalLibraries.Add(LibraryPath + "/Microsoft.CognitiveServices.Speech.core.lib");
+        PublicIncludePaths.AddRange(new string[] { IncludePath1, IncludePath2 });
+    }
+    //TODO better include paths maybe with loops
+    public void AWSLibs(string ThirdParty)//Amazon Libraries Paths
+    {
+        string IncludePath3 = Path.Combine(ThirdParty, "AWS", "Core");
+        string IncludePath4 = Path.Combine(ThirdParty, "AWS", "Polly");
+        string IncludePath5 = Path.Combine(ThirdParty, "AWS", "TTS");
+        string LibraryPath = Path.Combine(ThirdParty, "AWS", "lib");
+        //...include other Libraries from Amazon
+
+        PublicAdditionalLibraries.Add(LibraryPath + "/aws-cpp-sdk-core.lib");
+        PublicAdditionalLibraries.Add(LibraryPath + "/aws-cpp-sdk-polly.lib");
+        PublicAdditionalLibraries.Add(LibraryPath + "/aws-cpp-sdk-text-to-speech.lib");
+        PublicIncludePaths.AddRange(new string[] {IncludePath3, IncludePath4, IncludePath5 });
+    }
+
+    public void DllLoad(string Redist)//DLL load TODO better
+    {
+        RuntimeDependencies.Add(Path.Combine(Redist, "aws-c-common.dll"));
+        RuntimeDependencies.Add(Path.Combine(Redist, "aws-c-event-stream.dll"));
+        RuntimeDependencies.Add(Path.Combine(Redist, "aws-checksums.dll"));
+        RuntimeDependencies.Add(Path.Combine(Redist, "aws-cpp-sdk-core.dll"));
+        RuntimeDependencies.Add(Path.Combine(Redist, "aws-cpp-sdk-polly.dll"));
+        RuntimeDependencies.Add(Path.Combine(Redist, "aws-cpp-sdk-text-to-speech.dll"));
+        RuntimeDependencies.Add(Path.Combine(Redist, "Microsoft.CognitiveServices.Speech.core.dll"));
+        RuntimeDependencies.Add(Path.Combine(Redist, "Microsoft.CognitiveServices.Speech.extension.kws.dll"));
+    }
+
+    public void PrologLibs(string ThirdParty)//Prolog libraries and adding of additional dll support for Prolog to run correctly in case the system does not have SWiProlog installed
+    {
+        string PrologDllPath = Path.Combine(ThirdParty, "SWIProlog", "PrologDlls");
+        string PrologCpp = Path.Combine(ThirdParty, "SWIProlog", "libs");
+        
+
+        PublicAdditionalLibraries.Add(PrologCpp + "/libswipl.dll.a");
+        PublicAdditionalLibraries.Add(PrologCpp + "/libswipl.lib");
+
+        PublicIncludePaths.Add(Path.Combine(ThirdParty, "SWIProlog", "headers"));
+        PublicIncludePaths.Add(Path.Combine(ThirdParty, "kdepp"));//kdepp
+
+        RuntimeDependencies.Add(Path.Combine(PrologCpp, "/libswipl.dll"));
+
+        foreach (string dllFile in Directory.GetFiles(PrologDllPath, "*.dll"))
+        {
+            string destPath = Path.Combine("$(PluginDir)", "Binaries", "Win64", Path.GetFileName(dllFile));
+            Console.WriteLine("PrologDll : " + dllFile);
+            RuntimeDependencies.Add(destPath, dllFile);
+            PublicDelayLoadDLLs.Add(dllFile);
+
+        }
+
+
+    }
+
+
+    public FANTASIA(ReadOnlyTargetRules Target) : base(Target)
+    {
+        InitialUeConfig();
+        
+        DependeciesAndPaths();
+
+        string ModulePath = ModuleDirectory;
+        string ThirdParty = Path.GetFullPath(Path.Combine(ModulePath, "../../ThirdParty/"));//directs path to Third Party folder
+
+        MicrosoftLibs(ThirdParty);
+
+        AWSLibs(ThirdParty);
 
         if (Target.Type == TargetRules.TargetType.Editor)
         {
@@ -128,48 +206,11 @@ public class FANTASIA : ModuleRules
                 }
             );
         }
-
-
-        string ModulePath = ModuleDirectory;
-        string ThirdParty = Path.GetFullPath(Path.Combine(ModulePath, "../../ThirdParty/"));
-
-        string LibraryPath = Path.Combine(ThirdParty, "Microsoft.CognitiveServices.Speech.1.32.1", "build", "native", "x64", "Release");
-        string IncludePath1 = Path.Combine(ThirdParty, "Microsoft.CognitiveServices.Speech.1.32.1", "build", "native", "include", "cxx_api");
-        string IncludePath2 = Path.Combine(ThirdParty, "Microsoft.CognitiveServices.Speech.1.32.1", "build", "native", "include", "c_api");
-
-        PublicAdditionalLibraries.Add(LibraryPath + "/Microsoft.CognitiveServices.Speech.core.lib");
-
-        string IncludePath3 = Path.Combine(ThirdParty, "AWS", "Core");
-        string IncludePath4 = Path.Combine(ThirdParty, "AWS", "Polly");
-        string IncludePath5 = Path.Combine(ThirdParty, "AWS", "TTS");
-
-        LibraryPath = Path.Combine(ThirdParty, "AWS", "lib");
-        PublicAdditionalLibraries.Add(LibraryPath + "/aws-cpp-sdk-core.lib");
-        PublicAdditionalLibraries.Add(LibraryPath + "/aws-cpp-sdk-polly.lib");
-        PublicAdditionalLibraries.Add(LibraryPath + "/aws-cpp-sdk-text-to-speech.lib");
-
-        PublicIncludePaths.AddRange(new string[] { IncludePath1, IncludePath2, IncludePath3, IncludePath4, IncludePath5 });
-
         string Redist = Path.Combine(ThirdParty, "Redist");
 
-        RuntimeDependencies.Add(Path.Combine(Redist, "aws-c-common.dll"));
-        RuntimeDependencies.Add(Path.Combine(Redist, "aws-c-event-stream.dll"));
-        RuntimeDependencies.Add(Path.Combine(Redist, "aws-checksums.dll"));
-        RuntimeDependencies.Add(Path.Combine(Redist, "aws-cpp-sdk-core.dll"));
-        RuntimeDependencies.Add(Path.Combine(Redist, "aws-cpp-sdk-polly.dll"));
-        RuntimeDependencies.Add(Path.Combine(Redist, "aws-cpp-sdk-text-to-speech.dll"));
-        RuntimeDependencies.Add(Path.Combine(Redist, "Microsoft.CognitiveServices.Speech.core.dll"));
-        RuntimeDependencies.Add(Path.Combine(Redist, "Microsoft.CognitiveServices.Speech.extension.kws.dll"));
+        DllLoad(Redist);
 
-        PublicIncludePaths.Add(Path.Combine(ThirdParty, "kdepp"));
-
-        string PrologCpp = Path.Combine(ThirdParty, "SWIProlog", "libs");
-
-        PublicIncludePaths.Add(Path.Combine(ThirdParty, "SWIProlog", "headers"));
-        PublicAdditionalLibraries.Add(PrologCpp + "/libswipl.dll.a");
-        PublicAdditionalLibraries.Add(PrologCpp + "/libswipl.lib");
-        RuntimeDependencies.Add(Path.Combine(PrologCpp, "/libswipl.dll"));
-
+        PrologLibs(ThirdParty);
 
         CppStandard = CppStandardVersion.Cpp20;
 

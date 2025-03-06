@@ -1,0 +1,42 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UnrealEditor-FANTASIA-Win64-DebugGame.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"C:\Users\Alex\Documents\Unreal Projects\MyProject\Intermediate\Build\Win64\x64\MyProjectEditor\DebugGame\UnrealEd\SharedPCH.UnrealEd.Project.NonOptimized.ValApi.Cpp20.h.obj"
+"C:\Users\Alex\Documents\Unreal Projects\MyProject\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\DebugGame\FANTASIA\Module.FANTASIA.1.cpp.obj"
+"C:\Users\Alex\Documents\Unreal Projects\MyProject\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\DebugGame\FANTASIA\Module.FANTASIA.2.cpp.obj"
+"C:\Users\Alex\Documents\Unreal Projects\MyProject\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\DebugGame\FANTASIA\Audio2FaceComponent.cpp.obj"
+"C:\Users\Alex\Documents\Unreal Projects\MyProject\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\DebugGame\FANTASIA\Audio2FaceThread.cpp.obj"
+"C:\Users\Alex\Documents\Unreal Projects\MyProject\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\DebugGame\FANTASIA\AWSPollyComponent.cpp.obj"
+"C:\Users\Alex\Documents\Unreal Projects\MyProject\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\DebugGame\FANTASIA\AWSPollyThread.cpp.obj"
+"C:\Users\Alex\Documents\Unreal Projects\MyProject\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\DebugGame\FANTASIA\AzureASRComponent.cpp.obj"
+"C:\Users\Alex\Documents\Unreal Projects\MyProject\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\DebugGame\FANTASIA\AzureASRThread.cpp.obj"
+"C:\Users\Alex\Documents\Unreal Projects\MyProject\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\DebugGame\FANTASIA\AzureNLUComponent.cpp.obj"
+"C:\Users\Alex\Documents\Unreal Projects\MyProject\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\DebugGame\FANTASIA\AzureNLUThread.cpp.obj"
+"C:\Users\Alex\Documents\Unreal Projects\MyProject\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\DebugGame\FANTASIA\AzureTTSComponent.cpp.obj"
+"C:\Users\Alex\Documents\Unreal Projects\MyProject\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\DebugGame\FANTASIA\AzureTTSThread.cpp.obj"
+"C:\Users\Alex\Documents\Unreal Projects\MyProject\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\DebugGame\FANTASIA\BayesianInferenceThreads.cpp.obj"
+"C:\Users\Alex\Documents\Unreal Projects\MyProject\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\DebugGame\FANTASIA\BayesianNetwork.cpp.obj"
+"C:\Users\Alex\Documents\Unreal Projects\MyProject\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\DebugGame\FANTASIA\ElevenLabsTTSComponent.cpp.obj"
+"C:\Users\Alex\Documents\Unreal Projects\MyProject\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\DebugGame\FANTASIA\ElevenLabsTTSThread.cpp.obj"
+"C:\Users\Alex\Documents\Unreal Projects\MyProject\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\DebugGame\FANTASIA\FANTASIA.cpp.obj"
+"C:\Users\Alex\Documents\Unreal Projects\MyProject\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\DebugGame\FANTASIA\GeneralTTSComponent.cpp.obj"
+"C:\Users\Alex\Documents\Unreal Projects\MyProject\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\DebugGame\FANTASIA\GeneralTTSThread.cpp.obj"
+"C:\Users\Alex\Documents\Unreal Projects\MyProject\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\DebugGame\FANTASIA\GroqComponent.cpp.obj"
+"C:\Users\Alex\Documents\Unreal Projects\MyProject\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\DebugGame\FANTASIA\InfluenceDiag.cpp.obj"
+"C:\Users\Alex\Documents\Unreal Projects\MyProject\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\DebugGame\FANTASIA\LangGraphComponent.cpp.obj"
+"C:\Users\Alex\Documents\Unreal Projects\MyProject\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\DebugGame\FANTASIA\LibSVM.cpp.obj"
+"C:\Users\Alex\Documents\Unreal Projects\MyProject\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\DebugGame\FANTASIA\MathUtilities.cpp.obj"
+"C:\Users\Alex\Documents\Unreal Projects\MyProject\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\DebugGame\FANTASIA\Neo4jComponent.cpp.obj"
+"C:\Users\Alex\Documents\Unreal Projects\MyProject\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\DebugGame\FANTASIA\OllamaComponent.cpp.obj"
+"C:\Users\Alex\Documents\Unreal Projects\MyProject\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\DebugGame\FANTASIA\OpenAIComponent.cpp.obj"
+"C:\Users\Alex\Documents\Unreal Projects\MyProject\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\DebugGame\FANTASIA\svm.cpp.obj"
+"C:\Users\Alex\Documents\Unreal Projects\MyProject\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\DebugGame\FANTASIA\SWIPrologComponent.cpp.obj"
+"C:\Users\Alex\Documents\Unreal Projects\MyProject\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\DebugGame\FANTASIA\audio2face.grpc.pb.cc.obj"
+"C:\Users\Alex\Documents\Unreal Projects\MyProject\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\DebugGame\FANTASIA\audio2face.pb.cc.obj"
+"C:\Users\Alex\Documents\Unreal Projects\MyProject\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\DebugGame\FANTASIA\Default.rc2.res"
+/OUT:"C:\Users\Alex\Documents\Unreal Projects\MyProject\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\DebugGame\FANTASIA\UnrealEditor-FANTASIA-Win64-DebugGame.lib"
