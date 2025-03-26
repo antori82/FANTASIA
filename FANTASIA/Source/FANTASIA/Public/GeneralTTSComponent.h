@@ -13,6 +13,7 @@
 #include "Runtime/Json/Public/Json.h"
 #include "Runtime/JsonUtilities/Public/JsonUtilities.h"
 #include "TTSInterface.h"
+#include "http.h"
 #include "GeneralTTSComponent.generated.h"
 
 using namespace std;
