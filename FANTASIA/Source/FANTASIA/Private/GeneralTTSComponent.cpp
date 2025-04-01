@@ -48,7 +48,7 @@ void UGeneralTTSComponent::TTSSynthesize(FString ssml, FString id)
 {
 	FTTSResultAvailableDelegate TTSResultSubscriber;
 	TTSResultSubscriber.BindUObject(this, &UGeneralTTSComponent::getResult);
-	handle = GeneralTTSThread::setup(ssml, id, Endpoint);
+	handle = GeneralTTSThread::setup(ssml, id, Endpoint);//e l'endpoint dove lo inserisco?
 	TTSResultAvailableHandle = handle->TTSResultAvailableSubscribeUser(TTSResultSubscriber);
 }
 
@@ -73,5 +73,5 @@ TArray<float> UGeneralTTSComponent::TTSGetRawSound(FString id) {
 
 		AudioData.Add(NormalizedSample);
 	}
-	return AudioData;
+	return AudioData;//returnare un puntatore alla memoria, non una copia
 }

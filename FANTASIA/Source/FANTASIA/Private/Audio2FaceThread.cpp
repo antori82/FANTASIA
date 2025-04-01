@@ -21,10 +21,9 @@ FMyThread* FMyThread::Runnable = NULL;
 
 FMyThread::FMyThread(FString inPlayerA2F_name, FString inserver_url, TArray<float> inAudioData, int32 inSampleRate) : StopTaskCounter(0)
 {
-
     PlayerA2F_name = inPlayerA2F_name;
     server_url = inserver_url;
-    AudioData = inAudioData;
+    AudioData = inAudioData;//audio che arriva al componente Audio2Face
     SampleRate = inSampleRate;
 
     Thread = FRunnableThread::Create(this, TEXT("A2FaceThread"), 0, TPri_Normal);
@@ -120,8 +119,8 @@ void FMyThread::SendToAudio2FaceGrpc()
         int32 chunk_end = FMath::Min(i + chunk_size, AudioData.Num());
         const float* chunk_data = AudioData.GetData() + i;
         chunk_size = chunk_end - i;
-        PushAudioStreamRequest* requestAudio = new PushAudioStreamRequest();
-        requestAudio->set_audio_data(chunk_data, chunk_size * sizeof(float));
+        PushAudioStreamRequest* requestAudio = new PushAudioStreamRequest();//mettilo in .h
+        requestAudio->set_audio_data(chunk_data, chunk_size * sizeof(float));//richiama questa cosa ogni volta che un requestAudio è chiamato
         if (!writer->Write(*requestAudio)) {
             break;
         }
