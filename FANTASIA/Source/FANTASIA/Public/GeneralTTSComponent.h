@@ -63,7 +63,7 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "TTS Start", Keywords = "Plugin TTS"), Category = "TTS")
-	void TTSSynthesize(FString ssml, FString id) override;
+	void TTSSynthesize(FString ssml, FString id) override;//da modificare che rimanda il puntatore a Audio2Face
 
 	UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Sound General", Keywords = "Plugin TTS"), Category = "TTS")
 	USoundWave* TTSGetSound(FString id) override;
