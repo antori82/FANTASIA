@@ -1,17 +1,20 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
+
 #include "FANTASIA.h"
 
 #include "CoreMinimal.h"
 #include "FANTASIATypes.h"
-
+#ifndef prova
+#define prova
 #include "Audio2FaceThread.h"
+#endif
+
 #include <string>
 #include <sound/soundwaveprocedural.h>
 #include <kismet/gameplaystatics.h>
 #include "Sound/SoundWave.h"
-#include "Sound/SoundWaveProcedural.h"
 #include "Misc/FileHelper.h"
 #include "AudioDecompress.h"
 #include "Components/ActorComponent.h"

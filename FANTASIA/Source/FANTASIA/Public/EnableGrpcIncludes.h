@@ -1,3 +1,4 @@
+#pragma once
 #define GRPC_USE_PROTO_LITE 1
 
 #ifndef WORKAROUND_SYMBOL_MEMORY_BARRIER

@@ -1,11 +1,13 @@
 #pragma once
-
 #include "FANTASIA.h"
-#include "Engine.h"
 #include "CoreMinimal.h"
+#include "Engine.h"
 #include "Components/ActorComponent.h"
 #include "FANTASIATypes.h"
 #include "GeneralTTSThread.h"
+
+#include "Audio2FaceComponent.h"
+
 #include <iostream>
 #include <string>
 #include "Runtime/Engine/Classes/Sound/SoundWaveProcedural.h"
@@ -13,8 +15,10 @@
 #include "Runtime/Json/Public/Json.h"
 #include "Runtime/JsonUtilities/Public/JsonUtilities.h"
 #include "TTSInterface.h"
-#include "http.h"
 #include "GeneralTTSComponent.generated.h"
+
+
+
 
 using namespace std;
 
@@ -49,6 +53,9 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, Category = "Speech to Text")
 	UAudioComponent* Speaker;
+
+	//UPROPERTY(BlueprintReadWrite, Category = "Speech to Text")
+	//UAudio2FaceComponent* A2Fpointer;
 
 	UPROPERTY(BlueprintAssignable, Category = "Speech to Text")
 	FSynthesizedEvent SynthesisReady;

@@ -57,7 +57,7 @@ void GeneralTTSThread::Shutdown()
 	}
 }
 
-void GeneralTTSThread::Synthesize()
+void GeneralTTSThread::Synthesize()//ma funziona??
 {
 
 	//Http request to API
@@ -86,7 +86,7 @@ void GeneralTTSThread::Synthesize()
 	Request->SetHeader("Content-Type", "application/x-www-form-urlencoded");
 	Request->SetContentAsString(ssml);
 	Request->ProcessRequest();
-
+	//return true;//ha senso?
 }
 
 FDelegateHandle GeneralTTSThread::TTSResultAvailableSubscribeUser(FTTSResultAvailableDelegate& UseDelegate)

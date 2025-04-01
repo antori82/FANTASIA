@@ -1,6 +1,7 @@
 ﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
+
 #include "CoreMinimal.h"
 
 #include "EnableGrpcIncludes.h"
@@ -57,4 +58,4 @@ public:
 	static void Shutdown();
 	/** Checks if the thread is running */
 	bool IsThreadRunning() const;
-};
+}; 
