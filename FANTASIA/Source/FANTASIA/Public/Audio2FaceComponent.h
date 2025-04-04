@@ -6,10 +6,10 @@
 
 #include "CoreMinimal.h"
 #include "FANTASIATypes.h"
-#ifndef prova
-#define prova
+
+
 #include "Audio2FaceThread.h"
-#endif
+
 
 #include <string>
 #include <sound/soundwaveprocedural.h>
