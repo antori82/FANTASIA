@@ -8,11 +8,12 @@
 #include "Audio2Face/audio2face.grpc.pb.h"
 #include "Audio2Face/audio2face.pb.h"
 #include "DisableGrpcIncludes.h"
+#include <grpcpp/grpcpp.h>
 
 #include "HAL/Runnable.h"
 #include "HAL/ThreadSafeBool.h"
 #include "Templates/UniquePtr.h"
-#include <grpcpp/grpcpp.h>
+
 
 class FMyThread : public FRunnable
 {

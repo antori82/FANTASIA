@@ -2,19 +2,21 @@
 #include "FANTASIA.h"
 #include "CoreMinimal.h"
 #include "Engine.h"
+
+#include "EnableGrpcIncludes.h"
+#include "Audio2FaceComponent.h"
+#include "DisableGrpcIncludes.h"
+
 #include "Components/ActorComponent.h"
 #include "FANTASIATypes.h"
 #include "GeneralTTSThread.h"
 
-#include "Audio2FaceComponent.h"
-
-#include <iostream>
-#include <string>
 #include "Runtime/Engine/Classes/Sound/SoundWaveProcedural.h"
 #include "Runtime/Online/HTTP/Public/Http.h"
 #include "Runtime/Json/Public/Json.h"
 #include "Runtime/JsonUtilities/Public/JsonUtilities.h"
 #include "TTSInterface.h"
+
 #include "GeneralTTSComponent.generated.h"
 
 
@@ -54,8 +56,8 @@ public:
 	UPROPERTY(BlueprintReadWrite, Category = "Speech to Text")
 	UAudioComponent* Speaker;
 
-	//UPROPERTY(BlueprintReadWrite, Category = "Speech to Text")
-	//UAudio2FaceComponent* A2Fpointer;
+	UPROPERTY(BlueprintReadWrite, Category = "Speech to Text")
+	UAudio2FaceComponent* A2Fpointer;
 
 	UPROPERTY(BlueprintAssignable, Category = "Speech to Text")
 	FSynthesizedEvent SynthesisReady;
