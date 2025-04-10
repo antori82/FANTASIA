@@ -24,6 +24,8 @@
 
 using namespace std;
 
+//DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FAudioStreamDelegate, const TArray<float>&, AudioData);
+
 UCLASS(meta = (BlueprintSpawnableComponent))
 class UGeneralTTSComponent : public UActorComponent, public ITTSInterface
 {
@@ -52,6 +54,7 @@ private:
 	FString idSynthesisReady = "";
 
 public:
+
 
 	UPROPERTY(BlueprintReadWrite, Category = "Speech to Text")
 	UAudioComponent* Speaker;

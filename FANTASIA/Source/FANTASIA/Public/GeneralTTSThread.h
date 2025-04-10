@@ -10,6 +10,7 @@ using namespace std;
 
 DECLARE_EVENT_TwoParams(GeneralTTSThread, ResultAvailableEvent, FTTSData, FString);
 
+
 //~~~~~ Multi Threading ~~~
 class GeneralTTSThread : public FRunnable, public ITTSThreadInterface
 {
@@ -42,6 +43,8 @@ public:
 
 	static GeneralTTSThread* setup(FString ssml, FString id, FString Endpoint);
 
+	
+
 	// Begin FRunnable interface.
 	virtual bool Init();
 	virtual uint32 Run();
@@ -49,6 +52,8 @@ public:
 	// End FRunnable interface
 
 	void Synthesize() override;
+
+	TFunction<void(const TArray<float>&)> OnAudioDataReceived;
 
 	/** Makes sure this thread has stopped properly */
 	void EnsureCompletion();

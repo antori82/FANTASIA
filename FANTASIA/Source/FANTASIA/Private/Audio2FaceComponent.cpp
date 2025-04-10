@@ -10,11 +10,11 @@ UAudio2FaceComponent::UAudio2FaceComponent() {
 }
 
 
-void UAudio2FaceComponent::PlayAudio(TArray<float> data)
+void UAudio2FaceComponent::PlayAudio_implementation(TArray<float>& data)
 {
 	int32 sampleRate = 16000;
    
-    LoadRawSoundFromTTS(data);
+    LoadRawSoundFromTTS(&data);
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("sending audio.."));
   
 	A2FaceFMyThread(sampleRate);
@@ -29,9 +29,13 @@ void UAudio2FaceComponent::A2FaceFMyThread(int32 sampleRate) {
     }
 }
 
-void UAudio2FaceComponent::LoadRawSoundFromTTS(TArray<float> soundData) {
-    AudioData.Empty();
-    AudioData = soundData;
+void UAudio2FaceComponent::LoadRawSoundFromTTS(TArray<float>* soundData) {
+    if (soundData != nullptr) { 
+        AudioData = *soundData;
+    }
+    else {
+        UE_LOG(LogTemp, Error, TEXT("soundData è null!"));
+    }
 
     //for (int i = 0; i < size; i += 2) {
     //    float NormalizedSample = 0.0f;

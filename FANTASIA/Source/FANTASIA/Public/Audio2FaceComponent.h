@@ -9,6 +9,7 @@
 
 
 #include "Audio2FaceThread.h"
+#include "Audio2FaceConverterInterface.h"
 
 
 #include <string>
@@ -29,8 +30,8 @@
 ////
 #include "Audio2FaceComponent.generated.h"
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class FANTASIA_API UAudio2FaceComponent : public UActorComponent
+UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent , implements = "Audio2FaceInterface"))
+class FANTASIA_API UAudio2FaceComponent : public UActorComponent, public IAudio2FaceConverterInterface
 {
 	GENERATED_BODY()
 
@@ -47,11 +48,11 @@ public:
 	FMyThread* MyThread;
 	FDateTime Inizio;
 	FDateTime Fine;
-	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Play Audio", Keywords = "Nvidia Plugin"), Category = "Audio2Face")
-	void PlayAudio(TArray<float> data);
+	
+	void PlayAudio_implementation(TArray<float>& data);//funzione di richiamo dall'interfaccia A2F
 
-	void A2FaceFMyThread(int32 sampleRate);
-	void LoadRawSoundFromTTS(TArray<float> soundData);
+	void A2FaceFMyThread(int32 sampleRate);	
+	void LoadRawSoundFromTTS(TArray<float>* soundData);
 
 protected:
 	// Called when the game starts
