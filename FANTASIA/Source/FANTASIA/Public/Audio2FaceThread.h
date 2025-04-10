@@ -15,6 +15,8 @@
 #include "Templates/UniquePtr.h"
 
 
+
+
 class FMyThread : public FRunnable
 {
 private:
@@ -31,6 +33,9 @@ private:
 	TArray<float> AudioData;
 	int32 SampleRate;
 	bool StopRecording = false;
+
+	//stream audio//spostato dal cpp
+	nvidia::audio2face::PushAudioStreamRequest* requestAudio;
 
 public:
 	bool bIsRunning;
