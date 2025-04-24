@@ -10,11 +10,20 @@ UAudio2FaceComponent::UAudio2FaceComponent() {
 }
 
 
-void UAudio2FaceComponent::PlayAudio_implementation(TArray<float>& data)
+void UAudio2FaceComponent::PlayAudio(TArray<float> data)
 {
+    FString Output = TEXT("Dati ricevuti: ");
+
+    for (int32 i = 0; i < data.Num(); ++i)
+    {
+        Output += FString::SanitizeFloat(data[i]) + TEXT(", ");
+    }
+
+    UE_LOG(LogTemp, Warning, TEXT("%s"), *Output);
+
 	int32 sampleRate = 16000;
    
-    LoadRawSoundFromTTS(&data);
+    //LoadRawSoundFromTTS(&data);
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("sending audio.."));
   
 	A2FaceFMyThread(sampleRate);
@@ -29,7 +38,7 @@ void UAudio2FaceComponent::A2FaceFMyThread(int32 sampleRate) {
     }
 }
 
-void UAudio2FaceComponent::LoadRawSoundFromTTS(TArray<float>* soundData) {
+void UAudio2FaceComponent::LoadRawSoundFromTTS(const TArray<float>* soundData) {
     if (soundData != nullptr) { 
         AudioData = *soundData;
     }
@@ -46,6 +55,7 @@ void UAudio2FaceComponent::LoadRawSoundFromTTS(TArray<float>* soundData) {
     //}
 }
 
+
 // Called when the game starts
 void UAudio2FaceComponent::BeginPlay() {
 	Super::BeginPlay();
@@ -61,5 +71,13 @@ void UAudio2FaceComponent::EndPlay(const EEndPlayReason::Type EndPlayReason) {
 // Called every frame
 void UAudio2FaceComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+}
+ void UAudio2FaceComponent::ReceivingDataFunction(const TArray<float>& data)
+{
+    for (int32 i = 0; i < data.Num(); ++i)
+    {
+        FString Messaggio = FString::Printf(TEXT("Valore [%d]: %f"), i, data[i]);
+        GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, Messaggio);
+    }
 }
 
