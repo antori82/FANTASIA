@@ -1,9 +1,11 @@
 #pragma once
 #include "FANTASIATypes.h"
+//#include "GeneralTTSComponent.h" // fa casino
 #include "Http.h"
 #include "Runtime/Json/Public/Json.h"
 #include "TTSThreadInterface.h"
 #include "Runtime/JsonUtilities/Public/JsonUtilities.h"
+class UAudio2FaceComponent;
 
 
 using namespace std;
@@ -30,6 +32,10 @@ private:
 	FString id;
 	FString Endpoint;
 
+	void OnTTSPartialDataReceived(FHttpRequestPtr Request, int64 BytesSent, int64 BytesReceived);
+	int64 PreviousBytes = 0;
+	TWeakObjectPtr<UAudio2FaceComponent> Audio2FaceComponent;
+
 
 
 public:
@@ -51,9 +57,9 @@ public:
 	virtual void Stop();
 	// End FRunnable interface
 
-	void Synthesize() override;
+	void Synthesize(bool stream) override;
 
-	TFunction<void(const TArray<float>&)> OnAudioDataReceived;
+
 
 	/** Makes sure this thread has stopped properly */
 	void EnsureCompletion();
