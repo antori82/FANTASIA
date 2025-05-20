@@ -30,7 +30,7 @@
 ////
 #include "Audio2FaceComponent.generated.h"
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent , implements = "Audio2FaceInterface"))
+UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent , implements = "Audio2FaceConverterInterface"))
 class FANTASIA_API UAudio2FaceComponent : public UActorComponent, public IAudio2FaceConverterInterface
 {
 	GENERATED_BODY()
@@ -42,6 +42,7 @@ public:
 	FString PlayerA2F_name;
 
 	TArray<float> AudioData;
+	bool stream = false;
 
 	UPROPERTY(EditAnywhere, Category = "Audio2Face")
 	FString server_url;
@@ -49,10 +50,10 @@ public:
 	FDateTime Inizio;
 	FDateTime Fine;
 	
-	void PlayAudio_implementation(TArray<float>& data);//funzione di richiamo dall'interfaccia A2F
+	virtual void PlayAudio(TArray<float> data) override;//funzione di richiamo dall'interfaccia A2F
 
 	void A2FaceFMyThread(int32 sampleRate);	
-	void LoadRawSoundFromTTS(TArray<float>* soundData);
+	void LoadRawSoundFromTTS(const TArray<float>* soundData);
 
 protected:
 	// Called when the game starts
@@ -61,5 +62,7 @@ protected:
 
 public:	
 	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;	
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
+	void ReceivingDataFunction(const TArray<float>& data);
 };

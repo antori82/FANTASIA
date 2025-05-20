@@ -43,7 +43,7 @@ private:
 
 	TMap<FString, FTTSData> Buffer;
 	TMap<FString, FString> PendingSSML;
-	GeneralTTSThread* handle;
+	GeneralTTSThread* handle; 
 
 	FDelegateHandle TTSResultAvailableHandle;
 
@@ -59,7 +59,7 @@ public:
 	UPROPERTY(BlueprintReadWrite, Category = "Speech to Text")
 	UAudioComponent* Speaker;
 
-	UPROPERTY(BlueprintReadWrite, Category = "Speech to Text")
+	UPROPERTY(BlueprintReadWrite, Category = "ForA2F")
 	UAudio2FaceComponent* A2Fpointer;
 
 	UPROPERTY(BlueprintAssignable, Category = "Speech to Text")
@@ -82,4 +82,9 @@ public:
 
 	UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Raw Sound", Keywords = "Azure Plugin TTS"), Category = "TTS")
 	TArray<float> TTSGetRawSound(FString id);
+
+	UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Raw Sound from Path", Keywords = "TTS"), Category = "TTS")
+	TArray<float> TTSGetRawSoundfromPath(const FString& path);
+
+	void SendToA2FaceComponent(FString id);
 };

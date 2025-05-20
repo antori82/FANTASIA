@@ -26,7 +26,7 @@ public:
 	*
 	*
 	**/
-	virtual void Synthesize() = 0;
+	virtual void Synthesize() = 0; 
 
 
 	/**
