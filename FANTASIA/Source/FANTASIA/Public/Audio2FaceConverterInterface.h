@@ -16,6 +16,5 @@ class IAudio2FaceConverterInterface
     GENERATED_BODY()
 
 public:
-    UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Audio2FaceInterface")
-    void PlayAudio(const TArray<float>& Data);
+    virtual void PlayAudio(TArray<float> Data) = 0;
 };

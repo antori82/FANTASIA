@@ -10,7 +10,7 @@ UAudio2FaceComponent::UAudio2FaceComponent() {
 }
 
 
-void UAudio2FaceComponent::PlayAudio(TArray<float> data)
+void UAudio2FaceComponent::PlayAudio(TArray<float> data)    
 {
     FString Output = TEXT("Dati ricevuti: ");
 
@@ -34,7 +34,7 @@ void UAudio2FaceComponent::A2FaceFMyThread(int32 sampleRate) {
         GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("L'audio ancora in esecuzione,riprovare piu tardi"));
     }
     else {
-        MyThread = FMyThread::setup(PlayerA2F_name, server_url, AudioData, sampleRate);
+        MyThread = FMyThread::setup(PlayerA2F_name, server_url, AudioData, sampleRate, stream);//devi aggiungere  lo stream
     }
 }
 
@@ -43,7 +43,7 @@ void UAudio2FaceComponent::LoadRawSoundFromTTS(const TArray<float>* soundData) {
         AudioData = *soundData;
     }
     else {
-        UE_LOG(LogTemp, Error, TEXT("soundData è null!"));
+        UE_LOG(LogTemp, Error, TEXT("I dati sono nulli"));
     }
 
     //for (int i = 0; i < size; i += 2) {

@@ -2,14 +2,16 @@
 
 using namespace std;
 
-GeneralTTSThread* GeneralTTSThread::Runnable = NULL;
+GeneralTTSThread* GeneralTTSThread::Runnable = nullptr;
 
-GeneralTTSThread::GeneralTTSThread(FString inSsml, FString inID, FString url) : StopTaskCounter(0)
+
+GeneralTTSThread::GeneralTTSThread(FString inSsml, FString inID, FString url, UAudio2FaceComponent* A2F) : StopTaskCounter(0)
 {
 	ssml = inSsml;
 	id = inID;
 	Thread = FRunnableThread::Create(this, TEXT("GeneralTTSThread"), 0, TPri_Normal);
 	Endpoint = url;
+	A2FPointer = A2F;
 }
 
 GeneralTTSThread::~GeneralTTSThread() {
@@ -18,11 +20,11 @@ GeneralTTSThread::~GeneralTTSThread() {
 }
 
 
-GeneralTTSThread* GeneralTTSThread::setup(FString ssml, FString id, FString Endpoint)
+GeneralTTSThread* GeneralTTSThread::setup(FString ssml, FString id, FString Endpoint, UAudio2FaceComponent* A2F)
 {
 	if (!Runnable && FPlatformProcess::SupportsMultithreading())
 	{
-		Runnable = new GeneralTTSThread(ssml, id, Endpoint);
+		Runnable = new GeneralTTSThread(ssml, id, Endpoint, A2F);
 	}
 	return Runnable;
 }
@@ -57,8 +59,13 @@ void GeneralTTSThread::Shutdown()
 	}
 }
 
-void GeneralTTSThread::Synthesize()//ma funziona??
-{
+void GeneralTTSThread::Synthesize() {
+	// questa funzione va modificata in modo tale che diventa uguale a Ollama Component, cioè deve osservare
+	// se quest'ultima ha o meno la disponibilità di streaming, quindi guarda la e vedi se riesci a fare sta roba
+	//devo risolvere sto problem
+
+	
+
 
 	//Http request to API
 	TSharedRef<IHttpRequest, ESPMode::ThreadSafe> Request = FHttpModule::Get().CreateRequest();
@@ -71,6 +78,7 @@ void GeneralTTSThread::Synthesize()//ma funziona??
 				FTTSData SyntResult;
 				SyntResult.AudioData = ResponseData;
 				SyntResult.ssml = ssml;
+
 
 				TTSResultAvailable.Broadcast(SyntResult, id);
 
@@ -86,7 +94,72 @@ void GeneralTTSThread::Synthesize()//ma funziona??
 	Request->SetHeader("Content-Type", "application/x-www-form-urlencoded");
 	Request->SetContentAsString(ssml);
 	Request->ProcessRequest();
-	//return true;//ha senso?
+
+	//chiamo Audio2Face?
+
+	//connetto a Audio2FaceComponent
+
+}
+
+void GeneralTTSThread::SynthesizeStream()
+{
+	//Streaming Handler
+	PreviousBytes = 0;
+
+	auto Request = FHttpModule::Get().CreateRequest();
+	Request->SetURL(Endpoint);
+	Request->SetVerb(TEXT("POST"));
+	Request->SetHeader(TEXT("Content-Type"), TEXT("application/x-www-form-urlencoded"));
+	Request->SetHeader(TEXT("Accept"), TEXT("application/octet-stream"));
+	Request->SetContentAsString(ssml);
+
+	Request->OnRequestProgress64().BindLambda([this](FHttpRequestPtr Req, int64 BytesSent, int64 BytesReceived)
+		{
+			if (!Req.IsValid() || !Req->GetResponse().IsValid())
+			{
+				return;
+			}
+
+			const TArray<uint8>& FullData = Req->GetResponse()->GetContent();
+			int64 newBytes = BytesReceived - PreviousBytes;
+			if (newBytes > 0)
+			{
+				const uint8* NewDataPtr = FullData.GetData() + PreviousBytes;
+
+				//converto in float
+				int32 NumSamples = newBytes / 2;
+
+				TArray<float> FloatBuffer;
+				FloatBuffer.Reserve(NumSamples);
+
+				for (int32 i = 0; i < NumSamples; ++i)
+				{
+					// Lettura int16 little endian
+					int16 Sample = *(reinterpret_cast<const int16*>(NewDataPtr + i * 2));
+
+					// Converti in float tra -1.0 e 1.0
+					float NormalizedSample = Sample / 32768.0f;
+
+					FloatBuffer.Add(NormalizedSample);
+				}
+
+				//TODO finisci
+				if (A2FPointer)
+				{
+					A2FPointer->PlayAudio(FloatBuffer);
+				}
+
+				PreviousBytes = BytesReceived;
+			}
+		});
+
+
+
+}
+
+void GeneralTTSThread::OnTTSPartialDataReceived(FHttpRequestPtr Request, int64 BytesSent, int64 BytesReceived)
+{
+
 }
 
 FDelegateHandle GeneralTTSThread::TTSResultAvailableSubscribeUser(FTTSResultAvailableDelegate& UseDelegate)

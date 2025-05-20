@@ -1,11 +1,17 @@
 #pragma once
 #include "FANTASIATypes.h"
 //#include "GeneralTTSComponent.h" // fa casino
+
+
+#include "EnableGrpcIncludes.h"
+#include "Audio2FaceComponent.h"
+#include "DisableGrpcIncludes.h"
+
 #include "Http.h"
 #include "Runtime/Json/Public/Json.h"
 #include "TTSThreadInterface.h"
 #include "Runtime/JsonUtilities/Public/JsonUtilities.h"
-class UAudio2FaceComponent;
+
 
 
 using namespace std;
@@ -31,10 +37,12 @@ private:
 	FString ssml;
 	FString id;
 	FString Endpoint;
+	UAudio2FaceComponent* A2FPointer = nullptr;
 
 	void OnTTSPartialDataReceived(FHttpRequestPtr Request, int64 BytesSent, int64 BytesReceived);
+
+	void HandleNonStreamingResponse(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful);
 	int64 PreviousBytes = 0;
-	TWeakObjectPtr<UAudio2FaceComponent> Audio2FaceComponent;
 
 
 
@@ -43,11 +51,11 @@ public:
 	//~~~ Thread Core Functions ~~~
 
 	//Constructor
-	GeneralTTSThread(FString inSsml, FString inID, FString Endpoint);
+	GeneralTTSThread(FString inSsml, FString inID, FString Endpoint, UAudio2FaceComponent* A2FPointer);
 
 	virtual ~GeneralTTSThread();
 
-	static GeneralTTSThread* setup(FString ssml, FString id, FString Endpoint);
+	static GeneralTTSThread* setup(FString ssml, FString id, FString Endpoint, UAudio2FaceComponent* A2F);
 
 	
 
@@ -57,7 +65,11 @@ public:
 	virtual void Stop();
 	// End FRunnable interface
 
-	void Synthesize(bool stream) override;
+	void Synthesize() override;
+
+	void SynthesizeStream();
+
+	//void SynthImplem(bool stream);
 
 
 

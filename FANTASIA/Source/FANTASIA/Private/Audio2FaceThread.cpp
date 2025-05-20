@@ -19,12 +19,13 @@ using audio2face::PushAudioStreamResponse;
 
 FMyThread* FMyThread::Runnable = NULL;
 
-FMyThread::FMyThread(FString inPlayerA2F_name, FString inserver_url, TArray<float> inAudioData, int32 inSampleRate) : StopTaskCounter(0)
+FMyThread::FMyThread(FString inPlayerA2F_name, FString inserver_url, TArray<float> inAudioData, int32 inSampleRate, bool str) : StopTaskCounter(0)
 {
     PlayerA2F_name = inPlayerA2F_name;
     server_url = inserver_url;
     AudioData = inAudioData;//audio che arriva al componente Audio2Face
     SampleRate = inSampleRate;
+    stream = str;
 
     Thread = FRunnableThread::Create(this, TEXT("A2FaceThread"), 0, TPri_Normal);
 }
@@ -36,12 +37,12 @@ FMyThread::~FMyThread() {
     }
 }
 
-FMyThread* FMyThread::setup(FString inPlayerA2F_name, FString inserver_url, TArray<float> inAudioData, int32 inSampleRate)
+FMyThread* FMyThread::setup(FString inPlayerA2F_name, FString inserver_url, TArray<float> inAudioData, int32 inSampleRate, bool stream)
 {
     if (!Runnable && FPlatformProcess::SupportsMultithreading())
     {
         grpc_init();
-        Runnable = new FMyThread(inPlayerA2F_name, inserver_url, inAudioData, inSampleRate);
+        Runnable = new FMyThread(inPlayerA2F_name, inserver_url, inAudioData, inSampleRate, stream);
     }
     return Runnable;
 }
@@ -55,7 +56,17 @@ bool FMyThread::Init()
 uint32 FMyThread::Run()
 {
     bIsRunning = true;
+    //discrimina se è in streaming o meno, se lo è voglio che mi manda a una funzione che devo scrivereio
+    //e che mi gestisce l'arrivo dei dati o meno dal TTS, quindi voglio che rimane in attesa appena arrivano
+    //i dati e chiude quando finisce l'arrivo dei dati
+    /*if (!stream)
+    {
+        SendToAudio2FaceGrpc();
+    }
+    else SendStreamAudio2FaceGrpc();*/
+
     SendToAudio2FaceGrpc();
+    
     return 0;
 }
 
@@ -87,12 +98,42 @@ bool FMyThread::IsThreadRunning() const {
 void FMyThread::StopSending() {
     StopRecording = true;
 }
+
+//void FMyThread::SendToAudio2FaceGrpc()
+//{
+//    int chunk_size = SampleRate / 10; // 100ms per chunk
+//    int originalChunkSize = chunk_size;
+//
+//    for (int32 i = 0; i < AudioData.Num(); i += originalChunkSize) {
+//        if (StopRecording || StopTaskCounter.GetValue() > 0) {
+//            break;
+//        }
+//
+//        int32 currentChunk = FMath::Min(originalChunkSize, AudioData.Num() - i);
+//        const float* chunk_data = AudioData.GetData() + i;
+//
+//        // Log minimale del buffer corrente
+//        FString ChunkLog = TEXT("Streaming Chunk: [");
+//        for (int32 j = 0; j < FMath::Min(5, currentChunk); ++j) {
+//            ChunkLog += FString::Printf(TEXT("%.4f "), chunk_data[j]);
+//        }
+//        ChunkLog += TEXT("...]");
+//
+//        UE_LOG(LogTemp, Log, TEXT("%s"), *ChunkLog);
+//    }
+//
+//    UE_LOG(LogTemp, Warning, TEXT("Fine test stream buffer (simulato)"));
+//    bIsRunning = false;
+//    Shutdown();
+//}
+
 void FMyThread::SendToAudio2FaceGrpc()//da testare
 {
     string url = TCHAR_TO_UTF8(*server_url);
     std::shared_ptr<Channel> channel2 = grpc::CreateChannel(url, grpc::InsecureChannelCredentials());
 
-    std::unique_ptr<Audio2Face::Stub> stub2 = Audio2Face::NewStub(channel2);
+    //sostituire con auto
+    std::unique_ptr<Audio2Face::Stub> stub2 = Audio2Face::NewStub(channel2); // modificato, aveva 2 argomenti, il secondo null, ma non accettava null
 
     //creo un nuovo oggetto che verrà richiamato quando viene inviato uno stream audio
 
@@ -127,8 +168,22 @@ void FMyThread::SendToAudio2FaceGrpc()//da testare
        
         int32 currentChunk = FMath::Min(i + chunk_size, AudioData.Num() - i );
         const float* chunk_data = AudioData.GetData() + i;
+        //******************************Da eliminare, testing************************
 
+        int32 numValuesToShow = FMath::Min(5, currentChunk);
+        FString debugStr = TEXT("Chunk values: ");
+        for (int32 j = 0; j < numValuesToShow; ++j) {
+            debugStr += FString::Printf(TEXT("%.3f "), chunk_data[j]);
+            UE_LOG(LogTemp, Log, TEXT("%s"), *debugStr);
+        }
+        if (GEngine) {
+            // Visualizza il messaggio sullo schermo per 5 secondi, colore verde
+            GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, debugStr);
+        }
+
+        //******************************Da eliminare, testing************************
         requestAudio = new PushAudioStreamRequest();
+
 
         requestAudio->set_audio_data(chunk_data, currentChunk * sizeof(float));//richiama questa cosa ogni volta che un requestAudio è chiamato
         if (!writer->Write(*requestAudio)) {
