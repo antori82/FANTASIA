@@ -36,7 +36,7 @@ bool GeneralTTSThread::Init()
 
 uint32 GeneralTTSThread::Run()
 {
-	Synthesize();
+	SynthesizeStream();
 	return 0;
 }
 
@@ -103,6 +103,9 @@ void GeneralTTSThread::Synthesize() {
 
 void GeneralTTSThread::SynthesizeStream()
 {
+
+	UE_LOG(LogTemp, Log, TEXT("===> Avvio SynthesizeStream()"));
+
 	//Streaming Handler
 	PreviousBytes = 0;
 
@@ -111,12 +114,31 @@ void GeneralTTSThread::SynthesizeStream()
 	Request->SetVerb(TEXT("POST"));
 	Request->SetHeader(TEXT("Content-Type"), TEXT("application/x-www-form-urlencoded"));
 	Request->SetHeader(TEXT("Accept"), TEXT("application/octet-stream"));
-	Request->SetContentAsString(ssml);
+	//Request->SetContentAsString(ssml);
+
+	// 2) Preparo i parametri "allTextIn" e "modello" in formato URL-encoded
+	FString AllTextInValue = ssml;  // sostituisci col testo che vuoi mandare             // sostituisci con il modello che vuoi usare
+
+	// URL-encode di ciascun valore (spazi -> +, caratteri speciali convertiti, ecc.)
+	FString EncodedText = FGenericPlatformHttp::UrlEncode(AllTextInValue);
+
+	// Costruisco la stringa del body come "allTextIn=Beh+che+dire&modello=LC"
+	FString UrlEncodedBody = FString::Printf(
+		TEXT("allTextIn=%s"),
+		*EncodedText
+	);
+
+	Request->SetContentAsString(UrlEncodedBody);
+
+	UE_LOG(LogTemp, Log, TEXT("===> URL: %s"), *Endpoint);
+	UE_LOG(LogTemp, Log, TEXT("===> POST Body: %s"), *UrlEncodedBody);
+
 
 	Request->OnRequestProgress64().BindLambda([this](FHttpRequestPtr Req, int64 BytesSent, int64 BytesReceived)
 		{
 			if (!Req.IsValid() || !Req->GetResponse().IsValid())
 			{
+				UE_LOG(LogTemp, Warning, TEXT("Richiesta o risposta non valida durante lo streaming"));
 				return;
 			}
 
@@ -124,6 +146,8 @@ void GeneralTTSThread::SynthesizeStream()
 			int64 newBytes = BytesReceived - PreviousBytes;
 			if (newBytes > 0)
 			{
+				UE_LOG(LogTemp, Log, TEXT("===> Ricevuti %lld nuovi byte (totale %lld)"), newBytes, BytesReceived);
+
 				const uint8* NewDataPtr = FullData.GetData() + PreviousBytes;
 
 				//converto in float
@@ -146,14 +170,47 @@ void GeneralTTSThread::SynthesizeStream()
 				//TODO finisci
 				if (A2FPointer)
 				{
+					UE_LOG(LogTemp, Log, TEXT("===> Invio %d campioni audio a A2FPointer"), FloatBuffer.Num());
+					UE_LOG(LogTemp, Log, TEXT("===> Invio %d bytes audio a A2FPointer"), FloatBuffer.Num() * 4);
 					A2FPointer->PlayAudio(FloatBuffer);
 				}
 
 				PreviousBytes = BytesReceived;
+				Sleep(100);
 			}
 		});
 
+	//OnProcessRequesComplete
+	Request->OnProcessRequestComplete().BindLambda([](FHttpRequestPtr Req, FHttpResponsePtr Resp, bool bSuccess)
+		{
+			if (!bSuccess)
+			{
+				UE_LOG(LogTemp, Error, TEXT("===> Richiesta fallita"));
+				return;
+			}
 
+			if (!Resp.IsValid())
+			{
+				UE_LOG(LogTemp, Error, TEXT("===> Risposta non valida"));
+				return;
+			}
+
+			int32 StatusCode = Resp->GetResponseCode();
+			UE_LOG(LogTemp, Log, TEXT("===> Richiesta completata con codice HTTP: %d"), StatusCode);
+
+			if (StatusCode != 200)
+			{
+				UE_LOG(LogTemp, Warning, TEXT("===> Codice di risposta inatteso. Corpo: %s"), *Resp->GetContentAsString());
+			}
+			else
+			{
+				UE_LOG(LogTemp, Log, TEXT("===> Completamento avvenuto con successo"));
+			}
+		});
+
+	UE_LOG(LogTemp, Log, TEXT("===> Invio della richiesta TTS..."));
+
+	Request->ProcessRequest();
 
 }
 

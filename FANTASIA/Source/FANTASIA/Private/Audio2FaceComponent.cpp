@@ -12,16 +12,23 @@ UAudio2FaceComponent::UAudio2FaceComponent() {
 
 void UAudio2FaceComponent::PlayAudio(TArray<float> data)    
 {
-    FString Output = TEXT("Dati ricevuti: ");
+    //------Da togliere da qua
+    FString Output ;
 
     for (int32 i = 0; i < data.Num(); ++i)
     {
-        Output += FString::SanitizeFloat(data[i]) + TEXT(", ");
+        Output = FString::Printf(TEXT("Dato[%d]: %.3f"), i, data[i]);
+        UE_LOG(LogTemp, Warning, TEXT("%s"), *Output);
     }
 
-    UE_LOG(LogTemp, Warning, TEXT("%s"), *Output);
+    //UE_LOG(LogTemp, Warning, TEXT("%s"), *Output);
+
+    //-----Da togliere fino qua
 
 	int32 sampleRate = 16000;
+
+    AudioData = data;//serve?
+    
    
     //LoadRawSoundFromTTS(&data);
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("sending audio.."));
