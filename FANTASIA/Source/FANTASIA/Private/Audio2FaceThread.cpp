@@ -131,14 +131,19 @@ void FMyThread::StopSending() {
 
 void FMyThread::SendToAudio2FaceGrpc()//da testare
 {
-    FString Output = TEXT("Dati ricevuti nel thread : %s") + Thread->GetThreadName();
-
-    for (int32 i = 0; i < AudioData.Num(); ++i)
+    if (Thread)
     {
-        Output += FString::SanitizeFloat(AudioData[i]) + TEXT(", ");
-    }
+        //fai tutto qua
+        FString Output = FString::Printf(TEXT("Dati ricevuti nel thread: %d"), FPlatformTLS::GetCurrentThreadId());
+        FString data = FString::Printf(TEXT("Dati ricevuti : %d"), AudioData.Num());
 
-    UE_LOG(LogTemp, Warning, TEXT("%s"), *Output);
+        for (int32 i = 0; i < AudioData.Num(); ++i)
+        {
+            Output = FString::Printf(TEXT("Dato nel thread[%d]: %.3f"), i, AudioData[i]);
+            UE_LOG(LogTemp, Warning, TEXT("%s"), *Output);
+        }
+    }
+    
 
     //string url = TCHAR_TO_UTF8(*server_url);
     //std::shared_ptr<Channel> channel2 = grpc::CreateChannel(url, grpc::InsecureChannelCredentials());
