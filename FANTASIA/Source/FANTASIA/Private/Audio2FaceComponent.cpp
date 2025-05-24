@@ -13,11 +13,11 @@ UAudio2FaceComponent::UAudio2FaceComponent() {
 void UAudio2FaceComponent::PlayAudio(TArray<float> data)    
 {
     //------Da togliere da qua
-    FString Output ;
+    FString Output;
 
     for (int32 i = 0; i < data.Num(); ++i)
     {
-        Output = FString::Printf(TEXT("Dato[%d]: %.3f"), i, data[i]);
+        Output = FString::Printf(TEXT("Dato nel component[%d]: %.3f"), i, data[i]);
         UE_LOG(LogTemp, Warning, TEXT("%s"), *Output);
     }
 
