@@ -141,6 +141,7 @@ void GeneralTTSThread::SynthesizeStream()
 				UE_LOG(LogTemp, Warning, TEXT("Richiesta o risposta non valida durante lo streaming"));
 				return;
 			}
+			UE_LOG(LogTemp, Warning, TEXT("Richiesta partita in Streaming"));
 
 			const TArray<uint8>& FullData = Req->GetResponse()->GetContent();
 			int64 newBytes = BytesReceived - PreviousBytes;

@@ -15,6 +15,8 @@ void UAudio2FaceComponent::PlayAudio(TArray<float> data)
     //------Da togliere da qua
     FString Output;
 
+    UE_LOG(LogTemp, Warning, TEXT("Audio Data arrivati in chunk : %d"), data.NumBytes());
+
     for (int32 i = 0; i < data.Num(); ++i)
     {
         Output = FString::Printf(TEXT("Dato nel component[%d]: %.3f"), i, data[i]);
@@ -31,7 +33,7 @@ void UAudio2FaceComponent::PlayAudio(TArray<float> data)
     
    
     //LoadRawSoundFromTTS(&data);
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("sending audio.."));
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("sending %d of audio to a thread"), data.NumBytes());
   
 	A2FaceFMyThread(sampleRate);
 }
