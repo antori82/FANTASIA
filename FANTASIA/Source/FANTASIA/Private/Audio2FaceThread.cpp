@@ -65,6 +65,8 @@ uint32 FMyThread::Run()
     }
     else SendStreamAudio2FaceGrpc();*/
 
+    UE_LOG(LogTemp, Warning, TEXT("Thread number : %d"), FPlatformTLS::GetCurrentThreadId());
+
     SendToAudio2FaceGrpc(); //TODO QUESTA DOVREBBE ESSERE LA FUNZIONE DA RICHIAMARE 
 
 
@@ -135,7 +137,7 @@ void FMyThread::SendToAudio2FaceGrpc()//da testare
     {
         //fai tutto qua
         FString Output = FString::Printf(TEXT("Dati ricevuti nel thread: %d"), FPlatformTLS::GetCurrentThreadId());
-        FString data = FString::Printf(TEXT("Dati ricevuti : %d"), AudioData.Num());
+        FString data = FString::Printf(TEXT("Dati thread: %d"), AudioData.Num());
 
         for (int32 i = 0; i < AudioData.Num(); ++i)
         {
