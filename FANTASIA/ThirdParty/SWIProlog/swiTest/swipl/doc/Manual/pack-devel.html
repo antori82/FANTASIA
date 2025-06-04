@@ -1,0 +1,768 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+<title>SWI-Prolog 9.2.9 Reference Manual: Section 15.5</title><link rel="home" href="index.html">
+<link rel="contents" href="Contents.html">
+<link rel="index" href="DocIndex.html">
+<link rel="summary" href="summary.html">
+<link rel="previous" href="pack-structure.html">
+<link rel="next" href="libpl.html">
+
+<style type="text/css">
+
+/* Style sheet for SWI-Prolog latex2html
+*/
+
+dd.defbody
+{ margin-bottom: 1em;
+}
+
+dt.pubdef, dt.multidef
+{ color: #fff;
+padding: 2px 10px 0px 10px;
+margin-bottom: 5px;
+font-size: 18px;
+vertical-align: middle;
+overflow: hidden;
+}
+
+dt.pubdef { background-color: #0c3d6e; }
+dt.multidef { background-color: #ef9439; }
+
+.bib dd
+{ margin-bottom: 1em;
+}
+
+.bib dt
+{ float: left;
+margin-right: 1.3ex;
+}
+
+pre.code
+{ margin-left: 1.5em;
+margin-right: 1.5em;
+border: 1px dotted;
+padding-top: 5px;
+padding-left: 5px;
+padding-bottom: 5px;
+background-color: #f8f8f8;
+}
+
+div.navigate
+{ text-align: center;
+background-color: #f0f0f0;
+border: 1px dotted;
+padding: 5px;
+}
+
+div.title
+{ text-align: center;
+padding-bottom: 1em;
+font-size: 200%;
+font-weight: bold;
+}
+
+div.author
+{ text-align: center;
+font-style: italic;
+}
+
+div.abstract
+{ margin-top: 2em;
+background-color: #f0f0f0;
+border: 1px dotted;
+padding: 5px;
+margin-left: 10%; margin-right:10%;
+}
+
+div.abstract-title
+{ text-align: center;
+padding: 5px;
+font-size: 120%;
+font-weight: bold;
+}
+
+div.toc-h1
+{ font-size: 200%;
+font-weight: bold;
+}
+
+div.toc-h2
+{ font-size: 120%;
+font-weight: bold;
+margin-left: 2em;
+}
+
+div.toc-h3
+{ font-size: 100%;
+font-weight: bold;
+margin-left: 4em;
+}
+
+div.toc-h4
+{ font-size: 100%;
+margin-left: 6em;
+}
+
+span.sec-nr
+{
+}
+
+span.sec-title
+{
+}
+
+span.pred-ext
+{ font-weight: bold;
+}
+
+span.pred-tag
+{ float: right;
+padding-top: 0.2em;
+font-size: 80%;
+font-style: italic;
+color: #fff;
+}
+
+div.caption
+{ width: 80%;
+margin: auto;
+text-align:center;
+}
+
+/* Footnotes */
+.fn {
+color: red;
+font-size: 70%;
+}
+
+.fn-text, .fnp {
+position: absolute;
+top: auto;
+left: 10%;
+border: 1px solid #000;
+box-shadow: 5px 5px 5px #888;
+display: none;
+background: #fff;
+color: #000;
+margin-top: 25px;
+padding: 8px 12px;
+font-size: larger;
+}
+
+sup:hover span.fn-text
+{ display: block;
+}
+
+/* Lists */
+
+dl.latex
+{ margin-top: 1ex;
+margin-bottom: 0.5ex;
+}
+
+dl.latex dl.latex dd.defbody
+{ margin-bottom: 0.5ex;
+}
+
+/* PlDoc Tags */
+
+dl.tags
+{ font-size: 90%;
+margin-left: 5ex;
+margin-top: 1ex;
+margin-bottom: 0.5ex;
+}
+
+dl.tags dt
+{ margin-left: 0pt;
+font-weight: bold;
+}
+
+dl.tags dd
+{ margin-left: 3ex;
+}
+
+td.param
+{ font-style: italic;
+font-weight: bold;
+}
+
+/* Index */
+
+dt.index-sep
+{ font-weight: bold;
+font-size: +1;
+margin-top: 1ex;
+}
+
+/* Tables */
+
+table.center
+{ margin: auto;
+}
+
+table.latex
+{ border-collapse:collapse;
+}
+
+table.latex tr
+{ vertical-align: text-top;
+}
+
+table.latex td,th
+{ padding: 2px 1em;
+}
+
+table.latex tr.hline td,th
+{ border-top: 1px solid black;
+}
+
+table.frame-box
+{ border: 2px solid black;
+}
+
+</style>
+</head>
+<body style="background:white">
+<div class="navigate"><a class="nav" href="index.html"><img src="home.gif" alt="Home"></a>
+<a class="nav" href="Contents.html"><img src="index.gif" alt="Contents"></a>
+<a class="nav" href="DocIndex.html"><img src="yellow_pages.gif" alt="Index"></a>
+<a class="nav" href="summary.html"><img src="info.gif" alt="Summary"></a>
+<a class="nav" href="pack-structure.html"><img src="prev.gif" alt="Previous"></a>
+<a class="nav" href="libpl.html"><img src="next.gif" alt="Next"></a>
+</div>
+<h2 id="sec:pack-devel"><a id="sec:15.5"><span class="sec-nr">15.5</span> <span class="sec-title">Developing 
+a pack</span></a></h2>
+
+<a id="sec:pack-devel"></a>
+
+<p>We recommend using GIT for developing SWI-Prolog packages. To start a 
+new package, invent a name and verify that the name is not yet in use at 
+The <a class="url" href="https://www.swi-prolog.org/pack/list">pack 
+landing page</a>. Create a directory with this name, a sub-directory <code>prolog</code> 
+and a the metadata file <code>pack.pl</code> that contains at least the 
+name and version of the pack. Below is a simple example. See
+<a class="sec" href="pack-devel.html#sec:15.5.1">section 15.5.1</a> for 
+all possible metadata fields.
+
+<pre class="code">
+name(hello).
+version('1.0.0').
+title('Hello world').
+keywords([demo]).
+author( 'Bob Programmer, 'bob123@programmer.me. ).
+download('https://github/bob123/hello.git').
+</pre>
+
+<p>Now, add the Prolog libraries provided to the <code>prolog</code> 
+directory. While doing so, please pay attention to the points below. If 
+your are looking for examples of well structured libraries, please look 
+at the system libraries.
+
+<p>
+<ul class="latex">
+<li>Only add <em>module</em> files to the <code>prolog</code> directory.
+<li>Be aware that the modules your pack provides are globally accessible 
+as <code>library(File)</code>. Thus, make sure the name is fairly unique 
+and the module name is typically the same as the <em>base name</em> of 
+the file.
+<li>Modules that need not be immediately visible to the user should be 
+placed in a subdirectory. Typically one uses the pack name to name the 
+subdirectory.<sup class="fn">247<span class="fn-text">Using e.g., <code>private</code> 
+is not a good idea because the <code>private</code> directory of each 
+pack using this would be available as <code>library(Pack/private)</code>.</span></sup> 
+Use e.g., pack_&lt;<var>name</var>&gt; for the module names of the 
+private files.
+<li>Consider documenting the files using PlDoc.
+</ul>
+
+<p>Once the pack is ready for a very first test, we can make it 
+accessible using the command below. On non-Windows systems, this makes 
+the pack accessible using a <em>symbolic link</em> from your personal 
+pack directory to this directory.
+
+<pre class="code">
+swipl pack install .
+</pre>
+
+<p>After this command the new libraries should be available when you 
+start a new SWI-Prolog process. Another way to make the pack accessible 
+is by using the <code>pack</code> search path (see
+<a id="idx:filesearchpath2:2750"></a><a class="pred" href="consulting.html#file_search_path/2">file_search_path/2</a>). 
+The command (from the pack directory) is
+
+<pre class="code">
+swipl -p pack=..
+</pre>
+
+<p><h3 id="sec:pack-metadata"><a id="sec:15.5.1"><span class="sec-nr">15.5.1</span> <span class="sec-title">The 
+pack meta data</span></a></h3>
+
+<a id="sec:pack-metadata"></a>
+
+<p>A pack must have a file <code>pack.pl</code> in its root directory. 
+The file contains Prolog terms. Defined terms are below. The argument 
+types are types registered with <a id="idx:mustbe2:2751"></a><a class="pred" href="error.html#must_be/2">must_be/2</a> 
+and described in the running text.
+
+<dl class="latex">
+<dt><strong>name</strong>(<var>atom</var>)</dt>
+<dd class="defbody">
+Name of the pack. This should be the same as the directory name. Names 
+can be constructed from the ASCII letters, underscore and digits, e.g., <code>[a-zA-Z9-0_]+</code>
+</dd>
+<dt><strong>title</strong>(<var>atom</var>)</dt>
+<dd class="defbody">
+Short summary of the package. Do not use line breaks and limit respect 
+at maximum length of about 40 characters.
+</dd>
+<dt><strong>keywords</strong>(<var>list(atom)</var>)</dt>
+<dd class="defbody">
+List of keywords that help finding your pack. There is no fixed set of 
+keywords to choose from.
+</dd>
+<dt><strong>description</strong>(<var>list(atom)</var>)</dt>
+<dd class="defbody">
+Longer description as a list of lines.
+</dd>
+<dt><strong>version</strong>(<var>version</var>)</dt>
+<dd class="defbody">
+Current version of the pack. This is a list of integers separated by 
+dots. There is no limit to the number of sub revisions.
+</dd>
+<dt><strong>author</strong>(<var>atom, email_or_url_or_empty</var>)</dt>
+<dd class="defbody">
+Original author of the code. If the contact address is unknown it may be 
+omitted (empty atom). Repeat this term for multiple authors.
+</dd>
+<dt><strong>maintainer</strong>(<var>atom, email_or_url</var>)</dt>
+<dt><strong>packager</strong>(<var>atom, email_or_url</var>)</dt>
+<dd class="defbody">
+As <code>author</code>, but the contact cannot be empty. May be 
+repeated.
+</dd>
+<dt><strong>pack_version</strong>(<var>nonneg</var>)</dt>
+<dd class="defbody">
+Package convention number. Currently 1 (default) or 2. Version 2 
+provides better support for building foreign extensions.
+</dd>
+<dt><strong>home</strong>(<var>atom</var>)</dt>
+<dd class="defbody">
+Location of th home page. This is typically a URL.
+</dd>
+<dt><strong>download</strong>(<var>atom</var>)</dt>
+<dd class="defbody">
+Location for downloading. This is either the URL of the GIT repository 
+or a wildcard URL for downloading the archive, e.g., <a class="url" href="https://me.com/packs/mypack-*.zip">https://me.com/packs/mypack-*.zip</a>. 
+An upgrade request fetches the <a class="url" href="https://me.com/packs/">https://me.com/packs/</a>, 
+expecting an HTML page with links to the available versions. It then 
+selects the latest version.
+</dd>
+<dt><strong>provides</strong>(<var>atom</var>)</dt>
+<dd class="defbody">
+Announce that the pack provides facilities identified by the given 
+token. Optionally, the token may be given a version using <code>@(Token,Version)</code>. 
+A pack implicitly provides <code>@(PackName,PackVersion)</code>. The 
+supplied tokens operate in the same <em>name space</em> as packages and 
+thus the same care must be taken to select a name. Multiple of these 
+claims may be present.
+</dd>
+<dt><strong>requires</strong>(<var>dependency</var>)</dt>
+<dd class="defbody">
+The pack depends on the availability of <var>Dependency</var>. The
+<var>Dependency</var> is a token, normally the name of another package. 
+See <code>provides</code>. The dependency may be further refined by 
+writing <code>Token Cmp Version</code>, where <var>Cmp</var> is one of 
+Prolog's standard numerical comparison operators. See <a id="idx:cmpversions3:2752"></a><a class="pred" href="prologversions.html#cmp_versions/3">cmp_versions/3</a>. 
+This metadata is also used to state requirements on Prolog. See
+<a class="sec" href="pack-devel.html#sec:15.5.1.1">section 15.5.1.1</a>. 
+Multiple requirements are expressed with multiple claims.
+</dd>
+<dt><strong>conflicts</strong>(<var>dependency</var>)</dt>
+<dd class="defbody">
+The pack cannot be use together with the indicated <var>Dependency</var>. 
+This is the negation of <code>requires</code>.
+</dd>
+<dt><strong>replaces</strong>(<var>atom</var>)</dt>
+<dd class="defbody">
+This pack replaces some other pack.
+</dd>
+<dt><strong>autoload</strong>(<var>boolean</var>)</dt>
+<dd class="defbody">
+If <code>true</code>, add the library for the package as <em>autoload</em> 
+library. This implies that the exported predicates may be used without 
+explicitly importing the library. Use with care.
+</dd>
+</dl>
+
+<p><h4 id="sec:pack-prolog-requires"><a id="sec:15.5.1.1"><span class="sec-nr">15.5.1.1</span> <span class="sec-title">Pack 
+requirements on Prolog</span></a></h4>
+
+<a id="sec:pack-prolog-requires"></a>
+
+<p>The file <code>pack.pl</code> may contain <code>requires(Requirement)</code> 
+statements. Normally, <var>Requirement</var> is a pack or token, 
+optionally with a version requirement. The requirement <code>prolog</code> 
+is reserved for requirements on the Prolog version while
+<code>prolog:</code><var>Feature</var> may be used to demand specific 
+features. Feature matching is described with
+<a id="idx:requireprologversion2:2753"></a><a class="pred" href="prologversions.html#require_prolog_version/2">require_prolog_version/2</a>. 
+Multiple requirements on Prolog must all be true. Below are some 
+examples
+
+<pre class="code">
+requires(prolog &gt;= '9.2').        % 9.2.0 or later
+requires(prolog:threads).         % flag threads = true
+requires(prolog:library(socket)). % library(socket) exists
+requires(prolog:bounded(false)).  % flag bounded = false
+</pre>
+
+<p><h3 id="sec:pack-foreign"><a id="sec:15.5.2"><span class="sec-nr">15.5.2</span> <span class="sec-title">Packs 
+with foreign code</span></a></h3>
+
+<a id="sec:pack-foreign"></a>
+
+<p>Many packs include C or C++ resources. Such packs include the C or 
+C++ resources in a subdirectory of the pack. There are no restrictions 
+for naming this subdirectory or structuring the source files in this 
+directory. The build process must create native <em>modules</em> in the 
+directory <code>lib/&lt;<var>arch</var>&gt;</code>, where &lt;<var>arch</var>&gt; 
+is the architecture as obtained by the Prolog flag <a class="flag" href="flags.html#flag:arch">arch</a>.
+
+<p>The build process identifies control files that tell the package 
+manager which build tool to use. The package manager populates the 
+process environment with variables that provide details about the 
+running Prolog instance. This environment is saved in a file <code>buildenv.sh</code> 
+in the pack root or build directory. By
+<em>sourcing</em> this file, the user may run the build tools by hand 
+for debugging purposes.
+
+<p>The build process consists of five steps that are described below
+
+<dl class="latex">
+<dt><b>dependencies</b></dt>
+<dd class="defbody">
+This step currently only supports <code>conan</code>. It is executed if 
+either <code>conanfile.txt</code> or <code>conanfile.py</code> is found 
+in the root directory of the pack.
+</dd>
+<dt><b>configure</b></dt>
+<dd class="defbody">
+This preparation step is executed if one of <code>CMakeLists.txt</code> 
+(<b>cmake</b>), <code>configure</code>, <code>configure.in</code> (<b>autoconf</b>), <code>configure.ac</code> 
+or <code>Makefile.am</code> (<b>automake</b>) are found. The program to 
+manage them is in parenthesis.
+</dd>
+<dt><b>build</b></dt>
+<dd class="defbody">
+Build the process. When configured using (<b>cmake</b>) this will use (<b>cmake</b>). 
+Otherwise either <code>Makefile</code> or
+<code>makefile</code> is expected and Unix <b>make</b> is used to build 
+the process.
+</dd>
+<dt><b>test</b></dt>
+<dd class="defbody">
+Test the project. Either uses <b>cmake</b> or the GNU convention
+<code>make check</code>.
+</dd>
+<dt><b>install</b></dt>
+<dd class="defbody">
+Install the project. Either uses <b>cmake</b> or the GNU convention
+<code>make install</code>.
+</dd>
+</dl>
+
+<p>While running the above tools, the environment is populated. The 
+names of the variables provided depends on the <code>pack_version(Version)</code> 
+metadata. We give the names for version&nbsp;2, with the names for 
+version&nbsp;1 in parenthesis if this differs from the version&nbsp;2 
+name.
+
+<dl class="latex">
+<dt><b><code>PATH</code></b></dt>
+<dd class="defbody">
+Contains the environment path with the directory holding the currently 
+running SWI-Prolog instance prepended in front of it. As a result,
+<b>swipl</b> is always present and runs the same SWI-Prolog instance as 
+the current Prolog process.
+</dd>
+<dt><b><code>SWIPL</code></b></dt>
+<dd class="defbody">
+Contains the absolute file name of the running executable.
+</dd>
+<dt><b><code>SWIPL_PACK_VERSION</code></b></dt>
+<dd class="defbody">
+Version of the pack system (1 or 2). If not present we must assume&lsquo;1&rsquo;.
+</dd>
+<dt><b><code>SWIPL_VERSION</code> (<code>SWIPLVERSION</code>)</b></dt>
+<dd class="defbody">
+Contains the numeric SWI-Prolog version defined as
+<var>Major &times; 10000 + Minor &times; 100 + Patch</var>
+</dd>
+<dt><b><code>SWIPL_HOME_DIR</code> (<code>SWIHOME</code>)</b></dt>
+<dd class="defbody">
+Contains the directory holding the SWI-Prolog home.
+</dd>
+<dt><b><code>SWIPL_ARCH</code> (<code>SWIARCH</code>)</b></dt>
+<dd class="defbody">
+contains the machine architecture identifier.
+</dd>
+<dt><b><code>SWIPL_MODULE_DIR</code> (<code>PACKSODIR</code>)</b></dt>
+<dd class="defbody">
+constains the destination directory for shared objects/DLLs relative to 
+a Prolog pack, i.e., <code>lib/$SWIARCH</code>.
+</dd>
+<dt><b><code>SWIPL_MODULE_LIB</code> (<code>SWISOLIB</code>)</b></dt>
+<dd class="defbody">
+The SWI-Prolog library or an empty string when it is not required to 
+link modules against this library (e.g., ELF systems)
+</dd>
+<dt><b><code>SWIPL_LIB</code> (<code>SWILIB</code>)</b></dt>
+<dd class="defbody">
+The SWI-Prolog library we need to link to for programs that
+<em>embed</em> SWI-Prolog (normally <code>-lswipl</code>)
+</dd>
+<dt><b><code>SWIPL_INCLUDE_DIRS</code></b></dt>
+<dd class="defbody">
+CMake style variable that contains the directory holding
+<code>SWI-Prolog.h</code>, <code>SWI-Stream.h</code> and
+<code>SWI-cpp2.h</code>.
+</dd>
+<dt><b><code>SWIPL_LIBRARIES_DIR</code></b></dt>
+<dd class="defbody">
+CMake style variable that contains the directory holding
+<code>libswipl</code>
+</dd>
+<dt><b><code>SWIPL_CC</code> (<code>CC</code>)</b></dt>
+<dd class="defbody">
+C compiler used to build SWI-Prolog.
+</dd>
+<dt><b><code>SWIPL_CXX</code> (<code>CXX</code>)</b></dt>
+<dd class="defbody">
+C++ compiler used to build SWI-Prolog.
+</dd>
+<dt><b><code>SWIPL_LD</code> (<code>LD</code>)</b></dt>
+<dd class="defbody">
+Linker used to link SWI-Prolog.
+</dd>
+<dt><b><code>SWIPL_CFLAGS</code> (<code>CFLAGS</code>)</b></dt>
+<dd class="defbody">
+C-Flags for building extensions. Always contains <code>-ISWIPL-INCLUDE-DIR</code>.
+</dd>
+<dt><b><code>SWIPL_MODULE_LDFLAGS</code> (<code>LDSOFLAGS</code>)</b></dt>
+<dd class="defbody">
+Link flags for linking modules.
+</dd>
+<dt><b><code>SWIPL_MODULE_EXT</code> (<code>SOEXT</code>)</b></dt>
+<dd class="defbody">
+File name extension for modules (e.g., <code>.so</code> or <code>.dll</code>)
+</dd>
+<dt><b><code>SWIPL_PREFIX</code> (<code>PREFIX</code>)</b></dt>
+<dd class="defbody">
+Install prefix for global binaries, libraries and include files.
+</dd>
+</dl>
+
+<p><h4 id="sec:pack-makefile"><a id="sec:15.5.2.1"><span class="sec-nr">15.5.2.1</span> <span class="sec-title">Compiling 
+a foreign extension using a simple Makefile</span></a></h4>
+
+<a id="sec:pack-makefile"></a>
+
+<p>If the package requires some C code to be compiled that has no 
+dependencies and needs no configuration it is probably easiest to use a 
+simple Unix make file. We assume <code>pack_version(2)</code>. Here is a 
+simple <code>Makefile</code>. We assume the pack contains a file
+<code>c/environ.c</code> that contains the C source. Following the GNU 
+guidelines, the <code>Makefile</code> must define the following targets:
+
+<dl class="latex">
+<dt><b>all (default)</b></dt>
+<dd class="defbody">
+Build the foreign extension. In this very simple case we build the 
+resulting module directly in the target directory.
+</dd>
+<dt><b>check</b></dt>
+<dd class="defbody">
+Test the package. This is executed after the default build target.
+</dd>
+<dt><b>install</b></dt>
+<dd class="defbody">
+Install the package. In this case this does nothing.
+</dd>
+<dt><b>clean</b></dt>
+<dd class="defbody">
+Clean the package. This target disposes intermediate build products.
+</dd>
+<dt><b>distclean</b></dt>
+<dd class="defbody">
+Restore the package to its fully clean state. This implies that all 
+built products and intermediate build products are removed. The <code>distclean</code> 
+target is used by <a id="idx:packrebuild1:2754"></a><a class="pred" href="prologpack.html#pack_rebuild/1">pack_rebuild/1</a>.
+</dd>
+</dl>
+
+<pre class="code">
+MODULE= $(SWIPL_MODULE_DIR)/environ.$(SOEXT)
+CFLAGS= $(SWIPL_CFLAGS)
+
+all:    $(MODULE)
+
+OBJ=c/environ.o
+
+$(MODULE): $(OBJ)
+        mkdir -p $(SWIPL_MODULE_DIR)
+        $(SWIPL_LD) $(SWIPL_MODULE_LDFLAGS) -o $@ $(OBJ) $(SWIPL_MODULE_LIB)
+
+check::
+        $(SWIPL) -g run_tests -t halt test/test_environ.pl
+install::
+clean:
+        rm -f $(OBJ)
+distclean: clean
+        rm -f $(MODULE)
+</pre>
+
+<p><h4 id="sec:pack-publish"><a id="sec:15.5.2.2"><span class="sec-nr">15.5.2.2</span> <span class="sec-title">Publishing 
+a pack</span></a></h4>
+
+<a id="sec:pack-publish"></a>
+
+<p>As described in <a class="sec" href="pack-structure.html#sec:15.4">section 
+15.4</a>, a pack is distributed either as an archive file or as a GIT 
+repository. We strongly encourage using a GIT repository as that gives 
+good version and provenance support. Packs may be published by hand by 
+making the archive or git repository available from a globally 
+accessible place on the internet and installing the pack from this 
+location. This process is streamlined, notably for GIT packs using <a id="idx:packpublish2:2755"></a><a class="pred" href="prologpack.html#pack_publish/2">pack_publish/2</a> 
+and the
+<em>app</em> <code>pack</code>. To publish a pack a local GIT repository 
+that has publicly accessible <em>origin</em>,
+
+<p>
+<ol class="latex">
+<li>Update <code>version(Version)</code> in <code>pack.pl</code>
+<li>Commit all changes, make sure the the repository is clean.
+<li>Run
+
+<pre class="code">
+swipl pack publish .
+</pre>
+
+<p>
+</ol>
+
+<p>This will
+
+<p>
+<ol class="latex">
+<li>Verify the repository is clean and on the default branch.
+<li><em>Tag</em> the repository with V&lt;<var>version</var>&gt;. By 
+default, the tag will be <em>signed</em>. Please setup signing for GIT 
+or use the &ldquo;--no-sign`` option.
+<li>Push the repository and release tag.
+<li>Figure out the download location, either from the
+<code>download(URL)</code> metadata or the GIT remote information.
+<li>Install the package and its dependencies in a temporary isolated 
+pack environment.
+<li>On success, register the pack with the server.
+<li>Delete the isolated pack environment.
+</ol>
+
+<p>Similarly, a pack can be published from a public archive using the 
+command below. When using an archive, <b>never</b> change the content of 
+the archive but, instead, create a new archive with a new version.
+
+<pre class="code">
+swipl pack publish URL
+</pre>
+
+<p><h4 id="sec:pack-cmake"><a id="sec:15.5.2.3"><span class="sec-nr">15.5.2.3</span> <span class="sec-title">Compiling 
+a foreign extension using CMake</span></a></h4>
+
+<a id="sec:pack-cmake"></a>
+
+<p>If the package is more complicated, a simple Makefile typically does 
+not suffice. In this case we have two options. One is to use the GNU
+<b>autoconf</b> or <b>automake</b>. However, <b>cmake</b> is getting 
+more popular and provides much better support for non-POSIX platforms, 
+e.g., Windows. This section discusses building the same package as <a class="sec" href="pack-devel.html#sec:15.5.2.1">section 
+15.5.2.1</a> using <b>cmake</b>.
+
+<p>To use <b>cmake</b>, add the content below as the file
+<code>CMakeLists.txt</code> to the root directory of the pack. 
+SWI-Prolog ships with a <b>cmake</b> <em>include</em> file named
+<code>swipl.cmake</code> that deals with most of the configuration 
+issues. Comments in the file below explain the various steps of the 
+process.
+
+<pre class="code">
+cmake_minimum_required(VERSION 3.5)
+project(swipl-pack-environ)
+
+# Include swipl.cmake from the running SWI-Prolog's home
+list(INSERT CMAKE_MODULE_PATH 0 $ENV{SWIPL_HOME_DIR}/cmake)
+include(swipl)
+
+# Create the library as a CMake module
+add_library(environ MODULE c/environ.c)
+
+# Link the library to SWI-Prolog.  This also removes the `lib` prefix
+# from the target on systems that define a common library file prefix
+target_link_swipl(environ)
+
+# Install the foreign taget. `${swipl_module_dir}` contains the
+# directory for installing modules for this architecture.
+
+install(TARGETS environ
+        DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/${swipl_module_dir})
+
+# Run  tests.  This  is  executed   before    the   pack  is  installed.
+# swipl_test(name) runs Prolog with the command line below.
+#
+#    swipl -p foreign=${CMAKE_CURRENT_SOURCE_DIR}/${swipl_module_dir} \
+#          -p library=${CMAKE_CURRENT_SOURCE_DIR}/prolog \
+#          --on-error=status \
+#          -g test_${name} \
+#          -t halt \
+#          ${CMAKE_CURRENT_SOURCE_DIR}/test/test_${name}.pl
+#
+# This  implies  that  a  test  `name`  must    be  defined  in  a  file
+# `test/test_${name}.pl`, which exports a  predicate `test_${name}`. The
+# test succeeds if this predicate  succeeds   and  no error messages are
+# printed.
+
+enable_testing()
+swipl_add_test(environ)
+</pre>
+
+<p><h3 id="sec:pack-update"><a id="sec:15.5.3"><span class="sec-nr">15.5.3</span> <span class="sec-title">Updating 
+a package</span></a></h3>
+
+<a id="sec:pack-update"></a>
+
+<p>If a package needs a revision to fix bugs or add functionality it 
+needs to be updated. First, we create a development environment using
+
+<p>
+<ol class="latex">
+<li>Clone the git repository that provides the pack.
+<li>Install the pack <em>as a link</em> using the command below. If the 
+pack contains foreign build scripts, this creates a file
+<code>buildenv.sh</code> that contains the environment variables for 
+building the pack.
+
+<pre class="code">
+?- pack_install(.).
+</pre>
+
+<p>
+</ol>
+
+<p>Next, we can edit the pack sources and rebuild it the chosen build 
+tools after running <code>source buildenv.sh</code> to set the 
+appropriate environment variables. After validating that the pack works 
+as expected follow the instructions in <a class="sec" href="pack-devel.html#sec:15.5.2.2">section 
+15.5.2.2</a> to publish the new version.
+</body></html>

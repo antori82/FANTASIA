@@ -1,0 +1,563 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+<title>SWI-Prolog 9.2.9 Reference Manual: Section 13.2</title><link rel="home" href="index.html">
+<link rel="contents" href="Contents.html">
+<link rel="index" href="DocIndex.html">
+<link rel="summary" href="summary.html">
+<link rel="previous" href="wasm-loading.html">
+<link rel="next" href="wasm-js-call.html">
+
+<style type="text/css">
+
+/* Style sheet for SWI-Prolog latex2html
+*/
+
+dd.defbody
+{ margin-bottom: 1em;
+}
+
+dt.pubdef, dt.multidef
+{ color: #fff;
+padding: 2px 10px 0px 10px;
+margin-bottom: 5px;
+font-size: 18px;
+vertical-align: middle;
+overflow: hidden;
+}
+
+dt.pubdef { background-color: #0c3d6e; }
+dt.multidef { background-color: #ef9439; }
+
+.bib dd
+{ margin-bottom: 1em;
+}
+
+.bib dt
+{ float: left;
+margin-right: 1.3ex;
+}
+
+pre.code
+{ margin-left: 1.5em;
+margin-right: 1.5em;
+border: 1px dotted;
+padding-top: 5px;
+padding-left: 5px;
+padding-bottom: 5px;
+background-color: #f8f8f8;
+}
+
+div.navigate
+{ text-align: center;
+background-color: #f0f0f0;
+border: 1px dotted;
+padding: 5px;
+}
+
+div.title
+{ text-align: center;
+padding-bottom: 1em;
+font-size: 200%;
+font-weight: bold;
+}
+
+div.author
+{ text-align: center;
+font-style: italic;
+}
+
+div.abstract
+{ margin-top: 2em;
+background-color: #f0f0f0;
+border: 1px dotted;
+padding: 5px;
+margin-left: 10%; margin-right:10%;
+}
+
+div.abstract-title
+{ text-align: center;
+padding: 5px;
+font-size: 120%;
+font-weight: bold;
+}
+
+div.toc-h1
+{ font-size: 200%;
+font-weight: bold;
+}
+
+div.toc-h2
+{ font-size: 120%;
+font-weight: bold;
+margin-left: 2em;
+}
+
+div.toc-h3
+{ font-size: 100%;
+font-weight: bold;
+margin-left: 4em;
+}
+
+div.toc-h4
+{ font-size: 100%;
+margin-left: 6em;
+}
+
+span.sec-nr
+{
+}
+
+span.sec-title
+{
+}
+
+span.pred-ext
+{ font-weight: bold;
+}
+
+span.pred-tag
+{ float: right;
+padding-top: 0.2em;
+font-size: 80%;
+font-style: italic;
+color: #fff;
+}
+
+div.caption
+{ width: 80%;
+margin: auto;
+text-align:center;
+}
+
+/* Footnotes */
+.fn {
+color: red;
+font-size: 70%;
+}
+
+.fn-text, .fnp {
+position: absolute;
+top: auto;
+left: 10%;
+border: 1px solid #000;
+box-shadow: 5px 5px 5px #888;
+display: none;
+background: #fff;
+color: #000;
+margin-top: 25px;
+padding: 8px 12px;
+font-size: larger;
+}
+
+sup:hover span.fn-text
+{ display: block;
+}
+
+/* Lists */
+
+dl.latex
+{ margin-top: 1ex;
+margin-bottom: 0.5ex;
+}
+
+dl.latex dl.latex dd.defbody
+{ margin-bottom: 0.5ex;
+}
+
+/* PlDoc Tags */
+
+dl.tags
+{ font-size: 90%;
+margin-left: 5ex;
+margin-top: 1ex;
+margin-bottom: 0.5ex;
+}
+
+dl.tags dt
+{ margin-left: 0pt;
+font-weight: bold;
+}
+
+dl.tags dd
+{ margin-left: 3ex;
+}
+
+td.param
+{ font-style: italic;
+font-weight: bold;
+}
+
+/* Index */
+
+dt.index-sep
+{ font-weight: bold;
+font-size: +1;
+margin-top: 1ex;
+}
+
+/* Tables */
+
+table.center
+{ margin: auto;
+}
+
+table.latex
+{ border-collapse:collapse;
+}
+
+table.latex tr
+{ vertical-align: text-top;
+}
+
+table.latex td,th
+{ padding: 2px 1em;
+}
+
+table.latex tr.hline td,th
+{ border-top: 1px solid black;
+}
+
+table.frame-box
+{ border: 2px solid black;
+}
+
+</style>
+</head>
+<body style="background:white">
+<div class="navigate"><a class="nav" href="index.html"><img src="home.gif" alt="Home"></a>
+<a class="nav" href="Contents.html"><img src="index.gif" alt="Contents"></a>
+<a class="nav" href="DocIndex.html"><img src="yellow_pages.gif" alt="Index"></a>
+<a class="nav" href="summary.html"><img src="info.gif" alt="Summary"></a>
+<a class="nav" href="wasm-loading.html"><img src="prev.gif" alt="Previous"></a>
+<a class="nav" href="wasm-js-call.html"><img src="next.gif" alt="Next"></a>
+</div>
+<h2 id="sec:wasm-calling"><a id="sec:13.2"><span class="sec-nr">13.2</span> <span class="sec-title">Calling 
+Prolog from JavaScript</span></a></h2>
+
+<a id="sec:wasm-calling"></a>
+
+<p>The <code>Prolog</code> class provides several methods for calling 
+Prolog from JavaScript.
+
+<dl class="latex">
+<dt class="pubdef"><a id="Prolog.call()"><var>Boolean</var> <strong>Prolog.call</strong>(<var>Goal</var>)</a></dt>
+<dd class="defbody">
+Processes a Prolog goal represented as a <code>String</code> and returns
+<code>true</code> or <code>false</code>. This simple calling pattern is 
+intended for trivial goals such as setting a Prolog flag. For example, 
+the call below limits the Prolog stacks to 10Mb.
+
+<pre class="code">
+Prolog.call("set_prolog_flag(stack_limit, 10 000 000)");
+</pre>
+
+</dd>
+<dt class="pubdef"><a id="Prolog.query()"><var>Query</var> <strong>Prolog.query</strong>(<var>Goal</var>)</a></dt>
+<dt class="pubdef"><a id="Prolog.query()"><var>Query</var> <strong>Prolog.query</strong>(<var>Goal, 
+Input</var>)</a></dt>
+<dd class="defbody">
+Create a Prolog query from a <code>String</code>, optionally binding 
+Prolog variables embedded in <var>Goal</var> from properties of the <code>Object</code>
+<var>Input</var>. The returned object is an instance of class <code>Query</code>. 
+This instance can be used as a JavaScript <em>iterator</em>. The value 
+returned in each iteration is an <code>Object</code> with properties for 
+each variable in <var>Goal</var> that is not in <var>Input</var> and 
+does not start with an underscore. For example, we can iterate over the 
+members of a list like below. Further details on class <code>Query</code> 
+are provided in <a class="sec" href="wasm-calling.html#sec:13.2.1">section 
+13.2.1</a>. The translation of data between Prolog and JavaScript is 
+described in <a class="sec" href="wasm-calling.html#sec:13.2.2">section 
+13.2.2</a>.
+
+<pre class="code">
+for(let r of Prolog.query("member(Elem,List)",
+                          {List: ["aap", "noot", "mies"]}))
+{ console.log(r.Elem);
+}
+</pre>
+
+<p>This interface is also practical for calling (fast) Prolog predicates 
+to compute a single answer from an input using the <a class="func" href="wasm-calling.html#Query.once()">Query.once()</a> 
+method. Assuming a Prolog predicate fib/2 that computes the nth <em>Fibonacci</em> 
+number, we can call this using the code below. Note that if the fib/2 
+fails or raises an exception the object returned by <a class="func" href="wasm-calling.html#Query.once()">Query.once()</a> 
+does not contain the
+<code>Out</code> key and thus our function returns <code>undefined</code>.
+
+<pre class="code">
+function fib(in, out)
+{ return Prolog.query("fib(In,Out)", {In:in}).once().Out;
+}
+
+</pre>
+
+<p>The <code>.<b>query()</b></code> method is indented for fast queries 
+that do not require the <em>yield</em> mechanism, i.e., the execution 
+should not require asynchronous operations and the browser is not 
+responsive during the execution.</dd>
+<dt class="pubdef"><a id="Prolog.forEach()"><var>Promise</var> <strong>Prolog.forEach</strong>(<var>Goal</var>)</a></dt>
+<dt class="pubdef"><a id="Prolog.forEach()"><var>Promise</var> <strong>Prolog.forEach</strong>(<var>Goal, 
+OnAnswer</var>)</a></dt>
+<dt class="pubdef"><a id="Prolog.forEach()"><var>Promise</var> <strong>Prolog.forEach</strong>(<var>Goal, 
+Input</var>)</a></dt>
+<dt class="pubdef"><a id="Prolog.forEach()"><var>Promise</var> <strong>Prolog.forEach</strong>(<var>Goal, 
+Input, OnAnswer</var>)</a></dt>
+<dd class="defbody">
+This method executes <var>Goal</var> asynchronously. This implies that
+<var>Goal</var> may execute asynchronous operations and the browser 
+remains responsive while executing <var>Goal</var>. <var>Goal</var> and <var>Input</var> 
+are processed as with <code>.<b>query()</b></code>. For each answer, <var>OnAnswer</var> 
+is a
+<code>Function</code> that is called with a <code>Object</code> that 
+holds the bindings for the output arguments of <var>Goal</var>.
+
+<p>The returned <code>Promise</code> is resolved when the query 
+completes. The value passed to the <code>.<b>then()</b></code> method of 
+the <code>Promise</code> is the number of answers if <var>OnAnswer</var> 
+is provided or an <code>Array</code> of answers if <var>OnAnswer</var> 
+is omitted. If <var>Goal</var> raises an exception the <code>Promise</code> 
+is rejected.
+
+<p>Multiple calls to Prolog can be activated at any time. Prolog 
+processes such queries in <em>LIFO</em> <em>(Last In, First Out)</em> 
+mode. If queries need to be processed sequentially use JavaScript <code>await</code> 
+or the <code>Promise.<b>finally()</b></code> method to wait for 
+completion.
+</dd>
+</dl>
+
+<p><h3 id="sec:wasm-query"><a id="sec:13.2.1"><span class="sec-nr">13.2.1</span> <span class="sec-title">The 
+JavaScript class Query</span></a></h3>
+
+<a id="sec:wasm-query"></a>
+
+<p>The method <a class="func" href="wasm-calling.html#Prolog.query()">Prolog.query()</a> 
+returns an instance of the JavaScript class <code>Query</code> that may 
+be used to explore the solutions of the query. The <code>Query</code> 
+class implements the JavaScript <em>iterator</em> protocol.
+
+<dl class="latex">
+<dt class="pubdef"><a id="Query.next()"><var>Object</var> <strong>Query.next</strong>(<var></var>)</a></dt>
+<dd class="defbody">
+Implements the <em>iterator</em> protocol. This returns an object 
+holding the keys <code>done</code> and <code>value</code>. If exception 
+handling is enabled it returns an object
+{<code>done</code>:<code>true</code>, <code>error</code>:<code>true</code>,
+<code>message</code>:<var>String</var>}.</dd>
+<dt class="pubdef"><a id="Query.once()"><var>Object</var> <strong>Query.once</strong>(<var></var>)</a></dt>
+<dd class="defbody">
+Close the query after the first answer. Returns the <code>.value</code> 
+of the object returned by <code>.<b>next()</b></code> on success and the 
+complete object on failure or error. In addition, on a logical result 
+(no error), a field
+<code>success</code> is added with a boolean value. Thus, the return 
+value may contain these keys:
+
+<dl class="latex">
+<dt><b>{Bindings}</b></dt>
+<dd class="defbody">
+Query succeeded. Objects holds a key for each output variable. In 
+addition the <code>success</code> key is set to <code>true</code>.</dd>
+<dt><b>{<code>success</code>:<var>false</var>}</b></dt>
+<dd class="defbody">
+Query failed. Note that the binding keys all start with an uppercase 
+letter and this is thus not ambiguous.</dd>
+<dt><b>{<code>error</code>:true, <code>message</code>:<var>String</var>}</b></dt>
+<dd class="defbody">
+Query raised an exception.
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><a id="Query.close()"><var>Object</var> <strong>Query.close</strong>(<var></var>)</a></dt>
+<dd class="defbody">
+Closes the query. This can be used inside the iterator to stop further 
+enumeration.
+</dd>
+</dl>
+
+<p><h3 id="sec:wasm-data-conversion"><a id="sec:13.2.2"><span class="sec-nr">13.2.2</span> <span class="sec-title">Translating 
+data between JavaScript and Prolog</span></a></h3>
+
+<a id="sec:wasm-data-conversion"></a>
+
+<p>JavaScript and Prolog are both dynamically typed languages. The WASM 
+module defines a faithful translation between JavaScript data and Prolog 
+data that aims at completeness as well as keeping the data 
+representation clean in the common cases. We describe the translation in 
+two descriptions because round tripping does not always result in the 
+original object.
+
+<p><h4 id="sec:wasm-data-js-to-prolog"><a id="sec:13.2.2.1"><span class="sec-nr">13.2.2.1</span> <span class="sec-title">Translating 
+JavaScript data to Prolog</span></a></h4>
+
+<a id="sec:wasm-data-js-to-prolog"></a>
+
+<p>This section describes how data from JavaScript is translated into 
+Prolog. The interface is primarily designed for passing JavaScript data 
+as typically used to a natural Prolog representation. In addition a 
+number of classes are provided to create Prolog specific data structures 
+such as strings (as opposed to atoms), variables, compound terms, etc.
+
+<dl class="latex">
+<dt><b>Number</b></dt>
+<dd class="defbody">
+Translate to a Prolog integer or floating point number.
+</dd>
+<dt><b>BigInt</b></dt>
+<dd class="defbody">
+Translate to a Prolog integer.
+</dd>
+<dt><b>String</b></dt>
+<dd class="defbody">
+Translate to a Prolog atom. Use <code>new Prolog.<b>String(text)</b></code> 
+to create a Prolog string. See below.
+</dd>
+<dt><b>Boolean</b></dt>
+<dd class="defbody">
+Translate to one of the Prolog atoms <code>true</code> or <code>false</code>.
+</dd>
+<dt><b>undefined</b></dt>
+<dd class="defbody">
+Translate the Prolog atom <code>undefined</code>.
+</dd>
+<dt><b>null</b></dt>
+<dd class="defbody">
+Translate the Prolog atom <code>null</code>.
+</dd>
+<dt><b>Array</b></dt>
+<dd class="defbody">
+Translate to a Prolog list.
+</dd>
+<dt><b>Objects holding the key <code>$</code>:<var>Type</var></b></dt>
+<dd class="defbody">
+Such objects are converted depending on the value for this key. The 
+interface defines classes to simplify creating such objects.
+
+<dl class="latex">
+<dt><b>s</b></dt>
+<dd class="defbody">
+Represent a Prolog string. The key <code>v</code> holds the text. May be 
+created using <code>new Prolog.string(text)</code>. May be created using <code>new 
+Prolog.<b>String(text)</b></code>.
+</dd>
+<dt><b>r</b></dt>
+<dd class="defbody">
+Represent a Prolog <em>rational number</em>. The keys <code>n</code> and <code>d</code> 
+represent the <em>numerator</em> and <em>denominator</em>. For example, 
+to represent <code>1r3</code>, use {<code>$</code>:"r",
+<code>n</code>:1, <code>d</code>:3}. May be created using <code>new 
+Prolog.Rational(n, d)</code>, where <var>n</var> and <var>d</var> can be 
+JavaScript numbers or big integers.
+</dd>
+<dt><b>t</b></dt>
+<dd class="defbody">
+Represent a Prolog <em>compound term</em>. The object should hold 
+exactly one key whose value is an array that holds the argument values. 
+For example a term <code>point(1,2)</code> is constructed using
+{<code>$</code>:"t", <code>point</code>:[1,2]}. May be created using <code>new 
+Prolog.Compound(functor, args)</code>
+</dd>
+<dt><b>v</b></dt>
+<dd class="defbody">
+Represent a variable. If the key <code>v</code> is present this 
+identifies the variable. Two variables processed in the same translation 
+with the same identifier represent the same Prolog variable. If the <code>v</code> 
+key is omitted the variable will be unique. May be created using <code>new 
+Prolog.Var(id)</code>.
+</dd>
+<dt><b>l</b></dt>
+<dd class="defbody">
+Represent a Prolog list. As a JavaScript <code>Array</code> we only need 
+this typed object to create a <em>partial list</em>. The <code>v</code> 
+key contains the &ldquo;normal&rdquo; elements and the key <code>tail</code> 
+contains the tail of the list. May be created using <code>new 
+Prolog.List(array, tail)</code>.
+</dd>
+</dl>
+
+</dd>
+<dt><b>Object of class <code>Object</code></b></dt>
+<dd class="defbody">
+Plain JavaScript objects are translated into a Prolog <code>dict</code>. 
+Note that JavaScript object keys are always strings and (thus) all dict 
+keys are atoms. This, {1:"one"} is translated into
+<code>_{'1': one}</code>.
+</dd>
+<dt><b>ArrayBuffer</b></dt>
+<dd class="defbody">
+Instances of <code>ArrayBuffer</code> are translated into a Prolog 
+string that consists of characters in the range <var>0 ... 255</var>.
+</dd>
+<dt><b>Objects of a one class not being <code>Object</code></b></dt>
+<dd class="defbody">
+Instances of non-plain JavaScript objects are translated into a Prolog <em>blob</em>. 
+Such objects are written as <code>&lt;js_Class(id)&gt;</code>. The 
+Prolog interface allows for passing the objects back and calling methods 
+on them. See <a class="sec" href="wasm-js-call.html#sec:13.3">section 
+13.3</a>.
+</dd>
+</dl>
+
+<p><h4 id="sec:wasm-data-prolog-to-js"><a id="sec:13.2.2.2"><span class="sec-nr">13.2.2.2</span> <span class="sec-title">Translating 
+Prolog data to JavaScript</span></a></h4>
+
+<a id="sec:wasm-data-prolog-to-js"></a>
+
+<p>Most of the translation from Prolog data to JavaScript is the reverse 
+of the translation described in <a class="sec" href="wasm-calling.html#sec:13.2.2.1">section 
+13.2.2.1</a>. In some cases however reverse translation is ambiguous. 
+For example, both
+<code>42</code> and <code>42n</code> (a JavaScript <code>BigInt</code>) 
+translate to a simple Prolog integer. The other way around, as 
+JavaScript
+<code>Number</code> is a float, both Prolog <code>42</code> and <code>42.0</code> 
+translate to <code>42</code> in JavaScript.
+
+<dl class="latex">
+<dt><b>Variable</b></dt>
+<dd class="defbody">
+Translate to a JavaScript <code>Prolog.Variable</code> instance where 
+the identifier is a unique number of each unique variable.
+</dd>
+<dt><b>Integer</b></dt>
+<dd class="defbody">
+Translate to a JavaScript <code>Number</code> when possible or
+<code>BigInt</code> otherwise. Currently JavaScript <code>Number</code> 
+can represent integers upto <var>2^53</var> precisely.
+</dd>
+<dt><b>Rational</b></dt>
+<dd class="defbody">
+Translate to a JavaScript <code>Prolog.Rational</code> instance.
+</dd>
+<dt><b>Float</b></dt>
+<dd class="defbody">
+Translate to a JavaScript <code>Number</code>.
+</dd>
+<dt><b>Atom</b></dt>
+<dd class="defbody">
+Translate to a JavaScript <code>String</code>.
+</dd>
+<dt><b>String</b></dt>
+<dd class="defbody">
+Translate to a JavaScript <code>Prolog.String</code> instance.
+</dd>
+<dt><b>List</b></dt>
+<dd class="defbody">
+When a <em>proper list</em> create a JavaScript <code>Array</code>, 
+otherwise create a JavaScript <code>Prolog.List</code> instance.
+</dd>
+<dt><b>Compound term</b></dt>
+<dd class="defbody">
+Create a JavaScript <code>Prolog.Compound</code> instance.
+</dd>
+<dt><b>Dict</b></dt>
+<dd class="defbody">
+Create a plain JavaScript <code>Object</code> with the same keys. If the 
+dict has a non-var <em>tag</em>, add a <code>$tag</code> property.
+</dd>
+</dl>
+
+<p></body></html>

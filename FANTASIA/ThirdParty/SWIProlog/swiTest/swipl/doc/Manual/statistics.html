@@ -1,0 +1,344 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+<title>SWI-Prolog 9.2.9 Reference Manual: Section A.52</title><link rel="home" href="index.html">
+<link rel="contents" href="Contents.html">
+<link rel="index" href="DocIndex.html">
+<link rel="summary" href="summary.html">
+<link rel="previous" href="settings.html">
+<link rel="next" href="strings.html">
+
+<style type="text/css">
+
+/* Style sheet for SWI-Prolog latex2html
+*/
+
+dd.defbody
+{ margin-bottom: 1em;
+}
+
+dt.pubdef, dt.multidef
+{ color: #fff;
+padding: 2px 10px 0px 10px;
+margin-bottom: 5px;
+font-size: 18px;
+vertical-align: middle;
+overflow: hidden;
+}
+
+dt.pubdef { background-color: #0c3d6e; }
+dt.multidef { background-color: #ef9439; }
+
+.bib dd
+{ margin-bottom: 1em;
+}
+
+.bib dt
+{ float: left;
+margin-right: 1.3ex;
+}
+
+pre.code
+{ margin-left: 1.5em;
+margin-right: 1.5em;
+border: 1px dotted;
+padding-top: 5px;
+padding-left: 5px;
+padding-bottom: 5px;
+background-color: #f8f8f8;
+}
+
+div.navigate
+{ text-align: center;
+background-color: #f0f0f0;
+border: 1px dotted;
+padding: 5px;
+}
+
+div.title
+{ text-align: center;
+padding-bottom: 1em;
+font-size: 200%;
+font-weight: bold;
+}
+
+div.author
+{ text-align: center;
+font-style: italic;
+}
+
+div.abstract
+{ margin-top: 2em;
+background-color: #f0f0f0;
+border: 1px dotted;
+padding: 5px;
+margin-left: 10%; margin-right:10%;
+}
+
+div.abstract-title
+{ text-align: center;
+padding: 5px;
+font-size: 120%;
+font-weight: bold;
+}
+
+div.toc-h1
+{ font-size: 200%;
+font-weight: bold;
+}
+
+div.toc-h2
+{ font-size: 120%;
+font-weight: bold;
+margin-left: 2em;
+}
+
+div.toc-h3
+{ font-size: 100%;
+font-weight: bold;
+margin-left: 4em;
+}
+
+div.toc-h4
+{ font-size: 100%;
+margin-left: 6em;
+}
+
+span.sec-nr
+{
+}
+
+span.sec-title
+{
+}
+
+span.pred-ext
+{ font-weight: bold;
+}
+
+span.pred-tag
+{ float: right;
+padding-top: 0.2em;
+font-size: 80%;
+font-style: italic;
+color: #fff;
+}
+
+div.caption
+{ width: 80%;
+margin: auto;
+text-align:center;
+}
+
+/* Footnotes */
+.fn {
+color: red;
+font-size: 70%;
+}
+
+.fn-text, .fnp {
+position: absolute;
+top: auto;
+left: 10%;
+border: 1px solid #000;
+box-shadow: 5px 5px 5px #888;
+display: none;
+background: #fff;
+color: #000;
+margin-top: 25px;
+padding: 8px 12px;
+font-size: larger;
+}
+
+sup:hover span.fn-text
+{ display: block;
+}
+
+/* Lists */
+
+dl.latex
+{ margin-top: 1ex;
+margin-bottom: 0.5ex;
+}
+
+dl.latex dl.latex dd.defbody
+{ margin-bottom: 0.5ex;
+}
+
+/* PlDoc Tags */
+
+dl.tags
+{ font-size: 90%;
+margin-left: 5ex;
+margin-top: 1ex;
+margin-bottom: 0.5ex;
+}
+
+dl.tags dt
+{ margin-left: 0pt;
+font-weight: bold;
+}
+
+dl.tags dd
+{ margin-left: 3ex;
+}
+
+td.param
+{ font-style: italic;
+font-weight: bold;
+}
+
+/* Index */
+
+dt.index-sep
+{ font-weight: bold;
+font-size: +1;
+margin-top: 1ex;
+}
+
+/* Tables */
+
+table.center
+{ margin: auto;
+}
+
+table.latex
+{ border-collapse:collapse;
+}
+
+table.latex tr
+{ vertical-align: text-top;
+}
+
+table.latex td,th
+{ padding: 2px 1em;
+}
+
+table.latex tr.hline td,th
+{ border-top: 1px solid black;
+}
+
+table.frame-box
+{ border: 2px solid black;
+}
+
+</style>
+</head>
+<body style="background:white">
+<div class="navigate"><a class="nav" href="index.html"><img src="home.gif" alt="Home"></a>
+<a class="nav" href="Contents.html"><img src="index.gif" alt="Contents"></a>
+<a class="nav" href="DocIndex.html"><img src="yellow_pages.gif" alt="Index"></a>
+<a class="nav" href="summary.html"><img src="info.gif" alt="Summary"></a>
+<a class="nav" href="settings.html"><img src="prev.gif" alt="Previous"></a>
+<a class="nav" href="strings.html"><img src="next.gif" alt="Next"></a>
+</div>
+<h2 id="sec:statistics"><a id="sec:A.52"><span class="sec-nr">A.52</span> <span class="sec-title">library(statistics): 
+Get information about resource usage</span></a></h2>
+
+<p><a id="sec:statistics"></a>
+
+<p>This library provides predicates to obtain information about resource 
+usage by your program. The predicates of this library are for human use 
+at the toplevel: information is <i>printed</i>. All predicates obtain 
+their information using public low-level primitives. These primitives 
+can be use to obtain selective statistics during execution.
+
+<dl class="latex">
+<dt class="pubdef"><span class="pred-tag">[det]</span><a id="statistics/0"><strong>statistics</strong></a></dt>
+<dd class="defbody">
+Print information about resource usage using <a class="pred" href="printmsg.html#print_message/2">print_message/2</a>.
+
+<dl class="tags">
+<dt class="tag">See also</dt>
+<dd>
+All statistics printed are obtained through <a class="pred" href="builtin-statistics.html#statistics/2">statistics/2</a>.
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span class="pred-tag">[det]</span><a id="statistics/1"><strong>statistics</strong>(<var>-Stats:dict</var>)</a></dt>
+<dd class="defbody">
+<var>Stats</var> is a dict representing the same information as
+<a class="pred" href="statistics.html#statistics/0">statistics/0</a>. 
+This convience function is primarily intended to pass statistical 
+information to e.g., a web client. Time critical code that wishes to 
+collect statistics typically only need a small subset and should use <a class="pred" href="builtin-statistics.html#statistics/2">statistics/2</a> 
+to obtain exactly the data they need.</dd>
+<dt class="pubdef"><span class="pred-tag">[nondet]</span><a id="thread_statistics/2"><strong>thread_statistics</strong>(<var>?Thread, 
+-Stats:dict</var>)</a></dt>
+<dd class="defbody">
+Obtain statistical information about a single thread. Fails silently of 
+the <var>Thread</var> is no longer alive.
+<table class="arglist">
+<tr><td><var>Stats</var> </td><td>is a dict containing status, time and 
+stack-size information about <var>Thread</var>. </td></tr>
+</table>
+</dd>
+<dt class="pubdef"><span class="pred-tag">[nondet]</span><a id="time/1"><strong>time</strong>(<var>:Goal</var>)</a></dt>
+<dd class="defbody">
+Execute <var>Goal</var>, reporting statistics to the user. If <var>Goal</var> 
+succeeds non-deterministically, retrying reports the statistics for 
+providing the next answer.
+
+<p>Note that is no portable way to get thread-specific CPU time. 
+SWI-Prolog has implementations for Linux, Windows and MacOS. The 
+automatic detection may work on some other operating systems.
+
+<dl class="tags">
+<dt class="mtag">See also</dt>
+<dd>
+- <a class="pred" href="builtin-statistics.html#statistics/2">statistics/2</a> 
+for obtaining statistics in your program and understanding the reported 
+values. <br>
+- <a class="pred" href="statistics.html#call_time/2">call_time/2</a>, <a class="pred" href="statistics.html#call_time/3">call_time/3</a> 
+to obtain the timing in a dict.
+</dd>
+<dt class="tag">bug</dt>
+<dd>
+Inference statistics are often a few off.
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><a id="call_time/2"><strong>call_time</strong>(<var>:Goal, 
+-Time:dict</var>)</a></dt>
+<dt class="pubdef"><a id="call_time/3"><strong>call_time</strong>(<var>:Goal, 
+-Time:dict, -Result</var>)</a></dt>
+<dd class="defbody">
+Call <var>Goal</var> as <a class="pred" href="metacall.html#call/1">call/1</a>, 
+unifying <var>Time</var> with a dict that provides information on the 
+resource usage. If <var>Goal</var> succeeds with a choice point, 
+backtracking reports the time used to find the <i>next answer</i>, 
+failure or exception. If <var>Goal</var> succeeds deterministically no 
+choice point is left open. Currently <var>Time</var> contains the keys 
+below. Future versions may provide additional keys.
+
+<p>
+<ul class="compact">
+<li>wall:Seconds
+<li>cpu:Seconds
+<li>inferences:Count
+</ul>
+
+<p><a class="pred" href="statistics.html#call_time/2">call_time/2</a> is 
+defined as below. Note that for <a class="pred" href="statistics.html#call_time/2">call_time/2</a> 
+the time is only available if <var>Goal</var> succeeds.
+
+<pre class="code">
+call_time(Goal, Time) :-
+    call_time(Goal, Time, Result),
+    call(Result).
+</pre>
+
+<table class="arglist">
+<tr><td><var>Result</var> </td><td>is one of <code>true</code>, <code>false</code> 
+or <code>throw(E)</code>, depending on whether or not the goal succeeded 
+or raised an exception. Note that
+<var>Result</var> may be called using <a class="pred" href="metacall.html#call/1">call/1</a> 
+to propagate the failure or exception. </td></tr>
+</table>
+</dd>
+</dl>
+
+<p></body></html>
