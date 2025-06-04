@@ -177,7 +177,7 @@ void GeneralTTSThread::SynthesizeStream()
 				}
 
 				PreviousBytes = BytesReceived;
-				Sleep(100);
+				//Sleep(100);
 			}
 		});
 

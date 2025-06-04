@@ -1,0 +1,400 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+<title>SWI-Prolog 9.2.9 Reference Manual: Section A.25</title><link rel="home" href="index.html">
+<link rel="contents" href="Contents.html">
+<link rel="index" href="DocIndex.html">
+<link rel="summary" href="summary.html">
+<link rel="previous" href="lists.html">
+<link rel="next" href="main.html">
+
+<style type="text/css">
+
+/* Style sheet for SWI-Prolog latex2html
+*/
+
+dd.defbody
+{ margin-bottom: 1em;
+}
+
+dt.pubdef, dt.multidef
+{ color: #fff;
+padding: 2px 10px 0px 10px;
+margin-bottom: 5px;
+font-size: 18px;
+vertical-align: middle;
+overflow: hidden;
+}
+
+dt.pubdef { background-color: #0c3d6e; }
+dt.multidef { background-color: #ef9439; }
+
+.bib dd
+{ margin-bottom: 1em;
+}
+
+.bib dt
+{ float: left;
+margin-right: 1.3ex;
+}
+
+pre.code
+{ margin-left: 1.5em;
+margin-right: 1.5em;
+border: 1px dotted;
+padding-top: 5px;
+padding-left: 5px;
+padding-bottom: 5px;
+background-color: #f8f8f8;
+}
+
+div.navigate
+{ text-align: center;
+background-color: #f0f0f0;
+border: 1px dotted;
+padding: 5px;
+}
+
+div.title
+{ text-align: center;
+padding-bottom: 1em;
+font-size: 200%;
+font-weight: bold;
+}
+
+div.author
+{ text-align: center;
+font-style: italic;
+}
+
+div.abstract
+{ margin-top: 2em;
+background-color: #f0f0f0;
+border: 1px dotted;
+padding: 5px;
+margin-left: 10%; margin-right:10%;
+}
+
+div.abstract-title
+{ text-align: center;
+padding: 5px;
+font-size: 120%;
+font-weight: bold;
+}
+
+div.toc-h1
+{ font-size: 200%;
+font-weight: bold;
+}
+
+div.toc-h2
+{ font-size: 120%;
+font-weight: bold;
+margin-left: 2em;
+}
+
+div.toc-h3
+{ font-size: 100%;
+font-weight: bold;
+margin-left: 4em;
+}
+
+div.toc-h4
+{ font-size: 100%;
+margin-left: 6em;
+}
+
+span.sec-nr
+{
+}
+
+span.sec-title
+{
+}
+
+span.pred-ext
+{ font-weight: bold;
+}
+
+span.pred-tag
+{ float: right;
+padding-top: 0.2em;
+font-size: 80%;
+font-style: italic;
+color: #fff;
+}
+
+div.caption
+{ width: 80%;
+margin: auto;
+text-align:center;
+}
+
+/* Footnotes */
+.fn {
+color: red;
+font-size: 70%;
+}
+
+.fn-text, .fnp {
+position: absolute;
+top: auto;
+left: 10%;
+border: 1px solid #000;
+box-shadow: 5px 5px 5px #888;
+display: none;
+background: #fff;
+color: #000;
+margin-top: 25px;
+padding: 8px 12px;
+font-size: larger;
+}
+
+sup:hover span.fn-text
+{ display: block;
+}
+
+/* Lists */
+
+dl.latex
+{ margin-top: 1ex;
+margin-bottom: 0.5ex;
+}
+
+dl.latex dl.latex dd.defbody
+{ margin-bottom: 0.5ex;
+}
+
+/* PlDoc Tags */
+
+dl.tags
+{ font-size: 90%;
+margin-left: 5ex;
+margin-top: 1ex;
+margin-bottom: 0.5ex;
+}
+
+dl.tags dt
+{ margin-left: 0pt;
+font-weight: bold;
+}
+
+dl.tags dd
+{ margin-left: 3ex;
+}
+
+td.param
+{ font-style: italic;
+font-weight: bold;
+}
+
+/* Index */
+
+dt.index-sep
+{ font-weight: bold;
+font-size: +1;
+margin-top: 1ex;
+}
+
+/* Tables */
+
+table.center
+{ margin: auto;
+}
+
+table.latex
+{ border-collapse:collapse;
+}
+
+table.latex tr
+{ vertical-align: text-top;
+}
+
+table.latex td,th
+{ padding: 2px 1em;
+}
+
+table.latex tr.hline td,th
+{ border-top: 1px solid black;
+}
+
+table.frame-box
+{ border: 2px solid black;
+}
+
+</style>
+</head>
+<body style="background:white">
+<div class="navigate"><a class="nav" href="index.html"><img src="home.gif" alt="Home"></a>
+<a class="nav" href="Contents.html"><img src="index.gif" alt="Contents"></a>
+<a class="nav" href="DocIndex.html"><img src="yellow_pages.gif" alt="Index"></a>
+<a class="nav" href="summary.html"><img src="info.gif" alt="Summary"></a>
+<a class="nav" href="lists.html"><img src="prev.gif" alt="Previous"></a>
+<a class="nav" href="main.html"><img src="next.gif" alt="Next"></a>
+</div>
+<h2 id="sec:macros"><a id="sec:A.25"><span class="sec-nr">A.25</span> <span class="sec-title">library(macros): 
+Macro expansion</span></a></h2>
+
+<p><a id="sec:macros"></a>
+
+<p>This library defines a macro expansion mechanism that operates on 
+arbitrary terms. Unlike <a class="pred" href="consulting.html#term_expansion/2">term_expansion/2</a> 
+and <a class="pred" href="consulting.html#goal_expansion/2">goal_expansion/2</a>, 
+a term is explicitly designed for expansion using the term <code>#(Macro)</code>. 
+Macros are first of all intended to deal with compile time constants. 
+They can also be used to construct terms at compile time.
+
+<p><h3 id="sec:macros-define-and-use"><a id="sec:A.25.1"><span class="sec-nr">A.25.1</span> <span class="sec-title">Defining 
+and using macros</span></a></h3>
+
+<p><a id="sec:macros-define-and-use"></a>
+
+<p>Macros are defined for the current module using one of the three 
+constructs below.
+
+<pre class="code">
+#define(Macro, Replacement).
+#define(Macro, Replacement) :- Code.
+#import(ModuleFile).
+</pre>
+
+<p><var>Macro</var> is a <i>callable term</i>, not being <code>define(_,_)</code>, 
+or <code>import(_)</code>.
+<var>Replacement</var> is an arbitrary Prolog term. <var>Code</var> is a 
+Prolog <i>body term</i> that <i>must</i> succeed and can be used to 
+dynamically generate (parts of) <var>Replacement</var>.
+
+<p>The <code>#import(ModuleFile)</code> definition makes all macros from 
+the given module available for expansion in the module it appears. 
+Normally this shall be appear after local macro definitions.
+
+<p>A macro is called using the term <code>#(Macro)</code>. <code>#</code> 
+is defined as a low-priority (10) prefix operator to allow for <code>#Macro</code>. 
+Macros can appear at the following places:
+
+<p>
+<ul class="latex">
+<li>An entire sentence (clause)
+<li>Any argument of a compound. This implies also the head and body of a 
+clause.
+<li>Anywhere in a list, including as the tail of a list
+<li>As a value for a dict key or as a dict key name.
+</ul>
+
+<p>Macros can <b>not</b> appear as name of a compound or tag of a dict. 
+A term
+<code>#Macro</code> appearing in one of the allowed places <b>must</b> 
+have a matching macro defined, i.e., <code>#Macro</code> is <b>always</b> 
+expanded. An error is emitted if the expansion fails. Macro expansion is 
+applied recursively and thus, macros may be passed to macro arguments 
+and macro expansion may use other macros.
+
+<p>Macros are matched to terms using <i>Single Sided Unification</i> 
+(SSU), implemented using <code>Head =&gt; Body</code> rules. This 
+implies that the matching never instantiates variables in the term that 
+is being expanded.
+
+<p>Below are some examples. The first line defines the macro and the 
+indented line after show example usage of the macro.
+
+<pre class="code">
+#define(max_width, 100).
+    W &lt; #max_width
+
+#define(calc(Expr), Value) :- Value is Expr.
+    fact(#calc(#max_width*2)).
+
+#define(pt(X,Y), point{x:X, y:Y}).
+    reply_json(json{type:polygon,
+                    points:[#pt(0,0), #pt(0,5), #pt(5,0)]}).
+</pre>
+
+<p>Macro expansion expands terms <code>#(Callable)</code>. If the 
+argument to the
+#-term is not a <code>callable</code>, the #-term is not modified. This 
+notably allows for <code>#(Var)</code> as used by <code>library(clpfd)</code> 
+to indicate that a variable is constraint to be an (<code>clp(fd)</code>) 
+integer.
+
+<p><h3 id="sec:macros-implementation"><a id="sec:A.25.2"><span class="sec-nr">A.25.2</span> <span class="sec-title">Implementation 
+details</span></a></h3>
+
+<p><a id="sec:macros-implementation"></a>
+
+<p>A macro <code>#define(Macro, Expanded) :- Body.</code> is, after some 
+basic sanity checks, translated into a rule
+
+<pre class="code">
+'$macro'(Macro, Var), Body =&gt; Var = Expanded.
+</pre>
+
+<p>The <code>#import(File)</code> is translated into <code>:- use_module(File, [])</code> 
+and a
+<i>link clause</i> that links the macro expansion from the module 
+defined in
+<var>File</var> to the current module.
+
+<p>Macro expansion is realised by creating a clause for <a class="pred" href="consulting.html#term_expansion/2">term_expansion/2</a> 
+in the current module. This clause results from expanding the first
+<code>#define</code> or <code>#import</code> definition. Thus, if macros 
+are defined before any other local definition for <a class="pred" href="consulting.html#term_expansion/2">term_expansion/2</a> 
+it is executed as the first step. The macro expansion fails if no macros 
+were encounted in the term, allowing other term_expansion rules local to 
+the module to take effect. In other words, a term holding macros is not 
+subject to any other term expansion local to the module. It is subject 
+to term expansion defined in module <code>user</code> and <code>system</code> 
+that is performed after the local expansion is completed.
+
+<p><h3 id="sec:macros-predicates"><a id="sec:A.25.3"><span class="sec-nr">A.25.3</span> <span class="sec-title">Predicates</span></a></h3>
+
+<p><a id="sec:macros-predicates"></a>
+
+<dl class="latex">
+<dt class="pubdef"><span class="pred-tag">[semidet]</span><a id="include_macros/3"><strong>include_macros</strong>(<var>+M, 
++Macro, -Expanded</var>)</a></dt>
+<dd class="defbody">
+Include macros from another module. This predicate is a helper for
+<code>#import(File)</code>. It calls&rsquo;$macro&rsquo;/2 in <var>M</var>, 
+but fails silently in case <var>Macro</var> is not defined in <var>M</var> 
+as it may be defined in another imported macro file or further down in 
+the current file.</dd>
+<dt class="pubdef"><span class="pred-tag">[semidet]</span><a id="expand_macros/5"><strong>expand_macros</strong>(<var>+Module, 
++TermIn, -TermOut, +PosIn, -PosOut</var>)</a></dt>
+<dd class="defbody">
+Perform macro expansion on <var>TermIn</var> with layout <var>PosIn</var> 
+to produce
+<var>TermOut</var> with layout <var>PosOut</var>. The transformation is 
+performed if the current load context module is <var>Module</var> (see <a class="pred" href="consulting.html#prolog_load_context/2">prolog_load_context/2</a>).
+
+<p>This predicate is not intended for direct usage.</dd>
+<dt class="pubdef"><span class="pred-tag">[det]</span><a id="macro_position/1"><strong>macro_position</strong>(<var>-Position</var>)</a></dt>
+<dd class="defbody">
+True when <var>Position</var> is the position of the macro. <var>Position</var> 
+is a term
+<code>File:Line:LinePos</code>. If <var>File</var> is unknown it is 
+unified with <code>-</code>. If Line and/or LinePos are unknown they are 
+unified with 0. This predicate can be used in the body of a macro 
+definition to provide the source location. The example below defines <code>#pp(Var)</code> 
+to print a variable together with the variable name and source location.
+
+<pre class="code">
+#define(pp(Var), print_message(debug, dump_var(Pos, Name, Var))) :-
+    (   var_property(Var, name(Name))
+    -&gt;  true
+    ;   Name = 'Var'
+    ),
+    macro_position(Pos).
+
+:- multifile prolog:message//1.
+prolog:message(dump_var(Pos,Name,Var)) --&gt;
+    [ url(Pos), ': ',
+      ansi([fg(magenta),bold], '~w', [Name]), ' = ',
+      ansi(code, '~p', [Var])
+    ].
+</pre>
+
+<p></dd>
+</dl>
+
+<p></body></html>

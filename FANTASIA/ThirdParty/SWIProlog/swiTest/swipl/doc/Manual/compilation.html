@@ -1,0 +1,611 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+<title>SWI-Prolog 9.2.9 Reference Manual: Section 2.11</title><link rel="home" href="index.html">
+<link rel="contents" href="Contents.html">
+<link rel="index" href="DocIndex.html">
+<link rel="summary" href="summary.html">
+<link rel="previous" href="debugoverview.html">
+<link rel="next" href="flags.html">
+
+<style type="text/css">
+
+/* Style sheet for SWI-Prolog latex2html
+*/
+
+dd.defbody
+{ margin-bottom: 1em;
+}
+
+dt.pubdef, dt.multidef
+{ color: #fff;
+padding: 2px 10px 0px 10px;
+margin-bottom: 5px;
+font-size: 18px;
+vertical-align: middle;
+overflow: hidden;
+}
+
+dt.pubdef { background-color: #0c3d6e; }
+dt.multidef { background-color: #ef9439; }
+
+.bib dd
+{ margin-bottom: 1em;
+}
+
+.bib dt
+{ float: left;
+margin-right: 1.3ex;
+}
+
+pre.code
+{ margin-left: 1.5em;
+margin-right: 1.5em;
+border: 1px dotted;
+padding-top: 5px;
+padding-left: 5px;
+padding-bottom: 5px;
+background-color: #f8f8f8;
+}
+
+div.navigate
+{ text-align: center;
+background-color: #f0f0f0;
+border: 1px dotted;
+padding: 5px;
+}
+
+div.title
+{ text-align: center;
+padding-bottom: 1em;
+font-size: 200%;
+font-weight: bold;
+}
+
+div.author
+{ text-align: center;
+font-style: italic;
+}
+
+div.abstract
+{ margin-top: 2em;
+background-color: #f0f0f0;
+border: 1px dotted;
+padding: 5px;
+margin-left: 10%; margin-right:10%;
+}
+
+div.abstract-title
+{ text-align: center;
+padding: 5px;
+font-size: 120%;
+font-weight: bold;
+}
+
+div.toc-h1
+{ font-size: 200%;
+font-weight: bold;
+}
+
+div.toc-h2
+{ font-size: 120%;
+font-weight: bold;
+margin-left: 2em;
+}
+
+div.toc-h3
+{ font-size: 100%;
+font-weight: bold;
+margin-left: 4em;
+}
+
+div.toc-h4
+{ font-size: 100%;
+margin-left: 6em;
+}
+
+span.sec-nr
+{
+}
+
+span.sec-title
+{
+}
+
+span.pred-ext
+{ font-weight: bold;
+}
+
+span.pred-tag
+{ float: right;
+padding-top: 0.2em;
+font-size: 80%;
+font-style: italic;
+color: #fff;
+}
+
+div.caption
+{ width: 80%;
+margin: auto;
+text-align:center;
+}
+
+/* Footnotes */
+.fn {
+color: red;
+font-size: 70%;
+}
+
+.fn-text, .fnp {
+position: absolute;
+top: auto;
+left: 10%;
+border: 1px solid #000;
+box-shadow: 5px 5px 5px #888;
+display: none;
+background: #fff;
+color: #000;
+margin-top: 25px;
+padding: 8px 12px;
+font-size: larger;
+}
+
+sup:hover span.fn-text
+{ display: block;
+}
+
+/* Lists */
+
+dl.latex
+{ margin-top: 1ex;
+margin-bottom: 0.5ex;
+}
+
+dl.latex dl.latex dd.defbody
+{ margin-bottom: 0.5ex;
+}
+
+/* PlDoc Tags */
+
+dl.tags
+{ font-size: 90%;
+margin-left: 5ex;
+margin-top: 1ex;
+margin-bottom: 0.5ex;
+}
+
+dl.tags dt
+{ margin-left: 0pt;
+font-weight: bold;
+}
+
+dl.tags dd
+{ margin-left: 3ex;
+}
+
+td.param
+{ font-style: italic;
+font-weight: bold;
+}
+
+/* Index */
+
+dt.index-sep
+{ font-weight: bold;
+font-size: +1;
+margin-top: 1ex;
+}
+
+/* Tables */
+
+table.center
+{ margin: auto;
+}
+
+table.latex
+{ border-collapse:collapse;
+}
+
+table.latex tr
+{ vertical-align: text-top;
+}
+
+table.latex td,th
+{ padding: 2px 1em;
+}
+
+table.latex tr.hline td,th
+{ border-top: 1px solid black;
+}
+
+table.frame-box
+{ border: 2px solid black;
+}
+
+</style>
+</head>
+<body style="background:white">
+<div class="navigate"><a class="nav" href="index.html"><img src="home.gif" alt="Home"></a>
+<a class="nav" href="Contents.html"><img src="index.gif" alt="Contents"></a>
+<a class="nav" href="DocIndex.html"><img src="yellow_pages.gif" alt="Index"></a>
+<a class="nav" href="summary.html"><img src="info.gif" alt="Summary"></a>
+<a class="nav" href="debugoverview.html"><img src="prev.gif" alt="Previous"></a>
+<a class="nav" href="flags.html"><img src="next.gif" alt="Next"></a>
+</div>
+<h2 id="sec:compilation"><a id="sec:2.11"><span class="sec-nr">2.11</span> <span class="sec-title">Loading 
+and running projects</span></a></h2>
+
+<a id="sec:compilation"></a>
+
+<p>Most Prolog programs are split over multiple files organized in a 
+directory and optionally multiple subdirectories. Typically all files 
+are Prolog <em>module</em> files. See <a class="sec" href="modules.html#sec:6">section 
+6</a>. Typically, the directory contains a file, often called <code>load.pl</code>, 
+that loads all other files (modules) using <a id="idx:usemodule12:60"></a><a class="pred" href="import.html#use_module/1">use_module/[1,2]</a> 
+or, for projects that do not use modules, using <a id="idx:ensureloaded1:61"></a><a class="pred" href="consulting.html#ensure_loaded/1">ensure_loaded/1</a>.
+
+<p>If the project is an application (rather than a library), there are 
+several ways to start it. One option is by using the commandline option <strong>-g</strong> <var>goal</var>. 
+The classical Prolog way is by using an <a id="idx:initialization1:62"></a><a class="pred" href="consulting.html#initialization/1">initialization/1</a> <em>directive</em>. 
+Th problem with the latter is that such directives are both used for 
+runtime initialization in modules and starting the application while it 
+is hard to control the order in which they are executed. For this 
+reason, SWI-Prolog introduced <a id="idx:initialization2:63"></a><a class="pred" href="consulting.html#initialization/2">initialization/2</a>, 
+adding an argument that specifies the role and (indirectly) the order of 
+initialization. The application entry point is now declared using
+
+<pre class="code">
+:- initialization(start, main).
+
+start :-
+    ...
+</pre>
+
+<p>Using these conventions we may run the application using this command 
+line, where <var>option ...</var> are Prolog options to control e.g., 
+memory limits. Typically, none are required. <var>arg ...</var> are made 
+available to the program using the Prolog flag <a class="flag" href="flags.html#flag:argv">argv</a>.
+
+<pre class="code">
+% swipl [option ...] load.pl [arg ...]
+</pre>
+
+<p>To merely load the code without running the application, provided the 
+entry point is started using the <a id="idx:initialization2:64"></a><a class="pred" href="consulting.html#initialization/2">initialization/2</a> 
+directive described above, we can use the <strong>-l</strong>. After 
+loading we can debug and/or edit the application.
+
+<pre class="code">
+% swipl [option ...] -l load.pl [arg ...]
+</pre>
+
+<p>Rather than just using start/0 as above, applications typically use <a id="idx:main0:65"></a><a class="pred" href="main.html#main/0">main/0</a> 
+from the library <code>library(main)</code>. The <a id="idx:main0:66"></a><a class="pred" href="main.html#main/0">main/0</a> 
+predicate prepares for non-development usage and calls <a id="idx:main1:67"></a><span class="pred-ext">main/1</span> 
+with the application <var>argv</var> (command line arguments). These are 
+normally processed into <em>positional arguments</em> and <em>options</em> 
+using <a id="idx:argvoptions2:68"></a><span class="pred-ext">argv_options/2</span> 
+from the same library.
+
+<p>While the above works fine when using Prolog from the commandline, it 
+is less suitable for scenarios that make it hard to control the 
+SWI-Prolog commandline which as using <b>swipl-win</b> or running Prolog 
+under some IDE such as Emacs. Loading a program that uses the above <a id="idx:initialization2:69"></a><a class="pred" href="consulting.html#initialization/2">initialization/2</a> 
+directive into the toplevel using
+
+<pre class="code">
+?- [load].
+</pre>
+
+<p>does <b>not</b> start the entry point. Opening a <code>..pl</code> 
+file using <b>swipl-win</b> does start the entry point.
+
+<p><h3 id="sec:runcomp"><a id="sec:2.11.1"><span class="sec-nr">2.11.1</span> <span class="sec-title">Running 
+an application</span></a></h3>
+
+<a id="sec:runcomp"></a>
+
+<p>There are various options if you want to make your program ready for 
+real usage. The best choice depends on whether the program is to be used 
+only on machines holding the SWI-Prolog development system, the size of 
+the program, and the operating system (Unix vs. Windows). There are four 
+options
+
+<p>
+<ul class="latex">
+<li>On Unix-like systems one can use the <em>shebang</em> magic sequence 
+to turn a Prolog source into an executable. See
+<a class="sec" href="compilation.html#sec:2.11.1.1">section 2.11.1.1</a>.
+<li>On any system you can use a <em>shell script</em> (Unix
+<b>sh</b> or Windows <b>cmd</b>) script to start the application. See <a class="sec" href="compilation.html#sec:2.11.1.2">section 
+2.11.1.2</a>.
+<li>On any system you can create a <em>saved state</em> that consists of 
+the virtual machine code and a startup sequence. Saved states can be 
+stand-alone and with some precautions they can work without SWI-Prolog 
+itself installed. They start fast, but they are big and creating a state 
+from a program that uses native code extensions and (file) resources is 
+not trivial while details depend on the OS and required resources. See <a class="sec" href="compilation.html#sec:2.11.1.3">section 
+2.11.1.3</a>.
+<li>On any system you can add a Prolog file to a designated directory 
+and allow it to be started using
+
+<pre class="code">
+swipl name [arg ...]
+</pre>
+
+<p>New commands can be added to the Prolog installation, by Prolog
+<em>packs</em>, in a user specific directory or in a system-wide 
+directory. See <a class="sec" href="compilation.html#sec:2.11.1.5">section 
+2.11.1.5</a>.
+</ul>
+
+<p><h4 id="sec:plscript"><a id="sec:2.11.1.1"><span class="sec-nr">2.11.1.1</span> <span class="sec-title">Using 
+PrologScript</span></a></h4>
+
+<a id="sec:plscript"></a>
+
+<p>A Prolog source file can be used directly as a Unix program using the 
+Unix <code>#!</code> magic start. The Unix <code>#!</code> magic is 
+allowed because if the first letter of a Prolog file is <code>#</code>, 
+the first line is treated as a comment.<sup class="fn">12<span class="fn-text">The <code>#</code>-sign 
+can be the legal start of a normal Prolog clause. In the unlikely case 
+this is required, leave the first line blank or add a header comment.</span></sup> 
+To create a Prolog script, use one of the two alternatives below as 
+first line. The first can be used to bind a script to a specific Prolog 
+installation, while the latter uses the default prolog installed in <code>$PATH</code>.
+
+<pre class="code">
+#!/path/to/swipl
+#!/usr/bin/env swipl
+</pre>
+
+<p>The interpretation of arguments to the executable in the
+<em>HashBang</em> line differs between Unix-derived systems. For 
+portability, the <code>#!</code> must be followed immediately with an 
+absolute path to the executable and should have none or one argument. 
+Neither the executable path, nor the argument shall use quotes or 
+spaces. When started this way, the Prolog flag <a class="flag" href="flags.html#flag:argv">argv</a> 
+contains the command line arguments that follow the script invocation.
+
+<p>Starting with version 7.5.8, <a id="idx:initialization2:70"></a><a class="pred" href="consulting.html#initialization/2">initialization/2</a> 
+support the <var>When</var> options <code>program</code> and <code>main</code>, 
+allowing for the following definition of a Prolog script that evaluates 
+an arithmetic expression on the command line. Note that <a id="idx:main0:71"></a><a class="pred" href="main.html#main/0">main/0</a> 
+is defined lib the library
+<code>library(main)</code>. It calls <a id="idx:main1:72"></a><span class="pred-ext">main/1</span> 
+with the command line arguments after disabling signal handling.
+
+<pre class="code">
+#!/usr/bin/env swipl
+
+:- initialization(main, main).
+
+main(Argv) :-
+    atomic_list_concat(Argv, ' ', SingleArg),
+    term_to_atom(Term, SingleArg),
+    Val is Term,
+    format('~w~n', [Val]).
+</pre>
+
+<p>And here are two example runs:
+
+<pre class="code">
+% ./eval 1+2
+3
+% ./eval foo
+ERROR: is/2: Arithmetic: `foo/0' is not a function
+</pre>
+
+<p>Prolog script may be launched for debugging or inspection purposes 
+using the <strong>-l</strong> or <strong>-t</strong>. For example,
+<strong>-l</strong> merely loads the script, ignoring <code>main</code> 
+and
+<code>program</code> initialization.
+
+<pre class="code">
+swipl -l eval 1+1
+&lt;banner&gt;
+
+?- main.
+2
+true.
+
+?-
+</pre>
+
+<p>We can also force the program to enter the interactive toplevel after 
+the application is completed using <code>-t prolog</code>:
+
+<pre class="code">
+swipl -t prolog eval 1+1
+2
+?-
+</pre>
+
+<p>The Windows version simply ignores the <code>#!</code> line.<sup class="fn">13<span class="fn-text">Older 
+versions extracted command line arguments from the <em>HashBang</em> 
+line. As of version 5.9 all relevant setup can be achieved using <em>directives</em>. 
+Due to the compatibility issues around <em>HashBang</em> line 
+processing, we decided to remove it completely.</span></sup>
+
+<p><h4 id="sec:shellscript"><a id="sec:2.11.1.2"><span class="sec-nr">2.11.1.2</span> <span class="sec-title">Creating 
+a shell script</span></a></h4>
+
+<a id="sec:shellscript"></a>
+
+<p>With the introduction of <em>PrologScript</em> (see <a class="sec" href="compilation.html#sec:2.11.1.1">section 
+2.11.1.1</a>), using shell scripts as explained in this section has 
+become redundant for most applications.
+
+<p>Especially on Unix systems and not-too-large applications, writing a 
+shell script that simply loads your application and calls the entry 
+point is often a good choice. A skeleton for the script is given below, 
+followed by the Prolog code to obtain the program arguments. See library <code>library(main)</code> 
+and <a id="idx:argvoptions3:73"></a><a class="pred" href="main.html#argv_options/3">argv_options/3</a> 
+for details.
+
+<pre class="code">
+#!/bin/sh
+
+base=&lt;absolute-path-to-source&gt;
+SWIPL=swipl
+
+exec $SWIPL "$base/load.pl" -- "$@"
+</pre>
+
+<pre class="code">
+:- use_module(library(main)).
+:- initialization(main,main).
+
+main(Argv) :-
+    argv_options(Argv, Positional, Options),
+    go(Positional, Options).
+
+go(Positional, Options) :-
+    ...
+</pre>
+
+<p>On Windows systems, similar behaviour can be achieved by creating a 
+shortcut to Prolog, passing the proper options or writing a <code>.bat</code> 
+file.
+
+<p><h4 id="sec:makestate"><a id="sec:2.11.1.3"><span class="sec-nr">2.11.1.3</span> <span class="sec-title">Creating 
+a saved state</span></a></h4>
+
+<a id="sec:makestate"></a>
+
+<p>For larger programs, as well as for programs that are required to run 
+on systems that do not have the SWI-Prolog development system installed, 
+creating a saved state is the best solution. A saved state is created 
+using <a id="idx:qsaveprogram12:74"></a><a class="pred" href="saved-states.html#qsave_program/1">qsave_program/[1,2]</a> 
+or the <strong>-c</strong> command line option. A saved state is a file 
+containing machine-independent<sup class="fn">14<span class="fn-text">The 
+saved state does not depend on the CPU instruction set or endianness. 
+Saved states for 32- and 64-bits are not compatible. Typically, saved 
+states only run on the same version of Prolog on which they have been 
+created.</span></sup> intermediate code in a format dedicated for fast 
+loading. Optionally, the emulator may be integrated in the saved state, 
+creating a single file, but machine-dependent, executable. This process 
+is described in <a class="sec" href="runtime.html#sec:14">chapter 14</a>.
+
+<p><h4 id="sec:cmdlinecomp"><a id="sec:2.11.1.4"><span class="sec-nr">2.11.1.4</span> <span class="sec-title">Compilation 
+using the -c command line option</span></a></h4>
+
+<a id="sec:cmdlinecomp"></a>
+
+<p>This mechanism loads a series of Prolog source files and then creates 
+a saved state as <a id="idx:qsaveprogram2:75"></a><a class="pred" href="saved-states.html#qsave_program/2">qsave_program/2</a> 
+does. The command syntax is:
+
+<pre class="code">
+% swipl [option ...] [-o output] -c file.pl ...
+</pre>
+
+<p>The <var>options</var> argument are options to <a id="idx:qsaveprogram2:76"></a><a class="pred" href="saved-states.html#qsave_program/2">qsave_program/2</a> 
+written in the format below. The option names and their values are 
+described with
+<a id="idx:qsaveprogram2:77"></a><a class="pred" href="saved-states.html#qsave_program/2">qsave_program/2</a>.
+<blockquote>
+<code>--</code><em>option-name</em><code>=</code><em>option-value
+</em></blockquote>
+
+<p>For example, to create a stand-alone executable that starts by 
+executing main/0 and for which the source is loaded through
+<code>load.pl</code>, use the command
+
+<pre class="code">
+% swipl --goal=main --stand_alone=true -o myprog -c load.pl
+</pre>
+
+<p>This performs exactly the same as executing
+
+<pre class="code">
+% swipl
+&lt;banner&gt;
+
+?- [load].
+?- qsave_program(myprog,
+                 [ goal(main),
+                   stand_alone(true)
+                 ]).
+?- halt.
+</pre>
+
+<p><h4 id="sec:swipl-app"><a id="sec:2.11.1.5"><span class="sec-nr">2.11.1.5</span> <span class="sec-title">SWI-Prolog 
+app scripts</span></a></h4>
+
+<a id="sec:swipl-app"></a>
+
+<p>As of version 9.1.18, SWI-Prolog allows starting an application using 
+the command below.
+
+<pre class="code">
+swipl [option ...] [path:]name [arg ...]
+</pre>
+
+<p>This command line first processes Prolog options described in
+<a class="sec" href="cmdline.html#sec:2.4">section 2.4</a>. Note that 
+most standard Prolog commandline options are not relevant. The <strong>-f</strong> 
+defaults to <code>none</code>, which implies that the user init file is 
+by default not loaded. If an application wishes to load the user init 
+file, it should load
+<code>user_app_config(init)</code> if this file exists (see
+<a id="idx:existssource1:78"></a><a class="pred" href="consulting.html#exists_source/1">exists_source/1</a>).
+
+<p>Next, it locates <code>path(name)</code> using SWI-Prolog's file 
+search mechanism defined by <a id="idx:absolutefilename3:79"></a><a class="pred" href="files.html#absolute_file_name/3">absolute_file_name/3</a>. 
+After loading this file it finds the last goal registered for <code>main</code> 
+using <a id="idx:initialization2:80"></a><a class="pred" href="consulting.html#initialization/2">initialization/2</a> 
+as described in <a class="sec" href="compilation.html#sec:2.11">section 
+2.11</a> - if there is no initization directive for <code>main</code>, 
+the program terminates with an error. By default, the application 
+terminates after the entry point terminates. The entry point may enable 
+the interactive Prolog REPL loop by calling
+<a id="idx:clienabledevelopmentsystem0:81"></a><a class="pred" href="main.html#cli_enable_development_system/0">cli_enable_development_system/0</a>. 
+Other forms of the <a id="idx:initialization2:82"></a><a class="pred" href="consulting.html#initialization/2">initialization/2</a> 
+directive are also allowed, in addition to&lsquo;main`.
+
+<p>All command line options after <code>[path:]name</code> are 
+accessible in the Prolog flag <a class="flag" href="flags.html#flag:argv">argv</a>.
+
+<p>The optional <var>path</var> defaults to <code>app</code>. By 
+default, apps are searched in the directories below. See <a id="idx:filesearchpath2:83"></a><a class="pred" href="consulting.html#file_search_path/2">file_search_path/2</a> 
+for details.
+
+<p>
+<ol class="latex">
+<li>The <code>app</code> directory of the SWI-Prolog installation
+<li>User and site configuration. On POSIX systems using the XDG file 
+name conventions, this is normally <code> /.local/share/swi-prolog/app/</code> 
+and <code>/usr/share/swi-prolog/app</code>.
+<li>The <code>app</code> directory of a Prolog <em>pack</em>.
+</ol>
+
+<p>The following apps are provided by the installation
+
+<dl class="latex">
+<dt><b>app</b></dt>
+<dd class="defbody">
+Print information on installed apps. For example, to list all available 
+apps, run
+
+<pre class="code">
+swipl app list
+</pre>
+
+</dd>
+<dt><b>pack</b></dt>
+<dd class="defbody">
+Command line driven management of Prolog packs. This is a front-end to 
+the Prolog library <code>library(prolog_pack)</code>. For example, to 
+find packages related to <i>type</i>, use the command below.
+
+<pre class="code">
+swipl pack find type
+</pre>
+
+<p></dd>
+</dl>
+
+<p></body></html>
