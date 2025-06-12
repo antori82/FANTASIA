@@ -162,7 +162,6 @@ void USWIPrologComponent::startProlog() {
 
 	// Concatenazione “miopia-zero”:
 	std::string HomePath = "SWI_HOME_DIR=" + ProjectPath + SWIPath;
-	std::string PATHvar = "PATH=" + ProjectPath + SWIPath;
 	std::string DLLDir = ProjectPathReverse + SWIPathReverse + "\\bin";
 
 	if (_putenv(HomePath.c_str()) != 0)//da modificare per renderla atomica
@@ -216,48 +215,6 @@ void USWIPrologComponent::startProlog() {
 
 	UE_LOG(LogTemp, Warning, TEXT("Prolog initalized correctly"));//funziona fino ad ora
 
-
-	
-
-	//old code
-	
-	//int argc = 2;
-
-	//FString RelativePath = FPaths::ProjectDir();
-	//RelativePath = FPaths::GetPath(RelativePath + "Plugins/FANTASIA/FANTASIA/Binaries/Win64/libswipl.dll");
-	//FString RelativePath = FPaths::GetPath("C:\\Users\\Alex\\source\\repos\\SWIPrologPRova\\SWIPrologPRova\\bin");
-	//FString FullPath = IFileManager::Get().ConvertToAbsolutePathForExternalAppForRead(*RelativePath);
-	//char* result = TCHAR_TO_ANSI(*FullPath);
-
-
-
-	//FString FullPath = FString("-home=" + RelativePath);
-
-	/*
-	av[1] = (char*)"-nosignals";*/
-
-	//FCoreDelegates::OnPostEngineInit.AddUObject(this, &USWIPrologComponent::InitHRI);
-
-
-
-	
-	/*if (!PL_initialise(argc, av)) {
-		PL_halt(1);
-		UE_LOG(LogTemp, Warning, TEXT("failed to initialise prolog"));
-	}
-	else {
-		UE_LOG(LogTemp, Display, TEXT("SWI-Prolog inizializzato correttamente"));
-		resFolderPath = FPaths::ConvertRelativePathToFull(FPaths::ProjectDir());
-		resFolderPath = resFolderPath + "Resources/";
-		char* resPathString = TCHAR_TO_ANSI(*resFolderPath);
-
-		PlTermv dir(2);
-		dir[1].unify_atom(PlAtom(resPathString));
-		PlCall("working_directory", dir);
-		
-		UE_LOG(LogTemp, Display, TEXT("prolog initialised succesfully"));
-		UE_LOG(LogTemp, Display, TEXT("path for prolog: %s, working directory: %s"), *FullPath, *resFolderPath);
-	}*/
 }
 
 
