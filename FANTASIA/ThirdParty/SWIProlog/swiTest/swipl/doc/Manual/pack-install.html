@@ -1,0 +1,354 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+<title>SWI-Prolog 9.2.9 Reference Manual: Section 15.1</title><link rel="home" href="index.html">
+<link rel="contents" href="Contents.html">
+<link rel="index" href="DocIndex.html">
+<link rel="summary" href="summary.html">
+<link rel="previous" href="packs.html">
+<link rel="next" href="pack-attach.html">
+
+<style type="text/css">
+
+/* Style sheet for SWI-Prolog latex2html
+*/
+
+dd.defbody
+{ margin-bottom: 1em;
+}
+
+dt.pubdef, dt.multidef
+{ color: #fff;
+padding: 2px 10px 0px 10px;
+margin-bottom: 5px;
+font-size: 18px;
+vertical-align: middle;
+overflow: hidden;
+}
+
+dt.pubdef { background-color: #0c3d6e; }
+dt.multidef { background-color: #ef9439; }
+
+.bib dd
+{ margin-bottom: 1em;
+}
+
+.bib dt
+{ float: left;
+margin-right: 1.3ex;
+}
+
+pre.code
+{ margin-left: 1.5em;
+margin-right: 1.5em;
+border: 1px dotted;
+padding-top: 5px;
+padding-left: 5px;
+padding-bottom: 5px;
+background-color: #f8f8f8;
+}
+
+div.navigate
+{ text-align: center;
+background-color: #f0f0f0;
+border: 1px dotted;
+padding: 5px;
+}
+
+div.title
+{ text-align: center;
+padding-bottom: 1em;
+font-size: 200%;
+font-weight: bold;
+}
+
+div.author
+{ text-align: center;
+font-style: italic;
+}
+
+div.abstract
+{ margin-top: 2em;
+background-color: #f0f0f0;
+border: 1px dotted;
+padding: 5px;
+margin-left: 10%; margin-right:10%;
+}
+
+div.abstract-title
+{ text-align: center;
+padding: 5px;
+font-size: 120%;
+font-weight: bold;
+}
+
+div.toc-h1
+{ font-size: 200%;
+font-weight: bold;
+}
+
+div.toc-h2
+{ font-size: 120%;
+font-weight: bold;
+margin-left: 2em;
+}
+
+div.toc-h3
+{ font-size: 100%;
+font-weight: bold;
+margin-left: 4em;
+}
+
+div.toc-h4
+{ font-size: 100%;
+margin-left: 6em;
+}
+
+span.sec-nr
+{
+}
+
+span.sec-title
+{
+}
+
+span.pred-ext
+{ font-weight: bold;
+}
+
+span.pred-tag
+{ float: right;
+padding-top: 0.2em;
+font-size: 80%;
+font-style: italic;
+color: #fff;
+}
+
+div.caption
+{ width: 80%;
+margin: auto;
+text-align:center;
+}
+
+/* Footnotes */
+.fn {
+color: red;
+font-size: 70%;
+}
+
+.fn-text, .fnp {
+position: absolute;
+top: auto;
+left: 10%;
+border: 1px solid #000;
+box-shadow: 5px 5px 5px #888;
+display: none;
+background: #fff;
+color: #000;
+margin-top: 25px;
+padding: 8px 12px;
+font-size: larger;
+}
+
+sup:hover span.fn-text
+{ display: block;
+}
+
+/* Lists */
+
+dl.latex
+{ margin-top: 1ex;
+margin-bottom: 0.5ex;
+}
+
+dl.latex dl.latex dd.defbody
+{ margin-bottom: 0.5ex;
+}
+
+/* PlDoc Tags */
+
+dl.tags
+{ font-size: 90%;
+margin-left: 5ex;
+margin-top: 1ex;
+margin-bottom: 0.5ex;
+}
+
+dl.tags dt
+{ margin-left: 0pt;
+font-weight: bold;
+}
+
+dl.tags dd
+{ margin-left: 3ex;
+}
+
+td.param
+{ font-style: italic;
+font-weight: bold;
+}
+
+/* Index */
+
+dt.index-sep
+{ font-weight: bold;
+font-size: +1;
+margin-top: 1ex;
+}
+
+/* Tables */
+
+table.center
+{ margin: auto;
+}
+
+table.latex
+{ border-collapse:collapse;
+}
+
+table.latex tr
+{ vertical-align: text-top;
+}
+
+table.latex td,th
+{ padding: 2px 1em;
+}
+
+table.latex tr.hline td,th
+{ border-top: 1px solid black;
+}
+
+table.frame-box
+{ border: 2px solid black;
+}
+
+</style>
+</head>
+<body style="background:white">
+<div class="navigate"><a class="nav" href="index.html"><img src="home.gif" alt="Home"></a>
+<a class="nav" href="Contents.html"><img src="index.gif" alt="Contents"></a>
+<a class="nav" href="DocIndex.html"><img src="yellow_pages.gif" alt="Index"></a>
+<a class="nav" href="summary.html"><img src="info.gif" alt="Summary"></a>
+<a class="nav" href="packs.html"><img src="prev.gif" alt="Previous"></a>
+<a class="nav" href="pack-attach.html"><img src="next.gif" alt="Next"></a>
+</div>
+<h2 id="sec:pack-install"><a id="sec:15.1"><span class="sec-nr">15.1</span> <span class="sec-title">Installing 
+packs</span></a></h2>
+
+<a id="sec:pack-install"></a>
+
+<p>As of version 9.1.22, SWI-Prolog supports three models for managing 
+packs: <em>shared packages</em> are added to the user or system 
+environment, while <em>project specific packages</em> are added to a 
+particular project only. Finally, project specific packages can be 
+managed as <em>git submodules</em>. These three approaches are discussed 
+in more detail below.
+
+<p>Using <a id="idx:packinstall2:2736"></a><a class="pred" href="prologpack.html#pack_install/2">pack_install/2</a> 
+we can install a package either for the current user or globally for all 
+users.
+
+<p><b>Shared packages</b> 
+
+<p>System-wide installations is satisfactory as long as all projects can 
+use the same version of a pack, the packs required by all projects do 
+not conflict, and redistribution of the projects is not a primary 
+concern. For example, if you frequently require RocksDB for several 
+projects you are working on, installing the <code>rocksdb</code> pack as 
+user is appropriate.
+
+<p>The shared model is similar to e.g., Python's <b>pip</b> installer. 
+Python resolves dealing with packages for a specific project using
+<em>virtual environments</em>, where each virtual environment provides a 
+selection of packages. A Python virtual environment may be
+<em>activated</em> for the current shell, which modifies the shell's 
+environment variables.
+
+<p><b>Project specific packages</b> 
+
+<p>Alternatively, SWI-Prolog allows packs to be installed as part of a 
+project. This approach is also found with <b>npm</b>, the Node.js 
+package manager. Using project-specific packs with SWI-Prolog requires 
+calling <a id="idx:attachpacks2:2737"></a><a class="pred" href="pack-attach.html#attach_packs/2">attach_packs/2</a> 
+before loading any library from a pack. To use (only) packs from the 
+local sub directory <code>packs</code>, add this directive to the code 
+that uses it:
+
+<pre class="code">
+:- attach_packs(packs, [replace(true)]).
+</pre>
+
+<p>Packs can be installed into the <code>packs</code> directory directly 
+using
+<a id="idx:packinstall2:2738"></a><a class="pred" href="prologpack.html#pack_install/2">pack_install/2</a> 
+with the <code>pack_directory(Dir)</code> option or using the <code>pack</code> <em>app</em> 
+as
+
+<pre class="code">
+swipl pack install --dir=packs &lt;pack&gt;
+</pre>
+
+<p>The preferred way is to use <a id="idx:packinstalllocal3:2739"></a><a class="pred" href="prologpack.html#pack_install_local/3">pack_install_local/3</a>. 
+This predicate takes a <em>closure</em> to collect the desired packages, 
+creates an installation plan and executes this. This ensures a set of 
+compatible packs at their latest available version or explicitly 
+specified versions. Typically, one would create a file <code>packs.pl</code> 
+according to the example below to install the packages required by a 
+project. By using such a file it is easy to replicate a suitable set of 
+installed packs for anyone who wishes to use your application.
+
+<pre class="code">
+:- module(packs, []).
+:- use_module(library(prolog_pack)).
+:- attach_packs(packs, [replace(true)]).
+
+:- initialization(install, main).
+
+pack(scasp, [commit('HEAD')]).
+pack(environ, []).
+pack(date_time, []).
+
+install :-
+    pack_install_local(pack, packs, []).
+</pre>
+
+<p>Here, the <a id="idx:attachpacks2:2740"></a><a class="pred" href="pack-attach.html#attach_packs/2">attach_packs/2</a> 
+must be the same as used by the project. The first argument of <a id="idx:packinstalllocal2:2741"></a><span class="pred-ext">pack_install_local/2</span> 
+refers to pack/2 , generating a list of target packages and options for 
+each package. The options for each pack are defined by <a id="idx:packinstall2:2742"></a><a class="pred" href="prologpack.html#pack_install/2">pack_install/2</a>. 
+They typically refer to the download location and required version. 
+Given the above, we can install the packages we need for a project using
+
+<pre class="code">
+swipl packs.pl
+</pre>
+
+<p><b>Using GIT submodules</b> 
+
+<p>Alternative to the above, if the desired packs are all available as 
+git repository, we can add packs to our git managed projects by adding 
+the packs as git submodules to our project. For example, we add a pack 
+to the <code>packs</code> directory as
+
+<pre class="code">
+mkdir packs
+git submodule add https://github.com/SWI-Prolog/sCASP.git packs/scasp
+git submodule add https://github.com/fnogatz/tap.git tap
+</pre>
+
+<p>As above, we can must make our project use the local packs by calling <a id="idx:packattach2:2743"></a><a class="pred" href="pack-attach.html#pack_attach/2">pack_attach/2</a>. 
+After fetching all submodules we can build the foreign components and/or 
+run the tests of the attached packs using the steps below
+
+<pre class="code">
+?- attach_packs(packs, [replace(true)]).
+?- pack_rebuild.
+</pre>
+
+<p>Using git submodules gives full control of the pack versions you are 
+using. It also makes you responsible of adding dependencies and taking 
+care of version dependencies between packs. Finally, it limits you to 
+using git based packages.
+
+<p></body></html>

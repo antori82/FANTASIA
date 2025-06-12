@@ -1,0 +1,622 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+<title>SWI-Prolog 9.2.9 Reference Manual: Section 12.3</title><link rel="home" href="index.html">
+<link rel="contents" href="Contents.html">
+<link rel="index" href="DocIndex.html">
+<link rel="summary" href="summary.html">
+<link rel="previous" href="foreignlink.html">
+<link rel="next" href="foreigninclude.html">
+
+<style type="text/css">
+
+/* Style sheet for SWI-Prolog latex2html
+*/
+
+dd.defbody
+{ margin-bottom: 1em;
+}
+
+dt.pubdef, dt.multidef
+{ color: #fff;
+padding: 2px 10px 0px 10px;
+margin-bottom: 5px;
+font-size: 18px;
+vertical-align: middle;
+overflow: hidden;
+}
+
+dt.pubdef { background-color: #0c3d6e; }
+dt.multidef { background-color: #ef9439; }
+
+.bib dd
+{ margin-bottom: 1em;
+}
+
+.bib dt
+{ float: left;
+margin-right: 1.3ex;
+}
+
+pre.code
+{ margin-left: 1.5em;
+margin-right: 1.5em;
+border: 1px dotted;
+padding-top: 5px;
+padding-left: 5px;
+padding-bottom: 5px;
+background-color: #f8f8f8;
+}
+
+div.navigate
+{ text-align: center;
+background-color: #f0f0f0;
+border: 1px dotted;
+padding: 5px;
+}
+
+div.title
+{ text-align: center;
+padding-bottom: 1em;
+font-size: 200%;
+font-weight: bold;
+}
+
+div.author
+{ text-align: center;
+font-style: italic;
+}
+
+div.abstract
+{ margin-top: 2em;
+background-color: #f0f0f0;
+border: 1px dotted;
+padding: 5px;
+margin-left: 10%; margin-right:10%;
+}
+
+div.abstract-title
+{ text-align: center;
+padding: 5px;
+font-size: 120%;
+font-weight: bold;
+}
+
+div.toc-h1
+{ font-size: 200%;
+font-weight: bold;
+}
+
+div.toc-h2
+{ font-size: 120%;
+font-weight: bold;
+margin-left: 2em;
+}
+
+div.toc-h3
+{ font-size: 100%;
+font-weight: bold;
+margin-left: 4em;
+}
+
+div.toc-h4
+{ font-size: 100%;
+margin-left: 6em;
+}
+
+span.sec-nr
+{
+}
+
+span.sec-title
+{
+}
+
+span.pred-ext
+{ font-weight: bold;
+}
+
+span.pred-tag
+{ float: right;
+padding-top: 0.2em;
+font-size: 80%;
+font-style: italic;
+color: #fff;
+}
+
+div.caption
+{ width: 80%;
+margin: auto;
+text-align:center;
+}
+
+/* Footnotes */
+.fn {
+color: red;
+font-size: 70%;
+}
+
+.fn-text, .fnp {
+position: absolute;
+top: auto;
+left: 10%;
+border: 1px solid #000;
+box-shadow: 5px 5px 5px #888;
+display: none;
+background: #fff;
+color: #000;
+margin-top: 25px;
+padding: 8px 12px;
+font-size: larger;
+}
+
+sup:hover span.fn-text
+{ display: block;
+}
+
+/* Lists */
+
+dl.latex
+{ margin-top: 1ex;
+margin-bottom: 0.5ex;
+}
+
+dl.latex dl.latex dd.defbody
+{ margin-bottom: 0.5ex;
+}
+
+/* PlDoc Tags */
+
+dl.tags
+{ font-size: 90%;
+margin-left: 5ex;
+margin-top: 1ex;
+margin-bottom: 0.5ex;
+}
+
+dl.tags dt
+{ margin-left: 0pt;
+font-weight: bold;
+}
+
+dl.tags dd
+{ margin-left: 3ex;
+}
+
+td.param
+{ font-style: italic;
+font-weight: bold;
+}
+
+/* Index */
+
+dt.index-sep
+{ font-weight: bold;
+font-size: +1;
+margin-top: 1ex;
+}
+
+/* Tables */
+
+table.center
+{ margin: auto;
+}
+
+table.latex
+{ border-collapse:collapse;
+}
+
+table.latex tr
+{ vertical-align: text-top;
+}
+
+table.latex td,th
+{ padding: 2px 1em;
+}
+
+table.latex tr.hline td,th
+{ border-top: 1px solid black;
+}
+
+table.frame-box
+{ border: 2px solid black;
+}
+
+</style>
+</head>
+<body style="background:white">
+<div class="navigate"><a class="nav" href="index.html"><img src="home.gif" alt="Home"></a>
+<a class="nav" href="Contents.html"><img src="index.gif" alt="Contents"></a>
+<a class="nav" href="DocIndex.html"><img src="yellow_pages.gif" alt="Index"></a>
+<a class="nav" href="summary.html"><img src="info.gif" alt="Summary"></a>
+<a class="nav" href="foreignlink.html"><img src="prev.gif" alt="Previous"></a>
+<a class="nav" href="foreigninclude.html"><img src="next.gif" alt="Next"></a>
+</div>
+<h2 id="sec:foreigntypes"><a id="sec:12.3"><span class="sec-nr">12.3</span> <span class="sec-title">Interface 
+Data Types</span></a></h2>
+
+<a id="sec:foreigntypes"></a>
+
+<p><h3 id="sec:type-term-t"><a id="sec:12.3.1"><span class="sec-nr">12.3.1</span> <span class="sec-title">Type <code>term_t</code>: 
+a reference to a Prolog term</span></a></h3>
+
+<a id="sec:type-term-t"></a>
+
+<p>The principal data type is <code>term_t</code>. Type <code>term_t</code> 
+is what Quintus calls <code>QP_term_ref</code>. This name indicates 
+better what the type represents: it is a <em>handle</em> for a term 
+rather than the term itself. Terms can only be represented and 
+manipulated using this type, as this is the only safe way to ensure the 
+Prolog kernel is aware of all terms referenced by foreign code and thus 
+allows the kernel to perform garbage collection and/or stack-shifts 
+while foreign code is active, for example during a callback from C.
+
+<p>A term reference is a C <code>uintptr_t</code>, representing the 
+offset of a variable on the Prolog environment stack. A foreign function 
+is passed term references for the predicate arguments, one for each 
+argument. If references for intermediate results are needed, such 
+references may be created using <a class="func" href="foreigntypes.html#PL_new_term_ref()">PL_new_term_ref()</a> 
+or <a class="func" href="foreigntypes.html#PL_new_term_refs()">PL_new_term_refs()</a>. 
+These references normally live till the foreign function returns control 
+back to Prolog. Their scope can be explicitly limited using <a class="func" href="foreigninclude.html#PL_open_foreign_frame()">PL_open_foreign_frame()</a> 
+and
+<a class="func" href="foreigninclude.html#PL_close_foreign_frame()">PL_close_foreign_frame()</a>/<a class="func" href="foreigninclude.html#PL_discard_foreign_frame()">PL_discard_foreign_frame()</a>.
+
+<p>A <code>term_t</code> always refers to a valid Prolog term (variable, 
+atom, integer, float or compound term). A term lives either until 
+backtracking takes us back to a point before the term was created, the 
+garbage collector has collected the term, or the term was created after 
+a
+<a class="func" href="foreigninclude.html#PL_open_foreign_frame()">PL_open_foreign_frame()</a> 
+and <a class="func" href="foreigninclude.html#PL_discard_foreign_frame()">PL_discard_foreign_frame()</a> 
+has been called.
+
+<p>The foreign interface functions can either <i>read</i>, <i>unify</i> 
+or <i>write</i> to term references. In this document we use the 
+following notation for arguments of type <code>term_t</code>:
+<blockquote>
+<table class="latex frame-void">
+<tr><td><code>term_t +t</code></td><td>Accessed in read-mode. The&lsquo;+&rsquo;indicates 
+the argument is&lsquo;input&rsquo;. </td></tr>
+<tr><td><code>term_t -t</code></td><td>Accessed in write-mode. </td></tr>
+<tr><td><code>term_t ?t</code></td><td>Accessed in unify-mode. </td></tr>
+</table>
+</blockquote>
+
+<p><b>WARNING</b> Term references that are accessed in&lsquo;write&rsquo;(-) 
+mode will refer to an invalid term if the term is allocated on the 
+global stack and backtracking takes us back to a point before the term 
+was written.<sup class="fn">213<span class="fn-text">This could have 
+been avoided by <em>trailing</em> term references when data is written 
+to them. This seriously hurts performance in some scenarios though. If 
+this is desired, use <a class="func" href="foreigninclude.html#PL_put_variable()">PL_put_variable()</a> 
+followed by one of the PL_unify_*() functions.</span></sup> Compound 
+terms, dicts, large integers, rational numbers, floats and strings are 
+all allocated on the global stack. Below is a typical scenario where 
+this may happen. The first solution writes a term extracted from the 
+solution into <var>a</var>. After the system backtracks due to <a class="func" href="foreigninclude.html#PL_next_solution()">PL_next_solution()</a>, <var>a</var> 
+becomes a reference to a term that no longer exists.
+
+<pre class="code">
+term_t a = PL_new_term_ref();
+...
+query = PL_open_query(...);
+while(PL_next_solution(query))
+{ PL_get_arg(i, ..., a);
+}
+PL_close_query(query);
+</pre>
+
+<p>There are two solutions to this problem. One is to scope the term 
+reference using <a class="func" href="foreigninclude.html#PL_open_foreign_frame()">PL_open_foreign_frame()</a> 
+and <a class="func" href="foreigninclude.html#PL_close_foreign_frame()">PL_close_foreign_frame()</a> 
+and makes sure it goes out of scope before backtracking happens. The 
+other is to clear the term reference using <a class="func" href="foreigninclude.html#PL_put_variable()">PL_put_variable()</a> 
+before backtracking.
+
+<p>Term references are obtained in any of the following ways:
+
+<p>
+<ul class="latex">
+<li><i>Passed as argument</i><br>
+The C functions implementing foreign predicates are passed their 
+arguments as term references. These references may be read or unified. 
+Writing to these variables causes undefined behaviour.
+<li><i>Created by <a class="func" href="foreigntypes.html#PL_new_term_ref()">PL_new_term_ref()</a></i><br>
+A term created by <a class="func" href="foreigntypes.html#PL_new_term_ref()">PL_new_term_ref()</a> 
+is normally used to build temporary terms or to be written by one of the 
+interface functions. For example, <a class="func" href="foreigninclude.html#PL_get_arg()">PL_get_arg()</a> 
+writes a reference to the term argument in its last argument.
+<li><i>Created by <a class="func" href="foreigntypes.html#PL_new_term_refs()">PL_new_term_refs(size_t 
+n)</a></i><br>
+This function returns a set of term references with the same 
+characteristics as <a class="func" href="foreigntypes.html#PL_new_term_ref()">PL_new_term_ref()</a>. 
+See <a class="func" href="foreigninclude.html#PL_open_query()">PL_open_query()</a>.
+<li><i>Created by <a class="func" href="foreigntypes.html#PL_copy_term_ref()">PL_copy_term_ref(term_t 
+t)</a></i><br>
+Creates a new term reference to the same term as the argument. The term 
+may be written to. See <a class="fig" href="foreigninclude.html#fig:pl-display">figure 
+6</a>.
+</ul>
+
+<p>Term references can safely be copied to other C variables of type
+<code>term_t</code>, but all copies will always refer to the same term.
+
+<dl class="latex">
+<dt class="pubdef"><a id="PL_new_term_ref()"><var>term_t</var> <strong>PL_new_term_ref</strong>(<var></var>)</a></dt>
+<dd class="defbody">
+Return a fresh reference to a term. The reference is allocated on the
+<em>local</em> stack. Allocating a term reference may trigger a 
+stack-shift on machines that cannot use sparse memory management for 
+allocation of the Prolog stacks. The returned reference describes a 
+variable. Raise a resource exception and returns <code>(term_t)0</code> 
+on failure.</dd>
+<dt class="pubdef"><a id="PL_new_term_refs()"><var>term_t</var> <strong>PL_new_term_refs</strong>(<var>size_t 
+n</var>)</a></dt>
+<dd class="defbody">
+Return <var>n</var> new term references. The first term reference is 
+returned. The others are <var><var>t</var>+1</var>, <var><var>t</var>+2</var>, 
+etc. Raise a resource exception and returns <code>(term_t)0</code> on 
+failure. There are two reasons for using this function. <a class="func" href="foreigninclude.html#PL_open_query()">PL_open_query()</a> 
+and <a class="func" href="foreigninclude.html#PL_cons_functor()">PL_cons_functor()</a> 
+expect the arguments as a set of consecutive term references, and <em>very</em> 
+time-critical code requiring a number of term references can be written 
+as:
+
+<pre class="code">
+pl_mypredicate(term_t a0, term_t a1)
+{ term_t t0 = PL_new_term_refs(2);
+  term_t t1 = t0+1;
+
+  ...
+}
+</pre>
+
+</dd>
+<dt class="pubdef"><a id="PL_copy_term_ref()"><var>term_t</var> <strong>PL_copy_term_ref</strong>(<var>term_t 
+from</var>)</a></dt>
+<dd class="defbody">
+Create a new term reference and make it point initially to the same term 
+as <var>from</var>. This function is commonly used to copy a predicate 
+argument to a term reference that may be written. Raise a resource 
+exception and returns <code>(term_t)0</code> on failure. An example of 
+its use is given below, in the sample code <code><b>pl_write_atoms()</b></code>.</dd>
+<dt class="pubdef"><a id="PL_reset_term_refs()"><var>void</var> <strong>PL_reset_term_refs</strong>(<var>term_t 
+after</var>)</a></dt>
+<dd class="defbody">
+Destroy all term references that have been created after <var>after</var>, 
+including <var>after</var> itself. Any reference to the invalidated term 
+references after this call results in undefined behaviour.
+
+<p>Note that returning from the foreign context to Prolog will reclaim 
+all references used in the foreign context. This call is only necessary 
+if references are created inside a loop that never exits back to Prolog. 
+See also <a class="func" href="foreigninclude.html#PL_open_foreign_frame()">PL_open_foreign_frame()</a>, <a class="func" href="foreigninclude.html#PL_close_foreign_frame()">PL_close_foreign_frame()</a> 
+and
+<a class="func" href="foreigninclude.html#PL_discard_foreign_frame()">PL_discard_foreign_frame()</a>.
+</dd>
+</dl>
+
+<p><h4 id="sec:foreign-gc"><a id="sec:12.3.1.1"><span class="sec-nr">12.3.1.1</span> <span class="sec-title">Interaction 
+with the garbage collector and stack-shifter</span></a></h4>
+
+<a id="sec:foreign-gc"></a>
+
+<p>Prolog implements two mechanisms for avoiding stack overflow: garbage 
+collection and stack expansion. On machines that allow for it, Prolog 
+will use virtual memory management to detect stack overflow and expand 
+the runtime stacks. On other machines Prolog will reallocate the stacks 
+and update all pointers to them. To do so, Prolog needs to know which 
+data is referenced by C code. As all Prolog data known by C is 
+referenced through term references (<code>term_t</code>), Prolog has all 
+the information necessary to perform its memory management without 
+special precautions from the C programmer.
+
+<p><h3 id="sec:foreign-types"><a id="sec:12.3.2"><span class="sec-nr">12.3.2</span> <span class="sec-title">Other 
+foreign interface types</span></a></h3>
+
+<a id="sec:foreign-types"></a>
+
+<dl class="latex">
+<dt><b>atom_t</b></dt>
+<dd>
+The type <code>atom_t</code> actually represents a <em>blob</em> (see
+<a class="sec" href="foreigninclude.html#sec:12.4.10">section 12.4.10</a>). 
+Blobs are the super type of Prolog atoms, where atoms are blobs that 
+represent textual content. Textual content is also represented by Prolog 
+string (see <a class="sec" href="string.html#sec:5.2">section 5.2</a>), 
+which makes the general notion of <em>string</em> in Prolog ambiguous. 
+The core idea behind blobs/atoms is to represent arbitrary content using 
+a
+<em>unique</em> handle, such that comparing the handles is enough to 
+prove equivalence of the contents; i.e., given two different atom 
+handles we know they represent different texts. This uniqueness feature 
+allows the core engine to reason about atom equality and inequality 
+without considering their content. Blobs without the <code>PL_BLOB_UNIQUE</code> 
+feature are also tested for uniqueness without considering their 
+content. Each time an atom or a <code>PL_BLOB_UNIQUE</code> blob is 
+created, it must be looked up in the atom table; if a blob without
+<code>PL_BLOB_UNIQUE</code> is created, no lookup is done.
+<em>Strings</em> (<a class="sec" href="string.html#sec:5.2">section 5.2</a>) 
+and blobs without the
+<code>PL_BLOB_UNIQUE</code> feature do <em>not</em> have this uniqueness 
+property - to test for equality, the contents of the strings or blobs 
+must be compared. For both atoms and strings, comparisons for ordering 
+(e.g., used by <a id="idx:sort2:2515"></a><a class="pred" href="builtinlist.html#sort/2">sort/2</a> 
+or @&lt;/2) must use the contents; in the case of blobs, <a class="func" href="foreigninclude.html#compare()">compare()</a> 
+can be specified in the
+<code>PL_blob_t</code> structure to override the default bitwise 
+comparison.
+
+<p>Because atoms are often used to represent (parts of) arbitrary input, 
+intermediate results, and output of data processed by Prolog, it is 
+necessary that atoms be subject to <em>garbage collection</em> (see
+<a id="idx:garbagecollectatoms0:2516"></a><a class="pred" href="memory.html#garbage_collect_atoms/0">garbage_collect_atoms/0</a>). 
+The garbage collection makes atoms ideal handles for arbitrary data 
+structures, which are generalized as
+<em>blobs</em>. Blobs provide <em>safe</em> access to many internal 
+Prolog data structures such as streams, clause references, etc.</dd>
+<dt><b>functor_t</b></dt>
+<dd>
+A functor is the internal representation of a name/arity pair. They are 
+used to find the name and arity of a compound term as well as to 
+construct new compound terms. Like atoms they live for the whole Prolog 
+session and are unique.
+</dd>
+<dt><b>predicate_t</b></dt>
+<dd>
+Handle to a Prolog predicate. Predicate handles live forever (although 
+they can lose their definition).
+</dd>
+<dt><b>qid_t</b></dt>
+<dd>
+Query identifier. Used by <a class="func" href="foreigninclude.html#PL_open_query()">PL_open_query()</a>, <a class="func" href="foreigninclude.html#PL_next_solution()">PL_next_solution()</a>,
+<a class="func" href="foreigninclude.html#PL_cut_query()">PL_cut_query()</a>, 
+and <a class="func" href="foreigninclude.html#PL_close_query()">PL_close_query()</a> 
+to handle calling Prolog from C.
+</dd>
+<dt><b>fid_t</b></dt>
+<dd>
+Frame identifier. Used by
+<a class="func" href="foreigninclude.html#PL_open_foreign_frame()">PL_open_foreign_frame()</a> 
+and <a class="func" href="foreigninclude.html#PL_close_foreign_frame()">PL_close_foreign_frame()</a>.
+</dd>
+<dt><b>module_t</b></dt>
+<dd>
+A module is a unique handle to a Prolog module. Modules are used only to 
+call predicates in a specific module.
+</dd>
+<dt><b>foreign_t</b></dt>
+<dd>
+Return type for a C function implementing a Prolog predicate.
+</dd>
+<dt><b>control_t</b></dt>
+<dd>
+Passed as additional argument to non-deterministic foreign functions. 
+See PL_retry*() and PL_foreign_context*().
+</dd>
+<dt><b>install_t</b></dt>
+<dd>
+Type for the <b>install()</b> and <b>uninstall()</b> functions of shared 
+or dynamic link libraries. See <a class="sec" href="foreignlink.html#sec:12.2.3">section 
+12.2.3</a>.
+</dd>
+<dt><b>int64_t</b></dt>
+<dd>
+Actually part of the C99 standard rather than Prolog. As of version 
+5.5.6, Prolog integers are 64-bit on all hardware. The C99 type
+<code>int64_t</code> is defined in the <code>stdint.h</code> standard 
+header and provides platform-independent 64-bit integers. Portable code 
+accessing Prolog should use this type to exchange integer values. Please 
+note that
+<a class="func" href="foreigninclude.html#PL_get_long()">PL_get_long()</a> 
+can return <code>FALSE</code> on Prolog integers that cannot be 
+represented as a C long. Robust code should not assume any of the 
+integer fetching functions to succeed, <em>even</em> if the Prolog term 
+is known to be an integer.
+</dd>
+</dl>
+
+<p><h4 id="sec:pl-arity-as-size"><a id="sec:12.3.2.1"><span class="sec-nr">12.3.2.1</span> <span class="sec-title">PL_ARITY_AS_SIZE</span></a></h4>
+
+<a id="sec:pl-arity-as-size"></a>
+
+<p>As of SWI-Prolog 7.3.12, the arity of terms has changed from <code>int</code> 
+to <code>size_t</code>. To deal with this transition, all affecting 
+functions have two versions, where the old name exchanges the arity as <code>int</code> 
+and a new function with name *<b>_sz()</b> exchanges the arity as
+<code>size_t</code>. Up to 8.1.28, the default was to use the old <code>int</code> 
+functions. As of 8.1.29/8.2.x, the default is to use <code>size_t</code> 
+and the old behaviour can be restored by defining <code>PL_ARITY_AS_SIZE</code> 
+to <code>0</code> (zero). This makes old code compatible, but the 
+following warning is printed when compiling:
+
+<pre class="code">
+#warning "Term arity has changed from int to size_t."
+#warning "Please update your code or use #define PL_ARITY_AS_SIZE 0."
+</pre>
+
+<p>To make the code compile silently again, change the types you use to 
+represent arity from <code>int</code> to <code>size_t</code>. Please be 
+aware that
+<code>size_t</code> is <em>unsigned</em>. At some point representing 
+arity as <code>int</code> will be dropped completely.
+
+<p><h4 id="sec:c-api-bool"><a id="sec:12.3.2.2"><span class="sec-nr">12.3.2.2</span> <span class="sec-title">Notes 
+on C API bool return values</span></a></h4>
+
+<a id="sec:c-api-bool"></a>
+
+<p>Most of the SWI-Prolog C-API consists of C functions that return a 
+Boolean result. Up to version 9.3.10, these functions are defined to 
+return <code>int</code>. Later versions define these functions to return 
+the <code>bool</code>. This type is provided by the standard header
+<code>stdbool.h</code> and will be supported as a native type starting 
+with the C23 standard, which introduces the keywords <code>false</code>,
+<code>true</code> and <code>bool</code>. <code>SWI-Prolog.h</code> 
+defines the constants <code>FALSE</code> and <code>TRUE</code>. These 
+constants are consistent with <code>false</code>, and <code>true</code> 
+and may be used interchangeably. Future versions will deprecate <code>FALSE</code> 
+and
+<code>TRUE</code>. As of version 9.3.11 <code>SWI-Prolog.h</code> 
+includes
+<code>stdbool.h</code> and thus provides the standard names.
+
+<p>The Boolean result <code>true</code> indicates success, while <code>false</code> 
+may indicate an error or <em>logical failure</em>. Which of the two 
+happened can be examined by calling <a class="func" href="foreigninclude.html#PL_exception()">PL_exception(0)</a>, 
+which returns a
+<code>term_t</code> of value 0 if there was a logical failure. Otherwise 
+the returned term reference is a handle to the Prolog exception. 
+Typically there is no need to test whether or not there has been an 
+exception. Instead, the implementation of a foreign predicate can often 
+simply return <code>false</code> in case some API returned
+<code>false</code>. Prolog will map this to logical failure or raise the 
+pending exception. The C&nbsp;API defines several groups of <code>bool</code> 
+functions that behave consistently. Note that errors which as the Prolog 
+term handle (<code>term_t</code>) not being a valid is not reported 
+through the API. If this is detected <a class="func" href="foreigninclude.html#PL_api_error()">PL_api_error()</a> 
+is called, which aborts the process with a diagnostic message. If not 
+detected, such errors lead to <em>undefined behaviour</em> (read: 
+arbitrary crashes or wrong behaviour now or later).
+
+<dl class="latex">
+<dt><b>PL_is_*()</b></dt>
+<dd class="defbody">
+These are <em>type checking</em> functions. They have no side effects 
+and no error conditions. Returning <code>false</code> implies the 
+argument is not of the tested type.
+</dd>
+<dt><b>PL_get_*()</b></dt>
+<dd class="defbody">
+This group extracts C value from a Prolog term. If the term is not of 
+the expected type or the C value cannot represent the value the function 
+returns <code>false</code>. No exception is raised.
+</dd>
+<dt><b>PL_get_*<b>_ex()</b></b></dt>
+<dd class="defbody">
+This group is similar to PL_get_*(), but raises a Prolog exception. The 
+exception is either an <code>instantiation_error</code> in case the term 
+is unbound but should not be, a <code>type_error</code> in case the term 
+is of the wrong type or a <code>representation_error</code> in case the 
+C type cannot represent the Prolog value (e.g., a C
+<code>int</code> while the Prolog integer is out of reach for this 
+type).
+</dd>
+<dt><b>PL_put_*()</b></dt>
+<dd class="defbody">
+This group converts C data to a Prolog term. Such a function returning <code>false</code> 
+always raises a <code>resource_error</code>, indicating that Prolog does 
+not have sufficient resources to store the result.
+</dd>
+<dt><b>PL_unify_*()</b></dt>
+<dd class="defbody">
+This group unifies a Prolog term to a converted C value. Here, the 
+failure can be <em>logical</em> if the unification failed because the 
+term was already bound to some other value or the failure may be the 
+result of a resource error as with the PL_put_*() group.
+</dd>
+</dl>
+
+<p></body></html>

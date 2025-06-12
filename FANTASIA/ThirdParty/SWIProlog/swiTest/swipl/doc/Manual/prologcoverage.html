@@ -1,0 +1,515 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+<title>SWI-Prolog 9.2.9 Reference Manual: Section A.38</title><link rel="home" href="index.html">
+<link rel="contents" href="Contents.html">
+<link rel="index" href="DocIndex.html">
+<link rel="summary" href="summary.html">
+<link rel="previous" href="predicate_options.html">
+<link rel="next" href="prologdebug.html">
+
+<style type="text/css">
+
+/* Style sheet for SWI-Prolog latex2html
+*/
+
+dd.defbody
+{ margin-bottom: 1em;
+}
+
+dt.pubdef, dt.multidef
+{ color: #fff;
+padding: 2px 10px 0px 10px;
+margin-bottom: 5px;
+font-size: 18px;
+vertical-align: middle;
+overflow: hidden;
+}
+
+dt.pubdef { background-color: #0c3d6e; }
+dt.multidef { background-color: #ef9439; }
+
+.bib dd
+{ margin-bottom: 1em;
+}
+
+.bib dt
+{ float: left;
+margin-right: 1.3ex;
+}
+
+pre.code
+{ margin-left: 1.5em;
+margin-right: 1.5em;
+border: 1px dotted;
+padding-top: 5px;
+padding-left: 5px;
+padding-bottom: 5px;
+background-color: #f8f8f8;
+}
+
+div.navigate
+{ text-align: center;
+background-color: #f0f0f0;
+border: 1px dotted;
+padding: 5px;
+}
+
+div.title
+{ text-align: center;
+padding-bottom: 1em;
+font-size: 200%;
+font-weight: bold;
+}
+
+div.author
+{ text-align: center;
+font-style: italic;
+}
+
+div.abstract
+{ margin-top: 2em;
+background-color: #f0f0f0;
+border: 1px dotted;
+padding: 5px;
+margin-left: 10%; margin-right:10%;
+}
+
+div.abstract-title
+{ text-align: center;
+padding: 5px;
+font-size: 120%;
+font-weight: bold;
+}
+
+div.toc-h1
+{ font-size: 200%;
+font-weight: bold;
+}
+
+div.toc-h2
+{ font-size: 120%;
+font-weight: bold;
+margin-left: 2em;
+}
+
+div.toc-h3
+{ font-size: 100%;
+font-weight: bold;
+margin-left: 4em;
+}
+
+div.toc-h4
+{ font-size: 100%;
+margin-left: 6em;
+}
+
+span.sec-nr
+{
+}
+
+span.sec-title
+{
+}
+
+span.pred-ext
+{ font-weight: bold;
+}
+
+span.pred-tag
+{ float: right;
+padding-top: 0.2em;
+font-size: 80%;
+font-style: italic;
+color: #fff;
+}
+
+div.caption
+{ width: 80%;
+margin: auto;
+text-align:center;
+}
+
+/* Footnotes */
+.fn {
+color: red;
+font-size: 70%;
+}
+
+.fn-text, .fnp {
+position: absolute;
+top: auto;
+left: 10%;
+border: 1px solid #000;
+box-shadow: 5px 5px 5px #888;
+display: none;
+background: #fff;
+color: #000;
+margin-top: 25px;
+padding: 8px 12px;
+font-size: larger;
+}
+
+sup:hover span.fn-text
+{ display: block;
+}
+
+/* Lists */
+
+dl.latex
+{ margin-top: 1ex;
+margin-bottom: 0.5ex;
+}
+
+dl.latex dl.latex dd.defbody
+{ margin-bottom: 0.5ex;
+}
+
+/* PlDoc Tags */
+
+dl.tags
+{ font-size: 90%;
+margin-left: 5ex;
+margin-top: 1ex;
+margin-bottom: 0.5ex;
+}
+
+dl.tags dt
+{ margin-left: 0pt;
+font-weight: bold;
+}
+
+dl.tags dd
+{ margin-left: 3ex;
+}
+
+td.param
+{ font-style: italic;
+font-weight: bold;
+}
+
+/* Index */
+
+dt.index-sep
+{ font-weight: bold;
+font-size: +1;
+margin-top: 1ex;
+}
+
+/* Tables */
+
+table.center
+{ margin: auto;
+}
+
+table.latex
+{ border-collapse:collapse;
+}
+
+table.latex tr
+{ vertical-align: text-top;
+}
+
+table.latex td,th
+{ padding: 2px 1em;
+}
+
+table.latex tr.hline td,th
+{ border-top: 1px solid black;
+}
+
+table.frame-box
+{ border: 2px solid black;
+}
+
+</style>
+</head>
+<body style="background:white">
+<div class="navigate"><a class="nav" href="index.html"><img src="home.gif" alt="Home"></a>
+<a class="nav" href="Contents.html"><img src="index.gif" alt="Contents"></a>
+<a class="nav" href="DocIndex.html"><img src="yellow_pages.gif" alt="Index"></a>
+<a class="nav" href="summary.html"><img src="info.gif" alt="Summary"></a>
+<a class="nav" href="predicate_options.html"><img src="prev.gif" alt="Previous"></a>
+<a class="nav" href="prologdebug.html"><img src="next.gif" alt="Next"></a>
+</div>
+<h2 id="sec:prologcoverage"><a id="sec:A.38"><span class="sec-nr">A.38</span> <span class="sec-title">library(prolog_coverage): 
+Coverage analysis tool</span></a></h2>
+
+<p><a id="sec:prologcoverage"></a>
+
+<p>The purpose of this module is to find which part of the program has 
+been used by a certain goal. Usage is defined in terms of clauses for 
+which the <i>head unification</i> succeeded. For each clause we count 
+how often it succeeded and how often it failed. In addition we track all <i>call 
+sites</i>, creating goal-by-goal annotated clauses.
+
+<p>The result is represented as a list of clause-references. As the 
+references to clauses of dynamic predicates cannot be guaranteed, these 
+are omitted from the result.
+
+<p>Using <a class="pred" href="prologcoverage.html#coverage/2">coverage/2</a> 
+with the option <code>annotate(true)</code>, implied by <code>ext(Ext)</code> 
+or
+<code>dir(Dir)</code>, the analysis creates a line-by-line copy of the 
+source files that is annotated with how many times this line was 
+executed and with what logical results. These annotations rely on 
+relating executable code to source locations which is shared by the 
+source level debugger. Source level rewrites due to term or goal 
+expansion may harm the results.
+
+<p>The typical usage is to load the program and run the query below to 
+get a report by file with percentages and a directory <code>cov</code> 
+holding annotated files that provide line-by-line annotations. See
+<a class="pred" href="prologcoverage.html#show_coverage/1">show_coverage/1</a> 
+for details.
+
+<p><code>?-</code> <code>coverage(Goal, [dir(cov)])</code>.
+
+<p><h3 id="sec:coverage-threads"><a id="sec:A.38.1"><span class="sec-nr">A.38.1</span> <span class="sec-title">Coverage 
+collection and threads</span></a></h3>
+
+<p><a id="sec:coverage-threads"></a>
+
+<p>The coverage collect data structure is shared by threads created from 
+the thread that is collecting coverage data. Currently, this thread 
+should be <i>joined</i> before we can operate on the coverage data.
+
+<p><h3 id="sec:coverage-merge"><a id="sec:A.38.2"><span class="sec-nr">A.38.2</span> <span class="sec-title">Combining 
+coverage data from multiple runs</span></a></h3>
+
+<p><a id="sec:coverage-merge"></a>
+
+<p>The coverage tools allow both combining data from running multiple 
+queries as combining data from multiple Prolog processes.
+
+<p>For multiple queries in the same process, coverage data may be 
+collected using <a class="pred" href="prologcoverage.html#coverage/1">coverage/1</a> 
+which, unlike <a class="pred" href="prologcoverage.html#coverage/2">coverage/2</a>, 
+does not change the non-deterministic semantics of the <var>Goal</var> 
+and adds to the already collected data. If no current collection is in 
+progress, the currently collected data can be displayed using <a class="pred" href="prologcoverage.html#show_coverage/1">show_coverage/1</a>.
+
+<p>Coverage data may be saved to a file using <a class="pred" href="prologcoverage.html#cov_save_data/2">cov_save_data/2</a>. 
+Saved data can be reloaded using <a class="pred" href="prologcoverage.html#cov_load_data/2">cov_load_data/2</a>. 
+Data from multiple Prolog runs can be combined in the same file using <a class="pred" href="prologcoverage.html#cov_save_data/2">cov_save_data/2</a> 
+with the
+<code>append(true)</code> option. When possible, file locking is used to 
+ensure that concurrect processes can safely use the same data file. The 
+result can be shown by loading the code that was relevant to all runs, 
+use
+<a class="pred" href="prologcoverage.html#cov_load_data/2">cov_load_data/2</a> 
+and show the result using <a class="pred" href="prologcoverage.html#show_coverage/1">show_coverage/1</a>.
+
+<p>Note that saving an loading the coverage data saves and restores 
+references to the clauses as the Nth clause of a predicate defined in a 
+specific file. This implies that the program must be loaded in exactly 
+the same way, including optimization level, term/goal expansion and 
+order of <i>multifile</i> predicates.
+
+<p><h3 id="sec:coverage-predicates"><a id="sec:A.38.3"><span class="sec-nr">A.38.3</span> <span class="sec-title">Predicate 
+reference</span></a></h3>
+
+<p><a id="sec:coverage-predicates"></a>
+
+<dl class="latex">
+<dt class="pubdef"><a id="coverage/1"><strong>coverage</strong>(<var>:Goal</var>)</a></dt>
+<dd class="defbody">
+As <code>call(Goal)</code>, collecting coverage information while <var>Goal</var> 
+is running. If <var>Goal</var> succeeds with a choice point, coverage 
+collection is suspended and resumed if we backtrack into <var>Goal</var>. 
+Calls to
+<a class="pred" href="prologcoverage.html#coverage/1">coverage/1</a> may 
+be nested.</dd>
+<dt class="pubdef"><span class="pred-tag">[semidet]</span><a id="coverage/2"><strong>coverage</strong>(<var>:Goal, 
++Options</var>)</a></dt>
+<dd class="defbody">
+Collect and optionally report coverage by <var>Goal</var>. <var>Goal</var> 
+is executed as in <a class="pred" href="metacall.html#once/1">once/1</a>. <var>Options</var> 
+processed:
+
+<dl class="latex">
+<dt><strong>show</strong>(<var>+Boolean</var>)</dt>
+<dd class="defbody">
+When <code>true</code> (default), call <a class="pred" href="prologcoverage.html#show_coverage/1">show_coverage/1</a> 
+passing <var>Options</var> to show the collected coverage data and reset 
+the data. When
+<code>false</code>, collect the data but do not reset it. If there is 
+already existing data the new data is added.
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span class="pred-tag">[det]</span><a id="show_coverage/1"><strong>show_coverage</strong>(<var>+Options</var>)</a></dt>
+<dd class="defbody">
+Show collected coverage data. By default it reports the percentage of 
+called and failed clauses related to covered files. Using
+<code>dir(Dir)</code>, detailed line-by-line annotated files are created 
+in the directory Dir. Other options control the level of detail.
+
+<dl class="latex">
+<dt><strong>all</strong>(<var>+Boolean</var>)</dt>
+<dd class="defbody">
+When true, report on any file in which some predicate was called.
+</dd>
+<dt><strong>modules</strong>(<var>+Modules</var>)</dt>
+<dd class="defbody">
+Only report on files that implement one of the given <var>Modules</var>.
+</dd>
+<dt><strong>roots</strong>(<var>+Directories</var>)</dt>
+<dd class="defbody">
+Only report on files below one of the given roots. Each directory in <var>Directories</var> 
+can be a specification for
+<a class="pred" href="files.html#absolute_file_name/3">absolute_file_name/3</a>.
+</dd>
+<dt><strong>annotate</strong>(<var>+Bool</var>)</dt>
+<dd class="defbody">
+Create an annotated file for the detailed results. This is implied if 
+the <code>ext</code> or <code>dir</code> option are specified.
+</dd>
+<dt><strong>ext</strong>(<var>+Ext</var>)</dt>
+<dd class="defbody">
+Extension to use for the annotated file. Default is&lsquo;.cov`.
+</dd>
+<dt><strong>dir</strong>(<var>+Dir</var>)</dt>
+<dd class="defbody">
+Dump the annotations in the given directory. If not given, the annotated 
+files are created in the same directory as the source file. Each clause 
+that is related to a physical line in the file is annotated with one of:
+<blockquote>
+<table class="latex frame-box">
+<tr><td>### </td><td>Clause was never executed. </td></tr>
+<tr><td>++N</td><td>Clause was entered N times and always succeeded </td></tr>
+<tr><td>--N</td><td>Clause was entered N times and never succeeded </td></tr>
+<tr><td>+N-M</td><td>Clause has succeeded N times and failed M times </td></tr>
+<tr><td>+N*M</td><td>Clause was entered N times and succeeded M times </td></tr>
+</table>
+</blockquote>
+
+<p>All <i>call sites</i> are annotated using the same conventions, 
+except that <code>---</code> is used to annotate subgoals that were 
+never called.
+</dd>
+<dt><strong>line_numbers</strong>(<var>Boolean</var>)</dt>
+<dd class="defbody">
+If <code>true</code> (default), add line numbers to the annotated file.
+</dd>
+<dt><strong>color</strong>(<var>Boolean</var>)</dt>
+<dd class="defbody">
+Controls using ANSI escape sequences to color the output in the 
+annotated source. Default is <code>true</code>.
+</dd>
+<dt><strong>width</strong>(<var>+Columns</var>)</dt>
+<dd class="defbody">
+Presumed width of the output window. A value of 40 is considered the 
+minimum. Smaller values are handled as 40.
+</dd>
+</dl>
+
+<p>For example, run a goal and create annotated files in a directory
+<code>cov</code> using:
+
+<pre class="code">
+?- show_coverage([dir(cov)]).
+</pre>
+
+<dl class="tags">
+<dt class="tag">bug</dt>
+<dd>
+Color annotations are created using ANSI escape sequences. On most 
+systems these are displayed if the file is printed on the terminal. On 
+most systems <code>less</code> may be used with the <code>-r</code> 
+flag. Alternatively, programs such as <code>ansi2html</code> (Linux) may 
+be used to convert the files to HTML. It would probably be better to 
+integrate the output generation with <code>library(pldoc/doc_htmlsrc)</code>.
+</dd>
+</dl>
+
+</dd>
+<dt class="multidef"><span class="pred-tag">[semidet,multifile]</span><a id="report_hook/2"><strong>report_hook</strong>(<var>+Succeeded, 
++Failed</var>)</a></dt>
+<dd class="defbody">
+This hook is called after the data collection. It is passed a list of 
+objects that have succeeded as well as a list of objects that have 
+failed. The objects are one of
+
+<dl class="latex">
+<dt><strong><var>ClauseRef</var></strong></dt>
+<dd class="defbody">
+The specified clause
+</dd>
+<dt><strong>call_site</strong>(<var>ClauseRef, PC</var>)</dt>
+<dd class="defbody">
+A call was make in <var>ClauseRef</var> at the given program counter.
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span class="pred-tag">[det]</span><a id="cov_save_data/2"><strong>cov_save_data</strong>(<var>+File, 
++Options</var>)</a></dt>
+<dd class="defbody">
+Save the coverage information to <var>File</var>. <var>Options</var>:
+
+<dl class="latex">
+<dt><strong>append</strong>(<var>true</var>)</dt>
+<dd class="defbody">
+Append to <var>File</var> rather than truncating the data if the file 
+exists.
+</dd>
+</dl>
+
+<p>The <var>File</var> is opened using <code>lock(exclusive)</code>, 
+which implies that, provided the OS and file system implements file 
+locking, multiple processes may save coverage data to the same file.
+
+<p>The saved data is highly specific to the setup in which it has been 
+created. It can typically only be reloaded using <a class="pred" href="prologcoverage.html#cov_load_data/2">cov_load_data/2</a> 
+in the same Prolog executable using the same options and with all 
+relevant source file unmodified at the same location.
+
+<p>Reproducibility can be improved by using&lsquo;.qlf` files or <i>saved 
+states</i>.</dd>
+<dt class="pubdef"><span class="pred-tag">[det]</span><a id="cov_load_data/2"><strong>cov_load_data</strong>(<var>+File, 
++Options</var>)</a></dt>
+<dd class="defbody">
+Reload coverage data from <var>File</var>. <var>Options</var>:
+
+<dl class="latex">
+<dt><strong>load</strong>(<var>true</var>)</dt>
+<dd class="defbody">
+If specified and the file in which a clauses is expected to exist, load 
+the file using <a class="pred" href="consulting.html#load_files/2">load_files/2</a> 
+with the same options as used to initially load the file.
+</dd>
+<dt><strong>silent</strong>(<var>+Boolean</var>)</dt>
+<dd class="defbody">
+When <code>true</code>, do not emit messages on not loaded source files.
+</dd>
+</dl>
+
+<p>Data is assumed to be reliable if the Nth-clause of a predicate is 
+loaded from the same file at the same line number and has the same size. 
+Unreliable data is ignored, silently if <code>silent(true)</code> is 
+used.</dd>
+<dt class="pubdef"><span class="pred-tag">[det]</span><a id="cov_reset/0"><strong>cov_reset</strong></a></dt>
+<dd class="defbody">
+Discard all collected coverage data. This predicate raises a permission 
+error if coverage collection is in progress.</dd>
+<dt class="pubdef"><a id="cov_property/1"><strong>cov_property</strong>(<var>?Property</var>)</a></dt>
+<dd class="defbody">
+True when coverage analysis satisfies <var>Property</var>. Currently 
+defined properties are:
+
+<dl class="latex">
+<dt><strong>active</strong>(<var>?Nesting</var>)</dt>
+<dd class="defbody">
+True when coverage data is being collected. <var>Nesting</var> expresses 
+the nesting of <a class="pred" href="prologcoverage.html#coverage/1">coverage/1</a> 
+calls and is normally 1 (one).
+</dd>
+</dl>
+
+</dd>
+</dl>
+
+<p></body></html>

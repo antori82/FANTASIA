@@ -1,0 +1,882 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+<title>SWI-Prolog BerkeleyDB interface</title>
+<style type="text/css">
+
+/* Style sheet for SWI-Prolog latex2html
+*/
+
+dd.defbody
+{ margin-bottom: 1em;
+}
+
+dt.pubdef, dt.multidef
+{ color: #fff;
+padding: 2px 10px 0px 10px;
+margin-bottom: 5px;
+font-size: 18px;
+vertical-align: middle;
+overflow: hidden;
+}
+
+dt.pubdef { background-color: #0c3d6e; }
+dt.multidef { background-color: #ef9439; }
+
+.bib dd
+{ margin-bottom: 1em;
+}
+
+.bib dt
+{ float: left;
+margin-right: 1.3ex;
+}
+
+pre.code
+{ margin-left: 1.5em;
+margin-right: 1.5em;
+border: 1px dotted;
+padding-top: 5px;
+padding-left: 5px;
+padding-bottom: 5px;
+background-color: #f8f8f8;
+}
+
+div.navigate
+{ text-align: center;
+background-color: #f0f0f0;
+border: 1px dotted;
+padding: 5px;
+}
+
+div.title
+{ text-align: center;
+padding-bottom: 1em;
+font-size: 200%;
+font-weight: bold;
+}
+
+div.author
+{ text-align: center;
+font-style: italic;
+}
+
+div.abstract
+{ margin-top: 2em;
+background-color: #f0f0f0;
+border: 1px dotted;
+padding: 5px;
+margin-left: 10%; margin-right:10%;
+}
+
+div.abstract-title
+{ text-align: center;
+padding: 5px;
+font-size: 120%;
+font-weight: bold;
+}
+
+div.toc-h1
+{ font-size: 200%;
+font-weight: bold;
+}
+
+div.toc-h2
+{ font-size: 120%;
+font-weight: bold;
+margin-left: 2em;
+}
+
+div.toc-h3
+{ font-size: 100%;
+font-weight: bold;
+margin-left: 4em;
+}
+
+div.toc-h4
+{ font-size: 100%;
+margin-left: 6em;
+}
+
+span.sec-nr
+{
+}
+
+span.sec-title
+{
+}
+
+span.pred-ext
+{ font-weight: bold;
+}
+
+span.pred-tag
+{ float: right;
+padding-top: 0.2em;
+font-size: 80%;
+font-style: italic;
+color: #fff;
+}
+
+div.caption
+{ width: 80%;
+margin: auto;
+text-align:center;
+}
+
+/* Footnotes */
+.fn {
+color: red;
+font-size: 70%;
+}
+
+.fn-text, .fnp {
+position: absolute;
+top: auto;
+left: 10%;
+border: 1px solid #000;
+box-shadow: 5px 5px 5px #888;
+display: none;
+background: #fff;
+color: #000;
+margin-top: 25px;
+padding: 8px 12px;
+font-size: larger;
+}
+
+sup:hover span.fn-text
+{ display: block;
+}
+
+/* Lists */
+
+dl.latex
+{ margin-top: 1ex;
+margin-bottom: 0.5ex;
+}
+
+dl.latex dl.latex dd.defbody
+{ margin-bottom: 0.5ex;
+}
+
+/* PlDoc Tags */
+
+dl.tags
+{ font-size: 90%;
+margin-left: 5ex;
+margin-top: 1ex;
+margin-bottom: 0.5ex;
+}
+
+dl.tags dt
+{ margin-left: 0pt;
+font-weight: bold;
+}
+
+dl.tags dd
+{ margin-left: 3ex;
+}
+
+td.param
+{ font-style: italic;
+font-weight: bold;
+}
+
+/* Index */
+
+dt.index-sep
+{ font-weight: bold;
+font-size: +1;
+margin-top: 1ex;
+}
+
+/* Tables */
+
+table.center
+{ margin: auto;
+}
+
+table.latex
+{ border-collapse:collapse;
+}
+
+table.latex tr
+{ vertical-align: text-top;
+}
+
+table.latex td,th
+{ padding: 2px 1em;
+}
+
+table.latex tr.hline td,th
+{ border-top: 1px solid black;
+}
+
+table.frame-box
+{ border: 2px solid black;
+}
+
+</style>
+</head>
+<body style="background:white">
+<div class="title">SWI-Prolog BerkeleyDB interface</div>
+<div class="author">Jan Wielemaker <br>
+VU university Amsterdam <br>
+The Netherlands <br>
+E-mail: <a class="url" href="mailto:J.Wielemaker@vu.nl">J.Wielemaker@vu.nl</a></div>
+<div class="abstract">
+<div class="abstract-title">Abstract</div> This package realised 
+external storage of Prolog terms based on the <em>Berkeley DB</em> 
+library from <a class="url" href="http://www.sleepycat.com">Sleepycat 
+Software</a>. The DB library implements modular support for the bottom 
+layers of a database. The database itself maps unconstrained keys onto 
+values.
+
+<p>The SWI-Prolog interface for DB allows for fast storage of arbitrary 
+Prolog terms in the database.
+</div>
+
+<h1><a id="document-contents">Table of Contents</a></h1>
+
+<div class="toc">
+<div class="toc-h2"><a class="sec" href="#sec:1"><span class="sec-nr">1</span> <span class="sec-title">Introduction</span></a></div>
+<div class="toc-h3"><a class="sec" href="#sec:1.1"><span class="sec-nr">1.1</span> <span class="sec-title">About 
+this manual</span></a></div>
+<div class="toc-h2"><a class="sec" href="#sec:2"><span class="sec-nr">2</span> <span class="sec-title">library(bdb): 
+Berkeley DB interface</span></a></div>
+<div class="toc-h2"><a class="sec" href="#sec:3"><span class="sec-nr">3</span> <span class="sec-title">Copyright 
+and license</span></a></div>
+</div>
+
+<p><h2 id="sec:db-intro"><a id="sec:1"><span class="sec-nr">1</span> <span class="sec-title">Introduction</span></a></h2>
+
+<a id="sec:db-intro"></a>
+
+<p>The native Prolog database is not very well suited for either <em>very</em> 
+large data-sets or dynamically changing large data-sets that need to be 
+communicated between Prolog instances or need to be safely guarded 
+against system failure. These cases ask for an external database that 
+can be attached quickly and provides protection against system failure.
+
+<p>The Berkeley DB package is an open source library realising the 
+bottom-layers of a database. It is a modular system, which in it's 
+simplest deals with resource management on a mapped file and in its most 
+complex form deals with network transparency, transaction management, 
+locking, recovery, life-backup, etc.
+
+<p>The DB library maps keys to values. Optionally multiple values can be 
+associated with a key. Both key and value are arbitrary-length binary 
+objects.
+
+<p>This package stores arbitrary Prolog terms into the database, 
+serializing them using <b>PL_record_external()</b>. This provides an 
+interface similar to the recorded-database (<a id="idx:recorda3:1"></a><span class="pred-ext">recorda/3</span>), 
+which supports terms with internal sharing, cycles and attributes. In 
+addition, it can store restricted data types such as atoms, strings and 
+integers using standard representations which allows for sharing the 
+database with other languages.
+
+<p><h3 id="sec:db-about"><a id="sec:1.1"><span class="sec-nr">1.1</span> <span class="sec-title">About 
+this manual</span></a></h3>
+
+<a id="sec:db-about"></a>
+
+<p>This manual is by no means complete. The Berkeley DB documentation 
+should be consulted directly to resolve details on security, resource 
+usage, formats, configuration options etc. This interface passed default 
+values for most DB API calls. Supported options hint to the 
+corresponding DB API calls, which should be consulted for details.
+
+<p><h2 id="sec:bdb"><a id="sec:2"><span class="sec-nr">2</span> <span class="sec-title">library(bdb): 
+Berkeley DB interface</span></a></h2>
+
+<p><a id="sec:bdb"></a>
+
+<p>This package realises a binding to <i>Berkeley DB</i>, originally by
+<a class="url" href="http://www.sleepycat.com/">Sleepycat Software</a>, 
+now managed by
+<a class="url" href="http://www.oracle.com/technetwork/database/database-technologies/berkeleydb/downloads/index.html">Oracle</a>. 
+The DB library implements modular support for the bottom layers of a 
+database. In can be configured for single-threaded access to a file, 
+multi-threaded access with transactions, remote access as well as 
+database replication.
+
+<p>Berkeley DB is an <i>embedded</i> database. This implies the library 
+provides access to a file containing one or more database tables. The 
+Berkeley DB database tables are always <i>binary</i>, mapping a <i>key</i> 
+to a <i>value</i>. The SWI-Prolog interface to Berkeley DB allows for 
+fast storage of arbitrary Prolog terms including cycles and constraints 
+in the database.
+
+<p>Accessing a database consists of four steps:
+
+<p>
+<ol class="latex">
+<li>Initialise the default DB environment using <a class="pred" href="#bdb_init/1">bdb_init/1</a> 
+or create an explicit DB environment using <a class="pred" href="#bdb_init/2">bdb_init/2</a>. 
+This step is optional, providing simple non-transactional file access 
+when omitted.
+<li>Open a database using <a class="pred" href="#bdb_open/4">bdb_open/4</a>, 
+returning a handle to the database.
+<li>Accessing the data using <a class="pred" href="#bdb_put/3">bdb_put/3</a>, <a class="pred" href="#bdb_get/3">bdb_get/3</a>, 
+etc.
+<li>Closing a database using <a class="pred" href="#bdb_close/1">bdb_close/1</a>. 
+When omitted, all open databases are closed on program halt (see <span class="pred-ext">at_halt/1</span>).
+</ol>
+
+<p><b>Errors</b> reported by the underlying database are mapped to an 
+exception of the form <code>error(bdb(Code,Message,Object), _)</code>, 
+where <var>Code</var> is an atom for well known errors and an integer 
+for less known ones. <var>Message</var> is the return from the <code>db_strerror()</code> 
+function and <var>Object</var> is the most related Prolog object, 
+typically a database or database environment handle. If <var>Code</var> 
+is an atom, it is the lowercase version of the associated C macro after 
+string the <code>DB_</code> prefix. Currently the following atom-typed 
+codes are defined: <code>lock_deadlock</code>, <code>runrecovery</code>,
+<code>notfound</code>, <code>keyempty</code>, <code>keyexist</code>, <code>lock_notgranted</code> 
+and
+<code>secondary_bad</code>.
+
+<dl class="latex">
+<dt class="pubdef"><span class="pred-tag">[det]</span><a id="bdb_init/1"><strong>bdb_init</strong>(<var>+Options</var>)</a></dt>
+<dt class="pubdef"><span class="pred-tag">[det]</span><a id="bdb_init/2"><strong>bdb_init</strong>(<var>-Environment, 
++Options</var>)</a></dt>
+<dd class="defbody">
+Initialise a DB <i>environment</i>. The predicate <a class="pred" href="#bdb_init/1">bdb_init/1</a> 
+initialises the <i>default</i> environment, while <a class="pred" href="#bdb_init/2">bdb_init/2</a> 
+creates an explicit environment that can be passed to <a class="pred" href="#bdb_open/4">bdb_open/4</a> 
+using the <code>environment(+Environment)</code> option. If <a class="pred" href="#bdb_init/1">bdb_init/1</a> 
+is called, it must be called before the first call to <a class="pred" href="#bdb_open/4">bdb_open/4</a> 
+that uses the default environment. If <a class="pred" href="#bdb_init/1">bdb_init/1</a> 
+is not called, the default environment can only handle plain files and 
+does not support multiple threads, locking, crash recovery, etc.
+
+<p>Initializing a BDB environment always requires the <code>home(+Dir)</code> 
+option. If the environment contains no databases, the argument
+<code>create(true)</code> must be supplied as well.
+
+<p>The currently supported options are listed below. The name of the 
+boolean options are derived from the DB flags by dropping the =DB_= 
+prefix and using lowercase, e.g. <code>DB_INIT_LOCK</code> becomes <code>init_lock</code>. 
+For details, please refer to the DB manual.
+
+<dl class="latex">
+<dt><strong>create</strong>(<var>+Bool</var>)</dt>
+<dd class="defbody">
+If <code>true</code>, create any underlying file as required. By 
+default, no new files are created. This option should be set for 
+prograns that create new databases.
+</dd>
+<dt><strong>failchk</strong>(<var>+Bool</var>)</dt>
+<dt><strong>home</strong>(<var>+Home</var>)</dt>
+<dd class="defbody">
+Specify the DB home directory, the directory holding the database files. 
+The directory must exist prior to calling these predicates.
+</dd>
+<dt><strong>init_lock</strong>(<var>+Bool</var>)</dt>
+<dd class="defbody">
+Enable locking (<code>DB_INIT_LOCK</code>). Implied if transactions are 
+used.
+</dd>
+<dt><strong>init_log</strong>(<var>+Bool</var>)</dt>
+<dd class="defbody">
+Enable logging the DB modifications (<code>DB_INIT_LOG</code>). Logging 
+enables recovery of databases in case of system failure. Normally it is 
+used in combination with transactions.
+</dd>
+<dt><strong>init_mpool</strong>(<var>+Bool</var>)</dt>
+<dd class="defbody">
+Initialize memory pool. Impicit if <code>mp_size(+Size)</code> or
+<code>mp_mmapsize(+Size)</code> is specified.
+</dd>
+<dt><strong>init_rep</strong>(<var>+Bool</var>)</dt>
+<dd class="defbody">
+Init database replication. The rest of the replication logic is not yet 
+supported.
+</dd>
+<dt><strong>init_txn</strong>(<var>+Bool</var>)</dt>
+<dd class="defbody">
+Init transactions. Implies <code>init_log(true)</code>.
+</dd>
+<dt><strong>lockdown</strong>(<var>+Bool</var>)</dt>
+<dt><strong>mp_size</strong>(<var>+Integer</var>)</dt>
+<dt><strong>mp_mmapsize</strong>(<var>+Integer</var>)</dt>
+<dd class="defbody">
+Control memory pool handling (<code>DB_INIT_MPOOL</code>). The
+<code>mp_size</code> option sets the memory-pool used for caching, while 
+the <code>mp_mmapsize</code> controls the maximum size of a DB file 
+mapped entirely into memory.
+</dd>
+<dt><strong>private</strong>(<var>+Bool</var>)</dt>
+<dt><strong>recover</strong>(<var>+Bool</var>)</dt>
+<dd class="defbody">
+Perform recovery before opening the database.
+</dd>
+<dt><strong>recover_fatal</strong>(<var>+Bool</var>)</dt>
+<dd class="defbody">
+Perform fatal recovery before opening the database.
+</dd>
+<dt><strong>register</strong>(<var>+Bool</var>)</dt>
+<dt><strong>server</strong>(<var>+Host, [+ServerOptions]</var>)</dt>
+<dd class="defbody">
+Initialise the DB package for accessing a remote database. <var>Host</var> 
+specifies the name of the machine running
+<code>berkeley_db_svc</code>. Optionally additional options may be 
+specified:
+
+<dl class="latex">
+<dt><strong>server_timeout</strong>(<var>+Seconds</var>)</dt>
+<dd class="defbody">
+Specify the timeout time the server uses to determine that the client 
+has gone. This implies the server will terminate the connection to this 
+client if this client does not issue any requests for the indicated 
+time.
+</dd>
+<dt><strong>client_timeout</strong>(<var>+Seconds</var>)</dt>
+<dd class="defbody">
+Specify the time the client waits for the server to handle a request.
+</dd>
+</dl>
+
+</dd>
+<dt><strong>system_mem</strong>(<var>+Bool</var>)</dt>
+<dt><strong>transactions</strong>(<var>+Bool</var>)</dt>
+<dd class="defbody">
+Enable transactions, providing atomicy of changes and security. Implies 
+logging and locking. See
+<a class="pred" href="#bdb_transaction/1">bdb_transaction/1</a>.
+</dd>
+<dt><strong>thread</strong>(<var>+Bool</var>)</dt>
+<dd class="defbody">
+Make the environment accessible from multiple threads.
+</dd>
+<dt><strong>thread_count</strong>(<var>+Integer</var>)</dt>
+<dd class="defbody">
+Declare an approximate number of threads in the database environment. 
+See <code>DB_ENV-&gt;set_thread_count()</code>.
+</dd>
+<dt><strong>use_environ</strong>(<var>+Bool</var>)</dt>
+<dt><strong>use_environ_root</strong>(<var>+Bool</var>)</dt>
+<dt><strong>config</strong>(<var>+ListOfConfig</var>)</dt>
+<dd class="defbody">
+Specify a list of configuration options, each option is of the form 
+Name(Value). Currently unused.
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span class="pred-tag">[det]</span><a id="bdb_close_environment/1"><strong>bdb_close_environment</strong>(<var>+Environment</var>)</a></dt>
+<dd class="defbody">
+Close a database environment that was explicitly created using
+<a class="pred" href="#bdb_init/2">bdb_init/2</a>.</dd>
+<dt class="pubdef"><span class="pred-tag">[nondet]</span><a id="bdb_current_environment/1"><strong>bdb_current_environment</strong>(<var>-Environment</var>)</a></dt>
+<dd class="defbody">
+True when <var>Environment</var> is a currently known environment.</dd>
+<dt class="pubdef"><span class="pred-tag">[nondet]</span><a id="bdb_environment_property/2"><strong>bdb_environment_property</strong>(<var>?Environment, 
+?Property</var>)</a></dt>
+<dd class="defbody">
+True when <var>Property</var> is a property of <var>Environment</var>. 
+Defined properties are all boolean options defined with <a class="pred" href="#bdb_init/2">bdb_init/2</a> 
+and the following options:
+
+<dl class="latex">
+<dt><strong>home</strong>(<var>-Path</var>)</dt>
+<dd class="defbody">
+<var>Path</var> is the absolute path name for the directory used as 
+database environment.
+</dd>
+<dt><strong>open</strong>(<var>-Boolean</var>)</dt>
+<dd class="defbody">
+True if the environment is open.
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span class="pred-tag">[det]</span><a id="bdb_open/4"><strong>bdb_open</strong>(<var>+File, 
++Mode, -DB, +Options</var>)</a></dt>
+<dd class="defbody">
+Open <var>File</var> holding a database. <var>Mode</var> is one of <code>read</code>, 
+providing read-only access or <code>update</code>, providing read/write 
+access.
+<var>Options</var> is a list of options. Supported options are below. 
+The boolean options are passed as flags to <code>DB-&gt;open()</code>. 
+The option name is derived from the flag name by stripping the
+<code>DB_</code> prefix and converting to lower case. Consult the 
+Berkeley <var>DB</var> documentation for details.
+
+<dl class="latex">
+<dt><strong>auto_commit</strong>(<var>+Boolean</var>)</dt>
+<dd class="defbody">
+Open the database in a transaction. Ensures no database is created in 
+case of failure.
+</dd>
+<dt><strong>create</strong>(<var>+Boolean</var>)</dt>
+<dd class="defbody">
+Create a new database of the database does not exist.
+</dd>
+<dt><strong>dup</strong>(<var>+Boolean</var>)</dt>
+<dd class="defbody">
+Do/do not allow for duplicate values on the same key. Default is not to 
+allow for duplicates.
+</dd>
+<dt><strong>excl</strong>(<var>+Boolean</var>)</dt>
+<dd class="defbody">
+Combined with <code>create(true)</code>, fail if the database already 
+exists.
+</dd>
+<dt><strong>multiversion</strong>(<var>+Boolean</var>)</dt>
+<dd class="defbody">
+Open the database with support for multiversion concurrency control. The 
+flag is passed, but no further support is provided yet.
+</dd>
+<dt><strong>nommap</strong>(<var>+Boolean</var>)</dt>
+<dd class="defbody">
+Do not map this database into process memory.
+</dd>
+<dt><strong>rdonly</strong>(<var>+Boolean</var>)</dt>
+<dd class="defbody">
+Open the database for reading only.
+</dd>
+<dt><strong>read_uncommitted</strong>(<var>+Boolean</var>)</dt>
+<dd class="defbody">
+Read operations on the database may request the return of modified but 
+not yet committed data. This flag must be specified on all <var>DB</var> 
+handles used to perform dirty reads or database updates, otherwise 
+requests for dirty reads may not be honored and the read may block.
+</dd>
+<dt><strong>thread</strong>(<var>+Boolean</var>)</dt>
+<dd class="defbody">
+Enable access to the database handle from multiple threads. This is 
+default if the corresponding flag is specified for the environment.
+</dd>
+<dt><strong>truncate</strong>(<var>+Boolean</var>)</dt>
+<dd class="defbody">
+When specified, truncate the underlying file, i.e., start with an empty 
+database.
+</dd>
+<dt><strong>database</strong>(<var>+Name</var>)</dt>
+<dd class="defbody">
+If <var>File</var> contains multiple databases, address the named 
+database in the file. A <var>DB</var> file can only consist of multiple 
+databases if the <a class="pred" href="#bdb_open/4">bdb_open/4</a> call 
+that created it specified this argument. Each database in the file has 
+its own characteristics.
+</dd>
+<dt><strong>environment</strong>(<var>+Environment</var>)</dt>
+<dd class="defbody">
+Specify a database environment created using <a class="pred" href="#bdb_init/2">bdb_init/2</a>.
+</dd>
+<dt><strong>key</strong>(<var>+Type</var>)</dt>
+<dt><strong>value</strong>(<var>+Type</var>)</dt>
+<dd class="defbody">
+Specify the type of the key or value. Allowed values are:
+
+<dl class="latex">
+<dt><strong>term</strong></dt>
+<dd class="defbody">
+Key/Value is a Prolog term (default). This type allows for representing 
+arbitrary Prolog data in both keys and value. The representation is 
+space-efficient, but Prolog specific. See PL_record_external() in the 
+SWI-Prolog Reference Manual for details on the representation. The other 
+representations are more neutral. This implies they are more stable and 
+sharing the <var>DB</var> with other languages is feasible.
+</dd>
+<dt><strong>atom</strong></dt>
+<dd class="defbody">
+Key/Value is an atom. The text is represented as a UTF-8 string and its 
+length.
+</dd>
+<dt><strong>c_blob</strong></dt>
+<dd class="defbody">
+Key/Value is a blob (sequence of bytes). On output, a Prolog string is 
+used. The input is either a Prolog string or an atom holding only 
+characters in the range [0..255].
+</dd>
+<dt><strong>c_string</strong></dt>
+<dd class="defbody">
+Key/Value is an atom. The text is represented as a C 0-terminated UTF-8 
+string.
+</dd>
+<dt><strong>c_long</strong></dt>
+<dd class="defbody">
+Key/Value is an integer. The value is represented as a native C long in 
+machine byte-order.
+</dd>
+</dl>
+
+</dd>
+</dl>
+
+<table class="arglist">
+<tr><td><var>DB</var> </td><td>is unified with a <i>blob</i> of type <code>db</code>. 
+Database handles are subject to atom garbage collection. </td></tr>
+</table>
+
+<dl class="tags">
+<dt class="tag">Errors</dt>
+<dd>
+<code>permission_error(access, bdb_environment, Env)</code> if an 
+environment is not thread-enabled and accessed from multiple threads.
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span class="pred-tag">[det]</span><a id="bdb_close/1"><strong>bdb_close</strong>(<var>+DB</var>)</a></dt>
+<dd class="defbody">
+Close BerkeleyDB database indicated by <var>DB</var>. <var>DB</var> 
+becomes invalid after this operation. An attempt to access a closed 
+database is detected reliably and results in a permission_error 
+exception.</dd>
+<dt class="pubdef"><span class="pred-tag">[det]</span><a id="bdb_put/3"><strong>bdb_put</strong>(<var>+DB, 
++Key, +Value</var>)</a></dt>
+<dd class="defbody">
+Add a new key-value pair to the database. If the database does not allow 
+for duplicates the possible previous associated with
+<var>Key</var> is replaced by <var>Value</var>.</dd>
+<dt class="pubdef"><span class="pred-tag">[nondet]</span><a id="bdb_del/3"><strong>bdb_del</strong>(<var>+DB, 
+?Key, ?Value</var>)</a></dt>
+<dd class="defbody">
+Delete the first matching key-value pair from the database. If the 
+database allows for duplicates, this predicate is non-deterministic, 
+otherwise it is <i>semidet</i>. The enumeration performed by this 
+predicate is the same as for <a class="pred" href="#bdb_get/3">bdb_get/3</a>. 
+See also <a class="pred" href="#bdb_delall/3">bdb_delall/3</a>.</dd>
+<dt class="pubdef"><span class="pred-tag">[det]</span><a id="bdb_delall/3"><strong>bdb_delall</strong>(<var>+DB, 
++Key, ?Value</var>)</a></dt>
+<dd class="defbody">
+Delete all matching key-value pairs from the database. With unbound <var>Value</var> 
+the key and all values are removed efficiently.</dd>
+<dt class="pubdef"><span class="pred-tag">[nondet]</span><a id="bdb_get/3"><strong>bdb_get</strong>(<var>+DB, 
+?Key, -Value</var>)</a></dt>
+<dd class="defbody">
+Query the database. If the database allows for duplicates this predicate 
+is non-deterministic, otherwise it is <i>semidet</i>. Note that if <var>Key</var> 
+is a term this matches stored keys that are
+<i>variants</i> of <var>Key</var>, <b>not</b> unification. See <span class="pred-ext">=@=/2</span>. 
+Thus, after
+<code>bdb_put(DB, f(X), 42)</code>, we get the following query results:
+
+<p>
+<ul class="latex">
+<li><code>bdb_get(DB, f(Y), V)</code> binds <var>Value</var> to <code>42</code>, 
+while <var>Y</var> is left unbound.
+<li><code>bdb_get(DB, f(a), V)</code> <i>fails</i>.
+<li><code>bdb_enum(DB, f(a), V)</code> succeeds, but does not perform 
+any indexing, i.e., it enumerates all key-value pairs and performs the 
+unification.
+</ul>
+</dd>
+<dt class="pubdef"><a id="bdb_enum/3"><strong>bdb_enum</strong>(<var>+DB, 
+-Key, -Value</var>)</a></dt>
+<dd class="defbody">
+Enumerate the whole database, unifying the key-value pairs to
+<var>Key</var> and <var>Value</var>. Though this predicate can be used 
+with an instantiated <var>Key</var> to enumerate only the keys unifying 
+with <var>Key</var>, no indexing is used by <a class="pred" href="#bdb_enum/3">bdb_enum/3</a>.</dd>
+<dt class="pubdef"><span class="pred-tag">[semidet]</span><a id="bdb_getall/3"><strong>bdb_getall</strong>(<var>+DB, 
++Key, -Values</var>)</a></dt>
+<dd class="defbody">
+Get all values associated with <var>Key</var>. Fails if the key does not 
+exist (as <span class="pred-ext">bagof/3</span>).</dd>
+<dt class="pubdef"><span class="pred-tag">[nondet]</span><a id="bdb_current/1"><strong>bdb_current</strong>(<var>?DB</var>)</a></dt>
+<dd class="defbody">
+True when <var>DB</var> is a handle to a currently open database.</dd>
+<dt class="pubdef"><span class="pred-tag">[det]</span><a id="bdb_closeall/0"><strong>bdb_closeall</strong></a></dt>
+<dd class="defbody">
+Close all currently open databases and environments. This is called 
+automatically after loading this library on process terminatation using <span class="pred-ext">at_halt/1</span>.</dd>
+<dt class="pubdef"><span class="pred-tag">[semidet]</span><a id="bdb_transaction/1"><strong>bdb_transaction</strong>(<var>:Goal</var>)</a></dt>
+<dt class="pubdef"><span class="pred-tag">[semidet]</span><a id="bdb_transaction/2"><strong>bdb_transaction</strong>(<var>+Environment, 
+:Goal</var>)</a></dt>
+<dd class="defbody">
+Start a transaction, execute <var>Goal</var> and terminate the 
+transaction. Only if <var>Goal</var> succeeds, the transaction is 
+commited. If <var>Goal</var> fails or raises an exception, the 
+transaction is aborted and
+<a class="pred" href="#bdb_transaction/1">bdb_transaction/1</a> either 
+fails or rethrows the exception. Of special interest is the exception
+
+<pre class="code">
+error(package(db, deadlock), _)
+</pre>
+
+<p>This exception indicates a deadlock was raised by one of the DB 
+predicates. Deadlocks may arise if multiple processes or threads access 
+the same keys in a different order. The DB infra-structure causes one of 
+the processes involved in the deadlock to abort its transaction. This 
+process may choose to restart the transaction.
+
+<p>For example, a DB application may define <code>{Goal}</code> to 
+realise transactions and restart these automatically is a deadlock is 
+raised:
+
+<pre class="code">
+{Goal} :-
+    catch(bdb_transaction(Goal), E, true),
+    (   var(E)
+    -&gt;  true
+    ;   E = error(package(db, deadlock), _)
+    -&gt;  {Goal}
+    ;   throw(E)
+    ).
+</pre>
+
+<table class="arglist">
+<tr><td><var>Environment</var> </td><td>defines the environment to which 
+the transaction applies. If omitted, the default environment is used. 
+See <a class="pred" href="#bdb_init/1">bdb_init/1</a> and <a class="pred" href="#bdb_init/2">bdb_init/2</a>. </td></tr>
+</table>
+</dd>
+<dt class="pubdef"><span class="pred-tag">[det]</span><a id="bdb_version/1"><strong>bdb_version</strong>(<var>-Version:integer</var>)</a></dt>
+<dd class="defbody">
+True when <var>Version</var> identifies the database version. <var>Version</var> 
+is an integer defined as:
+
+<pre class="code">
+DB_VERSION_MAJOR*10000 +
+DB_VERSION_MINOR*100   +
+DB_VERSION_PATCH
+</pre>
+
+<p></dd>
+</dl>
+
+<p><h2 id="sec:db-copyright"><a id="sec:3"><span class="sec-nr">3</span> <span class="sec-title">Copyright 
+and license</span></a></h2>
+
+<a id="sec:db-copyright"></a>
+
+<p>The SWI-Prolog interface code is licensed under the same conditions 
+as SWI-Prolog itself.
+
+<p>The following is the license that applies to this copy of the 
+Berkeley DB software. For a license to use the Berkeley DB software 
+under conditions other than those described here, or to purchase support 
+for this software, please contact Oracle at 
+berkeleydb-info_us@oracle.com.
+
+<pre class="code">
+/*
+ * Copyright (c) 1990, 2010 Oracle and/or its affiliates.  All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ * 3. Redistributions in any form must be accompanied by information on
+ *    how to obtain complete source code for the DB software and any
+ *    accompanying software that uses the DB software.  The source code
+ *    must either be included in the distribution or be available for no
+ *    more than the cost of distribution plus a nominal fee, and must be
+ *    freely redistributable under reasonable conditions.  For an
+ *    executable file, complete source code means the source code for all
+ *    modules it contains.  It does not include source code for modules or
+ *    files that typically accompany the major components of the operating
+ *    system on which the executable file runs.
+ *
+ * THIS SOFTWARE IS PROVIDED BY ORACLE ``AS IS'' AND ANY EXPRESS OR
+ * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR
+ * NON-INFRINGEMENT, ARE DISCLAIMED.  IN NO EVENT SHALL ORACLE BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
+ * BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+ * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
+ * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+/*
+ * Copyright (c) 1990, 1993, 1994, 1995
+ *      The Regents of the University of California.  All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ * 3. Neither the name of the University nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
+ */
+/*
+ * Copyright (c) 1995, 1996
+ *      The President and Fellows of Harvard University.  All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ * 3. Neither the name of the University nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY HARVARD AND ITS CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL HARVARD OR ITS CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
+ */
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+/***
+ * ASM: a very small and fast Java bytecode manipulation framework
+ * Copyright (c) 2000-2005 INRIA, France Telecom
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ * 3. Neither the name of the copyright holders nor the names of its
+ *    contributors may be used to endorse or promote products derived from
+ *    this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
+ * THE POSSIBILITY OF SUCH DAMAGE.
+ */
+</pre>
+
+</body></html>

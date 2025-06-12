@@ -1,0 +1,349 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+<title>SWI-Prolog 9.2.9 Reference Manual: Section A.42</title><link rel="home" href="index.html">
+<link rel="contents" href="Contents.html">
+<link rel="index" href="DocIndex.html">
+<link rel="summary" href="summary.html">
+<link rel="previous" href="prologtrace.html">
+<link rel="next" href="prologxref.html">
+
+<style type="text/css">
+
+/* Style sheet for SWI-Prolog latex2html
+*/
+
+dd.defbody
+{ margin-bottom: 1em;
+}
+
+dt.pubdef, dt.multidef
+{ color: #fff;
+padding: 2px 10px 0px 10px;
+margin-bottom: 5px;
+font-size: 18px;
+vertical-align: middle;
+overflow: hidden;
+}
+
+dt.pubdef { background-color: #0c3d6e; }
+dt.multidef { background-color: #ef9439; }
+
+.bib dd
+{ margin-bottom: 1em;
+}
+
+.bib dt
+{ float: left;
+margin-right: 1.3ex;
+}
+
+pre.code
+{ margin-left: 1.5em;
+margin-right: 1.5em;
+border: 1px dotted;
+padding-top: 5px;
+padding-left: 5px;
+padding-bottom: 5px;
+background-color: #f8f8f8;
+}
+
+div.navigate
+{ text-align: center;
+background-color: #f0f0f0;
+border: 1px dotted;
+padding: 5px;
+}
+
+div.title
+{ text-align: center;
+padding-bottom: 1em;
+font-size: 200%;
+font-weight: bold;
+}
+
+div.author
+{ text-align: center;
+font-style: italic;
+}
+
+div.abstract
+{ margin-top: 2em;
+background-color: #f0f0f0;
+border: 1px dotted;
+padding: 5px;
+margin-left: 10%; margin-right:10%;
+}
+
+div.abstract-title
+{ text-align: center;
+padding: 5px;
+font-size: 120%;
+font-weight: bold;
+}
+
+div.toc-h1
+{ font-size: 200%;
+font-weight: bold;
+}
+
+div.toc-h2
+{ font-size: 120%;
+font-weight: bold;
+margin-left: 2em;
+}
+
+div.toc-h3
+{ font-size: 100%;
+font-weight: bold;
+margin-left: 4em;
+}
+
+div.toc-h4
+{ font-size: 100%;
+margin-left: 6em;
+}
+
+span.sec-nr
+{
+}
+
+span.sec-title
+{
+}
+
+span.pred-ext
+{ font-weight: bold;
+}
+
+span.pred-tag
+{ float: right;
+padding-top: 0.2em;
+font-size: 80%;
+font-style: italic;
+color: #fff;
+}
+
+div.caption
+{ width: 80%;
+margin: auto;
+text-align:center;
+}
+
+/* Footnotes */
+.fn {
+color: red;
+font-size: 70%;
+}
+
+.fn-text, .fnp {
+position: absolute;
+top: auto;
+left: 10%;
+border: 1px solid #000;
+box-shadow: 5px 5px 5px #888;
+display: none;
+background: #fff;
+color: #000;
+margin-top: 25px;
+padding: 8px 12px;
+font-size: larger;
+}
+
+sup:hover span.fn-text
+{ display: block;
+}
+
+/* Lists */
+
+dl.latex
+{ margin-top: 1ex;
+margin-bottom: 0.5ex;
+}
+
+dl.latex dl.latex dd.defbody
+{ margin-bottom: 0.5ex;
+}
+
+/* PlDoc Tags */
+
+dl.tags
+{ font-size: 90%;
+margin-left: 5ex;
+margin-top: 1ex;
+margin-bottom: 0.5ex;
+}
+
+dl.tags dt
+{ margin-left: 0pt;
+font-weight: bold;
+}
+
+dl.tags dd
+{ margin-left: 3ex;
+}
+
+td.param
+{ font-style: italic;
+font-weight: bold;
+}
+
+/* Index */
+
+dt.index-sep
+{ font-weight: bold;
+font-size: +1;
+margin-top: 1ex;
+}
+
+/* Tables */
+
+table.center
+{ margin: auto;
+}
+
+table.latex
+{ border-collapse:collapse;
+}
+
+table.latex tr
+{ vertical-align: text-top;
+}
+
+table.latex td,th
+{ padding: 2px 1em;
+}
+
+table.latex tr.hline td,th
+{ border-top: 1px solid black;
+}
+
+table.frame-box
+{ border: 2px solid black;
+}
+
+</style>
+</head>
+<body style="background:white">
+<div class="navigate"><a class="nav" href="index.html"><img src="home.gif" alt="Home"></a>
+<a class="nav" href="Contents.html"><img src="index.gif" alt="Contents"></a>
+<a class="nav" href="DocIndex.html"><img src="yellow_pages.gif" alt="Index"></a>
+<a class="nav" href="summary.html"><img src="info.gif" alt="Summary"></a>
+<a class="nav" href="prologtrace.html"><img src="prev.gif" alt="Previous"></a>
+<a class="nav" href="prologxref.html"><img src="next.gif" alt="Next"></a>
+</div>
+<h2 id="sec:prologversions"><a id="sec:A.42"><span class="sec-nr">A.42</span> <span class="sec-title">library(prolog_versions): 
+Demand specific (Prolog) versions</span></a></h2>
+
+<p><a id="sec:prologversions"></a>
+
+<dl class="tags">
+<dt class="mtag">To be done</dt>
+<dd>
+- Not only provide a minimal version but a more version ranges, exclude 
+certain versions, etc. <br>
+- More features and better messages to help the user resolving problems.
+</dd>
+</dl>
+
+<p>This library is provided to make it easier to reason about software 
+versions, in particular require that that hosting Prolog system is of 
+the right version and provides the features required by the library or 
+application.
+
+<dl class="latex">
+<dt class="pubdef"><span class="pred-tag">[det]</span><a id="require_prolog_version/2"><strong>require_prolog_version</strong>(<var>+Required, 
++Features:list</var>)</a></dt>
+<dd class="defbody">
+Claim that the running Prolog version is at least version <var>Required</var> 
+and provides the requested <var>Features</var>. <var>Required</var> is 
+an expression of versions. At the lowest level, a version is an atom or 
+string that provides the version as
+
+<pre class="code">
+Major.Minor[[.Patch][[-GitRev],-GitHash]]]
+</pre>
+
+<p>Example strings are&rsquo;8.5&rsquo;,&rsquo;8.5.0&rsquo;,&rsquo;8.5.0-50&rsquo;,&rsquo;8.5.0-69-gad38e8ad8`. 
+The last two require fetching the sources from git or using the Windows 
+daily builds.
+
+<p>Versions may be embedded in a comparison operator (<code>&lt;</code>, <code>=&lt;</code>, <code>=</code>,
+<code>&gt;=</code> or <code>&gt;</code>), e.g., <code>=&lt;('9.1')</code>. 
+Versions are considered to compare equal only on the components of the <var>Required</var> 
+version. I.e., <code>'9.1'</code> compares equal to <code>'9.1.2'</code>.
+
+<p>Version expressions can be constructed from the Prolog operators&rsquo;,&rsquo;/2,&rsquo;;&rsquo;/2 
+and&rsquo;<code>\+</code>&rsquo;/1. An example of a complicated 
+expression is below, which demands major version 9, but considers 9.1.2 
+not suitable.
+
+<pre class="code">
+(&gt;=('9'), \+(=('9.1.2')))
+</pre>
+
+<p><var>Features</var> is a list of required or preferred features. 
+Individual features are:
+
+<dl class="latex">
+<dt><strong>warning</strong>(<var>Feature</var>)</dt>
+<dd class="defbody">
+Only print a warning instead of throwing an error.
+</dd>
+<dt><strong>library</strong>(<var>Lib</var>)</dt>
+<dd class="defbody">
+Demand <code>library(Lib)</code> to be present. Thde library not being 
+there may indicate an incomplete installation. For example
+<code>library(pce)</code> to demand xpce graphics support.
+</dd>
+<dt><strong><var>Flag</var></strong></dt>
+<dd class="defbody">
+Demand <code>current_prolog_flag(Flag, true)</code> to be true.
+</dd>
+<dt><strong><var>FlagValue</var></strong></dt>
+<dd class="defbody">
+If <var>FlagValue</var> is Flag(Value), demand <code>current_prolog_flag(Flag, Value)</code> 
+to be true.
+</dd>
+</dl>
+
+<dl class="tags">
+<dt class="mtag">Errors</dt>
+<dd>
+- <code>version_error('SWI-Prolog', PrologVersion, Cmp, Required)</code> <br>
+- <code>existence_error(prolog_feature, Feature)</code>
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span class="pred-tag">[det]</span><a id="require_version/3"><strong>require_version</strong>(<var>+Component, 
++Available, +CmpRequired</var>)</a></dt>
+<dd class="defbody">
+Require <var>Component</var> to have version <var>CmpRequired</var>, 
+while <var>Component</var> is know to have version <var>Available</var>.
+
+<dl class="tags">
+<dt class="tag">Errors</dt>
+<dd>
+<code>version_error(Component, Required, Cmp, Available)</code>
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span class="pred-tag">[semidet]</span><a id="cmp_versions/3"><strong>cmp_versions</strong>(<var>?Cmp, 
++V1, +V2</var>)</a></dt>
+<dd class="defbody">
+Compare to versions. <var>Cmp</var> is one of <code>&lt;</code>, <code>=&lt;</code>, <code>=</code>, <code>&gt;=</code> 
+or <code>&gt;</code>. If
+<var>Cmp</var> is unbound we check whether <code>&lt;</code> or <code>&gt;</code> 
+hold or else bind <var>Cmp</var> to
+<code>=</code>.
+
+<p>When comparing for equality (<code>=</code>), the versions are 
+considered equal if they compare equal up to the detail level of the 
+least specified. E.g,&rsquo;9.1.2&rsquo;is considered equal to&rsquo;9.1&rsquo;.
+</dd>
+</dl>
+
+<p></body></html>

@@ -11,7 +11,7 @@
 //   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
-
+#pragma once
 #ifndef ABSL_TIME_INTERNAL_CCTZ_CIVIL_TIME_DETAIL_H_
 #define ABSL_TIME_INTERNAL_CCTZ_CIVIL_TIME_DETAIL_H_
 

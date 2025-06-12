@@ -1,4 +1,5 @@
 #ifndef GOOGLE_PROTOBUF_STUBS_CALLBACK_H_
+
 #define GOOGLE_PROTOBUF_STUBS_CALLBACK_H_
 
 #include <type_traits>

@@ -1,17 +1,21 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
+
 #include "FANTASIA.h"
 
 #include "CoreMinimal.h"
 #include "FANTASIATypes.h"
 
+
 #include "Audio2FaceThread.h"
+#include "Audio2FaceConverterInterface.h"
+
+
 #include <string>
 #include <sound/soundwaveprocedural.h>
 #include <kismet/gameplaystatics.h>
 #include "Sound/SoundWave.h"
-#include "Sound/SoundWaveProcedural.h"
 #include "Misc/FileHelper.h"
 #include "AudioDecompress.h"
 #include "Components/ActorComponent.h"
@@ -26,8 +30,8 @@
 ////
 #include "Audio2FaceComponent.generated.h"
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class FANTASIA_API UAudio2FaceComponent : public UActorComponent
+UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent , implements = "Audio2FaceConverterInterface"))
+class FANTASIA_API UAudio2FaceComponent : public UActorComponent, public IAudio2FaceConverterInterface
 {
 	GENERATED_BODY()
 
@@ -38,17 +42,18 @@ public:
 	FString PlayerA2F_name;
 
 	TArray<float> AudioData;
+	bool stream = false;
 
 	UPROPERTY(EditAnywhere, Category = "Audio2Face")
 	FString server_url;
 	FMyThread* MyThread;
 	FDateTime Inizio;
 	FDateTime Fine;
-	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Play Audio", Keywords = "Nvidia Plugin"), Category = "Audio2Face")
-	void PlayAudio(TArray<float> data);
+	
+	virtual void PlayAudio(TArray<float> data) override;//funzione di richiamo dall'interfaccia A2F
 
-	void A2FaceFMyThread(int32 sampleRate);
-	void LoadRawSoundFromTTS(TArray<float> soundData);
+	void A2FaceFMyThread(int32 sampleRate);	
+	void LoadRawSoundFromTTS(const TArray<float>* soundData);
 
 protected:
 	// Called when the game starts
@@ -57,5 +62,7 @@ protected:
 
 public:	
 	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;	
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
+	void ReceivingDataFunction(const TArray<float>& data);
 };

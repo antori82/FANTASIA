@@ -149,30 +149,74 @@ void USWIPrologComponent::openPrologFile(const FString filename) {
 
 
 void USWIPrologComponent::startProlog() {
-	if (_putenv("SWI_HOME_DIR=C:\\Program Files\\swipl")) return;
+
+	std::string ProjectPath = "C:/Users/Alex/Documents/Unreal Projects/MyProject"; //da modificare
+	std::string ProjectPathReverse = "C:\\Users\\Alex\\Documents\\Unreal Projects\\MyProject";// da modificare
+
+	//-----------------------------------------------------------------------------------------------------
+
+
+
+	std::string SWIPath = "/Plugins/FANTASIA/FANTASIA/ThirdParty/SWIProlog/swiTest/swipl";
+	std::string SWIPathReverse = "\\Plugins\\FANTASIA\\FANTASIA\\ThirdParty\\SWIProlog\\swiTest\\swipl\\bin";
+
+	// Concatenazione “miopia-zero”:
+	std::string HomePath = "SWI_HOME_DIR=" + ProjectPath + SWIPath;
+	std::string DLLDir = ProjectPathReverse + SWIPathReverse + "\\bin";
+
+	if (_putenv(HomePath.c_str()) != 0)//da modificare per renderla atomica
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Directory non Inserita tra le variabili d'ambiente"));
+		return;
+	}
+
+	if (_putenv(HomePath.c_str()) != 0)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Directory non Inserita tra nei path"));
+		return;
+	}
+
+	
+	if (!SetDllDirectoryA(DLLDir.c_str())) {
+		UE_LOG(LogTemp, Error, TEXT("SetDllDirectoryA fallita"));
+		return; // se non riesce qui, non ha senso proseguire
+	}
+
+	UE_LOG(LogTemp, Warning, TEXT("SetDllDirectoryA verso swipl\\bin OK"));
+
+
+	HMODULE hSwipl = LoadLibraryA("libswipl.dll");
+	if (!hSwipl) {
+		DWORD errorMessageID = ::GetLastError();
+		LPSTR messageBuffer = nullptr;
+		FormatMessageA(
+			FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
+			NULL, errorMessageID,
+			MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+			(LPSTR)&messageBuffer, 0, NULL
+		);
+		UE_LOG(LogTemp, Error, TEXT("LoadLibraryA(\"libswipl.dll\") fallita: %s"), *FString(messageBuffer));
+		LocalFree(messageBuffer);
+		return;
+	}
+
+	UE_LOG(LogTemp, Warning, TEXT("Library Loaded correctly"));
+
+	char* av[1];
+	av[0] = (char*)"swipl";
+
 	int argc = 1;
 
-	FString RelativePath = FPaths::ProjectDir();
-	RelativePath = FPaths::GetPath(RelativePath + "Plugins/FANTASIA/FANTASIA/Binaries/Win64/libswipl.dll");
-	FString FullPath = IFileManager::Get().ConvertToAbsolutePathForExternalAppForRead(*RelativePath);
-	char* result = TCHAR_TO_ANSI(*FullPath);
-	if (!PL_initialise(argc, &result)) {
+	if (!PL_initialise(argc, av))
+	{
 		PL_halt(1);
 		UE_LOG(LogTemp, Warning, TEXT("failed to initialise prolog"));
 	}
-	else {
-		resFolderPath = FPaths::ConvertRelativePathToFull(FPaths::ProjectDir());
-		resFolderPath = resFolderPath + "Resources/";
-		char* resPathString = TCHAR_TO_ANSI(*resFolderPath);
 
-		PlTermv dir(2);
-		dir[1].unify_atom(PlAtom(resPathString));
-		PlCall("working_directory", dir);
-		
-		UE_LOG(LogTemp, Display, TEXT("prolog initialised succesfully"));
-		UE_LOG(LogTemp, Display, TEXT("path for prolog: %s, working directory: %s"), *FullPath, *resFolderPath);
-	}
+	UE_LOG(LogTemp, Warning, TEXT("Prolog initalized correctly"));//funziona fino ad ora
+
 }
+
 
 FString USWIPrologComponent::translateTerm(UObject* term) {
 	if (USWIPrologAtom* atom = Cast<USWIPrologAtom>(term)) {
@@ -321,6 +365,7 @@ void USWIPrologComponent::BeginPlay()
 
 	//TODO:: check if correct
 	Super::BeginPlay();
+
 	startProlog();
 
 	// ...
