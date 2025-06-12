@@ -1,0 +1,328 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+<title>SWI-Prolog 9.2.9 Reference Manual: Section A.41</title><link rel="home" href="index.html">
+<link rel="contents" href="Contents.html">
+<link rel="index" href="DocIndex.html">
+<link rel="summary" href="summary.html">
+<link rel="previous" href="prologjiti.html">
+<link rel="next" href="prologversions.html">
+
+<style type="text/css">
+
+/* Style sheet for SWI-Prolog latex2html
+*/
+
+dd.defbody
+{ margin-bottom: 1em;
+}
+
+dt.pubdef, dt.multidef
+{ color: #fff;
+padding: 2px 10px 0px 10px;
+margin-bottom: 5px;
+font-size: 18px;
+vertical-align: middle;
+overflow: hidden;
+}
+
+dt.pubdef { background-color: #0c3d6e; }
+dt.multidef { background-color: #ef9439; }
+
+.bib dd
+{ margin-bottom: 1em;
+}
+
+.bib dt
+{ float: left;
+margin-right: 1.3ex;
+}
+
+pre.code
+{ margin-left: 1.5em;
+margin-right: 1.5em;
+border: 1px dotted;
+padding-top: 5px;
+padding-left: 5px;
+padding-bottom: 5px;
+background-color: #f8f8f8;
+}
+
+div.navigate
+{ text-align: center;
+background-color: #f0f0f0;
+border: 1px dotted;
+padding: 5px;
+}
+
+div.title
+{ text-align: center;
+padding-bottom: 1em;
+font-size: 200%;
+font-weight: bold;
+}
+
+div.author
+{ text-align: center;
+font-style: italic;
+}
+
+div.abstract
+{ margin-top: 2em;
+background-color: #f0f0f0;
+border: 1px dotted;
+padding: 5px;
+margin-left: 10%; margin-right:10%;
+}
+
+div.abstract-title
+{ text-align: center;
+padding: 5px;
+font-size: 120%;
+font-weight: bold;
+}
+
+div.toc-h1
+{ font-size: 200%;
+font-weight: bold;
+}
+
+div.toc-h2
+{ font-size: 120%;
+font-weight: bold;
+margin-left: 2em;
+}
+
+div.toc-h3
+{ font-size: 100%;
+font-weight: bold;
+margin-left: 4em;
+}
+
+div.toc-h4
+{ font-size: 100%;
+margin-left: 6em;
+}
+
+span.sec-nr
+{
+}
+
+span.sec-title
+{
+}
+
+span.pred-ext
+{ font-weight: bold;
+}
+
+span.pred-tag
+{ float: right;
+padding-top: 0.2em;
+font-size: 80%;
+font-style: italic;
+color: #fff;
+}
+
+div.caption
+{ width: 80%;
+margin: auto;
+text-align:center;
+}
+
+/* Footnotes */
+.fn {
+color: red;
+font-size: 70%;
+}
+
+.fn-text, .fnp {
+position: absolute;
+top: auto;
+left: 10%;
+border: 1px solid #000;
+box-shadow: 5px 5px 5px #888;
+display: none;
+background: #fff;
+color: #000;
+margin-top: 25px;
+padding: 8px 12px;
+font-size: larger;
+}
+
+sup:hover span.fn-text
+{ display: block;
+}
+
+/* Lists */
+
+dl.latex
+{ margin-top: 1ex;
+margin-bottom: 0.5ex;
+}
+
+dl.latex dl.latex dd.defbody
+{ margin-bottom: 0.5ex;
+}
+
+/* PlDoc Tags */
+
+dl.tags
+{ font-size: 90%;
+margin-left: 5ex;
+margin-top: 1ex;
+margin-bottom: 0.5ex;
+}
+
+dl.tags dt
+{ margin-left: 0pt;
+font-weight: bold;
+}
+
+dl.tags dd
+{ margin-left: 3ex;
+}
+
+td.param
+{ font-style: italic;
+font-weight: bold;
+}
+
+/* Index */
+
+dt.index-sep
+{ font-weight: bold;
+font-size: +1;
+margin-top: 1ex;
+}
+
+/* Tables */
+
+table.center
+{ margin: auto;
+}
+
+table.latex
+{ border-collapse:collapse;
+}
+
+table.latex tr
+{ vertical-align: text-top;
+}
+
+table.latex td,th
+{ padding: 2px 1em;
+}
+
+table.latex tr.hline td,th
+{ border-top: 1px solid black;
+}
+
+table.frame-box
+{ border: 2px solid black;
+}
+
+</style>
+</head>
+<body style="background:white">
+<div class="navigate"><a class="nav" href="index.html"><img src="home.gif" alt="Home"></a>
+<a class="nav" href="Contents.html"><img src="index.gif" alt="Contents"></a>
+<a class="nav" href="DocIndex.html"><img src="yellow_pages.gif" alt="Index"></a>
+<a class="nav" href="summary.html"><img src="info.gif" alt="Summary"></a>
+<a class="nav" href="prologjiti.html"><img src="prev.gif" alt="Previous"></a>
+<a class="nav" href="prologversions.html"><img src="next.gif" alt="Next"></a>
+</div>
+<h2 id="sec:prologtrace"><a id="sec:A.41"><span class="sec-nr">A.41</span> <span class="sec-title">library(prolog_trace): 
+Print access to predicates</span></a></h2>
+
+<p><a id="sec:prologtrace"></a>
+
+<dl class="tags">
+<dt class="tag">See also</dt>
+<dd>
+<code>library(debug)</code> for adding conditional print statements to a 
+program.
+</dd>
+</dl>
+
+<p>This library prints accesses to specified predicates by wrapping the 
+predicate.
+
+<dl class="latex">
+<dt class="pubdef"><span class="pred-tag">[det]</span><a id="trace/1"><strong>trace</strong>(<var>:Pred</var>)</a></dt>
+<dt class="pubdef"><span class="pred-tag">[det]</span><a id="trace/2"><strong>trace</strong>(<var>:Pred, 
++PortSpec</var>)</a></dt>
+<dd class="defbody">
+Print passes through <i>ports</i> of specified predicates. <var>Pred</var> 
+is a, possible partial, specification of a predicate as it is also used 
+be
+<a class="pred" href="debugger.html#spy/1">spy/1</a> and similar 
+predicates. Where a full predicate specification is of the shape <code>Module:Name/Arity</code> 
+(or&lsquo;<code>//</code>Arity for non-terminals), both the module and 
+arity may be omitted in which case <var>Pred</var> refers to all 
+matching predicates. <var>PortSpec</var> is either a single port (<code>call</code>, <code>exit</code>, <code>fail</code> 
+or <code>redo</code>), preceded with <code>+</code> or <code>-</code> or 
+a list of these. The predicate modifies the current trace specification 
+and then installs a suitable wrapper for the predicate using <span class="pred-ext">wrap_predicate/4</span>. 
+For example:
+
+<pre class="code">
+?- trace(append).
+%     lists:append/2: [all]
+%     lists:append/3: [all]
+%     append/1: [all]
+true.
+
+?- append([a,b], [c], L).
+ T [10] Call: lists:append([a, b], [c], _18032)
+ T [19] Call: lists:append([b], [c], _19410)
+ T [28] Call: lists:append([], [c], _20400)
+ T [28 +0.1ms] Exit: lists:append([], [c], [c])
+ T [19 +0.2ms] Exit: lists:append([b], [c], [b, c])
+ T [10 +0.5ms] Exit: lists:append([a, b], [c], [a, b, c])
+L = [a, b, c].
+
+?- trace(append, -all).
+%     lists:append/2: Not tracing
+%     lists:append/3: Not tracing
+%     append/1: Not tracing
+</pre>
+
+<p>The text between <code>[]</code> indicates the call depth (first 
+number) and for all ports except the <code>call</code> port the <i>wall</i> 
+time since the start (call port) in milliseconds. Note that the 
+instrumentation and print time is included in the time. In the example 
+above the actual time is about 0.00001ms on todays hardware.
+
+<p>In addition, <b>conditions</b> may be specified. In this case the the 
+specification takes the shape <code>trace(:Head, Port(Condition))</code>. 
+For example:
+
+<pre class="code">
+?- trace(current_prolog_flag(Flag, Value), call(var(Flag))).
+?- list_tracing.
+% Trace points (see trace/1,2) on:
+%     system:current_prolog_flag(A,_): [call(var(A))]
+</pre>
+
+<p>This specification will only print the goal if the registered 
+condition succeeds. Note that we can use the condition for its side 
+effect and then fail to avoid printing the event. Clearing the trace 
+event on all relevant ports removes the condition. There is currently no 
+way to modify the condition without clearing the trace point first.</dd>
+<dt class="pubdef"><a id="tracing/2"><strong>tracing</strong>(<var>:Spec, 
+-Ports</var>)</a></dt>
+<dd class="defbody">
+True if <var>Spec</var> is traced using <var>Ports</var>. <var>Spec</var> 
+is a fully qualified head term.</dd>
+<dt class="pubdef"><a id="list_tracing/0"><strong>list_tracing</strong></a></dt>
+<dd class="defbody">
+List predicates we are currently tracing</dd>
+<dt class="pubdef"><span class="pred-tag">[det]</span><a id="notraceall/0"><strong>notraceall</strong></a></dt>
+<dd class="defbody">
+Remove all trace points
+</dd>
+</dl>
+
+<p></body></html>

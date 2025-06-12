@@ -1,0 +1,477 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+<title>SWI-Prolog 9.2.9 Reference Manual: Section 13.3</title><link rel="home" href="index.html">
+<link rel="contents" href="Contents.html">
+<link rel="index" href="DocIndex.html">
+<link rel="summary" href="summary.html">
+<link rel="previous" href="wasm-calling.html">
+<link rel="next" href="runtime.html">
+
+<style type="text/css">
+
+/* Style sheet for SWI-Prolog latex2html
+*/
+
+dd.defbody
+{ margin-bottom: 1em;
+}
+
+dt.pubdef, dt.multidef
+{ color: #fff;
+padding: 2px 10px 0px 10px;
+margin-bottom: 5px;
+font-size: 18px;
+vertical-align: middle;
+overflow: hidden;
+}
+
+dt.pubdef { background-color: #0c3d6e; }
+dt.multidef { background-color: #ef9439; }
+
+.bib dd
+{ margin-bottom: 1em;
+}
+
+.bib dt
+{ float: left;
+margin-right: 1.3ex;
+}
+
+pre.code
+{ margin-left: 1.5em;
+margin-right: 1.5em;
+border: 1px dotted;
+padding-top: 5px;
+padding-left: 5px;
+padding-bottom: 5px;
+background-color: #f8f8f8;
+}
+
+div.navigate
+{ text-align: center;
+background-color: #f0f0f0;
+border: 1px dotted;
+padding: 5px;
+}
+
+div.title
+{ text-align: center;
+padding-bottom: 1em;
+font-size: 200%;
+font-weight: bold;
+}
+
+div.author
+{ text-align: center;
+font-style: italic;
+}
+
+div.abstract
+{ margin-top: 2em;
+background-color: #f0f0f0;
+border: 1px dotted;
+padding: 5px;
+margin-left: 10%; margin-right:10%;
+}
+
+div.abstract-title
+{ text-align: center;
+padding: 5px;
+font-size: 120%;
+font-weight: bold;
+}
+
+div.toc-h1
+{ font-size: 200%;
+font-weight: bold;
+}
+
+div.toc-h2
+{ font-size: 120%;
+font-weight: bold;
+margin-left: 2em;
+}
+
+div.toc-h3
+{ font-size: 100%;
+font-weight: bold;
+margin-left: 4em;
+}
+
+div.toc-h4
+{ font-size: 100%;
+margin-left: 6em;
+}
+
+span.sec-nr
+{
+}
+
+span.sec-title
+{
+}
+
+span.pred-ext
+{ font-weight: bold;
+}
+
+span.pred-tag
+{ float: right;
+padding-top: 0.2em;
+font-size: 80%;
+font-style: italic;
+color: #fff;
+}
+
+div.caption
+{ width: 80%;
+margin: auto;
+text-align:center;
+}
+
+/* Footnotes */
+.fn {
+color: red;
+font-size: 70%;
+}
+
+.fn-text, .fnp {
+position: absolute;
+top: auto;
+left: 10%;
+border: 1px solid #000;
+box-shadow: 5px 5px 5px #888;
+display: none;
+background: #fff;
+color: #000;
+margin-top: 25px;
+padding: 8px 12px;
+font-size: larger;
+}
+
+sup:hover span.fn-text
+{ display: block;
+}
+
+/* Lists */
+
+dl.latex
+{ margin-top: 1ex;
+margin-bottom: 0.5ex;
+}
+
+dl.latex dl.latex dd.defbody
+{ margin-bottom: 0.5ex;
+}
+
+/* PlDoc Tags */
+
+dl.tags
+{ font-size: 90%;
+margin-left: 5ex;
+margin-top: 1ex;
+margin-bottom: 0.5ex;
+}
+
+dl.tags dt
+{ margin-left: 0pt;
+font-weight: bold;
+}
+
+dl.tags dd
+{ margin-left: 3ex;
+}
+
+td.param
+{ font-style: italic;
+font-weight: bold;
+}
+
+/* Index */
+
+dt.index-sep
+{ font-weight: bold;
+font-size: +1;
+margin-top: 1ex;
+}
+
+/* Tables */
+
+table.center
+{ margin: auto;
+}
+
+table.latex
+{ border-collapse:collapse;
+}
+
+table.latex tr
+{ vertical-align: text-top;
+}
+
+table.latex td,th
+{ padding: 2px 1em;
+}
+
+table.latex tr.hline td,th
+{ border-top: 1px solid black;
+}
+
+table.frame-box
+{ border: 2px solid black;
+}
+
+</style>
+</head>
+<body style="background:white">
+<div class="navigate"><a class="nav" href="index.html"><img src="home.gif" alt="Home"></a>
+<a class="nav" href="Contents.html"><img src="index.gif" alt="Contents"></a>
+<a class="nav" href="DocIndex.html"><img src="yellow_pages.gif" alt="Index"></a>
+<a class="nav" href="summary.html"><img src="info.gif" alt="Summary"></a>
+<a class="nav" href="wasm-calling.html"><img src="prev.gif" alt="Previous"></a>
+<a class="nav" href="runtime.html"><img src="next.gif" alt="Next"></a>
+</div>
+<h2 id="sec:wasm-js-call"><a id="sec:13.3"><span class="sec-nr">13.3</span> <span class="sec-title">Accessing 
+JavaScript from Prolog</span></a></h2>
+
+<a id="sec:wasm-js-call"></a>
+
+<p>This section describes how we can interact with JavaScript from 
+Prolog. The interface is captured in a single predicate <span class="pred-ext">:=/2/.</span>
+
+<dl class="latex">
+<dt class="pubdef"><a id=":=/2"><var>Left</var> <strong>:=</strong> <var>Right</var></a></dt>
+<dd class="defbody">
+Depending on <var>Left</var>, this predicate implements two different 
+actions. If <var>Left</var> is a Prolog variable, it evaluates the 
+expression
+<var>Right</var> in JavaScript and unifies the result to <var>Left</var>. 
+If
+<var>Left</var> is a term <var>Obj</var>[<var>Key</var>], where <var>Key</var> 
+is an atom, it accesses a JavaScript <em>setter</em>. The general form 
+of an expression is <var>Expression</var>[<var>Callable</var>] or simply <var>Callable</var>. 
+If <var>Callable</var> is compound it expresses a function (or method) 
+call. Otherwise we call JavaScript <b>eval()</b>, except for these 
+special values:
+
+<dl class="latex">
+<dt><strong>window</strong></dt>
+<dd class="defbody">
+The main browser window itself (<code>undefined</code> when not in a 
+browser).
+</dd>
+<dt><strong>prolog</strong></dt>
+<dd class="defbody">
+The <code>Prolog</code> instance.
+</dd>
+</dl>
+
+<p>Prolog values are translated according to the rules in
+<a class="sec" href="wasm-calling.html#sec:13.2.2.2">section 13.2.2.2</a> 
+and the result is translated back to Prolog according to the rules in <a class="sec" href="wasm-calling.html#sec:13.2.2.1">section 
+13.2.2.1</a>. Because callables are translated to function calls, object 
+properties or global variables we need an escape to pass them as data. 
+This is achieved using the prefix operator <code><code>#</code></code>. 
+Note that lists are passed as JavaScript arrays rather than calls to the 
+list functor. For convenience Prolog strings are by default translated 
+to JavaScript
+<code>String</code> objects rather than <code>Prolog.String</code> 
+instances. Below are some examples:
+
+<pre class="code">
+?- Res := myfunc([1,2,3]).
+?- Max := 'Math'.max(10, 20).
+?- Out := document.getElementById('output').
+?- Par := document.createElement(p),
+   Par.textContent := #Text.
+?- Par.textContent := "aap" + " " + "noot".
+</pre>
+
+<p>Some JavaScript expressions are not implemented as functions. The 
+following &ldquo;functions&rdquo; are handled directly by the 
+implementation.
+
+<dl class="latex">
+<dt><strong>instanceof</strong></dt>
+<dd class="defbody">
+Returns the name of the class to which the object belongs. Same as <code>Obj.constructor.name</code>.
+</dd>
+<dt><strong>instanceof</strong>(<var>ClassName</var>)</dt>
+<dd class="defbody">
+Returns a <code>Boolean</code> indicating whether the object is an 
+instance of <var>ClassName</var>. Note that the class name must be an 
+atom and as JavaScript class names normally start with a capital, the 
+names dypically need to be quoted using <em>single</em> quotes. For 
+example:
+
+<pre class="code">
+?- W := window, T := W.instanceof('Window').
+W = &lt;js_Window&gt;(1),
+T = true.
+</pre>
+
+</dd>
+<dt><strong><code>-</code></strong>(<var>Any</var>)</dt>
+<dd class="defbody">
+Numerical negation
+</dd>
+<dt><strong><code>!</code></strong>(<var>Any</var>)</dt>
+<dd class="defbody">
+Logical negation.
+</dd>
+<dt><strong><code>+</code></strong>(<var>Any, Any</var>)</dt>
+<dt><strong><code>-</code></strong>(<var>Any, Any</var>)</dt>
+<dt><strong><code>*</code></strong>(<var>Any, Any</var>)</dt>
+<dt><strong><code>/</code></strong>(<var>Any, Any</var>)</dt>
+<dt><strong><code>&amp;</code></strong>(<var>Any, Any</var>)</dt>
+<dt><strong><code>|</code></strong>(<var>Any, Any</var>)</dt>
+<dt><strong><code>&amp;&amp;</code></strong>(<var>Any, Any</var>)</dt>
+<dt><strong><code>||</code></strong>(<var>Any, Any</var>)</dt>
+<dd class="defbody">
+Binary operators. Note that some are not defined as Prolog operators and 
+thus one must write e.g. <code>A := &amp;&amp;(true,false)</code>. <code>||</code> 
+is not a Prolog atom, so logical disjunction gets <code>A := '||'(false,false)</code>.
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span class="pred-tag">[semidet]</span><a id="is_object/1"><strong>is_object</strong>(<var>@Term</var>)</a></dt>
+<dd class="defbody">
+True if <var>Term</var> is a reference to a JavaScript object.
+</dd>
+<dt class="pubdef"><span class="pred-tag">[semidet]</span><a id="is_object/2"><strong>is_object</strong>(<var>@Term, 
+?Class</var>)</a></dt>
+<dd class="defbody">
+True when <var>Term</var> is an instance of <var>Class</var>. If <var>Class</var> 
+is unbound it is unified with the name of the <em>constructor</em>, 
+otherwise a JavaScript <code>Term instanceof Class</code> is executed.</dd>
+<dt class="pubdef"><a id="js_script/2"><strong>js_script</strong>(<var>+String, 
++Options</var>)</a></dt>
+<dd class="defbody">
+Evaluate <var>String</var> as JavaScript. This is designed to cooperate 
+with string <em>quasi quotations</em>, so we can write e.g.,
+
+<pre class="code">
+:- use_module(library(strings)).
+:- js_script({|string||
+function myfunc(a)
+...
+|}).
+</pre>
+
+<p>The implementation uses <span class="pred-ext">=:/2</span>, calling 
+the JavaScript function <b>eval()</b>.</dd>
+<dt class="pubdef"><a id="fetch/3"><strong>fetch</strong>(<var>+URL, 
++Type, -Data</var>)</a></dt>
+<dd class="defbody">
+Wrapper around JavaScript <b>fetch()</b>, conversion of the <code>Response</code> 
+object and waiting for the <code>Promise</code>. Type is an atom or 
+string that is used as method on the <code>Response</code> object. 
+Examples are
+<code>text</code>, <code>json</code>, <code>html</code> or <code>blob</code>. 
+The
+<code>blob</code> type returns the <var>Data</var> as a string of <em>bytes</em>, 
+i.e., character codes in the range <var>0 ... 255</var>.
+</dd>
+</dl>
+
+<p><h4 id="sec:wasm-js-async-call"><a id="sec:13.3.1"><span class="sec-nr">13.3.1</span> <span class="sec-title">Asynchronous 
+access to JavaScript from Prolog</span></a></h4>
+
+<a id="sec:wasm-js-async-call"></a>
+
+<p>While <a class="sec" href="wasm-js-call.html#sec:13.3">section 13.3</a> 
+describes synchronous calls from Prolog to JavaScript, we also need 
+asynchronous calling to implement <a id="idx:sleep1:2647"></a><a class="pred" href="miscpreds.html#sleep/1">sleep/1</a>, 
+wait for user input, downloading documents from the web, etc. 
+Asynchronous calling is achieved by <em>yielding</em> from the Prolog 
+virtual machine. This can only be done when Prolog is told to expect 
+that the VM may yield. This is implemented by <code>Prolog.<b>forEach()</b></code> 
+as described in <a class="sec" href="wasm-calling.html#sec:13.2">section 
+13.2</a>.
+
+<dl class="latex">
+<dt class="pubdef"><span class="pred-tag">[det]</span><a id="await/2"><strong>await</strong>(<var>+Promise, 
+-Result</var>)</a></dt>
+<dd class="defbody">
+Yield the Prolog VM, returning control back to JavaScript. When this is 
+called from Prolog invoked using <code>Prolog.<b>forEach()</b></code>, 
+execution of
+<a id="idx:await2:2648"></a><a class="pred" href="wasm-js-call.html#await/2">await/2</a> 
+completes when the <var>Promise</var> resolves and <var>Result</var> is 
+unified with the value passed to the <code>Promise.<b>then()</b></code> 
+method. As an exception to the normal conversion rules, if the result is 
+a single
+<code>String</code>, it is returned as a Prolog string rather than an 
+atom. When the <var>Promise</var> is rejected <a id="idx:await2:2649"></a><a class="pred" href="wasm-js-call.html#await/2">await/2</a> 
+throws an exception. Note that <a id="idx:await2:2650"></a><a class="pred" href="wasm-js-call.html#await/2">await/2</a> 
+allows, for example, downloading a URL from Prolog:
+
+<pre class="code">
+?- FP := fetch("test.pl"), await(FP, Response),
+   TP := Response.text(), await(TP, T).
+FP = &lt;js_Promise&gt;(4),
+Response = &lt;js_Response&gt;(5),
+TP = &lt;js_Promise&gt;(6),
+T = "% :- debug(js) ...".
+</pre>
+
+<p>Calls to <a id="idx:await2:2651"></a><a class="pred" href="wasm-js-call.html#await/2">await/2</a> 
+may be asynchronously aborted by calling
+<code>Prolog.<b>abort()</b></code> if <var>Promise</var> implements <code>.<b>abort()</b></code>. 
+See <a class="sec" href="wasm-js-call.html#sec:13.3.2">section 13.3.2</a> 
+for implementing such a promise.</dd>
+<dt class="pubdef"><span class="pred-tag">[semidet]</span><a id="is_async/0"><strong>is_async</strong></a></dt>
+<dd class="defbody">
+True when we can call <a id="idx:await2:2652"></a><a class="pred" href="wasm-js-call.html#await/2">await/2</a> 
+in the current state. This implies Prolog has been called from 
+JavaScript code that is prepared to deal with Prolog yielding and Prolog 
+is not inside a callback from C (WASM).
+</dd>
+</dl>
+
+<p><h4 id="sec:wasm-promise-abort"><a id="sec:13.3.2"><span class="sec-nr">13.3.2</span> <span class="sec-title">JavaScript 
+Promise that can be aborted</span></a></h4>
+
+<a id="sec:wasm-promise-abort"></a>
+
+<p>A <code>Promise</code> resolves or is rejected. As Prolog waits for a 
+specific promise on a call to <a id="idx:await2:2653"></a><a class="pred" href="wasm-js-call.html#await/2">await/2</a> 
+we may want to abort long running operations. This may be achieved using 
+the class
+<code>Prolog.Promise</code> which extends <code>Promise</code>. To make 
+the promise abortable the <em>executor</em> function must have an
+<code>abort</code> property. Below is the code for
+<code>Prolog.<b>promise_sleep()</b></code> that implements this schema. 
+First we create the <em>executor</em> and use properties on the function 
+itself to represent the necessary state information (here, the running 
+timer). Next, we add an <code>abort</code> property the clears the timer 
+and runs the <code>reject</code> callback of the <code>Promise</code>. 
+Finally we return an instance of <code>Prolog.Promise</code> which 
+implements <code>.<b>abort()</b></code>.
+
+<pre class="code">
+promise_sleep(time)
+{ const f = function(resolve, reject)
+  { f.reject = reject;
+    f.timer = setTimeout(() =&gt;
+      { f.timer = undefined;
+        resolve(true);
+      }, time*1000);
+  };
+
+  f.abort = function()
+  { if ( f.timer )
+    { clearTimeout(f.timer);
+      f.timer = undefined;
+      f.reject("abort");
+    }
+  }
+
+  return new Prolog.Promise(f);
+}
+</pre>
+
+<p></body></html>

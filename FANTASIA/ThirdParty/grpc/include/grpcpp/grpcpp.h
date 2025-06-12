@@ -41,7 +41,7 @@
 /// Refer to the
 /// [examples](https://github.com/grpc/grpc/blob/master/examples/cpp)
 /// for code putting these pieces into play.
-
+#pragma once
 #ifndef GRPCPP_GRPCPP_H
 #define GRPCPP_GRPCPP_H
 

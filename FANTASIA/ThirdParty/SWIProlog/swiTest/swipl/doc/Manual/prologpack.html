@@ -1,0 +1,617 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+<title>SWI-Prolog 9.2.9 Reference Manual: Section 15.3</title><link rel="home" href="index.html">
+<link rel="contents" href="Contents.html">
+<link rel="index" href="DocIndex.html">
+<link rel="summary" href="summary.html">
+<link rel="previous" href="pack-attach.html">
+<link rel="next" href="pack-structure.html">
+
+<style type="text/css">
+
+/* Style sheet for SWI-Prolog latex2html
+*/
+
+dd.defbody
+{ margin-bottom: 1em;
+}
+
+dt.pubdef, dt.multidef
+{ color: #fff;
+padding: 2px 10px 0px 10px;
+margin-bottom: 5px;
+font-size: 18px;
+vertical-align: middle;
+overflow: hidden;
+}
+
+dt.pubdef { background-color: #0c3d6e; }
+dt.multidef { background-color: #ef9439; }
+
+.bib dd
+{ margin-bottom: 1em;
+}
+
+.bib dt
+{ float: left;
+margin-right: 1.3ex;
+}
+
+pre.code
+{ margin-left: 1.5em;
+margin-right: 1.5em;
+border: 1px dotted;
+padding-top: 5px;
+padding-left: 5px;
+padding-bottom: 5px;
+background-color: #f8f8f8;
+}
+
+div.navigate
+{ text-align: center;
+background-color: #f0f0f0;
+border: 1px dotted;
+padding: 5px;
+}
+
+div.title
+{ text-align: center;
+padding-bottom: 1em;
+font-size: 200%;
+font-weight: bold;
+}
+
+div.author
+{ text-align: center;
+font-style: italic;
+}
+
+div.abstract
+{ margin-top: 2em;
+background-color: #f0f0f0;
+border: 1px dotted;
+padding: 5px;
+margin-left: 10%; margin-right:10%;
+}
+
+div.abstract-title
+{ text-align: center;
+padding: 5px;
+font-size: 120%;
+font-weight: bold;
+}
+
+div.toc-h1
+{ font-size: 200%;
+font-weight: bold;
+}
+
+div.toc-h2
+{ font-size: 120%;
+font-weight: bold;
+margin-left: 2em;
+}
+
+div.toc-h3
+{ font-size: 100%;
+font-weight: bold;
+margin-left: 4em;
+}
+
+div.toc-h4
+{ font-size: 100%;
+margin-left: 6em;
+}
+
+span.sec-nr
+{
+}
+
+span.sec-title
+{
+}
+
+span.pred-ext
+{ font-weight: bold;
+}
+
+span.pred-tag
+{ float: right;
+padding-top: 0.2em;
+font-size: 80%;
+font-style: italic;
+color: #fff;
+}
+
+div.caption
+{ width: 80%;
+margin: auto;
+text-align:center;
+}
+
+/* Footnotes */
+.fn {
+color: red;
+font-size: 70%;
+}
+
+.fn-text, .fnp {
+position: absolute;
+top: auto;
+left: 10%;
+border: 1px solid #000;
+box-shadow: 5px 5px 5px #888;
+display: none;
+background: #fff;
+color: #000;
+margin-top: 25px;
+padding: 8px 12px;
+font-size: larger;
+}
+
+sup:hover span.fn-text
+{ display: block;
+}
+
+/* Lists */
+
+dl.latex
+{ margin-top: 1ex;
+margin-bottom: 0.5ex;
+}
+
+dl.latex dl.latex dd.defbody
+{ margin-bottom: 0.5ex;
+}
+
+/* PlDoc Tags */
+
+dl.tags
+{ font-size: 90%;
+margin-left: 5ex;
+margin-top: 1ex;
+margin-bottom: 0.5ex;
+}
+
+dl.tags dt
+{ margin-left: 0pt;
+font-weight: bold;
+}
+
+dl.tags dd
+{ margin-left: 3ex;
+}
+
+td.param
+{ font-style: italic;
+font-weight: bold;
+}
+
+/* Index */
+
+dt.index-sep
+{ font-weight: bold;
+font-size: +1;
+margin-top: 1ex;
+}
+
+/* Tables */
+
+table.center
+{ margin: auto;
+}
+
+table.latex
+{ border-collapse:collapse;
+}
+
+table.latex tr
+{ vertical-align: text-top;
+}
+
+table.latex td,th
+{ padding: 2px 1em;
+}
+
+table.latex tr.hline td,th
+{ border-top: 1px solid black;
+}
+
+table.frame-box
+{ border: 2px solid black;
+}
+
+</style>
+</head>
+<body style="background:white">
+<div class="navigate"><a class="nav" href="index.html"><img src="home.gif" alt="Home"></a>
+<a class="nav" href="Contents.html"><img src="index.gif" alt="Contents"></a>
+<a class="nav" href="DocIndex.html"><img src="yellow_pages.gif" alt="Index"></a>
+<a class="nav" href="summary.html"><img src="info.gif" alt="Summary"></a>
+<a class="nav" href="pack-attach.html"><img src="prev.gif" alt="Previous"></a>
+<a class="nav" href="pack-structure.html"><img src="next.gif" alt="Next"></a>
+</div>
+<h2 id="sec:prologpack"><a id="sec:15.3"><span class="sec-nr">15.3</span> <span class="sec-title">library(prolog_pack): 
+A package manager for Prolog</span></a></h2>
+
+<p><a id="sec:prologpack"></a>
+
+<p>The <code>library(prolog_pack)</code> provides the SWI-Prolog package 
+manager. This library lets you inspect installed packages, install 
+packages, remove packages, etc. This library complemented by the 
+built-in predicates such as <a class="pred" href="pack-attach.html#attach_packs/2">attach_packs/2</a> 
+that makes installed packages available as libraries.
+
+<p>The important functionality of this library is encapsulated in the <i>app</i>
+<code>pack</code>. For help, run
+
+<pre class="code">
+swipl pack help
+</pre>
+
+<dl class="latex">
+<dt class="pubdef"><span class="pred-tag">[det]</span><a id="pack_list_installed/0"><strong>pack_list_installed</strong></a></dt>
+<dd class="defbody">
+List currently installed packages and report possible dependency issues.</dd>
+<dt class="pubdef"><a id="pack_info/1"><strong>pack_info</strong>(<var>+Pack</var>)</a></dt>
+<dd class="defbody">
+Print more detailed information about <var>Pack</var>.</dd>
+<dt class="pubdef"><span class="pred-tag">[det]</span><a id="pack_list/1"><strong>pack_list</strong>(<var>+Query</var>)</a></dt>
+<dt class="pubdef"><span class="pred-tag">[det]</span><a id="pack_list/2"><strong>pack_list</strong>(<var>+Query, 
++Options</var>)</a></dt>
+<dt class="pubdef"><span class="pred-tag">[det]</span><a id="pack_search/1"><strong>pack_search</strong>(<var>+Query</var>)</a></dt>
+<dd class="defbody">
+<var>Query</var> package server and installed packages and display 
+results.
+<var>Query</var> is matches case-insensitively against the name and 
+title of known and installed packages. For each matching package, a 
+single line is displayed that provides:
+
+<p>
+<ul class="latex">
+<li>Installation status
+
+<p>
+<ul class="latex">
+<li><b>p</b>: package, not installed
+<li><b>i</b>: installed package; up-to-date with public version
+<li><b>a</b>: as <b>i</b>, but installed only as dependency
+<li><b>U</b>: installed package; can be upgraded
+<li><b>A</b>: installed package; newer than publically available
+<li><b>l</b>: installed package; not on server
+</ul>
+
+<p>
+<li>Name@Version
+<li>Name@Version(ServerVersion)
+<li>Title
+</ul>
+
+<p><var>Options</var> processed:
+
+<dl class="latex">
+<dt><strong>installed</strong>(<var>true</var>)</dt>
+<dd class="defbody">
+Only list packages that are locally installed. Contacts the server to 
+compare our local version to the latest available version.
+</dd>
+<dt><strong>outdated</strong>(<var>true</var>)</dt>
+<dd class="defbody">
+Only list packages that need to be updated. This option implies <code>installed(true)</code>.
+</dd>
+<dt><strong>server</strong>(<var>Server<code>|</code>false</var>)</dt>
+<dd class="defbody">
+If <code>false</code>, do not contact the server. This implies
+<code>installed(true)</code>. Otherwise, use the given pack server.
+</dd>
+</dl>
+
+<p>Hint: <code>?- pack_list('').</code> lists all known packages.
+
+<p>The predicates <a class="pred" href="prologpack.html#pack_list/1">pack_list/1</a> 
+and <a class="pred" href="prologpack.html#pack_search/1">pack_search/1</a> 
+are synonyms. Both contact the package server at <a class="url" href="https://www.swi-prolog.org">https://www.swi-prolog.org</a> 
+to find available packages. Contacting the server can be avoided using 
+the
+<code>server(false)</code> option.</dd>
+<dt class="pubdef"><span class="pred-tag">[det]</span><a id="pack_install/1"><strong>pack_install</strong>(<var>+Spec:atom</var>)</a></dt>
+<dt class="pubdef"><span class="pred-tag">[det]</span><a id="pack_install/2"><strong>pack_install</strong>(<var>+SpecOrList, 
++Options</var>)</a></dt>
+<dd class="defbody">
+Install one or more packs from <var>SpecOrList</var>. <var>SpecOrList</var> 
+is a single specification or a list of specifications. A specification 
+is one of
+
+<p>
+<ul class="latex">
+<li>A pack name. This queries the pack repository at <a class="url" href="https://www.swi-prolog.org">https://www.swi-prolog.org</a>
+<li>Archive file name
+<li>A <code>http(s)</code> URL of an archive file name. This URL may 
+contain a star (*) for the version. In this case <a class="pred" href="prologpack.html#pack_install/1">pack_install/1</a> 
+asks for the directory content and selects the latest version.
+<li>An https GIT URL
+<li>A local directory name given as <code>file://</code> URL
+<li><code>'.'</code>, in which case a relative symlink is created to the 
+current directory (all other options for <var>Spec</var> make a copy of 
+the files). Installation using a symlink is normally used during 
+development of a pack.
+</ul>
+
+<p>Processes the options below. Default options as would be used by
+<a class="pred" href="prologpack.html#pack_install/1">pack_install/1</a> 
+are used to complete the provided <var>Options</var>. Note that
+<a class="pred" href="prologpack.html#pack_install/2">pack_install/2</a> 
+can be used through the SWI-Prolog command line app
+<code>pack</code> as below. Most of the options of this predicate are 
+available as command line options.
+
+<p>swipl pack install <var>&lt;</var>name<var>&gt;</var>
+
+<p><var>Options</var>:
+
+<dl class="latex">
+<dt><strong>url</strong>(<var>+URL</var>)</dt>
+<dd class="defbody">
+Source for downloading the package
+</dd>
+<dt><strong>pack_directory</strong>(<var>+Dir</var>)</dt>
+<dd class="defbody">
+Directory into which to install the package.
+</dd>
+<dt><strong>global</strong>(<var>+Boolean</var>)</dt>
+<dd class="defbody">
+If <code>true</code>, install in the XDG common application data path, 
+making the pack accessible to everyone. If <code>false</code>, install 
+in the XDG user application data path, making the pack accessible for 
+the current user only. If the option is absent, use the first existing 
+and writable directory. If that doesn't exist find locations where it 
+can be created and prompt the user to do so.
+</dd>
+<dt><strong>insecure</strong>(<var>+Boolean</var>)</dt>
+<dd class="defbody">
+When <code>true</code> (default <code>false</code>), do not perform any 
+checks on SSL certificates when downloading using <code>https</code>.
+</dd>
+<dt><strong>interactive</strong>(<var>+Boolean</var>)</dt>
+<dd class="defbody">
+Use default answer without asking the user if there is a default action.
+</dd>
+<dt><strong>silent</strong>(<var>+Boolean</var>)</dt>
+<dd class="defbody">
+If <code>true</code> (default false), suppress informational progress 
+messages.
+</dd>
+<dt><strong>upgrade</strong>(<var>+Boolean</var>)</dt>
+<dd class="defbody">
+If <code>true</code> (default <code>false</code>), upgrade package if it 
+is already installed.
+</dd>
+<dt><strong>rebuild</strong>(<var>Condition</var>)</dt>
+<dd class="defbody">
+Rebuild the foreign components. <var>Condition</var> is one of
+<code>if_absent</code> (default, do nothing if the directory with 
+foreign resources exists), <code>make</code> (run <code>make</code>) or <code>true</code> 
+(run&lsquo;make distclean` followed by the default configure and build 
+steps).
+</dd>
+<dt><strong>test</strong>(<var>Boolean</var>)</dt>
+<dd class="defbody">
+If <code>true</code> (default), run the pack tests.
+</dd>
+<dt><strong>git</strong>(<var>+Boolean</var>)</dt>
+<dd class="defbody">
+If <code>true</code> (default <code>false</code> unless <var>URL</var> 
+ends with <code>.git</code>), assume the URL is a GIT repository.
+</dd>
+<dt><strong>link</strong>(<var>+Boolean</var>)</dt>
+<dd class="defbody">
+Can be used if the installation source is a local directory and the file 
+system supports symbolic links. In this case the system adds the current 
+directory to the pack registration using a symbolic link and performs 
+the local installation steps.
+</dd>
+<dt><strong>version</strong>(<var>+Version</var>)</dt>
+<dd class="defbody">
+Demand the pack to satisfy some version requirement. <var>Version</var> 
+is as defined by <a class="pred" href="prologversions.html#require_version/3">require_version/3</a>. 
+For example <code>'1.5'</code> is the same as <code>&gt;=('1.5')</code>.
+</dd>
+<dt><strong>branch</strong>(<var>+Branch</var>)</dt>
+<dd class="defbody">
+When installing from a git repository, clone this branch.
+</dd>
+<dt><strong>commit</strong>(<var>+Commit</var>)</dt>
+<dd class="defbody">
+When installing from a git repository, checkout this commit.
+<var>Commit</var> is either a hash, a tag, a branch or <code>'HEAD'</code>.
+</dd>
+<dt><strong>build_type</strong>(<var>+Type</var>)</dt>
+<dd class="defbody">
+When building using CMake, use <code>-DCMAKE_BUILD_TYPE=Type</code>. 
+Default is the build type of Prolog or <code>Release</code>.
+</dd>
+<dt><strong>register</strong>(<var>+Boolean</var>)</dt>
+<dd class="defbody">
+If <code>true</code> (default), register packages as downloaded after 
+performing the download. This contacts the server with the meta-data of 
+each pack that was downloaded. The server will either register the 
+location as a new version or increment the download count. The server 
+stores the IP address of the client. Subsequent downloads of the same 
+version from the same IP address are ignored.
+</dd>
+<dt><strong>server</strong>(<var>+URL</var>)</dt>
+<dd class="defbody">
+Pack server to contact. Default is the setting
+<code>prolog_pack:server</code>, by default set to
+<code>https://www.swi-prolog.org/pack/</code>
+</dd>
+</dl>
+
+<p>Non-interactive installation can be established using the option
+<code>interactive(false)</code>. It is adviced to install from a 
+particular
+<i>trusted</i> URL instead of the plain pack name for unattented 
+operation.</dd>
+<dt class="pubdef"><span class="pred-tag">[det]</span><a id="pack_install_local/3"><strong>pack_install_local</strong>(<var>:Spec, 
++Dir, +Options</var>)</a></dt>
+<dd class="defbody">
+Install a number of packages in a local directory. This predicate 
+supports installing packages local to an application rather than 
+globally.</dd>
+<dt class="pubdef"><span class="pred-tag">[det]</span><a id="pack_url_file/2"><strong>pack_url_file</strong>(<var>+URL, 
+-File</var>)</a></dt>
+<dd class="defbody">
+True if <var>File</var> is a unique id for the referenced pack and 
+version. Normally, that is simply the base name, but GitHub archives 
+destroy this picture. Needed by the pack manager in the web server.</dd>
+<dt class="pubdef"><span class="pred-tag">[det]</span><a id="pack_rebuild/0"><strong>pack_rebuild</strong></a></dt>
+<dt class="pubdef"><span class="pred-tag">[det]</span><a id="pack_rebuild/1"><strong>pack_rebuild</strong>(<var>+Pack</var>)</a></dt>
+<dd class="defbody">
+Rebuild possible foreign components of <var>Pack</var>. The predicate
+<a class="pred" href="prologpack.html#pack_rebuild/0">pack_rebuild/0</a> 
+rebuilds all registered packs.</dd>
+<dt class="pubdef"><span class="pred-tag">[semidet]</span><a id="pack_upgrade/1"><strong>pack_upgrade</strong>(<var>+Pack</var>)</a></dt>
+<dd class="defbody">
+Upgrade <var>Pack</var>. Shorthand for <code>pack_install(Pack, [upgrade(true)])</code>.</dd>
+<dt class="pubdef"><span class="pred-tag">[det]</span><a id="pack_remove/1"><strong>pack_remove</strong>(<var>+Name</var>)</a></dt>
+<dt class="pubdef"><span class="pred-tag">[det]</span><a id="pack_remove/2"><strong>pack_remove</strong>(<var>+Name, 
++Options</var>)</a></dt>
+<dd class="defbody">
+Remove the indicated package. If packages depend (indirectly) on this 
+pack, ask to remove these as well. <var>Options</var>:
+
+<dl class="latex">
+<dt><strong>interactive</strong>(<var>false</var>)</dt>
+<dd class="defbody">
+Do not prompt the user.
+</dd>
+<dt><strong>dependencies</strong>(<var>Boolean</var>)</dt>
+<dd class="defbody">
+If <code>true</code> delete dependencies without asking.
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span class="pred-tag">[det]</span><a id="pack_publish/2"><strong>pack_publish</strong>(<var>+Spec, 
++Options</var>)</a></dt>
+<dd class="defbody">
+Publish a package. There are two ways typical ways to call this. We 
+recommend developing a pack in a GIT repository. In this scenario the 
+pack can be published using
+
+<pre class="code">
+?- pack_publish('.', []).
+</pre>
+
+<p>Alternatively, an archive file has been uploaded to a public 
+location. In this scenario we can publish the pack using
+
+<pre class="code">
+?- pack_publish(URL, [])
+</pre>
+
+<p>In both scenarios, <a class="pred" href="prologpack.html#pack_publish/2">pack_publish/2</a> 
+by default creates an isolated environment and installs the package in 
+this directory from the public URL. On success it triggers the pack 
+server to register the URL as a new pack or a new release of a pack.
+
+<p>Packs may also be published using the <i>app</i> <code>pack</code>, 
+e.g.
+
+<pre class="code">
+swipl pack publish .
+</pre>
+
+<p><var>Options</var>:
+
+<dl class="latex">
+<dt><strong>git</strong>(<var>Boolean</var>)</dt>
+<dd class="defbody">
+If <code>true</code>, and <var>Spec</var> is a git managed directory, 
+install using the remote repo.
+</dd>
+<dt><strong>sign</strong>(<var>Boolean</var>)</dt>
+<dd class="defbody">
+Sign the repository with the current version. This runs
+<code>git tag -s &lt;tag&gt;</code>.
+</dd>
+<dt><strong>force</strong>(<var>Boolean</var>)</dt>
+<dd class="defbody">
+Force the git tag. This runs <code>git tag -f &lt;tag&gt;</code>.
+</dd>
+<dt><strong>branch</strong>(<var>+Branch</var>)</dt>
+<dd class="defbody">
+<var>Branch</var> used for releases. Defined by <span class="pred-ext">git_default_branch/2</span> 
+if not specified.
+</dd>
+<dt><strong>register</strong>(<var>+Boolean</var>)</dt>
+<dd class="defbody">
+If <code>false</code> (default <code>true</code>), perform the 
+installation, but do not upload to the server. This can be used for 
+testing.
+</dd>
+<dt><strong>isolated</strong>(<var>+Boolean</var>)</dt>
+<dd class="defbody">
+If <code>true</code> (default), install and build all packages in an 
+isolated package directory. If <code>false</code>, use other packages 
+installed for the environment. The latter may be used to speedup 
+debugging.
+</dd>
+<dt><strong>pack_directory</strong>(<var>+Dir</var>)</dt>
+<dd class="defbody">
+Install the temporary packages in <var>Dir</var>. If omitted <a class="pred" href="prologpack.html#pack_publish/2">pack_publish/2</a> 
+creates a temporary directory and deletes this directory after 
+completion. An explict target <var>Dir</var> is created if it does not 
+exist and is not deleted on completion.
+</dd>
+<dt><strong>clean</strong>(<var>+Boolean</var>)</dt>
+<dd class="defbody">
+If <code>true</code> (default), clean the destination directory first
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span class="pred-tag">[nondet]</span><a id="pack_property/2"><strong>pack_property</strong>(<var>?Pack, 
+?Property</var>)</a></dt>
+<dd class="defbody">
+True when <var>Property</var> is a property of an installed <var>Pack</var>. 
+This interface is intended for programs that wish to interact with the 
+package manager. Defined properties are:
+
+<dl class="latex">
+<dt><strong>directory</strong>(<var>Directory</var>)</dt>
+<dd class="defbody">
+<var>Directory</var> into which the package is installed
+</dd>
+<dt><strong>version</strong>(<var>Version</var>)</dt>
+<dd class="defbody">
+Installed version
+</dd>
+<dt><strong>title</strong>(<var>Title</var>)</dt>
+<dd class="defbody">
+Full title of the package
+</dd>
+<dt><strong>author</strong>(<var>Author</var>)</dt>
+<dd class="defbody">
+Registered author
+</dd>
+<dt><strong>download</strong>(<var>URL</var>)</dt>
+<dd class="defbody">
+Official download <var>URL</var>
+</dd>
+<dt><strong>readme</strong>(<var>File</var>)</dt>
+<dd class="defbody">
+Package <code>README</code> file (if present)
+</dd>
+<dt><strong>todo</strong>(<var>File</var>)</dt>
+<dd class="defbody">
+Package <code>TODO</code> file (if present)
+</dd>
+</dl>
+
+</dd>
+</dl>
+
+<p></body></html>

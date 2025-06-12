@@ -1,0 +1,431 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+<title>SWI-Prolog 9.2.9 Reference Manual: Section 13.1</title><link rel="home" href="index.html">
+<link rel="contents" href="Contents.html">
+<link rel="index" href="DocIndex.html">
+<link rel="summary" href="summary.html">
+<link rel="previous" href="wasm.html">
+<link rel="next" href="wasm-calling.html">
+
+<style type="text/css">
+
+/* Style sheet for SWI-Prolog latex2html
+*/
+
+dd.defbody
+{ margin-bottom: 1em;
+}
+
+dt.pubdef, dt.multidef
+{ color: #fff;
+padding: 2px 10px 0px 10px;
+margin-bottom: 5px;
+font-size: 18px;
+vertical-align: middle;
+overflow: hidden;
+}
+
+dt.pubdef { background-color: #0c3d6e; }
+dt.multidef { background-color: #ef9439; }
+
+.bib dd
+{ margin-bottom: 1em;
+}
+
+.bib dt
+{ float: left;
+margin-right: 1.3ex;
+}
+
+pre.code
+{ margin-left: 1.5em;
+margin-right: 1.5em;
+border: 1px dotted;
+padding-top: 5px;
+padding-left: 5px;
+padding-bottom: 5px;
+background-color: #f8f8f8;
+}
+
+div.navigate
+{ text-align: center;
+background-color: #f0f0f0;
+border: 1px dotted;
+padding: 5px;
+}
+
+div.title
+{ text-align: center;
+padding-bottom: 1em;
+font-size: 200%;
+font-weight: bold;
+}
+
+div.author
+{ text-align: center;
+font-style: italic;
+}
+
+div.abstract
+{ margin-top: 2em;
+background-color: #f0f0f0;
+border: 1px dotted;
+padding: 5px;
+margin-left: 10%; margin-right:10%;
+}
+
+div.abstract-title
+{ text-align: center;
+padding: 5px;
+font-size: 120%;
+font-weight: bold;
+}
+
+div.toc-h1
+{ font-size: 200%;
+font-weight: bold;
+}
+
+div.toc-h2
+{ font-size: 120%;
+font-weight: bold;
+margin-left: 2em;
+}
+
+div.toc-h3
+{ font-size: 100%;
+font-weight: bold;
+margin-left: 4em;
+}
+
+div.toc-h4
+{ font-size: 100%;
+margin-left: 6em;
+}
+
+span.sec-nr
+{
+}
+
+span.sec-title
+{
+}
+
+span.pred-ext
+{ font-weight: bold;
+}
+
+span.pred-tag
+{ float: right;
+padding-top: 0.2em;
+font-size: 80%;
+font-style: italic;
+color: #fff;
+}
+
+div.caption
+{ width: 80%;
+margin: auto;
+text-align:center;
+}
+
+/* Footnotes */
+.fn {
+color: red;
+font-size: 70%;
+}
+
+.fn-text, .fnp {
+position: absolute;
+top: auto;
+left: 10%;
+border: 1px solid #000;
+box-shadow: 5px 5px 5px #888;
+display: none;
+background: #fff;
+color: #000;
+margin-top: 25px;
+padding: 8px 12px;
+font-size: larger;
+}
+
+sup:hover span.fn-text
+{ display: block;
+}
+
+/* Lists */
+
+dl.latex
+{ margin-top: 1ex;
+margin-bottom: 0.5ex;
+}
+
+dl.latex dl.latex dd.defbody
+{ margin-bottom: 0.5ex;
+}
+
+/* PlDoc Tags */
+
+dl.tags
+{ font-size: 90%;
+margin-left: 5ex;
+margin-top: 1ex;
+margin-bottom: 0.5ex;
+}
+
+dl.tags dt
+{ margin-left: 0pt;
+font-weight: bold;
+}
+
+dl.tags dd
+{ margin-left: 3ex;
+}
+
+td.param
+{ font-style: italic;
+font-weight: bold;
+}
+
+/* Index */
+
+dt.index-sep
+{ font-weight: bold;
+font-size: +1;
+margin-top: 1ex;
+}
+
+/* Tables */
+
+table.center
+{ margin: auto;
+}
+
+table.latex
+{ border-collapse:collapse;
+}
+
+table.latex tr
+{ vertical-align: text-top;
+}
+
+table.latex td,th
+{ padding: 2px 1em;
+}
+
+table.latex tr.hline td,th
+{ border-top: 1px solid black;
+}
+
+table.frame-box
+{ border: 2px solid black;
+}
+
+</style>
+</head>
+<body style="background:white">
+<div class="navigate"><a class="nav" href="index.html"><img src="home.gif" alt="Home"></a>
+<a class="nav" href="Contents.html"><img src="index.gif" alt="Contents"></a>
+<a class="nav" href="DocIndex.html"><img src="yellow_pages.gif" alt="Index"></a>
+<a class="nav" href="summary.html"><img src="info.gif" alt="Summary"></a>
+<a class="nav" href="wasm.html"><img src="prev.gif" alt="Previous"></a>
+<a class="nav" href="wasm-calling.html"><img src="next.gif" alt="Next"></a>
+</div>
+<h2 id="sec:wasm-loading"><a id="sec:13.1"><span class="sec-nr">13.1</span> <span class="sec-title">Loading 
+and initializing Prolog</span></a></h2>
+
+<a id="sec:wasm-loading"></a>
+
+<p>The WASM SWI-Prolog distribution consists of three files:
+
+<dl class="latex">
+<dt><b><code>swipl-web.js</code></b></dt>
+<dd>
+This is the main file that must be loaded using a <code>&lt;script&gt;</code> 
+element. It defines a global function <code>SWIPL</code> that loads the 
+other components and gives access to the SWI-Prolog system.
+</dd>
+<dt><b><code>swipl-web.wasm</code></b></dt>
+<dd>
+This is the actual WASM binary containing the compiled C code of the 
+core, foreign packages and required libraries.
+</dd>
+<dt><b><code>swipl-web.data</code></b></dt>
+<dd>
+This data contains a <em>file system</em> that is <em>mounted</em> on
+<code>/swipl</code>. It contains the Prolog startup code and libraries.
+</dd>
+</dl>
+
+<p>Below is the skeleton for getting access to the Prolog system. We 
+first define the global <var>Prolog</var> and <var>Module</var> objects. 
+The
+<var>options</var> object provides module configuration options. <b>SWIPL()</b> 
+returns a <code>Promise</code> that resolves when the WASM system is 
+loaded and initialized. It returns the WASM
+<em>module</em>, which contains <code>Module.prolog</code> to an 
+instance of the class <code>Prolog</code> that provides a high level 
+interface from JavaScript.
+
+<pre class="code">
+let Prolog;
+let Module;
+const options = {
+  // Provide options for customization
+};
+
+SWIPL(options).then((module) =&gt;
+{ Module = module;
+  Prolog = Module.prolog;
+
+  // Start using Prolog
+};
+</pre>
+
+<p>The <var>options</var> object defines customization properties for 
+the Emscripten module as well as for Prolog. We highlight the important 
+properties below.
+
+<dl class="latex">
+<dt><strong>arguments</strong></dt>
+<dd class="defbody">
+An <code>Array</code> of <code>String</code> objects that define the 
+commandline arguments for initializing Prolog. <code>argv[0]</code> is <em>not</em> 
+part of this array. Few arguments are useful in this context. The
+<strong>-q</strong> may be used to suppress the Prolog banner.</dd>
+<dt><strong>locateFile</strong></dt>
+<dd class="defbody">
+A <code>Function</code> that is used to translate <code>swipl-web.wasm</code> 
+and
+<code>swipl-web.data</code> into a (relative) URL. Default is to find 
+these resources in the same directory of the server. For example, to 
+load
+<code>swipl-web.wasm</code> and <code>swipl-web.data</code> from <code>/wasm</code> 
+use
+
+<pre class="code">
+var Module = {
+  ...,
+  locateFile: (file) =&gt; '/wasm/' + file
+}
+</pre>
+
+</dd>
+<dt><strong>on_output</strong></dt>
+<dd class="defbody">
+A <code>Function</code> that is called when Prolog writes to
+<code>user_output</code> or <code>user_error</code>. It is passed two 
+arguments: a
+<code>String</code> containing the text to emit and one of the constant 
+strings <code>"stdout"</code> or <code>"stderr"</code> to indicate the 
+output stream. This uses the Emscripten <code>Module.FS.init</code> 
+option to rebind the output and error streams, providing behaviour that 
+is similar to the Emscripten properties <code>print</code> and <code>printErr</code>. 
+However, our passed string contains the newline character and the 
+handler is called when Prolog <em>flushes</em> the output. Normally the 
+callback should insert a <code>&lt;span&gt;</code> element that has (at 
+least) the following style:
+
+<pre class="code">
+.stderr, .stdout {
+  white-space: pre-wrap;
+  font-family: monospace;
+  overflow-wrap: anywhere;
+}
+</pre>
+
+<p>Here is a simple implementation of <b>print()</b>, assuming the 
+document has a <code>&lt;div id="output"&gt;</code> node.
+
+<pre class="code">
+function print(line, cls)
+{ const output = document.getElementById("output");
+  const node   = document.createElement('span');
+
+  node.className = cls;
+  node.textContent = line;
+  output.appendChild(node);
+};
+</pre>
+
+<p></dd>
+</dl>
+
+<p><h3 id="sec:wasm-consult"><a id="sec:13.1.1"><span class="sec-nr">13.1.1</span> <span class="sec-title">Loading 
+Prolog files</span></a></h3>
+
+<a id="sec:wasm-consult"></a>
+
+<p>The WASM build ships with the Prolog library and thus Prolog 
+libraries can be loaded as normal using <a id="idx:usemodule1:2643"></a><a class="pred" href="import.html#use_module/1">use_module/1</a>, 
+etc., for example, we can include the <code>lists</code> library using 
+this directive. Note that the normal <em>autoloading</em> of library 
+code works in the WASM version.
+
+<pre class="code">
+:- use_module(library(lists)).
+</pre>
+
+<p>When Prolog is in <em>asynchronous</em> mode, i.e., called through
+<a class="func" href="wasm-calling.html#Prolog.forEach()">Prolog.forEach()</a>, 
+we can also load code from a <em>URL</em>. For example, we can load the <code>CHAT80</code> 
+demo program directly from
+<a class="url" href="https://github.com/JanWielemaker/chat80">GitHub</a> 
+using<sup class="fn">242<span class="fn-text">The <code><code>\</code></code>c 
+continues the quoted atom from the next line after removing leading 
+white space.</span></sup>
+
+<pre class="code">
+?- consult('https://raw.githubusercontent.com/JanWielemaker/\c
+            chat80/master/prolog/chat80.pl').
+</pre>
+
+<p>Larger files can be loaded as <code>.qlf</code> files. See <a class="sec" href="consulting.html#sec:4.3.3">section 
+4.3.3</a> and
+<a id="idx:qcompile2:2644"></a><a class="pred" href="consulting.html#qcompile/2">qcompile/2</a>. 
+Notably we can create a single qlf file from an application using the <code>include(user)</code> 
+option. Below we create a <code>.qlf</code> file from <a class="url" href="https://github.com/JanWielemaker/chat80">CHAT80</a>. 
+The resulting <code>chat80.qlf</code> can be loaded from a URL using <a id="idx:consult1:2645"></a><a class="pred" href="consulting.html#consult/1">consult/1</a> 
+as above.
+
+<pre class="code">
+?- qcompile('chat80.pl', [include(user)]).
+</pre>
+
+<p>There are three ways to load Prolog code from JavaScript: (1) loading 
+from a string, (2) loading from <code>&lt;script&gt;</code> elements and 
+(3) loading from URL. Note that all the loading methods return a <code>Promise</code> 
+that is resolved when loading the data is completed.
+
+<dl class="latex">
+<dt class="pubdef"><a id="Prolog.load_string()"><var>Promise</var> <strong>Prolog.load_string</strong>(<var>String, 
+Id</var>)</a></dt>
+<dd class="defbody">
+Load Prolog code from <var>String</var>, pretending it was loaded from 
+the file <var>Id</var>. The <var>Id</var> is optional. When omitted it 
+generates
+<code>/string/1</code>, <code>/string/2</code>, ... .</dd>
+<dt class="pubdef"><a id="Prolog.load_scripts()"><var>Promise</var> <strong>Prolog.load_scripts</strong>(<var></var>)</a></dt>
+<dd class="defbody">
+Load all scripts from the current docement that have their <code>type</code> 
+set to <code>text/prolog</code>. The file reference for the loaded 
+script is <code>/script/Id</code>, where <var>Id</var> is derived from 
+(1) the
+<code>id</code> of the script, (2) the <code>name</code> of the script 
+or (3) being the nth Prolog script in the document. When resolved, the 
+promise returns an array with the names of the loaded scripts.</dd>
+<dt class="pubdef"><a id="Prolog.consult()"><var>Promise</var> <strong>Prolog.consult</strong>(<var>...Sources</var>)</a></dt>
+<dd class="defbody">
+Load the given <var>Sources</var>. Each source is either a file from the 
+local file system, e.g., <code>library(lists)</code> or a URL. The 
+sources are downloaded and processed sequentially. This uses
+<a class="func" href="wasm-calling.html#Prolog.forEach()">Prolog.forEach()</a> 
+calling <a id="idx:loadfiles1:2646"></a><a class="pred" href="consulting.html#load_files/1">load_files/1</a>. 
+The returned
+<code>Promise</code> returns 1 on success.
+</dd>
+</dl>
+
+<p></body></html>

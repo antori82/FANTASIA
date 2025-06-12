@@ -1,21 +1,30 @@
 #pragma once
-
 #include "FANTASIA.h"
-#include "Engine.h"
 #include "CoreMinimal.h"
+#include "Engine.h"
+
+#include "EnableGrpcIncludes.h"
+#include "Audio2FaceComponent.h"
+#include "DisableGrpcIncludes.h"
+
 #include "Components/ActorComponent.h"
 #include "FANTASIATypes.h"
 #include "GeneralTTSThread.h"
-#include <iostream>
-#include <string>
+
 #include "Runtime/Engine/Classes/Sound/SoundWaveProcedural.h"
 #include "Runtime/Online/HTTP/Public/Http.h"
 #include "Runtime/Json/Public/Json.h"
 #include "Runtime/JsonUtilities/Public/JsonUtilities.h"
 #include "TTSInterface.h"
+
 #include "GeneralTTSComponent.generated.h"
 
+
+
+
 using namespace std;
+
+//DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FAudioStreamDelegate, const TArray<float>&, AudioData);
 
 UCLASS(meta = (BlueprintSpawnableComponent))
 class UGeneralTTSComponent : public UActorComponent, public ITTSInterface
@@ -34,7 +43,7 @@ private:
 
 	TMap<FString, FTTSData> Buffer;
 	TMap<FString, FString> PendingSSML;
-	GeneralTTSThread* handle;
+	GeneralTTSThread* handle; 
 
 	FDelegateHandle TTSResultAvailableHandle;
 
@@ -46,8 +55,12 @@ private:
 
 public:
 
+
 	UPROPERTY(BlueprintReadWrite, Category = "Speech to Text")
 	UAudioComponent* Speaker;
+
+	UPROPERTY(BlueprintReadWrite, Category = "ForA2F")
+	UAudio2FaceComponent* A2Fpointer;
 
 	UPROPERTY(BlueprintAssignable, Category = "Speech to Text")
 	FSynthesizedEvent SynthesisReady;
@@ -62,11 +75,16 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "TTS Start", Keywords = "Plugin TTS"), Category = "TTS")
-	void TTSSynthesize(FString ssml, FString id) override;
+	void TTSSynthesize(FString ssml, FString id) override;//da modificare che rimanda il puntatore a Audio2Face
 
 	UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Sound General", Keywords = "Plugin TTS"), Category = "TTS")
 	USoundWave* TTSGetSound(FString id) override;
 
 	UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Raw Sound", Keywords = "Azure Plugin TTS"), Category = "TTS")
 	TArray<float> TTSGetRawSound(FString id);
+
+	UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Raw Sound from Path", Keywords = "TTS"), Category = "TTS")
+	TArray<float> TTSGetRawSoundfromPath(const FString& path);
+
+	void SendToA2FaceComponent(FString id);
 };

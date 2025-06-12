@@ -97,7 +97,8 @@ public class FANTASIA : ModuleRules
         PublicDependencyModuleNames.AddRange(
             new string[]
             {
-                "Core"
+                "Core",
+                "Projects"
 				// ... add other public dependencies that you statically link with here ...
 			}
             );
@@ -113,7 +114,8 @@ public class FANTASIA : ModuleRules
                 "Voice",
                 "Json",
                 "JsonUtilities",
-                "HTTP"
+                "HTTP",
+                "UnrealEd"
 				// ... add private dependencies that you statically link with here ...	
 			}
             );
