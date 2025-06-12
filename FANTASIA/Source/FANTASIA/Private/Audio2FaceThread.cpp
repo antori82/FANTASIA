@@ -147,81 +147,81 @@ void FMyThread::SendToAudio2FaceGrpc()//da testare
     }
     
 
-    //string url = TCHAR_TO_UTF8(*server_url);
-    //std::shared_ptr<Channel> channel2 = grpc::CreateChannel(url, grpc::InsecureChannelCredentials());
+    string url = TCHAR_TO_UTF8(*server_url);
+    std::shared_ptr<Channel> channel2 = grpc::CreateChannel(url, grpc::InsecureChannelCredentials());
 
-    ////sostituire con auto
-    //std::unique_ptr<Audio2Face::Stub> stub2 = Audio2Face::NewStub(channel2); // modificato, aveva 2 argomenti, il secondo null, ma non accettava null
+    //sostituire con auto
+    std::unique_ptr<Audio2Face::Stub> stub2 = Audio2Face::NewStub(channel2); // modificato, aveva 2 argomenti, il secondo null, ma non accettava null
 
-    ////creo un nuovo oggetto che verrà richiamato quando viene inviato uno stream audio
+    //creo un nuovo oggetto che verrà richiamato quando viene inviato uno stream audio
 
-    //string PlayerA2FaceName = TCHAR_TO_UTF8(*PlayerA2F_name);
-    //int chunk_size = SampleRate / 10;
-    //bool block_until_playback_is_finished = true;
+    string PlayerA2FaceName = TCHAR_TO_UTF8(*PlayerA2F_name);
+    int chunk_size = SampleRate / 10;
+    bool block_until_playback_is_finished = true;
 
-    //ClientContext context;
-    //PushAudioRequestStart start_marker;
-    //start_marker.set_instance_name(PlayerA2FaceName);
-    //start_marker.set_samplerate(SampleRate);
-    //start_marker.set_block_until_playback_is_finished(block_until_playback_is_finished);
-
-
-    ////messaggio iniziale col marker
-    //PushAudioStreamRequest* request = new PushAudioStreamRequest();
-    //request->set_allocated_start_marker(&start_marker);
-
-    ////writer Stream per l'invio dei dati
-    //PushAudioStreamResponse response;
-    //std::unique_ptr<grpc::ClientWriter<PushAudioStreamRequest>> writer(stub2->PushAudioStream(&context, &response));
-    //writer->Write(*request);
-    //delete request;
+    ClientContext context;
+    PushAudioRequestStart start_marker;
+    start_marker.set_instance_name(PlayerA2FaceName);
+    start_marker.set_samplerate(SampleRate);
+    start_marker.set_block_until_playback_is_finished(block_until_playback_is_finished);
 
 
-    //int originalChunkSize = chunk_size;
+    //messaggio iniziale col marker
+    PushAudioStreamRequest* request = new PushAudioStreamRequest();
+    request->set_allocated_start_marker(&start_marker);
 
-    //for (int32 i = 0; i < AudioData.Num(); i += originalChunkSize) {
-    //    if (StopRecording || StopTaskCounter.GetValue() > 0) {
-    //        break;
-    //    }
-    //   
-    //    int32 currentChunk = FMath::Min(i + chunk_size, AudioData.Num() - i );
-    //    const float* chunk_data = AudioData.GetData() + i;
+    //writer Stream per l'invio dei dati
+    PushAudioStreamResponse response;
+    std::unique_ptr<grpc::ClientWriter<PushAudioStreamRequest>> writer(stub2->PushAudioStream(&context, &response));
+    writer->Write(*request);
+    delete request;
+
+
+    int originalChunkSize = chunk_size;
+
+    for (int32 i = 0; i < AudioData.Num(); i += originalChunkSize) {
+        if (StopRecording || StopTaskCounter.GetValue() > 0) {
+            break;
+        }
+       
+        int32 currentChunk = FMath::Min(i + chunk_size, AudioData.Num() - i );
+        const float* chunk_data = AudioData.GetData() + i;
     //    //******************************Da eliminare, testing************************
 
-    //    int32 numValuesToShow = FMath::Min(5, currentChunk);
-    //    FString debugStr = TEXT("Chunk values: ");
-    //    for (int32 j = 0; j < numValuesToShow; ++j) {
-    //        debugStr += FString::Printf(TEXT("%.3f "), chunk_data[j]);
-    //        UE_LOG(LogTemp, Log, TEXT("%s"), *debugStr);
-    //    }
-    //    if (GEngine) {
-    //        // Visualizza il messaggio sullo schermo per 5 secondi, colore verde
-    //        GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, debugStr);
-    //    }
+        int32 numValuesToShow = FMath::Min(5, currentChunk);
+        FString debugStr = TEXT("Chunk values: ");
+        for (int32 j = 0; j < numValuesToShow; ++j) {
+            debugStr += FString::Printf(TEXT("%.3f "), chunk_data[j]);
+            UE_LOG(LogTemp, Log, TEXT("%s"), *debugStr);
+        }
+        if (GEngine) {
+            // Visualizza il messaggio sullo schermo per 5 secondi, colore verde
+            GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, debugStr);
+        }
 
-    //    //******************************Da eliminare, testing************************
-    //    requestAudio = new PushAudioStreamRequest();
+        //******************************Da eliminare, testing************************
+        requestAudio = new PushAudioStreamRequest();
 
 
-    //    requestAudio->set_audio_data(chunk_data, currentChunk * sizeof(float));//richiama questa cosa ogni volta che un requestAudio è chiamato
-    //    if (!writer->Write(*requestAudio)) {
-    //        delete requestAudio;
-    //        break;
-    //    }
-    //    delete requestAudio;
-    //}
+        requestAudio->set_audio_data(chunk_data, currentChunk * sizeof(float));//richiama questa cosa ogni volta che un requestAudio è chiamato
+        if (!writer->Write(*requestAudio)) {
+            delete requestAudio;
+            break;
+        }
+        delete requestAudio;
+    }
 
-    //writer->WritesDone();
-    //Status status = writer->Finish();
+    writer->WritesDone();
+    Status status = writer->Finish();
 
-    //if (status.ok() && response.success()) {
-    //    GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Audio stream pushed successfully!"));
-    //}
-    //else {
-    //    GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Audio stream failed to push!"));
-    //}
-    //bIsRunning = false;
-    //Shutdown();
+    if (status.ok() && response.success()) {
+        GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Audio stream pushed successfully!"));
+    }
+    else {
+        GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Audio stream failed to push!"));
+    }
+    bIsRunning = false;
+    Shutdown();
 }
 
 

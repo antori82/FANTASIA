@@ -29,7 +29,7 @@ void UAudio2FaceComponent::PlayAudio(TArray<float> data)
 
 	int32 sampleRate = 16000;
 
-    AudioData = data;//serve?
+    AudioData = data;
     
    
     //LoadRawSoundFromTTS(&data);
@@ -81,7 +81,9 @@ void UAudio2FaceComponent::EndPlay(const EEndPlayReason::Type EndPlayReason) {
 void UAudio2FaceComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 }
- void UAudio2FaceComponent::ReceivingDataFunction(const TArray<float>& data)
+
+
+void UAudio2FaceComponent::ReceivingDataFunction(const TArray<float>& data)
 {
     for (int32 i = 0; i < data.Num(); ++i)
     {
