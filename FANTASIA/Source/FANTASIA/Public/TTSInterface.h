@@ -1,7 +1,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "FANTASIATypes.h"
 #include "UObject/Interface.h"
 #include "TTSInterface.generated.h"
 

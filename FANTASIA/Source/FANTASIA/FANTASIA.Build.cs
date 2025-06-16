@@ -143,7 +143,7 @@ public class FANTASIA : ModuleRules
         PublicAdditionalLibraries.Add(LibraryPath + "/aws-cpp-sdk-core.lib");
         PublicAdditionalLibraries.Add(LibraryPath + "/aws-cpp-sdk-polly.lib");
         PublicAdditionalLibraries.Add(LibraryPath + "/aws-cpp-sdk-text-to-speech.lib");
-        PublicIncludePaths.AddRange(new string[] {IncludePath3, IncludePath4, IncludePath5 });
+        PublicIncludePaths.AddRange(new string[] { IncludePath3, IncludePath4, IncludePath5 });
     }
 
     public void DllLoad(string Redist)
@@ -159,7 +159,7 @@ public class FANTASIA : ModuleRules
     {
         string PrologDllPath = Path.Combine(ThirdParty, "SWIProlog", "PrologDlls");
         string PrologCpp = Path.Combine(ThirdParty, "SWIProlog", "libs");
-        
+
 
         PublicAdditionalLibraries.Add(PrologCpp + "/libswipl.dll.a");
         PublicAdditionalLibraries.Add(PrologCpp + "/libswipl.lib");
@@ -179,7 +179,7 @@ public class FANTASIA : ModuleRules
     public FANTASIA(ReadOnlyTargetRules Target) : base(Target)
     {
         InitialUeConfig();
-        
+
         DependeciesAndPaths();
 
         string ModulePath = ModuleDirectory;
