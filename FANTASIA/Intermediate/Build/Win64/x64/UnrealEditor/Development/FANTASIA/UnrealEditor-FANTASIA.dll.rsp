@@ -175,6 +175,7 @@
 "..\Intermediate\Build\Win64\x64\UnrealEditor\Development\UnrealEd\UnrealEditor-UnrealEd.lib"
 "..\Intermediate\Build\Win64\x64\UnrealEditor\Development\AssetTools\UnrealEditor-AssetTools.lib"
 "..\Intermediate\Build\Win64\x64\UnrealEditor\Development\Core\UnrealEditor-Core.lib"
+"..\Intermediate\Build\Win64\x64\UnrealEditor\Development\Projects\UnrealEditor-Projects.lib"
 "delayimp.lib"
 "wininet.lib"
 "rpcrt4.lib"

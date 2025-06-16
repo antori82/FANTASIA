@@ -3,6 +3,7 @@
 	{
 		"Module.FANTASIA.1.cpp.obj": [
 			"Audio2FaceComponent.gen.cpp.obj",
+			"Audio2FaceConverterInterface.gen.cpp.obj",
 			"AWSPollyComponent.gen.cpp.obj",
 			"AzureASRComponent.gen.cpp.obj",
 			"AzureNLUComponent.gen.cpp.obj",
@@ -34,10 +35,7 @@
 			"AzureASRComponent.cpp.obj",
 			"AzureASRThread.cpp.obj",
 			"AzureNLUComponent.cpp.obj",
-			"AzureNLUThread.cpp.obj",
-			"AzureTTSComponent.cpp.obj",
-			"AzureTTSThread.cpp.obj",
-			"BayesianInferenceThreads.cpp.obj"
+			"AzureNLUThread.cpp.obj"
 		]
 	}
 }

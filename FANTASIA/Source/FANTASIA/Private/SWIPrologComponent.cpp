@@ -49,6 +49,8 @@ void USWIPrologComponent::SWIPLsubmitQuery(USWIPrologTerm* inRuleOrFactTerm, FSW
 	int bResult;
 	try {
 		bResult = myQuery.next_solution();
+		if (bResult == PL_S_FALSE)
+			UE_LOG(LogTemp, Display, TEXT("False!"));
 		while (bResult == PL_S_TRUE) {
 			UE_LOG(LogTemp, Display, TEXT("query solution development"));
 			USWIPrologSolution* currentSolution = NewObject<USWIPrologSolution>();
@@ -150,8 +152,8 @@ void USWIPrologComponent::openPrologFile(const FString filename) {
 
 void USWIPrologComponent::startProlog() {
 
-	std::string ProjectPath = "C:/Users/Alex/Documents/Unreal Projects/MyProject"; //da modificare
-	std::string ProjectPathReverse = "C:\\Users\\Alex\\Documents\\Unreal Projects\\MyProject";// da modificare
+	std::string ProjectPath = "D:/Perforce/FANTASIADevelopment";
+	std::string ProjectPathReverse = "D:\\Perforce\\FANTASIADevelopment";// da modificare
 
 	//-----------------------------------------------------------------------------------------------------
 
@@ -176,7 +178,7 @@ void USWIPrologComponent::startProlog() {
 		return;
 	}
 
-	
+
 	if (!SetDllDirectoryA(DLLDir.c_str())) {
 		UE_LOG(LogTemp, Error, TEXT("SetDllDirectoryA fallita"));
 		return; // se non riesce qui, non ha senso proseguire
@@ -212,8 +214,22 @@ void USWIPrologComponent::startProlog() {
 		PL_halt(1);
 		UE_LOG(LogTemp, Warning, TEXT("failed to initialise prolog"));
 	}
+	else {
+		FString RelativePath = FPaths::GameSourceDir();
+		RelativePath = FPaths::GetPath("../plugins/FANTASIA/ThirdParty/SWIProlog/libs/libswipl.dll");
+		FString FullPath = IFileManager::Get().ConvertToAbsolutePathForExternalAppForRead(*RelativePath);
 
-	UE_LOG(LogTemp, Warning, TEXT("Prolog initalized correctly"));//funziona fino ad ora
+		resFolderPath = FPaths::ConvertRelativePathToFull(FPaths::ProjectDir());
+		resFolderPath = resFolderPath + "Resources/";
+		char* resPathString = TCHAR_TO_ANSI(*resFolderPath);
+
+		PlTermv dir(2);
+		dir[1].unify_atom(PlAtom(resPathString));
+		PlCall("working_directory", dir);
+
+		UE_LOG(LogTemp, Display, TEXT("prolog initialised succesfully"));
+		UE_LOG(LogTemp, Display, TEXT("path for prolog: %s, working directory: %s"), *FullPath, *resFolderPath);
+	}
 
 }
 
