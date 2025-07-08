@@ -18,6 +18,7 @@ void UOpenAIComponent::OnGPTResponseReceived(FHttpRequestPtr Request, FHttpRespo
 
 		if (FJsonSerializer::Deserialize(Reader, JsonValue)) {
 			FString temp = Response->GetContentAsString();
+			UE_LOG(LogTemp, Warning, TEXT("Complete response: %s"), *temp);
 			const TSharedPtr<FJsonObject>* FileMessageObject;
 
 			if (JsonValue->TryGetObject(FileMessageObject)) {
@@ -25,7 +26,34 @@ void UOpenAIComponent::OnGPTResponseReceived(FHttpRequestPtr Request, FHttpRespo
 					UE_LOG(LogTemp, Error, TEXT("[OpenAIComponent] %hs: %hs"), TCHAR_TO_UTF8(*FileMessageObject->Get()->GetObjectField(TEXT("error"))->GetStringField(TEXT("type"))), TCHAR_TO_UTF8(*FileMessageObject->Get()->GetObjectField(TEXT("error"))->GetStringField(TEXT("code"))));
 					return;
 				}
+
 				TArray<TSharedPtr<FJsonValue>> results = FileMessageObject->Get()->GetArrayField(TEXT("choices"));
+
+				FString debugOutput;
+				TSharedRef<TJsonWriter<>> Writer = TJsonWriterFactory<>::Create(&debugOutput);
+				FJsonSerializer::Serialize(results[0], "", Writer);
+				UE_LOG(LogTemp, Warning, TEXT("First choice JSON: %s"), *debugOutput);
+
+
+				if (results.Num() > 0 && results[0]->Type == EJson::Object)
+				{
+					TSharedPtr<FJsonObject> choiceObject = results[0]->AsObject();
+					if (choiceObject->HasField(TEXT("message")))
+					{
+						TSharedPtr<FJsonObject> messageObject = choiceObject->GetObjectField(TEXT("message"));
+
+						if (messageObject->HasField(TEXT("content")))
+						{
+							FString content = messageObject->GetStringField(TEXT("content"));
+							UE_LOG(LogTemp, Warning, TEXT("Content: %s"), *content);
+						}
+						else
+						{
+							UE_LOG(LogTemp, Warning, TEXT("Il campo 'content' non è presente in 'message'"));
+						}
+					}
+				}
+				
 
 				checkRole = results[0]->AsObject()->GetObjectField(TEXT("message"))->GetStringField(TEXT("role"));
 
@@ -38,7 +66,9 @@ void UOpenAIComponent::OnGPTResponseReceived(FHttpRequestPtr Request, FHttpRespo
 				else if (checkRole == "user")
 					role = GPTRoleType::USER;
 
-				IncomingGPTResponse.Broadcast(results[0]->AsObject()->GetObjectField(TEXT("message"))->GetStringField(TEXT("content")), role);
+
+				//IncomingGPTResponse.Broadcast(results[0]->AsObject()->GetObjectField(TEXT("message"))->GetStringField(TEXT("content")), role);
+				IncomingGPTResponse.Broadcast(results[0]->AsObject()->GetObjectField(TEXT("choices"))->GetStringField(TEXT("content")), role);
 			}
 		}
 	}
@@ -59,11 +89,16 @@ void UOpenAIComponent::OnGPTPartialResponseReceived(FHttpRequestPtr request, uin
 		message = test->GetContentAsString();
 		FRegexMatcher myMatcher(myPattern, message);
 
+		
+
 		while (myMatcher.FindNext())
 		{
 			blocksReading++;
 			if (blocksReading > blocksRead) {
 				data = myMatcher.GetCaptureGroup(1);
+
+				//UE_LOG(LogTemp, Warning, TEXT("[GPT Stream] Raw buffer:\n%s"), *message);
+
 
 				TSharedPtr<FJsonValue> JsonValue;
 				TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(data);
@@ -73,9 +108,27 @@ void UOpenAIComponent::OnGPTPartialResponseReceived(FHttpRequestPtr request, uin
 
 					if (JsonValue->TryGetObject(FileMessageObject)) {
 						results = FileMessageObject->Get()->GetArrayField(TEXT("choices"));
+
+						TSharedPtr<FJsonObject> ChoiceObj = results[0]->AsObject();
+
+						const TSharedPtr<FJsonObject>* DeltaObj;
+
+						if (ChoiceObj->TryGetObjectField(TEXT("delta"), DeltaObj))
+						{
+							// 2) Prova a prendere il content
+							FString Fragment;
+							if ((*DeltaObj)->TryGetStringField(TEXT("content"), Fragment))
+							{
+								// Accumula solo se non vuoto
+								outFragment.Append(Fragment);
+								UE_LOG(LogTemp, Warning, TEXT("[GPT Stream] Delta ricevuto: \"%s\""), *Fragment);
+							}
+						}
+
 						results[0]->AsObject()->TryGetStringField(TEXT("finish_reason"), endStream);
 						if (endStream != "stop") {
-							blocksRead++;
+
+							blocksRead++; // WE CONTINUE (A)
 
 							results[0]->AsObject()->TryGetStringField(TEXT("role"), checkRole);
 							if (checkRole == "system")
@@ -87,10 +140,12 @@ void UOpenAIComponent::OnGPTPartialResponseReceived(FHttpRequestPtr request, uin
 							else if (checkRole == "user")
 								role = GPTRoleType::USER;
 
-							outFragment.Append(results[0]->AsObject()->GetObjectField(TEXT("delta"))->GetStringField(TEXT("content")));
+							//outFragment.Append(results[0]->AsObject()->GetObjectField(TEXT("message"))->GetStringField(TEXT("content")));
 						}
-						else
+						else {
 							blocksRead = 0;
+							UE_LOG(LogTemp, Warning, TEXT("[GPT Stream] Detected finish_reason == stop"));
+						}
 					}
 				}
 			}
@@ -104,19 +159,14 @@ void UOpenAIComponent::getGPTCompletion(TArray<FChatTurn> messages, FString apiM
 	FString payload;
 	TSharedRef<IHttpRequest, ESPMode::ThreadSafe> Request = Http->CreateRequest();
 
-	if (Key.IsEmpty()) {
+	/*if (Key.IsEmpty()) {
 		UE_LOG(LogTemp, Error, TEXT("[OpenAIComponent] Key field cannot be empty"));
 		return;
-	}
+	}*/
 
-	if (stream)
-		Request->OnRequestProgress64().BindUObject(this, &UOpenAIComponent::OnGPTPartialResponseReceived);
-	else
-		Request->OnProcessRequestComplete().BindUObject(this, &UOpenAIComponent::OnGPTResponseReceived);
-	Request->SetURL("https://api.openai.com/v1/chat/completions");
+	Request->SetURL("http://localhost:1234/api/v0/chat/completions");
 	Request->SetVerb("POST");
 	Request->SetHeader(TEXT("Content-Type"), TEXT("application/json"));
-	Request->SetHeader(TEXT("Authorization"), "Bearer " + Key);
 	Request->SetHeader(TEXT("User-Agent"), "X-UnrealEngine-Agent");
 
 	TSharedPtr<FJsonObject> payloadObject = MakeShareable(new FJsonObject());
@@ -136,9 +186,17 @@ void UOpenAIComponent::getGPTCompletion(TArray<FChatTurn> messages, FString apiM
 	payloadObject->SetBoolField("stream", stream);
 
 	FJsonSerializer::Serialize(payloadObject.ToSharedRef(), TJsonWriterFactory<>::Create(&payload));
-
 	Request->SetContentAsString(payload);
 	Request->ProcessRequest();
+
+
+	if (stream)
+		Request->OnRequestProgress64().BindUObject(this, &UOpenAIComponent::OnGPTPartialResponseReceived);
+	else Request->OnProcessRequestComplete().BindUObject(this, &UOpenAIComponent::OnGPTResponseReceived);
+	//Request->SetURL("https://api.openai.com/v1/chat/completions");
+	//Request->SetHeader(TEXT("Authorization"), "Bearer " + Key);
+	
+	
 }
 
 // Called when the game starts

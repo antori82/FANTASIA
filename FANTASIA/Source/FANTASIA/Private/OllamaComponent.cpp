@@ -104,6 +104,8 @@ void UOllamaComponent::getGPTCompletion(TArray<FChatTurn> messages, FString mode
 	TSharedRef<IHttpRequest, ESPMode::ThreadSafe> Request = Http->CreateRequest();
 
 	Request->SetURL(endpoint + ":" + FString::FromInt(port) + "/api/chat");
+
+	//Request->SetURL(endpoint + ":" + FString::FromInt(port) + "/api/v0/chat");
 	Request->SetVerb("POST");
 	Request->SetHeader(TEXT("Content-Type"), TEXT("application/json"));
 	Request->SetHeader(TEXT("User-Agent"), "X-UnrealEngine-Agent");
