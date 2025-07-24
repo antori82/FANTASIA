@@ -88,6 +88,7 @@ void UOpenAIComponent::OnGPTPartialResponseReceived(FHttpRequestPtr request, uin
 		test = request->GetResponse();
 		message = test->GetContentAsString();
 		FRegexMatcher myMatcher(myPattern, message);
+		UE_LOG(LogTemp, Warning, TEXT("[GPT Stream] Lunghezza contenuto: %d bytes"), message.Len());
 
 		
 
@@ -115,13 +116,12 @@ void UOpenAIComponent::OnGPTPartialResponseReceived(FHttpRequestPtr request, uin
 
 						if (ChoiceObj->TryGetObjectField(TEXT("delta"), DeltaObj))
 						{
-							// 2) Prova a prendere il content
 							FString Fragment;
 							if ((*DeltaObj)->TryGetStringField(TEXT("content"), Fragment))
 							{
 								// Accumula solo se non vuoto
 								outFragment.Append(Fragment);
-								UE_LOG(LogTemp, Warning, TEXT("[GPT Stream] Delta ricevuto: \"%s\""), *Fragment);
+								UE_LOG(LogTemp, Warning, TEXT("[GPT Stream] Dati aggiornati: \"%s\""), *outFragment);
 							}
 						}
 
@@ -149,20 +149,18 @@ void UOpenAIComponent::OnGPTPartialResponseReceived(FHttpRequestPtr request, uin
 					}
 				}
 			}
+			IncomingGPTStreamResponse.Broadcast(outFragment, role, endStream == "stop");
 		}
-		IncomingGPTStreamResponse.Broadcast(outFragment, role, endStream == "stop");
+		
 	}
 }
 
 void UOpenAIComponent::getGPTCompletion(TArray<FChatTurn> messages, FString apiMethod, bool stream) {
+
+
 	FHttpModule* Http = &FHttpModule::Get();
 	FString payload;
 	TSharedRef<IHttpRequest, ESPMode::ThreadSafe> Request = Http->CreateRequest();
-
-	/*if (Key.IsEmpty()) {
-		UE_LOG(LogTemp, Error, TEXT("[OpenAIComponent] Key field cannot be empty"));
-		return;
-	}*/
 
 	Request->SetURL("http://localhost:1234/api/v0/chat/completions");
 	Request->SetVerb("POST");
@@ -187,15 +185,18 @@ void UOpenAIComponent::getGPTCompletion(TArray<FChatTurn> messages, FString apiM
 
 	FJsonSerializer::Serialize(payloadObject.ToSharedRef(), TJsonWriterFactory<>::Create(&payload));
 	Request->SetContentAsString(payload);
-	Request->ProcessRequest();
-
-
-	if (stream)
-		Request->OnRequestProgress64().BindUObject(this, &UOpenAIComponent::OnGPTPartialResponseReceived);
-	else Request->OnProcessRequestComplete().BindUObject(this, &UOpenAIComponent::OnGPTResponseReceived);
-	//Request->SetURL("https://api.openai.com/v1/chat/completions");
-	//Request->SetHeader(TEXT("Authorization"), "Bearer " + Key);
 	
+
+
+	if (stream) {
+		Request->OnRequestProgress64().BindUObject(this, &UOpenAIComponent::OnGPTPartialResponseReceived);
+	}
+	else {
+		Request->OnProcessRequestComplete().BindUObject(this, &UOpenAIComponent::OnGPTResponseReceived);
+	}
+	
+	Request->ProcessRequest();
+	UE_LOG(LogTemp, Warning, TEXT("[GPT Request] Request sent"));
 	
 }
 
