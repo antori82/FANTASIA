@@ -6,7 +6,6 @@
 
 #include "UObject/GeneratedCppIncludes.h"
 #include "FANTASIA/Public/SWIPrologComponent.h"
-#include "FANTASIA/Public/FANTASIATypes.h"
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
 void EmptyLinkFunctionForGeneratedCodeSWIPrologComponent() {}
 
@@ -15,10 +14,87 @@ ENGINE_API UClass* Z_Construct_UClass_UActorComponent();
 FANTASIA_API UClass* Z_Construct_UClass_USWIPrologComponent();
 FANTASIA_API UClass* Z_Construct_UClass_USWIPrologComponent_NoRegister();
 FANTASIA_API UClass* Z_Construct_UClass_USWIPrologObject_NoRegister();
+FANTASIA_API UClass* Z_Construct_UClass_USWIPrologSolution_NoRegister();
 FANTASIA_API UClass* Z_Construct_UClass_USWIPrologTerm_NoRegister();
-FANTASIA_API UScriptStruct* Z_Construct_UScriptStruct_FSWIPrologResponse();
+FANTASIA_API UFunction* Z_Construct_UDelegateFunction_FANTASIA_SolutionAvailableEvent__DelegateSignature();
 UPackage* Z_Construct_UPackage__Script_FANTASIA();
 // End Cross Module References
+
+// Begin Delegate FSolutionAvailableEvent
+struct Z_Construct_UDelegateFunction_FANTASIA_SolutionAvailableEvent__DelegateSignature_Statics
+{
+	struct _Script_FANTASIA_eventSolutionAvailableEvent_Parms
+	{
+		USWIPrologSolution* solution;
+	};
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
+		{ "ModuleRelativePath", "Public/SWIPrologComponent.h" },
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_solution;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+	static const UECodeGen_Private::FFunctionParams FuncParams;
+};
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UDelegateFunction_FANTASIA_SolutionAvailableEvent__DelegateSignature_Statics::NewProp_solution = { "solution", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(_Script_FANTASIA_eventSolutionAvailableEvent_Parms, solution), Z_Construct_UClass_USWIPrologSolution_NoRegister, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UDelegateFunction_FANTASIA_SolutionAvailableEvent__DelegateSignature_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UDelegateFunction_FANTASIA_SolutionAvailableEvent__DelegateSignature_Statics::NewProp_solution,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_SolutionAvailableEvent__DelegateSignature_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UDelegateFunction_FANTASIA_SolutionAvailableEvent__DelegateSignature_Statics::FuncParams = { (UObject*(*)())Z_Construct_UPackage__Script_FANTASIA, nullptr, "SolutionAvailableEvent__DelegateSignature", nullptr, nullptr, Z_Construct_UDelegateFunction_FANTASIA_SolutionAvailableEvent__DelegateSignature_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_SolutionAvailableEvent__DelegateSignature_Statics::PropPointers), sizeof(Z_Construct_UDelegateFunction_FANTASIA_SolutionAvailableEvent__DelegateSignature_Statics::_Script_FANTASIA_eventSolutionAvailableEvent_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00130000, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_SolutionAvailableEvent__DelegateSignature_Statics::Function_MetaDataParams), Z_Construct_UDelegateFunction_FANTASIA_SolutionAvailableEvent__DelegateSignature_Statics::Function_MetaDataParams) };
+static_assert(sizeof(Z_Construct_UDelegateFunction_FANTASIA_SolutionAvailableEvent__DelegateSignature_Statics::_Script_FANTASIA_eventSolutionAvailableEvent_Parms) < MAX_uint16);
+UFunction* Z_Construct_UDelegateFunction_FANTASIA_SolutionAvailableEvent__DelegateSignature()
+{
+	static UFunction* ReturnFunction = nullptr;
+	if (!ReturnFunction)
+	{
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UDelegateFunction_FANTASIA_SolutionAvailableEvent__DelegateSignature_Statics::FuncParams);
+	}
+	return ReturnFunction;
+}
+void FSolutionAvailableEvent_DelegateWrapper(const FMulticastScriptDelegate& SolutionAvailableEvent, USWIPrologSolution* solution)
+{
+	struct _Script_FANTASIA_eventSolutionAvailableEvent_Parms
+	{
+		USWIPrologSolution* solution;
+	};
+	_Script_FANTASIA_eventSolutionAvailableEvent_Parms Parms;
+	Parms.solution=solution;
+	SolutionAvailableEvent.ProcessMulticastDelegate<UObject>(&Parms);
+}
+// End Delegate FSolutionAvailableEvent
+
+// Begin Class USWIPrologComponent Function nextSolution
+struct Z_Construct_UFunction_USWIPrologComponent_nextSolution_Statics
+{
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
+		{ "AutoCreateRefTerm", "parameters" },
+		{ "Category", "SWIProlog" },
+		{ "DisplayName", "Next solution" },
+		{ "ModuleRelativePath", "Public/SWIPrologComponent.h" },
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FFunctionParams FuncParams;
+};
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_USWIPrologComponent_nextSolution_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_USWIPrologComponent, nullptr, "nextSolution", nullptr, nullptr, nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_USWIPrologComponent_nextSolution_Statics::Function_MetaDataParams), Z_Construct_UFunction_USWIPrologComponent_nextSolution_Statics::Function_MetaDataParams) };
+UFunction* Z_Construct_UFunction_USWIPrologComponent_nextSolution()
+{
+	static UFunction* ReturnFunction = nullptr;
+	if (!ReturnFunction)
+	{
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_USWIPrologComponent_nextSolution_Statics::FuncParams);
+	}
+	return ReturnFunction;
+}
+DEFINE_FUNCTION(USWIPrologComponent::execnextSolution)
+{
+	P_FINISH;
+	P_NATIVE_BEGIN;
+	P_THIS->nextSolution();
+	P_NATIVE_END;
+}
+// End Class USWIPrologComponent Function nextSolution
 
 // Begin Class USWIPrologComponent Function openPrologFile
 struct Z_Construct_UFunction_USWIPrologComponent_openPrologFile_Statics
@@ -133,38 +209,6 @@ DEFINE_FUNCTION(USWIPrologComponent::execSWIPLassert)
 }
 // End Class USWIPrologComponent Function SWIPLassert
 
-// Begin Class USWIPrologComponent Function SWIPLresetProlog
-struct Z_Construct_UFunction_USWIPrologComponent_SWIPLresetProlog_Statics
-{
-#if WITH_METADATA
-	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "AutoCreateRefTerm", "parameters" },
-		{ "Category", "SWIProlog" },
-		{ "DisplayName", "Reset Prolog" },
-		{ "ModuleRelativePath", "Public/SWIPrologComponent.h" },
-	};
-#endif // WITH_METADATA
-	static const UECodeGen_Private::FFunctionParams FuncParams;
-};
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_USWIPrologComponent_SWIPLresetProlog_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_USWIPrologComponent, nullptr, "SWIPLresetProlog", nullptr, nullptr, nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_USWIPrologComponent_SWIPLresetProlog_Statics::Function_MetaDataParams), Z_Construct_UFunction_USWIPrologComponent_SWIPLresetProlog_Statics::Function_MetaDataParams) };
-UFunction* Z_Construct_UFunction_USWIPrologComponent_SWIPLresetProlog()
-{
-	static UFunction* ReturnFunction = nullptr;
-	if (!ReturnFunction)
-	{
-		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_USWIPrologComponent_SWIPLresetProlog_Statics::FuncParams);
-	}
-	return ReturnFunction;
-}
-DEFINE_FUNCTION(USWIPrologComponent::execSWIPLresetProlog)
-{
-	P_FINISH;
-	P_NATIVE_BEGIN;
-	P_THIS->SWIPLresetProlog();
-	P_NATIVE_END;
-}
-// End Class USWIPrologComponent Function SWIPLresetProlog
-
 // Begin Class USWIPrologComponent Function SWIPLretract
 struct Z_Construct_UFunction_USWIPrologComponent_SWIPLretract_Statics
 {
@@ -226,7 +270,6 @@ struct Z_Construct_UFunction_USWIPrologComponent_SWIPLsubmitQuery_Statics
 	struct SWIPrologComponent_eventSWIPLsubmitQuery_Parms
 	{
 		USWIPrologTerm* inRuleOrFact;
-		FSWIPrologResponse outResponse;
 	};
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
@@ -237,18 +280,15 @@ struct Z_Construct_UFunction_USWIPrologComponent_SWIPLsubmitQuery_Statics
 	};
 #endif // WITH_METADATA
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_inRuleOrFact;
-	static const UECodeGen_Private::FStructPropertyParams NewProp_outResponse;
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
 const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_USWIPrologComponent_SWIPLsubmitQuery_Statics::NewProp_inRuleOrFact = { "inRuleOrFact", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(SWIPrologComponent_eventSWIPLsubmitQuery_Parms, inRuleOrFact), Z_Construct_UClass_USWIPrologTerm_NoRegister, METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_USWIPrologComponent_SWIPLsubmitQuery_Statics::NewProp_outResponse = { "outResponse", nullptr, (EPropertyFlags)0x0010000000000180, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(SWIPrologComponent_eventSWIPLsubmitQuery_Parms, outResponse), Z_Construct_UScriptStruct_FSWIPrologResponse, METADATA_PARAMS(0, nullptr) }; // 1392627495
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_USWIPrologComponent_SWIPLsubmitQuery_Statics::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_USWIPrologComponent_SWIPLsubmitQuery_Statics::NewProp_inRuleOrFact,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_USWIPrologComponent_SWIPLsubmitQuery_Statics::NewProp_outResponse,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_USWIPrologComponent_SWIPLsubmitQuery_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_USWIPrologComponent_SWIPLsubmitQuery_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_USWIPrologComponent, nullptr, "SWIPLsubmitQuery", nullptr, nullptr, Z_Construct_UFunction_USWIPrologComponent_SWIPLsubmitQuery_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_USWIPrologComponent_SWIPLsubmitQuery_Statics::PropPointers), sizeof(Z_Construct_UFunction_USWIPrologComponent_SWIPLsubmitQuery_Statics::SWIPrologComponent_eventSWIPLsubmitQuery_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04420401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_USWIPrologComponent_SWIPLsubmitQuery_Statics::Function_MetaDataParams), Z_Construct_UFunction_USWIPrologComponent_SWIPLsubmitQuery_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_USWIPrologComponent_SWIPLsubmitQuery_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_USWIPrologComponent, nullptr, "SWIPLsubmitQuery", nullptr, nullptr, Z_Construct_UFunction_USWIPrologComponent_SWIPLsubmitQuery_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_USWIPrologComponent_SWIPLsubmitQuery_Statics::PropPointers), sizeof(Z_Construct_UFunction_USWIPrologComponent_SWIPLsubmitQuery_Statics::SWIPrologComponent_eventSWIPLsubmitQuery_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_USWIPrologComponent_SWIPLsubmitQuery_Statics::Function_MetaDataParams), Z_Construct_UFunction_USWIPrologComponent_SWIPLsubmitQuery_Statics::Function_MetaDataParams) };
 static_assert(sizeof(Z_Construct_UFunction_USWIPrologComponent_SWIPLsubmitQuery_Statics::SWIPrologComponent_eventSWIPLsubmitQuery_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_USWIPrologComponent_SWIPLsubmitQuery()
 {
@@ -262,10 +302,9 @@ UFunction* Z_Construct_UFunction_USWIPrologComponent_SWIPLsubmitQuery()
 DEFINE_FUNCTION(USWIPrologComponent::execSWIPLsubmitQuery)
 {
 	P_GET_OBJECT(USWIPrologTerm,Z_Param_inRuleOrFact);
-	P_GET_STRUCT_REF(FSWIPrologResponse,Z_Param_Out_outResponse);
 	P_FINISH;
 	P_NATIVE_BEGIN;
-	P_THIS->SWIPLsubmitQuery(Z_Param_inRuleOrFact,Z_Param_Out_outResponse);
+	P_THIS->SWIPLsubmitQuery(Z_Param_inRuleOrFact);
 	P_NATIVE_END;
 }
 // End Class USWIPrologComponent Function SWIPLsubmitQuery
@@ -275,9 +314,9 @@ void USWIPrologComponent::StaticRegisterNativesUSWIPrologComponent()
 {
 	UClass* Class = USWIPrologComponent::StaticClass();
 	static const FNameNativePtrPair Funcs[] = {
+		{ "nextSolution", &USWIPrologComponent::execnextSolution },
 		{ "openPrologFile", &USWIPrologComponent::execopenPrologFile },
 		{ "SWIPLassert", &USWIPrologComponent::execSWIPLassert },
-		{ "SWIPLresetProlog", &USWIPrologComponent::execSWIPLresetProlog },
 		{ "SWIPLretract", &USWIPrologComponent::execSWIPLretract },
 		{ "SWIPLsubmitQuery", &USWIPrologComponent::execSWIPLsubmitQuery },
 	};
@@ -297,14 +336,19 @@ struct Z_Construct_UClass_USWIPrologComponent_Statics
 		{ "IncludePath", "SWIPrologComponent.h" },
 		{ "ModuleRelativePath", "Public/SWIPrologComponent.h" },
 	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_SolutionAvailable_MetaData[] = {
+		{ "ModuleRelativePath", "Public/SWIPrologComponent.h" },
+	};
 #endif // WITH_METADATA
+	static const UECodeGen_Private::FMulticastDelegatePropertyParams NewProp_SolutionAvailable;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static UObject* (*const DependentSingletons[])();
 	static constexpr FClassFunctionLinkInfo FuncInfo[] = {
+		{ &Z_Construct_UFunction_USWIPrologComponent_nextSolution, "nextSolution" }, // 295646408
 		{ &Z_Construct_UFunction_USWIPrologComponent_openPrologFile, "openPrologFile" }, // 1331636385
 		{ &Z_Construct_UFunction_USWIPrologComponent_SWIPLassert, "SWIPLassert" }, // 901108155
-		{ &Z_Construct_UFunction_USWIPrologComponent_SWIPLresetProlog, "SWIPLresetProlog" }, // 4223325723
 		{ &Z_Construct_UFunction_USWIPrologComponent_SWIPLretract, "SWIPLretract" }, // 3558670054
-		{ &Z_Construct_UFunction_USWIPrologComponent_SWIPLsubmitQuery, "SWIPLsubmitQuery" }, // 3827036387
+		{ &Z_Construct_UFunction_USWIPrologComponent_SWIPLsubmitQuery, "SWIPLsubmitQuery" }, // 1733030947
 	};
 	static_assert(UE_ARRAY_COUNT(FuncInfo) < 2048);
 	static constexpr FCppClassTypeInfoStatic StaticCppClassTypeInfo = {
@@ -312,6 +356,11 @@ struct Z_Construct_UClass_USWIPrologComponent_Statics
 	};
 	static const UECodeGen_Private::FClassParams ClassParams;
 };
+const UECodeGen_Private::FMulticastDelegatePropertyParams Z_Construct_UClass_USWIPrologComponent_Statics::NewProp_SolutionAvailable = { "SolutionAvailable", nullptr, (EPropertyFlags)0x0010100010080000, UECodeGen_Private::EPropertyGenFlags::InlineMulticastDelegate, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(USWIPrologComponent, SolutionAvailable), Z_Construct_UDelegateFunction_FANTASIA_SolutionAvailableEvent__DelegateSignature, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_SolutionAvailable_MetaData), NewProp_SolutionAvailable_MetaData) }; // 3013765042
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_USWIPrologComponent_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_USWIPrologComponent_Statics::NewProp_SolutionAvailable,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_USWIPrologComponent_Statics::PropPointers) < 2048);
 UObject* (*const Z_Construct_UClass_USWIPrologComponent_Statics::DependentSingletons[])() = {
 	(UObject* (*)())Z_Construct_UClass_UActorComponent,
 	(UObject* (*)())Z_Construct_UPackage__Script_FANTASIA,
@@ -323,11 +372,11 @@ const UECodeGen_Private::FClassParams Z_Construct_UClass_USWIPrologComponent_Sta
 	&StaticCppClassTypeInfo,
 	DependentSingletons,
 	FuncInfo,
-	nullptr,
+	Z_Construct_UClass_USWIPrologComponent_Statics::PropPointers,
 	nullptr,
 	UE_ARRAY_COUNT(DependentSingletons),
 	UE_ARRAY_COUNT(FuncInfo),
-	0,
+	UE_ARRAY_COUNT(Z_Construct_UClass_USWIPrologComponent_Statics::PropPointers),
 	0,
 	0x00A000A4u,
 	METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UClass_USWIPrologComponent_Statics::Class_MetaDataParams), Z_Construct_UClass_USWIPrologComponent_Statics::Class_MetaDataParams)
@@ -349,14 +398,14 @@ USWIPrologComponent::~USWIPrologComponent() {}
 // End Class USWIPrologComponent
 
 // Begin Registration
-struct Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_SWIPrologComponent_h_Statics
+struct Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_SWIPrologComponent_h_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_USWIPrologComponent, USWIPrologComponent::StaticClass, TEXT("USWIPrologComponent"), &Z_Registration_Info_UClass_USWIPrologComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(USWIPrologComponent), 3962328257U) },
+		{ Z_Construct_UClass_USWIPrologComponent, USWIPrologComponent::StaticClass, TEXT("USWIPrologComponent"), &Z_Registration_Info_UClass_USWIPrologComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(USWIPrologComponent), 3383803368U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_SWIPrologComponent_h_1037438509(TEXT("/Script/FANTASIA"),
-	Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_SWIPrologComponent_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_SWIPrologComponent_h_Statics::ClassInfo),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_SWIPrologComponent_h_3226013845(TEXT("/Script/FANTASIA"),
+	Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_SWIPrologComponent_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_SWIPrologComponent_h_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);
 // End Registration
