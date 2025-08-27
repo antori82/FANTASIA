@@ -217,6 +217,9 @@ public:
 
 	UPROPERTY(BlueprintReadOnly)
 	TArray<FString> resultSet;
+
+	UPROPERTY(BlueprintReadOnly)
+	bool verified;
 };
 
 UENUM(BlueprintType)

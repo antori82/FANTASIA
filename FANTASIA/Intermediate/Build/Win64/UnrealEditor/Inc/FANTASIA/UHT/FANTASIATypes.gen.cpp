@@ -1150,9 +1150,15 @@ struct Z_Construct_UClass_USWIPrologSolution_Statics
 		{ "Category", "SWIPrologSolution" },
 		{ "ModuleRelativePath", "Public/FANTASIATypes.h" },
 	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_verified_MetaData[] = {
+		{ "Category", "SWIPrologSolution" },
+		{ "ModuleRelativePath", "Public/FANTASIATypes.h" },
+	};
 #endif // WITH_METADATA
 	static const UECodeGen_Private::FStrPropertyParams NewProp_resultSet_Inner;
 	static const UECodeGen_Private::FArrayPropertyParams NewProp_resultSet;
+	static void NewProp_verified_SetBit(void* Obj);
+	static const UECodeGen_Private::FBoolPropertyParams NewProp_verified;
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static UObject* (*const DependentSingletons[])();
 	static constexpr FCppClassTypeInfoStatic StaticCppClassTypeInfo = {
@@ -1162,9 +1168,15 @@ struct Z_Construct_UClass_USWIPrologSolution_Statics
 };
 const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_USWIPrologSolution_Statics::NewProp_resultSet_Inner = { "resultSet", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, METADATA_PARAMS(0, nullptr) };
 const UECodeGen_Private::FArrayPropertyParams Z_Construct_UClass_USWIPrologSolution_Statics::NewProp_resultSet = { "resultSet", nullptr, (EPropertyFlags)0x0010000000000014, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(USWIPrologSolution, resultSet), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_resultSet_MetaData), NewProp_resultSet_MetaData) };
+void Z_Construct_UClass_USWIPrologSolution_Statics::NewProp_verified_SetBit(void* Obj)
+{
+	((USWIPrologSolution*)Obj)->verified = 1;
+}
+const UECodeGen_Private::FBoolPropertyParams Z_Construct_UClass_USWIPrologSolution_Statics::NewProp_verified = { "verified", nullptr, (EPropertyFlags)0x0010000000000014, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, sizeof(bool), sizeof(USWIPrologSolution), &Z_Construct_UClass_USWIPrologSolution_Statics::NewProp_verified_SetBit, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_verified_MetaData), NewProp_verified_MetaData) };
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_USWIPrologSolution_Statics::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_USWIPrologSolution_Statics::NewProp_resultSet_Inner,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_USWIPrologSolution_Statics::NewProp_resultSet,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_USWIPrologSolution_Statics::NewProp_verified,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_USWIPrologSolution_Statics::PropPointers) < 2048);
 UObject* (*const Z_Construct_UClass_USWIPrologSolution_Statics::DependentSingletons[])() = {
@@ -2727,7 +2739,7 @@ UNeo4jResultCellSimple::~UNeo4jResultCellSimple() {}
 // End Class UNeo4jResultCellSimple
 
 // Begin Registration
-struct Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_Statics
+struct Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_Statics
 {
 	static constexpr FEnumRegisterCompiledInInfo EnumInfo[] = {
 		{ SWIPrologOperation_StaticEnum, TEXT("SWIPrologOperation"), &Z_Registration_Info_UEnum_SWIPrologOperation, CONSTRUCT_RELOAD_VERSION_INFO(FEnumReloadVersionInfo, 1261065449U) },
@@ -2759,7 +2771,7 @@ struct Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_F
 		{ Z_Construct_UClass_USWIPrologList, USWIPrologList::StaticClass, TEXT("USWIPrologList"), &Z_Registration_Info_UClass_USWIPrologList, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(USWIPrologList), 3474724491U) },
 		{ Z_Construct_UClass_USWIPrologHeadToTail, USWIPrologHeadToTail::StaticClass, TEXT("USWIPrologHeadToTail"), &Z_Registration_Info_UClass_USWIPrologHeadToTail, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(USWIPrologHeadToTail), 2290551282U) },
 		{ Z_Construct_UClass_USWIPrologCut, USWIPrologCut::StaticClass, TEXT("USWIPrologCut"), &Z_Registration_Info_UClass_USWIPrologCut, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(USWIPrologCut), 4183630570U) },
-		{ Z_Construct_UClass_USWIPrologSolution, USWIPrologSolution::StaticClass, TEXT("USWIPrologSolution"), &Z_Registration_Info_UClass_USWIPrologSolution, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(USWIPrologSolution), 3500098461U) },
+		{ Z_Construct_UClass_USWIPrologSolution, USWIPrologSolution::StaticClass, TEXT("USWIPrologSolution"), &Z_Registration_Info_UClass_USWIPrologSolution, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(USWIPrologSolution), 3319156974U) },
 		{ Z_Construct_UClass_UNLUIntent, UNLUIntent::StaticClass, TEXT("UNLUIntent"), &Z_Registration_Info_UClass_UNLUIntent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UNLUIntent), 980026208U) },
 		{ Z_Construct_UClass_UNLUEntity, UNLUEntity::StaticClass, TEXT("UNLUEntity"), &Z_Registration_Info_UClass_UNLUEntity, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UNLUEntity), 937203255U) },
 		{ Z_Construct_UClass_UNeo4jResultRow, UNeo4jResultRow::StaticClass, TEXT("UNeo4jResultRow"), &Z_Registration_Info_UClass_UNeo4jResultRow, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UNeo4jResultRow), 3460069060U) },
@@ -2769,9 +2781,9 @@ struct Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_F
 		{ Z_Construct_UClass_UNeo4jResultCellSimple, UNeo4jResultCellSimple::StaticClass, TEXT("UNeo4jResultCellSimple"), &Z_Registration_Info_UClass_UNeo4jResultCellSimple, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UNeo4jResultCellSimple), 3829507120U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_3528130042(TEXT("/Script/FANTASIA"),
-	Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_Statics::ClassInfo),
-	Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_Statics::ScriptStructInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_Statics::ScriptStructInfo),
-	Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_Statics::EnumInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_Statics::EnumInfo));
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_3902281485(TEXT("/Script/FANTASIA"),
+	Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_Statics::ClassInfo),
+	Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_Statics::ScriptStructInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_Statics::ScriptStructInfo),
+	Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_Statics::EnumInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_Statics::EnumInfo));
 // End Registration
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
