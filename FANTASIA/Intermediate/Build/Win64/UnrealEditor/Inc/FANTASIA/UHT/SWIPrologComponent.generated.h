@@ -10,22 +10,26 @@
 
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
 class USWIPrologObject;
+class USWIPrologSolution;
 class USWIPrologTerm;
-struct FSWIPrologResponse;
 #ifdef FANTASIA_SWIPrologComponent_generated_h
 #error "SWIPrologComponent.generated.h already included, missing '#pragma once' in SWIPrologComponent.h"
 #endif
 #define FANTASIA_SWIPrologComponent_generated_h
 
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_SWIPrologComponent_h_33_RPC_WRAPPERS_NO_PURE_DECLS \
+#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_SWIPrologComponent_h_9_DELEGATE \
+FANTASIA_API void FSolutionAvailableEvent_DelegateWrapper(const FMulticastScriptDelegate& SolutionAvailableEvent, USWIPrologSolution* solution);
+
+
+#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_SWIPrologComponent_h_14_RPC_WRAPPERS_NO_PURE_DECLS \
 	DECLARE_FUNCTION(execopenPrologFile); \
-	DECLARE_FUNCTION(execSWIPLresetProlog); \
 	DECLARE_FUNCTION(execSWIPLretract); \
 	DECLARE_FUNCTION(execSWIPLassert); \
+	DECLARE_FUNCTION(execnextSolution); \
 	DECLARE_FUNCTION(execSWIPLsubmitQuery);
 
 
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_SWIPrologComponent_h_33_INCLASS_NO_PURE_DECLS \
+#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_SWIPrologComponent_h_14_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUSWIPrologComponent(); \
 	friend struct Z_Construct_UClass_USWIPrologComponent_Statics; \
@@ -36,7 +40,7 @@ public: \
 
 
 
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_SWIPrologComponent_h_33_ENHANCED_CONSTRUCTORS \
+#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_SWIPrologComponent_h_14_ENHANCED_CONSTRUCTORS \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
 	USWIPrologComponent(USWIPrologComponent&&); \
@@ -48,13 +52,13 @@ public: \
 	NO_API virtual ~USWIPrologComponent();
 
 
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_SWIPrologComponent_h_30_PROLOG
-#define FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_SWIPrologComponent_h_33_GENERATED_BODY \
+#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_SWIPrologComponent_h_11_PROLOG
+#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_SWIPrologComponent_h_14_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_SWIPrologComponent_h_33_RPC_WRAPPERS_NO_PURE_DECLS \
-	FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_SWIPrologComponent_h_33_INCLASS_NO_PURE_DECLS \
-	FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_SWIPrologComponent_h_33_ENHANCED_CONSTRUCTORS \
+	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_SWIPrologComponent_h_14_RPC_WRAPPERS_NO_PURE_DECLS \
+	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_SWIPrologComponent_h_14_INCLASS_NO_PURE_DECLS \
+	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_SWIPrologComponent_h_14_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
@@ -62,7 +66,7 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 template<> FANTASIA_API UClass* StaticClass<class USWIPrologComponent>();
 
 #undef CURRENT_FILE_ID
-#define CURRENT_FILE_ID FID_Perforce_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_SWIPrologComponent_h
+#define CURRENT_FILE_ID FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_SWIPrologComponent_h
 
 
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
