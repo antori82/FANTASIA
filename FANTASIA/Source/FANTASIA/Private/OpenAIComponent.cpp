@@ -122,6 +122,7 @@ void UOpenAIComponent::OnGPTPartialResponseReceived(FHttpRequestPtr request, uin
 								// Accumula solo se non vuoto
 								outFragment.Append(Fragment);
 								UE_LOG(LogTemp, Warning, TEXT("[GPT Stream] Dati aggiornati: \"%s\""), *outFragment);
+								IncomingGPTStreamResponse.Broadcast(outFragment, role, endStream == "stop");//broadcast
 							}
 						}
 
@@ -149,9 +150,9 @@ void UOpenAIComponent::OnGPTPartialResponseReceived(FHttpRequestPtr request, uin
 					}
 				}
 			}
-			IncomingGPTStreamResponse.Broadcast(outFragment, role, endStream == "stop");
+			
 		}
-		
+
 	}
 }
 
