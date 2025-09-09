@@ -13,30 +13,36 @@ UOllamaComponent::UOllamaComponent()
 	// ...
 }
 
+
+
 void UOllamaComponent::OnGPTResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful) {
 	if (bWasSuccessful) {
-
 		TSharedPtr<FJsonValue> JsonValue;
 		TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(Response->GetContentAsString());
 		FString checkRole;
 		GPTRoleType role;
 
-		if (FJsonSerializer::Deserialize(Reader, JsonValue))
-		{
+		if (FJsonSerializer::Deserialize(Reader, JsonValue)) {
 			FString temp = Response->GetContentAsString();
+			UE_LOG(LogTemp, Warning, TEXT("Complete response: %s"), *temp);
 			const TSharedPtr<FJsonObject>* FileMessageObject;
 
 			if (JsonValue->TryGetObject(FileMessageObject)) {
-				checkRole = FileMessageObject->Get()->GetObjectField(TEXT("message"))->GetStringField(TEXT("role"));
+				if (FileMessageObject->Get()->TryGetField(TEXT("error"))) {
+					UE_LOG(LogTemp, Error, TEXT("[OllamaComponent] %hs: %hs"), TCHAR_TO_UTF8(*FileMessageObject->Get()->GetObjectField(TEXT("error"))->GetStringField(TEXT("type"))), TCHAR_TO_UTF8(*FileMessageObject->Get()->GetObjectField(TEXT("error"))->GetStringField(TEXT("code"))));
+					return;
+				}
 
-				if (checkRole == "system")
-					role = GPTRoleType::SYSTEM;
-				else if (checkRole == "assistant")
-					role = GPTRoleType::ASSISTANT;
-				else if (checkRole == "function")
-					role = GPTRoleType::FUNCTION;
-				else if (checkRole == "user")
-					role = GPTRoleType::USER;
+			checkRole = FileMessageObject->Get()->GetObjectField(TEXT("message"))->GetStringField(TEXT("role"));
+
+			if (checkRole == "system")
+				role = GPTRoleType::SYSTEM;
+			else if (checkRole == "assistant")
+				role = GPTRoleType::ASSISTANT;
+			else if (checkRole == "function")
+				role = GPTRoleType::FUNCTION;
+			else if (checkRole == "user")
+				role = GPTRoleType::USER;
 
 				IncomingGPTResponse.Broadcast(FileMessageObject->Get()->GetObjectField(TEXT("message"))->GetStringField(TEXT("content")), role);
 			}
@@ -98,7 +104,7 @@ void UOllamaComponent::OnGPTPartialResponseReceived(FHttpRequestPtr request, uin
 	}
 }
 
-void UOllamaComponent::getGPTCompletion(TArray<FChatTurn> messages, FString model, bool stream) {
+void UOllamaComponent::getGPTCompletion(TArray<FChatTurn> messages, FString apiMethod, bool stream) {
 	FHttpModule* Http = &FHttpModule::Get();
 	FString payload;
 	TSharedRef<IHttpRequest, ESPMode::ThreadSafe> Request = Http->CreateRequest();
@@ -110,30 +116,36 @@ void UOllamaComponent::getGPTCompletion(TArray<FChatTurn> messages, FString mode
 
 	TSharedPtr<FJsonObject> payloadObject = MakeShareable(new FJsonObject());
 
-
 	TArray<TSharedPtr<FJsonValue>> jsonMessages;
-	for (int i = 0; i < messages.Num(); i++)
-	{
+	for (int i = 0; i < messages.Num(); i++) {
 		TSharedPtr<FJsonObject> turn = MakeShareable(new FJsonObject());
 		FText enumValueText;
 		UEnum::GetDisplayValueAsText(messages[i].role, enumValueText);
 		turn->SetStringField("role", enumValueText.ToString().ToLower());
 		turn->SetStringField("content", messages[i].content);
-
+		
 		jsonMessages.Add(MakeShareable(new FJsonValueObject(turn)));
 	}
+
 	payloadObject->SetArrayField(TEXT("messages"), jsonMessages);
-	payloadObject->SetStringField("model", model);
-	if (stream)
-		Request->OnRequestProgress64().BindUObject(this, &UOllamaComponent::OnGPTPartialResponseReceived);
-	else
-		Request->OnProcessRequestComplete().BindUObject(this, &UOllamaComponent::OnGPTResponseReceived);
+	//payloadObject->SetStringField(TEXT("reasoning effort"), "low");
+	payloadObject->SetStringField(TEXT("model"), apiMethod);
 	payloadObject->SetBoolField("stream", stream);
 
 	FJsonSerializer::Serialize(payloadObject.ToSharedRef(), TJsonWriterFactory<>::Create(&payload));
-
 	Request->SetContentAsString(payload);
+
+
+
+	if (stream) {
+		Request->OnRequestProgress64().BindUObject(this, &UOllamaComponent::OnGPTPartialResponseReceived);
+	}
+	else {
+		Request->OnProcessRequestComplete().BindUObject(this, &UOllamaComponent::OnGPTResponseReceived);
+	}
+
 	Request->ProcessRequest();
+	UE_LOG(LogTemp, Warning, TEXT("[GPT Request] Request sent"));
 }
 
 // Called when the game starts
