@@ -1,15 +1,15 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-#include "OpenAIComponent.h"
+#include "LmstudioComponent.h"
 #include "Misc/Base64.h"
 
-// Sets default values for this component's properties
-UOpenAIComponent::UOpenAIComponent() {
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
+
+ULmstudioComponent::ULmstudioComponent() {
+
 	PrimaryComponentTick.bCanEverTick = false;
+
 }
 
-void UOpenAIComponent::OnGPTResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful) {
+void ULmstudioComponent::OnGPTResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful)
+{
 	if (bWasSuccessful) {
 		TSharedPtr<FJsonValue> JsonValue;
 		TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(Response->GetContentAsString());
@@ -53,7 +53,7 @@ void UOpenAIComponent::OnGPTResponseReceived(FHttpRequestPtr Request, FHttpRespo
 						}
 					}
 				}
-				
+
 
 				checkRole = results[0]->AsObject()->GetObjectField(TEXT("message"))->GetStringField(TEXT("role"));
 
@@ -74,10 +74,10 @@ void UOpenAIComponent::OnGPTResponseReceived(FHttpRequestPtr Request, FHttpRespo
 	}
 }
 
-void UOpenAIComponent::OnGPTPartialResponseReceived(FHttpRequestPtr request, uint64 bytesSent, uint64 bytesReceived) {
+void ULmstudioComponent::OnGPTPartialResponseReceived(FHttpRequestPtr request, uint64 bytesSent, uint64 bytesReceived) {
 	FHttpResponsePtr test;
 	FString message, data, checkRole, outFragment = "";
-	const FRegexPattern myPattern(TEXT("data: (\\{.*\\})"));
+	const FRegexPattern myPattern(TEXT("(\\{\"model\":.*\"done\":.*\\})"));
 	static GPTRoleType role = GPTRoleType::ASSISTANT;
 	static int blocksRead = 0;
 	int blocksReading = 0;
@@ -90,7 +90,7 @@ void UOpenAIComponent::OnGPTPartialResponseReceived(FHttpRequestPtr request, uin
 		FRegexMatcher myMatcher(myPattern, message);
 		UE_LOG(LogTemp, Warning, TEXT("[GPT Stream] Lunghezza contenuto: %d bytes"), message.Len());
 
-		
+
 
 		while (myMatcher.FindNext())
 		{
@@ -98,7 +98,7 @@ void UOpenAIComponent::OnGPTPartialResponseReceived(FHttpRequestPtr request, uin
 			if (blocksReading > blocksRead) {
 				data = myMatcher.GetCaptureGroup(1);
 
-				//UE_LOG(LogTemp, Warning, TEXT("[GPT Stream] Raw buffer:\n%s"), *message);
+				UE_LOG(LogTemp, Warning, TEXT("[GPT Stream] Raw buffer:\n%s"), *message);
 
 
 				TSharedPtr<FJsonValue> JsonValue;
@@ -114,15 +114,17 @@ void UOpenAIComponent::OnGPTPartialResponseReceived(FHttpRequestPtr request, uin
 
 						const TSharedPtr<FJsonObject>* DeltaObj;
 
-						if (ChoiceObj->TryGetObjectField(TEXT("choices"), DeltaObj))
+						UE_LOG(LogTemp, Warning, TEXT("[GPT Stream] Arrivo fino qua"));
+
+						if (ChoiceObj->TryGetObjectField(TEXT("delta"), DeltaObj))
 						{
 							FString Fragment;
-							if ((*DeltaObj)->TryGetStringField(TEXT("text"), Fragment))
+							if ((*DeltaObj)->TryGetStringField(TEXT("content"), Fragment))
 							{
 								// Accumula solo se non vuoto
 								outFragment.Append(Fragment);
 								UE_LOG(LogTemp, Warning, TEXT("[GPT Stream] Dati aggiornati: \"%s\""), *outFragment);
-								IncomingGPTStreamResponse.Broadcast(outFragment, role, endStream == "stop");//to be included both in .h than .c
+								IncomingGPTStreamResponse.Broadcast(outFragment, role, endStream == "stop");//broadcast
 							}
 						}
 
@@ -150,15 +152,14 @@ void UOpenAIComponent::OnGPTPartialResponseReceived(FHttpRequestPtr request, uin
 					}
 				}
 			}
-			
+
 		}
 
 	}
 }
 
-void UOpenAIComponent::getGPTCompletion(TArray<FChatTurn> messages, FString apiMethod, bool stream) {
-
-
+void ULmstudioComponent::getGPTCompletion(TArray<FChatTurn> messages, FString apiMethod, bool stream)
+{
 	FHttpModule* Http = &FHttpModule::Get();
 	FString payload;
 	TSharedRef<IHttpRequest, ESPMode::ThreadSafe> Request = Http->CreateRequest();
@@ -186,27 +187,36 @@ void UOpenAIComponent::getGPTCompletion(TArray<FChatTurn> messages, FString apiM
 
 	FJsonSerializer::Serialize(payloadObject.ToSharedRef(), TJsonWriterFactory<>::Create(&payload));
 	Request->SetContentAsString(payload);
-	
+
 
 
 	if (stream) {
-		Request->OnRequestProgress64().BindUObject(this, &UOpenAIComponent::OnGPTPartialResponseReceived);
+		Request->OnRequestProgress64().BindUObject(this, &ULmstudioComponent::OnGPTPartialResponseReceived);
 	}
 	else {
-		Request->OnProcessRequestComplete().BindUObject(this, &UOpenAIComponent::OnGPTResponseReceived);
+		Request->OnProcessRequestComplete().BindUObject(this, &ULmstudioComponent::OnGPTResponseReceived);
 	}
-	
+
 	Request->ProcessRequest();
 	UE_LOG(LogTemp, Warning, TEXT("[GPT Request] Request sent"));
-	
 }
 
-// Called when the game starts
-void UOpenAIComponent::BeginPlay() {
+void ULmstudioComponent::BeginPlay() {
 	Super::BeginPlay();
+
 }
 
-// Called every frame
-void UOpenAIComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) {
+void ULmstudioComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+{
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+
+
 }
+
+
+
+
+
+
+
+
