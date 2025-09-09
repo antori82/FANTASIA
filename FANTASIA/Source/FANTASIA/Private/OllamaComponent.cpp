@@ -128,7 +128,7 @@ void UOllamaComponent::getGPTCompletion(TArray<FChatTurn> messages, FString apiM
 	}
 
 	payloadObject->SetArrayField(TEXT("messages"), jsonMessages);
-	//payloadObject->SetStringField(TEXT("reasoning effort"), "low");
+	payloadObject->SetStringField(TEXT("reasoning effort"), "low");
 	payloadObject->SetStringField(TEXT("model"), apiMethod);
 	payloadObject->SetBoolField("stream", stream);
 
