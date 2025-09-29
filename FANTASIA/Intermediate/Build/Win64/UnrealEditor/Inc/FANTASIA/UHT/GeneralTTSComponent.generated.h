@@ -16,7 +16,6 @@ class USoundWave;
 #define FANTASIA_GeneralTTSComponent_generated_h
 
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_GeneralTTSComponent_h_32_RPC_WRAPPERS_NO_PURE_DECLS \
-	DECLARE_FUNCTION(execTTSGetRawSoundfromPath); \
 	DECLARE_FUNCTION(execTTSGetRawSound); \
 	DECLARE_FUNCTION(execTTSGetSound); \
 	DECLARE_FUNCTION(execTTSSynthesize);

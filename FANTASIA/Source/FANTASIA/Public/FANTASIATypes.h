@@ -313,7 +313,10 @@ struct FTTSData
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FSynthesizedEvent, FString, id);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FSynthesizedInternalEvent, FTTSData, response, FString, id);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FPartialSynthesizedEvent, FString, id);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FPartialSynthesizedInternalEvent, FTTSData, response, FString, id);
 DECLARE_DELEGATE_TwoParams(FTTSResultAvailableDelegate, FTTSData, FString);
+DECLARE_DELEGATE_TwoParams(FTTSPartialResultAvailableDelegate, TArray<uint8>, FString);
 
 USTRUCT(BlueprintType)
 struct FNeo4jResponse {
