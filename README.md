@@ -119,7 +119,7 @@ Special thanks to the students who contributed to FANTASIA
 * <a href="https://www.linkedin.com/in/yegor-napadystyy-b5482b2bb/">Yegor Napadystyy</a> - Audio2Face prototype connector
 * <a href="https://www.linkedin.com/in/lorenzo-bracale-6001b1331/">Lorenzo Bracale</a> - Prolog component prototype development
 * <a href="https://www.linkedin.com/in/danierspo/">Danilo Esposito</a> - First implementation of the logical/bayesian backbone for the FANTASIA Interaction Model
-* Raffaele Di Maso - Advanced implementation of the logical/bayesian backbone for the FANTASIA Interaction Model
+* <a href="https://www.linkedin.com/in/raffaele-di-maso-a976b6377/">Raffaele Di Maso</a> - Advanced implementation of the logical/bayesian backbone for the FANTASIA Interaction Model
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
