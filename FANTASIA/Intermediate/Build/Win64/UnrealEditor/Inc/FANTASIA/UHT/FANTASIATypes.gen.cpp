@@ -60,6 +60,8 @@ FANTASIA_API UEnum* Z_Construct_UEnum_FANTASIA_SWIPrologOperation();
 FANTASIA_API UEnum* Z_Construct_UEnum_FANTASIA_TTSVoiceType();
 FANTASIA_API UFunction* Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature();
 FANTASIA_API UFunction* Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTStreamResponseEvent__DelegateSignature();
+FANTASIA_API UFunction* Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedEvent__DelegateSignature();
+FANTASIA_API UFunction* Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedInternalEvent__DelegateSignature();
 FANTASIA_API UFunction* Z_Construct_UDelegateFunction_FANTASIA_SynthesizedEvent__DelegateSignature();
 FANTASIA_API UFunction* Z_Construct_UDelegateFunction_FANTASIA_SynthesizedInternalEvent__DelegateSignature();
 FANTASIA_API UScriptStruct* Z_Construct_UScriptStruct_FChatTurn();
@@ -1979,6 +1981,100 @@ void FSynthesizedInternalEvent_DelegateWrapper(const FMulticastScriptDelegate& S
 	SynthesizedInternalEvent.ProcessMulticastDelegate<UObject>(&Parms);
 }
 // End Delegate FSynthesizedInternalEvent
+
+// Begin Delegate FPartialSynthesizedEvent
+struct Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedEvent__DelegateSignature_Statics
+{
+	struct _Script_FANTASIA_eventPartialSynthesizedEvent_Parms
+	{
+		FString id;
+	};
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
+		{ "ModuleRelativePath", "Public/FANTASIATypes.h" },
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FStrPropertyParams NewProp_id;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+	static const UECodeGen_Private::FFunctionParams FuncParams;
+};
+const UECodeGen_Private::FStrPropertyParams Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedEvent__DelegateSignature_Statics::NewProp_id = { "id", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(_Script_FANTASIA_eventPartialSynthesizedEvent_Parms, id), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedEvent__DelegateSignature_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedEvent__DelegateSignature_Statics::NewProp_id,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedEvent__DelegateSignature_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedEvent__DelegateSignature_Statics::FuncParams = { (UObject*(*)())Z_Construct_UPackage__Script_FANTASIA, nullptr, "PartialSynthesizedEvent__DelegateSignature", nullptr, nullptr, Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedEvent__DelegateSignature_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedEvent__DelegateSignature_Statics::PropPointers), sizeof(Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedEvent__DelegateSignature_Statics::_Script_FANTASIA_eventPartialSynthesizedEvent_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00130000, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedEvent__DelegateSignature_Statics::Function_MetaDataParams), Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedEvent__DelegateSignature_Statics::Function_MetaDataParams) };
+static_assert(sizeof(Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedEvent__DelegateSignature_Statics::_Script_FANTASIA_eventPartialSynthesizedEvent_Parms) < MAX_uint16);
+UFunction* Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedEvent__DelegateSignature()
+{
+	static UFunction* ReturnFunction = nullptr;
+	if (!ReturnFunction)
+	{
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedEvent__DelegateSignature_Statics::FuncParams);
+	}
+	return ReturnFunction;
+}
+void FPartialSynthesizedEvent_DelegateWrapper(const FMulticastScriptDelegate& PartialSynthesizedEvent, const FString& id)
+{
+	struct _Script_FANTASIA_eventPartialSynthesizedEvent_Parms
+	{
+		FString id;
+	};
+	_Script_FANTASIA_eventPartialSynthesizedEvent_Parms Parms;
+	Parms.id=id;
+	PartialSynthesizedEvent.ProcessMulticastDelegate<UObject>(&Parms);
+}
+// End Delegate FPartialSynthesizedEvent
+
+// Begin Delegate FPartialSynthesizedInternalEvent
+struct Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedInternalEvent__DelegateSignature_Statics
+{
+	struct _Script_FANTASIA_eventPartialSynthesizedInternalEvent_Parms
+	{
+		FTTSData response;
+		FString id;
+	};
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
+		{ "ModuleRelativePath", "Public/FANTASIATypes.h" },
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FStructPropertyParams NewProp_response;
+	static const UECodeGen_Private::FStrPropertyParams NewProp_id;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+	static const UECodeGen_Private::FFunctionParams FuncParams;
+};
+const UECodeGen_Private::FStructPropertyParams Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedInternalEvent__DelegateSignature_Statics::NewProp_response = { "response", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(_Script_FANTASIA_eventPartialSynthesizedInternalEvent_Parms, response), Z_Construct_UScriptStruct_FTTSData, METADATA_PARAMS(0, nullptr) }; // 983459605
+const UECodeGen_Private::FStrPropertyParams Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedInternalEvent__DelegateSignature_Statics::NewProp_id = { "id", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(_Script_FANTASIA_eventPartialSynthesizedInternalEvent_Parms, id), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedInternalEvent__DelegateSignature_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedInternalEvent__DelegateSignature_Statics::NewProp_response,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedInternalEvent__DelegateSignature_Statics::NewProp_id,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedInternalEvent__DelegateSignature_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedInternalEvent__DelegateSignature_Statics::FuncParams = { (UObject*(*)())Z_Construct_UPackage__Script_FANTASIA, nullptr, "PartialSynthesizedInternalEvent__DelegateSignature", nullptr, nullptr, Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedInternalEvent__DelegateSignature_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedInternalEvent__DelegateSignature_Statics::PropPointers), sizeof(Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedInternalEvent__DelegateSignature_Statics::_Script_FANTASIA_eventPartialSynthesizedInternalEvent_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00130000, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedInternalEvent__DelegateSignature_Statics::Function_MetaDataParams), Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedInternalEvent__DelegateSignature_Statics::Function_MetaDataParams) };
+static_assert(sizeof(Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedInternalEvent__DelegateSignature_Statics::_Script_FANTASIA_eventPartialSynthesizedInternalEvent_Parms) < MAX_uint16);
+UFunction* Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedInternalEvent__DelegateSignature()
+{
+	static UFunction* ReturnFunction = nullptr;
+	if (!ReturnFunction)
+	{
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedInternalEvent__DelegateSignature_Statics::FuncParams);
+	}
+	return ReturnFunction;
+}
+void FPartialSynthesizedInternalEvent_DelegateWrapper(const FMulticastScriptDelegate& PartialSynthesizedInternalEvent, FTTSData response, const FString& id)
+{
+	struct _Script_FANTASIA_eventPartialSynthesizedInternalEvent_Parms
+	{
+		FTTSData response;
+		FString id;
+	};
+	_Script_FANTASIA_eventPartialSynthesizedInternalEvent_Parms Parms;
+	Parms.response=response;
+	Parms.id=id;
+	PartialSynthesizedInternalEvent.ProcessMulticastDelegate<UObject>(&Parms);
+}
+// End Delegate FPartialSynthesizedInternalEvent
 
 // Begin ScriptStruct FNeo4jResponse
 static FStructRegistrationInfo Z_Registration_Info_UScriptStruct_Neo4jResponse;
