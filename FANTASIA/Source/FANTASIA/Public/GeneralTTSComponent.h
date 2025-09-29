@@ -55,11 +55,7 @@ private:
 
 public:
 
-
-	UPROPERTY(BlueprintReadWrite, Category = "Speech to Text")
-	UAudioComponent* Speaker;
-
-	UPROPERTY(BlueprintReadWrite, Category = "ForA2F")
+	UPROPERTY(BlueprintReadWrite, Category = "TTS")
 	UAudio2FaceComponent* A2Fpointer;
 
 	UPROPERTY(BlueprintAssignable, Category = "Speech to Text")
@@ -75,16 +71,13 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "TTS Start", Keywords = "Plugin TTS"), Category = "TTS")
-	void TTSSynthesize(FString ssml, FString id) override;//da modificare che rimanda il puntatore a Audio2Face
+	void TTSSynthesize(FString ssml, FString id) override;
 
-	UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Sound General", Keywords = "Plugin TTS"), Category = "TTS")
+	UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Sound General", Keywords = "TTS Sound"), Category = "TTS")
 	USoundWave* TTSGetSound(FString id) override;
 
-	UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Raw Sound", Keywords = "Azure Plugin TTS"), Category = "TTS")
+	UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Raw Sound", Keywords = "TTS Sound"), Category = "TTS")
 	TArray<float> TTSGetRawSound(FString id);
-
-	UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Raw Sound from Path", Keywords = "TTS"), Category = "TTS")
-	TArray<float> TTSGetRawSoundfromPath(const FString& path);
 
 	void SendToA2FaceComponent(FString id);
 };

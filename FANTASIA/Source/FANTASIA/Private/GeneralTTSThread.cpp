@@ -60,13 +60,6 @@ void GeneralTTSThread::Shutdown()
 }
 
 void GeneralTTSThread::Synthesize() {
-	// questa funzione va modificata in modo tale che diventa uguale a Ollama Component, cioè deve osservare
-	// se quest'ultima ha o meno la disponibilità di streaming, quindi guarda la e vedi se riesci a fare sta roba
-	//devo risolvere sto problem
-
-	
-
-
 	//Http request to API
 	TSharedRef<IHttpRequest, ESPMode::ThreadSafe> Request = FHttpModule::Get().CreateRequest();
 	Request->OnProcessRequestComplete().BindLambda([this](FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful)
@@ -94,11 +87,6 @@ void GeneralTTSThread::Synthesize() {
 	Request->SetHeader("Content-Type", "application/x-www-form-urlencoded");
 	Request->SetContentAsString(ssml);
 	Request->ProcessRequest();
-
-	//chiamo Audio2Face?
-
-	//connetto a Audio2FaceComponent
-
 }
 
 void GeneralTTSThread::SynthesizeStream()
@@ -166,14 +154,6 @@ void GeneralTTSThread::SynthesizeStream()
 					float NormalizedSample = Sample / 32768.0f;
 
 					FloatBuffer.Add(NormalizedSample);
-				}
-
-				//TODO finisci
-				if (A2FPointer)
-				{
-					UE_LOG(LogTemp, Log, TEXT("===> Invio %d campioni audio a A2FPointer"), FloatBuffer.Num());
-					UE_LOG(LogTemp, Log, TEXT("===> Invio %d bytes audio a A2FPointer"), FloatBuffer.Num() * 4);
-					A2FPointer->PlayAudio(FloatBuffer);
 				}
 
 				PreviousBytes = BytesReceived;

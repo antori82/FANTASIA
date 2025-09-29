@@ -17,11 +17,6 @@ UElevenLabsTTSComponent::UElevenLabsTTSComponent()
 void UElevenLabsTTSComponent::BeginPlay()
 {
 	Super::BeginPlay();
-
-	if (!Speaker) {
-		Speaker = NewObject<UAudioComponent>(this);
-		Speaker->RegisterComponent();
-	}
 }
 
 // Called every frame
@@ -31,6 +26,13 @@ void UElevenLabsTTSComponent::TickComponent(float DeltaTime, ELevelTick TickType
 	if (idSynthesisReady != "") {
 		SynthesisReady.Broadcast(idSynthesisReady);
 		idSynthesisReady = "";
+
+	}
+	else if (idPartialSynthesisReady != "") {
+		
+		PartialSynthesisReady.Broadcast(idPartialSynthesisReady);
+		idPartialSynthesisReady = "";
+		//StreamingBuffer.Remove(idPartialSynthesisReady);
 	}
 }
 
@@ -41,16 +43,38 @@ void UElevenLabsTTSComponent::getResult(FTTSData response, FString id)
 	Buffer.Remove(id);
 	Buffer.Add(id, response);
 	idSynthesisReady = id;
-	handle->Shutdown();
 }
 
-void UElevenLabsTTSComponent::TTSSynthesize(FString text, FString id)
+void UElevenLabsTTSComponent::getPartialResult(TArray<uint8> response, FString id)
+{
+	if (!StreamingBuffer.Contains(id)) {
+		TArray<float> newArray;
+
+		StreamingBuffer.Add(id, newArray);
+	}
+
+	for (int i = 0; i < response.Num() - 1; i += 2)
+		StreamingBuffer[id].Add(*reinterpret_cast<int16*>(&response.GetData()[i]) / 32768.0f);
+
+	if (IsValid(A2Fpointer)) {
+		A2Fpointer->QueueAudio(StreamingBuffer[id]);
+
+		StreamingBuffer[id].Empty();
+	}
+	
+	idPartialSynthesisReady = id;
+}
+
+void UElevenLabsTTSComponent::TTSSynthesize(FString text, FString id, bool stream)
 {
 	FTTSResultAvailableDelegate TTSResultSubscriber;
+	FTTSPartialResultAvailableDelegate TTSPartialResultSubscriber;
 
 	TTSResultSubscriber.BindUObject(this, &UElevenLabsTTSComponent::getResult);
-	handle = ElevenLabsTTSThread::setup(Key, text, id, VoiceID, ModelID, stability, similarity_boost, style, use_speaker_boost);
+	TTSPartialResultSubscriber.BindUObject(this, &UElevenLabsTTSComponent::getPartialResult);
+	handle = ElevenLabsTTSThread::setup(Key, text, id, VoiceID, ModelID, stability, similarity_boost, style, use_speaker_boost, stream);
 	TTSResultAvailableHandle = handle->TTSResultAvailableSubscribeUser(TTSResultSubscriber);
+	TTSPartialResultAvailableHandle = handle->TTSPartialResultAvailableSubscribeUser(TTSPartialResultSubscriber);
 }
 
 USoundWaveProcedural* UElevenLabsTTSComponent::TTSGetSound(FString id) {
@@ -77,5 +101,13 @@ TArray<float> UElevenLabsTTSComponent::TTSGetRawSound(FString id) {
 
 		AudioData.Add(NormalizedSample);
 	}
+	return AudioData;
+}
+
+TArray<float> UElevenLabsTTSComponent::TTSGetPartialRawSound(FString id) {
+	TArray<float> AudioData;
+
+	StreamingBuffer.RemoveAndCopyValue(id, AudioData);
+
 	return AudioData;
 }
