@@ -92,7 +92,8 @@ void UOllamaComponent::OnGPTPartialResponseReceived(FHttpRequestPtr request, uin
 							else if (checkRole == "user")
 								role = GPTRoleType::USER;
 
-							outFragment.Append(FileMessageObject->Get()->GetObjectField(TEXT("message"))->GetStringField(TEXT("content")));
+							if (FileMessageObject->Get()->GetObjectField(TEXT("message"))->GetStringField(TEXT("content")) != "")
+								outFragment.Append(FileMessageObject->Get()->GetObjectField(TEXT("message"))->GetStringField(TEXT("content")));
 						}
 						else
 							blocksRead = 0;
@@ -144,6 +145,7 @@ void UOllamaComponent::getGPTCompletion(TArray<FChatTurn> messages, FString apiM
 		Request->OnProcessRequestComplete().BindUObject(this, &UOllamaComponent::OnGPTResponseReceived);
 	}
 
+	Request->SetTimeout(60);
 	Request->ProcessRequest();
 	UE_LOG(LogTemp, Warning, TEXT("[GPT Request] Request sent"));
 }

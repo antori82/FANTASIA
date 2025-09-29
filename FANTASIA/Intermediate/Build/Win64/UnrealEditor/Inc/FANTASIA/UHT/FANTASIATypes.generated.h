@@ -489,21 +489,29 @@ FANTASIA_API void FSynthesizedEvent_DelegateWrapper(const FMulticastScriptDelega
 FANTASIA_API void FSynthesizedInternalEvent_DelegateWrapper(const FMulticastScriptDelegate& SynthesizedInternalEvent, FTTSData response, const FString& id);
 
 
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_321_GENERATED_BODY \
+#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_316_DELEGATE \
+FANTASIA_API void FPartialSynthesizedEvent_DelegateWrapper(const FMulticastScriptDelegate& PartialSynthesizedEvent, const FString& id);
+
+
+#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_317_DELEGATE \
+FANTASIA_API void FPartialSynthesizedInternalEvent_DelegateWrapper(const FMulticastScriptDelegate& PartialSynthesizedInternalEvent, FTTSData response, const FString& id);
+
+
+#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_324_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FNeo4jResponse_Statics; \
 	FANTASIA_API static class UScriptStruct* StaticStruct();
 
 
 template<> FANTASIA_API UScriptStruct* StaticStruct<struct FNeo4jResponse>();
 
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_336_GENERATED_BODY \
+#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_339_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FNLUResponse_Statics; \
 	FANTASIA_API static class UScriptStruct* StaticStruct();
 
 
 template<> FANTASIA_API UScriptStruct* StaticStruct<struct FNLUResponse>();
 
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_351_INCLASS_NO_PURE_DECLS \
+#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_354_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUNLUIntent(); \
 	friend struct Z_Construct_UClass_UNLUIntent_Statics; \
@@ -512,7 +520,7 @@ public: \
 	DECLARE_SERIALIZER(UNLUIntent)
 
 
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_351_ENHANCED_CONSTRUCTORS \
+#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_354_ENHANCED_CONSTRUCTORS \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
 	UNLUIntent(UNLUIntent&&); \
@@ -524,19 +532,19 @@ public: \
 	NO_API virtual ~UNLUIntent();
 
 
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_348_PROLOG
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_351_GENERATED_BODY \
+#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_351_PROLOG
+#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_354_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_351_INCLASS_NO_PURE_DECLS \
-	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_351_ENHANCED_CONSTRUCTORS \
+	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_354_INCLASS_NO_PURE_DECLS \
+	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_354_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
 template<> FANTASIA_API UClass* StaticClass<class UNLUIntent>();
 
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_366_INCLASS_NO_PURE_DECLS \
+#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_369_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUNLUEntity(); \
 	friend struct Z_Construct_UClass_UNLUEntity_Statics; \
@@ -545,7 +553,7 @@ public: \
 	DECLARE_SERIALIZER(UNLUEntity)
 
 
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_366_ENHANCED_CONSTRUCTORS \
+#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_369_ENHANCED_CONSTRUCTORS \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
 	UNLUEntity(UNLUEntity&&); \
@@ -557,19 +565,19 @@ public: \
 	NO_API virtual ~UNLUEntity();
 
 
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_363_PROLOG
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_366_GENERATED_BODY \
+#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_366_PROLOG
+#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_369_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_366_INCLASS_NO_PURE_DECLS \
-	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_366_ENHANCED_CONSTRUCTORS \
+	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_369_INCLASS_NO_PURE_DECLS \
+	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_369_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
 template<> FANTASIA_API UClass* StaticClass<class UNLUEntity>();
 
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_396_INCLASS_NO_PURE_DECLS \
+#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_399_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUNeo4jResultRow(); \
 	friend struct Z_Construct_UClass_UNeo4jResultRow_Statics; \
@@ -578,7 +586,7 @@ public: \
 	DECLARE_SERIALIZER(UNeo4jResultRow)
 
 
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_396_ENHANCED_CONSTRUCTORS \
+#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_399_ENHANCED_CONSTRUCTORS \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
 	UNeo4jResultRow(UNeo4jResultRow&&); \
@@ -590,19 +598,19 @@ public: \
 	NO_API virtual ~UNeo4jResultRow();
 
 
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_393_PROLOG
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_396_GENERATED_BODY \
+#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_396_PROLOG
+#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_399_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_396_INCLASS_NO_PURE_DECLS \
-	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_396_ENHANCED_CONSTRUCTORS \
+	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_399_INCLASS_NO_PURE_DECLS \
+	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_399_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
 template<> FANTASIA_API UClass* StaticClass<class UNeo4jResultRow>();
 
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_408_INCLASS_NO_PURE_DECLS \
+#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_411_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUNeo4jResultCell(); \
 	friend struct Z_Construct_UClass_UNeo4jResultCell_Statics; \
@@ -611,7 +619,7 @@ public: \
 	DECLARE_SERIALIZER(UNeo4jResultCell)
 
 
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_408_ENHANCED_CONSTRUCTORS \
+#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_411_ENHANCED_CONSTRUCTORS \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
 	UNeo4jResultCell(UNeo4jResultCell&&); \
@@ -623,19 +631,19 @@ public: \
 	NO_API virtual ~UNeo4jResultCell();
 
 
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_405_PROLOG
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_408_GENERATED_BODY \
+#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_408_PROLOG
+#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_411_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_408_INCLASS_NO_PURE_DECLS \
-	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_408_ENHANCED_CONSTRUCTORS \
+	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_411_INCLASS_NO_PURE_DECLS \
+	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_411_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
 template<> FANTASIA_API UClass* StaticClass<class UNeo4jResultCell>();
 
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_417_INCLASS_NO_PURE_DECLS \
+#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_420_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUNeo4jResultCellNode(); \
 	friend struct Z_Construct_UClass_UNeo4jResultCellNode_Statics; \
@@ -644,7 +652,7 @@ public: \
 	DECLARE_SERIALIZER(UNeo4jResultCellNode)
 
 
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_417_ENHANCED_CONSTRUCTORS \
+#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_420_ENHANCED_CONSTRUCTORS \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
 	UNeo4jResultCellNode(UNeo4jResultCellNode&&); \
@@ -656,19 +664,19 @@ public: \
 	NO_API virtual ~UNeo4jResultCellNode();
 
 
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_414_PROLOG
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_417_GENERATED_BODY \
+#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_417_PROLOG
+#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_420_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_417_INCLASS_NO_PURE_DECLS \
-	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_417_ENHANCED_CONSTRUCTORS \
+	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_420_INCLASS_NO_PURE_DECLS \
+	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_420_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
 template<> FANTASIA_API UClass* StaticClass<class UNeo4jResultCellNode>();
 
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_435_INCLASS_NO_PURE_DECLS \
+#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_438_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUNeo4jResultCellRelationship(); \
 	friend struct Z_Construct_UClass_UNeo4jResultCellRelationship_Statics; \
@@ -677,7 +685,7 @@ public: \
 	DECLARE_SERIALIZER(UNeo4jResultCellRelationship)
 
 
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_435_ENHANCED_CONSTRUCTORS \
+#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_438_ENHANCED_CONSTRUCTORS \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
 	UNeo4jResultCellRelationship(UNeo4jResultCellRelationship&&); \
@@ -689,19 +697,19 @@ public: \
 	NO_API virtual ~UNeo4jResultCellRelationship();
 
 
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_432_PROLOG
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_435_GENERATED_BODY \
+#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_435_PROLOG
+#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_438_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_435_INCLASS_NO_PURE_DECLS \
-	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_435_ENHANCED_CONSTRUCTORS \
+	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_438_INCLASS_NO_PURE_DECLS \
+	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_438_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
 template<> FANTASIA_API UClass* StaticClass<class UNeo4jResultCellRelationship>();
 
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_453_INCLASS_NO_PURE_DECLS \
+#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_456_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUNeo4jResultCellSimple(); \
 	friend struct Z_Construct_UClass_UNeo4jResultCellSimple_Statics; \
@@ -710,7 +718,7 @@ public: \
 	DECLARE_SERIALIZER(UNeo4jResultCellSimple)
 
 
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_453_ENHANCED_CONSTRUCTORS \
+#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_456_ENHANCED_CONSTRUCTORS \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
 	UNeo4jResultCellSimple(UNeo4jResultCellSimple&&); \
@@ -722,12 +730,12 @@ public: \
 	NO_API virtual ~UNeo4jResultCellSimple();
 
 
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_450_PROLOG
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_453_GENERATED_BODY \
+#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_453_PROLOG
+#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_456_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_453_INCLASS_NO_PURE_DECLS \
-	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_453_ENHANCED_CONSTRUCTORS \
+	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_456_INCLASS_NO_PURE_DECLS \
+	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_456_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 

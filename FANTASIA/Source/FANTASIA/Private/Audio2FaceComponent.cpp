@@ -10,32 +10,9 @@ UAudio2FaceComponent::UAudio2FaceComponent() {
 }
 
 
-void UAudio2FaceComponent::PlayAudio(TArray<float> data)    
+void UAudio2FaceComponent::QueueAudio(TArray<float> data)
 {
-    //------Da togliere da qua
-    FString Output;
-
-    UE_LOG(LogTemp, Warning, TEXT("Audio Data arrivati in chunk : %d"), data.NumBytes());
-
-    for (int32 i = 0; i < data.Num(); ++i)
-    {
-        Output = FString::Printf(TEXT("Dato nel component[%d]: %.3f"), i, data[i]);
-        UE_LOG(LogTemp, Warning, TEXT("%s"), *Output);
-    }
-
-    //UE_LOG(LogTemp, Warning, TEXT("%s"), *Output);
-
-    //-----Da togliere fino qua
-
-	int32 sampleRate = 16000;
-
-    AudioData = data;
-    
-   
-    //LoadRawSoundFromTTS(&data);
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("sending %d of audio to a thread"), data.NumBytes());
-  
-	A2FaceFMyThread(sampleRate);
+    MyThread->QueueAudio(data);
 }
 
 void UAudio2FaceComponent::A2FaceFMyThread(int32 sampleRate) {
@@ -43,31 +20,32 @@ void UAudio2FaceComponent::A2FaceFMyThread(int32 sampleRate) {
         GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("L'audio ancora in esecuzione,riprovare piu tardi"));
     }
     else {
-        MyThread = FMyThread::setup(PlayerA2F_name, server_url, AudioData, sampleRate, stream);//devi aggiungere  lo stream
+        MyThread = FMyThread::setup(PlayerA2F_name, server_url, sampleRate);
     }
 }
 
-void UAudio2FaceComponent::LoadRawSoundFromTTS(const TArray<float>* soundData) {
-    if (soundData != nullptr) { 
-        AudioData = *soundData;
-    }
-    else {
-        UE_LOG(LogTemp, Error, TEXT("I dati sono nulli"));
-    }
+void UAudio2FaceComponent::LoadSoundWaveFromTTS(USoundWave* sound) {
+    TArray<uint8> tempData;
+    uint32 sampleRate;
+    uint16 numChannels;
 
-    //for (int i = 0; i < size; i += 2) {
-    //    float NormalizedSample = 0.0f;
-    //    int16 Sample = *reinterpret_cast<int16*>(&rawSound[i]);
-    //    NormalizedSample = Sample / 32768.0f;
+    AudioData.Empty();
+    sound->GetImportedSoundWaveData(tempData, sampleRate, numChannels);
 
-    //    AudioData.Add(NormalizedSample);
-    //}
+    for (int i = 0; i < tempData.Num(); i += 2) {
+        float NormalizedSample = 0.0f;
+        
+        int16 Sample = *reinterpret_cast<int16*>(&tempData);
+        NormalizedSample = Sample / 32768.0f;
+
+        AudioData.Add(NormalizedSample);
+    }
 }
-
 
 // Called when the game starts
 void UAudio2FaceComponent::BeginPlay() {
 	Super::BeginPlay();
+    A2FaceFMyThread(16000);
 }
 
 void UAudio2FaceComponent::EndPlay(const EEndPlayReason::Type EndPlayReason) {
@@ -80,15 +58,5 @@ void UAudio2FaceComponent::EndPlay(const EEndPlayReason::Type EndPlayReason) {
 // Called every frame
 void UAudio2FaceComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-}
-
-
-void UAudio2FaceComponent::ReceivingDataFunction(const TArray<float>& data)
-{
-    for (int32 i = 0; i < data.Num(); ++i)
-    {
-        FString Messaggio = FString::Printf(TEXT("Valore [%d]: %f"), i, data[i]);
-        GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, Messaggio);
-    }
 }
 

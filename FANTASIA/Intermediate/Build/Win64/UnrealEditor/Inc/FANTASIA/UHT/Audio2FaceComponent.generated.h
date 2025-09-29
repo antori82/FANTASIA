@@ -14,17 +14,20 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #endif
 #define FANTASIA_Audio2FaceComponent_generated_h
 
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_Audio2FaceComponent_h_36_INCLASS_NO_PURE_DECLS \
+#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_Audio2FaceComponent_h_32_RPC_WRAPPERS_NO_PURE_DECLS \
+	DECLARE_FUNCTION(execQueueAudio);
+
+
+#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_Audio2FaceComponent_h_32_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUAudio2FaceComponent(); \
 	friend struct Z_Construct_UClass_UAudio2FaceComponent_Statics; \
 public: \
 	DECLARE_CLASS(UAudio2FaceComponent, UActorComponent, COMPILED_IN_FLAGS(0 | CLASS_Config), CASTCLASS_None, TEXT("/Script/FANTASIA"), NO_API) \
-	DECLARE_SERIALIZER(UAudio2FaceComponent) \
-	virtual UObject* _getUObject() const override { return const_cast<UAudio2FaceComponent*>(this); }
+	DECLARE_SERIALIZER(UAudio2FaceComponent)
 
 
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_Audio2FaceComponent_h_36_ENHANCED_CONSTRUCTORS \
+#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_Audio2FaceComponent_h_32_ENHANCED_CONSTRUCTORS \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
 	UAudio2FaceComponent(UAudio2FaceComponent&&); \
@@ -36,12 +39,13 @@ public: \
 	NO_API virtual ~UAudio2FaceComponent();
 
 
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_Audio2FaceComponent_h_33_PROLOG
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_Audio2FaceComponent_h_36_GENERATED_BODY \
+#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_Audio2FaceComponent_h_29_PROLOG
+#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_Audio2FaceComponent_h_32_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_Audio2FaceComponent_h_36_INCLASS_NO_PURE_DECLS \
-	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_Audio2FaceComponent_h_36_ENHANCED_CONSTRUCTORS \
+	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_Audio2FaceComponent_h_32_RPC_WRAPPERS_NO_PURE_DECLS \
+	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_Audio2FaceComponent_h_32_INCLASS_NO_PURE_DECLS \
+	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_Audio2FaceComponent_h_32_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
