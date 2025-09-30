@@ -21,7 +21,7 @@
 
 using namespace std;
 
-UCLASS(meta = (BlueprintSpawnableComponent))
+UCLASS(meta = (BlueprintSpawnableComponent), Config = Game)
 class UElevenLabsTTSComponent : public UActorComponent
 {
 	GENERATED_BODY()
@@ -61,13 +61,13 @@ public:
 	UPROPERTY(BlueprintAssignable, Category = "Speech to Text")
 	FPartialSynthesizedEvent PartialSynthesisReady;
 
-	UPROPERTY(EditAnywhere, Category = "Configuration")
+	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
 	FString VoiceID;
 
-	UPROPERTY(EditAnywhere, Category = "Configuration")
+	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
 	FString ModelID;
 
-	UPROPERTY(EditAnywhere, Category = "Configuration")
+	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
 	FString Key;
 
 	UPROPERTY(EditAnywhere, Category = "Voice Settings", meta = (UIMin = "0.0", UIMax = "1.0"))
