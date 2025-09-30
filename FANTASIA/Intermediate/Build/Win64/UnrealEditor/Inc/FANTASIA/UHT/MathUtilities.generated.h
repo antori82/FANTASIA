@@ -5,28 +5,36 @@
 ===========================================================================*/
 
 // IWYU pragma: private, include "MathUtilities.h"
-#include "UObject/ObjectMacros.h"
-#include "UObject/ScriptMacros.h"
 
-PRAGMA_DISABLE_DEPRECATION_WARNINGS
- 
 #ifdef FANTASIA_MathUtilities_generated_h
 #error "MathUtilities.generated.h already included, missing '#pragma once' in MathUtilities.h"
 #endif
 #define FANTASIA_MathUtilities_generated_h
 
+#include "UObject/ObjectMacros.h"
+#include "UObject/ScriptMacros.h"
+
+PRAGMA_DISABLE_DEPRECATION_WARNINGS
+
+ 
+
+// ********** Begin Class UKernelDensityEstimator **************************************************
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_MathUtilities_h_12_RPC_WRAPPERS \
 	DECLARE_FUNCTION(execgetPdf); \
 	DECLARE_FUNCTION(execevaluate); \
 	DECLARE_FUNCTION(execsetData);
 
 
+FANTASIA_API UClass* Z_Construct_UClass_UKernelDensityEstimator_NoRegister();
+
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_MathUtilities_h_12_INCLASS \
 private: \
 	static void StaticRegisterNativesUKernelDensityEstimator(); \
 	friend struct Z_Construct_UClass_UKernelDensityEstimator_Statics; \
+	static UClass* GetPrivateStaticClass(); \
+	friend FANTASIA_API UClass* Z_Construct_UClass_UKernelDensityEstimator_NoRegister(); \
 public: \
-	DECLARE_CLASS(UKernelDensityEstimator, UObject, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/FANTASIA"), NO_API) \
+	DECLARE_CLASS2(UKernelDensityEstimator, UObject, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/FANTASIA"), Z_Construct_UClass_UKernelDensityEstimator_NoRegister) \
 	DECLARE_SERIALIZER(UKernelDensityEstimator)
 
 
@@ -36,11 +44,9 @@ public: \
 	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(UKernelDensityEstimator) \
 	DECLARE_VTABLE_PTR_HELPER_CTOR(NO_API, UKernelDensityEstimator); \
 	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(UKernelDensityEstimator); \
-private: \
-	/** Private move- and copy-constructors, should never be used */ \
-	UKernelDensityEstimator(UKernelDensityEstimator&&); \
-	UKernelDensityEstimator(const UKernelDensityEstimator&); \
-public: \
+	/** Deleted move- and copy-constructors, should never be used */ \
+	UKernelDensityEstimator(UKernelDensityEstimator&&) = delete; \
+	UKernelDensityEstimator(const UKernelDensityEstimator&) = delete; \
 	NO_API virtual ~UKernelDensityEstimator();
 
 
@@ -55,10 +61,11 @@ public: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-template<> FANTASIA_API UClass* StaticClass<class UKernelDensityEstimator>();
+class UKernelDensityEstimator;
+
+// ********** End Class UKernelDensityEstimator ****************************************************
 
 #undef CURRENT_FILE_ID
 #define CURRENT_FILE_ID FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_MathUtilities_h
-
 
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

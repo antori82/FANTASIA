@@ -5,12 +5,14 @@
 ===========================================================================*/
 
 #include "UObject/GeneratedCppIncludes.h"
-#include "FANTASIA/Public/LangGraphComponent.h"
-#include "FANTASIA/Public/FANTASIATypes.h"
+#include "LangGraphComponent.h"
+#include "FANTASIATypes.h"
+
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
+
 void EmptyLinkFunctionForGeneratedCodeLangGraphComponent() {}
 
-// Begin Cross Module References
+// ********** Begin Cross Module References ********************************************************
 ENGINE_API UClass* Z_Construct_UClass_UActorComponent();
 FANTASIA_API UClass* Z_Construct_UClass_ULangGraphComponent();
 FANTASIA_API UClass* Z_Construct_UClass_ULangGraphComponent_NoRegister();
@@ -20,9 +22,9 @@ FANTASIA_API UFunction* Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraph
 FANTASIA_API UFunction* Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphThreadCreateResponseEvent__DelegateSignature();
 FANTASIA_API UScriptStruct* Z_Construct_UScriptStruct_FChatTurn();
 UPackage* Z_Construct_UPackage__Script_FANTASIA();
-// End Cross Module References
+// ********** End Cross Module References **********************************************************
 
-// Begin Delegate FIncomingLangGraphThreadCreateResponseEvent
+// ********** Begin Delegate FIncomingLangGraphThreadCreateResponseEvent ***************************
 struct Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphThreadCreateResponseEvent__DelegateSignature_Statics
 {
 	struct _Script_FANTASIA_eventIncomingLangGraphThreadCreateResponseEvent_Parms
@@ -36,21 +38,21 @@ struct Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphThreadCreateRespo
 #endif // WITH_METADATA
 	static const UECodeGen_Private::FStrPropertyParams NewProp_threadID;
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
-	static const UECodeGen_Private::FFunctionParams FuncParams;
+	static const UECodeGen_Private::FDelegateFunctionParams FuncParams;
 };
 const UECodeGen_Private::FStrPropertyParams Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphThreadCreateResponseEvent__DelegateSignature_Statics::NewProp_threadID = { "threadID", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(_Script_FANTASIA_eventIncomingLangGraphThreadCreateResponseEvent_Parms, threadID), METADATA_PARAMS(0, nullptr) };
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphThreadCreateResponseEvent__DelegateSignature_Statics::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphThreadCreateResponseEvent__DelegateSignature_Statics::NewProp_threadID,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphThreadCreateResponseEvent__DelegateSignature_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphThreadCreateResponseEvent__DelegateSignature_Statics::FuncParams = { (UObject*(*)())Z_Construct_UPackage__Script_FANTASIA, nullptr, "IncomingLangGraphThreadCreateResponseEvent__DelegateSignature", nullptr, nullptr, Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphThreadCreateResponseEvent__DelegateSignature_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphThreadCreateResponseEvent__DelegateSignature_Statics::PropPointers), sizeof(Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphThreadCreateResponseEvent__DelegateSignature_Statics::_Script_FANTASIA_eventIncomingLangGraphThreadCreateResponseEvent_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00130000, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphThreadCreateResponseEvent__DelegateSignature_Statics::Function_MetaDataParams), Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphThreadCreateResponseEvent__DelegateSignature_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FDelegateFunctionParams Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphThreadCreateResponseEvent__DelegateSignature_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UPackage__Script_FANTASIA, nullptr, "IncomingLangGraphThreadCreateResponseEvent__DelegateSignature", Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphThreadCreateResponseEvent__DelegateSignature_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphThreadCreateResponseEvent__DelegateSignature_Statics::PropPointers), sizeof(Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphThreadCreateResponseEvent__DelegateSignature_Statics::_Script_FANTASIA_eventIncomingLangGraphThreadCreateResponseEvent_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00130000, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphThreadCreateResponseEvent__DelegateSignature_Statics::Function_MetaDataParams), Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphThreadCreateResponseEvent__DelegateSignature_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphThreadCreateResponseEvent__DelegateSignature_Statics::_Script_FANTASIA_eventIncomingLangGraphThreadCreateResponseEvent_Parms) < MAX_uint16);
 UFunction* Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphThreadCreateResponseEvent__DelegateSignature()
 {
 	static UFunction* ReturnFunction = nullptr;
 	if (!ReturnFunction)
 	{
-		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphThreadCreateResponseEvent__DelegateSignature_Statics::FuncParams);
+		UECodeGen_Private::ConstructUDelegateFunction(&ReturnFunction, Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphThreadCreateResponseEvent__DelegateSignature_Statics::FuncParams);
 	}
 	return ReturnFunction;
 }
@@ -64,9 +66,9 @@ void FIncomingLangGraphThreadCreateResponseEvent_DelegateWrapper(const FMulticas
 	Parms.threadID=threadID;
 	IncomingLangGraphThreadCreateResponseEvent.ProcessMulticastDelegate<UObject>(&Parms);
 }
-// End Delegate FIncomingLangGraphThreadCreateResponseEvent
+// ********** End Delegate FIncomingLangGraphThreadCreateResponseEvent *****************************
 
-// Begin Delegate FIncomingLangGraphResponseEvent
+// ********** Begin Delegate FIncomingLangGraphResponseEvent ***************************************
 struct Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphResponseEvent__DelegateSignature_Statics
 {
 	struct _Script_FANTASIA_eventIncomingLangGraphResponseEvent_Parms
@@ -83,7 +85,7 @@ struct Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphResponseEvent__De
 	static const UECodeGen_Private::FBytePropertyParams NewProp_role_Underlying;
 	static const UECodeGen_Private::FEnumPropertyParams NewProp_role;
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
-	static const UECodeGen_Private::FFunctionParams FuncParams;
+	static const UECodeGen_Private::FDelegateFunctionParams FuncParams;
 };
 const UECodeGen_Private::FStrPropertyParams Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphResponseEvent__DelegateSignature_Statics::NewProp_LangGraphResponse = { "LangGraphResponse", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(_Script_FANTASIA_eventIncomingLangGraphResponseEvent_Parms, LangGraphResponse), METADATA_PARAMS(0, nullptr) };
 const UECodeGen_Private::FBytePropertyParams Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphResponseEvent__DelegateSignature_Statics::NewProp_role_Underlying = { "UnderlyingType", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Byte, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, nullptr, METADATA_PARAMS(0, nullptr) };
@@ -94,14 +96,14 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UDelegateFunctio
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphResponseEvent__DelegateSignature_Statics::NewProp_role,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphResponseEvent__DelegateSignature_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphResponseEvent__DelegateSignature_Statics::FuncParams = { (UObject*(*)())Z_Construct_UPackage__Script_FANTASIA, nullptr, "IncomingLangGraphResponseEvent__DelegateSignature", nullptr, nullptr, Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphResponseEvent__DelegateSignature_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphResponseEvent__DelegateSignature_Statics::PropPointers), sizeof(Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphResponseEvent__DelegateSignature_Statics::_Script_FANTASIA_eventIncomingLangGraphResponseEvent_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00130000, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphResponseEvent__DelegateSignature_Statics::Function_MetaDataParams), Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphResponseEvent__DelegateSignature_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FDelegateFunctionParams Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphResponseEvent__DelegateSignature_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UPackage__Script_FANTASIA, nullptr, "IncomingLangGraphResponseEvent__DelegateSignature", Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphResponseEvent__DelegateSignature_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphResponseEvent__DelegateSignature_Statics::PropPointers), sizeof(Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphResponseEvent__DelegateSignature_Statics::_Script_FANTASIA_eventIncomingLangGraphResponseEvent_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00130000, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphResponseEvent__DelegateSignature_Statics::Function_MetaDataParams), Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphResponseEvent__DelegateSignature_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphResponseEvent__DelegateSignature_Statics::_Script_FANTASIA_eventIncomingLangGraphResponseEvent_Parms) < MAX_uint16);
 UFunction* Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphResponseEvent__DelegateSignature()
 {
 	static UFunction* ReturnFunction = nullptr;
 	if (!ReturnFunction)
 	{
-		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphResponseEvent__DelegateSignature_Statics::FuncParams);
+		UECodeGen_Private::ConstructUDelegateFunction(&ReturnFunction, Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphResponseEvent__DelegateSignature_Statics::FuncParams);
 	}
 	return ReturnFunction;
 }
@@ -117,9 +119,9 @@ void FIncomingLangGraphResponseEvent_DelegateWrapper(const FMulticastScriptDeleg
 	Parms.role=role;
 	IncomingLangGraphResponseEvent.ProcessMulticastDelegate<UObject>(&Parms);
 }
-// End Delegate FIncomingLangGraphResponseEvent
+// ********** End Delegate FIncomingLangGraphResponseEvent *****************************************
 
-// Begin Delegate FIncomingLangGraphStreamResponseEvent
+// ********** Begin Delegate FIncomingLangGraphStreamResponseEvent *********************************
 struct Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphStreamResponseEvent__DelegateSignature_Statics
 {
 	struct _Script_FANTASIA_eventIncomingLangGraphStreamResponseEvent_Parms
@@ -139,7 +141,7 @@ struct Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphStreamResponseEve
 	static void NewProp_endStream_SetBit(void* Obj);
 	static const UECodeGen_Private::FBoolPropertyParams NewProp_endStream;
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
-	static const UECodeGen_Private::FFunctionParams FuncParams;
+	static const UECodeGen_Private::FDelegateFunctionParams FuncParams;
 };
 const UECodeGen_Private::FStrPropertyParams Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphStreamResponseEvent__DelegateSignature_Statics::NewProp_LangGraphResponse = { "LangGraphResponse", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(_Script_FANTASIA_eventIncomingLangGraphStreamResponseEvent_Parms, LangGraphResponse), METADATA_PARAMS(0, nullptr) };
 const UECodeGen_Private::FBytePropertyParams Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphStreamResponseEvent__DelegateSignature_Statics::NewProp_role_Underlying = { "UnderlyingType", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Byte, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, nullptr, METADATA_PARAMS(0, nullptr) };
@@ -156,14 +158,14 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UDelegateFunctio
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphStreamResponseEvent__DelegateSignature_Statics::NewProp_endStream,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphStreamResponseEvent__DelegateSignature_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphStreamResponseEvent__DelegateSignature_Statics::FuncParams = { (UObject*(*)())Z_Construct_UPackage__Script_FANTASIA, nullptr, "IncomingLangGraphStreamResponseEvent__DelegateSignature", nullptr, nullptr, Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphStreamResponseEvent__DelegateSignature_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphStreamResponseEvent__DelegateSignature_Statics::PropPointers), sizeof(Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphStreamResponseEvent__DelegateSignature_Statics::_Script_FANTASIA_eventIncomingLangGraphStreamResponseEvent_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00130000, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphStreamResponseEvent__DelegateSignature_Statics::Function_MetaDataParams), Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphStreamResponseEvent__DelegateSignature_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FDelegateFunctionParams Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphStreamResponseEvent__DelegateSignature_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UPackage__Script_FANTASIA, nullptr, "IncomingLangGraphStreamResponseEvent__DelegateSignature", Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphStreamResponseEvent__DelegateSignature_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphStreamResponseEvent__DelegateSignature_Statics::PropPointers), sizeof(Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphStreamResponseEvent__DelegateSignature_Statics::_Script_FANTASIA_eventIncomingLangGraphStreamResponseEvent_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00130000, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphStreamResponseEvent__DelegateSignature_Statics::Function_MetaDataParams), Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphStreamResponseEvent__DelegateSignature_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphStreamResponseEvent__DelegateSignature_Statics::_Script_FANTASIA_eventIncomingLangGraphStreamResponseEvent_Parms) < MAX_uint16);
 UFunction* Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphStreamResponseEvent__DelegateSignature()
 {
 	static UFunction* ReturnFunction = nullptr;
 	if (!ReturnFunction)
 	{
-		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphStreamResponseEvent__DelegateSignature_Statics::FuncParams);
+		UECodeGen_Private::ConstructUDelegateFunction(&ReturnFunction, Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphStreamResponseEvent__DelegateSignature_Statics::FuncParams);
 	}
 	return ReturnFunction;
 }
@@ -181,9 +183,9 @@ void FIncomingLangGraphStreamResponseEvent_DelegateWrapper(const FMulticastScrip
 	Parms.endStream=endStream ? true : false;
 	IncomingLangGraphStreamResponseEvent.ProcessMulticastDelegate<UObject>(&Parms);
 }
-// End Delegate FIncomingLangGraphStreamResponseEvent
+// ********** End Delegate FIncomingLangGraphStreamResponseEvent ***********************************
 
-// Begin Class ULangGraphComponent Function createLangGraphThread
+// ********** Begin Class ULangGraphComponent Function createLangGraphThread ***********************
 struct Z_Construct_UFunction_ULangGraphComponent_createLangGraphThread_Statics
 {
 	struct LangGraphComponent_eventcreateLangGraphThread_Parms
@@ -206,7 +208,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_ULangG
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_ULangGraphComponent_createLangGraphThread_Statics::NewProp_threadID,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_ULangGraphComponent_createLangGraphThread_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_ULangGraphComponent_createLangGraphThread_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_ULangGraphComponent, nullptr, "createLangGraphThread", nullptr, nullptr, Z_Construct_UFunction_ULangGraphComponent_createLangGraphThread_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_ULangGraphComponent_createLangGraphThread_Statics::PropPointers), sizeof(Z_Construct_UFunction_ULangGraphComponent_createLangGraphThread_Statics::LangGraphComponent_eventcreateLangGraphThread_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_ULangGraphComponent_createLangGraphThread_Statics::Function_MetaDataParams), Z_Construct_UFunction_ULangGraphComponent_createLangGraphThread_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_ULangGraphComponent_createLangGraphThread_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_ULangGraphComponent, nullptr, "createLangGraphThread", Z_Construct_UFunction_ULangGraphComponent_createLangGraphThread_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_ULangGraphComponent_createLangGraphThread_Statics::PropPointers), sizeof(Z_Construct_UFunction_ULangGraphComponent_createLangGraphThread_Statics::LangGraphComponent_eventcreateLangGraphThread_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_ULangGraphComponent_createLangGraphThread_Statics::Function_MetaDataParams), Z_Construct_UFunction_ULangGraphComponent_createLangGraphThread_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(Z_Construct_UFunction_ULangGraphComponent_createLangGraphThread_Statics::LangGraphComponent_eventcreateLangGraphThread_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_ULangGraphComponent_createLangGraphThread()
 {
@@ -225,9 +227,9 @@ DEFINE_FUNCTION(ULangGraphComponent::execcreateLangGraphThread)
 	P_THIS->createLangGraphThread(Z_Param_threadID);
 	P_NATIVE_END;
 }
-// End Class ULangGraphComponent Function createLangGraphThread
+// ********** End Class ULangGraphComponent Function createLangGraphThread *************************
 
-// Begin Class ULangGraphComponent Function deleteLangGraphThread
+// ********** Begin Class ULangGraphComponent Function deleteLangGraphThread ***********************
 struct Z_Construct_UFunction_ULangGraphComponent_deleteLangGraphThread_Statics
 {
 	struct LangGraphComponent_eventdeleteLangGraphThread_Parms
@@ -250,7 +252,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_ULangG
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_ULangGraphComponent_deleteLangGraphThread_Statics::NewProp_threadID,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_ULangGraphComponent_deleteLangGraphThread_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_ULangGraphComponent_deleteLangGraphThread_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_ULangGraphComponent, nullptr, "deleteLangGraphThread", nullptr, nullptr, Z_Construct_UFunction_ULangGraphComponent_deleteLangGraphThread_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_ULangGraphComponent_deleteLangGraphThread_Statics::PropPointers), sizeof(Z_Construct_UFunction_ULangGraphComponent_deleteLangGraphThread_Statics::LangGraphComponent_eventdeleteLangGraphThread_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_ULangGraphComponent_deleteLangGraphThread_Statics::Function_MetaDataParams), Z_Construct_UFunction_ULangGraphComponent_deleteLangGraphThread_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_ULangGraphComponent_deleteLangGraphThread_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_ULangGraphComponent, nullptr, "deleteLangGraphThread", Z_Construct_UFunction_ULangGraphComponent_deleteLangGraphThread_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_ULangGraphComponent_deleteLangGraphThread_Statics::PropPointers), sizeof(Z_Construct_UFunction_ULangGraphComponent_deleteLangGraphThread_Statics::LangGraphComponent_eventdeleteLangGraphThread_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_ULangGraphComponent_deleteLangGraphThread_Statics::Function_MetaDataParams), Z_Construct_UFunction_ULangGraphComponent_deleteLangGraphThread_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(Z_Construct_UFunction_ULangGraphComponent_deleteLangGraphThread_Statics::LangGraphComponent_eventdeleteLangGraphThread_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_ULangGraphComponent_deleteLangGraphThread()
 {
@@ -269,9 +271,9 @@ DEFINE_FUNCTION(ULangGraphComponent::execdeleteLangGraphThread)
 	P_THIS->deleteLangGraphThread(Z_Param_threadID);
 	P_NATIVE_END;
 }
-// End Class ULangGraphComponent Function deleteLangGraphThread
+// ********** End Class ULangGraphComponent Function deleteLangGraphThread *************************
 
-// Begin Class ULangGraphComponent Function langGraphQuery
+// ********** Begin Class ULangGraphComponent Function langGraphQuery ******************************
 struct Z_Construct_UFunction_ULangGraphComponent_langGraphQuery_Statics
 {
 	struct LangGraphComponent_eventlangGraphQuery_Parms
@@ -305,8 +307,8 @@ struct Z_Construct_UFunction_ULangGraphComponent_langGraphQuery_Statics
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
-const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_ULangGraphComponent_langGraphQuery_Statics::NewProp_messages_Inner = { "messages", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, Z_Construct_UScriptStruct_FChatTurn, METADATA_PARAMS(0, nullptr) }; // 4210891163
-const UECodeGen_Private::FArrayPropertyParams Z_Construct_UFunction_ULangGraphComponent_langGraphQuery_Statics::NewProp_messages = { "messages", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(LangGraphComponent_eventlangGraphQuery_Parms, messages), EArrayPropertyFlags::None, METADATA_PARAMS(0, nullptr) }; // 4210891163
+const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_ULangGraphComponent_langGraphQuery_Statics::NewProp_messages_Inner = { "messages", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, Z_Construct_UScriptStruct_FChatTurn, METADATA_PARAMS(0, nullptr) }; // 1111787146
+const UECodeGen_Private::FArrayPropertyParams Z_Construct_UFunction_ULangGraphComponent_langGraphQuery_Statics::NewProp_messages = { "messages", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(LangGraphComponent_eventlangGraphQuery_Parms, messages), EArrayPropertyFlags::None, METADATA_PARAMS(0, nullptr) }; // 1111787146
 const UECodeGen_Private::FStrPropertyParams Z_Construct_UFunction_ULangGraphComponent_langGraphQuery_Statics::NewProp_threadID = { "threadID", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(LangGraphComponent_eventlangGraphQuery_Parms, threadID), METADATA_PARAMS(0, nullptr) };
 const UECodeGen_Private::FStrPropertyParams Z_Construct_UFunction_ULangGraphComponent_langGraphQuery_Statics::NewProp_assistantID = { "assistantID", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(LangGraphComponent_eventlangGraphQuery_Parms, assistantID), METADATA_PARAMS(0, nullptr) };
 const UECodeGen_Private::FStrPropertyParams Z_Construct_UFunction_ULangGraphComponent_langGraphQuery_Statics::NewProp_model = { "model", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(LangGraphComponent_eventlangGraphQuery_Parms, model), METADATA_PARAMS(0, nullptr) };
@@ -326,7 +328,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_ULangG
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_ULangGraphComponent_langGraphQuery_Statics::NewProp_stream,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_ULangGraphComponent_langGraphQuery_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_ULangGraphComponent_langGraphQuery_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_ULangGraphComponent, nullptr, "langGraphQuery", nullptr, nullptr, Z_Construct_UFunction_ULangGraphComponent_langGraphQuery_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_ULangGraphComponent_langGraphQuery_Statics::PropPointers), sizeof(Z_Construct_UFunction_ULangGraphComponent_langGraphQuery_Statics::LangGraphComponent_eventlangGraphQuery_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_ULangGraphComponent_langGraphQuery_Statics::Function_MetaDataParams), Z_Construct_UFunction_ULangGraphComponent_langGraphQuery_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_ULangGraphComponent_langGraphQuery_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_ULangGraphComponent, nullptr, "langGraphQuery", Z_Construct_UFunction_ULangGraphComponent_langGraphQuery_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_ULangGraphComponent_langGraphQuery_Statics::PropPointers), sizeof(Z_Construct_UFunction_ULangGraphComponent_langGraphQuery_Statics::LangGraphComponent_eventlangGraphQuery_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_ULangGraphComponent_langGraphQuery_Statics::Function_MetaDataParams), Z_Construct_UFunction_ULangGraphComponent_langGraphQuery_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(Z_Construct_UFunction_ULangGraphComponent_langGraphQuery_Statics::LangGraphComponent_eventlangGraphQuery_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_ULangGraphComponent_langGraphQuery()
 {
@@ -350,9 +352,9 @@ DEFINE_FUNCTION(ULangGraphComponent::execlangGraphQuery)
 	P_THIS->langGraphQuery(Z_Param_messages,Z_Param_threadID,Z_Param_assistantID,Z_Param_model,Z_Param_recursionLimit,Z_Param_stream);
 	P_NATIVE_END;
 }
-// End Class ULangGraphComponent Function langGraphQuery
+// ********** End Class ULangGraphComponent Function langGraphQuery ********************************
 
-// Begin Class ULangGraphComponent
+// ********** Begin Class ULangGraphComponent ******************************************************
 void ULangGraphComponent::StaticRegisterNativesULangGraphComponent()
 {
 	UClass* Class = ULangGraphComponent::StaticClass();
@@ -363,10 +365,34 @@ void ULangGraphComponent::StaticRegisterNativesULangGraphComponent()
 	};
 	FNativeFunctionRegistrar::RegisterFunctions(Class, Funcs, UE_ARRAY_COUNT(Funcs));
 }
-IMPLEMENT_CLASS_NO_AUTO_REGISTRATION(ULangGraphComponent);
+FClassRegistrationInfo Z_Registration_Info_UClass_ULangGraphComponent;
+UClass* ULangGraphComponent::GetPrivateStaticClass()
+{
+	using TClass = ULangGraphComponent;
+	if (!Z_Registration_Info_UClass_ULangGraphComponent.InnerSingleton)
+	{
+		GetPrivateStaticClassBody(
+			StaticPackage(),
+			TEXT("LangGraphComponent"),
+			Z_Registration_Info_UClass_ULangGraphComponent.InnerSingleton,
+			StaticRegisterNativesULangGraphComponent,
+			sizeof(TClass),
+			alignof(TClass),
+			TClass::StaticClassFlags,
+			TClass::StaticClassCastFlags(),
+			TClass::StaticConfigName(),
+			(UClass::ClassConstructorType)InternalConstructor<TClass>,
+			(UClass::ClassVTableHelperCtorCallerType)InternalVTableHelperCtorCaller<TClass>,
+			UOBJECT_CPPCLASS_STATICFUNCTIONS_FORCLASS(TClass),
+			&TClass::Super::StaticClass,
+			&TClass::WithinClass::StaticClass
+		);
+	}
+	return Z_Registration_Info_UClass_ULangGraphComponent.InnerSingleton;
+}
 UClass* Z_Construct_UClass_ULangGraphComponent_NoRegister()
 {
-	return ULangGraphComponent::StaticClass();
+	return ULangGraphComponent::GetPrivateStaticClass();
 }
 struct Z_Construct_UClass_ULangGraphComponent_Statics
 {
@@ -403,9 +429,9 @@ struct Z_Construct_UClass_ULangGraphComponent_Statics
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static UObject* (*const DependentSingletons[])();
 	static constexpr FClassFunctionLinkInfo FuncInfo[] = {
-		{ &Z_Construct_UFunction_ULangGraphComponent_createLangGraphThread, "createLangGraphThread" }, // 1601105639
-		{ &Z_Construct_UFunction_ULangGraphComponent_deleteLangGraphThread, "deleteLangGraphThread" }, // 2417441837
-		{ &Z_Construct_UFunction_ULangGraphComponent_langGraphQuery, "langGraphQuery" }, // 3609268043
+		{ &Z_Construct_UFunction_ULangGraphComponent_createLangGraphThread, "createLangGraphThread" }, // 399967099
+		{ &Z_Construct_UFunction_ULangGraphComponent_deleteLangGraphThread, "deleteLangGraphThread" }, // 345719540
+		{ &Z_Construct_UFunction_ULangGraphComponent_langGraphQuery, "langGraphQuery" }, // 1188931154
 	};
 	static_assert(UE_ARRAY_COUNT(FuncInfo) < 2048);
 	static constexpr FCppClassTypeInfoStatic StaticCppClassTypeInfo = {
@@ -415,9 +441,9 @@ struct Z_Construct_UClass_ULangGraphComponent_Statics
 };
 const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_ULangGraphComponent_Statics::NewProp_endpoint = { "endpoint", nullptr, (EPropertyFlags)0x0010000000004001, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(ULangGraphComponent, endpoint), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_endpoint_MetaData), NewProp_endpoint_MetaData) };
 const UECodeGen_Private::FIntPropertyParams Z_Construct_UClass_ULangGraphComponent_Statics::NewProp_port = { "port", nullptr, (EPropertyFlags)0x0010000000004001, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(ULangGraphComponent, port), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_port_MetaData), NewProp_port_MetaData) };
-const UECodeGen_Private::FMulticastDelegatePropertyParams Z_Construct_UClass_ULangGraphComponent_Statics::NewProp_IncomingLangGraphResponse = { "IncomingLangGraphResponse", nullptr, (EPropertyFlags)0x0010100010080000, UECodeGen_Private::EPropertyGenFlags::InlineMulticastDelegate, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(ULangGraphComponent, IncomingLangGraphResponse), Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphResponseEvent__DelegateSignature, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_IncomingLangGraphResponse_MetaData), NewProp_IncomingLangGraphResponse_MetaData) }; // 1660468719
-const UECodeGen_Private::FMulticastDelegatePropertyParams Z_Construct_UClass_ULangGraphComponent_Statics::NewProp_IncomingLangGraphStreamResponse = { "IncomingLangGraphStreamResponse", nullptr, (EPropertyFlags)0x0010100010080000, UECodeGen_Private::EPropertyGenFlags::InlineMulticastDelegate, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(ULangGraphComponent, IncomingLangGraphStreamResponse), Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphStreamResponseEvent__DelegateSignature, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_IncomingLangGraphStreamResponse_MetaData), NewProp_IncomingLangGraphStreamResponse_MetaData) }; // 1793225715
-const UECodeGen_Private::FMulticastDelegatePropertyParams Z_Construct_UClass_ULangGraphComponent_Statics::NewProp_LangGraphThreadCreateResponse = { "LangGraphThreadCreateResponse", nullptr, (EPropertyFlags)0x0010100010080000, UECodeGen_Private::EPropertyGenFlags::InlineMulticastDelegate, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(ULangGraphComponent, LangGraphThreadCreateResponse), Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphThreadCreateResponseEvent__DelegateSignature, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_LangGraphThreadCreateResponse_MetaData), NewProp_LangGraphThreadCreateResponse_MetaData) }; // 2992933986
+const UECodeGen_Private::FMulticastDelegatePropertyParams Z_Construct_UClass_ULangGraphComponent_Statics::NewProp_IncomingLangGraphResponse = { "IncomingLangGraphResponse", nullptr, (EPropertyFlags)0x0010100010080000, UECodeGen_Private::EPropertyGenFlags::InlineMulticastDelegate, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(ULangGraphComponent, IncomingLangGraphResponse), Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphResponseEvent__DelegateSignature, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_IncomingLangGraphResponse_MetaData), NewProp_IncomingLangGraphResponse_MetaData) }; // 1505036972
+const UECodeGen_Private::FMulticastDelegatePropertyParams Z_Construct_UClass_ULangGraphComponent_Statics::NewProp_IncomingLangGraphStreamResponse = { "IncomingLangGraphStreamResponse", nullptr, (EPropertyFlags)0x0010100010080000, UECodeGen_Private::EPropertyGenFlags::InlineMulticastDelegate, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(ULangGraphComponent, IncomingLangGraphStreamResponse), Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphStreamResponseEvent__DelegateSignature, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_IncomingLangGraphStreamResponse_MetaData), NewProp_IncomingLangGraphStreamResponse_MetaData) }; // 2764477562
+const UECodeGen_Private::FMulticastDelegatePropertyParams Z_Construct_UClass_ULangGraphComponent_Statics::NewProp_LangGraphThreadCreateResponse = { "LangGraphThreadCreateResponse", nullptr, (EPropertyFlags)0x0010100010080000, UECodeGen_Private::EPropertyGenFlags::InlineMulticastDelegate, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(ULangGraphComponent, LangGraphThreadCreateResponse), Z_Construct_UDelegateFunction_FANTASIA_IncomingLangGraphThreadCreateResponseEvent__DelegateSignature, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_LangGraphThreadCreateResponse_MetaData), NewProp_LangGraphThreadCreateResponse_MetaData) }; // 3262840215
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_ULangGraphComponent_Statics::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ULangGraphComponent_Statics::NewProp_endpoint,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ULangGraphComponent_Statics::NewProp_port,
@@ -454,24 +480,21 @@ UClass* Z_Construct_UClass_ULangGraphComponent()
 	}
 	return Z_Registration_Info_UClass_ULangGraphComponent.OuterSingleton;
 }
-template<> FANTASIA_API UClass* StaticClass<ULangGraphComponent>()
-{
-	return ULangGraphComponent::StaticClass();
-}
 DEFINE_VTABLE_PTR_HELPER_CTOR(ULangGraphComponent);
 ULangGraphComponent::~ULangGraphComponent() {}
-// End Class ULangGraphComponent
+// ********** End Class ULangGraphComponent ********************************************************
 
-// Begin Registration
-struct Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_LangGraphComponent_h_Statics
+// ********** Begin Registration *******************************************************************
+struct Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_LangGraphComponent_h__Script_FANTASIA_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_ULangGraphComponent, ULangGraphComponent::StaticClass, TEXT("ULangGraphComponent"), &Z_Registration_Info_UClass_ULangGraphComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ULangGraphComponent), 2510659933U) },
+		{ Z_Construct_UClass_ULangGraphComponent, ULangGraphComponent::StaticClass, TEXT("ULangGraphComponent"), &Z_Registration_Info_UClass_ULangGraphComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ULangGraphComponent), 3413925211U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_LangGraphComponent_h_3076518045(TEXT("/Script/FANTASIA"),
-	Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_LangGraphComponent_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_LangGraphComponent_h_Statics::ClassInfo),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_LangGraphComponent_h__Script_FANTASIA_1745052583(TEXT("/Script/FANTASIA"),
+	Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_LangGraphComponent_h__Script_FANTASIA_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_LangGraphComponent_h__Script_FANTASIA_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);
-// End Registration
+// ********** End Registration *********************************************************************
+
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

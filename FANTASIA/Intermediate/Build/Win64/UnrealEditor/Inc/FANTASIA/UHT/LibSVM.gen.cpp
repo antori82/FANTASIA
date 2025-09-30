@@ -5,11 +5,13 @@
 ===========================================================================*/
 
 #include "UObject/GeneratedCppIncludes.h"
-#include "FANTASIA/Public/LibSVM.h"
+#include "LibSVM.h"
+
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
+
 void EmptyLinkFunctionForGeneratedCodeLibSVM() {}
 
-// Begin Cross Module References
+// ********** Begin Cross Module References ********************************************************
 COREUOBJECT_API UClass* Z_Construct_UClass_UObject();
 FANTASIA_API UClass* Z_Construct_UClass_ULibSVM();
 FANTASIA_API UClass* Z_Construct_UClass_ULibSVM_NoRegister();
@@ -19,21 +21,17 @@ FANTASIA_API UScriptStruct* Z_Construct_UScriptStruct_FCLFResult();
 FANTASIA_API UScriptStruct* Z_Construct_UScriptStruct_FCLFSample();
 FANTASIA_API UScriptStruct* Z_Construct_UScriptStruct_FSVMParameters();
 UPackage* Z_Construct_UPackage__Script_FANTASIA();
-// End Cross Module References
+// ********** End Cross Module References **********************************************************
 
-// Begin ScriptStruct FCLFSample
-static FStructRegistrationInfo Z_Registration_Info_UScriptStruct_CLFSample;
+// ********** Begin ScriptStruct FCLFSample ********************************************************
+static FStructRegistrationInfo Z_Registration_Info_UScriptStruct_FCLFSample;
 class UScriptStruct* FCLFSample::StaticStruct()
 {
-	if (!Z_Registration_Info_UScriptStruct_CLFSample.OuterSingleton)
+	if (!Z_Registration_Info_UScriptStruct_FCLFSample.OuterSingleton)
 	{
-		Z_Registration_Info_UScriptStruct_CLFSample.OuterSingleton = GetStaticStruct(Z_Construct_UScriptStruct_FCLFSample, (UObject*)Z_Construct_UPackage__Script_FANTASIA(), TEXT("CLFSample"));
+		Z_Registration_Info_UScriptStruct_FCLFSample.OuterSingleton = GetStaticStruct(Z_Construct_UScriptStruct_FCLFSample, (UObject*)Z_Construct_UPackage__Script_FANTASIA(), TEXT("CLFSample"));
 	}
-	return Z_Registration_Info_UScriptStruct_CLFSample.OuterSingleton;
-}
-template<> FANTASIA_API UScriptStruct* StaticStruct<FCLFSample>()
-{
-	return FCLFSample::StaticStruct();
+	return Z_Registration_Info_UScriptStruct_FCLFSample.OuterSingleton;
 }
 struct Z_Construct_UScriptStruct_FCLFSample_Statics
 {
@@ -92,27 +90,23 @@ const UECodeGen_Private::FStructParams Z_Construct_UScriptStruct_FCLFSample_Stat
 };
 UScriptStruct* Z_Construct_UScriptStruct_FCLFSample()
 {
-	if (!Z_Registration_Info_UScriptStruct_CLFSample.InnerSingleton)
+	if (!Z_Registration_Info_UScriptStruct_FCLFSample.InnerSingleton)
 	{
-		UECodeGen_Private::ConstructUScriptStruct(Z_Registration_Info_UScriptStruct_CLFSample.InnerSingleton, Z_Construct_UScriptStruct_FCLFSample_Statics::StructParams);
+		UECodeGen_Private::ConstructUScriptStruct(Z_Registration_Info_UScriptStruct_FCLFSample.InnerSingleton, Z_Construct_UScriptStruct_FCLFSample_Statics::StructParams);
 	}
-	return Z_Registration_Info_UScriptStruct_CLFSample.InnerSingleton;
+	return Z_Registration_Info_UScriptStruct_FCLFSample.InnerSingleton;
 }
-// End ScriptStruct FCLFSample
+// ********** End ScriptStruct FCLFSample **********************************************************
 
-// Begin ScriptStruct FCLFResult
-static FStructRegistrationInfo Z_Registration_Info_UScriptStruct_CLFResult;
+// ********** Begin ScriptStruct FCLFResult ********************************************************
+static FStructRegistrationInfo Z_Registration_Info_UScriptStruct_FCLFResult;
 class UScriptStruct* FCLFResult::StaticStruct()
 {
-	if (!Z_Registration_Info_UScriptStruct_CLFResult.OuterSingleton)
+	if (!Z_Registration_Info_UScriptStruct_FCLFResult.OuterSingleton)
 	{
-		Z_Registration_Info_UScriptStruct_CLFResult.OuterSingleton = GetStaticStruct(Z_Construct_UScriptStruct_FCLFResult, (UObject*)Z_Construct_UPackage__Script_FANTASIA(), TEXT("CLFResult"));
+		Z_Registration_Info_UScriptStruct_FCLFResult.OuterSingleton = GetStaticStruct(Z_Construct_UScriptStruct_FCLFResult, (UObject*)Z_Construct_UPackage__Script_FANTASIA(), TEXT("CLFResult"));
 	}
-	return Z_Registration_Info_UScriptStruct_CLFResult.OuterSingleton;
-}
-template<> FANTASIA_API UScriptStruct* StaticStruct<FCLFResult>()
-{
-	return FCLFResult::StaticStruct();
+	return Z_Registration_Info_UScriptStruct_FCLFResult.OuterSingleton;
 }
 struct Z_Construct_UScriptStruct_FCLFResult_Statics
 {
@@ -164,16 +158,16 @@ const UECodeGen_Private::FStructParams Z_Construct_UScriptStruct_FCLFResult_Stat
 };
 UScriptStruct* Z_Construct_UScriptStruct_FCLFResult()
 {
-	if (!Z_Registration_Info_UScriptStruct_CLFResult.InnerSingleton)
+	if (!Z_Registration_Info_UScriptStruct_FCLFResult.InnerSingleton)
 	{
-		UECodeGen_Private::ConstructUScriptStruct(Z_Registration_Info_UScriptStruct_CLFResult.InnerSingleton, Z_Construct_UScriptStruct_FCLFResult_Statics::StructParams);
+		UECodeGen_Private::ConstructUScriptStruct(Z_Registration_Info_UScriptStruct_FCLFResult.InnerSingleton, Z_Construct_UScriptStruct_FCLFResult_Statics::StructParams);
 	}
-	return Z_Registration_Info_UScriptStruct_CLFResult.InnerSingleton;
+	return Z_Registration_Info_UScriptStruct_FCLFResult.InnerSingleton;
 }
-// End ScriptStruct FCLFResult
+// ********** End ScriptStruct FCLFResult **********************************************************
 
-// Begin Enum LibSVMTypes
-static_assert(!int64(LibSVMTypes::C_SVC)||!int64(LibSVMTypes::NU_SVC)||!int64(LibSVMTypes::ONE_CLASS_SVM)||!int64(LibSVMTypes::EPSILON_SVR)||!int64(LibSVMTypes::NU_SVR), "'LibSVMTypes' does not have a 0 entry!(This is a problem when the enum is initalized by default)");
+// ********** Begin Enum LibSVMTypes ***************************************************************
+static_assert(!int64(LibSVMTypes::C_SVC)||!int64(LibSVMTypes::NU_SVC)||!int64(LibSVMTypes::ONE_CLASS_SVM)||!int64(LibSVMTypes::EPSILON_SVR)||!int64(LibSVMTypes::NU_SVR), "'LibSVMTypes' does not have a 0 entry!(This is a problem when the enum is initialized by default)");
 static FEnumRegistrationInfo Z_Registration_Info_UEnum_LibSVMTypes;
 static UEnum* LibSVMTypes_StaticEnum()
 {
@@ -234,10 +228,10 @@ UEnum* Z_Construct_UEnum_FANTASIA_LibSVMTypes()
 	}
 	return Z_Registration_Info_UEnum_LibSVMTypes.InnerSingleton;
 }
-// End Enum LibSVMTypes
+// ********** End Enum LibSVMTypes *****************************************************************
 
-// Begin Enum LibSVMKernels
-static_assert(!int64(LibSVMKernels::LINEAR)||!int64(LibSVMKernels::POLYNOMIAL)||!int64(LibSVMKernels::RBF)||!int64(LibSVMKernels::SIGMOID), "'LibSVMKernels' does not have a 0 entry!(This is a problem when the enum is initalized by default)");
+// ********** Begin Enum LibSVMKernels *************************************************************
+static_assert(!int64(LibSVMKernels::LINEAR)||!int64(LibSVMKernels::POLYNOMIAL)||!int64(LibSVMKernels::RBF)||!int64(LibSVMKernels::SIGMOID), "'LibSVMKernels' does not have a 0 entry!(This is a problem when the enum is initialized by default)");
 static FEnumRegistrationInfo Z_Registration_Info_UEnum_LibSVMKernels;
 static UEnum* LibSVMKernels_StaticEnum()
 {
@@ -295,21 +289,17 @@ UEnum* Z_Construct_UEnum_FANTASIA_LibSVMKernels()
 	}
 	return Z_Registration_Info_UEnum_LibSVMKernels.InnerSingleton;
 }
-// End Enum LibSVMKernels
+// ********** End Enum LibSVMKernels ***************************************************************
 
-// Begin ScriptStruct FSVMParameters
-static FStructRegistrationInfo Z_Registration_Info_UScriptStruct_SVMParameters;
+// ********** Begin ScriptStruct FSVMParameters ****************************************************
+static FStructRegistrationInfo Z_Registration_Info_UScriptStruct_FSVMParameters;
 class UScriptStruct* FSVMParameters::StaticStruct()
 {
-	if (!Z_Registration_Info_UScriptStruct_SVMParameters.OuterSingleton)
+	if (!Z_Registration_Info_UScriptStruct_FSVMParameters.OuterSingleton)
 	{
-		Z_Registration_Info_UScriptStruct_SVMParameters.OuterSingleton = GetStaticStruct(Z_Construct_UScriptStruct_FSVMParameters, (UObject*)Z_Construct_UPackage__Script_FANTASIA(), TEXT("SVMParameters"));
+		Z_Registration_Info_UScriptStruct_FSVMParameters.OuterSingleton = GetStaticStruct(Z_Construct_UScriptStruct_FSVMParameters, (UObject*)Z_Construct_UPackage__Script_FANTASIA(), TEXT("SVMParameters"));
 	}
-	return Z_Registration_Info_UScriptStruct_SVMParameters.OuterSingleton;
-}
-template<> FANTASIA_API UScriptStruct* StaticStruct<FSVMParameters>()
-{
-	return FSVMParameters::StaticStruct();
+	return Z_Registration_Info_UScriptStruct_FSVMParameters.OuterSingleton;
 }
 struct Z_Construct_UScriptStruct_FSVMParameters_Statics
 {
@@ -432,15 +422,15 @@ const UECodeGen_Private::FStructParams Z_Construct_UScriptStruct_FSVMParameters_
 };
 UScriptStruct* Z_Construct_UScriptStruct_FSVMParameters()
 {
-	if (!Z_Registration_Info_UScriptStruct_SVMParameters.InnerSingleton)
+	if (!Z_Registration_Info_UScriptStruct_FSVMParameters.InnerSingleton)
 	{
-		UECodeGen_Private::ConstructUScriptStruct(Z_Registration_Info_UScriptStruct_SVMParameters.InnerSingleton, Z_Construct_UScriptStruct_FSVMParameters_Statics::StructParams);
+		UECodeGen_Private::ConstructUScriptStruct(Z_Registration_Info_UScriptStruct_FSVMParameters.InnerSingleton, Z_Construct_UScriptStruct_FSVMParameters_Statics::StructParams);
 	}
-	return Z_Registration_Info_UScriptStruct_SVMParameters.InnerSingleton;
+	return Z_Registration_Info_UScriptStruct_FSVMParameters.InnerSingleton;
 }
-// End ScriptStruct FSVMParameters
+// ********** End ScriptStruct FSVMParameters ******************************************************
 
-// Begin Class ULibSVM Function load
+// ********** Begin Class ULibSVM Function load ****************************************************
 struct Z_Construct_UFunction_ULibSVM_load_Statics
 {
 	struct LibSVM_eventload_Parms
@@ -464,7 +454,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_ULibSV
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_ULibSVM_load_Statics::NewProp_path,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_ULibSVM_load_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_ULibSVM_load_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_ULibSVM, nullptr, "load", nullptr, nullptr, Z_Construct_UFunction_ULibSVM_load_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_ULibSVM_load_Statics::PropPointers), sizeof(Z_Construct_UFunction_ULibSVM_load_Statics::LibSVM_eventload_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_ULibSVM_load_Statics::Function_MetaDataParams), Z_Construct_UFunction_ULibSVM_load_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_ULibSVM_load_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_ULibSVM, nullptr, "load", Z_Construct_UFunction_ULibSVM_load_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_ULibSVM_load_Statics::PropPointers), sizeof(Z_Construct_UFunction_ULibSVM_load_Statics::LibSVM_eventload_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_ULibSVM_load_Statics::Function_MetaDataParams), Z_Construct_UFunction_ULibSVM_load_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(Z_Construct_UFunction_ULibSVM_load_Statics::LibSVM_eventload_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_ULibSVM_load()
 {
@@ -483,9 +473,9 @@ DEFINE_FUNCTION(ULibSVM::execload)
 	P_THIS->load(Z_Param_path);
 	P_NATIVE_END;
 }
-// End Class ULibSVM Function load
+// ********** End Class ULibSVM Function load ******************************************************
 
-// Begin Class ULibSVM Function predict
+// ********** Begin Class ULibSVM Function predict *************************************************
 struct Z_Construct_UFunction_ULibSVM_predict_Statics
 {
 	struct LibSVM_eventpredict_Parms
@@ -508,10 +498,10 @@ struct Z_Construct_UFunction_ULibSVM_predict_Statics
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
-const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_ULibSVM_predict_Statics::NewProp_samples_Inner = { "samples", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, Z_Construct_UScriptStruct_FCLFSample, METADATA_PARAMS(0, nullptr) }; // 1022972749
-const UECodeGen_Private::FArrayPropertyParams Z_Construct_UFunction_ULibSVM_predict_Statics::NewProp_samples = { "samples", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(LibSVM_eventpredict_Parms, samples), EArrayPropertyFlags::None, METADATA_PARAMS(0, nullptr) }; // 1022972749
-const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_ULibSVM_predict_Statics::NewProp_ReturnValue_Inner = { "ReturnValue", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, Z_Construct_UScriptStruct_FCLFResult, METADATA_PARAMS(0, nullptr) }; // 1613212741
-const UECodeGen_Private::FArrayPropertyParams Z_Construct_UFunction_ULibSVM_predict_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(LibSVM_eventpredict_Parms, ReturnValue), EArrayPropertyFlags::None, METADATA_PARAMS(0, nullptr) }; // 1613212741
+const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_ULibSVM_predict_Statics::NewProp_samples_Inner = { "samples", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, Z_Construct_UScriptStruct_FCLFSample, METADATA_PARAMS(0, nullptr) }; // 1928741559
+const UECodeGen_Private::FArrayPropertyParams Z_Construct_UFunction_ULibSVM_predict_Statics::NewProp_samples = { "samples", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(LibSVM_eventpredict_Parms, samples), EArrayPropertyFlags::None, METADATA_PARAMS(0, nullptr) }; // 1928741559
+const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_ULibSVM_predict_Statics::NewProp_ReturnValue_Inner = { "ReturnValue", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, Z_Construct_UScriptStruct_FCLFResult, METADATA_PARAMS(0, nullptr) }; // 4059783103
+const UECodeGen_Private::FArrayPropertyParams Z_Construct_UFunction_ULibSVM_predict_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(LibSVM_eventpredict_Parms, ReturnValue), EArrayPropertyFlags::None, METADATA_PARAMS(0, nullptr) }; // 4059783103
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_ULibSVM_predict_Statics::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_ULibSVM_predict_Statics::NewProp_samples_Inner,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_ULibSVM_predict_Statics::NewProp_samples,
@@ -519,7 +509,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_ULibSV
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_ULibSVM_predict_Statics::NewProp_ReturnValue,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_ULibSVM_predict_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_ULibSVM_predict_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_ULibSVM, nullptr, "predict", nullptr, nullptr, Z_Construct_UFunction_ULibSVM_predict_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_ULibSVM_predict_Statics::PropPointers), sizeof(Z_Construct_UFunction_ULibSVM_predict_Statics::LibSVM_eventpredict_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_ULibSVM_predict_Statics::Function_MetaDataParams), Z_Construct_UFunction_ULibSVM_predict_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_ULibSVM_predict_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_ULibSVM, nullptr, "predict", Z_Construct_UFunction_ULibSVM_predict_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_ULibSVM_predict_Statics::PropPointers), sizeof(Z_Construct_UFunction_ULibSVM_predict_Statics::LibSVM_eventpredict_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_ULibSVM_predict_Statics::Function_MetaDataParams), Z_Construct_UFunction_ULibSVM_predict_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(Z_Construct_UFunction_ULibSVM_predict_Statics::LibSVM_eventpredict_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_ULibSVM_predict()
 {
@@ -538,9 +528,9 @@ DEFINE_FUNCTION(ULibSVM::execpredict)
 	*(TArray<FCLFResult>*)Z_Param__Result=P_THIS->predict(Z_Param_samples);
 	P_NATIVE_END;
 }
-// End Class ULibSVM Function predict
+// ********** End Class ULibSVM Function predict ***************************************************
 
-// Begin Class ULibSVM Function train
+// ********** Begin Class ULibSVM Function train ***************************************************
 struct Z_Construct_UFunction_ULibSVM_train_Statics
 {
 #if WITH_METADATA
@@ -553,7 +543,7 @@ struct Z_Construct_UFunction_ULibSVM_train_Statics
 #endif // WITH_METADATA
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_ULibSVM_train_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_ULibSVM, nullptr, "train", nullptr, nullptr, nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_ULibSVM_train_Statics::Function_MetaDataParams), Z_Construct_UFunction_ULibSVM_train_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_ULibSVM_train_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_ULibSVM, nullptr, "train", nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_ULibSVM_train_Statics::Function_MetaDataParams), Z_Construct_UFunction_ULibSVM_train_Statics::Function_MetaDataParams)},  };
 UFunction* Z_Construct_UFunction_ULibSVM_train()
 {
 	static UFunction* ReturnFunction = nullptr;
@@ -570,9 +560,9 @@ DEFINE_FUNCTION(ULibSVM::exectrain)
 	P_THIS->train();
 	P_NATIVE_END;
 }
-// End Class ULibSVM Function train
+// ********** End Class ULibSVM Function train *****************************************************
 
-// Begin Class ULibSVM
+// ********** Begin Class ULibSVM ******************************************************************
 void ULibSVM::StaticRegisterNativesULibSVM()
 {
 	UClass* Class = ULibSVM::StaticClass();
@@ -583,10 +573,34 @@ void ULibSVM::StaticRegisterNativesULibSVM()
 	};
 	FNativeFunctionRegistrar::RegisterFunctions(Class, Funcs, UE_ARRAY_COUNT(Funcs));
 }
-IMPLEMENT_CLASS_NO_AUTO_REGISTRATION(ULibSVM);
+FClassRegistrationInfo Z_Registration_Info_UClass_ULibSVM;
+UClass* ULibSVM::GetPrivateStaticClass()
+{
+	using TClass = ULibSVM;
+	if (!Z_Registration_Info_UClass_ULibSVM.InnerSingleton)
+	{
+		GetPrivateStaticClassBody(
+			StaticPackage(),
+			TEXT("LibSVM"),
+			Z_Registration_Info_UClass_ULibSVM.InnerSingleton,
+			StaticRegisterNativesULibSVM,
+			sizeof(TClass),
+			alignof(TClass),
+			TClass::StaticClassFlags,
+			TClass::StaticClassCastFlags(),
+			TClass::StaticConfigName(),
+			(UClass::ClassConstructorType)InternalConstructor<TClass>,
+			(UClass::ClassVTableHelperCtorCallerType)InternalVTableHelperCtorCaller<TClass>,
+			UOBJECT_CPPCLASS_STATICFUNCTIONS_FORCLASS(TClass),
+			&TClass::Super::StaticClass,
+			&TClass::WithinClass::StaticClass
+		);
+	}
+	return Z_Registration_Info_UClass_ULibSVM.InnerSingleton;
+}
 UClass* Z_Construct_UClass_ULibSVM_NoRegister()
 {
-	return ULibSVM::StaticClass();
+	return ULibSVM::GetPrivateStaticClass();
 }
 struct Z_Construct_UClass_ULibSVM_Statics
 {
@@ -613,9 +627,9 @@ struct Z_Construct_UClass_ULibSVM_Statics
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static UObject* (*const DependentSingletons[])();
 	static constexpr FClassFunctionLinkInfo FuncInfo[] = {
-		{ &Z_Construct_UFunction_ULibSVM_load, "load" }, // 3365297958
-		{ &Z_Construct_UFunction_ULibSVM_predict, "predict" }, // 3898248928
-		{ &Z_Construct_UFunction_ULibSVM_train, "train" }, // 1696540372
+		{ &Z_Construct_UFunction_ULibSVM_load, "load" }, // 2415731637
+		{ &Z_Construct_UFunction_ULibSVM_predict, "predict" }, // 2934822918
+		{ &Z_Construct_UFunction_ULibSVM_train, "train" }, // 2173803975
 	};
 	static_assert(UE_ARRAY_COUNT(FuncInfo) < 2048);
 	static constexpr FCppClassTypeInfoStatic StaticCppClassTypeInfo = {
@@ -623,9 +637,9 @@ struct Z_Construct_UClass_ULibSVM_Statics
 	};
 	static const UECodeGen_Private::FClassParams ClassParams;
 };
-const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_ULibSVM_Statics::NewProp_trainingSet_Inner = { "trainingSet", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, Z_Construct_UScriptStruct_FCLFSample, METADATA_PARAMS(0, nullptr) }; // 1022972749
-const UECodeGen_Private::FArrayPropertyParams Z_Construct_UClass_ULibSVM_Statics::NewProp_trainingSet = { "trainingSet", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(ULibSVM, trainingSet), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_trainingSet_MetaData), NewProp_trainingSet_MetaData) }; // 1022972749
-const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_ULibSVM_Statics::NewProp_SVMParameters = { "SVMParameters", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(ULibSVM, SVMParameters), Z_Construct_UScriptStruct_FSVMParameters, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_SVMParameters_MetaData), NewProp_SVMParameters_MetaData) }; // 3464799922
+const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_ULibSVM_Statics::NewProp_trainingSet_Inner = { "trainingSet", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, Z_Construct_UScriptStruct_FCLFSample, METADATA_PARAMS(0, nullptr) }; // 1928741559
+const UECodeGen_Private::FArrayPropertyParams Z_Construct_UClass_ULibSVM_Statics::NewProp_trainingSet = { "trainingSet", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(ULibSVM, trainingSet), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_trainingSet_MetaData), NewProp_trainingSet_MetaData) }; // 1928741559
+const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_ULibSVM_Statics::NewProp_SVMParameters = { "SVMParameters", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(ULibSVM, SVMParameters), Z_Construct_UScriptStruct_FSVMParameters, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_SVMParameters_MetaData), NewProp_SVMParameters_MetaData) }; // 1294465250
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_ULibSVM_Statics::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ULibSVM_Statics::NewProp_trainingSet_Inner,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ULibSVM_Statics::NewProp_trainingSet,
@@ -660,33 +674,30 @@ UClass* Z_Construct_UClass_ULibSVM()
 	}
 	return Z_Registration_Info_UClass_ULibSVM.OuterSingleton;
 }
-template<> FANTASIA_API UClass* StaticClass<ULibSVM>()
-{
-	return ULibSVM::StaticClass();
-}
 DEFINE_VTABLE_PTR_HELPER_CTOR(ULibSVM);
 ULibSVM::~ULibSVM() {}
-// End Class ULibSVM
+// ********** End Class ULibSVM ********************************************************************
 
-// Begin Registration
-struct Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_LibSVM_h_Statics
+// ********** Begin Registration *******************************************************************
+struct Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_LibSVM_h__Script_FANTASIA_Statics
 {
 	static constexpr FEnumRegisterCompiledInInfo EnumInfo[] = {
 		{ LibSVMTypes_StaticEnum, TEXT("LibSVMTypes"), &Z_Registration_Info_UEnum_LibSVMTypes, CONSTRUCT_RELOAD_VERSION_INFO(FEnumReloadVersionInfo, 1580382862U) },
 		{ LibSVMKernels_StaticEnum, TEXT("LibSVMKernels"), &Z_Registration_Info_UEnum_LibSVMKernels, CONSTRUCT_RELOAD_VERSION_INFO(FEnumReloadVersionInfo, 417858639U) },
 	};
 	static constexpr FStructRegisterCompiledInInfo ScriptStructInfo[] = {
-		{ FCLFSample::StaticStruct, Z_Construct_UScriptStruct_FCLFSample_Statics::NewStructOps, TEXT("CLFSample"), &Z_Registration_Info_UScriptStruct_CLFSample, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FCLFSample), 1022972749U) },
-		{ FCLFResult::StaticStruct, Z_Construct_UScriptStruct_FCLFResult_Statics::NewStructOps, TEXT("CLFResult"), &Z_Registration_Info_UScriptStruct_CLFResult, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FCLFResult), 1613212741U) },
-		{ FSVMParameters::StaticStruct, Z_Construct_UScriptStruct_FSVMParameters_Statics::NewStructOps, TEXT("SVMParameters"), &Z_Registration_Info_UScriptStruct_SVMParameters, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FSVMParameters), 3464799922U) },
+		{ FCLFSample::StaticStruct, Z_Construct_UScriptStruct_FCLFSample_Statics::NewStructOps, TEXT("CLFSample"), &Z_Registration_Info_UScriptStruct_FCLFSample, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FCLFSample), 1928741559U) },
+		{ FCLFResult::StaticStruct, Z_Construct_UScriptStruct_FCLFResult_Statics::NewStructOps, TEXT("CLFResult"), &Z_Registration_Info_UScriptStruct_FCLFResult, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FCLFResult), 4059783103U) },
+		{ FSVMParameters::StaticStruct, Z_Construct_UScriptStruct_FSVMParameters_Statics::NewStructOps, TEXT("SVMParameters"), &Z_Registration_Info_UScriptStruct_FSVMParameters, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FSVMParameters), 1294465250U) },
 	};
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_ULibSVM, ULibSVM::StaticClass, TEXT("ULibSVM"), &Z_Registration_Info_UClass_ULibSVM, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ULibSVM), 1524768110U) },
+		{ Z_Construct_UClass_ULibSVM, ULibSVM::StaticClass, TEXT("ULibSVM"), &Z_Registration_Info_UClass_ULibSVM, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ULibSVM), 453986718U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_LibSVM_h_380709003(TEXT("/Script/FANTASIA"),
-	Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_LibSVM_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_LibSVM_h_Statics::ClassInfo),
-	Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_LibSVM_h_Statics::ScriptStructInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_LibSVM_h_Statics::ScriptStructInfo),
-	Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_LibSVM_h_Statics::EnumInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_LibSVM_h_Statics::EnumInfo));
-// End Registration
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_LibSVM_h__Script_FANTASIA_3001809755(TEXT("/Script/FANTASIA"),
+	Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_LibSVM_h__Script_FANTASIA_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_LibSVM_h__Script_FANTASIA_Statics::ClassInfo),
+	Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_LibSVM_h__Script_FANTASIA_Statics::ScriptStructInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_LibSVM_h__Script_FANTASIA_Statics::ScriptStructInfo),
+	Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_LibSVM_h__Script_FANTASIA_Statics::EnumInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_LibSVM_h__Script_FANTASIA_Statics::EnumInfo));
+// ********** End Registration *********************************************************************
+
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

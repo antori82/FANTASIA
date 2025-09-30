@@ -5,25 +5,51 @@
 ===========================================================================*/
 
 #include "UObject/GeneratedCppIncludes.h"
-#include "FANTASIAEditor/Public/BayesianNetworkFactory.h"
+#include "BayesianNetworkFactory.h"
+
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
+
 void EmptyLinkFunctionForGeneratedCodeBayesianNetworkFactory() {}
 
-// Begin Cross Module References
+// ********** Begin Cross Module References ********************************************************
 FANTASIAEDITOR_API UClass* Z_Construct_UClass_UBayesianNetworkFactory();
 FANTASIAEDITOR_API UClass* Z_Construct_UClass_UBayesianNetworkFactory_NoRegister();
 UNREALED_API UClass* Z_Construct_UClass_UFactory();
 UPackage* Z_Construct_UPackage__Script_FANTASIAEditor();
-// End Cross Module References
+// ********** End Cross Module References **********************************************************
 
-// Begin Class UBayesianNetworkFactory
+// ********** Begin Class UBayesianNetworkFactory **************************************************
 void UBayesianNetworkFactory::StaticRegisterNativesUBayesianNetworkFactory()
 {
 }
-IMPLEMENT_CLASS_NO_AUTO_REGISTRATION(UBayesianNetworkFactory);
+FClassRegistrationInfo Z_Registration_Info_UClass_UBayesianNetworkFactory;
+UClass* UBayesianNetworkFactory::GetPrivateStaticClass()
+{
+	using TClass = UBayesianNetworkFactory;
+	if (!Z_Registration_Info_UClass_UBayesianNetworkFactory.InnerSingleton)
+	{
+		GetPrivateStaticClassBody(
+			StaticPackage(),
+			TEXT("BayesianNetworkFactory"),
+			Z_Registration_Info_UClass_UBayesianNetworkFactory.InnerSingleton,
+			StaticRegisterNativesUBayesianNetworkFactory,
+			sizeof(TClass),
+			alignof(TClass),
+			TClass::StaticClassFlags,
+			TClass::StaticClassCastFlags(),
+			TClass::StaticConfigName(),
+			(UClass::ClassConstructorType)InternalConstructor<TClass>,
+			(UClass::ClassVTableHelperCtorCallerType)InternalVTableHelperCtorCaller<TClass>,
+			UOBJECT_CPPCLASS_STATICFUNCTIONS_FORCLASS(TClass),
+			&TClass::Super::StaticClass,
+			&TClass::WithinClass::StaticClass
+		);
+	}
+	return Z_Registration_Info_UClass_UBayesianNetworkFactory.InnerSingleton;
+}
 UClass* Z_Construct_UClass_UBayesianNetworkFactory_NoRegister()
 {
-	return UBayesianNetworkFactory::StaticClass();
+	return UBayesianNetworkFactory::GetPrivateStaticClass();
 }
 struct Z_Construct_UClass_UBayesianNetworkFactory_Statics
 {
@@ -68,24 +94,21 @@ UClass* Z_Construct_UClass_UBayesianNetworkFactory()
 	}
 	return Z_Registration_Info_UClass_UBayesianNetworkFactory.OuterSingleton;
 }
-template<> FANTASIAEDITOR_API UClass* StaticClass<UBayesianNetworkFactory>()
-{
-	return UBayesianNetworkFactory::StaticClass();
-}
 DEFINE_VTABLE_PTR_HELPER_CTOR(UBayesianNetworkFactory);
 UBayesianNetworkFactory::~UBayesianNetworkFactory() {}
-// End Class UBayesianNetworkFactory
+// ********** End Class UBayesianNetworkFactory ****************************************************
 
-// Begin Registration
-struct Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIAEditor_Public_BayesianNetworkFactory_h_Statics
+// ********** Begin Registration *******************************************************************
+struct Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIAEditor_Public_BayesianNetworkFactory_h__Script_FANTASIAEditor_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_UBayesianNetworkFactory, UBayesianNetworkFactory::StaticClass, TEXT("UBayesianNetworkFactory"), &Z_Registration_Info_UClass_UBayesianNetworkFactory, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UBayesianNetworkFactory), 555479487U) },
+		{ Z_Construct_UClass_UBayesianNetworkFactory, UBayesianNetworkFactory::StaticClass, TEXT("UBayesianNetworkFactory"), &Z_Registration_Info_UClass_UBayesianNetworkFactory, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UBayesianNetworkFactory), 88302069U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIAEditor_Public_BayesianNetworkFactory_h_3601613316(TEXT("/Script/FANTASIAEditor"),
-	Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIAEditor_Public_BayesianNetworkFactory_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIAEditor_Public_BayesianNetworkFactory_h_Statics::ClassInfo),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIAEditor_Public_BayesianNetworkFactory_h__Script_FANTASIAEditor_1180788346(TEXT("/Script/FANTASIAEditor"),
+	Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIAEditor_Public_BayesianNetworkFactory_h__Script_FANTASIAEditor_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIAEditor_Public_BayesianNetworkFactory_h__Script_FANTASIAEditor_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);
-// End Registration
+// ********** End Registration *********************************************************************
+
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

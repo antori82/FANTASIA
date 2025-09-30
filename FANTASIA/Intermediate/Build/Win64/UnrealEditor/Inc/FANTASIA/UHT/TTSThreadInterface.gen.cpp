@@ -5,25 +5,51 @@
 ===========================================================================*/
 
 #include "UObject/GeneratedCppIncludes.h"
-#include "FANTASIA/Public/TTSThreadInterface.h"
+#include "TTSThreadInterface.h"
+
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
+
 void EmptyLinkFunctionForGeneratedCodeTTSThreadInterface() {}
 
-// Begin Cross Module References
+// ********** Begin Cross Module References ********************************************************
 COREUOBJECT_API UClass* Z_Construct_UClass_UInterface();
 FANTASIA_API UClass* Z_Construct_UClass_UTTSThreadInterface();
 FANTASIA_API UClass* Z_Construct_UClass_UTTSThreadInterface_NoRegister();
 UPackage* Z_Construct_UPackage__Script_FANTASIA();
-// End Cross Module References
+// ********** End Cross Module References **********************************************************
 
-// Begin Interface UTTSThreadInterface
+// ********** Begin Interface UTTSThreadInterface **************************************************
 void UTTSThreadInterface::StaticRegisterNativesUTTSThreadInterface()
 {
 }
-IMPLEMENT_CLASS_NO_AUTO_REGISTRATION(UTTSThreadInterface);
+FClassRegistrationInfo Z_Registration_Info_UClass_UTTSThreadInterface;
+UClass* UTTSThreadInterface::GetPrivateStaticClass()
+{
+	using TClass = UTTSThreadInterface;
+	if (!Z_Registration_Info_UClass_UTTSThreadInterface.InnerSingleton)
+	{
+		GetPrivateStaticClassBody(
+			StaticPackage(),
+			TEXT("TTSThreadInterface"),
+			Z_Registration_Info_UClass_UTTSThreadInterface.InnerSingleton,
+			StaticRegisterNativesUTTSThreadInterface,
+			sizeof(TClass),
+			alignof(TClass),
+			TClass::StaticClassFlags,
+			TClass::StaticClassCastFlags(),
+			TClass::StaticConfigName(),
+			(UClass::ClassConstructorType)InternalConstructor<TClass>,
+			(UClass::ClassVTableHelperCtorCallerType)InternalVTableHelperCtorCaller<TClass>,
+			UOBJECT_CPPCLASS_STATICFUNCTIONS_FORCLASS(TClass),
+			&TClass::Super::StaticClass,
+			&TClass::WithinClass::StaticClass
+		);
+	}
+	return Z_Registration_Info_UClass_UTTSThreadInterface.InnerSingleton;
+}
 UClass* Z_Construct_UClass_UTTSThreadInterface_NoRegister()
 {
-	return UTTSThreadInterface::StaticClass();
+	return UTTSThreadInterface::GetPrivateStaticClass();
 }
 struct Z_Construct_UClass_UTTSThreadInterface_Statics
 {
@@ -66,25 +92,21 @@ UClass* Z_Construct_UClass_UTTSThreadInterface()
 	}
 	return Z_Registration_Info_UClass_UTTSThreadInterface.OuterSingleton;
 }
-template<> FANTASIA_API UClass* StaticClass<UTTSThreadInterface>()
-{
-	return UTTSThreadInterface::StaticClass();
-}
 UTTSThreadInterface::UTTSThreadInterface(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer) {}
 DEFINE_VTABLE_PTR_HELPER_CTOR(UTTSThreadInterface);
-UTTSThreadInterface::~UTTSThreadInterface() {}
-// End Interface UTTSThreadInterface
+// ********** End Interface UTTSThreadInterface ****************************************************
 
-// Begin Registration
-struct Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_TTSThreadInterface_h_Statics
+// ********** Begin Registration *******************************************************************
+struct Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_TTSThreadInterface_h__Script_FANTASIA_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_UTTSThreadInterface, UTTSThreadInterface::StaticClass, TEXT("UTTSThreadInterface"), &Z_Registration_Info_UClass_UTTSThreadInterface, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UTTSThreadInterface), 1585089102U) },
+		{ Z_Construct_UClass_UTTSThreadInterface, UTTSThreadInterface::StaticClass, TEXT("UTTSThreadInterface"), &Z_Registration_Info_UClass_UTTSThreadInterface, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UTTSThreadInterface), 2786013028U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_TTSThreadInterface_h_345810575(TEXT("/Script/FANTASIA"),
-	Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_TTSThreadInterface_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_TTSThreadInterface_h_Statics::ClassInfo),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_TTSThreadInterface_h__Script_FANTASIA_3754647322(TEXT("/Script/FANTASIA"),
+	Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_TTSThreadInterface_h__Script_FANTASIA_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_TTSThreadInterface_h__Script_FANTASIA_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);
-// End Registration
+// ********** End Registration *********************************************************************
+
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
