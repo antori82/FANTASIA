@@ -5,11 +5,13 @@
 ===========================================================================*/
 
 #include "UObject/GeneratedCppIncludes.h"
-#include "FANTASIA/Public/FANTASIATypes.h"
+#include "FANTASIATypes.h"
+
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
+
 void EmptyLinkFunctionForGeneratedCodeFANTASIATypes() {}
 
-// Begin Cross Module References
+// ********** Begin Cross Module References ********************************************************
 COREUOBJECT_API UClass* Z_Construct_UClass_UObject();
 FANTASIA_API UClass* Z_Construct_UClass_UNeo4jResultCell();
 FANTASIA_API UClass* Z_Construct_UClass_UNeo4jResultCell_NoRegister();
@@ -71,9 +73,9 @@ FANTASIA_API UScriptStruct* Z_Construct_UScriptStruct_FSWIPrologResponse();
 FANTASIA_API UScriptStruct* Z_Construct_UScriptStruct_FTTSData();
 FANTASIA_API UScriptStruct* Z_Construct_UScriptStruct_FTTSTimedStruct();
 UPackage* Z_Construct_UPackage__Script_FANTASIA();
-// End Cross Module References
+// ********** End Cross Module References **********************************************************
 
-// Begin Enum SWIPrologOperation
+// ********** Begin Enum SWIPrologOperation ********************************************************
 static FEnumRegistrationInfo Z_Registration_Info_UEnum_SWIPrologOperation;
 static UEnum* SWIPrologOperation_StaticEnum()
 {
@@ -167,21 +169,17 @@ UEnum* Z_Construct_UEnum_FANTASIA_SWIPrologOperation()
 	}
 	return Z_Registration_Info_UEnum_SWIPrologOperation.InnerSingleton;
 }
-// End Enum SWIPrologOperation
+// ********** End Enum SWIPrologOperation **********************************************************
 
-// Begin ScriptStruct FSWIPrologResponse
-static FStructRegistrationInfo Z_Registration_Info_UScriptStruct_SWIPrologResponse;
+// ********** Begin ScriptStruct FSWIPrologResponse ************************************************
+static FStructRegistrationInfo Z_Registration_Info_UScriptStruct_FSWIPrologResponse;
 class UScriptStruct* FSWIPrologResponse::StaticStruct()
 {
-	if (!Z_Registration_Info_UScriptStruct_SWIPrologResponse.OuterSingleton)
+	if (!Z_Registration_Info_UScriptStruct_FSWIPrologResponse.OuterSingleton)
 	{
-		Z_Registration_Info_UScriptStruct_SWIPrologResponse.OuterSingleton = GetStaticStruct(Z_Construct_UScriptStruct_FSWIPrologResponse, (UObject*)Z_Construct_UPackage__Script_FANTASIA(), TEXT("SWIPrologResponse"));
+		Z_Registration_Info_UScriptStruct_FSWIPrologResponse.OuterSingleton = GetStaticStruct(Z_Construct_UScriptStruct_FSWIPrologResponse, (UObject*)Z_Construct_UPackage__Script_FANTASIA(), TEXT("SWIPrologResponse"));
 	}
-	return Z_Registration_Info_UScriptStruct_SWIPrologResponse.OuterSingleton;
-}
-template<> FANTASIA_API UScriptStruct* StaticStruct<FSWIPrologResponse>()
-{
-	return FSWIPrologResponse::StaticStruct();
+	return Z_Registration_Info_UScriptStruct_FSWIPrologResponse.OuterSingleton;
 }
 struct Z_Construct_UScriptStruct_FSWIPrologResponse_Statics
 {
@@ -240,22 +238,46 @@ const UECodeGen_Private::FStructParams Z_Construct_UScriptStruct_FSWIPrologRespo
 };
 UScriptStruct* Z_Construct_UScriptStruct_FSWIPrologResponse()
 {
-	if (!Z_Registration_Info_UScriptStruct_SWIPrologResponse.InnerSingleton)
+	if (!Z_Registration_Info_UScriptStruct_FSWIPrologResponse.InnerSingleton)
 	{
-		UECodeGen_Private::ConstructUScriptStruct(Z_Registration_Info_UScriptStruct_SWIPrologResponse.InnerSingleton, Z_Construct_UScriptStruct_FSWIPrologResponse_Statics::StructParams);
+		UECodeGen_Private::ConstructUScriptStruct(Z_Registration_Info_UScriptStruct_FSWIPrologResponse.InnerSingleton, Z_Construct_UScriptStruct_FSWIPrologResponse_Statics::StructParams);
 	}
-	return Z_Registration_Info_UScriptStruct_SWIPrologResponse.InnerSingleton;
+	return Z_Registration_Info_UScriptStruct_FSWIPrologResponse.InnerSingleton;
 }
-// End ScriptStruct FSWIPrologResponse
+// ********** End ScriptStruct FSWIPrologResponse **************************************************
 
-// Begin Class USWIPrologObject
+// ********** Begin Class USWIPrologObject *********************************************************
 void USWIPrologObject::StaticRegisterNativesUSWIPrologObject()
 {
 }
-IMPLEMENT_CLASS_NO_AUTO_REGISTRATION(USWIPrologObject);
+FClassRegistrationInfo Z_Registration_Info_UClass_USWIPrologObject;
+UClass* USWIPrologObject::GetPrivateStaticClass()
+{
+	using TClass = USWIPrologObject;
+	if (!Z_Registration_Info_UClass_USWIPrologObject.InnerSingleton)
+	{
+		GetPrivateStaticClassBody(
+			StaticPackage(),
+			TEXT("SWIPrologObject"),
+			Z_Registration_Info_UClass_USWIPrologObject.InnerSingleton,
+			StaticRegisterNativesUSWIPrologObject,
+			sizeof(TClass),
+			alignof(TClass),
+			TClass::StaticClassFlags,
+			TClass::StaticClassCastFlags(),
+			TClass::StaticConfigName(),
+			(UClass::ClassConstructorType)InternalConstructor<TClass>,
+			(UClass::ClassVTableHelperCtorCallerType)InternalVTableHelperCtorCaller<TClass>,
+			UOBJECT_CPPCLASS_STATICFUNCTIONS_FORCLASS(TClass),
+			&TClass::Super::StaticClass,
+			&TClass::WithinClass::StaticClass
+		);
+	}
+	return Z_Registration_Info_UClass_USWIPrologObject.InnerSingleton;
+}
 UClass* Z_Construct_UClass_USWIPrologObject_NoRegister()
 {
-	return USWIPrologObject::StaticClass();
+	return USWIPrologObject::GetPrivateStaticClass();
 }
 struct Z_Construct_UClass_USWIPrologObject_Statics
 {
@@ -301,22 +323,42 @@ UClass* Z_Construct_UClass_USWIPrologObject()
 	}
 	return Z_Registration_Info_UClass_USWIPrologObject.OuterSingleton;
 }
-template<> FANTASIA_API UClass* StaticClass<USWIPrologObject>()
-{
-	return USWIPrologObject::StaticClass();
-}
 DEFINE_VTABLE_PTR_HELPER_CTOR(USWIPrologObject);
 USWIPrologObject::~USWIPrologObject() {}
-// End Class USWIPrologObject
+// ********** End Class USWIPrologObject ***********************************************************
 
-// Begin Class USWIPrologRuleBody
+// ********** Begin Class USWIPrologRuleBody *******************************************************
 void USWIPrologRuleBody::StaticRegisterNativesUSWIPrologRuleBody()
 {
 }
-IMPLEMENT_CLASS_NO_AUTO_REGISTRATION(USWIPrologRuleBody);
+FClassRegistrationInfo Z_Registration_Info_UClass_USWIPrologRuleBody;
+UClass* USWIPrologRuleBody::GetPrivateStaticClass()
+{
+	using TClass = USWIPrologRuleBody;
+	if (!Z_Registration_Info_UClass_USWIPrologRuleBody.InnerSingleton)
+	{
+		GetPrivateStaticClassBody(
+			StaticPackage(),
+			TEXT("SWIPrologRuleBody"),
+			Z_Registration_Info_UClass_USWIPrologRuleBody.InnerSingleton,
+			StaticRegisterNativesUSWIPrologRuleBody,
+			sizeof(TClass),
+			alignof(TClass),
+			TClass::StaticClassFlags,
+			TClass::StaticClassCastFlags(),
+			TClass::StaticConfigName(),
+			(UClass::ClassConstructorType)InternalConstructor<TClass>,
+			(UClass::ClassVTableHelperCtorCallerType)InternalVTableHelperCtorCaller<TClass>,
+			UOBJECT_CPPCLASS_STATICFUNCTIONS_FORCLASS(TClass),
+			&TClass::Super::StaticClass,
+			&TClass::WithinClass::StaticClass
+		);
+	}
+	return Z_Registration_Info_UClass_USWIPrologRuleBody.InnerSingleton;
+}
 UClass* Z_Construct_UClass_USWIPrologRuleBody_NoRegister()
 {
-	return USWIPrologRuleBody::StaticClass();
+	return USWIPrologRuleBody::GetPrivateStaticClass();
 }
 struct Z_Construct_UClass_USWIPrologRuleBody_Statics
 {
@@ -392,22 +434,42 @@ UClass* Z_Construct_UClass_USWIPrologRuleBody()
 	}
 	return Z_Registration_Info_UClass_USWIPrologRuleBody.OuterSingleton;
 }
-template<> FANTASIA_API UClass* StaticClass<USWIPrologRuleBody>()
-{
-	return USWIPrologRuleBody::StaticClass();
-}
 DEFINE_VTABLE_PTR_HELPER_CTOR(USWIPrologRuleBody);
 USWIPrologRuleBody::~USWIPrologRuleBody() {}
-// End Class USWIPrologRuleBody
+// ********** End Class USWIPrologRuleBody *********************************************************
 
-// Begin Class USWIPrologRule
+// ********** Begin Class USWIPrologRule ***********************************************************
 void USWIPrologRule::StaticRegisterNativesUSWIPrologRule()
 {
 }
-IMPLEMENT_CLASS_NO_AUTO_REGISTRATION(USWIPrologRule);
+FClassRegistrationInfo Z_Registration_Info_UClass_USWIPrologRule;
+UClass* USWIPrologRule::GetPrivateStaticClass()
+{
+	using TClass = USWIPrologRule;
+	if (!Z_Registration_Info_UClass_USWIPrologRule.InnerSingleton)
+	{
+		GetPrivateStaticClassBody(
+			StaticPackage(),
+			TEXT("SWIPrologRule"),
+			Z_Registration_Info_UClass_USWIPrologRule.InnerSingleton,
+			StaticRegisterNativesUSWIPrologRule,
+			sizeof(TClass),
+			alignof(TClass),
+			TClass::StaticClassFlags,
+			TClass::StaticClassCastFlags(),
+			TClass::StaticConfigName(),
+			(UClass::ClassConstructorType)InternalConstructor<TClass>,
+			(UClass::ClassVTableHelperCtorCallerType)InternalVTableHelperCtorCaller<TClass>,
+			UOBJECT_CPPCLASS_STATICFUNCTIONS_FORCLASS(TClass),
+			&TClass::Super::StaticClass,
+			&TClass::WithinClass::StaticClass
+		);
+	}
+	return Z_Registration_Info_UClass_USWIPrologRule.InnerSingleton;
+}
 UClass* Z_Construct_UClass_USWIPrologRule_NoRegister()
 {
-	return USWIPrologRule::StaticClass();
+	return USWIPrologRule::GetPrivateStaticClass();
 }
 struct Z_Construct_UClass_USWIPrologRule_Statics
 {
@@ -472,22 +534,42 @@ UClass* Z_Construct_UClass_USWIPrologRule()
 	}
 	return Z_Registration_Info_UClass_USWIPrologRule.OuterSingleton;
 }
-template<> FANTASIA_API UClass* StaticClass<USWIPrologRule>()
-{
-	return USWIPrologRule::StaticClass();
-}
 DEFINE_VTABLE_PTR_HELPER_CTOR(USWIPrologRule);
 USWIPrologRule::~USWIPrologRule() {}
-// End Class USWIPrologRule
+// ********** End Class USWIPrologRule *************************************************************
 
-// Begin Class USWIPrologTerm
+// ********** Begin Class USWIPrologTerm ***********************************************************
 void USWIPrologTerm::StaticRegisterNativesUSWIPrologTerm()
 {
 }
-IMPLEMENT_CLASS_NO_AUTO_REGISTRATION(USWIPrologTerm);
+FClassRegistrationInfo Z_Registration_Info_UClass_USWIPrologTerm;
+UClass* USWIPrologTerm::GetPrivateStaticClass()
+{
+	using TClass = USWIPrologTerm;
+	if (!Z_Registration_Info_UClass_USWIPrologTerm.InnerSingleton)
+	{
+		GetPrivateStaticClassBody(
+			StaticPackage(),
+			TEXT("SWIPrologTerm"),
+			Z_Registration_Info_UClass_USWIPrologTerm.InnerSingleton,
+			StaticRegisterNativesUSWIPrologTerm,
+			sizeof(TClass),
+			alignof(TClass),
+			TClass::StaticClassFlags,
+			TClass::StaticClassCastFlags(),
+			TClass::StaticConfigName(),
+			(UClass::ClassConstructorType)InternalConstructor<TClass>,
+			(UClass::ClassVTableHelperCtorCallerType)InternalVTableHelperCtorCaller<TClass>,
+			UOBJECT_CPPCLASS_STATICFUNCTIONS_FORCLASS(TClass),
+			&TClass::Super::StaticClass,
+			&TClass::WithinClass::StaticClass
+		);
+	}
+	return Z_Registration_Info_UClass_USWIPrologTerm.InnerSingleton;
+}
 UClass* Z_Construct_UClass_USWIPrologTerm_NoRegister()
 {
-	return USWIPrologTerm::StaticClass();
+	return USWIPrologTerm::GetPrivateStaticClass();
 }
 struct Z_Construct_UClass_USWIPrologTerm_Statics
 {
@@ -533,22 +615,42 @@ UClass* Z_Construct_UClass_USWIPrologTerm()
 	}
 	return Z_Registration_Info_UClass_USWIPrologTerm.OuterSingleton;
 }
-template<> FANTASIA_API UClass* StaticClass<USWIPrologTerm>()
-{
-	return USWIPrologTerm::StaticClass();
-}
 DEFINE_VTABLE_PTR_HELPER_CTOR(USWIPrologTerm);
 USWIPrologTerm::~USWIPrologTerm() {}
-// End Class USWIPrologTerm
+// ********** End Class USWIPrologTerm *************************************************************
 
-// Begin Class USWIPrologAtom
+// ********** Begin Class USWIPrologAtom ***********************************************************
 void USWIPrologAtom::StaticRegisterNativesUSWIPrologAtom()
 {
 }
-IMPLEMENT_CLASS_NO_AUTO_REGISTRATION(USWIPrologAtom);
+FClassRegistrationInfo Z_Registration_Info_UClass_USWIPrologAtom;
+UClass* USWIPrologAtom::GetPrivateStaticClass()
+{
+	using TClass = USWIPrologAtom;
+	if (!Z_Registration_Info_UClass_USWIPrologAtom.InnerSingleton)
+	{
+		GetPrivateStaticClassBody(
+			StaticPackage(),
+			TEXT("SWIPrologAtom"),
+			Z_Registration_Info_UClass_USWIPrologAtom.InnerSingleton,
+			StaticRegisterNativesUSWIPrologAtom,
+			sizeof(TClass),
+			alignof(TClass),
+			TClass::StaticClassFlags,
+			TClass::StaticClassCastFlags(),
+			TClass::StaticConfigName(),
+			(UClass::ClassConstructorType)InternalConstructor<TClass>,
+			(UClass::ClassVTableHelperCtorCallerType)InternalVTableHelperCtorCaller<TClass>,
+			UOBJECT_CPPCLASS_STATICFUNCTIONS_FORCLASS(TClass),
+			&TClass::Super::StaticClass,
+			&TClass::WithinClass::StaticClass
+		);
+	}
+	return Z_Registration_Info_UClass_USWIPrologAtom.InnerSingleton;
+}
 UClass* Z_Construct_UClass_USWIPrologAtom_NoRegister()
 {
-	return USWIPrologAtom::StaticClass();
+	return USWIPrologAtom::GetPrivateStaticClass();
 }
 struct Z_Construct_UClass_USWIPrologAtom_Statics
 {
@@ -605,22 +707,42 @@ UClass* Z_Construct_UClass_USWIPrologAtom()
 	}
 	return Z_Registration_Info_UClass_USWIPrologAtom.OuterSingleton;
 }
-template<> FANTASIA_API UClass* StaticClass<USWIPrologAtom>()
-{
-	return USWIPrologAtom::StaticClass();
-}
 DEFINE_VTABLE_PTR_HELPER_CTOR(USWIPrologAtom);
 USWIPrologAtom::~USWIPrologAtom() {}
-// End Class USWIPrologAtom
+// ********** End Class USWIPrologAtom *************************************************************
 
-// Begin Class USWIPrologVariable
+// ********** Begin Class USWIPrologVariable *******************************************************
 void USWIPrologVariable::StaticRegisterNativesUSWIPrologVariable()
 {
 }
-IMPLEMENT_CLASS_NO_AUTO_REGISTRATION(USWIPrologVariable);
+FClassRegistrationInfo Z_Registration_Info_UClass_USWIPrologVariable;
+UClass* USWIPrologVariable::GetPrivateStaticClass()
+{
+	using TClass = USWIPrologVariable;
+	if (!Z_Registration_Info_UClass_USWIPrologVariable.InnerSingleton)
+	{
+		GetPrivateStaticClassBody(
+			StaticPackage(),
+			TEXT("SWIPrologVariable"),
+			Z_Registration_Info_UClass_USWIPrologVariable.InnerSingleton,
+			StaticRegisterNativesUSWIPrologVariable,
+			sizeof(TClass),
+			alignof(TClass),
+			TClass::StaticClassFlags,
+			TClass::StaticClassCastFlags(),
+			TClass::StaticConfigName(),
+			(UClass::ClassConstructorType)InternalConstructor<TClass>,
+			(UClass::ClassVTableHelperCtorCallerType)InternalVTableHelperCtorCaller<TClass>,
+			UOBJECT_CPPCLASS_STATICFUNCTIONS_FORCLASS(TClass),
+			&TClass::Super::StaticClass,
+			&TClass::WithinClass::StaticClass
+		);
+	}
+	return Z_Registration_Info_UClass_USWIPrologVariable.InnerSingleton;
+}
 UClass* Z_Construct_UClass_USWIPrologVariable_NoRegister()
 {
-	return USWIPrologVariable::StaticClass();
+	return USWIPrologVariable::GetPrivateStaticClass();
 }
 struct Z_Construct_UClass_USWIPrologVariable_Statics
 {
@@ -677,22 +799,42 @@ UClass* Z_Construct_UClass_USWIPrologVariable()
 	}
 	return Z_Registration_Info_UClass_USWIPrologVariable.OuterSingleton;
 }
-template<> FANTASIA_API UClass* StaticClass<USWIPrologVariable>()
-{
-	return USWIPrologVariable::StaticClass();
-}
 DEFINE_VTABLE_PTR_HELPER_CTOR(USWIPrologVariable);
 USWIPrologVariable::~USWIPrologVariable() {}
-// End Class USWIPrologVariable
+// ********** End Class USWIPrologVariable *********************************************************
 
-// Begin Class USWIPrologInteger
+// ********** Begin Class USWIPrologInteger ********************************************************
 void USWIPrologInteger::StaticRegisterNativesUSWIPrologInteger()
 {
 }
-IMPLEMENT_CLASS_NO_AUTO_REGISTRATION(USWIPrologInteger);
+FClassRegistrationInfo Z_Registration_Info_UClass_USWIPrologInteger;
+UClass* USWIPrologInteger::GetPrivateStaticClass()
+{
+	using TClass = USWIPrologInteger;
+	if (!Z_Registration_Info_UClass_USWIPrologInteger.InnerSingleton)
+	{
+		GetPrivateStaticClassBody(
+			StaticPackage(),
+			TEXT("SWIPrologInteger"),
+			Z_Registration_Info_UClass_USWIPrologInteger.InnerSingleton,
+			StaticRegisterNativesUSWIPrologInteger,
+			sizeof(TClass),
+			alignof(TClass),
+			TClass::StaticClassFlags,
+			TClass::StaticClassCastFlags(),
+			TClass::StaticConfigName(),
+			(UClass::ClassConstructorType)InternalConstructor<TClass>,
+			(UClass::ClassVTableHelperCtorCallerType)InternalVTableHelperCtorCaller<TClass>,
+			UOBJECT_CPPCLASS_STATICFUNCTIONS_FORCLASS(TClass),
+			&TClass::Super::StaticClass,
+			&TClass::WithinClass::StaticClass
+		);
+	}
+	return Z_Registration_Info_UClass_USWIPrologInteger.InnerSingleton;
+}
 UClass* Z_Construct_UClass_USWIPrologInteger_NoRegister()
 {
-	return USWIPrologInteger::StaticClass();
+	return USWIPrologInteger::GetPrivateStaticClass();
 }
 struct Z_Construct_UClass_USWIPrologInteger_Statics
 {
@@ -749,22 +891,42 @@ UClass* Z_Construct_UClass_USWIPrologInteger()
 	}
 	return Z_Registration_Info_UClass_USWIPrologInteger.OuterSingleton;
 }
-template<> FANTASIA_API UClass* StaticClass<USWIPrologInteger>()
-{
-	return USWIPrologInteger::StaticClass();
-}
 DEFINE_VTABLE_PTR_HELPER_CTOR(USWIPrologInteger);
 USWIPrologInteger::~USWIPrologInteger() {}
-// End Class USWIPrologInteger
+// ********** End Class USWIPrologInteger **********************************************************
 
-// Begin Class USWIPrologFloat
+// ********** Begin Class USWIPrologFloat **********************************************************
 void USWIPrologFloat::StaticRegisterNativesUSWIPrologFloat()
 {
 }
-IMPLEMENT_CLASS_NO_AUTO_REGISTRATION(USWIPrologFloat);
+FClassRegistrationInfo Z_Registration_Info_UClass_USWIPrologFloat;
+UClass* USWIPrologFloat::GetPrivateStaticClass()
+{
+	using TClass = USWIPrologFloat;
+	if (!Z_Registration_Info_UClass_USWIPrologFloat.InnerSingleton)
+	{
+		GetPrivateStaticClassBody(
+			StaticPackage(),
+			TEXT("SWIPrologFloat"),
+			Z_Registration_Info_UClass_USWIPrologFloat.InnerSingleton,
+			StaticRegisterNativesUSWIPrologFloat,
+			sizeof(TClass),
+			alignof(TClass),
+			TClass::StaticClassFlags,
+			TClass::StaticClassCastFlags(),
+			TClass::StaticConfigName(),
+			(UClass::ClassConstructorType)InternalConstructor<TClass>,
+			(UClass::ClassVTableHelperCtorCallerType)InternalVTableHelperCtorCaller<TClass>,
+			UOBJECT_CPPCLASS_STATICFUNCTIONS_FORCLASS(TClass),
+			&TClass::Super::StaticClass,
+			&TClass::WithinClass::StaticClass
+		);
+	}
+	return Z_Registration_Info_UClass_USWIPrologFloat.InnerSingleton;
+}
 UClass* Z_Construct_UClass_USWIPrologFloat_NoRegister()
 {
-	return USWIPrologFloat::StaticClass();
+	return USWIPrologFloat::GetPrivateStaticClass();
 }
 struct Z_Construct_UClass_USWIPrologFloat_Statics
 {
@@ -821,22 +983,42 @@ UClass* Z_Construct_UClass_USWIPrologFloat()
 	}
 	return Z_Registration_Info_UClass_USWIPrologFloat.OuterSingleton;
 }
-template<> FANTASIA_API UClass* StaticClass<USWIPrologFloat>()
-{
-	return USWIPrologFloat::StaticClass();
-}
 DEFINE_VTABLE_PTR_HELPER_CTOR(USWIPrologFloat);
 USWIPrologFloat::~USWIPrologFloat() {}
-// End Class USWIPrologFloat
+// ********** End Class USWIPrologFloat ************************************************************
 
-// Begin Class USWIPrologCompound
+// ********** Begin Class USWIPrologCompound *******************************************************
 void USWIPrologCompound::StaticRegisterNativesUSWIPrologCompound()
 {
 }
-IMPLEMENT_CLASS_NO_AUTO_REGISTRATION(USWIPrologCompound);
+FClassRegistrationInfo Z_Registration_Info_UClass_USWIPrologCompound;
+UClass* USWIPrologCompound::GetPrivateStaticClass()
+{
+	using TClass = USWIPrologCompound;
+	if (!Z_Registration_Info_UClass_USWIPrologCompound.InnerSingleton)
+	{
+		GetPrivateStaticClassBody(
+			StaticPackage(),
+			TEXT("SWIPrologCompound"),
+			Z_Registration_Info_UClass_USWIPrologCompound.InnerSingleton,
+			StaticRegisterNativesUSWIPrologCompound,
+			sizeof(TClass),
+			alignof(TClass),
+			TClass::StaticClassFlags,
+			TClass::StaticClassCastFlags(),
+			TClass::StaticConfigName(),
+			(UClass::ClassConstructorType)InternalConstructor<TClass>,
+			(UClass::ClassVTableHelperCtorCallerType)InternalVTableHelperCtorCaller<TClass>,
+			UOBJECT_CPPCLASS_STATICFUNCTIONS_FORCLASS(TClass),
+			&TClass::Super::StaticClass,
+			&TClass::WithinClass::StaticClass
+		);
+	}
+	return Z_Registration_Info_UClass_USWIPrologCompound.InnerSingleton;
+}
 UClass* Z_Construct_UClass_USWIPrologCompound_NoRegister()
 {
-	return USWIPrologCompound::StaticClass();
+	return USWIPrologCompound::GetPrivateStaticClass();
 }
 struct Z_Construct_UClass_USWIPrologCompound_Statics
 {
@@ -903,22 +1085,42 @@ UClass* Z_Construct_UClass_USWIPrologCompound()
 	}
 	return Z_Registration_Info_UClass_USWIPrologCompound.OuterSingleton;
 }
-template<> FANTASIA_API UClass* StaticClass<USWIPrologCompound>()
-{
-	return USWIPrologCompound::StaticClass();
-}
 DEFINE_VTABLE_PTR_HELPER_CTOR(USWIPrologCompound);
 USWIPrologCompound::~USWIPrologCompound() {}
-// End Class USWIPrologCompound
+// ********** End Class USWIPrologCompound *********************************************************
 
-// Begin Class USWIPrologList
+// ********** Begin Class USWIPrologList ***********************************************************
 void USWIPrologList::StaticRegisterNativesUSWIPrologList()
 {
 }
-IMPLEMENT_CLASS_NO_AUTO_REGISTRATION(USWIPrologList);
+FClassRegistrationInfo Z_Registration_Info_UClass_USWIPrologList;
+UClass* USWIPrologList::GetPrivateStaticClass()
+{
+	using TClass = USWIPrologList;
+	if (!Z_Registration_Info_UClass_USWIPrologList.InnerSingleton)
+	{
+		GetPrivateStaticClassBody(
+			StaticPackage(),
+			TEXT("SWIPrologList"),
+			Z_Registration_Info_UClass_USWIPrologList.InnerSingleton,
+			StaticRegisterNativesUSWIPrologList,
+			sizeof(TClass),
+			alignof(TClass),
+			TClass::StaticClassFlags,
+			TClass::StaticClassCastFlags(),
+			TClass::StaticConfigName(),
+			(UClass::ClassConstructorType)InternalConstructor<TClass>,
+			(UClass::ClassVTableHelperCtorCallerType)InternalVTableHelperCtorCaller<TClass>,
+			UOBJECT_CPPCLASS_STATICFUNCTIONS_FORCLASS(TClass),
+			&TClass::Super::StaticClass,
+			&TClass::WithinClass::StaticClass
+		);
+	}
+	return Z_Registration_Info_UClass_USWIPrologList.InnerSingleton;
+}
 UClass* Z_Construct_UClass_USWIPrologList_NoRegister()
 {
-	return USWIPrologList::StaticClass();
+	return USWIPrologList::GetPrivateStaticClass();
 }
 struct Z_Construct_UClass_USWIPrologList_Statics
 {
@@ -978,22 +1180,42 @@ UClass* Z_Construct_UClass_USWIPrologList()
 	}
 	return Z_Registration_Info_UClass_USWIPrologList.OuterSingleton;
 }
-template<> FANTASIA_API UClass* StaticClass<USWIPrologList>()
-{
-	return USWIPrologList::StaticClass();
-}
 DEFINE_VTABLE_PTR_HELPER_CTOR(USWIPrologList);
 USWIPrologList::~USWIPrologList() {}
-// End Class USWIPrologList
+// ********** End Class USWIPrologList *************************************************************
 
-// Begin Class USWIPrologHeadToTail
+// ********** Begin Class USWIPrologHeadToTail *****************************************************
 void USWIPrologHeadToTail::StaticRegisterNativesUSWIPrologHeadToTail()
 {
 }
-IMPLEMENT_CLASS_NO_AUTO_REGISTRATION(USWIPrologHeadToTail);
+FClassRegistrationInfo Z_Registration_Info_UClass_USWIPrologHeadToTail;
+UClass* USWIPrologHeadToTail::GetPrivateStaticClass()
+{
+	using TClass = USWIPrologHeadToTail;
+	if (!Z_Registration_Info_UClass_USWIPrologHeadToTail.InnerSingleton)
+	{
+		GetPrivateStaticClassBody(
+			StaticPackage(),
+			TEXT("SWIPrologHeadToTail"),
+			Z_Registration_Info_UClass_USWIPrologHeadToTail.InnerSingleton,
+			StaticRegisterNativesUSWIPrologHeadToTail,
+			sizeof(TClass),
+			alignof(TClass),
+			TClass::StaticClassFlags,
+			TClass::StaticClassCastFlags(),
+			TClass::StaticConfigName(),
+			(UClass::ClassConstructorType)InternalConstructor<TClass>,
+			(UClass::ClassVTableHelperCtorCallerType)InternalVTableHelperCtorCaller<TClass>,
+			UOBJECT_CPPCLASS_STATICFUNCTIONS_FORCLASS(TClass),
+			&TClass::Super::StaticClass,
+			&TClass::WithinClass::StaticClass
+		);
+	}
+	return Z_Registration_Info_UClass_USWIPrologHeadToTail.InnerSingleton;
+}
 UClass* Z_Construct_UClass_USWIPrologHeadToTail_NoRegister()
 {
-	return USWIPrologHeadToTail::StaticClass();
+	return USWIPrologHeadToTail::GetPrivateStaticClass();
 }
 struct Z_Construct_UClass_USWIPrologHeadToTail_Statics
 {
@@ -1061,22 +1283,42 @@ UClass* Z_Construct_UClass_USWIPrologHeadToTail()
 	}
 	return Z_Registration_Info_UClass_USWIPrologHeadToTail.OuterSingleton;
 }
-template<> FANTASIA_API UClass* StaticClass<USWIPrologHeadToTail>()
-{
-	return USWIPrologHeadToTail::StaticClass();
-}
 DEFINE_VTABLE_PTR_HELPER_CTOR(USWIPrologHeadToTail);
 USWIPrologHeadToTail::~USWIPrologHeadToTail() {}
-// End Class USWIPrologHeadToTail
+// ********** End Class USWIPrologHeadToTail *******************************************************
 
-// Begin Class USWIPrologCut
+// ********** Begin Class USWIPrologCut ************************************************************
 void USWIPrologCut::StaticRegisterNativesUSWIPrologCut()
 {
 }
-IMPLEMENT_CLASS_NO_AUTO_REGISTRATION(USWIPrologCut);
+FClassRegistrationInfo Z_Registration_Info_UClass_USWIPrologCut;
+UClass* USWIPrologCut::GetPrivateStaticClass()
+{
+	using TClass = USWIPrologCut;
+	if (!Z_Registration_Info_UClass_USWIPrologCut.InnerSingleton)
+	{
+		GetPrivateStaticClassBody(
+			StaticPackage(),
+			TEXT("SWIPrologCut"),
+			Z_Registration_Info_UClass_USWIPrologCut.InnerSingleton,
+			StaticRegisterNativesUSWIPrologCut,
+			sizeof(TClass),
+			alignof(TClass),
+			TClass::StaticClassFlags,
+			TClass::StaticClassCastFlags(),
+			TClass::StaticConfigName(),
+			(UClass::ClassConstructorType)InternalConstructor<TClass>,
+			(UClass::ClassVTableHelperCtorCallerType)InternalVTableHelperCtorCaller<TClass>,
+			UOBJECT_CPPCLASS_STATICFUNCTIONS_FORCLASS(TClass),
+			&TClass::Super::StaticClass,
+			&TClass::WithinClass::StaticClass
+		);
+	}
+	return Z_Registration_Info_UClass_USWIPrologCut.InnerSingleton;
+}
 UClass* Z_Construct_UClass_USWIPrologCut_NoRegister()
 {
-	return USWIPrologCut::StaticClass();
+	return USWIPrologCut::GetPrivateStaticClass();
 }
 struct Z_Construct_UClass_USWIPrologCut_Statics
 {
@@ -1122,22 +1364,42 @@ UClass* Z_Construct_UClass_USWIPrologCut()
 	}
 	return Z_Registration_Info_UClass_USWIPrologCut.OuterSingleton;
 }
-template<> FANTASIA_API UClass* StaticClass<USWIPrologCut>()
-{
-	return USWIPrologCut::StaticClass();
-}
 DEFINE_VTABLE_PTR_HELPER_CTOR(USWIPrologCut);
 USWIPrologCut::~USWIPrologCut() {}
-// End Class USWIPrologCut
+// ********** End Class USWIPrologCut **************************************************************
 
-// Begin Class USWIPrologSolution
+// ********** Begin Class USWIPrologSolution *******************************************************
 void USWIPrologSolution::StaticRegisterNativesUSWIPrologSolution()
 {
 }
-IMPLEMENT_CLASS_NO_AUTO_REGISTRATION(USWIPrologSolution);
+FClassRegistrationInfo Z_Registration_Info_UClass_USWIPrologSolution;
+UClass* USWIPrologSolution::GetPrivateStaticClass()
+{
+	using TClass = USWIPrologSolution;
+	if (!Z_Registration_Info_UClass_USWIPrologSolution.InnerSingleton)
+	{
+		GetPrivateStaticClassBody(
+			StaticPackage(),
+			TEXT("SWIPrologSolution"),
+			Z_Registration_Info_UClass_USWIPrologSolution.InnerSingleton,
+			StaticRegisterNativesUSWIPrologSolution,
+			sizeof(TClass),
+			alignof(TClass),
+			TClass::StaticClassFlags,
+			TClass::StaticClassCastFlags(),
+			TClass::StaticConfigName(),
+			(UClass::ClassConstructorType)InternalConstructor<TClass>,
+			(UClass::ClassVTableHelperCtorCallerType)InternalVTableHelperCtorCaller<TClass>,
+			UOBJECT_CPPCLASS_STATICFUNCTIONS_FORCLASS(TClass),
+			&TClass::Super::StaticClass,
+			&TClass::WithinClass::StaticClass
+		);
+	}
+	return Z_Registration_Info_UClass_USWIPrologSolution.InnerSingleton;
+}
 UClass* Z_Construct_UClass_USWIPrologSolution_NoRegister()
 {
-	return USWIPrologSolution::StaticClass();
+	return USWIPrologSolution::GetPrivateStaticClass();
 }
 struct Z_Construct_UClass_USWIPrologSolution_Statics
 {
@@ -1209,15 +1471,11 @@ UClass* Z_Construct_UClass_USWIPrologSolution()
 	}
 	return Z_Registration_Info_UClass_USWIPrologSolution.OuterSingleton;
 }
-template<> FANTASIA_API UClass* StaticClass<USWIPrologSolution>()
-{
-	return USWIPrologSolution::StaticClass();
-}
 DEFINE_VTABLE_PTR_HELPER_CTOR(USWIPrologSolution);
 USWIPrologSolution::~USWIPrologSolution() {}
-// End Class USWIPrologSolution
+// ********** End Class USWIPrologSolution *********************************************************
 
-// Begin Enum EAzureASREnum
+// ********** Begin Enum EAzureASREnum *************************************************************
 static FEnumRegistrationInfo Z_Registration_Info_UEnum_EAzureASREnum;
 static UEnum* EAzureASREnum_StaticEnum()
 {
@@ -1267,9 +1525,9 @@ UEnum* Z_Construct_UEnum_FANTASIA_EAzureASREnum()
 	}
 	return Z_Registration_Info_UEnum_EAzureASREnum.InnerSingleton;
 }
-// End Enum EAzureASREnum
+// ********** End Enum EAzureASREnum ***************************************************************
 
-// Begin Enum GPTRoleType
+// ********** Begin Enum GPTRoleType ***************************************************************
 static FEnumRegistrationInfo Z_Registration_Info_UEnum_GPTRoleType;
 static UEnum* GPTRoleType_StaticEnum()
 {
@@ -1327,21 +1585,17 @@ UEnum* Z_Construct_UEnum_FANTASIA_GPTRoleType()
 	}
 	return Z_Registration_Info_UEnum_GPTRoleType.InnerSingleton;
 }
-// End Enum GPTRoleType
+// ********** End Enum GPTRoleType *****************************************************************
 
-// Begin ScriptStruct FChatTurn
-static FStructRegistrationInfo Z_Registration_Info_UScriptStruct_ChatTurn;
+// ********** Begin ScriptStruct FChatTurn *********************************************************
+static FStructRegistrationInfo Z_Registration_Info_UScriptStruct_FChatTurn;
 class UScriptStruct* FChatTurn::StaticStruct()
 {
-	if (!Z_Registration_Info_UScriptStruct_ChatTurn.OuterSingleton)
+	if (!Z_Registration_Info_UScriptStruct_FChatTurn.OuterSingleton)
 	{
-		Z_Registration_Info_UScriptStruct_ChatTurn.OuterSingleton = GetStaticStruct(Z_Construct_UScriptStruct_FChatTurn, (UObject*)Z_Construct_UPackage__Script_FANTASIA(), TEXT("ChatTurn"));
+		Z_Registration_Info_UScriptStruct_FChatTurn.OuterSingleton = GetStaticStruct(Z_Construct_UScriptStruct_FChatTurn, (UObject*)Z_Construct_UPackage__Script_FANTASIA(), TEXT("ChatTurn"));
 	}
-	return Z_Registration_Info_UScriptStruct_ChatTurn.OuterSingleton;
-}
-template<> FANTASIA_API UScriptStruct* StaticStruct<FChatTurn>()
-{
-	return FChatTurn::StaticStruct();
+	return Z_Registration_Info_UScriptStruct_FChatTurn.OuterSingleton;
 }
 struct Z_Construct_UScriptStruct_FChatTurn_Statics
 {
@@ -1394,15 +1648,15 @@ const UECodeGen_Private::FStructParams Z_Construct_UScriptStruct_FChatTurn_Stati
 };
 UScriptStruct* Z_Construct_UScriptStruct_FChatTurn()
 {
-	if (!Z_Registration_Info_UScriptStruct_ChatTurn.InnerSingleton)
+	if (!Z_Registration_Info_UScriptStruct_FChatTurn.InnerSingleton)
 	{
-		UECodeGen_Private::ConstructUScriptStruct(Z_Registration_Info_UScriptStruct_ChatTurn.InnerSingleton, Z_Construct_UScriptStruct_FChatTurn_Statics::StructParams);
+		UECodeGen_Private::ConstructUScriptStruct(Z_Registration_Info_UScriptStruct_FChatTurn.InnerSingleton, Z_Construct_UScriptStruct_FChatTurn_Statics::StructParams);
 	}
-	return Z_Registration_Info_UScriptStruct_ChatTurn.InnerSingleton;
+	return Z_Registration_Info_UScriptStruct_FChatTurn.InnerSingleton;
 }
-// End ScriptStruct FChatTurn
+// ********** End ScriptStruct FChatTurn ***********************************************************
 
-// Begin Delegate FIncomingGPTResponseEvent
+// ********** Begin Delegate FIncomingGPTResponseEvent *********************************************
 struct Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature_Statics
 {
 	struct _Script_FANTASIA_eventIncomingGPTResponseEvent_Parms
@@ -1419,7 +1673,7 @@ struct Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__Delegate
 	static const UECodeGen_Private::FBytePropertyParams NewProp_role_Underlying;
 	static const UECodeGen_Private::FEnumPropertyParams NewProp_role;
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
-	static const UECodeGen_Private::FFunctionParams FuncParams;
+	static const UECodeGen_Private::FDelegateFunctionParams FuncParams;
 };
 const UECodeGen_Private::FStrPropertyParams Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature_Statics::NewProp_GPTResponse = { "GPTResponse", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(_Script_FANTASIA_eventIncomingGPTResponseEvent_Parms, GPTResponse), METADATA_PARAMS(0, nullptr) };
 const UECodeGen_Private::FBytePropertyParams Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature_Statics::NewProp_role_Underlying = { "UnderlyingType", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Byte, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, nullptr, METADATA_PARAMS(0, nullptr) };
@@ -1430,14 +1684,14 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UDelegateFunctio
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature_Statics::NewProp_role,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature_Statics::FuncParams = { (UObject*(*)())Z_Construct_UPackage__Script_FANTASIA, nullptr, "IncomingGPTResponseEvent__DelegateSignature", nullptr, nullptr, Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature_Statics::PropPointers), sizeof(Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature_Statics::_Script_FANTASIA_eventIncomingGPTResponseEvent_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00130000, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature_Statics::Function_MetaDataParams), Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FDelegateFunctionParams Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UPackage__Script_FANTASIA, nullptr, "IncomingGPTResponseEvent__DelegateSignature", Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature_Statics::PropPointers), sizeof(Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature_Statics::_Script_FANTASIA_eventIncomingGPTResponseEvent_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00130000, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature_Statics::Function_MetaDataParams), Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature_Statics::_Script_FANTASIA_eventIncomingGPTResponseEvent_Parms) < MAX_uint16);
 UFunction* Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature()
 {
 	static UFunction* ReturnFunction = nullptr;
 	if (!ReturnFunction)
 	{
-		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature_Statics::FuncParams);
+		UECodeGen_Private::ConstructUDelegateFunction(&ReturnFunction, Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature_Statics::FuncParams);
 	}
 	return ReturnFunction;
 }
@@ -1453,9 +1707,9 @@ void FIncomingGPTResponseEvent_DelegateWrapper(const FMulticastScriptDelegate& I
 	Parms.role=role;
 	IncomingGPTResponseEvent.ProcessMulticastDelegate<UObject>(&Parms);
 }
-// End Delegate FIncomingGPTResponseEvent
+// ********** End Delegate FIncomingGPTResponseEvent ***********************************************
 
-// Begin Delegate FIncomingGPTStreamResponseEvent
+// ********** Begin Delegate FIncomingGPTStreamResponseEvent ***************************************
 struct Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTStreamResponseEvent__DelegateSignature_Statics
 {
 	struct _Script_FANTASIA_eventIncomingGPTStreamResponseEvent_Parms
@@ -1475,7 +1729,7 @@ struct Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTStreamResponseEvent__De
 	static void NewProp_endStream_SetBit(void* Obj);
 	static const UECodeGen_Private::FBoolPropertyParams NewProp_endStream;
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
-	static const UECodeGen_Private::FFunctionParams FuncParams;
+	static const UECodeGen_Private::FDelegateFunctionParams FuncParams;
 };
 const UECodeGen_Private::FStrPropertyParams Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTStreamResponseEvent__DelegateSignature_Statics::NewProp_GPTResponse = { "GPTResponse", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(_Script_FANTASIA_eventIncomingGPTStreamResponseEvent_Parms, GPTResponse), METADATA_PARAMS(0, nullptr) };
 const UECodeGen_Private::FBytePropertyParams Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTStreamResponseEvent__DelegateSignature_Statics::NewProp_role_Underlying = { "UnderlyingType", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Byte, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, nullptr, METADATA_PARAMS(0, nullptr) };
@@ -1492,14 +1746,14 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UDelegateFunctio
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTStreamResponseEvent__DelegateSignature_Statics::NewProp_endStream,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTStreamResponseEvent__DelegateSignature_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTStreamResponseEvent__DelegateSignature_Statics::FuncParams = { (UObject*(*)())Z_Construct_UPackage__Script_FANTASIA, nullptr, "IncomingGPTStreamResponseEvent__DelegateSignature", nullptr, nullptr, Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTStreamResponseEvent__DelegateSignature_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTStreamResponseEvent__DelegateSignature_Statics::PropPointers), sizeof(Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTStreamResponseEvent__DelegateSignature_Statics::_Script_FANTASIA_eventIncomingGPTStreamResponseEvent_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00130000, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTStreamResponseEvent__DelegateSignature_Statics::Function_MetaDataParams), Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTStreamResponseEvent__DelegateSignature_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FDelegateFunctionParams Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTStreamResponseEvent__DelegateSignature_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UPackage__Script_FANTASIA, nullptr, "IncomingGPTStreamResponseEvent__DelegateSignature", Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTStreamResponseEvent__DelegateSignature_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTStreamResponseEvent__DelegateSignature_Statics::PropPointers), sizeof(Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTStreamResponseEvent__DelegateSignature_Statics::_Script_FANTASIA_eventIncomingGPTStreamResponseEvent_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00130000, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTStreamResponseEvent__DelegateSignature_Statics::Function_MetaDataParams), Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTStreamResponseEvent__DelegateSignature_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTStreamResponseEvent__DelegateSignature_Statics::_Script_FANTASIA_eventIncomingGPTStreamResponseEvent_Parms) < MAX_uint16);
 UFunction* Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTStreamResponseEvent__DelegateSignature()
 {
 	static UFunction* ReturnFunction = nullptr;
 	if (!ReturnFunction)
 	{
-		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTStreamResponseEvent__DelegateSignature_Statics::FuncParams);
+		UECodeGen_Private::ConstructUDelegateFunction(&ReturnFunction, Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTStreamResponseEvent__DelegateSignature_Statics::FuncParams);
 	}
 	return ReturnFunction;
 }
@@ -1517,9 +1771,9 @@ void FIncomingGPTStreamResponseEvent_DelegateWrapper(const FMulticastScriptDeleg
 	Parms.endStream=endStream ? true : false;
 	IncomingGPTStreamResponseEvent.ProcessMulticastDelegate<UObject>(&Parms);
 }
-// End Delegate FIncomingGPTStreamResponseEvent
+// ********** End Delegate FIncomingGPTStreamResponseEvent *****************************************
 
-// Begin Enum InfluenceNodeType
+// ********** Begin Enum InfluenceNodeType *********************************************************
 static FEnumRegistrationInfo Z_Registration_Info_UEnum_InfluenceNodeType;
 static UEnum* InfluenceNodeType_StaticEnum()
 {
@@ -1574,9 +1828,9 @@ UEnum* Z_Construct_UEnum_FANTASIA_InfluenceNodeType()
 	}
 	return Z_Registration_Info_UEnum_InfluenceNodeType.InnerSingleton;
 }
-// End Enum InfluenceNodeType
+// ********** End Enum InfluenceNodeType ***********************************************************
 
-// Begin Enum BayesianNodeType
+// ********** Begin Enum BayesianNodeType **********************************************************
 static FEnumRegistrationInfo Z_Registration_Info_UEnum_BayesianNodeType;
 static UEnum* BayesianNodeType_StaticEnum()
 {
@@ -1649,9 +1903,9 @@ UEnum* Z_Construct_UEnum_FANTASIA_BayesianNodeType()
 	}
 	return Z_Registration_Info_UEnum_BayesianNodeType.InnerSingleton;
 }
-// End Enum BayesianNodeType
+// ********** End Enum BayesianNodeType ************************************************************
 
-// Begin Enum TTSVoiceType
+// ********** Begin Enum TTSVoiceType **************************************************************
 static FEnumRegistrationInfo Z_Registration_Info_UEnum_TTSVoiceType;
 static UEnum* TTSVoiceType_StaticEnum()
 {
@@ -1703,9 +1957,9 @@ UEnum* Z_Construct_UEnum_FANTASIA_TTSVoiceType()
 	}
 	return Z_Registration_Info_UEnum_TTSVoiceType.InnerSingleton;
 }
-// End Enum TTSVoiceType
+// ********** End Enum TTSVoiceType ****************************************************************
 
-// Begin Enum Neo4jOperation
+// ********** Begin Enum Neo4jOperation ************************************************************
 static FEnumRegistrationInfo Z_Registration_Info_UEnum_Neo4jOperation;
 static UEnum* Neo4jOperation_StaticEnum()
 {
@@ -1766,21 +2020,17 @@ UEnum* Z_Construct_UEnum_FANTASIA_Neo4jOperation()
 	}
 	return Z_Registration_Info_UEnum_Neo4jOperation.InnerSingleton;
 }
-// End Enum Neo4jOperation
+// ********** End Enum Neo4jOperation **************************************************************
 
-// Begin ScriptStruct FTTSTimedStruct
-static FStructRegistrationInfo Z_Registration_Info_UScriptStruct_TTSTimedStruct;
+// ********** Begin ScriptStruct FTTSTimedStruct ***************************************************
+static FStructRegistrationInfo Z_Registration_Info_UScriptStruct_FTTSTimedStruct;
 class UScriptStruct* FTTSTimedStruct::StaticStruct()
 {
-	if (!Z_Registration_Info_UScriptStruct_TTSTimedStruct.OuterSingleton)
+	if (!Z_Registration_Info_UScriptStruct_FTTSTimedStruct.OuterSingleton)
 	{
-		Z_Registration_Info_UScriptStruct_TTSTimedStruct.OuterSingleton = GetStaticStruct(Z_Construct_UScriptStruct_FTTSTimedStruct, (UObject*)Z_Construct_UPackage__Script_FANTASIA(), TEXT("TTSTimedStruct"));
+		Z_Registration_Info_UScriptStruct_FTTSTimedStruct.OuterSingleton = GetStaticStruct(Z_Construct_UScriptStruct_FTTSTimedStruct, (UObject*)Z_Construct_UPackage__Script_FANTASIA(), TEXT("TTSTimedStruct"));
 	}
-	return Z_Registration_Info_UScriptStruct_TTSTimedStruct.OuterSingleton;
-}
-template<> FANTASIA_API UScriptStruct* StaticStruct<FTTSTimedStruct>()
-{
-	return FTTSTimedStruct::StaticStruct();
+	return Z_Registration_Info_UScriptStruct_FTTSTimedStruct.OuterSingleton;
 }
 struct Z_Construct_UScriptStruct_FTTSTimedStruct_Statics
 {
@@ -1830,27 +2080,23 @@ const UECodeGen_Private::FStructParams Z_Construct_UScriptStruct_FTTSTimedStruct
 };
 UScriptStruct* Z_Construct_UScriptStruct_FTTSTimedStruct()
 {
-	if (!Z_Registration_Info_UScriptStruct_TTSTimedStruct.InnerSingleton)
+	if (!Z_Registration_Info_UScriptStruct_FTTSTimedStruct.InnerSingleton)
 	{
-		UECodeGen_Private::ConstructUScriptStruct(Z_Registration_Info_UScriptStruct_TTSTimedStruct.InnerSingleton, Z_Construct_UScriptStruct_FTTSTimedStruct_Statics::StructParams);
+		UECodeGen_Private::ConstructUScriptStruct(Z_Registration_Info_UScriptStruct_FTTSTimedStruct.InnerSingleton, Z_Construct_UScriptStruct_FTTSTimedStruct_Statics::StructParams);
 	}
-	return Z_Registration_Info_UScriptStruct_TTSTimedStruct.InnerSingleton;
+	return Z_Registration_Info_UScriptStruct_FTTSTimedStruct.InnerSingleton;
 }
-// End ScriptStruct FTTSTimedStruct
+// ********** End ScriptStruct FTTSTimedStruct *****************************************************
 
-// Begin ScriptStruct FTTSData
-static FStructRegistrationInfo Z_Registration_Info_UScriptStruct_TTSData;
+// ********** Begin ScriptStruct FTTSData **********************************************************
+static FStructRegistrationInfo Z_Registration_Info_UScriptStruct_FTTSData;
 class UScriptStruct* FTTSData::StaticStruct()
 {
-	if (!Z_Registration_Info_UScriptStruct_TTSData.OuterSingleton)
+	if (!Z_Registration_Info_UScriptStruct_FTTSData.OuterSingleton)
 	{
-		Z_Registration_Info_UScriptStruct_TTSData.OuterSingleton = GetStaticStruct(Z_Construct_UScriptStruct_FTTSData, (UObject*)Z_Construct_UPackage__Script_FANTASIA(), TEXT("TTSData"));
+		Z_Registration_Info_UScriptStruct_FTTSData.OuterSingleton = GetStaticStruct(Z_Construct_UScriptStruct_FTTSData, (UObject*)Z_Construct_UPackage__Script_FANTASIA(), TEXT("TTSData"));
 	}
-	return Z_Registration_Info_UScriptStruct_TTSData.OuterSingleton;
-}
-template<> FANTASIA_API UScriptStruct* StaticStruct<FTTSData>()
-{
-	return FTTSData::StaticStruct();
+	return Z_Registration_Info_UScriptStruct_FTTSData.OuterSingleton;
 }
 struct Z_Construct_UScriptStruct_FTTSData_Statics
 {
@@ -1880,15 +2126,15 @@ const UECodeGen_Private::FStructParams Z_Construct_UScriptStruct_FTTSData_Static
 };
 UScriptStruct* Z_Construct_UScriptStruct_FTTSData()
 {
-	if (!Z_Registration_Info_UScriptStruct_TTSData.InnerSingleton)
+	if (!Z_Registration_Info_UScriptStruct_FTTSData.InnerSingleton)
 	{
-		UECodeGen_Private::ConstructUScriptStruct(Z_Registration_Info_UScriptStruct_TTSData.InnerSingleton, Z_Construct_UScriptStruct_FTTSData_Statics::StructParams);
+		UECodeGen_Private::ConstructUScriptStruct(Z_Registration_Info_UScriptStruct_FTTSData.InnerSingleton, Z_Construct_UScriptStruct_FTTSData_Statics::StructParams);
 	}
-	return Z_Registration_Info_UScriptStruct_TTSData.InnerSingleton;
+	return Z_Registration_Info_UScriptStruct_FTTSData.InnerSingleton;
 }
-// End ScriptStruct FTTSData
+// ********** End ScriptStruct FTTSData ************************************************************
 
-// Begin Delegate FSynthesizedEvent
+// ********** Begin Delegate FSynthesizedEvent *****************************************************
 struct Z_Construct_UDelegateFunction_FANTASIA_SynthesizedEvent__DelegateSignature_Statics
 {
 	struct _Script_FANTASIA_eventSynthesizedEvent_Parms
@@ -1902,21 +2148,21 @@ struct Z_Construct_UDelegateFunction_FANTASIA_SynthesizedEvent__DelegateSignatur
 #endif // WITH_METADATA
 	static const UECodeGen_Private::FStrPropertyParams NewProp_id;
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
-	static const UECodeGen_Private::FFunctionParams FuncParams;
+	static const UECodeGen_Private::FDelegateFunctionParams FuncParams;
 };
 const UECodeGen_Private::FStrPropertyParams Z_Construct_UDelegateFunction_FANTASIA_SynthesizedEvent__DelegateSignature_Statics::NewProp_id = { "id", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(_Script_FANTASIA_eventSynthesizedEvent_Parms, id), METADATA_PARAMS(0, nullptr) };
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UDelegateFunction_FANTASIA_SynthesizedEvent__DelegateSignature_Statics::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UDelegateFunction_FANTASIA_SynthesizedEvent__DelegateSignature_Statics::NewProp_id,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_SynthesizedEvent__DelegateSignature_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UDelegateFunction_FANTASIA_SynthesizedEvent__DelegateSignature_Statics::FuncParams = { (UObject*(*)())Z_Construct_UPackage__Script_FANTASIA, nullptr, "SynthesizedEvent__DelegateSignature", nullptr, nullptr, Z_Construct_UDelegateFunction_FANTASIA_SynthesizedEvent__DelegateSignature_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_SynthesizedEvent__DelegateSignature_Statics::PropPointers), sizeof(Z_Construct_UDelegateFunction_FANTASIA_SynthesizedEvent__DelegateSignature_Statics::_Script_FANTASIA_eventSynthesizedEvent_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00130000, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_SynthesizedEvent__DelegateSignature_Statics::Function_MetaDataParams), Z_Construct_UDelegateFunction_FANTASIA_SynthesizedEvent__DelegateSignature_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FDelegateFunctionParams Z_Construct_UDelegateFunction_FANTASIA_SynthesizedEvent__DelegateSignature_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UPackage__Script_FANTASIA, nullptr, "SynthesizedEvent__DelegateSignature", Z_Construct_UDelegateFunction_FANTASIA_SynthesizedEvent__DelegateSignature_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_SynthesizedEvent__DelegateSignature_Statics::PropPointers), sizeof(Z_Construct_UDelegateFunction_FANTASIA_SynthesizedEvent__DelegateSignature_Statics::_Script_FANTASIA_eventSynthesizedEvent_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00130000, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_SynthesizedEvent__DelegateSignature_Statics::Function_MetaDataParams), Z_Construct_UDelegateFunction_FANTASIA_SynthesizedEvent__DelegateSignature_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(Z_Construct_UDelegateFunction_FANTASIA_SynthesizedEvent__DelegateSignature_Statics::_Script_FANTASIA_eventSynthesizedEvent_Parms) < MAX_uint16);
 UFunction* Z_Construct_UDelegateFunction_FANTASIA_SynthesizedEvent__DelegateSignature()
 {
 	static UFunction* ReturnFunction = nullptr;
 	if (!ReturnFunction)
 	{
-		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UDelegateFunction_FANTASIA_SynthesizedEvent__DelegateSignature_Statics::FuncParams);
+		UECodeGen_Private::ConstructUDelegateFunction(&ReturnFunction, Z_Construct_UDelegateFunction_FANTASIA_SynthesizedEvent__DelegateSignature_Statics::FuncParams);
 	}
 	return ReturnFunction;
 }
@@ -1930,9 +2176,9 @@ void FSynthesizedEvent_DelegateWrapper(const FMulticastScriptDelegate& Synthesiz
 	Parms.id=id;
 	SynthesizedEvent.ProcessMulticastDelegate<UObject>(&Parms);
 }
-// End Delegate FSynthesizedEvent
+// ********** End Delegate FSynthesizedEvent *******************************************************
 
-// Begin Delegate FSynthesizedInternalEvent
+// ********** Begin Delegate FSynthesizedInternalEvent *********************************************
 struct Z_Construct_UDelegateFunction_FANTASIA_SynthesizedInternalEvent__DelegateSignature_Statics
 {
 	struct _Script_FANTASIA_eventSynthesizedInternalEvent_Parms
@@ -1948,23 +2194,23 @@ struct Z_Construct_UDelegateFunction_FANTASIA_SynthesizedInternalEvent__Delegate
 	static const UECodeGen_Private::FStructPropertyParams NewProp_response;
 	static const UECodeGen_Private::FStrPropertyParams NewProp_id;
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
-	static const UECodeGen_Private::FFunctionParams FuncParams;
+	static const UECodeGen_Private::FDelegateFunctionParams FuncParams;
 };
-const UECodeGen_Private::FStructPropertyParams Z_Construct_UDelegateFunction_FANTASIA_SynthesizedInternalEvent__DelegateSignature_Statics::NewProp_response = { "response", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(_Script_FANTASIA_eventSynthesizedInternalEvent_Parms, response), Z_Construct_UScriptStruct_FTTSData, METADATA_PARAMS(0, nullptr) }; // 983459605
+const UECodeGen_Private::FStructPropertyParams Z_Construct_UDelegateFunction_FANTASIA_SynthesizedInternalEvent__DelegateSignature_Statics::NewProp_response = { "response", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(_Script_FANTASIA_eventSynthesizedInternalEvent_Parms, response), Z_Construct_UScriptStruct_FTTSData, METADATA_PARAMS(0, nullptr) }; // 211695542
 const UECodeGen_Private::FStrPropertyParams Z_Construct_UDelegateFunction_FANTASIA_SynthesizedInternalEvent__DelegateSignature_Statics::NewProp_id = { "id", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(_Script_FANTASIA_eventSynthesizedInternalEvent_Parms, id), METADATA_PARAMS(0, nullptr) };
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UDelegateFunction_FANTASIA_SynthesizedInternalEvent__DelegateSignature_Statics::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UDelegateFunction_FANTASIA_SynthesizedInternalEvent__DelegateSignature_Statics::NewProp_response,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UDelegateFunction_FANTASIA_SynthesizedInternalEvent__DelegateSignature_Statics::NewProp_id,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_SynthesizedInternalEvent__DelegateSignature_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UDelegateFunction_FANTASIA_SynthesizedInternalEvent__DelegateSignature_Statics::FuncParams = { (UObject*(*)())Z_Construct_UPackage__Script_FANTASIA, nullptr, "SynthesizedInternalEvent__DelegateSignature", nullptr, nullptr, Z_Construct_UDelegateFunction_FANTASIA_SynthesizedInternalEvent__DelegateSignature_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_SynthesizedInternalEvent__DelegateSignature_Statics::PropPointers), sizeof(Z_Construct_UDelegateFunction_FANTASIA_SynthesizedInternalEvent__DelegateSignature_Statics::_Script_FANTASIA_eventSynthesizedInternalEvent_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00130000, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_SynthesizedInternalEvent__DelegateSignature_Statics::Function_MetaDataParams), Z_Construct_UDelegateFunction_FANTASIA_SynthesizedInternalEvent__DelegateSignature_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FDelegateFunctionParams Z_Construct_UDelegateFunction_FANTASIA_SynthesizedInternalEvent__DelegateSignature_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UPackage__Script_FANTASIA, nullptr, "SynthesizedInternalEvent__DelegateSignature", Z_Construct_UDelegateFunction_FANTASIA_SynthesizedInternalEvent__DelegateSignature_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_SynthesizedInternalEvent__DelegateSignature_Statics::PropPointers), sizeof(Z_Construct_UDelegateFunction_FANTASIA_SynthesizedInternalEvent__DelegateSignature_Statics::_Script_FANTASIA_eventSynthesizedInternalEvent_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00130000, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_SynthesizedInternalEvent__DelegateSignature_Statics::Function_MetaDataParams), Z_Construct_UDelegateFunction_FANTASIA_SynthesizedInternalEvent__DelegateSignature_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(Z_Construct_UDelegateFunction_FANTASIA_SynthesizedInternalEvent__DelegateSignature_Statics::_Script_FANTASIA_eventSynthesizedInternalEvent_Parms) < MAX_uint16);
 UFunction* Z_Construct_UDelegateFunction_FANTASIA_SynthesizedInternalEvent__DelegateSignature()
 {
 	static UFunction* ReturnFunction = nullptr;
 	if (!ReturnFunction)
 	{
-		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UDelegateFunction_FANTASIA_SynthesizedInternalEvent__DelegateSignature_Statics::FuncParams);
+		UECodeGen_Private::ConstructUDelegateFunction(&ReturnFunction, Z_Construct_UDelegateFunction_FANTASIA_SynthesizedInternalEvent__DelegateSignature_Statics::FuncParams);
 	}
 	return ReturnFunction;
 }
@@ -1980,9 +2226,9 @@ void FSynthesizedInternalEvent_DelegateWrapper(const FMulticastScriptDelegate& S
 	Parms.id=id;
 	SynthesizedInternalEvent.ProcessMulticastDelegate<UObject>(&Parms);
 }
-// End Delegate FSynthesizedInternalEvent
+// ********** End Delegate FSynthesizedInternalEvent ***********************************************
 
-// Begin Delegate FPartialSynthesizedEvent
+// ********** Begin Delegate FPartialSynthesizedEvent **********************************************
 struct Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedEvent__DelegateSignature_Statics
 {
 	struct _Script_FANTASIA_eventPartialSynthesizedEvent_Parms
@@ -1996,21 +2242,21 @@ struct Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedEvent__DelegateS
 #endif // WITH_METADATA
 	static const UECodeGen_Private::FStrPropertyParams NewProp_id;
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
-	static const UECodeGen_Private::FFunctionParams FuncParams;
+	static const UECodeGen_Private::FDelegateFunctionParams FuncParams;
 };
 const UECodeGen_Private::FStrPropertyParams Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedEvent__DelegateSignature_Statics::NewProp_id = { "id", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(_Script_FANTASIA_eventPartialSynthesizedEvent_Parms, id), METADATA_PARAMS(0, nullptr) };
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedEvent__DelegateSignature_Statics::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedEvent__DelegateSignature_Statics::NewProp_id,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedEvent__DelegateSignature_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedEvent__DelegateSignature_Statics::FuncParams = { (UObject*(*)())Z_Construct_UPackage__Script_FANTASIA, nullptr, "PartialSynthesizedEvent__DelegateSignature", nullptr, nullptr, Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedEvent__DelegateSignature_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedEvent__DelegateSignature_Statics::PropPointers), sizeof(Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedEvent__DelegateSignature_Statics::_Script_FANTASIA_eventPartialSynthesizedEvent_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00130000, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedEvent__DelegateSignature_Statics::Function_MetaDataParams), Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedEvent__DelegateSignature_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FDelegateFunctionParams Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedEvent__DelegateSignature_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UPackage__Script_FANTASIA, nullptr, "PartialSynthesizedEvent__DelegateSignature", Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedEvent__DelegateSignature_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedEvent__DelegateSignature_Statics::PropPointers), sizeof(Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedEvent__DelegateSignature_Statics::_Script_FANTASIA_eventPartialSynthesizedEvent_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00130000, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedEvent__DelegateSignature_Statics::Function_MetaDataParams), Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedEvent__DelegateSignature_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedEvent__DelegateSignature_Statics::_Script_FANTASIA_eventPartialSynthesizedEvent_Parms) < MAX_uint16);
 UFunction* Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedEvent__DelegateSignature()
 {
 	static UFunction* ReturnFunction = nullptr;
 	if (!ReturnFunction)
 	{
-		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedEvent__DelegateSignature_Statics::FuncParams);
+		UECodeGen_Private::ConstructUDelegateFunction(&ReturnFunction, Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedEvent__DelegateSignature_Statics::FuncParams);
 	}
 	return ReturnFunction;
 }
@@ -2024,9 +2270,9 @@ void FPartialSynthesizedEvent_DelegateWrapper(const FMulticastScriptDelegate& Pa
 	Parms.id=id;
 	PartialSynthesizedEvent.ProcessMulticastDelegate<UObject>(&Parms);
 }
-// End Delegate FPartialSynthesizedEvent
+// ********** End Delegate FPartialSynthesizedEvent ************************************************
 
-// Begin Delegate FPartialSynthesizedInternalEvent
+// ********** Begin Delegate FPartialSynthesizedInternalEvent **************************************
 struct Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedInternalEvent__DelegateSignature_Statics
 {
 	struct _Script_FANTASIA_eventPartialSynthesizedInternalEvent_Parms
@@ -2042,23 +2288,23 @@ struct Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedInternalEvent__D
 	static const UECodeGen_Private::FStructPropertyParams NewProp_response;
 	static const UECodeGen_Private::FStrPropertyParams NewProp_id;
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
-	static const UECodeGen_Private::FFunctionParams FuncParams;
+	static const UECodeGen_Private::FDelegateFunctionParams FuncParams;
 };
-const UECodeGen_Private::FStructPropertyParams Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedInternalEvent__DelegateSignature_Statics::NewProp_response = { "response", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(_Script_FANTASIA_eventPartialSynthesizedInternalEvent_Parms, response), Z_Construct_UScriptStruct_FTTSData, METADATA_PARAMS(0, nullptr) }; // 983459605
+const UECodeGen_Private::FStructPropertyParams Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedInternalEvent__DelegateSignature_Statics::NewProp_response = { "response", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(_Script_FANTASIA_eventPartialSynthesizedInternalEvent_Parms, response), Z_Construct_UScriptStruct_FTTSData, METADATA_PARAMS(0, nullptr) }; // 211695542
 const UECodeGen_Private::FStrPropertyParams Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedInternalEvent__DelegateSignature_Statics::NewProp_id = { "id", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(_Script_FANTASIA_eventPartialSynthesizedInternalEvent_Parms, id), METADATA_PARAMS(0, nullptr) };
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedInternalEvent__DelegateSignature_Statics::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedInternalEvent__DelegateSignature_Statics::NewProp_response,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedInternalEvent__DelegateSignature_Statics::NewProp_id,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedInternalEvent__DelegateSignature_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedInternalEvent__DelegateSignature_Statics::FuncParams = { (UObject*(*)())Z_Construct_UPackage__Script_FANTASIA, nullptr, "PartialSynthesizedInternalEvent__DelegateSignature", nullptr, nullptr, Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedInternalEvent__DelegateSignature_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedInternalEvent__DelegateSignature_Statics::PropPointers), sizeof(Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedInternalEvent__DelegateSignature_Statics::_Script_FANTASIA_eventPartialSynthesizedInternalEvent_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00130000, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedInternalEvent__DelegateSignature_Statics::Function_MetaDataParams), Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedInternalEvent__DelegateSignature_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FDelegateFunctionParams Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedInternalEvent__DelegateSignature_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UPackage__Script_FANTASIA, nullptr, "PartialSynthesizedInternalEvent__DelegateSignature", Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedInternalEvent__DelegateSignature_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedInternalEvent__DelegateSignature_Statics::PropPointers), sizeof(Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedInternalEvent__DelegateSignature_Statics::_Script_FANTASIA_eventPartialSynthesizedInternalEvent_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00130000, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedInternalEvent__DelegateSignature_Statics::Function_MetaDataParams), Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedInternalEvent__DelegateSignature_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedInternalEvent__DelegateSignature_Statics::_Script_FANTASIA_eventPartialSynthesizedInternalEvent_Parms) < MAX_uint16);
 UFunction* Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedInternalEvent__DelegateSignature()
 {
 	static UFunction* ReturnFunction = nullptr;
 	if (!ReturnFunction)
 	{
-		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedInternalEvent__DelegateSignature_Statics::FuncParams);
+		UECodeGen_Private::ConstructUDelegateFunction(&ReturnFunction, Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedInternalEvent__DelegateSignature_Statics::FuncParams);
 	}
 	return ReturnFunction;
 }
@@ -2074,21 +2320,17 @@ void FPartialSynthesizedInternalEvent_DelegateWrapper(const FMulticastScriptDele
 	Parms.id=id;
 	PartialSynthesizedInternalEvent.ProcessMulticastDelegate<UObject>(&Parms);
 }
-// End Delegate FPartialSynthesizedInternalEvent
+// ********** End Delegate FPartialSynthesizedInternalEvent ****************************************
 
-// Begin ScriptStruct FNeo4jResponse
-static FStructRegistrationInfo Z_Registration_Info_UScriptStruct_Neo4jResponse;
+// ********** Begin ScriptStruct FNeo4jResponse ****************************************************
+static FStructRegistrationInfo Z_Registration_Info_UScriptStruct_FNeo4jResponse;
 class UScriptStruct* FNeo4jResponse::StaticStruct()
 {
-	if (!Z_Registration_Info_UScriptStruct_Neo4jResponse.OuterSingleton)
+	if (!Z_Registration_Info_UScriptStruct_FNeo4jResponse.OuterSingleton)
 	{
-		Z_Registration_Info_UScriptStruct_Neo4jResponse.OuterSingleton = GetStaticStruct(Z_Construct_UScriptStruct_FNeo4jResponse, (UObject*)Z_Construct_UPackage__Script_FANTASIA(), TEXT("Neo4jResponse"));
+		Z_Registration_Info_UScriptStruct_FNeo4jResponse.OuterSingleton = GetStaticStruct(Z_Construct_UScriptStruct_FNeo4jResponse, (UObject*)Z_Construct_UPackage__Script_FANTASIA(), TEXT("Neo4jResponse"));
 	}
-	return Z_Registration_Info_UScriptStruct_Neo4jResponse.OuterSingleton;
-}
-template<> FANTASIA_API UScriptStruct* StaticStruct<FNeo4jResponse>()
-{
-	return FNeo4jResponse::StaticStruct();
+	return Z_Registration_Info_UScriptStruct_FNeo4jResponse.OuterSingleton;
 }
 struct Z_Construct_UScriptStruct_FNeo4jResponse_Statics
 {
@@ -2150,27 +2392,23 @@ const UECodeGen_Private::FStructParams Z_Construct_UScriptStruct_FNeo4jResponse_
 };
 UScriptStruct* Z_Construct_UScriptStruct_FNeo4jResponse()
 {
-	if (!Z_Registration_Info_UScriptStruct_Neo4jResponse.InnerSingleton)
+	if (!Z_Registration_Info_UScriptStruct_FNeo4jResponse.InnerSingleton)
 	{
-		UECodeGen_Private::ConstructUScriptStruct(Z_Registration_Info_UScriptStruct_Neo4jResponse.InnerSingleton, Z_Construct_UScriptStruct_FNeo4jResponse_Statics::StructParams);
+		UECodeGen_Private::ConstructUScriptStruct(Z_Registration_Info_UScriptStruct_FNeo4jResponse.InnerSingleton, Z_Construct_UScriptStruct_FNeo4jResponse_Statics::StructParams);
 	}
-	return Z_Registration_Info_UScriptStruct_Neo4jResponse.InnerSingleton;
+	return Z_Registration_Info_UScriptStruct_FNeo4jResponse.InnerSingleton;
 }
-// End ScriptStruct FNeo4jResponse
+// ********** End ScriptStruct FNeo4jResponse ******************************************************
 
-// Begin ScriptStruct FNLUResponse
-static FStructRegistrationInfo Z_Registration_Info_UScriptStruct_NLUResponse;
+// ********** Begin ScriptStruct FNLUResponse ******************************************************
+static FStructRegistrationInfo Z_Registration_Info_UScriptStruct_FNLUResponse;
 class UScriptStruct* FNLUResponse::StaticStruct()
 {
-	if (!Z_Registration_Info_UScriptStruct_NLUResponse.OuterSingleton)
+	if (!Z_Registration_Info_UScriptStruct_FNLUResponse.OuterSingleton)
 	{
-		Z_Registration_Info_UScriptStruct_NLUResponse.OuterSingleton = GetStaticStruct(Z_Construct_UScriptStruct_FNLUResponse, (UObject*)Z_Construct_UPackage__Script_FANTASIA(), TEXT("NLUResponse"));
+		Z_Registration_Info_UScriptStruct_FNLUResponse.OuterSingleton = GetStaticStruct(Z_Construct_UScriptStruct_FNLUResponse, (UObject*)Z_Construct_UPackage__Script_FANTASIA(), TEXT("NLUResponse"));
 	}
-	return Z_Registration_Info_UScriptStruct_NLUResponse.OuterSingleton;
-}
-template<> FANTASIA_API UScriptStruct* StaticStruct<FNLUResponse>()
-{
-	return FNLUResponse::StaticStruct();
+	return Z_Registration_Info_UScriptStruct_FNLUResponse.OuterSingleton;
 }
 struct Z_Construct_UScriptStruct_FNLUResponse_Statics
 {
@@ -2232,22 +2470,46 @@ const UECodeGen_Private::FStructParams Z_Construct_UScriptStruct_FNLUResponse_St
 };
 UScriptStruct* Z_Construct_UScriptStruct_FNLUResponse()
 {
-	if (!Z_Registration_Info_UScriptStruct_NLUResponse.InnerSingleton)
+	if (!Z_Registration_Info_UScriptStruct_FNLUResponse.InnerSingleton)
 	{
-		UECodeGen_Private::ConstructUScriptStruct(Z_Registration_Info_UScriptStruct_NLUResponse.InnerSingleton, Z_Construct_UScriptStruct_FNLUResponse_Statics::StructParams);
+		UECodeGen_Private::ConstructUScriptStruct(Z_Registration_Info_UScriptStruct_FNLUResponse.InnerSingleton, Z_Construct_UScriptStruct_FNLUResponse_Statics::StructParams);
 	}
-	return Z_Registration_Info_UScriptStruct_NLUResponse.InnerSingleton;
+	return Z_Registration_Info_UScriptStruct_FNLUResponse.InnerSingleton;
 }
-// End ScriptStruct FNLUResponse
+// ********** End ScriptStruct FNLUResponse ********************************************************
 
-// Begin Class UNLUIntent
+// ********** Begin Class UNLUIntent ***************************************************************
 void UNLUIntent::StaticRegisterNativesUNLUIntent()
 {
 }
-IMPLEMENT_CLASS_NO_AUTO_REGISTRATION(UNLUIntent);
+FClassRegistrationInfo Z_Registration_Info_UClass_UNLUIntent;
+UClass* UNLUIntent::GetPrivateStaticClass()
+{
+	using TClass = UNLUIntent;
+	if (!Z_Registration_Info_UClass_UNLUIntent.InnerSingleton)
+	{
+		GetPrivateStaticClassBody(
+			StaticPackage(),
+			TEXT("NLUIntent"),
+			Z_Registration_Info_UClass_UNLUIntent.InnerSingleton,
+			StaticRegisterNativesUNLUIntent,
+			sizeof(TClass),
+			alignof(TClass),
+			TClass::StaticClassFlags,
+			TClass::StaticClassCastFlags(),
+			TClass::StaticConfigName(),
+			(UClass::ClassConstructorType)InternalConstructor<TClass>,
+			(UClass::ClassVTableHelperCtorCallerType)InternalVTableHelperCtorCaller<TClass>,
+			UOBJECT_CPPCLASS_STATICFUNCTIONS_FORCLASS(TClass),
+			&TClass::Super::StaticClass,
+			&TClass::WithinClass::StaticClass
+		);
+	}
+	return Z_Registration_Info_UClass_UNLUIntent.InnerSingleton;
+}
 UClass* Z_Construct_UClass_UNLUIntent_NoRegister()
 {
-	return UNLUIntent::StaticClass();
+	return UNLUIntent::GetPrivateStaticClass();
 }
 struct Z_Construct_UClass_UNLUIntent_Statics
 {
@@ -2311,22 +2573,42 @@ UClass* Z_Construct_UClass_UNLUIntent()
 	}
 	return Z_Registration_Info_UClass_UNLUIntent.OuterSingleton;
 }
-template<> FANTASIA_API UClass* StaticClass<UNLUIntent>()
-{
-	return UNLUIntent::StaticClass();
-}
 DEFINE_VTABLE_PTR_HELPER_CTOR(UNLUIntent);
 UNLUIntent::~UNLUIntent() {}
-// End Class UNLUIntent
+// ********** End Class UNLUIntent *****************************************************************
 
-// Begin Class UNLUEntity
+// ********** Begin Class UNLUEntity ***************************************************************
 void UNLUEntity::StaticRegisterNativesUNLUEntity()
 {
 }
-IMPLEMENT_CLASS_NO_AUTO_REGISTRATION(UNLUEntity);
+FClassRegistrationInfo Z_Registration_Info_UClass_UNLUEntity;
+UClass* UNLUEntity::GetPrivateStaticClass()
+{
+	using TClass = UNLUEntity;
+	if (!Z_Registration_Info_UClass_UNLUEntity.InnerSingleton)
+	{
+		GetPrivateStaticClassBody(
+			StaticPackage(),
+			TEXT("NLUEntity"),
+			Z_Registration_Info_UClass_UNLUEntity.InnerSingleton,
+			StaticRegisterNativesUNLUEntity,
+			sizeof(TClass),
+			alignof(TClass),
+			TClass::StaticClassFlags,
+			TClass::StaticClassCastFlags(),
+			TClass::StaticConfigName(),
+			(UClass::ClassConstructorType)InternalConstructor<TClass>,
+			(UClass::ClassVTableHelperCtorCallerType)InternalVTableHelperCtorCaller<TClass>,
+			UOBJECT_CPPCLASS_STATICFUNCTIONS_FORCLASS(TClass),
+			&TClass::Super::StaticClass,
+			&TClass::WithinClass::StaticClass
+		);
+	}
+	return Z_Registration_Info_UClass_UNLUEntity.InnerSingleton;
+}
 UClass* Z_Construct_UClass_UNLUEntity_NoRegister()
 {
-	return UNLUEntity::StaticClass();
+	return UNLUEntity::GetPrivateStaticClass();
 }
 struct Z_Construct_UClass_UNLUEntity_Statics
 {
@@ -2428,22 +2710,42 @@ UClass* Z_Construct_UClass_UNLUEntity()
 	}
 	return Z_Registration_Info_UClass_UNLUEntity.OuterSingleton;
 }
-template<> FANTASIA_API UClass* StaticClass<UNLUEntity>()
-{
-	return UNLUEntity::StaticClass();
-}
 DEFINE_VTABLE_PTR_HELPER_CTOR(UNLUEntity);
 UNLUEntity::~UNLUEntity() {}
-// End Class UNLUEntity
+// ********** End Class UNLUEntity *****************************************************************
 
-// Begin Class UNeo4jResultRow
+// ********** Begin Class UNeo4jResultRow **********************************************************
 void UNeo4jResultRow::StaticRegisterNativesUNeo4jResultRow()
 {
 }
-IMPLEMENT_CLASS_NO_AUTO_REGISTRATION(UNeo4jResultRow);
+FClassRegistrationInfo Z_Registration_Info_UClass_UNeo4jResultRow;
+UClass* UNeo4jResultRow::GetPrivateStaticClass()
+{
+	using TClass = UNeo4jResultRow;
+	if (!Z_Registration_Info_UClass_UNeo4jResultRow.InnerSingleton)
+	{
+		GetPrivateStaticClassBody(
+			StaticPackage(),
+			TEXT("Neo4jResultRow"),
+			Z_Registration_Info_UClass_UNeo4jResultRow.InnerSingleton,
+			StaticRegisterNativesUNeo4jResultRow,
+			sizeof(TClass),
+			alignof(TClass),
+			TClass::StaticClassFlags,
+			TClass::StaticClassCastFlags(),
+			TClass::StaticConfigName(),
+			(UClass::ClassConstructorType)InternalConstructor<TClass>,
+			(UClass::ClassVTableHelperCtorCallerType)InternalVTableHelperCtorCaller<TClass>,
+			UOBJECT_CPPCLASS_STATICFUNCTIONS_FORCLASS(TClass),
+			&TClass::Super::StaticClass,
+			&TClass::WithinClass::StaticClass
+		);
+	}
+	return Z_Registration_Info_UClass_UNeo4jResultRow.InnerSingleton;
+}
 UClass* Z_Construct_UClass_UNeo4jResultRow_NoRegister()
 {
-	return UNeo4jResultRow::StaticClass();
+	return UNeo4jResultRow::GetPrivateStaticClass();
 }
 struct Z_Construct_UClass_UNeo4jResultRow_Statics
 {
@@ -2506,22 +2808,42 @@ UClass* Z_Construct_UClass_UNeo4jResultRow()
 	}
 	return Z_Registration_Info_UClass_UNeo4jResultRow.OuterSingleton;
 }
-template<> FANTASIA_API UClass* StaticClass<UNeo4jResultRow>()
-{
-	return UNeo4jResultRow::StaticClass();
-}
 DEFINE_VTABLE_PTR_HELPER_CTOR(UNeo4jResultRow);
 UNeo4jResultRow::~UNeo4jResultRow() {}
-// End Class UNeo4jResultRow
+// ********** End Class UNeo4jResultRow ************************************************************
 
-// Begin Class UNeo4jResultCell
+// ********** Begin Class UNeo4jResultCell *********************************************************
 void UNeo4jResultCell::StaticRegisterNativesUNeo4jResultCell()
 {
 }
-IMPLEMENT_CLASS_NO_AUTO_REGISTRATION(UNeo4jResultCell);
+FClassRegistrationInfo Z_Registration_Info_UClass_UNeo4jResultCell;
+UClass* UNeo4jResultCell::GetPrivateStaticClass()
+{
+	using TClass = UNeo4jResultCell;
+	if (!Z_Registration_Info_UClass_UNeo4jResultCell.InnerSingleton)
+	{
+		GetPrivateStaticClassBody(
+			StaticPackage(),
+			TEXT("Neo4jResultCell"),
+			Z_Registration_Info_UClass_UNeo4jResultCell.InnerSingleton,
+			StaticRegisterNativesUNeo4jResultCell,
+			sizeof(TClass),
+			alignof(TClass),
+			TClass::StaticClassFlags,
+			TClass::StaticClassCastFlags(),
+			TClass::StaticConfigName(),
+			(UClass::ClassConstructorType)InternalConstructor<TClass>,
+			(UClass::ClassVTableHelperCtorCallerType)InternalVTableHelperCtorCaller<TClass>,
+			UOBJECT_CPPCLASS_STATICFUNCTIONS_FORCLASS(TClass),
+			&TClass::Super::StaticClass,
+			&TClass::WithinClass::StaticClass
+		);
+	}
+	return Z_Registration_Info_UClass_UNeo4jResultCell.InnerSingleton;
+}
 UClass* Z_Construct_UClass_UNeo4jResultCell_NoRegister()
 {
-	return UNeo4jResultCell::StaticClass();
+	return UNeo4jResultCell::GetPrivateStaticClass();
 }
 struct Z_Construct_UClass_UNeo4jResultCell_Statics
 {
@@ -2567,22 +2889,42 @@ UClass* Z_Construct_UClass_UNeo4jResultCell()
 	}
 	return Z_Registration_Info_UClass_UNeo4jResultCell.OuterSingleton;
 }
-template<> FANTASIA_API UClass* StaticClass<UNeo4jResultCell>()
-{
-	return UNeo4jResultCell::StaticClass();
-}
 DEFINE_VTABLE_PTR_HELPER_CTOR(UNeo4jResultCell);
 UNeo4jResultCell::~UNeo4jResultCell() {}
-// End Class UNeo4jResultCell
+// ********** End Class UNeo4jResultCell ***********************************************************
 
-// Begin Class UNeo4jResultCellNode
+// ********** Begin Class UNeo4jResultCellNode *****************************************************
 void UNeo4jResultCellNode::StaticRegisterNativesUNeo4jResultCellNode()
 {
 }
-IMPLEMENT_CLASS_NO_AUTO_REGISTRATION(UNeo4jResultCellNode);
+FClassRegistrationInfo Z_Registration_Info_UClass_UNeo4jResultCellNode;
+UClass* UNeo4jResultCellNode::GetPrivateStaticClass()
+{
+	using TClass = UNeo4jResultCellNode;
+	if (!Z_Registration_Info_UClass_UNeo4jResultCellNode.InnerSingleton)
+	{
+		GetPrivateStaticClassBody(
+			StaticPackage(),
+			TEXT("Neo4jResultCellNode"),
+			Z_Registration_Info_UClass_UNeo4jResultCellNode.InnerSingleton,
+			StaticRegisterNativesUNeo4jResultCellNode,
+			sizeof(TClass),
+			alignof(TClass),
+			TClass::StaticClassFlags,
+			TClass::StaticClassCastFlags(),
+			TClass::StaticConfigName(),
+			(UClass::ClassConstructorType)InternalConstructor<TClass>,
+			(UClass::ClassVTableHelperCtorCallerType)InternalVTableHelperCtorCaller<TClass>,
+			UOBJECT_CPPCLASS_STATICFUNCTIONS_FORCLASS(TClass),
+			&TClass::Super::StaticClass,
+			&TClass::WithinClass::StaticClass
+		);
+	}
+	return Z_Registration_Info_UClass_UNeo4jResultCellNode.InnerSingleton;
+}
 UClass* Z_Construct_UClass_UNeo4jResultCellNode_NoRegister()
 {
-	return UNeo4jResultCellNode::StaticClass();
+	return UNeo4jResultCellNode::GetPrivateStaticClass();
 }
 struct Z_Construct_UClass_UNeo4jResultCellNode_Statics
 {
@@ -2662,22 +3004,42 @@ UClass* Z_Construct_UClass_UNeo4jResultCellNode()
 	}
 	return Z_Registration_Info_UClass_UNeo4jResultCellNode.OuterSingleton;
 }
-template<> FANTASIA_API UClass* StaticClass<UNeo4jResultCellNode>()
-{
-	return UNeo4jResultCellNode::StaticClass();
-}
 DEFINE_VTABLE_PTR_HELPER_CTOR(UNeo4jResultCellNode);
 UNeo4jResultCellNode::~UNeo4jResultCellNode() {}
-// End Class UNeo4jResultCellNode
+// ********** End Class UNeo4jResultCellNode *******************************************************
 
-// Begin Class UNeo4jResultCellRelationship
+// ********** Begin Class UNeo4jResultCellRelationship *********************************************
 void UNeo4jResultCellRelationship::StaticRegisterNativesUNeo4jResultCellRelationship()
 {
 }
-IMPLEMENT_CLASS_NO_AUTO_REGISTRATION(UNeo4jResultCellRelationship);
+FClassRegistrationInfo Z_Registration_Info_UClass_UNeo4jResultCellRelationship;
+UClass* UNeo4jResultCellRelationship::GetPrivateStaticClass()
+{
+	using TClass = UNeo4jResultCellRelationship;
+	if (!Z_Registration_Info_UClass_UNeo4jResultCellRelationship.InnerSingleton)
+	{
+		GetPrivateStaticClassBody(
+			StaticPackage(),
+			TEXT("Neo4jResultCellRelationship"),
+			Z_Registration_Info_UClass_UNeo4jResultCellRelationship.InnerSingleton,
+			StaticRegisterNativesUNeo4jResultCellRelationship,
+			sizeof(TClass),
+			alignof(TClass),
+			TClass::StaticClassFlags,
+			TClass::StaticClassCastFlags(),
+			TClass::StaticConfigName(),
+			(UClass::ClassConstructorType)InternalConstructor<TClass>,
+			(UClass::ClassVTableHelperCtorCallerType)InternalVTableHelperCtorCaller<TClass>,
+			UOBJECT_CPPCLASS_STATICFUNCTIONS_FORCLASS(TClass),
+			&TClass::Super::StaticClass,
+			&TClass::WithinClass::StaticClass
+		);
+	}
+	return Z_Registration_Info_UClass_UNeo4jResultCellRelationship.InnerSingleton;
+}
 UClass* Z_Construct_UClass_UNeo4jResultCellRelationship_NoRegister()
 {
-	return UNeo4jResultCellRelationship::StaticClass();
+	return UNeo4jResultCellRelationship::GetPrivateStaticClass();
 }
 struct Z_Construct_UClass_UNeo4jResultCellRelationship_Statics
 {
@@ -2754,22 +3116,42 @@ UClass* Z_Construct_UClass_UNeo4jResultCellRelationship()
 	}
 	return Z_Registration_Info_UClass_UNeo4jResultCellRelationship.OuterSingleton;
 }
-template<> FANTASIA_API UClass* StaticClass<UNeo4jResultCellRelationship>()
-{
-	return UNeo4jResultCellRelationship::StaticClass();
-}
 DEFINE_VTABLE_PTR_HELPER_CTOR(UNeo4jResultCellRelationship);
 UNeo4jResultCellRelationship::~UNeo4jResultCellRelationship() {}
-// End Class UNeo4jResultCellRelationship
+// ********** End Class UNeo4jResultCellRelationship ***********************************************
 
-// Begin Class UNeo4jResultCellSimple
+// ********** Begin Class UNeo4jResultCellSimple ***************************************************
 void UNeo4jResultCellSimple::StaticRegisterNativesUNeo4jResultCellSimple()
 {
 }
-IMPLEMENT_CLASS_NO_AUTO_REGISTRATION(UNeo4jResultCellSimple);
+FClassRegistrationInfo Z_Registration_Info_UClass_UNeo4jResultCellSimple;
+UClass* UNeo4jResultCellSimple::GetPrivateStaticClass()
+{
+	using TClass = UNeo4jResultCellSimple;
+	if (!Z_Registration_Info_UClass_UNeo4jResultCellSimple.InnerSingleton)
+	{
+		GetPrivateStaticClassBody(
+			StaticPackage(),
+			TEXT("Neo4jResultCellSimple"),
+			Z_Registration_Info_UClass_UNeo4jResultCellSimple.InnerSingleton,
+			StaticRegisterNativesUNeo4jResultCellSimple,
+			sizeof(TClass),
+			alignof(TClass),
+			TClass::StaticClassFlags,
+			TClass::StaticClassCastFlags(),
+			TClass::StaticConfigName(),
+			(UClass::ClassConstructorType)InternalConstructor<TClass>,
+			(UClass::ClassVTableHelperCtorCallerType)InternalVTableHelperCtorCaller<TClass>,
+			UOBJECT_CPPCLASS_STATICFUNCTIONS_FORCLASS(TClass),
+			&TClass::Super::StaticClass,
+			&TClass::WithinClass::StaticClass
+		);
+	}
+	return Z_Registration_Info_UClass_UNeo4jResultCellSimple.InnerSingleton;
+}
 UClass* Z_Construct_UClass_UNeo4jResultCellSimple_NoRegister()
 {
-	return UNeo4jResultCellSimple::StaticClass();
+	return UNeo4jResultCellSimple::GetPrivateStaticClass();
 }
 struct Z_Construct_UClass_UNeo4jResultCellSimple_Statics
 {
@@ -2826,16 +3208,12 @@ UClass* Z_Construct_UClass_UNeo4jResultCellSimple()
 	}
 	return Z_Registration_Info_UClass_UNeo4jResultCellSimple.OuterSingleton;
 }
-template<> FANTASIA_API UClass* StaticClass<UNeo4jResultCellSimple>()
-{
-	return UNeo4jResultCellSimple::StaticClass();
-}
 DEFINE_VTABLE_PTR_HELPER_CTOR(UNeo4jResultCellSimple);
 UNeo4jResultCellSimple::~UNeo4jResultCellSimple() {}
-// End Class UNeo4jResultCellSimple
+// ********** End Class UNeo4jResultCellSimple *****************************************************
 
-// Begin Registration
-struct Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_Statics
+// ********** Begin Registration *******************************************************************
+struct Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h__Script_FANTASIA_Statics
 {
 	static constexpr FEnumRegisterCompiledInInfo EnumInfo[] = {
 		{ SWIPrologOperation_StaticEnum, TEXT("SWIPrologOperation"), &Z_Registration_Info_UEnum_SWIPrologOperation, CONSTRUCT_RELOAD_VERSION_INFO(FEnumReloadVersionInfo, 1261065449U) },
@@ -2847,39 +3225,40 @@ struct Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_S
 		{ Neo4jOperation_StaticEnum, TEXT("Neo4jOperation"), &Z_Registration_Info_UEnum_Neo4jOperation, CONSTRUCT_RELOAD_VERSION_INFO(FEnumReloadVersionInfo, 652439313U) },
 	};
 	static constexpr FStructRegisterCompiledInInfo ScriptStructInfo[] = {
-		{ FSWIPrologResponse::StaticStruct, Z_Construct_UScriptStruct_FSWIPrologResponse_Statics::NewStructOps, TEXT("SWIPrologResponse"), &Z_Registration_Info_UScriptStruct_SWIPrologResponse, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FSWIPrologResponse), 1392627495U) },
-		{ FChatTurn::StaticStruct, Z_Construct_UScriptStruct_FChatTurn_Statics::NewStructOps, TEXT("ChatTurn"), &Z_Registration_Info_UScriptStruct_ChatTurn, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FChatTurn), 4210891163U) },
-		{ FTTSTimedStruct::StaticStruct, Z_Construct_UScriptStruct_FTTSTimedStruct_Statics::NewStructOps, TEXT("TTSTimedStruct"), &Z_Registration_Info_UScriptStruct_TTSTimedStruct, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FTTSTimedStruct), 3581234331U) },
-		{ FTTSData::StaticStruct, Z_Construct_UScriptStruct_FTTSData_Statics::NewStructOps, TEXT("TTSData"), &Z_Registration_Info_UScriptStruct_TTSData, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FTTSData), 983459605U) },
-		{ FNeo4jResponse::StaticStruct, Z_Construct_UScriptStruct_FNeo4jResponse_Statics::NewStructOps, TEXT("Neo4jResponse"), &Z_Registration_Info_UScriptStruct_Neo4jResponse, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FNeo4jResponse), 26987846U) },
-		{ FNLUResponse::StaticStruct, Z_Construct_UScriptStruct_FNLUResponse_Statics::NewStructOps, TEXT("NLUResponse"), &Z_Registration_Info_UScriptStruct_NLUResponse, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FNLUResponse), 667433752U) },
+		{ FSWIPrologResponse::StaticStruct, Z_Construct_UScriptStruct_FSWIPrologResponse_Statics::NewStructOps, TEXT("SWIPrologResponse"), &Z_Registration_Info_UScriptStruct_FSWIPrologResponse, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FSWIPrologResponse), 2491901368U) },
+		{ FChatTurn::StaticStruct, Z_Construct_UScriptStruct_FChatTurn_Statics::NewStructOps, TEXT("ChatTurn"), &Z_Registration_Info_UScriptStruct_FChatTurn, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FChatTurn), 1111787146U) },
+		{ FTTSTimedStruct::StaticStruct, Z_Construct_UScriptStruct_FTTSTimedStruct_Statics::NewStructOps, TEXT("TTSTimedStruct"), &Z_Registration_Info_UScriptStruct_FTTSTimedStruct, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FTTSTimedStruct), 4099653476U) },
+		{ FTTSData::StaticStruct, Z_Construct_UScriptStruct_FTTSData_Statics::NewStructOps, TEXT("TTSData"), &Z_Registration_Info_UScriptStruct_FTTSData, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FTTSData), 211695542U) },
+		{ FNeo4jResponse::StaticStruct, Z_Construct_UScriptStruct_FNeo4jResponse_Statics::NewStructOps, TEXT("Neo4jResponse"), &Z_Registration_Info_UScriptStruct_FNeo4jResponse, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FNeo4jResponse), 1659649810U) },
+		{ FNLUResponse::StaticStruct, Z_Construct_UScriptStruct_FNLUResponse_Statics::NewStructOps, TEXT("NLUResponse"), &Z_Registration_Info_UScriptStruct_FNLUResponse, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FNLUResponse), 122685510U) },
 	};
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_USWIPrologObject, USWIPrologObject::StaticClass, TEXT("USWIPrologObject"), &Z_Registration_Info_UClass_USWIPrologObject, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(USWIPrologObject), 2336694148U) },
-		{ Z_Construct_UClass_USWIPrologRuleBody, USWIPrologRuleBody::StaticClass, TEXT("USWIPrologRuleBody"), &Z_Registration_Info_UClass_USWIPrologRuleBody, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(USWIPrologRuleBody), 341958105U) },
-		{ Z_Construct_UClass_USWIPrologRule, USWIPrologRule::StaticClass, TEXT("USWIPrologRule"), &Z_Registration_Info_UClass_USWIPrologRule, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(USWIPrologRule), 3691889708U) },
-		{ Z_Construct_UClass_USWIPrologTerm, USWIPrologTerm::StaticClass, TEXT("USWIPrologTerm"), &Z_Registration_Info_UClass_USWIPrologTerm, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(USWIPrologTerm), 3803756213U) },
-		{ Z_Construct_UClass_USWIPrologAtom, USWIPrologAtom::StaticClass, TEXT("USWIPrologAtom"), &Z_Registration_Info_UClass_USWIPrologAtom, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(USWIPrologAtom), 1616504834U) },
-		{ Z_Construct_UClass_USWIPrologVariable, USWIPrologVariable::StaticClass, TEXT("USWIPrologVariable"), &Z_Registration_Info_UClass_USWIPrologVariable, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(USWIPrologVariable), 1997011316U) },
-		{ Z_Construct_UClass_USWIPrologInteger, USWIPrologInteger::StaticClass, TEXT("USWIPrologInteger"), &Z_Registration_Info_UClass_USWIPrologInteger, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(USWIPrologInteger), 3958549796U) },
-		{ Z_Construct_UClass_USWIPrologFloat, USWIPrologFloat::StaticClass, TEXT("USWIPrologFloat"), &Z_Registration_Info_UClass_USWIPrologFloat, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(USWIPrologFloat), 3764542981U) },
-		{ Z_Construct_UClass_USWIPrologCompound, USWIPrologCompound::StaticClass, TEXT("USWIPrologCompound"), &Z_Registration_Info_UClass_USWIPrologCompound, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(USWIPrologCompound), 3619933292U) },
-		{ Z_Construct_UClass_USWIPrologList, USWIPrologList::StaticClass, TEXT("USWIPrologList"), &Z_Registration_Info_UClass_USWIPrologList, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(USWIPrologList), 3474724491U) },
-		{ Z_Construct_UClass_USWIPrologHeadToTail, USWIPrologHeadToTail::StaticClass, TEXT("USWIPrologHeadToTail"), &Z_Registration_Info_UClass_USWIPrologHeadToTail, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(USWIPrologHeadToTail), 2290551282U) },
-		{ Z_Construct_UClass_USWIPrologCut, USWIPrologCut::StaticClass, TEXT("USWIPrologCut"), &Z_Registration_Info_UClass_USWIPrologCut, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(USWIPrologCut), 4183630570U) },
-		{ Z_Construct_UClass_USWIPrologSolution, USWIPrologSolution::StaticClass, TEXT("USWIPrologSolution"), &Z_Registration_Info_UClass_USWIPrologSolution, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(USWIPrologSolution), 3319156974U) },
-		{ Z_Construct_UClass_UNLUIntent, UNLUIntent::StaticClass, TEXT("UNLUIntent"), &Z_Registration_Info_UClass_UNLUIntent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UNLUIntent), 980026208U) },
-		{ Z_Construct_UClass_UNLUEntity, UNLUEntity::StaticClass, TEXT("UNLUEntity"), &Z_Registration_Info_UClass_UNLUEntity, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UNLUEntity), 937203255U) },
-		{ Z_Construct_UClass_UNeo4jResultRow, UNeo4jResultRow::StaticClass, TEXT("UNeo4jResultRow"), &Z_Registration_Info_UClass_UNeo4jResultRow, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UNeo4jResultRow), 3460069060U) },
-		{ Z_Construct_UClass_UNeo4jResultCell, UNeo4jResultCell::StaticClass, TEXT("UNeo4jResultCell"), &Z_Registration_Info_UClass_UNeo4jResultCell, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UNeo4jResultCell), 3803135964U) },
-		{ Z_Construct_UClass_UNeo4jResultCellNode, UNeo4jResultCellNode::StaticClass, TEXT("UNeo4jResultCellNode"), &Z_Registration_Info_UClass_UNeo4jResultCellNode, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UNeo4jResultCellNode), 38539807U) },
-		{ Z_Construct_UClass_UNeo4jResultCellRelationship, UNeo4jResultCellRelationship::StaticClass, TEXT("UNeo4jResultCellRelationship"), &Z_Registration_Info_UClass_UNeo4jResultCellRelationship, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UNeo4jResultCellRelationship), 4008198376U) },
-		{ Z_Construct_UClass_UNeo4jResultCellSimple, UNeo4jResultCellSimple::StaticClass, TEXT("UNeo4jResultCellSimple"), &Z_Registration_Info_UClass_UNeo4jResultCellSimple, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UNeo4jResultCellSimple), 3829507120U) },
+		{ Z_Construct_UClass_USWIPrologObject, USWIPrologObject::StaticClass, TEXT("USWIPrologObject"), &Z_Registration_Info_UClass_USWIPrologObject, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(USWIPrologObject), 3011916790U) },
+		{ Z_Construct_UClass_USWIPrologRuleBody, USWIPrologRuleBody::StaticClass, TEXT("USWIPrologRuleBody"), &Z_Registration_Info_UClass_USWIPrologRuleBody, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(USWIPrologRuleBody), 4188538534U) },
+		{ Z_Construct_UClass_USWIPrologRule, USWIPrologRule::StaticClass, TEXT("USWIPrologRule"), &Z_Registration_Info_UClass_USWIPrologRule, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(USWIPrologRule), 2351081919U) },
+		{ Z_Construct_UClass_USWIPrologTerm, USWIPrologTerm::StaticClass, TEXT("USWIPrologTerm"), &Z_Registration_Info_UClass_USWIPrologTerm, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(USWIPrologTerm), 3438644820U) },
+		{ Z_Construct_UClass_USWIPrologAtom, USWIPrologAtom::StaticClass, TEXT("USWIPrologAtom"), &Z_Registration_Info_UClass_USWIPrologAtom, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(USWIPrologAtom), 2175181970U) },
+		{ Z_Construct_UClass_USWIPrologVariable, USWIPrologVariable::StaticClass, TEXT("USWIPrologVariable"), &Z_Registration_Info_UClass_USWIPrologVariable, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(USWIPrologVariable), 1691946465U) },
+		{ Z_Construct_UClass_USWIPrologInteger, USWIPrologInteger::StaticClass, TEXT("USWIPrologInteger"), &Z_Registration_Info_UClass_USWIPrologInteger, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(USWIPrologInteger), 1789490862U) },
+		{ Z_Construct_UClass_USWIPrologFloat, USWIPrologFloat::StaticClass, TEXT("USWIPrologFloat"), &Z_Registration_Info_UClass_USWIPrologFloat, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(USWIPrologFloat), 382097037U) },
+		{ Z_Construct_UClass_USWIPrologCompound, USWIPrologCompound::StaticClass, TEXT("USWIPrologCompound"), &Z_Registration_Info_UClass_USWIPrologCompound, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(USWIPrologCompound), 1489591560U) },
+		{ Z_Construct_UClass_USWIPrologList, USWIPrologList::StaticClass, TEXT("USWIPrologList"), &Z_Registration_Info_UClass_USWIPrologList, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(USWIPrologList), 2307953016U) },
+		{ Z_Construct_UClass_USWIPrologHeadToTail, USWIPrologHeadToTail::StaticClass, TEXT("USWIPrologHeadToTail"), &Z_Registration_Info_UClass_USWIPrologHeadToTail, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(USWIPrologHeadToTail), 248033777U) },
+		{ Z_Construct_UClass_USWIPrologCut, USWIPrologCut::StaticClass, TEXT("USWIPrologCut"), &Z_Registration_Info_UClass_USWIPrologCut, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(USWIPrologCut), 2505183431U) },
+		{ Z_Construct_UClass_USWIPrologSolution, USWIPrologSolution::StaticClass, TEXT("USWIPrologSolution"), &Z_Registration_Info_UClass_USWIPrologSolution, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(USWIPrologSolution), 2166927651U) },
+		{ Z_Construct_UClass_UNLUIntent, UNLUIntent::StaticClass, TEXT("UNLUIntent"), &Z_Registration_Info_UClass_UNLUIntent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UNLUIntent), 2699767822U) },
+		{ Z_Construct_UClass_UNLUEntity, UNLUEntity::StaticClass, TEXT("UNLUEntity"), &Z_Registration_Info_UClass_UNLUEntity, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UNLUEntity), 647006600U) },
+		{ Z_Construct_UClass_UNeo4jResultRow, UNeo4jResultRow::StaticClass, TEXT("UNeo4jResultRow"), &Z_Registration_Info_UClass_UNeo4jResultRow, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UNeo4jResultRow), 2832838163U) },
+		{ Z_Construct_UClass_UNeo4jResultCell, UNeo4jResultCell::StaticClass, TEXT("UNeo4jResultCell"), &Z_Registration_Info_UClass_UNeo4jResultCell, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UNeo4jResultCell), 585410883U) },
+		{ Z_Construct_UClass_UNeo4jResultCellNode, UNeo4jResultCellNode::StaticClass, TEXT("UNeo4jResultCellNode"), &Z_Registration_Info_UClass_UNeo4jResultCellNode, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UNeo4jResultCellNode), 1412158188U) },
+		{ Z_Construct_UClass_UNeo4jResultCellRelationship, UNeo4jResultCellRelationship::StaticClass, TEXT("UNeo4jResultCellRelationship"), &Z_Registration_Info_UClass_UNeo4jResultCellRelationship, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UNeo4jResultCellRelationship), 246216386U) },
+		{ Z_Construct_UClass_UNeo4jResultCellSimple, UNeo4jResultCellSimple::StaticClass, TEXT("UNeo4jResultCellSimple"), &Z_Registration_Info_UClass_UNeo4jResultCellSimple, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UNeo4jResultCellSimple), 4165987847U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_3902281485(TEXT("/Script/FANTASIA"),
-	Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_Statics::ClassInfo),
-	Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_Statics::ScriptStructInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_Statics::ScriptStructInfo),
-	Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_Statics::EnumInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_Statics::EnumInfo));
-// End Registration
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h__Script_FANTASIA_1660809534(TEXT("/Script/FANTASIA"),
+	Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h__Script_FANTASIA_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h__Script_FANTASIA_Statics::ClassInfo),
+	Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h__Script_FANTASIA_Statics::ScriptStructInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h__Script_FANTASIA_Statics::ScriptStructInfo),
+	Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h__Script_FANTASIA_Statics::EnumInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h__Script_FANTASIA_Statics::EnumInfo));
+// ********** End Registration *********************************************************************
+
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

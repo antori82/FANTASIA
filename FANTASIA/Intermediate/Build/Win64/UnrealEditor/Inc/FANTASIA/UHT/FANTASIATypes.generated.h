@@ -5,39 +5,47 @@
 ===========================================================================*/
 
 // IWYU pragma: private, include "FANTASIATypes.h"
-#include "UObject/ObjectMacros.h"
-#include "UObject/ScriptMacros.h"
 
-PRAGMA_DISABLE_DEPRECATION_WARNINGS
-enum class GPTRoleType : uint8;
-struct FTTSData;
 #ifdef FANTASIA_FANTASIATypes_generated_h
 #error "FANTASIATypes.generated.h already included, missing '#pragma once' in FANTASIATypes.h"
 #endif
 #define FANTASIA_FANTASIATypes_generated_h
 
+#include "UObject/ObjectMacros.h"
+#include "UObject/ScriptMacros.h"
+
+PRAGMA_DISABLE_DEPRECATION_WARNINGS
+
+enum class GPTRoleType : uint8;
+struct FTTSData;
+
+// ********** Begin ScriptStruct FSWIPrologResponse ************************************************
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_28_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FSWIPrologResponse_Statics; \
 	FANTASIA_API static class UScriptStruct* StaticStruct();
 
 
-template<> FANTASIA_API UScriptStruct* StaticStruct<struct FSWIPrologResponse>();
+struct FSWIPrologResponse;
+// ********** End ScriptStruct FSWIPrologResponse **************************************************
+
+// ********** Begin Class USWIPrologObject *********************************************************
+FANTASIA_API UClass* Z_Construct_UClass_USWIPrologObject_NoRegister();
 
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_42_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUSWIPrologObject(); \
 	friend struct Z_Construct_UClass_USWIPrologObject_Statics; \
+	static UClass* GetPrivateStaticClass(); \
+	friend FANTASIA_API UClass* Z_Construct_UClass_USWIPrologObject_NoRegister(); \
 public: \
-	DECLARE_CLASS(USWIPrologObject, UObject, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/FANTASIA"), NO_API) \
+	DECLARE_CLASS2(USWIPrologObject, UObject, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/FANTASIA"), Z_Construct_UClass_USWIPrologObject_NoRegister) \
 	DECLARE_SERIALIZER(USWIPrologObject)
 
 
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_42_ENHANCED_CONSTRUCTORS \
-private: \
-	/** Private move- and copy-constructors, should never be used */ \
-	USWIPrologObject(USWIPrologObject&&); \
-	USWIPrologObject(const USWIPrologObject&); \
-public: \
+	/** Deleted move- and copy-constructors, should never be used */ \
+	USWIPrologObject(USWIPrologObject&&) = delete; \
+	USWIPrologObject(const USWIPrologObject&) = delete; \
 	DECLARE_VTABLE_PTR_HELPER_CTOR(NO_API, USWIPrologObject); \
 	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(USWIPrologObject); \
 	DEFINE_DEFAULT_CONSTRUCTOR_CALL(USWIPrologObject) \
@@ -54,23 +62,28 @@ private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-template<> FANTASIA_API UClass* StaticClass<class USWIPrologObject>();
+class USWIPrologObject;
+
+// ********** End Class USWIPrologObject ***********************************************************
+
+// ********** Begin Class USWIPrologRuleBody *******************************************************
+FANTASIA_API UClass* Z_Construct_UClass_USWIPrologRuleBody_NoRegister();
 
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_50_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUSWIPrologRuleBody(); \
 	friend struct Z_Construct_UClass_USWIPrologRuleBody_Statics; \
+	static UClass* GetPrivateStaticClass(); \
+	friend FANTASIA_API UClass* Z_Construct_UClass_USWIPrologRuleBody_NoRegister(); \
 public: \
-	DECLARE_CLASS(USWIPrologRuleBody, USWIPrologObject, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/FANTASIA"), NO_API) \
+	DECLARE_CLASS2(USWIPrologRuleBody, USWIPrologObject, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/FANTASIA"), Z_Construct_UClass_USWIPrologRuleBody_NoRegister) \
 	DECLARE_SERIALIZER(USWIPrologRuleBody)
 
 
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_50_ENHANCED_CONSTRUCTORS \
-private: \
-	/** Private move- and copy-constructors, should never be used */ \
-	USWIPrologRuleBody(USWIPrologRuleBody&&); \
-	USWIPrologRuleBody(const USWIPrologRuleBody&); \
-public: \
+	/** Deleted move- and copy-constructors, should never be used */ \
+	USWIPrologRuleBody(USWIPrologRuleBody&&) = delete; \
+	USWIPrologRuleBody(const USWIPrologRuleBody&) = delete; \
 	DECLARE_VTABLE_PTR_HELPER_CTOR(NO_API, USWIPrologRuleBody); \
 	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(USWIPrologRuleBody); \
 	DEFINE_DEFAULT_CONSTRUCTOR_CALL(USWIPrologRuleBody) \
@@ -87,23 +100,28 @@ private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-template<> FANTASIA_API UClass* StaticClass<class USWIPrologRuleBody>();
+class USWIPrologRuleBody;
+
+// ********** End Class USWIPrologRuleBody *********************************************************
+
+// ********** Begin Class USWIPrologRule ***********************************************************
+FANTASIA_API UClass* Z_Construct_UClass_USWIPrologRule_NoRegister();
 
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_69_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUSWIPrologRule(); \
 	friend struct Z_Construct_UClass_USWIPrologRule_Statics; \
+	static UClass* GetPrivateStaticClass(); \
+	friend FANTASIA_API UClass* Z_Construct_UClass_USWIPrologRule_NoRegister(); \
 public: \
-	DECLARE_CLASS(USWIPrologRule, USWIPrologObject, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/FANTASIA"), NO_API) \
+	DECLARE_CLASS2(USWIPrologRule, USWIPrologObject, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/FANTASIA"), Z_Construct_UClass_USWIPrologRule_NoRegister) \
 	DECLARE_SERIALIZER(USWIPrologRule)
 
 
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_69_ENHANCED_CONSTRUCTORS \
-private: \
-	/** Private move- and copy-constructors, should never be used */ \
-	USWIPrologRule(USWIPrologRule&&); \
-	USWIPrologRule(const USWIPrologRule&); \
-public: \
+	/** Deleted move- and copy-constructors, should never be used */ \
+	USWIPrologRule(USWIPrologRule&&) = delete; \
+	USWIPrologRule(const USWIPrologRule&) = delete; \
 	DECLARE_VTABLE_PTR_HELPER_CTOR(NO_API, USWIPrologRule); \
 	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(USWIPrologRule); \
 	DEFINE_DEFAULT_CONSTRUCTOR_CALL(USWIPrologRule) \
@@ -120,23 +138,28 @@ private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-template<> FANTASIA_API UClass* StaticClass<class USWIPrologRule>();
+class USWIPrologRule;
+
+// ********** End Class USWIPrologRule *************************************************************
+
+// ********** Begin Class USWIPrologTerm ***********************************************************
+FANTASIA_API UClass* Z_Construct_UClass_USWIPrologTerm_NoRegister();
 
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_85_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUSWIPrologTerm(); \
 	friend struct Z_Construct_UClass_USWIPrologTerm_Statics; \
+	static UClass* GetPrivateStaticClass(); \
+	friend FANTASIA_API UClass* Z_Construct_UClass_USWIPrologTerm_NoRegister(); \
 public: \
-	DECLARE_CLASS(USWIPrologTerm, USWIPrologObject, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/FANTASIA"), NO_API) \
+	DECLARE_CLASS2(USWIPrologTerm, USWIPrologObject, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/FANTASIA"), Z_Construct_UClass_USWIPrologTerm_NoRegister) \
 	DECLARE_SERIALIZER(USWIPrologTerm)
 
 
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_85_ENHANCED_CONSTRUCTORS \
-private: \
-	/** Private move- and copy-constructors, should never be used */ \
-	USWIPrologTerm(USWIPrologTerm&&); \
-	USWIPrologTerm(const USWIPrologTerm&); \
-public: \
+	/** Deleted move- and copy-constructors, should never be used */ \
+	USWIPrologTerm(USWIPrologTerm&&) = delete; \
+	USWIPrologTerm(const USWIPrologTerm&) = delete; \
 	DECLARE_VTABLE_PTR_HELPER_CTOR(NO_API, USWIPrologTerm); \
 	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(USWIPrologTerm); \
 	DEFINE_DEFAULT_CONSTRUCTOR_CALL(USWIPrologTerm) \
@@ -153,23 +176,28 @@ private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-template<> FANTASIA_API UClass* StaticClass<class USWIPrologTerm>();
+class USWIPrologTerm;
+
+// ********** End Class USWIPrologTerm *************************************************************
+
+// ********** Begin Class USWIPrologAtom ***********************************************************
+FANTASIA_API UClass* Z_Construct_UClass_USWIPrologAtom_NoRegister();
 
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_96_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUSWIPrologAtom(); \
 	friend struct Z_Construct_UClass_USWIPrologAtom_Statics; \
+	static UClass* GetPrivateStaticClass(); \
+	friend FANTASIA_API UClass* Z_Construct_UClass_USWIPrologAtom_NoRegister(); \
 public: \
-	DECLARE_CLASS(USWIPrologAtom, USWIPrologTerm, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/FANTASIA"), NO_API) \
+	DECLARE_CLASS2(USWIPrologAtom, USWIPrologTerm, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/FANTASIA"), Z_Construct_UClass_USWIPrologAtom_NoRegister) \
 	DECLARE_SERIALIZER(USWIPrologAtom)
 
 
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_96_ENHANCED_CONSTRUCTORS \
-private: \
-	/** Private move- and copy-constructors, should never be used */ \
-	USWIPrologAtom(USWIPrologAtom&&); \
-	USWIPrologAtom(const USWIPrologAtom&); \
-public: \
+	/** Deleted move- and copy-constructors, should never be used */ \
+	USWIPrologAtom(USWIPrologAtom&&) = delete; \
+	USWIPrologAtom(const USWIPrologAtom&) = delete; \
 	DECLARE_VTABLE_PTR_HELPER_CTOR(NO_API, USWIPrologAtom); \
 	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(USWIPrologAtom); \
 	DEFINE_DEFAULT_CONSTRUCTOR_CALL(USWIPrologAtom) \
@@ -186,23 +214,28 @@ private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-template<> FANTASIA_API UClass* StaticClass<class USWIPrologAtom>();
+class USWIPrologAtom;
+
+// ********** End Class USWIPrologAtom *************************************************************
+
+// ********** Begin Class USWIPrologVariable *******************************************************
+FANTASIA_API UClass* Z_Construct_UClass_USWIPrologVariable_NoRegister();
 
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_110_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUSWIPrologVariable(); \
 	friend struct Z_Construct_UClass_USWIPrologVariable_Statics; \
+	static UClass* GetPrivateStaticClass(); \
+	friend FANTASIA_API UClass* Z_Construct_UClass_USWIPrologVariable_NoRegister(); \
 public: \
-	DECLARE_CLASS(USWIPrologVariable, USWIPrologTerm, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/FANTASIA"), NO_API) \
+	DECLARE_CLASS2(USWIPrologVariable, USWIPrologTerm, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/FANTASIA"), Z_Construct_UClass_USWIPrologVariable_NoRegister) \
 	DECLARE_SERIALIZER(USWIPrologVariable)
 
 
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_110_ENHANCED_CONSTRUCTORS \
-private: \
-	/** Private move- and copy-constructors, should never be used */ \
-	USWIPrologVariable(USWIPrologVariable&&); \
-	USWIPrologVariable(const USWIPrologVariable&); \
-public: \
+	/** Deleted move- and copy-constructors, should never be used */ \
+	USWIPrologVariable(USWIPrologVariable&&) = delete; \
+	USWIPrologVariable(const USWIPrologVariable&) = delete; \
 	DECLARE_VTABLE_PTR_HELPER_CTOR(NO_API, USWIPrologVariable); \
 	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(USWIPrologVariable); \
 	DEFINE_DEFAULT_CONSTRUCTOR_CALL(USWIPrologVariable) \
@@ -219,23 +252,28 @@ private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-template<> FANTASIA_API UClass* StaticClass<class USWIPrologVariable>();
+class USWIPrologVariable;
+
+// ********** End Class USWIPrologVariable *********************************************************
+
+// ********** Begin Class USWIPrologInteger ********************************************************
+FANTASIA_API UClass* Z_Construct_UClass_USWIPrologInteger_NoRegister();
 
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_124_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUSWIPrologInteger(); \
 	friend struct Z_Construct_UClass_USWIPrologInteger_Statics; \
+	static UClass* GetPrivateStaticClass(); \
+	friend FANTASIA_API UClass* Z_Construct_UClass_USWIPrologInteger_NoRegister(); \
 public: \
-	DECLARE_CLASS(USWIPrologInteger, USWIPrologTerm, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/FANTASIA"), NO_API) \
+	DECLARE_CLASS2(USWIPrologInteger, USWIPrologTerm, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/FANTASIA"), Z_Construct_UClass_USWIPrologInteger_NoRegister) \
 	DECLARE_SERIALIZER(USWIPrologInteger)
 
 
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_124_ENHANCED_CONSTRUCTORS \
-private: \
-	/** Private move- and copy-constructors, should never be used */ \
-	USWIPrologInteger(USWIPrologInteger&&); \
-	USWIPrologInteger(const USWIPrologInteger&); \
-public: \
+	/** Deleted move- and copy-constructors, should never be used */ \
+	USWIPrologInteger(USWIPrologInteger&&) = delete; \
+	USWIPrologInteger(const USWIPrologInteger&) = delete; \
 	DECLARE_VTABLE_PTR_HELPER_CTOR(NO_API, USWIPrologInteger); \
 	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(USWIPrologInteger); \
 	DEFINE_DEFAULT_CONSTRUCTOR_CALL(USWIPrologInteger) \
@@ -252,23 +290,28 @@ private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-template<> FANTASIA_API UClass* StaticClass<class USWIPrologInteger>();
+class USWIPrologInteger;
+
+// ********** End Class USWIPrologInteger **********************************************************
+
+// ********** Begin Class USWIPrologFloat **********************************************************
+FANTASIA_API UClass* Z_Construct_UClass_USWIPrologFloat_NoRegister();
 
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_138_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUSWIPrologFloat(); \
 	friend struct Z_Construct_UClass_USWIPrologFloat_Statics; \
+	static UClass* GetPrivateStaticClass(); \
+	friend FANTASIA_API UClass* Z_Construct_UClass_USWIPrologFloat_NoRegister(); \
 public: \
-	DECLARE_CLASS(USWIPrologFloat, USWIPrologTerm, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/FANTASIA"), NO_API) \
+	DECLARE_CLASS2(USWIPrologFloat, USWIPrologTerm, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/FANTASIA"), Z_Construct_UClass_USWIPrologFloat_NoRegister) \
 	DECLARE_SERIALIZER(USWIPrologFloat)
 
 
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_138_ENHANCED_CONSTRUCTORS \
-private: \
-	/** Private move- and copy-constructors, should never be used */ \
-	USWIPrologFloat(USWIPrologFloat&&); \
-	USWIPrologFloat(const USWIPrologFloat&); \
-public: \
+	/** Deleted move- and copy-constructors, should never be used */ \
+	USWIPrologFloat(USWIPrologFloat&&) = delete; \
+	USWIPrologFloat(const USWIPrologFloat&) = delete; \
 	DECLARE_VTABLE_PTR_HELPER_CTOR(NO_API, USWIPrologFloat); \
 	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(USWIPrologFloat); \
 	DEFINE_DEFAULT_CONSTRUCTOR_CALL(USWIPrologFloat) \
@@ -285,23 +328,28 @@ private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-template<> FANTASIA_API UClass* StaticClass<class USWIPrologFloat>();
+class USWIPrologFloat;
+
+// ********** End Class USWIPrologFloat ************************************************************
+
+// ********** Begin Class USWIPrologCompound *******************************************************
+FANTASIA_API UClass* Z_Construct_UClass_USWIPrologCompound_NoRegister();
 
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_152_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUSWIPrologCompound(); \
 	friend struct Z_Construct_UClass_USWIPrologCompound_Statics; \
+	static UClass* GetPrivateStaticClass(); \
+	friend FANTASIA_API UClass* Z_Construct_UClass_USWIPrologCompound_NoRegister(); \
 public: \
-	DECLARE_CLASS(USWIPrologCompound, USWIPrologTerm, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/FANTASIA"), NO_API) \
+	DECLARE_CLASS2(USWIPrologCompound, USWIPrologTerm, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/FANTASIA"), Z_Construct_UClass_USWIPrologCompound_NoRegister) \
 	DECLARE_SERIALIZER(USWIPrologCompound)
 
 
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_152_ENHANCED_CONSTRUCTORS \
-private: \
-	/** Private move- and copy-constructors, should never be used */ \
-	USWIPrologCompound(USWIPrologCompound&&); \
-	USWIPrologCompound(const USWIPrologCompound&); \
-public: \
+	/** Deleted move- and copy-constructors, should never be used */ \
+	USWIPrologCompound(USWIPrologCompound&&) = delete; \
+	USWIPrologCompound(const USWIPrologCompound&) = delete; \
 	DECLARE_VTABLE_PTR_HELPER_CTOR(NO_API, USWIPrologCompound); \
 	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(USWIPrologCompound); \
 	DEFINE_DEFAULT_CONSTRUCTOR_CALL(USWIPrologCompound) \
@@ -318,23 +366,28 @@ private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-template<> FANTASIA_API UClass* StaticClass<class USWIPrologCompound>();
+class USWIPrologCompound;
+
+// ********** End Class USWIPrologCompound *********************************************************
+
+// ********** Begin Class USWIPrologList ***********************************************************
+FANTASIA_API UClass* Z_Construct_UClass_USWIPrologList_NoRegister();
 
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_169_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUSWIPrologList(); \
 	friend struct Z_Construct_UClass_USWIPrologList_Statics; \
+	static UClass* GetPrivateStaticClass(); \
+	friend FANTASIA_API UClass* Z_Construct_UClass_USWIPrologList_NoRegister(); \
 public: \
-	DECLARE_CLASS(USWIPrologList, USWIPrologTerm, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/FANTASIA"), NO_API) \
+	DECLARE_CLASS2(USWIPrologList, USWIPrologTerm, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/FANTASIA"), Z_Construct_UClass_USWIPrologList_NoRegister) \
 	DECLARE_SERIALIZER(USWIPrologList)
 
 
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_169_ENHANCED_CONSTRUCTORS \
-private: \
-	/** Private move- and copy-constructors, should never be used */ \
-	USWIPrologList(USWIPrologList&&); \
-	USWIPrologList(const USWIPrologList&); \
-public: \
+	/** Deleted move- and copy-constructors, should never be used */ \
+	USWIPrologList(USWIPrologList&&) = delete; \
+	USWIPrologList(const USWIPrologList&) = delete; \
 	DECLARE_VTABLE_PTR_HELPER_CTOR(NO_API, USWIPrologList); \
 	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(USWIPrologList); \
 	DEFINE_DEFAULT_CONSTRUCTOR_CALL(USWIPrologList) \
@@ -351,23 +404,28 @@ private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-template<> FANTASIA_API UClass* StaticClass<class USWIPrologList>();
+class USWIPrologList;
+
+// ********** End Class USWIPrologList *************************************************************
+
+// ********** Begin Class USWIPrologHeadToTail *****************************************************
+FANTASIA_API UClass* Z_Construct_UClass_USWIPrologHeadToTail_NoRegister();
 
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_183_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUSWIPrologHeadToTail(); \
 	friend struct Z_Construct_UClass_USWIPrologHeadToTail_Statics; \
+	static UClass* GetPrivateStaticClass(); \
+	friend FANTASIA_API UClass* Z_Construct_UClass_USWIPrologHeadToTail_NoRegister(); \
 public: \
-	DECLARE_CLASS(USWIPrologHeadToTail, USWIPrologTerm, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/FANTASIA"), NO_API) \
+	DECLARE_CLASS2(USWIPrologHeadToTail, USWIPrologTerm, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/FANTASIA"), Z_Construct_UClass_USWIPrologHeadToTail_NoRegister) \
 	DECLARE_SERIALIZER(USWIPrologHeadToTail)
 
 
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_183_ENHANCED_CONSTRUCTORS \
-private: \
-	/** Private move- and copy-constructors, should never be used */ \
-	USWIPrologHeadToTail(USWIPrologHeadToTail&&); \
-	USWIPrologHeadToTail(const USWIPrologHeadToTail&); \
-public: \
+	/** Deleted move- and copy-constructors, should never be used */ \
+	USWIPrologHeadToTail(USWIPrologHeadToTail&&) = delete; \
+	USWIPrologHeadToTail(const USWIPrologHeadToTail&) = delete; \
 	DECLARE_VTABLE_PTR_HELPER_CTOR(NO_API, USWIPrologHeadToTail); \
 	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(USWIPrologHeadToTail); \
 	DEFINE_DEFAULT_CONSTRUCTOR_CALL(USWIPrologHeadToTail) \
@@ -384,23 +442,28 @@ private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-template<> FANTASIA_API UClass* StaticClass<class USWIPrologHeadToTail>();
+class USWIPrologHeadToTail;
+
+// ********** End Class USWIPrologHeadToTail *******************************************************
+
+// ********** Begin Class USWIPrologCut ************************************************************
+FANTASIA_API UClass* Z_Construct_UClass_USWIPrologCut_NoRegister();
 
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_200_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUSWIPrologCut(); \
 	friend struct Z_Construct_UClass_USWIPrologCut_Statics; \
+	static UClass* GetPrivateStaticClass(); \
+	friend FANTASIA_API UClass* Z_Construct_UClass_USWIPrologCut_NoRegister(); \
 public: \
-	DECLARE_CLASS(USWIPrologCut, USWIPrologTerm, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/FANTASIA"), NO_API) \
+	DECLARE_CLASS2(USWIPrologCut, USWIPrologTerm, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/FANTASIA"), Z_Construct_UClass_USWIPrologCut_NoRegister) \
 	DECLARE_SERIALIZER(USWIPrologCut)
 
 
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_200_ENHANCED_CONSTRUCTORS \
-private: \
-	/** Private move- and copy-constructors, should never be used */ \
-	USWIPrologCut(USWIPrologCut&&); \
-	USWIPrologCut(const USWIPrologCut&); \
-public: \
+	/** Deleted move- and copy-constructors, should never be used */ \
+	USWIPrologCut(USWIPrologCut&&) = delete; \
+	USWIPrologCut(const USWIPrologCut&) = delete; \
 	DECLARE_VTABLE_PTR_HELPER_CTOR(NO_API, USWIPrologCut); \
 	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(USWIPrologCut); \
 	DEFINE_DEFAULT_CONSTRUCTOR_CALL(USWIPrologCut) \
@@ -417,23 +480,28 @@ private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-template<> FANTASIA_API UClass* StaticClass<class USWIPrologCut>();
+class USWIPrologCut;
+
+// ********** End Class USWIPrologCut **************************************************************
+
+// ********** Begin Class USWIPrologSolution *******************************************************
+FANTASIA_API UClass* Z_Construct_UClass_USWIPrologSolution_NoRegister();
 
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_212_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUSWIPrologSolution(); \
 	friend struct Z_Construct_UClass_USWIPrologSolution_Statics; \
+	static UClass* GetPrivateStaticClass(); \
+	friend FANTASIA_API UClass* Z_Construct_UClass_USWIPrologSolution_NoRegister(); \
 public: \
-	DECLARE_CLASS(USWIPrologSolution, UObject, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/FANTASIA"), NO_API) \
+	DECLARE_CLASS2(USWIPrologSolution, UObject, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/FANTASIA"), Z_Construct_UClass_USWIPrologSolution_NoRegister) \
 	DECLARE_SERIALIZER(USWIPrologSolution)
 
 
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_212_ENHANCED_CONSTRUCTORS \
-private: \
-	/** Private move- and copy-constructors, should never be used */ \
-	USWIPrologSolution(USWIPrologSolution&&); \
-	USWIPrologSolution(const USWIPrologSolution&); \
-public: \
+	/** Deleted move- and copy-constructors, should never be used */ \
+	USWIPrologSolution(USWIPrologSolution&&) = delete; \
+	USWIPrologSolution(const USWIPrologSolution&) = delete; \
 	DECLARE_VTABLE_PTR_HELPER_CTOR(NO_API, USWIPrologSolution); \
 	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(USWIPrologSolution); \
 	DEFINE_DEFAULT_CONSTRUCTOR_CALL(USWIPrologSolution) \
@@ -450,82 +518,115 @@ private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-template<> FANTASIA_API UClass* StaticClass<class USWIPrologSolution>();
+class USWIPrologSolution;
 
+// ********** End Class USWIPrologSolution *********************************************************
+
+// ********** Begin ScriptStruct FChatTurn *********************************************************
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_243_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FChatTurn_Statics; \
 	FANTASIA_API static class UScriptStruct* StaticStruct();
 
 
-template<> FANTASIA_API UScriptStruct* StaticStruct<struct FChatTurn>();
+struct FChatTurn;
+// ********** End ScriptStruct FChatTurn ***********************************************************
 
+// ********** Begin Delegate FIncomingGPTResponseEvent *********************************************
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_252_DELEGATE \
 FANTASIA_API void FIncomingGPTResponseEvent_DelegateWrapper(const FMulticastScriptDelegate& IncomingGPTResponseEvent, const FString& GPTResponse, GPTRoleType role);
 
 
+// ********** End Delegate FIncomingGPTResponseEvent ***********************************************
+
+// ********** Begin Delegate FIncomingGPTStreamResponseEvent ***************************************
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_253_DELEGATE \
 FANTASIA_API void FIncomingGPTStreamResponseEvent_DelegateWrapper(const FMulticastScriptDelegate& IncomingGPTStreamResponseEvent, const FString& GPTResponse, GPTRoleType role, bool endStream);
 
 
+// ********** End Delegate FIncomingGPTStreamResponseEvent *****************************************
+
+// ********** Begin ScriptStruct FTTSTimedStruct ***************************************************
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_293_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FTTSTimedStruct_Statics; \
 	FANTASIA_API static class UScriptStruct* StaticStruct();
 
 
-template<> FANTASIA_API UScriptStruct* StaticStruct<struct FTTSTimedStruct>();
+struct FTTSTimedStruct;
+// ********** End ScriptStruct FTTSTimedStruct *****************************************************
 
+// ********** Begin ScriptStruct FTTSData **********************************************************
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_305_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FTTSData_Statics; \
 	FANTASIA_API static class UScriptStruct* StaticStruct();
 
 
-template<> FANTASIA_API UScriptStruct* StaticStruct<struct FTTSData>();
+struct FTTSData;
+// ********** End ScriptStruct FTTSData ************************************************************
 
+// ********** Begin Delegate FSynthesizedEvent *****************************************************
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_314_DELEGATE \
 FANTASIA_API void FSynthesizedEvent_DelegateWrapper(const FMulticastScriptDelegate& SynthesizedEvent, const FString& id);
 
 
+// ********** End Delegate FSynthesizedEvent *******************************************************
+
+// ********** Begin Delegate FSynthesizedInternalEvent *********************************************
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_315_DELEGATE \
 FANTASIA_API void FSynthesizedInternalEvent_DelegateWrapper(const FMulticastScriptDelegate& SynthesizedInternalEvent, FTTSData response, const FString& id);
 
 
+// ********** End Delegate FSynthesizedInternalEvent ***********************************************
+
+// ********** Begin Delegate FPartialSynthesizedEvent **********************************************
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_316_DELEGATE \
 FANTASIA_API void FPartialSynthesizedEvent_DelegateWrapper(const FMulticastScriptDelegate& PartialSynthesizedEvent, const FString& id);
 
 
+// ********** End Delegate FPartialSynthesizedEvent ************************************************
+
+// ********** Begin Delegate FPartialSynthesizedInternalEvent **************************************
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_317_DELEGATE \
 FANTASIA_API void FPartialSynthesizedInternalEvent_DelegateWrapper(const FMulticastScriptDelegate& PartialSynthesizedInternalEvent, FTTSData response, const FString& id);
 
 
+// ********** End Delegate FPartialSynthesizedInternalEvent ****************************************
+
+// ********** Begin ScriptStruct FNeo4jResponse ****************************************************
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_324_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FNeo4jResponse_Statics; \
 	FANTASIA_API static class UScriptStruct* StaticStruct();
 
 
-template<> FANTASIA_API UScriptStruct* StaticStruct<struct FNeo4jResponse>();
+struct FNeo4jResponse;
+// ********** End ScriptStruct FNeo4jResponse ******************************************************
 
+// ********** Begin ScriptStruct FNLUResponse ******************************************************
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_339_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FNLUResponse_Statics; \
 	FANTASIA_API static class UScriptStruct* StaticStruct();
 
 
-template<> FANTASIA_API UScriptStruct* StaticStruct<struct FNLUResponse>();
+struct FNLUResponse;
+// ********** End ScriptStruct FNLUResponse ********************************************************
+
+// ********** Begin Class UNLUIntent ***************************************************************
+FANTASIA_API UClass* Z_Construct_UClass_UNLUIntent_NoRegister();
 
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_354_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUNLUIntent(); \
 	friend struct Z_Construct_UClass_UNLUIntent_Statics; \
+	static UClass* GetPrivateStaticClass(); \
+	friend FANTASIA_API UClass* Z_Construct_UClass_UNLUIntent_NoRegister(); \
 public: \
-	DECLARE_CLASS(UNLUIntent, UObject, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/FANTASIA"), NO_API) \
+	DECLARE_CLASS2(UNLUIntent, UObject, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/FANTASIA"), Z_Construct_UClass_UNLUIntent_NoRegister) \
 	DECLARE_SERIALIZER(UNLUIntent)
 
 
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_354_ENHANCED_CONSTRUCTORS \
-private: \
-	/** Private move- and copy-constructors, should never be used */ \
-	UNLUIntent(UNLUIntent&&); \
-	UNLUIntent(const UNLUIntent&); \
-public: \
+	/** Deleted move- and copy-constructors, should never be used */ \
+	UNLUIntent(UNLUIntent&&) = delete; \
+	UNLUIntent(const UNLUIntent&) = delete; \
 	DECLARE_VTABLE_PTR_HELPER_CTOR(NO_API, UNLUIntent); \
 	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(UNLUIntent); \
 	DEFINE_DEFAULT_CONSTRUCTOR_CALL(UNLUIntent) \
@@ -542,23 +643,28 @@ private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-template<> FANTASIA_API UClass* StaticClass<class UNLUIntent>();
+class UNLUIntent;
+
+// ********** End Class UNLUIntent *****************************************************************
+
+// ********** Begin Class UNLUEntity ***************************************************************
+FANTASIA_API UClass* Z_Construct_UClass_UNLUEntity_NoRegister();
 
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_369_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUNLUEntity(); \
 	friend struct Z_Construct_UClass_UNLUEntity_Statics; \
+	static UClass* GetPrivateStaticClass(); \
+	friend FANTASIA_API UClass* Z_Construct_UClass_UNLUEntity_NoRegister(); \
 public: \
-	DECLARE_CLASS(UNLUEntity, UObject, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/FANTASIA"), NO_API) \
+	DECLARE_CLASS2(UNLUEntity, UObject, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/FANTASIA"), Z_Construct_UClass_UNLUEntity_NoRegister) \
 	DECLARE_SERIALIZER(UNLUEntity)
 
 
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_369_ENHANCED_CONSTRUCTORS \
-private: \
-	/** Private move- and copy-constructors, should never be used */ \
-	UNLUEntity(UNLUEntity&&); \
-	UNLUEntity(const UNLUEntity&); \
-public: \
+	/** Deleted move- and copy-constructors, should never be used */ \
+	UNLUEntity(UNLUEntity&&) = delete; \
+	UNLUEntity(const UNLUEntity&) = delete; \
 	DECLARE_VTABLE_PTR_HELPER_CTOR(NO_API, UNLUEntity); \
 	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(UNLUEntity); \
 	DEFINE_DEFAULT_CONSTRUCTOR_CALL(UNLUEntity) \
@@ -575,23 +681,28 @@ private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-template<> FANTASIA_API UClass* StaticClass<class UNLUEntity>();
+class UNLUEntity;
+
+// ********** End Class UNLUEntity *****************************************************************
+
+// ********** Begin Class UNeo4jResultRow **********************************************************
+FANTASIA_API UClass* Z_Construct_UClass_UNeo4jResultRow_NoRegister();
 
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_399_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUNeo4jResultRow(); \
 	friend struct Z_Construct_UClass_UNeo4jResultRow_Statics; \
+	static UClass* GetPrivateStaticClass(); \
+	friend FANTASIA_API UClass* Z_Construct_UClass_UNeo4jResultRow_NoRegister(); \
 public: \
-	DECLARE_CLASS(UNeo4jResultRow, UObject, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/FANTASIA"), NO_API) \
+	DECLARE_CLASS2(UNeo4jResultRow, UObject, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/FANTASIA"), Z_Construct_UClass_UNeo4jResultRow_NoRegister) \
 	DECLARE_SERIALIZER(UNeo4jResultRow)
 
 
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_399_ENHANCED_CONSTRUCTORS \
-private: \
-	/** Private move- and copy-constructors, should never be used */ \
-	UNeo4jResultRow(UNeo4jResultRow&&); \
-	UNeo4jResultRow(const UNeo4jResultRow&); \
-public: \
+	/** Deleted move- and copy-constructors, should never be used */ \
+	UNeo4jResultRow(UNeo4jResultRow&&) = delete; \
+	UNeo4jResultRow(const UNeo4jResultRow&) = delete; \
 	DECLARE_VTABLE_PTR_HELPER_CTOR(NO_API, UNeo4jResultRow); \
 	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(UNeo4jResultRow); \
 	DEFINE_DEFAULT_CONSTRUCTOR_CALL(UNeo4jResultRow) \
@@ -608,23 +719,28 @@ private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-template<> FANTASIA_API UClass* StaticClass<class UNeo4jResultRow>();
+class UNeo4jResultRow;
+
+// ********** End Class UNeo4jResultRow ************************************************************
+
+// ********** Begin Class UNeo4jResultCell *********************************************************
+FANTASIA_API UClass* Z_Construct_UClass_UNeo4jResultCell_NoRegister();
 
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_411_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUNeo4jResultCell(); \
 	friend struct Z_Construct_UClass_UNeo4jResultCell_Statics; \
+	static UClass* GetPrivateStaticClass(); \
+	friend FANTASIA_API UClass* Z_Construct_UClass_UNeo4jResultCell_NoRegister(); \
 public: \
-	DECLARE_CLASS(UNeo4jResultCell, UObject, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/FANTASIA"), NO_API) \
+	DECLARE_CLASS2(UNeo4jResultCell, UObject, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/FANTASIA"), Z_Construct_UClass_UNeo4jResultCell_NoRegister) \
 	DECLARE_SERIALIZER(UNeo4jResultCell)
 
 
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_411_ENHANCED_CONSTRUCTORS \
-private: \
-	/** Private move- and copy-constructors, should never be used */ \
-	UNeo4jResultCell(UNeo4jResultCell&&); \
-	UNeo4jResultCell(const UNeo4jResultCell&); \
-public: \
+	/** Deleted move- and copy-constructors, should never be used */ \
+	UNeo4jResultCell(UNeo4jResultCell&&) = delete; \
+	UNeo4jResultCell(const UNeo4jResultCell&) = delete; \
 	DECLARE_VTABLE_PTR_HELPER_CTOR(NO_API, UNeo4jResultCell); \
 	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(UNeo4jResultCell); \
 	DEFINE_DEFAULT_CONSTRUCTOR_CALL(UNeo4jResultCell) \
@@ -641,23 +757,28 @@ private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-template<> FANTASIA_API UClass* StaticClass<class UNeo4jResultCell>();
+class UNeo4jResultCell;
+
+// ********** End Class UNeo4jResultCell ***********************************************************
+
+// ********** Begin Class UNeo4jResultCellNode *****************************************************
+FANTASIA_API UClass* Z_Construct_UClass_UNeo4jResultCellNode_NoRegister();
 
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_420_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUNeo4jResultCellNode(); \
 	friend struct Z_Construct_UClass_UNeo4jResultCellNode_Statics; \
+	static UClass* GetPrivateStaticClass(); \
+	friend FANTASIA_API UClass* Z_Construct_UClass_UNeo4jResultCellNode_NoRegister(); \
 public: \
-	DECLARE_CLASS(UNeo4jResultCellNode, UNeo4jResultCell, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/FANTASIA"), NO_API) \
+	DECLARE_CLASS2(UNeo4jResultCellNode, UNeo4jResultCell, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/FANTASIA"), Z_Construct_UClass_UNeo4jResultCellNode_NoRegister) \
 	DECLARE_SERIALIZER(UNeo4jResultCellNode)
 
 
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_420_ENHANCED_CONSTRUCTORS \
-private: \
-	/** Private move- and copy-constructors, should never be used */ \
-	UNeo4jResultCellNode(UNeo4jResultCellNode&&); \
-	UNeo4jResultCellNode(const UNeo4jResultCellNode&); \
-public: \
+	/** Deleted move- and copy-constructors, should never be used */ \
+	UNeo4jResultCellNode(UNeo4jResultCellNode&&) = delete; \
+	UNeo4jResultCellNode(const UNeo4jResultCellNode&) = delete; \
 	DECLARE_VTABLE_PTR_HELPER_CTOR(NO_API, UNeo4jResultCellNode); \
 	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(UNeo4jResultCellNode); \
 	DEFINE_DEFAULT_CONSTRUCTOR_CALL(UNeo4jResultCellNode) \
@@ -674,23 +795,28 @@ private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-template<> FANTASIA_API UClass* StaticClass<class UNeo4jResultCellNode>();
+class UNeo4jResultCellNode;
+
+// ********** End Class UNeo4jResultCellNode *******************************************************
+
+// ********** Begin Class UNeo4jResultCellRelationship *********************************************
+FANTASIA_API UClass* Z_Construct_UClass_UNeo4jResultCellRelationship_NoRegister();
 
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_438_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUNeo4jResultCellRelationship(); \
 	friend struct Z_Construct_UClass_UNeo4jResultCellRelationship_Statics; \
+	static UClass* GetPrivateStaticClass(); \
+	friend FANTASIA_API UClass* Z_Construct_UClass_UNeo4jResultCellRelationship_NoRegister(); \
 public: \
-	DECLARE_CLASS(UNeo4jResultCellRelationship, UNeo4jResultCell, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/FANTASIA"), NO_API) \
+	DECLARE_CLASS2(UNeo4jResultCellRelationship, UNeo4jResultCell, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/FANTASIA"), Z_Construct_UClass_UNeo4jResultCellRelationship_NoRegister) \
 	DECLARE_SERIALIZER(UNeo4jResultCellRelationship)
 
 
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_438_ENHANCED_CONSTRUCTORS \
-private: \
-	/** Private move- and copy-constructors, should never be used */ \
-	UNeo4jResultCellRelationship(UNeo4jResultCellRelationship&&); \
-	UNeo4jResultCellRelationship(const UNeo4jResultCellRelationship&); \
-public: \
+	/** Deleted move- and copy-constructors, should never be used */ \
+	UNeo4jResultCellRelationship(UNeo4jResultCellRelationship&&) = delete; \
+	UNeo4jResultCellRelationship(const UNeo4jResultCellRelationship&) = delete; \
 	DECLARE_VTABLE_PTR_HELPER_CTOR(NO_API, UNeo4jResultCellRelationship); \
 	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(UNeo4jResultCellRelationship); \
 	DEFINE_DEFAULT_CONSTRUCTOR_CALL(UNeo4jResultCellRelationship) \
@@ -707,23 +833,28 @@ private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-template<> FANTASIA_API UClass* StaticClass<class UNeo4jResultCellRelationship>();
+class UNeo4jResultCellRelationship;
+
+// ********** End Class UNeo4jResultCellRelationship ***********************************************
+
+// ********** Begin Class UNeo4jResultCellSimple ***************************************************
+FANTASIA_API UClass* Z_Construct_UClass_UNeo4jResultCellSimple_NoRegister();
 
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_456_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUNeo4jResultCellSimple(); \
 	friend struct Z_Construct_UClass_UNeo4jResultCellSimple_Statics; \
+	static UClass* GetPrivateStaticClass(); \
+	friend FANTASIA_API UClass* Z_Construct_UClass_UNeo4jResultCellSimple_NoRegister(); \
 public: \
-	DECLARE_CLASS(UNeo4jResultCellSimple, UNeo4jResultCell, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/FANTASIA"), NO_API) \
+	DECLARE_CLASS2(UNeo4jResultCellSimple, UNeo4jResultCell, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/FANTASIA"), Z_Construct_UClass_UNeo4jResultCellSimple_NoRegister) \
 	DECLARE_SERIALIZER(UNeo4jResultCellSimple)
 
 
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h_456_ENHANCED_CONSTRUCTORS \
-private: \
-	/** Private move- and copy-constructors, should never be used */ \
-	UNeo4jResultCellSimple(UNeo4jResultCellSimple&&); \
-	UNeo4jResultCellSimple(const UNeo4jResultCellSimple&); \
-public: \
+	/** Deleted move- and copy-constructors, should never be used */ \
+	UNeo4jResultCellSimple(UNeo4jResultCellSimple&&) = delete; \
+	UNeo4jResultCellSimple(const UNeo4jResultCellSimple&) = delete; \
 	DECLARE_VTABLE_PTR_HELPER_CTOR(NO_API, UNeo4jResultCellSimple); \
 	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(UNeo4jResultCellSimple); \
 	DEFINE_DEFAULT_CONSTRUCTOR_CALL(UNeo4jResultCellSimple) \
@@ -740,12 +871,14 @@ private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-template<> FANTASIA_API UClass* StaticClass<class UNeo4jResultCellSimple>();
+class UNeo4jResultCellSimple;
+
+// ********** End Class UNeo4jResultCellSimple *****************************************************
 
 #undef CURRENT_FILE_ID
 #define CURRENT_FILE_ID FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_FANTASIATypes_h
 
-
+// ********** Begin Enum SWIPrologOperation ********************************************************
 #define FOREACH_ENUM_SWIPROLOGOPERATION(op) \
 	op(SWIPrologOperation::AND) \
 	op(SWIPrologOperation::OR) \
@@ -767,14 +900,18 @@ template<> FANTASIA_API UClass* StaticClass<class UNeo4jResultCellSimple>();
 enum class SWIPrologOperation : uint8;
 template<> struct TIsUEnumClass<SWIPrologOperation> { enum { Value = true }; };
 template<> FANTASIA_API UEnum* StaticEnum<SWIPrologOperation>();
+// ********** End Enum SWIPrologOperation **********************************************************
 
+// ********** Begin Enum EAzureASREnum *************************************************************
 #define FOREACH_ENUM_EAZUREASRENUM(op) \
 	op(ASR_CONTINUOUS) \
 	op(ASR_ONESHOT) 
 
 enum EAzureASREnum : uint8;
 template<> FANTASIA_API UEnum* StaticEnum<EAzureASREnum>();
+// ********** End Enum EAzureASREnum ***************************************************************
 
+// ********** Begin Enum GPTRoleType ***************************************************************
 #define FOREACH_ENUM_GPTROLETYPE(op) \
 	op(GPTRoleType::SYSTEM) \
 	op(GPTRoleType::ASSISTANT) \
@@ -784,7 +921,9 @@ template<> FANTASIA_API UEnum* StaticEnum<EAzureASREnum>();
 enum class GPTRoleType : uint8;
 template<> struct TIsUEnumClass<GPTRoleType> { enum { Value = true }; };
 template<> FANTASIA_API UEnum* StaticEnum<GPTRoleType>();
+// ********** End Enum GPTRoleType *****************************************************************
 
+// ********** Begin Enum InfluenceNodeType *********************************************************
 #define FOREACH_ENUM_INFLUENCENODETYPE(op) \
 	op(InfluenceNodeType::CHANCE) \
 	op(InfluenceNodeType::UTILITY) \
@@ -793,7 +932,9 @@ template<> FANTASIA_API UEnum* StaticEnum<GPTRoleType>();
 enum class InfluenceNodeType : uint8;
 template<> struct TIsUEnumClass<InfluenceNodeType> { enum { Value = true }; };
 template<> FANTASIA_API UEnum* StaticEnum<InfluenceNodeType>();
+// ********** End Enum InfluenceNodeType ***********************************************************
 
+// ********** Begin Enum BayesianNodeType **********************************************************
 #define FOREACH_ENUM_BAYESIANNODETYPE(op) \
 	op(BayesianNodeType::NORMAL) \
 	op(BayesianNodeType::AMPLITUDE) \
@@ -807,7 +948,9 @@ template<> FANTASIA_API UEnum* StaticEnum<InfluenceNodeType>();
 enum class BayesianNodeType : uint8;
 template<> struct TIsUEnumClass<BayesianNodeType> { enum { Value = true }; };
 template<> FANTASIA_API UEnum* StaticEnum<BayesianNodeType>();
+// ********** End Enum BayesianNodeType ************************************************************
 
+// ********** Begin Enum TTSVoiceType **************************************************************
 #define FOREACH_ENUM_TTSVOICETYPE(op) \
 	op(TTSVoiceType::NEURAL) \
 	op(TTSVoiceType::STANDARD) 
@@ -815,7 +958,9 @@ template<> FANTASIA_API UEnum* StaticEnum<BayesianNodeType>();
 enum class TTSVoiceType : uint8;
 template<> struct TIsUEnumClass<TTSVoiceType> { enum { Value = true }; };
 template<> FANTASIA_API UEnum* StaticEnum<TTSVoiceType>();
+// ********** End Enum TTSVoiceType ****************************************************************
 
+// ********** Begin Enum Neo4jOperation ************************************************************
 #define FOREACH_ENUM_NEO4JOPERATION(op) \
 	op(Neo4jOperation::SINGLE_REQUEST) \
 	op(Neo4jOperation::BEGIN_TRANSACTION) \
@@ -826,5 +971,6 @@ template<> FANTASIA_API UEnum* StaticEnum<TTSVoiceType>();
 enum class Neo4jOperation : uint8;
 template<> struct TIsUEnumClass<Neo4jOperation> { enum { Value = true }; };
 template<> FANTASIA_API UEnum* StaticEnum<Neo4jOperation>();
+// ********** End Enum Neo4jOperation **************************************************************
 
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
