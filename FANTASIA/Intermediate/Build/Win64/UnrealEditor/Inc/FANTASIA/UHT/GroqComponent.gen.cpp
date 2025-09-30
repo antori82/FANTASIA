@@ -5,12 +5,14 @@
 ===========================================================================*/
 
 #include "UObject/GeneratedCppIncludes.h"
-#include "FANTASIA/Public/GroqComponent.h"
-#include "FANTASIA/Public/FANTASIATypes.h"
+#include "GroqComponent.h"
+#include "FANTASIATypes.h"
+
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
+
 void EmptyLinkFunctionForGeneratedCodeGroqComponent() {}
 
-// Begin Cross Module References
+// ********** Begin Cross Module References ********************************************************
 ENGINE_API UClass* Z_Construct_UClass_UActorComponent();
 FANTASIA_API UClass* Z_Construct_UClass_UGroqComponent();
 FANTASIA_API UClass* Z_Construct_UClass_UGroqComponent_NoRegister();
@@ -18,9 +20,9 @@ FANTASIA_API UFunction* Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTRespon
 FANTASIA_API UFunction* Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTStreamResponseEvent__DelegateSignature();
 FANTASIA_API UScriptStruct* Z_Construct_UScriptStruct_FChatTurn();
 UPackage* Z_Construct_UPackage__Script_FANTASIA();
-// End Cross Module References
+// ********** End Cross Module References **********************************************************
 
-// Begin Class UGroqComponent Function getGPTCompletion
+// ********** Begin Class UGroqComponent Function getGPTCompletion *********************************
 struct Z_Construct_UFunction_UGroqComponent_getGPTCompletion_Statics
 {
 	struct GroqComponent_eventgetGPTCompletion_Parms
@@ -47,8 +49,8 @@ struct Z_Construct_UFunction_UGroqComponent_getGPTCompletion_Statics
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
-const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_UGroqComponent_getGPTCompletion_Statics::NewProp_messages_Inner = { "messages", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, Z_Construct_UScriptStruct_FChatTurn, METADATA_PARAMS(0, nullptr) }; // 4210891163
-const UECodeGen_Private::FArrayPropertyParams Z_Construct_UFunction_UGroqComponent_getGPTCompletion_Statics::NewProp_messages = { "messages", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(GroqComponent_eventgetGPTCompletion_Parms, messages), EArrayPropertyFlags::None, METADATA_PARAMS(0, nullptr) }; // 4210891163
+const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_UGroqComponent_getGPTCompletion_Statics::NewProp_messages_Inner = { "messages", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, Z_Construct_UScriptStruct_FChatTurn, METADATA_PARAMS(0, nullptr) }; // 1111787146
+const UECodeGen_Private::FArrayPropertyParams Z_Construct_UFunction_UGroqComponent_getGPTCompletion_Statics::NewProp_messages = { "messages", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(GroqComponent_eventgetGPTCompletion_Parms, messages), EArrayPropertyFlags::None, METADATA_PARAMS(0, nullptr) }; // 1111787146
 const UECodeGen_Private::FStrPropertyParams Z_Construct_UFunction_UGroqComponent_getGPTCompletion_Statics::NewProp_apiMethod = { "apiMethod", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(GroqComponent_eventgetGPTCompletion_Parms, apiMethod), METADATA_PARAMS(0, nullptr) };
 void Z_Construct_UFunction_UGroqComponent_getGPTCompletion_Statics::NewProp_stream_SetBit(void* Obj)
 {
@@ -62,7 +64,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UGroqC
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UGroqComponent_getGPTCompletion_Statics::NewProp_stream,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UGroqComponent_getGPTCompletion_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UGroqComponent_getGPTCompletion_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UGroqComponent, nullptr, "getGPTCompletion", nullptr, nullptr, Z_Construct_UFunction_UGroqComponent_getGPTCompletion_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UGroqComponent_getGPTCompletion_Statics::PropPointers), sizeof(Z_Construct_UFunction_UGroqComponent_getGPTCompletion_Statics::GroqComponent_eventgetGPTCompletion_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UGroqComponent_getGPTCompletion_Statics::Function_MetaDataParams), Z_Construct_UFunction_UGroqComponent_getGPTCompletion_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UGroqComponent_getGPTCompletion_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_UGroqComponent, nullptr, "getGPTCompletion", Z_Construct_UFunction_UGroqComponent_getGPTCompletion_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UGroqComponent_getGPTCompletion_Statics::PropPointers), sizeof(Z_Construct_UFunction_UGroqComponent_getGPTCompletion_Statics::GroqComponent_eventgetGPTCompletion_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UGroqComponent_getGPTCompletion_Statics::Function_MetaDataParams), Z_Construct_UFunction_UGroqComponent_getGPTCompletion_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(Z_Construct_UFunction_UGroqComponent_getGPTCompletion_Statics::GroqComponent_eventgetGPTCompletion_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_UGroqComponent_getGPTCompletion()
 {
@@ -83,9 +85,9 @@ DEFINE_FUNCTION(UGroqComponent::execgetGPTCompletion)
 	P_THIS->getGPTCompletion(Z_Param_messages,Z_Param_apiMethod,Z_Param_stream);
 	P_NATIVE_END;
 }
-// End Class UGroqComponent Function getGPTCompletion
+// ********** End Class UGroqComponent Function getGPTCompletion ***********************************
 
-// Begin Class UGroqComponent
+// ********** Begin Class UGroqComponent ***********************************************************
 void UGroqComponent::StaticRegisterNativesUGroqComponent()
 {
 	UClass* Class = UGroqComponent::StaticClass();
@@ -94,10 +96,34 @@ void UGroqComponent::StaticRegisterNativesUGroqComponent()
 	};
 	FNativeFunctionRegistrar::RegisterFunctions(Class, Funcs, UE_ARRAY_COUNT(Funcs));
 }
-IMPLEMENT_CLASS_NO_AUTO_REGISTRATION(UGroqComponent);
+FClassRegistrationInfo Z_Registration_Info_UClass_UGroqComponent;
+UClass* UGroqComponent::GetPrivateStaticClass()
+{
+	using TClass = UGroqComponent;
+	if (!Z_Registration_Info_UClass_UGroqComponent.InnerSingleton)
+	{
+		GetPrivateStaticClassBody(
+			StaticPackage(),
+			TEXT("GroqComponent"),
+			Z_Registration_Info_UClass_UGroqComponent.InnerSingleton,
+			StaticRegisterNativesUGroqComponent,
+			sizeof(TClass),
+			alignof(TClass),
+			TClass::StaticClassFlags,
+			TClass::StaticClassCastFlags(),
+			TClass::StaticConfigName(),
+			(UClass::ClassConstructorType)InternalConstructor<TClass>,
+			(UClass::ClassVTableHelperCtorCallerType)InternalVTableHelperCtorCaller<TClass>,
+			UOBJECT_CPPCLASS_STATICFUNCTIONS_FORCLASS(TClass),
+			&TClass::Super::StaticClass,
+			&TClass::WithinClass::StaticClass
+		);
+	}
+	return Z_Registration_Info_UClass_UGroqComponent.InnerSingleton;
+}
 UClass* Z_Construct_UClass_UGroqComponent_NoRegister()
 {
-	return UGroqComponent::StaticClass();
+	return UGroqComponent::GetPrivateStaticClass();
 }
 struct Z_Construct_UClass_UGroqComponent_Statics
 {
@@ -129,7 +155,7 @@ struct Z_Construct_UClass_UGroqComponent_Statics
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static UObject* (*const DependentSingletons[])();
 	static constexpr FClassFunctionLinkInfo FuncInfo[] = {
-		{ &Z_Construct_UFunction_UGroqComponent_getGPTCompletion, "getGPTCompletion" }, // 907324479
+		{ &Z_Construct_UFunction_UGroqComponent_getGPTCompletion, "getGPTCompletion" }, // 1017711516
 	};
 	static_assert(UE_ARRAY_COUNT(FuncInfo) < 2048);
 	static constexpr FCppClassTypeInfoStatic StaticCppClassTypeInfo = {
@@ -138,9 +164,9 @@ struct Z_Construct_UClass_UGroqComponent_Statics
 	static const UECodeGen_Private::FClassParams ClassParams;
 };
 const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_UGroqComponent_Statics::NewProp_Key = { "Key", nullptr, (EPropertyFlags)0x0010000000004001, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UGroqComponent, Key), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Key_MetaData), NewProp_Key_MetaData) };
-const UECodeGen_Private::FMulticastDelegatePropertyParams Z_Construct_UClass_UGroqComponent_Statics::NewProp_IncomingGPTResponse = { "IncomingGPTResponse", nullptr, (EPropertyFlags)0x0010100010080000, UECodeGen_Private::EPropertyGenFlags::InlineMulticastDelegate, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UGroqComponent, IncomingGPTResponse), Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_IncomingGPTResponse_MetaData), NewProp_IncomingGPTResponse_MetaData) }; // 830462791
-const UECodeGen_Private::FMulticastDelegatePropertyParams Z_Construct_UClass_UGroqComponent_Statics::NewProp_IncomingChatGPTResponse = { "IncomingChatGPTResponse", nullptr, (EPropertyFlags)0x0010100010080000, UECodeGen_Private::EPropertyGenFlags::InlineMulticastDelegate, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UGroqComponent, IncomingChatGPTResponse), Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_IncomingChatGPTResponse_MetaData), NewProp_IncomingChatGPTResponse_MetaData) }; // 830462791
-const UECodeGen_Private::FMulticastDelegatePropertyParams Z_Construct_UClass_UGroqComponent_Statics::NewProp_IncomingGPTStreamResponse = { "IncomingGPTStreamResponse", nullptr, (EPropertyFlags)0x0010100010080000, UECodeGen_Private::EPropertyGenFlags::InlineMulticastDelegate, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UGroqComponent, IncomingGPTStreamResponse), Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTStreamResponseEvent__DelegateSignature, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_IncomingGPTStreamResponse_MetaData), NewProp_IncomingGPTStreamResponse_MetaData) }; // 1550049039
+const UECodeGen_Private::FMulticastDelegatePropertyParams Z_Construct_UClass_UGroqComponent_Statics::NewProp_IncomingGPTResponse = { "IncomingGPTResponse", nullptr, (EPropertyFlags)0x0010100010080000, UECodeGen_Private::EPropertyGenFlags::InlineMulticastDelegate, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UGroqComponent, IncomingGPTResponse), Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_IncomingGPTResponse_MetaData), NewProp_IncomingGPTResponse_MetaData) }; // 2402807174
+const UECodeGen_Private::FMulticastDelegatePropertyParams Z_Construct_UClass_UGroqComponent_Statics::NewProp_IncomingChatGPTResponse = { "IncomingChatGPTResponse", nullptr, (EPropertyFlags)0x0010100010080000, UECodeGen_Private::EPropertyGenFlags::InlineMulticastDelegate, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UGroqComponent, IncomingChatGPTResponse), Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTResponseEvent__DelegateSignature, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_IncomingChatGPTResponse_MetaData), NewProp_IncomingChatGPTResponse_MetaData) }; // 2402807174
+const UECodeGen_Private::FMulticastDelegatePropertyParams Z_Construct_UClass_UGroqComponent_Statics::NewProp_IncomingGPTStreamResponse = { "IncomingGPTStreamResponse", nullptr, (EPropertyFlags)0x0010100010080000, UECodeGen_Private::EPropertyGenFlags::InlineMulticastDelegate, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UGroqComponent, IncomingGPTStreamResponse), Z_Construct_UDelegateFunction_FANTASIA_IncomingGPTStreamResponseEvent__DelegateSignature, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_IncomingGPTStreamResponse_MetaData), NewProp_IncomingGPTStreamResponse_MetaData) }; // 462870519
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_UGroqComponent_Statics::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UGroqComponent_Statics::NewProp_Key,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UGroqComponent_Statics::NewProp_IncomingGPTResponse,
@@ -176,24 +202,21 @@ UClass* Z_Construct_UClass_UGroqComponent()
 	}
 	return Z_Registration_Info_UClass_UGroqComponent.OuterSingleton;
 }
-template<> FANTASIA_API UClass* StaticClass<UGroqComponent>()
-{
-	return UGroqComponent::StaticClass();
-}
 DEFINE_VTABLE_PTR_HELPER_CTOR(UGroqComponent);
 UGroqComponent::~UGroqComponent() {}
-// End Class UGroqComponent
+// ********** End Class UGroqComponent *************************************************************
 
-// Begin Registration
-struct Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_GroqComponent_h_Statics
+// ********** Begin Registration *******************************************************************
+struct Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_GroqComponent_h__Script_FANTASIA_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_UGroqComponent, UGroqComponent::StaticClass, TEXT("UGroqComponent"), &Z_Registration_Info_UClass_UGroqComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UGroqComponent), 2224448788U) },
+		{ Z_Construct_UClass_UGroqComponent, UGroqComponent::StaticClass, TEXT("UGroqComponent"), &Z_Registration_Info_UClass_UGroqComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UGroqComponent), 2553115866U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_GroqComponent_h_1730584604(TEXT("/Script/FANTASIA"),
-	Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_GroqComponent_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_GroqComponent_h_Statics::ClassInfo),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_GroqComponent_h__Script_FANTASIA_1427869782(TEXT("/Script/FANTASIA"),
+	Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_GroqComponent_h__Script_FANTASIA_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_GroqComponent_h__Script_FANTASIA_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);
-// End Registration
+// ********** End Registration *********************************************************************
+
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

@@ -5,43 +5,56 @@
 ===========================================================================*/
 
 // IWYU pragma: private, include "InfluenceDiag.h"
-#include "UObject/ObjectMacros.h"
-#include "UObject/ScriptMacros.h"
 
-PRAGMA_DISABLE_DEPRECATION_WARNINGS
- 
- struct FArrayFloat;
-enum class InfluenceNodeType : uint8;
 #ifdef FANTASIA_InfluenceDiag_generated_h
 #error "InfluenceDiag.generated.h already included, missing '#pragma once' in InfluenceDiag.h"
 #endif
 #define FANTASIA_InfluenceDiag_generated_h
 
+#include "UObject/ObjectMacros.h"
+#include "UObject/ScriptMacros.h"
+
+PRAGMA_DISABLE_DEPRECATION_WARNINGS
+
+ 
+ struct FArrayFloat;
+enum class InfluenceNodeType : uint8;
+
+// ********** Begin ScriptStruct FInfluenceDiagArcStruct *******************************************
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_46_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FInfluenceDiagArcStruct_Statics; \
 	FANTASIA_API static class UScriptStruct* StaticStruct();
 
 
-template<> FANTASIA_API UScriptStruct* StaticStruct<struct FInfluenceDiagArcStruct>();
+struct FInfluenceDiagArcStruct;
+// ********** End ScriptStruct FInfluenceDiagArcStruct *********************************************
 
+// ********** Begin ScriptStruct FInfluenceDiagNodeStruct ******************************************
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_58_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FInfluenceDiagNodeStruct_Statics; \
 	FANTASIA_API static class UScriptStruct* StaticStruct();
 
 
-template<> FANTASIA_API UScriptStruct* StaticStruct<struct FInfluenceDiagNodeStruct>();
+struct FInfluenceDiagNodeStruct;
+// ********** End ScriptStruct FInfluenceDiagNodeStruct ********************************************
 
+// ********** Begin ScriptStruct FArrayFloat *******************************************************
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_79_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FArrayFloat_Statics; \
 	FANTASIA_API static class UScriptStruct* StaticStruct();
 
 
-template<> FANTASIA_API UScriptStruct* StaticStruct<struct FArrayFloat>();
+struct FArrayFloat;
+// ********** End ScriptStruct FArrayFloat *********************************************************
 
+// ********** Begin Delegate FIDInferenceAvailableEvent ********************************************
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_87_DELEGATE \
 FANTASIA_API void FIDInferenceAvailableEvent_DelegateWrapper(const FMulticastScriptDelegate& IDInferenceAvailableEvent);
 
 
+// ********** End Delegate FIDInferenceAvailableEvent **********************************************
+
+// ********** Begin Class UInfluenceDiag ***********************************************************
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_92_RPC_WRAPPERS \
 	DECLARE_FUNCTION(execdecisionOrder); \
 	DECLARE_FUNCTION(execdecisionOrderExists); \
@@ -65,12 +78,16 @@ FANTASIA_API void FIDInferenceAvailableEvent_DelegateWrapper(const FMulticastScr
 	DECLARE_FUNCTION(execInit);
 
 
+FANTASIA_API UClass* Z_Construct_UClass_UInfluenceDiag_NoRegister();
+
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_92_INCLASS \
 private: \
 	static void StaticRegisterNativesUInfluenceDiag(); \
 	friend struct Z_Construct_UClass_UInfluenceDiag_Statics; \
+	static UClass* GetPrivateStaticClass(); \
+	friend FANTASIA_API UClass* Z_Construct_UClass_UInfluenceDiag_NoRegister(); \
 public: \
-	DECLARE_CLASS(UInfluenceDiag, UObject, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/FANTASIA"), NO_API) \
+	DECLARE_CLASS2(UInfluenceDiag, UObject, COMPILED_IN_FLAGS(0), CASTCLASS_None, TEXT("/Script/FANTASIA"), Z_Construct_UClass_UInfluenceDiag_NoRegister) \
 	DECLARE_SERIALIZER(UInfluenceDiag)
 
 
@@ -80,11 +97,9 @@ public: \
 	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(UInfluenceDiag) \
 	DECLARE_VTABLE_PTR_HELPER_CTOR(NO_API, UInfluenceDiag); \
 	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(UInfluenceDiag); \
-private: \
-	/** Private move- and copy-constructors, should never be used */ \
-	UInfluenceDiag(UInfluenceDiag&&); \
-	UInfluenceDiag(const UInfluenceDiag&); \
-public: \
+	/** Deleted move- and copy-constructors, should never be used */ \
+	UInfluenceDiag(UInfluenceDiag&&) = delete; \
+	UInfluenceDiag(const UInfluenceDiag&) = delete; \
 	NO_API virtual ~UInfluenceDiag();
 
 
@@ -99,17 +114,20 @@ public: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-template<> FANTASIA_API UClass* StaticClass<class UInfluenceDiag>();
+class UInfluenceDiag;
+
+// ********** End Class UInfluenceDiag *************************************************************
 
 #undef CURRENT_FILE_ID
 #define CURRENT_FILE_ID FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h
 
-
+// ********** Begin Enum InferenceIDAlgs ***********************************************************
 #define FOREACH_ENUM_INFERENCEIDALGS(op) \
 	op(InferenceIDAlgs::ShaferShenoyLIMID) 
 
 enum class InferenceIDAlgs : uint8;
 template<> struct TIsUEnumClass<InferenceIDAlgs> { enum { Value = true }; };
 template<> FANTASIA_API UEnum* StaticEnum<InferenceIDAlgs>();
+// ********** End Enum InferenceIDAlgs *************************************************************
 
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
