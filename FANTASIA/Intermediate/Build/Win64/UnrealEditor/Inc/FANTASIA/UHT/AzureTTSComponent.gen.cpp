@@ -5,11 +5,13 @@
 ===========================================================================*/
 
 #include "UObject/GeneratedCppIncludes.h"
-#include "FANTASIA/Public/AzureTTSComponent.h"
+#include "AzureTTSComponent.h"
+
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
+
 void EmptyLinkFunctionForGeneratedCodeAzureTTSComponent() {}
 
-// Begin Cross Module References
+// ********** Begin Cross Module References ********************************************************
 ENGINE_API UClass* Z_Construct_UClass_UActorComponent();
 ENGINE_API UClass* Z_Construct_UClass_UAudioComponent_NoRegister();
 ENGINE_API UClass* Z_Construct_UClass_USoundWave_NoRegister();
@@ -18,9 +20,9 @@ FANTASIA_API UClass* Z_Construct_UClass_UAzureTTSComponent_NoRegister();
 FANTASIA_API UClass* Z_Construct_UClass_UTTSInterface_NoRegister();
 FANTASIA_API UFunction* Z_Construct_UDelegateFunction_FANTASIA_SynthesizedEvent__DelegateSignature();
 UPackage* Z_Construct_UPackage__Script_FANTASIA();
-// End Cross Module References
+// ********** End Cross Module References **********************************************************
 
-// Begin Class UAzureTTSComponent Function TTSGetRawSound
+// ********** Begin Class UAzureTTSComponent Function TTSGetRawSound *******************************
 struct Z_Construct_UFunction_UAzureTTSComponent_TTSGetRawSound_Statics
 {
 	struct AzureTTSComponent_eventTTSGetRawSound_Parms
@@ -51,7 +53,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UAzure
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UAzureTTSComponent_TTSGetRawSound_Statics::NewProp_ReturnValue,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UAzureTTSComponent_TTSGetRawSound_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UAzureTTSComponent_TTSGetRawSound_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UAzureTTSComponent, nullptr, "TTSGetRawSound", nullptr, nullptr, Z_Construct_UFunction_UAzureTTSComponent_TTSGetRawSound_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UAzureTTSComponent_TTSGetRawSound_Statics::PropPointers), sizeof(Z_Construct_UFunction_UAzureTTSComponent_TTSGetRawSound_Statics::AzureTTSComponent_eventTTSGetRawSound_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x14020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UAzureTTSComponent_TTSGetRawSound_Statics::Function_MetaDataParams), Z_Construct_UFunction_UAzureTTSComponent_TTSGetRawSound_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UAzureTTSComponent_TTSGetRawSound_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_UAzureTTSComponent, nullptr, "TTSGetRawSound", Z_Construct_UFunction_UAzureTTSComponent_TTSGetRawSound_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UAzureTTSComponent_TTSGetRawSound_Statics::PropPointers), sizeof(Z_Construct_UFunction_UAzureTTSComponent_TTSGetRawSound_Statics::AzureTTSComponent_eventTTSGetRawSound_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x14020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UAzureTTSComponent_TTSGetRawSound_Statics::Function_MetaDataParams), Z_Construct_UFunction_UAzureTTSComponent_TTSGetRawSound_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(Z_Construct_UFunction_UAzureTTSComponent_TTSGetRawSound_Statics::AzureTTSComponent_eventTTSGetRawSound_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_UAzureTTSComponent_TTSGetRawSound()
 {
@@ -70,9 +72,9 @@ DEFINE_FUNCTION(UAzureTTSComponent::execTTSGetRawSound)
 	*(TArray<float>*)Z_Param__Result=P_THIS->TTSGetRawSound(Z_Param_id);
 	P_NATIVE_END;
 }
-// End Class UAzureTTSComponent Function TTSGetRawSound
+// ********** End Class UAzureTTSComponent Function TTSGetRawSound *********************************
 
-// Begin Class UAzureTTSComponent Function TTSGetSound
+// ********** Begin Class UAzureTTSComponent Function TTSGetSound **********************************
 struct Z_Construct_UFunction_UAzureTTSComponent_TTSGetSound_Statics
 {
 	struct AzureTTSComponent_eventTTSGetSound_Parms
@@ -100,7 +102,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UAzure
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UAzureTTSComponent_TTSGetSound_Statics::NewProp_ReturnValue,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UAzureTTSComponent_TTSGetSound_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UAzureTTSComponent_TTSGetSound_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UAzureTTSComponent, nullptr, "TTSGetSound", nullptr, nullptr, Z_Construct_UFunction_UAzureTTSComponent_TTSGetSound_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UAzureTTSComponent_TTSGetSound_Statics::PropPointers), sizeof(Z_Construct_UFunction_UAzureTTSComponent_TTSGetSound_Statics::AzureTTSComponent_eventTTSGetSound_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x14020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UAzureTTSComponent_TTSGetSound_Statics::Function_MetaDataParams), Z_Construct_UFunction_UAzureTTSComponent_TTSGetSound_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UAzureTTSComponent_TTSGetSound_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_UAzureTTSComponent, nullptr, "TTSGetSound", Z_Construct_UFunction_UAzureTTSComponent_TTSGetSound_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UAzureTTSComponent_TTSGetSound_Statics::PropPointers), sizeof(Z_Construct_UFunction_UAzureTTSComponent_TTSGetSound_Statics::AzureTTSComponent_eventTTSGetSound_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x14020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UAzureTTSComponent_TTSGetSound_Statics::Function_MetaDataParams), Z_Construct_UFunction_UAzureTTSComponent_TTSGetSound_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(Z_Construct_UFunction_UAzureTTSComponent_TTSGetSound_Statics::AzureTTSComponent_eventTTSGetSound_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_UAzureTTSComponent_TTSGetSound()
 {
@@ -119,9 +121,9 @@ DEFINE_FUNCTION(UAzureTTSComponent::execTTSGetSound)
 	*(USoundWave**)Z_Param__Result=P_THIS->TTSGetSound(Z_Param_id);
 	P_NATIVE_END;
 }
-// End Class UAzureTTSComponent Function TTSGetSound
+// ********** End Class UAzureTTSComponent Function TTSGetSound ************************************
 
-// Begin Class UAzureTTSComponent Function TTSSynthesize
+// ********** Begin Class UAzureTTSComponent Function TTSSynthesize ********************************
 struct Z_Construct_UFunction_UAzureTTSComponent_TTSSynthesize_Statics
 {
 	struct AzureTTSComponent_eventTTSSynthesize_Parms
@@ -149,7 +151,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UAzure
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UAzureTTSComponent_TTSSynthesize_Statics::NewProp_id,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UAzureTTSComponent_TTSSynthesize_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UAzureTTSComponent_TTSSynthesize_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UAzureTTSComponent, nullptr, "TTSSynthesize", nullptr, nullptr, Z_Construct_UFunction_UAzureTTSComponent_TTSSynthesize_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UAzureTTSComponent_TTSSynthesize_Statics::PropPointers), sizeof(Z_Construct_UFunction_UAzureTTSComponent_TTSSynthesize_Statics::AzureTTSComponent_eventTTSSynthesize_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UAzureTTSComponent_TTSSynthesize_Statics::Function_MetaDataParams), Z_Construct_UFunction_UAzureTTSComponent_TTSSynthesize_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UAzureTTSComponent_TTSSynthesize_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_UAzureTTSComponent, nullptr, "TTSSynthesize", Z_Construct_UFunction_UAzureTTSComponent_TTSSynthesize_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UAzureTTSComponent_TTSSynthesize_Statics::PropPointers), sizeof(Z_Construct_UFunction_UAzureTTSComponent_TTSSynthesize_Statics::AzureTTSComponent_eventTTSSynthesize_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UAzureTTSComponent_TTSSynthesize_Statics::Function_MetaDataParams), Z_Construct_UFunction_UAzureTTSComponent_TTSSynthesize_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(Z_Construct_UFunction_UAzureTTSComponent_TTSSynthesize_Statics::AzureTTSComponent_eventTTSSynthesize_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_UAzureTTSComponent_TTSSynthesize()
 {
@@ -169,9 +171,9 @@ DEFINE_FUNCTION(UAzureTTSComponent::execTTSSynthesize)
 	P_THIS->TTSSynthesize(Z_Param_ssml,Z_Param_id);
 	P_NATIVE_END;
 }
-// End Class UAzureTTSComponent Function TTSSynthesize
+// ********** End Class UAzureTTSComponent Function TTSSynthesize **********************************
 
-// Begin Class UAzureTTSComponent
+// ********** Begin Class UAzureTTSComponent *******************************************************
 void UAzureTTSComponent::StaticRegisterNativesUAzureTTSComponent()
 {
 	UClass* Class = UAzureTTSComponent::StaticClass();
@@ -182,10 +184,34 @@ void UAzureTTSComponent::StaticRegisterNativesUAzureTTSComponent()
 	};
 	FNativeFunctionRegistrar::RegisterFunctions(Class, Funcs, UE_ARRAY_COUNT(Funcs));
 }
-IMPLEMENT_CLASS_NO_AUTO_REGISTRATION(UAzureTTSComponent);
+FClassRegistrationInfo Z_Registration_Info_UClass_UAzureTTSComponent;
+UClass* UAzureTTSComponent::GetPrivateStaticClass()
+{
+	using TClass = UAzureTTSComponent;
+	if (!Z_Registration_Info_UClass_UAzureTTSComponent.InnerSingleton)
+	{
+		GetPrivateStaticClassBody(
+			StaticPackage(),
+			TEXT("AzureTTSComponent"),
+			Z_Registration_Info_UClass_UAzureTTSComponent.InnerSingleton,
+			StaticRegisterNativesUAzureTTSComponent,
+			sizeof(TClass),
+			alignof(TClass),
+			TClass::StaticClassFlags,
+			TClass::StaticClassCastFlags(),
+			TClass::StaticConfigName(),
+			(UClass::ClassConstructorType)InternalConstructor<TClass>,
+			(UClass::ClassVTableHelperCtorCallerType)InternalVTableHelperCtorCaller<TClass>,
+			UOBJECT_CPPCLASS_STATICFUNCTIONS_FORCLASS(TClass),
+			&TClass::Super::StaticClass,
+			&TClass::WithinClass::StaticClass
+		);
+	}
+	return Z_Registration_Info_UClass_UAzureTTSComponent.InnerSingleton;
+}
 UClass* Z_Construct_UClass_UAzureTTSComponent_NoRegister()
 {
-	return UAzureTTSComponent::StaticClass();
+	return UAzureTTSComponent::GetPrivateStaticClass();
 }
 struct Z_Construct_UClass_UAzureTTSComponent_Statics
 {
@@ -242,9 +268,9 @@ struct Z_Construct_UClass_UAzureTTSComponent_Statics
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static UObject* (*const DependentSingletons[])();
 	static constexpr FClassFunctionLinkInfo FuncInfo[] = {
-		{ &Z_Construct_UFunction_UAzureTTSComponent_TTSGetRawSound, "TTSGetRawSound" }, // 4181388205
-		{ &Z_Construct_UFunction_UAzureTTSComponent_TTSGetSound, "TTSGetSound" }, // 2003235420
-		{ &Z_Construct_UFunction_UAzureTTSComponent_TTSSynthesize, "TTSSynthesize" }, // 1252693287
+		{ &Z_Construct_UFunction_UAzureTTSComponent_TTSGetRawSound, "TTSGetRawSound" }, // 1318189925
+		{ &Z_Construct_UFunction_UAzureTTSComponent_TTSGetSound, "TTSGetSound" }, // 2690777517
+		{ &Z_Construct_UFunction_UAzureTTSComponent_TTSSynthesize, "TTSSynthesize" }, // 613458885
 	};
 	static_assert(UE_ARRAY_COUNT(FuncInfo) < 2048);
 	static const UECodeGen_Private::FImplementedInterfaceParams InterfaceParams[];
@@ -254,7 +280,7 @@ struct Z_Construct_UClass_UAzureTTSComponent_Statics
 	static const UECodeGen_Private::FClassParams ClassParams;
 };
 const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_UAzureTTSComponent_Statics::NewProp_Speaker = { "Speaker", nullptr, (EPropertyFlags)0x001000000008000c, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UAzureTTSComponent, Speaker), Z_Construct_UClass_UAudioComponent_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Speaker_MetaData), NewProp_Speaker_MetaData) };
-const UECodeGen_Private::FMulticastDelegatePropertyParams Z_Construct_UClass_UAzureTTSComponent_Statics::NewProp_SynthesisReady = { "SynthesisReady", nullptr, (EPropertyFlags)0x0010000010080000, UECodeGen_Private::EPropertyGenFlags::InlineMulticastDelegate, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UAzureTTSComponent, SynthesisReady), Z_Construct_UDelegateFunction_FANTASIA_SynthesizedEvent__DelegateSignature, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_SynthesisReady_MetaData), NewProp_SynthesisReady_MetaData) }; // 3364404421
+const UECodeGen_Private::FMulticastDelegatePropertyParams Z_Construct_UClass_UAzureTTSComponent_Statics::NewProp_SynthesisReady = { "SynthesisReady", nullptr, (EPropertyFlags)0x0010000010080000, UECodeGen_Private::EPropertyGenFlags::InlineMulticastDelegate, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UAzureTTSComponent, SynthesisReady), Z_Construct_UDelegateFunction_FANTASIA_SynthesizedEvent__DelegateSignature, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_SynthesisReady_MetaData), NewProp_SynthesisReady_MetaData) }; // 1658130564
 const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_UAzureTTSComponent_Statics::NewProp_Language = { "Language", nullptr, (EPropertyFlags)0x0010000000000001, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UAzureTTSComponent, Language), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Language_MetaData), NewProp_Language_MetaData) };
 const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_UAzureTTSComponent_Statics::NewProp_Voice = { "Voice", nullptr, (EPropertyFlags)0x0010000000000001, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UAzureTTSComponent, Voice), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Voice_MetaData), NewProp_Voice_MetaData) };
 const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_UAzureTTSComponent_Statics::NewProp_Key = { "Key", nullptr, (EPropertyFlags)0x0010000000000001, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UAzureTTSComponent, Key), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Key_MetaData), NewProp_Key_MetaData) };
@@ -282,7 +308,7 @@ UObject* (*const Z_Construct_UClass_UAzureTTSComponent_Statics::DependentSinglet
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_UAzureTTSComponent_Statics::DependentSingletons) < 16);
 const UECodeGen_Private::FImplementedInterfaceParams Z_Construct_UClass_UAzureTTSComponent_Statics::InterfaceParams[] = {
-	{ Z_Construct_UClass_UTTSInterface_NoRegister, (int32)VTABLE_OFFSET(UAzureTTSComponent, ITTSInterface), false },  // 2614763809
+	{ Z_Construct_UClass_UTTSInterface_NoRegister, (int32)VTABLE_OFFSET(UAzureTTSComponent, ITTSInterface), false },  // 3405460891
 };
 const UECodeGen_Private::FClassParams Z_Construct_UClass_UAzureTTSComponent_Statics::ClassParams = {
 	&UAzureTTSComponent::StaticClass,
@@ -307,24 +333,21 @@ UClass* Z_Construct_UClass_UAzureTTSComponent()
 	}
 	return Z_Registration_Info_UClass_UAzureTTSComponent.OuterSingleton;
 }
-template<> FANTASIA_API UClass* StaticClass<UAzureTTSComponent>()
-{
-	return UAzureTTSComponent::StaticClass();
-}
 DEFINE_VTABLE_PTR_HELPER_CTOR(UAzureTTSComponent);
 UAzureTTSComponent::~UAzureTTSComponent() {}
-// End Class UAzureTTSComponent
+// ********** End Class UAzureTTSComponent *********************************************************
 
-// Begin Registration
-struct Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_Statics
+// ********** Begin Registration *******************************************************************
+struct Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h__Script_FANTASIA_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_UAzureTTSComponent, UAzureTTSComponent::StaticClass, TEXT("UAzureTTSComponent"), &Z_Registration_Info_UClass_UAzureTTSComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UAzureTTSComponent), 3822200769U) },
+		{ Z_Construct_UClass_UAzureTTSComponent, UAzureTTSComponent::StaticClass, TEXT("UAzureTTSComponent"), &Z_Registration_Info_UClass_UAzureTTSComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UAzureTTSComponent), 1052548605U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_483052763(TEXT("/Script/FANTASIA"),
-	Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h_Statics::ClassInfo),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h__Script_FANTASIA_4249591300(TEXT("/Script/FANTASIA"),
+	Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h__Script_FANTASIA_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_AzureTTSComponent_h__Script_FANTASIA_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);
-// End Registration
+// ********** End Registration *********************************************************************
+
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

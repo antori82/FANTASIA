@@ -5,35 +5,40 @@
 ===========================================================================*/
 
 // IWYU pragma: private, include "TTSThreadInterface.h"
-#include "UObject/ObjectMacros.h"
-#include "UObject/ScriptMacros.h"
 
-PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #ifdef FANTASIA_TTSThreadInterface_generated_h
 #error "TTSThreadInterface.generated.h already included, missing '#pragma once' in TTSThreadInterface.h"
 #endif
 #define FANTASIA_TTSThreadInterface_generated_h
 
+#include "UObject/ObjectMacros.h"
+#include "UObject/ScriptMacros.h"
+
+PRAGMA_DISABLE_DEPRECATION_WARNINGS
+
+// ********** Begin Interface UTTSThreadInterface **************************************************
+FANTASIA_API UClass* Z_Construct_UClass_UTTSThreadInterface_NoRegister();
+
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_TTSThreadInterface_h_12_ENHANCED_CONSTRUCTORS \
 	/** Standard constructor, called after all reflected properties have been initialized */ \
 	FANTASIA_API UTTSThreadInterface(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get()); \
-private: \
-	/** Private move- and copy-constructors, should never be used */ \
-	UTTSThreadInterface(UTTSThreadInterface&&); \
-	UTTSThreadInterface(const UTTSThreadInterface&); \
-public: \
+	/** Deleted move- and copy-constructors, should never be used */ \
+	UTTSThreadInterface(UTTSThreadInterface&&) = delete; \
+	UTTSThreadInterface(const UTTSThreadInterface&) = delete; \
 	DECLARE_VTABLE_PTR_HELPER_CTOR(FANTASIA_API, UTTSThreadInterface); \
 	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(UTTSThreadInterface); \
 	DEFINE_ABSTRACT_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(UTTSThreadInterface) \
-	FANTASIA_API virtual ~UTTSThreadInterface();
+	virtual ~UTTSThreadInterface() = default;
 
 
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_TTSThreadInterface_h_12_GENERATED_UINTERFACE_BODY() \
 private: \
 	static void StaticRegisterNativesUTTSThreadInterface(); \
 	friend struct Z_Construct_UClass_UTTSThreadInterface_Statics; \
+	static UClass* GetPrivateStaticClass(); \
+	friend FANTASIA_API UClass* Z_Construct_UClass_UTTSThreadInterface_NoRegister(); \
 public: \
-	DECLARE_CLASS(UTTSThreadInterface, UInterface, COMPILED_IN_FLAGS(CLASS_Abstract | CLASS_Interface), CASTCLASS_None, TEXT("/Script/FANTASIA"), FANTASIA_API) \
+	DECLARE_CLASS2(UTTSThreadInterface, UInterface, COMPILED_IN_FLAGS(CLASS_Abstract | CLASS_Interface), CASTCLASS_None, TEXT("/Script/FANTASIA"), Z_Construct_UClass_UTTSThreadInterface_NoRegister) \
 	DECLARE_SERIALIZER(UTTSThreadInterface)
 
 
@@ -63,10 +68,11 @@ private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-template<> FANTASIA_API UClass* StaticClass<class UTTSThreadInterface>();
+class UTTSThreadInterface;
+
+// ********** End Interface UTTSThreadInterface ****************************************************
 
 #undef CURRENT_FILE_ID
 #define CURRENT_FILE_ID FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_TTSThreadInterface_h
-
 
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

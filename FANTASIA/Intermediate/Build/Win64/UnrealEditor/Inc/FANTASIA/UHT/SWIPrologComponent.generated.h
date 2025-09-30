@@ -5,22 +5,29 @@
 ===========================================================================*/
 
 // IWYU pragma: private, include "SWIPrologComponent.h"
-#include "UObject/ObjectMacros.h"
-#include "UObject/ScriptMacros.h"
 
-PRAGMA_DISABLE_DEPRECATION_WARNINGS
-class USWIPrologObject;
-class USWIPrologSolution;
-class USWIPrologTerm;
 #ifdef FANTASIA_SWIPrologComponent_generated_h
 #error "SWIPrologComponent.generated.h already included, missing '#pragma once' in SWIPrologComponent.h"
 #endif
 #define FANTASIA_SWIPrologComponent_generated_h
 
+#include "UObject/ObjectMacros.h"
+#include "UObject/ScriptMacros.h"
+
+PRAGMA_DISABLE_DEPRECATION_WARNINGS
+
+class USWIPrologObject;
+class USWIPrologSolution;
+class USWIPrologTerm;
+
+// ********** Begin Delegate FSolutionAvailableEvent ***********************************************
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_SWIPrologComponent_h_9_DELEGATE \
 FANTASIA_API void FSolutionAvailableEvent_DelegateWrapper(const FMulticastScriptDelegate& SolutionAvailableEvent, USWIPrologSolution* solution);
 
 
+// ********** End Delegate FSolutionAvailableEvent *************************************************
+
+// ********** Begin Class USWIPrologComponent ******************************************************
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_SWIPrologComponent_h_14_RPC_WRAPPERS_NO_PURE_DECLS \
 	DECLARE_FUNCTION(execopenPrologFile); \
 	DECLARE_FUNCTION(execSWIPLretract); \
@@ -29,23 +36,25 @@ FANTASIA_API void FSolutionAvailableEvent_DelegateWrapper(const FMulticastScript
 	DECLARE_FUNCTION(execSWIPLsubmitQuery);
 
 
+FANTASIA_API UClass* Z_Construct_UClass_USWIPrologComponent_NoRegister();
+
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_SWIPrologComponent_h_14_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUSWIPrologComponent(); \
 	friend struct Z_Construct_UClass_USWIPrologComponent_Statics; \
+	static UClass* GetPrivateStaticClass(); \
+	friend FANTASIA_API UClass* Z_Construct_UClass_USWIPrologComponent_NoRegister(); \
 public: \
-	DECLARE_CLASS(USWIPrologComponent, UActorComponent, COMPILED_IN_FLAGS(0 | CLASS_Config), CASTCLASS_None, TEXT("/Script/FANTASIA"), NO_API) \
+	DECLARE_CLASS2(USWIPrologComponent, UActorComponent, COMPILED_IN_FLAGS(0 | CLASS_Config), CASTCLASS_None, TEXT("/Script/FANTASIA"), Z_Construct_UClass_USWIPrologComponent_NoRegister) \
 	DECLARE_SERIALIZER(USWIPrologComponent) \
 	static const TCHAR* StaticConfigName() {return TEXT("Game");} \
 
 
 
 #define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_SWIPrologComponent_h_14_ENHANCED_CONSTRUCTORS \
-private: \
-	/** Private move- and copy-constructors, should never be used */ \
-	USWIPrologComponent(USWIPrologComponent&&); \
-	USWIPrologComponent(const USWIPrologComponent&); \
-public: \
+	/** Deleted move- and copy-constructors, should never be used */ \
+	USWIPrologComponent(USWIPrologComponent&&) = delete; \
+	USWIPrologComponent(const USWIPrologComponent&) = delete; \
 	DECLARE_VTABLE_PTR_HELPER_CTOR(NO_API, USWIPrologComponent); \
 	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(USWIPrologComponent); \
 	DEFINE_DEFAULT_CONSTRUCTOR_CALL(USWIPrologComponent) \
@@ -63,10 +72,11 @@ private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-template<> FANTASIA_API UClass* StaticClass<class USWIPrologComponent>();
+class USWIPrologComponent;
+
+// ********** End Class USWIPrologComponent ********************************************************
 
 #undef CURRENT_FILE_ID
 #define CURRENT_FILE_ID FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_SWIPrologComponent_h
-
 
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

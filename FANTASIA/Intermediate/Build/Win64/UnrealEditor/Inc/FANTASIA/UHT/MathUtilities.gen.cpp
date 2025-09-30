@@ -5,18 +5,20 @@
 ===========================================================================*/
 
 #include "UObject/GeneratedCppIncludes.h"
-#include "FANTASIA/Public/MathUtilities.h"
+#include "MathUtilities.h"
+
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
+
 void EmptyLinkFunctionForGeneratedCodeMathUtilities() {}
 
-// Begin Cross Module References
+// ********** Begin Cross Module References ********************************************************
 COREUOBJECT_API UClass* Z_Construct_UClass_UObject();
 FANTASIA_API UClass* Z_Construct_UClass_UKernelDensityEstimator();
 FANTASIA_API UClass* Z_Construct_UClass_UKernelDensityEstimator_NoRegister();
 UPackage* Z_Construct_UPackage__Script_FANTASIA();
-// End Cross Module References
+// ********** End Cross Module References **********************************************************
 
-// Begin Class UKernelDensityEstimator Function evaluate
+// ********** Begin Class UKernelDensityEstimator Function evaluate ********************************
 struct Z_Construct_UFunction_UKernelDensityEstimator_evaluate_Statics
 {
 	struct KernelDensityEstimator_eventevaluate_Parms
@@ -43,7 +45,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UKerne
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UKernelDensityEstimator_evaluate_Statics::NewProp_ReturnValue,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UKernelDensityEstimator_evaluate_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UKernelDensityEstimator_evaluate_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UKernelDensityEstimator, nullptr, "evaluate", nullptr, nullptr, Z_Construct_UFunction_UKernelDensityEstimator_evaluate_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UKernelDensityEstimator_evaluate_Statics::PropPointers), sizeof(Z_Construct_UFunction_UKernelDensityEstimator_evaluate_Statics::KernelDensityEstimator_eventevaluate_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UKernelDensityEstimator_evaluate_Statics::Function_MetaDataParams), Z_Construct_UFunction_UKernelDensityEstimator_evaluate_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UKernelDensityEstimator_evaluate_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_UKernelDensityEstimator, nullptr, "evaluate", Z_Construct_UFunction_UKernelDensityEstimator_evaluate_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UKernelDensityEstimator_evaluate_Statics::PropPointers), sizeof(Z_Construct_UFunction_UKernelDensityEstimator_evaluate_Statics::KernelDensityEstimator_eventevaluate_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UKernelDensityEstimator_evaluate_Statics::Function_MetaDataParams), Z_Construct_UFunction_UKernelDensityEstimator_evaluate_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(Z_Construct_UFunction_UKernelDensityEstimator_evaluate_Statics::KernelDensityEstimator_eventevaluate_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_UKernelDensityEstimator_evaluate()
 {
@@ -62,9 +64,9 @@ DEFINE_FUNCTION(UKernelDensityEstimator::execevaluate)
 	*(float*)Z_Param__Result=P_THIS->evaluate(Z_Param_point);
 	P_NATIVE_END;
 }
-// End Class UKernelDensityEstimator Function evaluate
+// ********** End Class UKernelDensityEstimator Function evaluate **********************************
 
-// Begin Class UKernelDensityEstimator Function getPdf
+// ********** Begin Class UKernelDensityEstimator Function getPdf **********************************
 struct Z_Construct_UFunction_UKernelDensityEstimator_getPdf_Statics
 {
 	struct KernelDensityEstimator_eventgetPdf_Parms
@@ -105,7 +107,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UKerne
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UKernelDensityEstimator_getPdf_Statics::NewProp_ReturnValue,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UKernelDensityEstimator_getPdf_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UKernelDensityEstimator_getPdf_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UKernelDensityEstimator, nullptr, "getPdf", nullptr, nullptr, Z_Construct_UFunction_UKernelDensityEstimator_getPdf_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UKernelDensityEstimator_getPdf_Statics::PropPointers), sizeof(Z_Construct_UFunction_UKernelDensityEstimator_getPdf_Statics::KernelDensityEstimator_eventgetPdf_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x14020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UKernelDensityEstimator_getPdf_Statics::Function_MetaDataParams), Z_Construct_UFunction_UKernelDensityEstimator_getPdf_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UKernelDensityEstimator_getPdf_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_UKernelDensityEstimator, nullptr, "getPdf", Z_Construct_UFunction_UKernelDensityEstimator_getPdf_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UKernelDensityEstimator_getPdf_Statics::PropPointers), sizeof(Z_Construct_UFunction_UKernelDensityEstimator_getPdf_Statics::KernelDensityEstimator_eventgetPdf_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x14020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UKernelDensityEstimator_getPdf_Statics::Function_MetaDataParams), Z_Construct_UFunction_UKernelDensityEstimator_getPdf_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(Z_Construct_UFunction_UKernelDensityEstimator_getPdf_Statics::KernelDensityEstimator_eventgetPdf_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_UKernelDensityEstimator_getPdf()
 {
@@ -126,9 +128,9 @@ DEFINE_FUNCTION(UKernelDensityEstimator::execgetPdf)
 	*(TMap<float,float>*)Z_Param__Result=P_THIS->getPdf(Z_Param_min,Z_Param_max,Z_Param_points);
 	P_NATIVE_END;
 }
-// End Class UKernelDensityEstimator Function getPdf
+// ********** End Class UKernelDensityEstimator Function getPdf ************************************
 
-// Begin Class UKernelDensityEstimator Function setData
+// ********** Begin Class UKernelDensityEstimator Function setData *********************************
 struct Z_Construct_UFunction_UKernelDensityEstimator_setData_Statics
 {
 	struct KernelDensityEstimator_eventsetData_Parms
@@ -154,7 +156,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UKerne
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UKernelDensityEstimator_setData_Statics::NewProp_newData,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UKernelDensityEstimator_setData_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UKernelDensityEstimator_setData_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UKernelDensityEstimator, nullptr, "setData", nullptr, nullptr, Z_Construct_UFunction_UKernelDensityEstimator_setData_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UKernelDensityEstimator_setData_Statics::PropPointers), sizeof(Z_Construct_UFunction_UKernelDensityEstimator_setData_Statics::KernelDensityEstimator_eventsetData_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UKernelDensityEstimator_setData_Statics::Function_MetaDataParams), Z_Construct_UFunction_UKernelDensityEstimator_setData_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UKernelDensityEstimator_setData_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_UKernelDensityEstimator, nullptr, "setData", Z_Construct_UFunction_UKernelDensityEstimator_setData_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UKernelDensityEstimator_setData_Statics::PropPointers), sizeof(Z_Construct_UFunction_UKernelDensityEstimator_setData_Statics::KernelDensityEstimator_eventsetData_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UKernelDensityEstimator_setData_Statics::Function_MetaDataParams), Z_Construct_UFunction_UKernelDensityEstimator_setData_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(Z_Construct_UFunction_UKernelDensityEstimator_setData_Statics::KernelDensityEstimator_eventsetData_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_UKernelDensityEstimator_setData()
 {
@@ -173,9 +175,9 @@ DEFINE_FUNCTION(UKernelDensityEstimator::execsetData)
 	P_THIS->setData(Z_Param_newData);
 	P_NATIVE_END;
 }
-// End Class UKernelDensityEstimator Function setData
+// ********** End Class UKernelDensityEstimator Function setData ***********************************
 
-// Begin Class UKernelDensityEstimator
+// ********** Begin Class UKernelDensityEstimator **************************************************
 void UKernelDensityEstimator::StaticRegisterNativesUKernelDensityEstimator()
 {
 	UClass* Class = UKernelDensityEstimator::StaticClass();
@@ -186,10 +188,34 @@ void UKernelDensityEstimator::StaticRegisterNativesUKernelDensityEstimator()
 	};
 	FNativeFunctionRegistrar::RegisterFunctions(Class, Funcs, UE_ARRAY_COUNT(Funcs));
 }
-IMPLEMENT_CLASS_NO_AUTO_REGISTRATION(UKernelDensityEstimator);
+FClassRegistrationInfo Z_Registration_Info_UClass_UKernelDensityEstimator;
+UClass* UKernelDensityEstimator::GetPrivateStaticClass()
+{
+	using TClass = UKernelDensityEstimator;
+	if (!Z_Registration_Info_UClass_UKernelDensityEstimator.InnerSingleton)
+	{
+		GetPrivateStaticClassBody(
+			StaticPackage(),
+			TEXT("KernelDensityEstimator"),
+			Z_Registration_Info_UClass_UKernelDensityEstimator.InnerSingleton,
+			StaticRegisterNativesUKernelDensityEstimator,
+			sizeof(TClass),
+			alignof(TClass),
+			TClass::StaticClassFlags,
+			TClass::StaticClassCastFlags(),
+			TClass::StaticConfigName(),
+			(UClass::ClassConstructorType)InternalConstructor<TClass>,
+			(UClass::ClassVTableHelperCtorCallerType)InternalVTableHelperCtorCaller<TClass>,
+			UOBJECT_CPPCLASS_STATICFUNCTIONS_FORCLASS(TClass),
+			&TClass::Super::StaticClass,
+			&TClass::WithinClass::StaticClass
+		);
+	}
+	return Z_Registration_Info_UClass_UKernelDensityEstimator.InnerSingleton;
+}
 UClass* Z_Construct_UClass_UKernelDensityEstimator_NoRegister()
 {
-	return UKernelDensityEstimator::StaticClass();
+	return UKernelDensityEstimator::GetPrivateStaticClass();
 }
 struct Z_Construct_UClass_UKernelDensityEstimator_Statics
 {
@@ -203,9 +229,9 @@ struct Z_Construct_UClass_UKernelDensityEstimator_Statics
 #endif // WITH_METADATA
 	static UObject* (*const DependentSingletons[])();
 	static constexpr FClassFunctionLinkInfo FuncInfo[] = {
-		{ &Z_Construct_UFunction_UKernelDensityEstimator_evaluate, "evaluate" }, // 450236263
-		{ &Z_Construct_UFunction_UKernelDensityEstimator_getPdf, "getPdf" }, // 11803563
-		{ &Z_Construct_UFunction_UKernelDensityEstimator_setData, "setData" }, // 2073847928
+		{ &Z_Construct_UFunction_UKernelDensityEstimator_evaluate, "evaluate" }, // 478565951
+		{ &Z_Construct_UFunction_UKernelDensityEstimator_getPdf, "getPdf" }, // 3451106171
+		{ &Z_Construct_UFunction_UKernelDensityEstimator_setData, "setData" }, // 1838832657
 	};
 	static_assert(UE_ARRAY_COUNT(FuncInfo) < 2048);
 	static constexpr FCppClassTypeInfoStatic StaticCppClassTypeInfo = {
@@ -241,24 +267,21 @@ UClass* Z_Construct_UClass_UKernelDensityEstimator()
 	}
 	return Z_Registration_Info_UClass_UKernelDensityEstimator.OuterSingleton;
 }
-template<> FANTASIA_API UClass* StaticClass<UKernelDensityEstimator>()
-{
-	return UKernelDensityEstimator::StaticClass();
-}
 DEFINE_VTABLE_PTR_HELPER_CTOR(UKernelDensityEstimator);
 UKernelDensityEstimator::~UKernelDensityEstimator() {}
-// End Class UKernelDensityEstimator
+// ********** End Class UKernelDensityEstimator ****************************************************
 
-// Begin Registration
-struct Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_MathUtilities_h_Statics
+// ********** Begin Registration *******************************************************************
+struct Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_MathUtilities_h__Script_FANTASIA_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_UKernelDensityEstimator, UKernelDensityEstimator::StaticClass, TEXT("UKernelDensityEstimator"), &Z_Registration_Info_UClass_UKernelDensityEstimator, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UKernelDensityEstimator), 287400553U) },
+		{ Z_Construct_UClass_UKernelDensityEstimator, UKernelDensityEstimator::StaticClass, TEXT("UKernelDensityEstimator"), &Z_Registration_Info_UClass_UKernelDensityEstimator, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UKernelDensityEstimator), 3570552767U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_MathUtilities_h_62290858(TEXT("/Script/FANTASIA"),
-	Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_MathUtilities_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_MathUtilities_h_Statics::ClassInfo),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_MathUtilities_h__Script_FANTASIA_2681884641(TEXT("/Script/FANTASIA"),
+	Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_MathUtilities_h__Script_FANTASIA_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_MathUtilities_h__Script_FANTASIA_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);
-// End Registration
+// ********** End Registration *********************************************************************
+
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
