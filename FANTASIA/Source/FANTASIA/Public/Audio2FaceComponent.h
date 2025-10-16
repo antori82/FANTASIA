@@ -26,36 +26,54 @@
 ////
 #include "Audio2FaceComponent.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FLoadSceneCompleteEvent, bool, sceneReady);
+
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class FANTASIA_API UAudio2FaceComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
-public:	
-	// Sets default values for this component's properties
-	UAudio2FaceComponent();
-	UPROPERTY(EditAnywhere, Category = "Audio2Face")
-	FString PlayerA2F_name;
+private:
 
 	TArray<float> AudioData;
-
-	UPROPERTY(EditAnywhere, Category = "Audio2Face")
-	FString server_url;
 	FMyThread* MyThread;
-	FDateTime Inizio;
-	FDateTime Fine;
-	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Play Audio", Keywords = "Nvidia Plugin"), Category = "Audio2Face")
-	void QueueAudio(TArray<float> data);
 
 	void A2FaceFMyThread(int32 sampleRate);
 	void LoadSoundWaveFromTTS(USoundWave* sound);
+
+	void OnResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful);
+	void signalSceneComplete();
+
+public:	
+	// Sets default values for this component's properties
+	UAudio2FaceComponent();
+
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
+	UPROPERTY(BlueprintAssignable, BlueprintCallable)
+	FLoadSceneCompleteEvent LoadSceneComplete;
+
+	UPROPERTY(EditAnywhere, Category = "Audio2Face")
+	FString endpoint;
+
+	UPROPERTY(EditAnywhere, Category = "Audio2Face")
+	uint32 port;
+	
+	UPROPERTY(EditAnywhere, Category = "Audio2Face")
+	FString A2FPlayerName;
+
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Play Audio"), Category = "Audio2Face")
+	void QueueAudio(TArray<float> data);
+
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Load Scene"), Category = "Audio2Face")
+	void LoadScene(FString sceneName = "Audio2Face.usd");
+
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Connect"), Category = "Audio2Face")
+	void Connect();
 
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
-public:	
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;	
 };

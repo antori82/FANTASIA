@@ -1,14 +1,14 @@
 {
     "Version": "1.2",
     "Data": {
-        "Source": "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\fantasia\\source\\fantasia\\private\\mathutilities.cpp",
+        "Source": "d:\\perforce\\fantasiatemplate\\plugins\\fantasia\\fantasia\\source\\fantasia\\private\\mathutilities.cpp",
         "ProvidedModule": "",
-        "PCH": "d:\\perforce\\fantasiadevelopment\\intermediate\\build\\win64\\x64\\fantasiadevelopmenteditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.valexpapi.cpp20.h.pch",
+        "PCH": "d:\\perforce\\fantasiatemplate\\intermediate\\build\\win64\\x64\\fantasiatemplateeditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.valexpapi.cpp20.h.pch",
         "Includes": [
-            "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\fantasia\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\fantasia\\definitions.fantasia.h",
-            "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\fantasia\\source\\fantasia\\public\\mathutilities.h",
-            "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\fantasia\\source\\fantasia\\public\\fantasia.h",
-            "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\fantasia\\thirdparty\\kdepp\\kde.h",
+            "d:\\perforce\\fantasiatemplate\\plugins\\fantasia\\fantasia\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\fantasia\\definitions.fantasia.h",
+            "d:\\perforce\\fantasiatemplate\\plugins\\fantasia\\fantasia\\source\\fantasia\\public\\mathutilities.h",
+            "d:\\perforce\\fantasiatemplate\\plugins\\fantasia\\fantasia\\source\\fantasia\\public\\fantasia.h",
+            "d:\\perforce\\fantasiatemplate\\plugins\\fantasia\\fantasia\\thirdparty\\kdepp\\kde.h",
             "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.44.35207\\include\\cmath",
             "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.44.35207\\include\\numeric",
             "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.44.35207\\include\\__msvc_bit_utils.hpp",
@@ -20,7 +20,7 @@
             "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.44.35207\\include\\string",
             "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.44.35207\\include\\cctype",
             "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.44.35207\\include\\vector",
-            "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\fantasia\\intermediate\\build\\win64\\unrealeditor\\inc\\fantasia\\uht\\mathutilities.generated.h"
+            "d:\\perforce\\fantasiatemplate\\plugins\\fantasia\\fantasia\\intermediate\\build\\win64\\unrealeditor\\inc\\fantasia\\uht\\mathutilities.generated.h"
         ],
         "ImportedModules": [],
         "ImportedHeaderUnits": []

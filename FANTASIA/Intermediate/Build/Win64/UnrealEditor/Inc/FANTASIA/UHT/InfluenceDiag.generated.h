@@ -21,7 +21,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 enum class InfluenceNodeType : uint8;
 
 // ********** Begin ScriptStruct FInfluenceDiagArcStruct *******************************************
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_46_GENERATED_BODY \
+#define FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_46_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FInfluenceDiagArcStruct_Statics; \
 	FANTASIA_API static class UScriptStruct* StaticStruct();
 
@@ -30,7 +30,7 @@ struct FInfluenceDiagArcStruct;
 // ********** End ScriptStruct FInfluenceDiagArcStruct *********************************************
 
 // ********** Begin ScriptStruct FInfluenceDiagNodeStruct ******************************************
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_58_GENERATED_BODY \
+#define FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_58_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FInfluenceDiagNodeStruct_Statics; \
 	FANTASIA_API static class UScriptStruct* StaticStruct();
 
@@ -39,7 +39,7 @@ struct FInfluenceDiagNodeStruct;
 // ********** End ScriptStruct FInfluenceDiagNodeStruct ********************************************
 
 // ********** Begin ScriptStruct FArrayFloat *******************************************************
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_79_GENERATED_BODY \
+#define FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_79_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FArrayFloat_Statics; \
 	FANTASIA_API static class UScriptStruct* StaticStruct();
 
@@ -48,14 +48,14 @@ struct FArrayFloat;
 // ********** End ScriptStruct FArrayFloat *********************************************************
 
 // ********** Begin Delegate FIDInferenceAvailableEvent ********************************************
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_87_DELEGATE \
+#define FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_87_DELEGATE \
 FANTASIA_API void FIDInferenceAvailableEvent_DelegateWrapper(const FMulticastScriptDelegate& IDInferenceAvailableEvent);
 
 
 // ********** End Delegate FIDInferenceAvailableEvent **********************************************
 
 // ********** Begin Class UInfluenceDiag ***********************************************************
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_92_RPC_WRAPPERS \
+#define FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_92_RPC_WRAPPERS \
 	DECLARE_FUNCTION(execdecisionOrder); \
 	DECLARE_FUNCTION(execdecisionOrderExists); \
 	DECLARE_FUNCTION(execidFromName); \
@@ -80,7 +80,7 @@ FANTASIA_API void FIDInferenceAvailableEvent_DelegateWrapper(const FMulticastScr
 
 FANTASIA_API UClass* Z_Construct_UClass_UInfluenceDiag_NoRegister();
 
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_92_INCLASS \
+#define FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_92_INCLASS \
 private: \
 	static void StaticRegisterNativesUInfluenceDiag(); \
 	friend struct Z_Construct_UClass_UInfluenceDiag_Statics; \
@@ -91,7 +91,7 @@ public: \
 	DECLARE_SERIALIZER(UInfluenceDiag)
 
 
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_92_STANDARD_CONSTRUCTORS \
+#define FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_92_STANDARD_CONSTRUCTORS \
 	/** Standard constructor, called after all reflected properties have been initialized */ \
 	NO_API UInfluenceDiag(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get()); \
 	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(UInfluenceDiag) \
@@ -103,13 +103,13 @@ public: \
 	NO_API virtual ~UInfluenceDiag();
 
 
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_89_PROLOG
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_92_GENERATED_BODY_LEGACY \
+#define FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_89_PROLOG
+#define FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_92_GENERATED_BODY_LEGACY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_92_RPC_WRAPPERS \
-	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_92_INCLASS \
-	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_92_STANDARD_CONSTRUCTORS \
+	FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_92_RPC_WRAPPERS \
+	FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_92_INCLASS \
+	FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h_92_STANDARD_CONSTRUCTORS \
 public: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
@@ -119,7 +119,7 @@ class UInfluenceDiag;
 // ********** End Class UInfluenceDiag *************************************************************
 
 #undef CURRENT_FILE_ID
-#define CURRENT_FILE_ID FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h
+#define CURRENT_FILE_ID FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_InfluenceDiag_h
 
 // ********** Begin Enum InferenceIDAlgs ***********************************************************
 #define FOREACH_ENUM_INFERENCEIDALGS(op) \
