@@ -127,10 +127,8 @@ void UNeo4jComponent::submitQuery(FString query, Neo4jOperation operation, FStri
 	TSharedRef<IHttpRequest, ESPMode::ThreadSafe> Request = Http->CreateRequest();
 	Request->OnProcessRequestComplete().BindUObject(this, &UNeo4jComponent::OnResponseReceived);
 
-	if (useV4)
-		prefix = "/db/data/transaction";
-	else
-		prefix = "/db/" + database + "/tx";
+
+	prefix = "/db/" + database + "/tx";
 
 	switch (operation) {
 	case Neo4jOperation::SINGLE_REQUEST:

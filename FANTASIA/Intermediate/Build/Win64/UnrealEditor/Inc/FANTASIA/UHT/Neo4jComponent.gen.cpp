@@ -210,10 +210,6 @@ struct Z_Construct_UClass_UNeo4jComponent_Statics
 		{ "Category", "Neo4jComponent" },
 		{ "ModuleRelativePath", "Public/Neo4jComponent.h" },
 	};
-	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_useV4_MetaData[] = {
-		{ "Category", "Configuration" },
-		{ "ModuleRelativePath", "Public/Neo4jComponent.h" },
-	};
 #endif // WITH_METADATA
 	static const UECodeGen_Private::FStrPropertyParams NewProp_endpoint;
 	static const UECodeGen_Private::FIntPropertyParams NewProp_port;
@@ -221,8 +217,6 @@ struct Z_Construct_UClass_UNeo4jComponent_Statics
 	static const UECodeGen_Private::FStrPropertyParams NewProp_password;
 	static const UECodeGen_Private::FMulticastDelegatePropertyParams NewProp_IncomingResponse;
 	static const UECodeGen_Private::FStrPropertyParams NewProp_response;
-	static void NewProp_useV4_SetBit(void* Obj);
-	static const UECodeGen_Private::FBoolPropertyParams NewProp_useV4;
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static UObject* (*const DependentSingletons[])();
 	static constexpr FClassFunctionLinkInfo FuncInfo[] = {
@@ -240,11 +234,6 @@ const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_UNeo4jComponent_S
 const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_password = { "password", nullptr, (EPropertyFlags)0x0010000000004001, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UNeo4jComponent, password), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_password_MetaData), NewProp_password_MetaData) };
 const UECodeGen_Private::FMulticastDelegatePropertyParams Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_IncomingResponse = { "IncomingResponse", nullptr, (EPropertyFlags)0x0010100010080000, UECodeGen_Private::EPropertyGenFlags::InlineMulticastDelegate, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UNeo4jComponent, IncomingResponse), Z_Construct_UDelegateFunction_FANTASIA_IncomingNeo4jResponseEvent__DelegateSignature, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_IncomingResponse_MetaData), NewProp_IncomingResponse_MetaData) }; // 560789168
 const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_response = { "response", nullptr, (EPropertyFlags)0x0010000000000014, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UNeo4jComponent, response), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_response_MetaData), NewProp_response_MetaData) };
-void Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_useV4_SetBit(void* Obj)
-{
-	((UNeo4jComponent*)Obj)->useV4 = 1;
-}
-const UECodeGen_Private::FBoolPropertyParams Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_useV4 = { "useV4", nullptr, (EPropertyFlags)0x0010000000004001, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, sizeof(bool), sizeof(UNeo4jComponent), &Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_useV4_SetBit, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_useV4_MetaData), NewProp_useV4_MetaData) };
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_UNeo4jComponent_Statics::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_endpoint,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_port,
@@ -252,7 +241,6 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_UNeo4jCom
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_password,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_IncomingResponse,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_response,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UNeo4jComponent_Statics::NewProp_useV4,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_UNeo4jComponent_Statics::PropPointers) < 2048);
 UObject* (*const Z_Construct_UClass_UNeo4jComponent_Statics::DependentSingletons[])() = {
@@ -288,14 +276,14 @@ UNeo4jComponent::~UNeo4jComponent() {}
 // ********** End Class UNeo4jComponent ************************************************************
 
 // ********** Begin Registration *******************************************************************
-struct Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_Neo4jComponent_h__Script_FANTASIA_Statics
+struct Z_CompiledInDeferFile_FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_Neo4jComponent_h__Script_FANTASIA_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_UNeo4jComponent, UNeo4jComponent::StaticClass, TEXT("UNeo4jComponent"), &Z_Registration_Info_UClass_UNeo4jComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UNeo4jComponent), 2798942164U) },
+		{ Z_Construct_UClass_UNeo4jComponent, UNeo4jComponent::StaticClass, TEXT("UNeo4jComponent"), &Z_Registration_Info_UClass_UNeo4jComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UNeo4jComponent), 225306803U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_Neo4jComponent_h__Script_FANTASIA_2713419942(TEXT("/Script/FANTASIA"),
-	Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_Neo4jComponent_h__Script_FANTASIA_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_Neo4jComponent_h__Script_FANTASIA_Statics::ClassInfo),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_Neo4jComponent_h__Script_FANTASIA_4028682527(TEXT("/Script/FANTASIA"),
+	Z_CompiledInDeferFile_FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_Neo4jComponent_h__Script_FANTASIA_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_Neo4jComponent_h__Script_FANTASIA_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);
 // ********** End Registration *********************************************************************

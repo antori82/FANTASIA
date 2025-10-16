@@ -20,7 +20,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 enum class BayesianNodeType : uint8;
 
 // ********** Begin ScriptStruct FMapContainer *****************************************************
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_44_GENERATED_BODY \
+#define FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_44_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FMapContainer_Statics; \
 	FANTASIA_API static class UScriptStruct* StaticStruct();
 
@@ -29,7 +29,7 @@ struct FMapContainer;
 // ********** End ScriptStruct FMapContainer *******************************************************
 
 // ********** Begin ScriptStruct FBayesianArcStruct ************************************************
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_62_GENERATED_BODY \
+#define FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_62_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FBayesianArcStruct_Statics; \
 	FANTASIA_API static class UScriptStruct* StaticStruct();
 
@@ -38,7 +38,7 @@ struct FBayesianArcStruct;
 // ********** End ScriptStruct FBayesianArcStruct **************************************************
 
 // ********** Begin ScriptStruct FBayesianNodeStruct ***********************************************
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_74_GENERATED_BODY \
+#define FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_74_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FBayesianNodeStruct_Statics; \
 	FANTASIA_API static class UScriptStruct* StaticStruct();
 
@@ -47,14 +47,14 @@ struct FBayesianNodeStruct;
 // ********** End ScriptStruct FBayesianNodeStruct *************************************************
 
 // ********** Begin Delegate FBNInferenceAvailableEvent ********************************************
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_89_DELEGATE \
+#define FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_89_DELEGATE \
 FANTASIA_API void FBNInferenceAvailableEvent_DelegateWrapper(const FMulticastScriptDelegate& BNInferenceAvailableEvent);
 
 
 // ********** End Delegate FBNInferenceAvailableEvent **********************************************
 
 // ********** Begin Class UBayesianNetwork *********************************************************
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_94_RPC_WRAPPERS \
+#define FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_94_RPC_WRAPPERS \
 	DECLARE_FUNCTION(execgetMarkovBlanketNodes); \
 	DECLARE_FUNCTION(execidFromName); \
 	DECLARE_FUNCTION(execerase); \
@@ -75,7 +75,7 @@ FANTASIA_API void FBNInferenceAvailableEvent_DelegateWrapper(const FMulticastScr
 
 FANTASIA_API UClass* Z_Construct_UClass_UBayesianNetwork_NoRegister();
 
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_94_INCLASS \
+#define FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_94_INCLASS \
 private: \
 	static void StaticRegisterNativesUBayesianNetwork(); \
 	friend struct Z_Construct_UClass_UBayesianNetwork_Statics; \
@@ -86,7 +86,7 @@ public: \
 	DECLARE_SERIALIZER(UBayesianNetwork)
 
 
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_94_STANDARD_CONSTRUCTORS \
+#define FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_94_STANDARD_CONSTRUCTORS \
 	/** Standard constructor, called after all reflected properties have been initialized */ \
 	NO_API UBayesianNetwork(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get()); \
 	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(UBayesianNetwork) \
@@ -98,13 +98,13 @@ public: \
 	NO_API virtual ~UBayesianNetwork();
 
 
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_91_PROLOG
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_94_GENERATED_BODY_LEGACY \
+#define FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_91_PROLOG
+#define FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_94_GENERATED_BODY_LEGACY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_94_RPC_WRAPPERS \
-	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_94_INCLASS \
-	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_94_STANDARD_CONSTRUCTORS \
+	FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_94_RPC_WRAPPERS \
+	FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_94_INCLASS \
+	FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h_94_STANDARD_CONSTRUCTORS \
 public: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
@@ -114,7 +114,7 @@ class UBayesianNetwork;
 // ********** End Class UBayesianNetwork ***********************************************************
 
 #undef CURRENT_FILE_ID
-#define CURRENT_FILE_ID FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h
+#define CURRENT_FILE_ID FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_BayesianNetwork_h
 
 // ********** Begin Enum InferenceAlgs *************************************************************
 #define FOREACH_ENUM_INFERENCEALGS(op) \

@@ -1,12 +1,12 @@
 {
     "Version": "1.2",
     "Data": {
-        "Source": "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\fantasia\\source\\fantasia\\private\\svm.cpp",
+        "Source": "d:\\perforce\\fantasiatemplate\\plugins\\fantasia\\fantasia\\source\\fantasia\\private\\svm.cpp",
         "ProvidedModule": "",
-        "PCH": "d:\\perforce\\fantasiadevelopment\\intermediate\\build\\win64\\x64\\fantasiadevelopmenteditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.valexpapi.cpp20.h.pch",
+        "PCH": "d:\\perforce\\fantasiatemplate\\intermediate\\build\\win64\\x64\\fantasiatemplateeditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.valexpapi.cpp20.h.pch",
         "Includes": [
-            "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\fantasia\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\fantasia\\definitions.fantasia.h",
-            "d:\\perforce\\fantasiadevelopment\\plugins\\fantasia\\fantasia\\source\\fantasia\\public\\svm.h",
+            "d:\\perforce\\fantasiatemplate\\plugins\\fantasia\\fantasia\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\fantasia\\definitions.fantasia.h",
+            "d:\\perforce\\fantasiatemplate\\plugins\\fantasia\\fantasia\\source\\fantasia\\public\\svm.h",
             "c:\\program files (x86)\\windows kits\\10\\include\\10.0.26100.0\\ucrt\\math.h",
             "c:\\program files (x86)\\windows kits\\10\\include\\10.0.26100.0\\ucrt\\locale.h"
         ],
