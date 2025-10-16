@@ -85,6 +85,6 @@
 /DORIGINAL_FILE_NAME="UnrealEditor-FANTASIAEditor.dll"
 /DBUILD_ICON_FILE_NAME="\"..\\Build\\Windows\\Resources\\Default.ico\""
 /DPROJECT_COPYRIGHT_STRING="Fill out your copyright notice in the Description page of Project Settings."
-/DPROJECT_PRODUCT_IDENTIFIER=FANTASIADevelopment
-/fo "D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIAEditor/Default.rc2.res"
+/DPROJECT_PRODUCT_IDENTIFIER=FANTASIATemplate
+/fo "D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIAEditor/Default.rc2.res"
 "../Build/Windows/Resources/Default.rc2"

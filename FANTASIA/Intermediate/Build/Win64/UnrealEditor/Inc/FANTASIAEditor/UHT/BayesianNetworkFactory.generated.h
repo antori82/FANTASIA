@@ -19,7 +19,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 // ********** Begin Class UBayesianNetworkFactory **************************************************
 FANTASIAEDITOR_API UClass* Z_Construct_UClass_UBayesianNetworkFactory_NoRegister();
 
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIAEditor_Public_BayesianNetworkFactory_h_22_INCLASS_NO_PURE_DECLS \
+#define FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIAEditor_Public_BayesianNetworkFactory_h_22_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUBayesianNetworkFactory(); \
 	friend struct Z_Construct_UClass_UBayesianNetworkFactory_Statics; \
@@ -30,7 +30,7 @@ public: \
 	DECLARE_SERIALIZER(UBayesianNetworkFactory)
 
 
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIAEditor_Public_BayesianNetworkFactory_h_22_ENHANCED_CONSTRUCTORS \
+#define FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIAEditor_Public_BayesianNetworkFactory_h_22_ENHANCED_CONSTRUCTORS \
 	/** Deleted move- and copy-constructors, should never be used */ \
 	UBayesianNetworkFactory(UBayesianNetworkFactory&&) = delete; \
 	UBayesianNetworkFactory(const UBayesianNetworkFactory&) = delete; \
@@ -40,12 +40,12 @@ public: \
 	NO_API virtual ~UBayesianNetworkFactory();
 
 
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIAEditor_Public_BayesianNetworkFactory_h_19_PROLOG
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIAEditor_Public_BayesianNetworkFactory_h_22_GENERATED_BODY \
+#define FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIAEditor_Public_BayesianNetworkFactory_h_19_PROLOG
+#define FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIAEditor_Public_BayesianNetworkFactory_h_22_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIAEditor_Public_BayesianNetworkFactory_h_22_INCLASS_NO_PURE_DECLS \
-	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIAEditor_Public_BayesianNetworkFactory_h_22_ENHANCED_CONSTRUCTORS \
+	FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIAEditor_Public_BayesianNetworkFactory_h_22_INCLASS_NO_PURE_DECLS \
+	FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIAEditor_Public_BayesianNetworkFactory_h_22_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
@@ -55,6 +55,6 @@ class UBayesianNetworkFactory;
 // ********** End Class UBayesianNetworkFactory ****************************************************
 
 #undef CURRENT_FILE_ID
-#define CURRENT_FILE_ID FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIAEditor_Public_BayesianNetworkFactory_h
+#define CURRENT_FILE_ID FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIAEditor_Public_BayesianNetworkFactory_h
 
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

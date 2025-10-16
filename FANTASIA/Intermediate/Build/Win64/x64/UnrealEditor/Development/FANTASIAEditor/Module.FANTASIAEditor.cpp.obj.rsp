@@ -1,12 +1,12 @@
-"D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIAEditor/Module.FANTASIAEditor.cpp"
-@"D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIAEditor/FANTASIAEditor.Shared.rsp"
-/FI"D:/Perforce/FANTASIADevelopment/Intermediate/Build/Win64/x64/FANTASIADevelopmentEditor/Development/UnrealEd/SharedPCH.UnrealEd.Project.ValApi.ValExpApi.Cpp20.h"
-/FI"D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIAEditor/Definitions.FANTASIAEditor.h"
-/Yu"D:/Perforce/FANTASIADevelopment/Intermediate/Build/Win64/x64/FANTASIADevelopmentEditor/Development/UnrealEd/SharedPCH.UnrealEd.Project.ValApi.ValExpApi.Cpp20.h"
-/Fp"D:/Perforce/FANTASIADevelopment/Intermediate/Build/Win64/x64/FANTASIADevelopmentEditor/Development/UnrealEd/SharedPCH.UnrealEd.Project.ValApi.ValExpApi.Cpp20.h.pch"
-/Fo"D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIAEditor/Module.FANTASIAEditor.cpp.obj"
-/experimental:log "D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIAEditor/Module.FANTASIAEditor.cpp.sarif"
-/sourceDependencies "D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIAEditor/Module.FANTASIAEditor.cpp.dep.json"
+"D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIAEditor/Module.FANTASIAEditor.cpp"
+@"D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIAEditor/FANTASIAEditor.Shared.rsp"
+/FI"D:/Perforce/FANTASIATemplate/Intermediate/Build/Win64/x64/FANTASIATemplateEditor/Development/UnrealEd/SharedPCH.UnrealEd.Project.ValApi.ValExpApi.Cpp20.h"
+/FI"D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIAEditor/Definitions.FANTASIAEditor.h"
+/Yu"D:/Perforce/FANTASIATemplate/Intermediate/Build/Win64/x64/FANTASIATemplateEditor/Development/UnrealEd/SharedPCH.UnrealEd.Project.ValApi.ValExpApi.Cpp20.h"
+/Fp"D:/Perforce/FANTASIATemplate/Intermediate/Build/Win64/x64/FANTASIATemplateEditor/Development/UnrealEd/SharedPCH.UnrealEd.Project.ValApi.ValExpApi.Cpp20.h.pch"
+/Fo"D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIAEditor/Module.FANTASIAEditor.cpp.obj"
+/experimental:log "D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIAEditor/Module.FANTASIAEditor.cpp.sarif"
+/sourceDependencies "D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIAEditor/Module.FANTASIAEditor.cpp.dep.json"
 /Zc:inline
 /nologo
 /Oi

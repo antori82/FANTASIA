@@ -10,13 +10,13 @@
                         "text": "eliminazione in corso del valore restituito della funzione con attributo [[nodiscard]]"
                     },
                     "analysisTarget": {
-                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/SWIPrologThread.cpp"
+                        "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/SWIPrologThread.cpp"
                     },
                     "locations": [
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/SWIPrologThread.cpp"
+                                    "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/SWIPrologThread.cpp"
                                 },
                                 "region": {
                                     "startLine": 137,
@@ -35,13 +35,13 @@
                         "text": "eliminazione in corso del valore restituito della funzione con attributo [[nodiscard]]"
                     },
                     "analysisTarget": {
-                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/SWIPrologThread.cpp"
+                        "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/SWIPrologThread.cpp"
                     },
                     "locations": [
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/SWIPrologThread.cpp"
+                                    "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/SWIPrologThread.cpp"
                                 },
                                 "region": {
                                     "startLine": 322,
@@ -60,13 +60,13 @@
                         "text": "'PlTerm::operator =': use unify_*()"
                     },
                     "analysisTarget": {
-                        "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/SWIPrologThread.cpp"
+                        "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/SWIPrologThread.cpp"
                     },
                     "locations": [
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/SWIPrologThread.cpp"
+                                    "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/SWIPrologThread.cpp"
                                 },
                                 "region": {
                                     "startLine": 322,

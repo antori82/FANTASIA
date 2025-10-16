@@ -15,14 +15,7 @@ public class FANTASIA : ModuleRules
         {
             isLibrarySupported = true;
 
-            //string PlatformString = (Target.Platform == UnrealTargetPlatform.Win64) ? "x64" : "x86";
             string LibrariesPath = Path.Combine(ThirdPartyPath, "aGrUM", "Libraries");
-
-            /*
-            test your path with:
-            using System; // Console.WriteLine("");
-            Console.WriteLine("... LibrariesPath -> " + LibrariesPath);
-            */
 
             PublicAdditionalLibraries.Add(Path.Combine(LibrariesPath, "aGrUM.x64.lib"));
         }
@@ -120,25 +113,23 @@ public class FANTASIA : ModuleRules
 			}
             );
     }
-    //TODO better include paths maybe with loops
-    public void MicrosoftLibs(string ThirdParty)//Microsoft Libraries Paths
+
+    public void MicrosoftLibs(string ThirdParty)
     {
         string LibraryPath = Path.Combine(ThirdParty, "Microsoft.CognitiveServices.Speech.1.32.1", "build", "native", "x64", "Release");
         string IncludePath1 = Path.Combine(ThirdParty, "Microsoft.CognitiveServices.Speech.1.32.1", "build", "native", "include", "cxx_api");
         string IncludePath2 = Path.Combine(ThirdParty, "Microsoft.CognitiveServices.Speech.1.32.1", "build", "native", "include", "c_api");
-        //...include other Libraries from Microsoft
 
         PublicAdditionalLibraries.Add(LibraryPath + "/Microsoft.CognitiveServices.Speech.core.lib");
         PublicIncludePaths.AddRange(new string[] { IncludePath1, IncludePath2 });
     }
-    //TODO better include paths maybe with loops
-    public void AWSLibs(string ThirdParty)//Amazon Libraries Paths
+
+    public void AWSLibs(string ThirdParty)
     {
         string IncludePath3 = Path.Combine(ThirdParty, "AWS", "Core");
         string IncludePath4 = Path.Combine(ThirdParty, "AWS", "Polly");
         string IncludePath5 = Path.Combine(ThirdParty, "AWS", "TTS");
         string LibraryPath = Path.Combine(ThirdParty, "AWS", "lib");
-        //...include other Libraries from Amazon
 
         PublicAdditionalLibraries.Add(LibraryPath + "/aws-cpp-sdk-core.lib");
         PublicAdditionalLibraries.Add(LibraryPath + "/aws-cpp-sdk-polly.lib");
@@ -155,7 +146,7 @@ public class FANTASIA : ModuleRules
         }
     }
 
-    public void PrologLibs(string ThirdParty)//Prolog libraries
+    public void PrologLibs(string ThirdParty)
     {
         string PrologDllPath = Path.Combine(ThirdParty, "SWIProlog", "PrologDlls");
         string PrologCpp = Path.Combine(ThirdParty, "SWIProlog", "libs");
@@ -183,7 +174,7 @@ public class FANTASIA : ModuleRules
         DependeciesAndPaths();
 
         string ModulePath = ModuleDirectory;
-        string ThirdParty = Path.GetFullPath(Path.Combine(ModulePath, "../../ThirdParty/"));//directs path to Third Party folder
+        string ThirdParty = Path.GetFullPath(Path.Combine(ModulePath, "../../ThirdParty/"));
 
         MicrosoftLibs(ThirdParty);
 
@@ -210,7 +201,7 @@ public class FANTASIA : ModuleRules
         LoadAgrum(Target, ThirdParty);
         LoadGrpc(Target, ThirdParty);
 
-        PublicIncludePaths.Add(Path.Combine(ThirdParty, "kdepp"));//kdepp
+        PublicIncludePaths.Add(Path.Combine(ThirdParty, "kdepp"));
 
         DynamicallyLoadedModuleNames.AddRange(
         new string[]

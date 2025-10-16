@@ -20,7 +20,7 @@ class USoundWave;
 struct FTTSTimedStruct;
 
 // ********** Begin Class UAWSPollyComponent *******************************************************
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_AWSPollyComponent_h_20_RPC_WRAPPERS_NO_PURE_DECLS \
+#define FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_AWSPollyComponent_h_20_RPC_WRAPPERS_NO_PURE_DECLS \
 	DECLARE_FUNCTION(execTTSGetRawSound); \
 	DECLARE_FUNCTION(execAWSPollyGetNotifies); \
 	DECLARE_FUNCTION(execAWSPollyGetLipSync); \
@@ -30,7 +30,7 @@ struct FTTSTimedStruct;
 
 FANTASIA_API UClass* Z_Construct_UClass_UAWSPollyComponent_NoRegister();
 
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_AWSPollyComponent_h_20_INCLASS_NO_PURE_DECLS \
+#define FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_AWSPollyComponent_h_20_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUAWSPollyComponent(); \
 	friend struct Z_Construct_UClass_UAWSPollyComponent_Statics; \
@@ -43,7 +43,7 @@ public: \
 
 
 
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_AWSPollyComponent_h_20_ENHANCED_CONSTRUCTORS \
+#define FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_AWSPollyComponent_h_20_ENHANCED_CONSTRUCTORS \
 	/** Deleted move- and copy-constructors, should never be used */ \
 	UAWSPollyComponent(UAWSPollyComponent&&) = delete; \
 	UAWSPollyComponent(const UAWSPollyComponent&) = delete; \
@@ -53,13 +53,13 @@ public: \
 	NO_API virtual ~UAWSPollyComponent();
 
 
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_AWSPollyComponent_h_17_PROLOG
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_AWSPollyComponent_h_20_GENERATED_BODY \
+#define FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_AWSPollyComponent_h_17_PROLOG
+#define FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_AWSPollyComponent_h_20_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_AWSPollyComponent_h_20_RPC_WRAPPERS_NO_PURE_DECLS \
-	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_AWSPollyComponent_h_20_INCLASS_NO_PURE_DECLS \
-	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_AWSPollyComponent_h_20_ENHANCED_CONSTRUCTORS \
+	FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_AWSPollyComponent_h_20_RPC_WRAPPERS_NO_PURE_DECLS \
+	FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_AWSPollyComponent_h_20_INCLASS_NO_PURE_DECLS \
+	FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_AWSPollyComponent_h_20_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
@@ -69,6 +69,6 @@ class UAWSPollyComponent;
 // ********** End Class UAWSPollyComponent *********************************************************
 
 #undef CURRENT_FILE_ID
-#define CURRENT_FILE_ID FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_AWSPollyComponent_h
+#define CURRENT_FILE_ID FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_AWSPollyComponent_h
 
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

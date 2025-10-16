@@ -1,12 +1,12 @@
 {
     "Version": "1.2",
     "Data": {
-        "Source": "c:\\users\\alex\\documents\\unreal projects\\myproject\\plugins\\fantasia\\source\\fantasiaeditor\\private\\fantasiaeditor.cpp",
+        "Source": "d:\\perforce\\fantasiatemplate\\plugins\\fantasia\\fantasia\\source\\fantasiaeditor\\private\\fantasiaeditor.cpp",
         "ProvidedModule": "",
-        "PCH": "c:\\users\\alex\\documents\\unreal projects\\myproject\\intermediate\\build\\win64\\x64\\myprojecteditor\\debuggame\\unrealed\\sharedpch.unrealed.project.nonoptimized.valapi.cpp20.h.pch",
+        "PCH": "d:\\perforce\\fantasiatemplate\\intermediate\\build\\win64\\x64\\fantasiatemplateeditor\\debuggame\\unrealed\\sharedpch.unrealed.project.nonoptimized.valapi.valexpapi.cpp20.h.pch",
         "Includes": [
-            "c:\\users\\alex\\documents\\unreal projects\\myproject\\plugins\\fantasia\\intermediate\\build\\win64\\x64\\unrealeditor\\debuggame\\fantasiaeditor\\definitions.fantasiaeditor.h",
-            "c:\\users\\alex\\documents\\unreal projects\\myproject\\plugins\\fantasia\\source\\fantasiaeditor\\public\\fantasiaeditor.h"
+            "d:\\perforce\\fantasiatemplate\\plugins\\fantasia\\fantasia\\intermediate\\build\\win64\\x64\\unrealeditor\\debuggame\\fantasiaeditor\\definitions.fantasiaeditor.h",
+            "d:\\perforce\\fantasiatemplate\\plugins\\fantasia\\fantasia\\source\\fantasiaeditor\\public\\fantasiaeditor.h"
         ],
         "ImportedModules": [],
         "ImportedHeaderUnits": []

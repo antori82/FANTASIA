@@ -1,17 +1,17 @@
-"C:\Users\Alex\Documents\Unreal Projects\MyProject\Plugins\FANTASIA\Source\FANTASIA\Private\ElevenLabsTTSThread.cpp"
-/FI"C:\Users\Alex\Documents\Unreal Projects\MyProject\Intermediate\Build\Win64\x64\MyProjectEditor\DebugGame\UnrealEd\SharedPCH.UnrealEd.Project.NonOptimized.ValApi.Cpp20.h"
-/FI"C:\Users\Alex\Documents\Unreal Projects\MyProject\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\DebugGame\FANTASIA\Definitions.FANTASIA.h"
-/Yu"C:\Users\Alex\Documents\Unreal Projects\MyProject\Intermediate\Build\Win64\x64\MyProjectEditor\DebugGame\UnrealEd\SharedPCH.UnrealEd.Project.NonOptimized.ValApi.Cpp20.h"
-/Fp"C:\Users\Alex\Documents\Unreal Projects\MyProject\Intermediate\Build\Win64\x64\MyProjectEditor\DebugGame\UnrealEd\SharedPCH.UnrealEd.Project.NonOptimized.ValApi.Cpp20.h.pch"
-/Fo"C:\Users\Alex\Documents\Unreal Projects\MyProject\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\DebugGame\FANTASIA\ElevenLabsTTSThread.cpp.obj"
-/experimental:log "C:\Users\Alex\Documents\Unreal Projects\MyProject\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\DebugGame\FANTASIA\ElevenLabsTTSThread.cpp.sarif"
-/sourceDependencies "C:\Users\Alex\Documents\Unreal Projects\MyProject\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\DebugGame\FANTASIA\ElevenLabsTTSThread.cpp.dep.json"
-@"C:\Users\Alex\Documents\Unreal Projects\MyProject\Plugins\FANTASIA\Intermediate\Build\Win64\x64\UnrealEditor\DebugGame\FANTASIA\FANTASIA.Shared.rsp"
-/d2ssa-cfg-question-
+"D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/ElevenLabsTTSThread.cpp"
+@"D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/DebugGame/FANTASIA/FANTASIA.Shared.rsp"
+/FI"D:/Perforce/FANTASIATemplate/Intermediate/Build/Win64/x64/FANTASIATemplateEditor/DebugGame/UnrealEd/SharedPCH.UnrealEd.Project.NonOptimized.ValApi.ValExpApi.Cpp20.h"
+/FI"D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/DebugGame/FANTASIA/Definitions.FANTASIA.h"
+/Yu"D:/Perforce/FANTASIATemplate/Intermediate/Build/Win64/x64/FANTASIATemplateEditor/DebugGame/UnrealEd/SharedPCH.UnrealEd.Project.NonOptimized.ValApi.ValExpApi.Cpp20.h"
+/Fp"D:/Perforce/FANTASIATemplate/Intermediate/Build/Win64/x64/FANTASIATemplateEditor/DebugGame/UnrealEd/SharedPCH.UnrealEd.Project.NonOptimized.ValApi.ValExpApi.Cpp20.h.pch"
+/Fo"D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/DebugGame/FANTASIA/ElevenLabsTTSThread.cpp.obj"
+/experimental:log "D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/DebugGame/FANTASIA/ElevenLabsTTSThread.cpp.sarif"
+/sourceDependencies "D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/DebugGame/FANTASIA/ElevenLabsTTSThread.cpp.dep.json"
 /Zc:inline
 /nologo
 /Oi
 /FC
+/diagnostics:caret
 /c
 /Gw
 /Gy
@@ -36,15 +36,14 @@
 /bigobj
 /fp:fast
 /Zp8
+/W4
 /we4456
 /we4458
 /we4459
-/we4668
 /wd4244
 /wd4838
 /TP
 /GR-
-/W4
 /std:c++20
 /Zc:preprocessor
 /wd5054

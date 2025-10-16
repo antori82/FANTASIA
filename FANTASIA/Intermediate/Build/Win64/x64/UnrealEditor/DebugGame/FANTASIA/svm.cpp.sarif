@@ -7,20 +7,23 @@
                 {
                     "ruleId": "C4458",
                     "message": {
-                        "text": "declaration of 'l' hides class member"
+                        "text": "se si dichiara 'l', il membro della classe verrà nascosto"
                     },
                     "analysisTarget": {
-                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                        "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                     },
                     "locations": [
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                                    "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                                 },
                                 "region": {
                                     "startLine": 508,
-                                    "startColumn": 24
+                                    "startColumn": 24,
+                                    "snippet": {
+                                        "text": "void Solver::Solve(int l, const QMatrix& Q, const double *p_, const schar *y_,"
+                                    }
                                 }
                             }
                         }
@@ -30,15 +33,18 @@
                             "id": 0,
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                                    "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                                 },
                                 "region": {
                                     "startLine": 427,
-                                    "startColumn": 6
+                                    "startColumn": 6,
+                                    "snippet": {
+                                        "text": "\tint l;"
+                                    }
                                 }
                             },
                             "message": {
-                                "text": "see declaration of 'Solver::l'"
+                                "text": "vedere la dichiarazione di 'Solver::l'"
                             }
                         }
                     ]
@@ -46,20 +52,23 @@
                 {
                     "ruleId": "C4458",
                     "message": {
-                        "text": "declaration of 'Q' hides class member"
+                        "text": "se si dichiara 'Q', il membro della classe verrà nascosto"
                     },
                     "analysisTarget": {
-                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                        "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                     },
                     "locations": [
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                                    "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                                 },
                                 "region": {
                                     "startLine": 508,
-                                    "startColumn": 42
+                                    "startColumn": 42,
+                                    "snippet": {
+                                        "text": "void Solver::Solve(int l, const QMatrix& Q, const double *p_, const schar *y_,"
+                                    }
                                 }
                             }
                         }
@@ -69,15 +78,18 @@
                             "id": 0,
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                                    "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                                 },
                                 "region": {
                                     "startLine": 420,
-                                    "startColumn": 17
+                                    "startColumn": 17,
+                                    "snippet": {
+                                        "text": "\tconst QMatrix *Q;"
+                                    }
                                 }
                             },
                             "message": {
-                                "text": "see declaration of 'Solver::Q'"
+                                "text": "vedere la dichiarazione di 'Solver::Q'"
                             }
                         }
                     ]
@@ -85,20 +97,23 @@
                 {
                     "ruleId": "C4458",
                     "message": {
-                        "text": "declaration of 'Cp' hides class member"
+                        "text": "se si dichiara 'Cp', il membro della classe verrà nascosto"
                     },
                     "analysisTarget": {
-                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                        "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                     },
                     "locations": [
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                                    "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                                 },
                                 "region": {
                                     "startLine": 509,
-                                    "startColumn": 29
+                                    "startColumn": 29,
+                                    "snippet": {
+                                        "text": "\t\t   double *alpha_, double Cp, double Cn, double eps,"
+                                    }
                                 }
                             }
                         }
@@ -108,15 +123,18 @@
                             "id": 0,
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                                    "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                                 },
                                 "region": {
                                     "startLine": 423,
-                                    "startColumn": 9
+                                    "startColumn": 9,
+                                    "snippet": {
+                                        "text": "\tdouble Cp,Cn;"
+                                    }
                                 }
                             },
                             "message": {
-                                "text": "see declaration of 'Solver::Cp'"
+                                "text": "vedere la dichiarazione di 'Solver::Cp'"
                             }
                         }
                     ]
@@ -124,20 +142,23 @@
                 {
                     "ruleId": "C4458",
                     "message": {
-                        "text": "declaration of 'Cn' hides class member"
+                        "text": "se si dichiara 'Cn', il membro della classe verrà nascosto"
                     },
                     "analysisTarget": {
-                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                        "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                     },
                     "locations": [
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                                    "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                                 },
                                 "region": {
                                     "startLine": 509,
-                                    "startColumn": 40
+                                    "startColumn": 40,
+                                    "snippet": {
+                                        "text": "\t\t   double *alpha_, double Cp, double Cn, double eps,"
+                                    }
                                 }
                             }
                         }
@@ -147,15 +168,18 @@
                             "id": 0,
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                                    "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                                 },
                                 "region": {
                                     "startLine": 423,
-                                    "startColumn": 12
+                                    "startColumn": 12,
+                                    "snippet": {
+                                        "text": "\tdouble Cp,Cn;"
+                                    }
                                 }
                             },
                             "message": {
-                                "text": "see declaration of 'Solver::Cn'"
+                                "text": "vedere la dichiarazione di 'Solver::Cn'"
                             }
                         }
                     ]
@@ -163,20 +187,23 @@
                 {
                     "ruleId": "C4458",
                     "message": {
-                        "text": "declaration of 'eps' hides class member"
+                        "text": "se si dichiara 'eps', il membro della classe verrà nascosto"
                     },
                     "analysisTarget": {
-                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                        "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                     },
                     "locations": [
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                                    "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                                 },
                                 "region": {
                                     "startLine": 509,
-                                    "startColumn": 51
+                                    "startColumn": 51,
+                                    "snippet": {
+                                        "text": "\t\t   double *alpha_, double Cp, double Cn, double eps,"
+                                    }
                                 }
                             }
                         }
@@ -186,15 +213,18 @@
                             "id": 0,
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                                    "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                                 },
                                 "region": {
                                     "startLine": 422,
-                                    "startColumn": 9
+                                    "startColumn": 9,
+                                    "snippet": {
+                                        "text": "\tdouble eps;"
+                                    }
                                 }
                             },
                             "message": {
-                                "text": "see declaration of 'Solver::eps'"
+                                "text": "vedere la dichiarazione di 'Solver::eps'"
                             }
                         }
                     ]
@@ -202,20 +232,23 @@
                 {
                     "ruleId": "C4458",
                     "message": {
-                        "text": "declaration of 'l' hides class member"
+                        "text": "se si dichiara 'l', il membro della classe verrà nascosto"
                     },
                     "analysisTarget": {
-                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                        "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                     },
                     "locations": [
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                                    "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                                 },
                                 "region": {
                                     "startLine": 1017,
-                                    "startColumn": 17
+                                    "startColumn": 17,
+                                    "snippet": {
+                                        "text": "\tvoid Solve(int l, const QMatrix& Q, const double *p, const schar *y,"
+                                    }
                                 }
                             }
                         }
@@ -225,15 +258,18 @@
                             "id": 0,
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                                    "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                                 },
                                 "region": {
                                     "startLine": 427,
-                                    "startColumn": 6
+                                    "startColumn": 6,
+                                    "snippet": {
+                                        "text": "\tint l;"
+                                    }
                                 }
                             },
                             "message": {
-                                "text": "see declaration of 'Solver::l'"
+                                "text": "vedere la dichiarazione di 'Solver::l'"
                             }
                         }
                     ]
@@ -241,20 +277,23 @@
                 {
                     "ruleId": "C4458",
                     "message": {
-                        "text": "declaration of 'Q' hides class member"
+                        "text": "se si dichiara 'Q', il membro della classe verrà nascosto"
                     },
                     "analysisTarget": {
-                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                        "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                     },
                     "locations": [
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                                    "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                                 },
                                 "region": {
                                     "startLine": 1017,
-                                    "startColumn": 35
+                                    "startColumn": 35,
+                                    "snippet": {
+                                        "text": "\tvoid Solve(int l, const QMatrix& Q, const double *p, const schar *y,"
+                                    }
                                 }
                             }
                         }
@@ -264,15 +303,18 @@
                             "id": 0,
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                                    "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                                 },
                                 "region": {
                                     "startLine": 420,
-                                    "startColumn": 17
+                                    "startColumn": 17,
+                                    "snippet": {
+                                        "text": "\tconst QMatrix *Q;"
+                                    }
                                 }
                             },
                             "message": {
-                                "text": "see declaration of 'Solver::Q'"
+                                "text": "vedere la dichiarazione di 'Solver::Q'"
                             }
                         }
                     ]
@@ -280,20 +322,23 @@
                 {
                     "ruleId": "C4458",
                     "message": {
-                        "text": "declaration of 'p' hides class member"
+                        "text": "se si dichiara 'p', il membro della classe verrà nascosto"
                     },
                     "analysisTarget": {
-                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                        "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                     },
                     "locations": [
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                                    "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                                 },
                                 "region": {
                                     "startLine": 1017,
-                                    "startColumn": 52
+                                    "startColumn": 52,
+                                    "snippet": {
+                                        "text": "\tvoid Solve(int l, const QMatrix& Q, const double *p, const schar *y,"
+                                    }
                                 }
                             }
                         }
@@ -303,15 +348,18 @@
                             "id": 0,
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                                    "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                                 },
                                 "region": {
                                     "startLine": 424,
-                                    "startColumn": 10
+                                    "startColumn": 10,
+                                    "snippet": {
+                                        "text": "\tdouble *p;"
+                                    }
                                 }
                             },
                             "message": {
-                                "text": "see declaration of 'Solver::p'"
+                                "text": "vedere la dichiarazione di 'Solver::p'"
                             }
                         }
                     ]
@@ -319,20 +367,23 @@
                 {
                     "ruleId": "C4458",
                     "message": {
-                        "text": "declaration of 'y' hides class member"
+                        "text": "se si dichiara 'y', il membro della classe verrà nascosto"
                     },
                     "analysisTarget": {
-                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                        "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                     },
                     "locations": [
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                                    "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                                 },
                                 "region": {
                                     "startLine": 1017,
-                                    "startColumn": 68
+                                    "startColumn": 68,
+                                    "snippet": {
+                                        "text": "\tvoid Solve(int l, const QMatrix& Q, const double *p, const schar *y,"
+                                    }
                                 }
                             }
                         }
@@ -342,15 +393,18 @@
                             "id": 0,
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                                    "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                                 },
                                 "region": {
                                     "startLine": 415,
-                                    "startColumn": 9
+                                    "startColumn": 9,
+                                    "snippet": {
+                                        "text": "\tschar *y;"
+                                    }
                                 }
                             },
                             "message": {
-                                "text": "see declaration of 'Solver::y'"
+                                "text": "vedere la dichiarazione di 'Solver::y'"
                             }
                         }
                     ]
@@ -358,20 +412,23 @@
                 {
                     "ruleId": "C4458",
                     "message": {
-                        "text": "declaration of 'alpha' hides class member"
+                        "text": "se si dichiara 'alpha', il membro della classe verrà nascosto"
                     },
                     "analysisTarget": {
-                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                        "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                     },
                     "locations": [
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                                    "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                                 },
                                 "region": {
                                     "startLine": 1018,
-                                    "startColumn": 14
+                                    "startColumn": 14,
+                                    "snippet": {
+                                        "text": "\t\t   double *alpha, double Cp, double Cn, double eps,"
+                                    }
                                 }
                             }
                         }
@@ -381,15 +438,18 @@
                             "id": 0,
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                                    "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                                 },
                                 "region": {
                                     "startLine": 419,
-                                    "startColumn": 10
+                                    "startColumn": 10,
+                                    "snippet": {
+                                        "text": "\tdouble *alpha;"
+                                    }
                                 }
                             },
                             "message": {
-                                "text": "see declaration of 'Solver::alpha'"
+                                "text": "vedere la dichiarazione di 'Solver::alpha'"
                             }
                         }
                     ]
@@ -397,20 +457,23 @@
                 {
                     "ruleId": "C4458",
                     "message": {
-                        "text": "declaration of 'Cp' hides class member"
+                        "text": "se si dichiara 'Cp', il membro della classe verrà nascosto"
                     },
                     "analysisTarget": {
-                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                        "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                     },
                     "locations": [
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                                    "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                                 },
                                 "region": {
                                     "startLine": 1018,
-                                    "startColumn": 28
+                                    "startColumn": 28,
+                                    "snippet": {
+                                        "text": "\t\t   double *alpha, double Cp, double Cn, double eps,"
+                                    }
                                 }
                             }
                         }
@@ -420,15 +483,18 @@
                             "id": 0,
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                                    "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                                 },
                                 "region": {
                                     "startLine": 423,
-                                    "startColumn": 9
+                                    "startColumn": 9,
+                                    "snippet": {
+                                        "text": "\tdouble Cp,Cn;"
+                                    }
                                 }
                             },
                             "message": {
-                                "text": "see declaration of 'Solver::Cp'"
+                                "text": "vedere la dichiarazione di 'Solver::Cp'"
                             }
                         }
                     ]
@@ -436,20 +502,23 @@
                 {
                     "ruleId": "C4458",
                     "message": {
-                        "text": "declaration of 'Cn' hides class member"
+                        "text": "se si dichiara 'Cn', il membro della classe verrà nascosto"
                     },
                     "analysisTarget": {
-                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                        "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                     },
                     "locations": [
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                                    "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                                 },
                                 "region": {
                                     "startLine": 1018,
-                                    "startColumn": 39
+                                    "startColumn": 39,
+                                    "snippet": {
+                                        "text": "\t\t   double *alpha, double Cp, double Cn, double eps,"
+                                    }
                                 }
                             }
                         }
@@ -459,15 +528,18 @@
                             "id": 0,
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                                    "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                                 },
                                 "region": {
                                     "startLine": 423,
-                                    "startColumn": 12
+                                    "startColumn": 12,
+                                    "snippet": {
+                                        "text": "\tdouble Cp,Cn;"
+                                    }
                                 }
                             },
                             "message": {
-                                "text": "see declaration of 'Solver::Cn'"
+                                "text": "vedere la dichiarazione di 'Solver::Cn'"
                             }
                         }
                     ]
@@ -475,20 +547,23 @@
                 {
                     "ruleId": "C4458",
                     "message": {
-                        "text": "declaration of 'eps' hides class member"
+                        "text": "se si dichiara 'eps', il membro della classe verrà nascosto"
                     },
                     "analysisTarget": {
-                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                        "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                     },
                     "locations": [
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                                    "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                                 },
                                 "region": {
                                     "startLine": 1018,
-                                    "startColumn": 50
+                                    "startColumn": 50,
+                                    "snippet": {
+                                        "text": "\t\t   double *alpha, double Cp, double Cn, double eps,"
+                                    }
                                 }
                             }
                         }
@@ -498,15 +573,18 @@
                             "id": 0,
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                                    "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                                 },
                                 "region": {
                                     "startLine": 422,
-                                    "startColumn": 9
+                                    "startColumn": 9,
+                                    "snippet": {
+                                        "text": "\tdouble eps;"
+                                    }
                                 }
                             },
                             "message": {
-                                "text": "see declaration of 'Solver::eps'"
+                                "text": "vedere la dichiarazione di 'Solver::eps'"
                             }
                         }
                     ]
@@ -514,20 +592,23 @@
                 {
                     "ruleId": "C4458",
                     "message": {
-                        "text": "declaration of 'si' hides class member"
+                        "text": "se si dichiara 'si', il membro della classe verrà nascosto"
                     },
                     "analysisTarget": {
-                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                        "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                     },
                     "locations": [
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                                    "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                                 },
                                 "region": {
                                     "startLine": 1019,
-                                    "startColumn": 20
+                                    "startColumn": 20,
+                                    "snippet": {
+                                        "text": "\t\t   SolutionInfo* si, int shrinking)"
+                                    }
                                 }
                             }
                         }
@@ -537,15 +618,18 @@
                             "id": 0,
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                                    "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                                 },
                                 "region": {
                                     "startLine": 1025,
-                                    "startColumn": 16
+                                    "startColumn": 16,
+                                    "snippet": {
+                                        "text": "\tSolutionInfo *si;"
+                                    }
                                 }
                             },
                             "message": {
-                                "text": "see declaration of 'Solver_NU::si'"
+                                "text": "vedere la dichiarazione di 'Solver_NU::si'"
                             }
                         }
                     ]
@@ -556,17 +640,20 @@
                         "text": "'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details."
                     },
                     "analysisTarget": {
-                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                        "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                     },
                     "locations": [
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                                    "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                                 },
                                 "region": {
                                     "startLine": 2762,
-                                    "startColumn": 13
+                                    "startColumn": 13,
+                                    "snippet": {
+                                        "text": "\tFILE *fp = fopen(model_file_name,\"w\");"
+                                    }
                                 }
                             }
                         }
@@ -578,17 +665,20 @@
                         "text": "'strdup': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _strdup. See online help for details."
                     },
                     "analysisTarget": {
-                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                        "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                     },
                     "locations": [
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                                    "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                                 },
                                 "region": {
                                     "startLine": 2767,
-                                    "startColumn": 16
+                                    "startColumn": 16,
+                                    "snippet": {
+                                        "text": "\t\told_locale = strdup(old_locale);"
+                                    }
                                 }
                             }
                         }
@@ -600,17 +690,20 @@
                         "text": "'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details."
                     },
                     "analysisTarget": {
-                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                        "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                     },
                     "locations": [
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                                    "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                                 },
                                 "region": {
                                     "startLine": 2905,
-                                    "startColumn": 3
+                                    "startColumn": 3,
+                                    "snippet": {
+                                        "text": "\t\tFSCANF(fp,\"%80s\",cmd);"
+                                    }
                                 }
                             }
                         }
@@ -622,17 +715,20 @@
                         "text": "'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details."
                     },
                     "analysisTarget": {
-                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                        "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                     },
                     "locations": [
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                                    "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                                 },
                                 "region": {
                                     "startLine": 2909,
-                                    "startColumn": 4
+                                    "startColumn": 4,
+                                    "snippet": {
+                                        "text": "\t\t\tFSCANF(fp,\"%80s\",cmd);"
+                                    }
                                 }
                             }
                         }
@@ -644,17 +740,20 @@
                         "text": "'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details."
                     },
                     "analysisTarget": {
-                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                        "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                     },
                     "locations": [
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                                    "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                                 },
                                 "region": {
                                     "startLine": 2927,
-                                    "startColumn": 4
+                                    "startColumn": 4,
+                                    "snippet": {
+                                        "text": "\t\t\tFSCANF(fp,\"%80s\",cmd);"
+                                    }
                                 }
                             }
                         }
@@ -666,17 +765,20 @@
                         "text": "'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details."
                     },
                     "analysisTarget": {
-                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                        "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                     },
                     "locations": [
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                                    "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                                 },
                                 "region": {
                                     "startLine": 2944,
-                                    "startColumn": 4
+                                    "startColumn": 4,
+                                    "snippet": {
+                                        "text": "\t\t\tFSCANF(fp,\"%d\",&param.degree);"
+                                    }
                                 }
                             }
                         }
@@ -688,17 +790,20 @@
                         "text": "'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details."
                     },
                     "analysisTarget": {
-                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                        "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                     },
                     "locations": [
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                                    "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                                 },
                                 "region": {
                                     "startLine": 2946,
-                                    "startColumn": 4
+                                    "startColumn": 4,
+                                    "snippet": {
+                                        "text": "\t\t\tFSCANF(fp,\"%lf\",&param.gamma);"
+                                    }
                                 }
                             }
                         }
@@ -710,17 +815,20 @@
                         "text": "'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details."
                     },
                     "analysisTarget": {
-                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                        "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                     },
                     "locations": [
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                                    "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                                 },
                                 "region": {
                                     "startLine": 2948,
-                                    "startColumn": 4
+                                    "startColumn": 4,
+                                    "snippet": {
+                                        "text": "\t\t\tFSCANF(fp,\"%lf\",&param.coef0);"
+                                    }
                                 }
                             }
                         }
@@ -732,17 +840,20 @@
                         "text": "'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details."
                     },
                     "analysisTarget": {
-                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                        "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                     },
                     "locations": [
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                                    "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                                 },
                                 "region": {
                                     "startLine": 2950,
-                                    "startColumn": 4
+                                    "startColumn": 4,
+                                    "snippet": {
+                                        "text": "\t\t\tFSCANF(fp,\"%d\",&model->nr_class);"
+                                    }
                                 }
                             }
                         }
@@ -754,17 +865,20 @@
                         "text": "'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details."
                     },
                     "analysisTarget": {
-                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                        "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                     },
                     "locations": [
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                                    "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                                 },
                                 "region": {
                                     "startLine": 2952,
-                                    "startColumn": 4
+                                    "startColumn": 4,
+                                    "snippet": {
+                                        "text": "\t\t\tFSCANF(fp,\"%d\",&model->l);"
+                                    }
                                 }
                             }
                         }
@@ -776,17 +890,20 @@
                         "text": "'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details."
                     },
                     "analysisTarget": {
-                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                        "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                     },
                     "locations": [
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                                    "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                                 },
                                 "region": {
                                     "startLine": 2958,
-                                    "startColumn": 5
+                                    "startColumn": 5,
+                                    "snippet": {
+                                        "text": "\t\t\t\tFSCANF(fp,\"%lf\",&model->rho[i]);"
+                                    }
                                 }
                             }
                         }
@@ -798,17 +915,20 @@
                         "text": "'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details."
                     },
                     "analysisTarget": {
-                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                        "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                     },
                     "locations": [
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                                    "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                                 },
                                 "region": {
                                     "startLine": 2965,
-                                    "startColumn": 5
+                                    "startColumn": 5,
+                                    "snippet": {
+                                        "text": "\t\t\t\tFSCANF(fp,\"%d\",&model->label[i]);"
+                                    }
                                 }
                             }
                         }
@@ -820,17 +940,20 @@
                         "text": "'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details."
                     },
                     "analysisTarget": {
-                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                        "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                     },
                     "locations": [
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                                    "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                                 },
                                 "region": {
                                     "startLine": 2972,
-                                    "startColumn": 5
+                                    "startColumn": 5,
+                                    "snippet": {
+                                        "text": "\t\t\t\tFSCANF(fp,\"%lf\",&model->probA[i]);"
+                                    }
                                 }
                             }
                         }
@@ -842,17 +965,20 @@
                         "text": "'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details."
                     },
                     "analysisTarget": {
-                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                        "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                     },
                     "locations": [
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                                    "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                                 },
                                 "region": {
                                     "startLine": 2979,
-                                    "startColumn": 5
+                                    "startColumn": 5,
+                                    "snippet": {
+                                        "text": "\t\t\t\tFSCANF(fp,\"%lf\",&model->probB[i]);"
+                                    }
                                 }
                             }
                         }
@@ -864,17 +990,20 @@
                         "text": "'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details."
                     },
                     "analysisTarget": {
-                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                        "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                     },
                     "locations": [
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                                    "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                                 },
                                 "region": {
                                     "startLine": 2986,
-                                    "startColumn": 5
+                                    "startColumn": 5,
+                                    "snippet": {
+                                        "text": "\t\t\t\tFSCANF(fp,\"%lf\",&model->prob_density_marks[i]);"
+                                    }
                                 }
                             }
                         }
@@ -886,17 +1015,20 @@
                         "text": "'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details."
                     },
                     "analysisTarget": {
-                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                        "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                     },
                     "locations": [
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                                    "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                                 },
                                 "region": {
                                     "startLine": 2993,
-                                    "startColumn": 5
+                                    "startColumn": 5,
+                                    "snippet": {
+                                        "text": "\t\t\t\tFSCANF(fp,\"%d\",&model->nSV[i]);"
+                                    }
                                 }
                             }
                         }
@@ -908,17 +1040,20 @@
                         "text": "'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details."
                     },
                     "analysisTarget": {
-                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                        "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                     },
                     "locations": [
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                                    "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                                 },
                                 "region": {
                                     "startLine": 3017,
-                                    "startColumn": 13
+                                    "startColumn": 13,
+                                    "snippet": {
+                                        "text": "\tFILE *fp = fopen(model_file_name,\"rb\");"
+                                    }
                                 }
                             }
                         }
@@ -930,17 +1065,20 @@
                         "text": "'strdup': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _strdup. See online help for details."
                     },
                     "analysisTarget": {
-                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                        "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                     },
                     "locations": [
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                                    "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                                 },
                                 "region": {
                                     "startLine": 3022,
-                                    "startColumn": 16
+                                    "startColumn": 16,
+                                    "snippet": {
+                                        "text": "\t\told_locale = strdup(old_locale);"
+                                    }
                                 }
                             }
                         }
@@ -952,17 +1090,20 @@
                         "text": "'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details."
                     },
                     "analysisTarget": {
-                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                        "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                     },
                     "locations": [
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                                    "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                                 },
                                 "region": {
                                     "startLine": 3061,
-                                    "startColumn": 7
+                                    "startColumn": 7,
+                                    "snippet": {
+                                        "text": "\t\tp = strtok(line,\":\");"
+                                    }
                                 }
                             }
                         }
@@ -974,17 +1115,20 @@
                         "text": "'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details."
                     },
                     "analysisTarget": {
-                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                        "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                     },
                     "locations": [
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                                    "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                                 },
                                 "region": {
                                     "startLine": 3064,
-                                    "startColumn": 8
+                                    "startColumn": 8,
+                                    "snippet": {
+                                        "text": "\t\t\tp = strtok(NULL,\":\");"
+                                    }
                                 }
                             }
                         }
@@ -996,17 +1140,20 @@
                         "text": "'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details."
                     },
                     "analysisTarget": {
-                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                        "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                     },
                     "locations": [
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                                    "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                                 },
                                 "region": {
                                     "startLine": 3090,
-                                    "startColumn": 7
+                                    "startColumn": 7,
+                                    "snippet": {
+                                        "text": "\t\tp = strtok(line, \" \\t\");"
+                                    }
                                 }
                             }
                         }
@@ -1018,17 +1165,20 @@
                         "text": "'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details."
                     },
                     "analysisTarget": {
-                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                        "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                     },
                     "locations": [
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                                    "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                                 },
                                 "region": {
                                     "startLine": 3094,
-                                    "startColumn": 8
+                                    "startColumn": 8,
+                                    "snippet": {
+                                        "text": "\t\t\tp = strtok(NULL, \" \\t\");"
+                                    }
                                 }
                             }
                         }
@@ -1040,17 +1190,20 @@
                         "text": "'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details."
                     },
                     "analysisTarget": {
-                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                        "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                     },
                     "locations": [
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                                    "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                                 },
                                 "region": {
                                     "startLine": 3100,
-                                    "startColumn": 10
+                                    "startColumn": 10,
+                                    "snippet": {
+                                        "text": "\t\t\tidx = strtok(NULL, \":\");"
+                                    }
                                 }
                             }
                         }
@@ -1062,17 +1215,20 @@
                         "text": "'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details."
                     },
                     "analysisTarget": {
-                        "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                        "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                     },
                     "locations": [
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Users/Alex/Documents/Unreal Projects/MyProject/Plugins/FANTASIA/Source/FANTASIA/Private/svm.cpp"
+                                    "uri": "file:///D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/svm.cpp"
                                 },
                                 "region": {
                                     "startLine": 3101,
-                                    "startColumn": 10
+                                    "startColumn": 10,
+                                    "snippet": {
+                                        "text": "\t\t\tval = strtok(NULL, \" \\t\");"
+                                    }
                                 }
                             }
                         }

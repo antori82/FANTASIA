@@ -31,13 +31,7 @@
 			"Audio2FaceThread.cpp.obj",
 			"AWSPollyComponent.cpp.obj",
 			"AWSPollyThread.cpp.obj",
-			"AzureASRComponent.cpp.obj",
-			"AzureASRThread.cpp.obj",
-			"AzureNLUComponent.cpp.obj",
-			"AzureNLUThread.cpp.obj",
-			"AzureTTSComponent.cpp.obj",
-			"AzureTTSThread.cpp.obj",
-			"BayesianInferenceThreads.cpp.obj"
+			"AzureASRComponent.cpp.obj"
 		]
 	}
 }

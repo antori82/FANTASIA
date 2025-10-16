@@ -113,15 +113,15 @@ void FMyThread::SendToAudio2FaceGrpc()
     writer->Write(*request);
 
     while (!StopRecording) {
-        if (!AudioData.IsEmpty()) {
-            PushAudioStreamRequest* requestAudio = new PushAudioStreamRequest();
+            if (!AudioData.IsEmpty()) {
+                PushAudioStreamRequest* requestAudio = new PushAudioStreamRequest();
            
-            lockAudioBuffer.Lock();
-            requestAudio->set_audio_data(AudioData.GetData(), AudioData.Num() * sizeof(float));
-            writer->Write(*requestAudio);
-            AudioData.Empty();
-            lockAudioBuffer.Unlock();
-        }
+                lockAudioBuffer.Lock();
+                requestAudio->set_audio_data(AudioData.GetData(), AudioData.Num() * sizeof(float));
+                writer->Write(*requestAudio);
+                AudioData.Empty();
+                lockAudioBuffer.Unlock();
+            }
     }
 
     writer->WritesDone();

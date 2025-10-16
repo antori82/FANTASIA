@@ -21,20 +21,20 @@ enum class Neo4jOperation : uint8;
 struct FNeo4jResponse;
 
 // ********** Begin Delegate FIncomingNeo4jResponseEvent *******************************************
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_Neo4jComponent_h_9_DELEGATE \
+#define FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_Neo4jComponent_h_9_DELEGATE \
 FANTASIA_API void FIncomingNeo4jResponseEvent_DelegateWrapper(const FMulticastScriptDelegate& IncomingNeo4jResponseEvent, FNeo4jResponse Neo4jResponse);
 
 
 // ********** End Delegate FIncomingNeo4jResponseEvent *********************************************
 
 // ********** Begin Class UNeo4jComponent **********************************************************
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_Neo4jComponent_h_14_RPC_WRAPPERS_NO_PURE_DECLS \
+#define FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_Neo4jComponent_h_14_RPC_WRAPPERS_NO_PURE_DECLS \
 	DECLARE_FUNCTION(execsubmitQuery);
 
 
 FANTASIA_API UClass* Z_Construct_UClass_UNeo4jComponent_NoRegister();
 
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_Neo4jComponent_h_14_INCLASS_NO_PURE_DECLS \
+#define FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_Neo4jComponent_h_14_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUNeo4jComponent(); \
 	friend struct Z_Construct_UClass_UNeo4jComponent_Statics; \
@@ -47,7 +47,7 @@ public: \
 
 
 
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_Neo4jComponent_h_14_ENHANCED_CONSTRUCTORS \
+#define FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_Neo4jComponent_h_14_ENHANCED_CONSTRUCTORS \
 	/** Deleted move- and copy-constructors, should never be used */ \
 	UNeo4jComponent(UNeo4jComponent&&) = delete; \
 	UNeo4jComponent(const UNeo4jComponent&) = delete; \
@@ -57,13 +57,13 @@ public: \
 	NO_API virtual ~UNeo4jComponent();
 
 
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_Neo4jComponent_h_11_PROLOG
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_Neo4jComponent_h_14_GENERATED_BODY \
+#define FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_Neo4jComponent_h_11_PROLOG
+#define FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_Neo4jComponent_h_14_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_Neo4jComponent_h_14_RPC_WRAPPERS_NO_PURE_DECLS \
-	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_Neo4jComponent_h_14_INCLASS_NO_PURE_DECLS \
-	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_Neo4jComponent_h_14_ENHANCED_CONSTRUCTORS \
+	FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_Neo4jComponent_h_14_RPC_WRAPPERS_NO_PURE_DECLS \
+	FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_Neo4jComponent_h_14_INCLASS_NO_PURE_DECLS \
+	FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_Neo4jComponent_h_14_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
@@ -73,6 +73,6 @@ class UNeo4jComponent;
 // ********** End Class UNeo4jComponent ************************************************************
 
 #undef CURRENT_FILE_ID
-#define CURRENT_FILE_ID FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_Neo4jComponent_h
+#define CURRENT_FILE_ID FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_Neo4jComponent_h
 
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
