@@ -19,7 +19,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
  
 
 // ********** Begin Class UKernelDensityEstimator **************************************************
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_MathUtilities_h_12_RPC_WRAPPERS \
+#define FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_MathUtilities_h_12_RPC_WRAPPERS \
 	DECLARE_FUNCTION(execgetPdf); \
 	DECLARE_FUNCTION(execevaluate); \
 	DECLARE_FUNCTION(execsetData);
@@ -27,7 +27,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 
 FANTASIA_API UClass* Z_Construct_UClass_UKernelDensityEstimator_NoRegister();
 
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_MathUtilities_h_12_INCLASS \
+#define FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_MathUtilities_h_12_INCLASS \
 private: \
 	static void StaticRegisterNativesUKernelDensityEstimator(); \
 	friend struct Z_Construct_UClass_UKernelDensityEstimator_Statics; \
@@ -38,7 +38,7 @@ public: \
 	DECLARE_SERIALIZER(UKernelDensityEstimator)
 
 
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_MathUtilities_h_12_STANDARD_CONSTRUCTORS \
+#define FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_MathUtilities_h_12_STANDARD_CONSTRUCTORS \
 	/** Standard constructor, called after all reflected properties have been initialized */ \
 	NO_API UKernelDensityEstimator(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get()); \
 	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(UKernelDensityEstimator) \
@@ -50,13 +50,13 @@ public: \
 	NO_API virtual ~UKernelDensityEstimator();
 
 
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_MathUtilities_h_9_PROLOG
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_MathUtilities_h_12_GENERATED_BODY_LEGACY \
+#define FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_MathUtilities_h_9_PROLOG
+#define FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_MathUtilities_h_12_GENERATED_BODY_LEGACY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_MathUtilities_h_12_RPC_WRAPPERS \
-	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_MathUtilities_h_12_INCLASS \
-	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_MathUtilities_h_12_STANDARD_CONSTRUCTORS \
+	FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_MathUtilities_h_12_RPC_WRAPPERS \
+	FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_MathUtilities_h_12_INCLASS \
+	FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_MathUtilities_h_12_STANDARD_CONSTRUCTORS \
 public: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
@@ -66,6 +66,6 @@ class UKernelDensityEstimator;
 // ********** End Class UKernelDensityEstimator ****************************************************
 
 #undef CURRENT_FILE_ID
-#define CURRENT_FILE_ID FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_MathUtilities_h
+#define CURRENT_FILE_ID FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_MathUtilities_h
 
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

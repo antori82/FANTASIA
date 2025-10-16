@@ -19,7 +19,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 class USoundWave;
 
 // ********** Begin Class UGeneralTTSComponent *****************************************************
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_GeneralTTSComponent_h_32_RPC_WRAPPERS_NO_PURE_DECLS \
+#define FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_GeneralTTSComponent_h_32_RPC_WRAPPERS_NO_PURE_DECLS \
 	DECLARE_FUNCTION(execTTSGetRawSound); \
 	DECLARE_FUNCTION(execTTSGetSound); \
 	DECLARE_FUNCTION(execTTSSynthesize);
@@ -27,7 +27,7 @@ class USoundWave;
 
 FANTASIA_API UClass* Z_Construct_UClass_UGeneralTTSComponent_NoRegister();
 
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_GeneralTTSComponent_h_32_INCLASS_NO_PURE_DECLS \
+#define FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_GeneralTTSComponent_h_32_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUGeneralTTSComponent(); \
 	friend struct Z_Construct_UClass_UGeneralTTSComponent_Statics; \
@@ -39,7 +39,7 @@ public: \
 	virtual UObject* _getUObject() const override { return const_cast<UGeneralTTSComponent*>(this); }
 
 
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_GeneralTTSComponent_h_32_ENHANCED_CONSTRUCTORS \
+#define FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_GeneralTTSComponent_h_32_ENHANCED_CONSTRUCTORS \
 	/** Deleted move- and copy-constructors, should never be used */ \
 	UGeneralTTSComponent(UGeneralTTSComponent&&) = delete; \
 	UGeneralTTSComponent(const UGeneralTTSComponent&) = delete; \
@@ -49,13 +49,13 @@ public: \
 	NO_API virtual ~UGeneralTTSComponent();
 
 
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_GeneralTTSComponent_h_29_PROLOG
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_GeneralTTSComponent_h_32_GENERATED_BODY \
+#define FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_GeneralTTSComponent_h_29_PROLOG
+#define FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_GeneralTTSComponent_h_32_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_GeneralTTSComponent_h_32_RPC_WRAPPERS_NO_PURE_DECLS \
-	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_GeneralTTSComponent_h_32_INCLASS_NO_PURE_DECLS \
-	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_GeneralTTSComponent_h_32_ENHANCED_CONSTRUCTORS \
+	FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_GeneralTTSComponent_h_32_RPC_WRAPPERS_NO_PURE_DECLS \
+	FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_GeneralTTSComponent_h_32_INCLASS_NO_PURE_DECLS \
+	FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_GeneralTTSComponent_h_32_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
@@ -65,6 +65,6 @@ class UGeneralTTSComponent;
 // ********** End Class UGeneralTTSComponent *******************************************************
 
 #undef CURRENT_FILE_ID
-#define CURRENT_FILE_ID FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_GeneralTTSComponent_h
+#define CURRENT_FILE_ID FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_GeneralTTSComponent_h
 
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

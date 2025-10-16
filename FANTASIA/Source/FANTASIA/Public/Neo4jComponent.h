@@ -28,8 +28,6 @@ public:
 	FIncomingNeo4jResponseEvent IncomingResponse;
 	UPROPERTY(BlueprintReadOnly)
 	FString response;
-	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
-	bool useV4;
 
 	void OnResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful);
 

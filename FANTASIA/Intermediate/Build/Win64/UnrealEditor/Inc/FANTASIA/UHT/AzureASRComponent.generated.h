@@ -17,28 +17,28 @@
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
 
 // ********** Begin Delegate FIncomingPartialASREvent **********************************************
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_AzureASRComponent_h_22_DELEGATE \
+#define FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_AzureASRComponent_h_22_DELEGATE \
 FANTASIA_API void FIncomingPartialASREvent_DelegateWrapper(const FMulticastScriptDelegate& IncomingPartialASREvent, const FString& message);
 
 
 // ********** End Delegate FIncomingPartialASREvent ************************************************
 
 // ********** Begin Delegate FIncomingFinalASREvent ************************************************
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_AzureASRComponent_h_23_DELEGATE \
+#define FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_AzureASRComponent_h_23_DELEGATE \
 FANTASIA_API void FIncomingFinalASREvent_DelegateWrapper(const FMulticastScriptDelegate& IncomingFinalASREvent, const FString& message);
 
 
 // ********** End Delegate FIncomingFinalASREvent **************************************************
 
 // ********** Begin Class UAzureASRComponent *******************************************************
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_AzureASRComponent_h_28_RPC_WRAPPERS_NO_PURE_DECLS \
+#define FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_AzureASRComponent_h_28_RPC_WRAPPERS_NO_PURE_DECLS \
 	DECLARE_FUNCTION(execAzureASRStop); \
 	DECLARE_FUNCTION(execAzureASRStart);
 
 
 FANTASIA_API UClass* Z_Construct_UClass_UAzureASRComponent_NoRegister();
 
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_AzureASRComponent_h_28_INCLASS_NO_PURE_DECLS \
+#define FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_AzureASRComponent_h_28_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUAzureASRComponent(); \
 	friend struct Z_Construct_UClass_UAzureASRComponent_Statics; \
@@ -51,7 +51,7 @@ public: \
 
 
 
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_AzureASRComponent_h_28_ENHANCED_CONSTRUCTORS \
+#define FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_AzureASRComponent_h_28_ENHANCED_CONSTRUCTORS \
 	/** Deleted move- and copy-constructors, should never be used */ \
 	UAzureASRComponent(UAzureASRComponent&&) = delete; \
 	UAzureASRComponent(const UAzureASRComponent&) = delete; \
@@ -61,13 +61,13 @@ public: \
 	NO_API virtual ~UAzureASRComponent();
 
 
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_AzureASRComponent_h_25_PROLOG
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_AzureASRComponent_h_28_GENERATED_BODY \
+#define FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_AzureASRComponent_h_25_PROLOG
+#define FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_AzureASRComponent_h_28_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_AzureASRComponent_h_28_RPC_WRAPPERS_NO_PURE_DECLS \
-	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_AzureASRComponent_h_28_INCLASS_NO_PURE_DECLS \
-	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_AzureASRComponent_h_28_ENHANCED_CONSTRUCTORS \
+	FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_AzureASRComponent_h_28_RPC_WRAPPERS_NO_PURE_DECLS \
+	FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_AzureASRComponent_h_28_INCLASS_NO_PURE_DECLS \
+	FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_AzureASRComponent_h_28_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
@@ -77,6 +77,6 @@ class UAzureASRComponent;
 // ********** End Class UAzureASRComponent *********************************************************
 
 #undef CURRENT_FILE_ID
-#define CURRENT_FILE_ID FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_AzureASRComponent_h
+#define CURRENT_FILE_ID FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_AzureASRComponent_h
 
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
