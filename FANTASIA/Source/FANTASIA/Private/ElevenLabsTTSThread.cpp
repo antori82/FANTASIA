@@ -15,7 +15,6 @@ ElevenLabsTTSThread::ElevenLabsTTSThread(FString inKey, FString inText, FString 
 	style = inStyle;
 	use_speaker_boost = inUse_speaker_boost;
 	isStreaming = stream;
-
 	Thread = FRunnableThread::Create(this, TEXT("ElevenLabsTTSThread"), 0, TPri_Normal);
 }
 
@@ -77,15 +76,12 @@ void ElevenLabsTTSThread::Synthesize()
 						if ((len - StreamingNum) % 2 == 0) {
 							SynthResult = TArray<uint8>(&Req->GetResponse()->GetContent()[StreamingNum], len - StreamingNum);
 							StreamingNum = len;
-							UE_LOG(LogTemp, Warning, TEXT("Got 1"));
 						}
 						else {
 							SynthResult = TArray<uint8>(&Req->GetResponse()->GetContent()[StreamingNum], len - StreamingNum - 1);
 							StreamingNum = len - 1;
-							UE_LOG(LogTemp, Warning, TEXT("Got 2"));
 						}
 
-						
 						PreviousBytes = BytesReceived;
 						TTSPartialResultAvailable.Broadcast(SynthResult, id);
 					}

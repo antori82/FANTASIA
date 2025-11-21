@@ -17,6 +17,8 @@
 #include "Runtime/Online/HTTP/Public/Http.h"
 #include "Runtime/Json/Public/Json.h"
 #include "Runtime/JsonUtilities/Public/JsonUtilities.h"
+#include "ACERuntimeModule.h"
+#include "ACEAudioCurveSourceComponent.h"
 #include "ElevenLabsTTSComponent.generated.h"
 
 using namespace std;
@@ -45,15 +47,25 @@ private:
 	void getResult(FTTSData response, FString id);
 	void getPartialResult(TArray<uint8> response, FString id);
 
-
 	bool usingStreamingBuffer = false;
+	bool bufferOpen = false;
+	TArray<float> sendData;
+
 public:
 
 	// Sets default values for this component's properties
 	UElevenLabsTTSComponent();
 
+	
+
 	UPROPERTY(BlueprintReadWrite, Category = "TTS")
-	UAudio2FaceComponent* A2Fpointer;
+	UACEAudioCurveSourceComponent* A2Fpointer;
+
+	UPROPERTY(BlueprintReadWrite, Category = "TTS")
+	FAudio2FaceEmotion EmotionParameters;
+
+	UPROPERTY(BlueprintReadWrite, Category = "TTS")
+	UAudio2FaceParameters* A2FParameters;
 
 	UPROPERTY(BlueprintAssignable, Category = "Speech to Text")
 	FSynthesizedEvent SynthesisReady;

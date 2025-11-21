@@ -20,11 +20,12 @@
 			"Name": "FANTASIA",
 			"Type": "Runtime",
 			"LoadingPhase": "Default"
-		},
+		}
+	],
+	"Plugins": [
 		{
-			"Name": "FANTASIAEditor",
-			"Type": "Editor",
-			"LoadingPhase": "PostEngineInit"
+			"Name": "NV_ACE_Reference",
+			"Enabled": true
 		}
 	]
 }

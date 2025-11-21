@@ -17,6 +17,30 @@ UElevenLabsTTSComponent::UElevenLabsTTSComponent()
 void UElevenLabsTTSComponent::BeginPlay()
 {
 	Super::BeginPlay();
+
+	AsyncTask(ENamedThreads::AnyHiPriThreadNormalTask, [this]() {
+		TArray<float> outData;
+
+		while (true) {
+			int currentData = sendData.Num();
+
+			if (currentData > 0) {
+				for (int i = 0; i < currentData; i++)
+					outData.Add(sendData[i]);
+
+				FACERuntimeModule::Get().AnimateFromAudioSamples(A2Fpointer, outData, 1, 16000, false, EmotionParameters, A2FParameters, FName("LocalA2F-James"));
+				outData.Empty();
+
+				for (int i = 0; i < currentData; i++)
+					sendData.RemoveAt(0);
+			}
+			else if (!usingStreamingBuffer && bufferOpen) {
+				FACERuntimeModule::Get().EndAudioSamples(A2Fpointer);
+				bufferOpen = false;
+			}
+				
+		}
+	});
 }
 
 // Called every frame
@@ -40,6 +64,10 @@ void UElevenLabsTTSComponent::getResult(FTTSData response, FString id)
 {
 	handle->TTSResultAvailableUnsubscribeUser(TTSResultAvailableHandle);
 
+	if (IsValid(A2Fpointer)) {
+		usingStreamingBuffer = false;
+	}
+
 	Buffer.Remove(id);
 	Buffer.Add(id, response);
 	idSynthesisReady = id;
@@ -48,18 +76,19 @@ void UElevenLabsTTSComponent::getResult(FTTSData response, FString id)
 void UElevenLabsTTSComponent::getPartialResult(TArray<uint8> response, FString id)
 {
 	if (!StreamingBuffer.Contains(id)) {
-		TArray<float> newArray;
+		//TArray<float> newArray;
 
-		StreamingBuffer.Add(id, newArray);
+		//StreamingBuffer.Add(id, newArray);
 	}
 
-	for (int i = 0; i < response.Num() - 1; i += 2)
-		StreamingBuffer[id].Add(*reinterpret_cast<int16*>(&response.GetData()[i]) / 32768.0f);
-
+	for (int i = 0; i < response.Num() - 1; i += 2) {
+		//StreamingBuffer[id].Add(*reinterpret_cast<int16*>(&response.GetData()[i]) / 32768.0f);
+		sendData.Add(*reinterpret_cast<int16*>(&response.GetData()[i]) / 32768.0f);
+	}
+		
 	if (IsValid(A2Fpointer)) {
-		A2Fpointer->QueueAudio(StreamingBuffer[id]);
-
-		StreamingBuffer[id].Empty();
+		usingStreamingBuffer = true;
+		bufferOpen = true;
 	}
 	
 	idPartialSynthesisReady = id;
@@ -79,6 +108,7 @@ void UElevenLabsTTSComponent::TTSSynthesize(FString text, FString id, bool strea
 
 USoundWaveProcedural* UElevenLabsTTSComponent::TTSGetSound(FString id) {
 	USoundWaveProcedural* SyntheticVoice = NewObject<USoundWaveProcedural>();
+	USoundWave* SyntheticVoiceOut = NewObject<USoundWave>();
 	float SamplingRate = 16000;
 
 	SyntheticVoice->SetSampleRate(SamplingRate);
@@ -87,7 +117,7 @@ USoundWaveProcedural* UElevenLabsTTSComponent::TTSGetSound(FString id) {
 	SyntheticVoice->RawPCMDataSize = Buffer[id].AudioData.Num() * sizeof(uint8);
 	SyntheticVoice->Duration = (float)Buffer[id].AudioData.Num() / (2 * (float)SamplingRate);
 	SyntheticVoice->QueueAudio((const uint8*) Buffer[id].AudioData.GetData(), SyntheticVoice->RawPCMDataSize);
-	
+
 	return SyntheticVoice;
 }
 

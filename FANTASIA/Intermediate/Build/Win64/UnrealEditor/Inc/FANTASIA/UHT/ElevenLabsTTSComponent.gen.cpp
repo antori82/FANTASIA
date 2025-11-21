@@ -6,15 +6,18 @@
 
 #include "UObject/GeneratedCppIncludes.h"
 #include "ElevenLabsTTSComponent.h"
+#include "ACETypes.h"
 
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
 
 void EmptyLinkFunctionForGeneratedCodeElevenLabsTTSComponent() {}
 
 // ********** Begin Cross Module References ********************************************************
+ACECORE_API UClass* Z_Construct_UClass_UAudio2FaceParameters_NoRegister();
+ACECORE_API UScriptStruct* Z_Construct_UScriptStruct_FAudio2FaceEmotion();
+ACERUNTIME_API UClass* Z_Construct_UClass_UACEAudioCurveSourceComponent_NoRegister();
 ENGINE_API UClass* Z_Construct_UClass_UActorComponent();
 ENGINE_API UClass* Z_Construct_UClass_USoundWaveProcedural_NoRegister();
-FANTASIA_API UClass* Z_Construct_UClass_UAudio2FaceComponent_NoRegister();
 FANTASIA_API UClass* Z_Construct_UClass_UElevenLabsTTSComponent();
 FANTASIA_API UClass* Z_Construct_UClass_UElevenLabsTTSComponent_NoRegister();
 FANTASIA_API UFunction* Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedEvent__DelegateSignature();
@@ -289,6 +292,14 @@ struct Z_Construct_UClass_UElevenLabsTTSComponent_Statics
 		{ "EditInline", "true" },
 		{ "ModuleRelativePath", "Public/ElevenLabsTTSComponent.h" },
 	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_EmotionParameters_MetaData[] = {
+		{ "Category", "TTS" },
+		{ "ModuleRelativePath", "Public/ElevenLabsTTSComponent.h" },
+	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_A2FParameters_MetaData[] = {
+		{ "Category", "TTS" },
+		{ "ModuleRelativePath", "Public/ElevenLabsTTSComponent.h" },
+	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_SynthesisReady_MetaData[] = {
 		{ "Category", "Speech to Text" },
 		{ "ModuleRelativePath", "Public/ElevenLabsTTSComponent.h" },
@@ -335,6 +346,8 @@ struct Z_Construct_UClass_UElevenLabsTTSComponent_Statics
 	};
 #endif // WITH_METADATA
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_A2Fpointer;
+	static const UECodeGen_Private::FStructPropertyParams NewProp_EmotionParameters;
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_A2FParameters;
 	static const UECodeGen_Private::FMulticastDelegatePropertyParams NewProp_SynthesisReady;
 	static const UECodeGen_Private::FMulticastDelegatePropertyParams NewProp_PartialSynthesisReady;
 	static const UECodeGen_Private::FStrPropertyParams NewProp_VoiceID;
@@ -359,7 +372,9 @@ struct Z_Construct_UClass_UElevenLabsTTSComponent_Statics
 	};
 	static const UECodeGen_Private::FClassParams ClassParams;
 };
-const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_UElevenLabsTTSComponent_Statics::NewProp_A2Fpointer = { "A2Fpointer", nullptr, (EPropertyFlags)0x001000000008000c, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UElevenLabsTTSComponent, A2Fpointer), Z_Construct_UClass_UAudio2FaceComponent_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_A2Fpointer_MetaData), NewProp_A2Fpointer_MetaData) };
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_UElevenLabsTTSComponent_Statics::NewProp_A2Fpointer = { "A2Fpointer", nullptr, (EPropertyFlags)0x001000000008000c, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UElevenLabsTTSComponent, A2Fpointer), Z_Construct_UClass_UACEAudioCurveSourceComponent_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_A2Fpointer_MetaData), NewProp_A2Fpointer_MetaData) };
+const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_UElevenLabsTTSComponent_Statics::NewProp_EmotionParameters = { "EmotionParameters", nullptr, (EPropertyFlags)0x0010000000000004, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UElevenLabsTTSComponent, EmotionParameters), Z_Construct_UScriptStruct_FAudio2FaceEmotion, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_EmotionParameters_MetaData), NewProp_EmotionParameters_MetaData) }; // 2924740110
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_UElevenLabsTTSComponent_Statics::NewProp_A2FParameters = { "A2FParameters", nullptr, (EPropertyFlags)0x0010000000000004, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UElevenLabsTTSComponent, A2FParameters), Z_Construct_UClass_UAudio2FaceParameters_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_A2FParameters_MetaData), NewProp_A2FParameters_MetaData) };
 const UECodeGen_Private::FMulticastDelegatePropertyParams Z_Construct_UClass_UElevenLabsTTSComponent_Statics::NewProp_SynthesisReady = { "SynthesisReady", nullptr, (EPropertyFlags)0x0010000010080000, UECodeGen_Private::EPropertyGenFlags::InlineMulticastDelegate, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UElevenLabsTTSComponent, SynthesisReady), Z_Construct_UDelegateFunction_FANTASIA_SynthesizedEvent__DelegateSignature, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_SynthesisReady_MetaData), NewProp_SynthesisReady_MetaData) }; // 1658130564
 const UECodeGen_Private::FMulticastDelegatePropertyParams Z_Construct_UClass_UElevenLabsTTSComponent_Statics::NewProp_PartialSynthesisReady = { "PartialSynthesisReady", nullptr, (EPropertyFlags)0x0010000010080000, UECodeGen_Private::EPropertyGenFlags::InlineMulticastDelegate, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UElevenLabsTTSComponent, PartialSynthesisReady), Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedEvent__DelegateSignature, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_PartialSynthesisReady_MetaData), NewProp_PartialSynthesisReady_MetaData) }; // 965322784
 const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_UElevenLabsTTSComponent_Statics::NewProp_VoiceID = { "VoiceID", nullptr, (EPropertyFlags)0x0010000000004001, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UElevenLabsTTSComponent, VoiceID), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_VoiceID_MetaData), NewProp_VoiceID_MetaData) };
@@ -375,6 +390,8 @@ void Z_Construct_UClass_UElevenLabsTTSComponent_Statics::NewProp_use_speaker_boo
 const UECodeGen_Private::FBoolPropertyParams Z_Construct_UClass_UElevenLabsTTSComponent_Statics::NewProp_use_speaker_boost = { "use_speaker_boost", nullptr, (EPropertyFlags)0x0010000000000001, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, sizeof(bool), sizeof(UElevenLabsTTSComponent), &Z_Construct_UClass_UElevenLabsTTSComponent_Statics::NewProp_use_speaker_boost_SetBit, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_use_speaker_boost_MetaData), NewProp_use_speaker_boost_MetaData) };
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_UElevenLabsTTSComponent_Statics::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UElevenLabsTTSComponent_Statics::NewProp_A2Fpointer,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UElevenLabsTTSComponent_Statics::NewProp_EmotionParameters,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UElevenLabsTTSComponent_Statics::NewProp_A2FParameters,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UElevenLabsTTSComponent_Statics::NewProp_SynthesisReady,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UElevenLabsTTSComponent_Statics::NewProp_PartialSynthesisReady,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UElevenLabsTTSComponent_Statics::NewProp_VoiceID,
@@ -419,14 +436,14 @@ UElevenLabsTTSComponent::~UElevenLabsTTSComponent() {}
 // ********** End Class UElevenLabsTTSComponent ****************************************************
 
 // ********** Begin Registration *******************************************************************
-struct Z_CompiledInDeferFile_FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_ElevenLabsTTSComponent_h__Script_FANTASIA_Statics
+struct Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_ElevenLabsTTSComponent_h__Script_FANTASIA_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_UElevenLabsTTSComponent, UElevenLabsTTSComponent::StaticClass, TEXT("UElevenLabsTTSComponent"), &Z_Registration_Info_UClass_UElevenLabsTTSComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UElevenLabsTTSComponent), 1715922388U) },
+		{ Z_Construct_UClass_UElevenLabsTTSComponent, UElevenLabsTTSComponent::StaticClass, TEXT("UElevenLabsTTSComponent"), &Z_Registration_Info_UClass_UElevenLabsTTSComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UElevenLabsTTSComponent), 3180323606U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_ElevenLabsTTSComponent_h__Script_FANTASIA_432945862(TEXT("/Script/FANTASIA"),
-	Z_CompiledInDeferFile_FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_ElevenLabsTTSComponent_h__Script_FANTASIA_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_FANTASIATemplate_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_ElevenLabsTTSComponent_h__Script_FANTASIA_Statics::ClassInfo),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_ElevenLabsTTSComponent_h__Script_FANTASIA_2572023221(TEXT("/Script/FANTASIA"),
+	Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_ElevenLabsTTSComponent_h__Script_FANTASIA_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_ElevenLabsTTSComponent_h__Script_FANTASIA_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);
 // ********** End Registration *********************************************************************

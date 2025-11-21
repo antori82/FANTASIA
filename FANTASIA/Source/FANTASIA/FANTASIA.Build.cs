@@ -83,8 +83,8 @@ public class FANTASIA : ModuleRules
 
         PrivateIncludePaths.AddRange(
             new string[] {
-				// ... add other private include paths required here ...
-			}
+
+            }
             );
 
         PublicDependencyModuleNames.AddRange(
@@ -108,9 +108,9 @@ public class FANTASIA : ModuleRules
                 "Json",
                 "JsonUtilities",
                 "HTTP",
-                "UnrealEd"
-				// ... add private dependencies that you statically link with here ...	
-			}
+                "ACERuntime",
+                "ACECore"
+            }
             );
     }
 
