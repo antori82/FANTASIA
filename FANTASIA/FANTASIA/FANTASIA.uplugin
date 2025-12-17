@@ -1,0 +1,31 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "0.9",
+	"FriendlyName": "FANTASIA",
+	"Description": "Framework for Advanced Natural Tools and Applications with Social Interactive Agents",
+	"Category": "Other",
+	"CreatedBy": "Antonio Origlia",
+	"CreatedByURL": "",
+	"DocsURL": "",
+	"MarketplaceURL": "",
+	"EngineVersion": "5.6.0",
+	"SupportURL": "",
+	"CanContainContent": true,
+	"IsBetaVersion": false,
+	"IsExperimentalVersion": true,
+	"Installed": false,
+	"Modules": [
+		{
+			"Name": "FANTASIA",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	],
+	"Plugins": [
+		{
+			"Name": "NV_ACE_Reference",
+			"Enabled": true
+		}
+	]
+}

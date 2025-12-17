@@ -1,0 +1,108 @@
+#pragma once
+
+#include "FANTASIA.h"
+#include "Engine.h"
+#include "CoreMinimal.h"
+
+#include "Components/ActorComponent.h"
+#include "FANTASIATypes.h"
+#include "ElevenLabsTTSThread.h"
+#include <iostream>
+#include <string>
+#include "Runtime/Engine/Classes/Sound/SoundWaveProcedural.h"
+#include "Runtime/Online/HTTP/Public/Http.h"
+#include "Runtime/Json/Public/Json.h"
+#include "Runtime/JsonUtilities/Public/JsonUtilities.h"
+#include "ACERuntimeModule.h"
+#include "ACEAudioCurveSourceComponent.h"
+#include "ElevenLabsTTSComponent.generated.h"
+
+using namespace std;
+
+UCLASS(meta = (BlueprintSpawnableComponent), Config = Game)
+class UElevenLabsTTSComponent : public UActorComponent
+{
+	GENERATED_BODY()
+
+protected:
+	// Called when the game starts
+	virtual void BeginPlay() override;
+
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+
+private:
+
+	TMap<FString, FTTSData> Buffer;
+	TMap<FString, TArray<float>> StreamingBuffer;
+	TMap<FString, FString> PendingSSML;
+	ElevenLabsTTSThread* handle;
+	FDelegateHandle TTSResultAvailableHandle;
+	FDelegateHandle TTSPartialResultAvailableHandle;
+	FSynthesizedInternalEvent synthesisReadyInternal;
+	FString idSynthesisReady = "";
+	FString idPartialSynthesisReady = "";
+
+	void getResult(FTTSData response, FString id);
+	void getPartialResult(TArray<uint8> response, FString id);
+
+	bool usingStreamingBuffer = false;
+	bool bufferOpen = false;
+	TQueue<float, EQueueMode::Spsc> sendData;
+	bool isPlaying = false;
+	TArray<uint8> SyntheticVoicePCMData;
+public:
+
+	// Sets default values for this component's properties
+	UElevenLabsTTSComponent();
+
+	UPROPERTY(BlueprintReadWrite, Category = "TTS")
+	UACEAudioCurveSourceComponent* A2Fpointer;
+
+	UPROPERTY(BlueprintReadWrite, Category = "TTS")
+	FAudio2FaceEmotion EmotionParameters;
+
+	UPROPERTY(BlueprintReadWrite, Category = "TTS")
+	UAudio2FaceParameters* A2FParameters;
+
+	UPROPERTY(BlueprintReadWrite, Category = "TTS")
+	FName A2FProvider;
+
+	UPROPERTY(BlueprintAssignable, Category = "Speech to Text")
+	FSynthesizedEvent SynthesisReady;
+
+	UPROPERTY(BlueprintAssignable, Category = "Speech to Text")
+	FPartialSynthesizedEvent PartialSynthesisReady;
+
+	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
+	FString VoiceID;
+
+	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
+	FString ModelID;
+
+	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
+	FString Key;
+
+	UPROPERTY(EditAnywhere, Category = "Voice Settings", meta = (UIMin = "0.0", UIMax = "1.0"))
+	float stability;
+
+	UPROPERTY(EditAnywhere, Category = "Voice Settings", meta = (UIMin = "0.0", UIMax = "1.0"))
+	float similarity_boost;
+
+	UPROPERTY(EditAnywhere, Category = "Voice Settings", meta = (UIMin = "0.0", UIMax = "1.0"))
+	float style;
+
+	UPROPERTY(EditAnywhere, Category = "Voice Settings", meta = (UIMin = "0.0", UIMax = "1.0"))
+	bool use_speaker_boost;
+
+	// Called every frame
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction);
+
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "TTS Start", Keywords = "ElevenLabs TTS"), Category = "TTS")
+	void TTSSynthesize(FString text, FString id);
+
+	UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Sound", Keywords = "ElevenLabs TTS"), Category = "TTS")
+	USoundWaveProcedural* TTSGetSound(FString id);
+
+	UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Raw Sound", Keywords = "ElevenLabs TTS"), Category = "TTS")
+	TArray<uint8> TTSGetRawSound(FString id);
+};
