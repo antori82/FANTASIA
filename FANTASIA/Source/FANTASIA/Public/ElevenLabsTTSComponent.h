@@ -4,10 +4,6 @@
 #include "Engine.h"
 #include "CoreMinimal.h"
 
-#include "EnableGrpcIncludes.h"
-#include "Audio2FaceComponent.h"
-#include "DisableGrpcIncludes.h"
-
 #include "Components/ActorComponent.h"
 #include "FANTASIATypes.h"
 #include "ElevenLabsTTSThread.h"
@@ -32,6 +28,8 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+
 private:
 
 	TMap<FString, FTTSData> Buffer;
@@ -49,8 +47,9 @@ private:
 
 	bool usingStreamingBuffer = false;
 	bool bufferOpen = false;
-	TArray<float> sendData;
-
+	TQueue<float, EQueueMode::Spsc> sendData;
+	bool isPlaying = false;
+	TArray<uint8> SyntheticVoicePCMData;
 public:
 
 	// Sets default values for this component's properties
@@ -99,14 +98,11 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction);
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "TTS Start", Keywords = "ElevenLabs TTS"), Category = "TTS")
-	void TTSSynthesize(FString ssml, FString id, bool stream);
+	void TTSSynthesize(FString text, FString id);
 
 	UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Sound", Keywords = "ElevenLabs TTS"), Category = "TTS")
 	USoundWaveProcedural* TTSGetSound(FString id);
 
 	UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Raw Sound", Keywords = "ElevenLabs TTS"), Category = "TTS")
-	TArray<float> TTSGetRawSound(FString id);
-
-	UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Streaming Raw Sound", Keywords = "ElevenLabs TTS"), Category = "TTS")
-	TArray<float> TTSGetPartialRawSound(FString id);
+	TArray<uint8> TTSGetRawSound(FString id);
 };

@@ -19,8 +19,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 class USoundWaveProcedural;
 
 // ********** Begin Class UElevenLabsTTSComponent **************************************************
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_ElevenLabsTTSComponent_h_29_RPC_WRAPPERS_NO_PURE_DECLS \
-	DECLARE_FUNCTION(execTTSGetPartialRawSound); \
+#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_ElevenLabsTTSComponent_h_25_RPC_WRAPPERS_NO_PURE_DECLS \
 	DECLARE_FUNCTION(execTTSGetRawSound); \
 	DECLARE_FUNCTION(execTTSGetSound); \
 	DECLARE_FUNCTION(execTTSSynthesize);
@@ -28,7 +27,7 @@ class USoundWaveProcedural;
 
 FANTASIA_API UClass* Z_Construct_UClass_UElevenLabsTTSComponent_NoRegister();
 
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_ElevenLabsTTSComponent_h_29_INCLASS_NO_PURE_DECLS \
+#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_ElevenLabsTTSComponent_h_25_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUElevenLabsTTSComponent(); \
 	friend struct Z_Construct_UClass_UElevenLabsTTSComponent_Statics; \
@@ -41,7 +40,7 @@ public: \
 
 
 
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_ElevenLabsTTSComponent_h_29_ENHANCED_CONSTRUCTORS \
+#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_ElevenLabsTTSComponent_h_25_ENHANCED_CONSTRUCTORS \
 	/** Deleted move- and copy-constructors, should never be used */ \
 	UElevenLabsTTSComponent(UElevenLabsTTSComponent&&) = delete; \
 	UElevenLabsTTSComponent(const UElevenLabsTTSComponent&) = delete; \
@@ -51,13 +50,13 @@ public: \
 	NO_API virtual ~UElevenLabsTTSComponent();
 
 
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_ElevenLabsTTSComponent_h_26_PROLOG
-#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_ElevenLabsTTSComponent_h_29_GENERATED_BODY \
+#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_ElevenLabsTTSComponent_h_22_PROLOG
+#define FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_ElevenLabsTTSComponent_h_25_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_ElevenLabsTTSComponent_h_29_RPC_WRAPPERS_NO_PURE_DECLS \
-	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_ElevenLabsTTSComponent_h_29_INCLASS_NO_PURE_DECLS \
-	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_ElevenLabsTTSComponent_h_29_ENHANCED_CONSTRUCTORS \
+	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_ElevenLabsTTSComponent_h_25_RPC_WRAPPERS_NO_PURE_DECLS \
+	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_ElevenLabsTTSComponent_h_25_INCLASS_NO_PURE_DECLS \
+	FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_ElevenLabsTTSComponent_h_25_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 

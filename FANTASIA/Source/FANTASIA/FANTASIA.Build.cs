@@ -83,8 +83,8 @@ public class FANTASIA : ModuleRules
 
         PrivateIncludePaths.AddRange(
             new string[] {
-
-            }
+                
+			}
             );
 
         PublicDependencyModuleNames.AddRange(
@@ -110,7 +110,7 @@ public class FANTASIA : ModuleRules
                 "HTTP",
                 "ACERuntime",
                 "ACECore"
-            }
+			}
             );
     }
 
@@ -157,7 +157,7 @@ public class FANTASIA : ModuleRules
 
         PublicIncludePaths.Add(Path.Combine(ThirdParty, "SWIProlog", "headers"));
 
-        RuntimeDependencies.Add(Path.Combine(PrologCpp, "/libswipl.dll"));
+        RuntimeDependencies.Add(Path.Combine(PrologCpp, "libswipl.dll"));
 
         foreach (string dllFile in Directory.GetFiles(PrologDllPath, "*"))
         {

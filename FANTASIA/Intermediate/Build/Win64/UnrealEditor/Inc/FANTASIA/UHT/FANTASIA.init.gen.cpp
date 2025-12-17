@@ -18,7 +18,6 @@ void EmptyLinkFunctionForGeneratedCodeFANTASIA_init() {}
 	FANTASIA_API UFunction* Z_Construct_UDelegateFunction_FANTASIA_IncomingNeo4jResponseEvent__DelegateSignature();
 	FANTASIA_API UFunction* Z_Construct_UDelegateFunction_FANTASIA_IncomingNLUEvent__DelegateSignature();
 	FANTASIA_API UFunction* Z_Construct_UDelegateFunction_FANTASIA_IncomingPartialASREvent__DelegateSignature();
-	FANTASIA_API UFunction* Z_Construct_UDelegateFunction_FANTASIA_LoadSceneCompleteEvent__DelegateSignature();
 	FANTASIA_API UFunction* Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedEvent__DelegateSignature();
 	FANTASIA_API UFunction* Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedInternalEvent__DelegateSignature();
 	FANTASIA_API UFunction* Z_Construct_UDelegateFunction_FANTASIA_SolutionAvailableEvent__DelegateSignature();
@@ -41,7 +40,6 @@ void EmptyLinkFunctionForGeneratedCodeFANTASIA_init() {}
 				(UObject* (*)())Z_Construct_UDelegateFunction_FANTASIA_IncomingNeo4jResponseEvent__DelegateSignature,
 				(UObject* (*)())Z_Construct_UDelegateFunction_FANTASIA_IncomingNLUEvent__DelegateSignature,
 				(UObject* (*)())Z_Construct_UDelegateFunction_FANTASIA_IncomingPartialASREvent__DelegateSignature,
-				(UObject* (*)())Z_Construct_UDelegateFunction_FANTASIA_LoadSceneCompleteEvent__DelegateSignature,
 				(UObject* (*)())Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedEvent__DelegateSignature,
 				(UObject* (*)())Z_Construct_UDelegateFunction_FANTASIA_PartialSynthesizedInternalEvent__DelegateSignature,
 				(UObject* (*)())Z_Construct_UDelegateFunction_FANTASIA_SolutionAvailableEvent__DelegateSignature,
@@ -53,13 +51,13 @@ void EmptyLinkFunctionForGeneratedCodeFANTASIA_init() {}
 				SingletonFuncArray,
 				UE_ARRAY_COUNT(SingletonFuncArray),
 				PKG_CompiledIn | 0x00000000,
-				0x00B9F44E,
-				0x5387ECF2,
+				0x706F3682,
+				0xD4CF04FE,
 				METADATA_PARAMS(0, nullptr)
 			};
 			UECodeGen_Private::ConstructUPackage(Z_Registration_Info_UPackage__Script_FANTASIA.OuterSingleton, PackageParams);
 		}
 		return Z_Registration_Info_UPackage__Script_FANTASIA.OuterSingleton;
 	}
-	static FRegisterCompiledInInfo Z_CompiledInDeferPackage_UPackage__Script_FANTASIA(Z_Construct_UPackage__Script_FANTASIA, TEXT("/Script/FANTASIA"), Z_Registration_Info_UPackage__Script_FANTASIA, CONSTRUCT_RELOAD_VERSION_INFO(FPackageReloadVersionInfo, 0x00B9F44E, 0x5387ECF2));
+	static FRegisterCompiledInInfo Z_CompiledInDeferPackage_UPackage__Script_FANTASIA(Z_Construct_UPackage__Script_FANTASIA, TEXT("/Script/FANTASIA"), Z_Registration_Info_UPackage__Script_FANTASIA, CONSTRUCT_RELOAD_VERSION_INFO(FPackageReloadVersionInfo, 0x706F3682, 0xD4CF04FE));
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

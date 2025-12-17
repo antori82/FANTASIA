@@ -2,7 +2,6 @@
 	"RemapUnityFiles": 
 	{
 		"Module.FANTASIA.1.cpp.obj": [
-			"Audio2FaceComponent.gen.cpp.obj",
 			"AWSPollyComponent.gen.cpp.obj",
 			"AzureASRComponent.gen.cpp.obj",
 			"AzureNLUComponent.gen.cpp.obj",
@@ -13,7 +12,6 @@
 			"FANTASIATypes.gen.cpp.obj"
 		],
 		"Module.FANTASIA.2.cpp.obj": [
-			"GeneralTTSComponent.gen.cpp.obj",
 			"GroqComponent.gen.cpp.obj",
 			"InfluenceDiag.gen.cpp.obj",
 			"LangGraphComponent.gen.cpp.obj",
@@ -27,11 +25,16 @@
 			"TTSInterface.gen.cpp.obj",
 			"TTSThreadInterface.gen.cpp.obj",
 			"PerModuleInline.gen.cpp.obj",
-			"Audio2FaceComponent.cpp.obj",
-			"Audio2FaceThread.cpp.obj",
 			"AWSPollyComponent.cpp.obj",
 			"AWSPollyThread.cpp.obj",
-			"AzureASRComponent.cpp.obj"
+			"AzureASRComponent.cpp.obj",
+			"AzureASRThread.cpp.obj",
+			"AzureNLUComponent.cpp.obj",
+			"AzureNLUThread.cpp.obj",
+			"AzureTTSComponent.cpp.obj",
+			"AzureTTSThread.cpp.obj",
+			"BayesianInferenceThreads.cpp.obj",
+			"BayesianNetwork.cpp.obj"
 		]
 	}
 }

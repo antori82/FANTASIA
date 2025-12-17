@@ -190,6 +190,8 @@ void ULangGraphComponent::langGraphQuery(TArray<FChatTurn> messages, FString thr
 		Request->SetURL(endpoint + ":" + FString::FromInt(port) + "/threads/" + threadID + "/runs/wait");
 	}
 	
+	
+
 	TSharedPtr<FJsonObject> configObject = MakeShareable(new FJsonObject());
 	TSharedPtr<FJsonObject> configurableObject = MakeShareable(new FJsonObject());
 

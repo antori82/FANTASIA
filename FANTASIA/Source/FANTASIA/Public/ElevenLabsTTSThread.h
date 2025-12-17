@@ -12,7 +12,7 @@ DECLARE_EVENT_TwoParams(ElevenLabsTTSThread, FElevenLabsTTSResultAvailableEvent,
 DECLARE_EVENT_TwoParams(ElevenLabsTTSThread, FElevenLabsTTSPartialResultAvailableEvent, TArray<uint8>, FString);
 
 //~~~~~ Multi Threading ~~~
-class ElevenLabsTTSThread : public FRunnable, public ITTSThreadInterface
+class ElevenLabsTTSThread : public FRunnable
 {
 private:
 	/** Singleton instance, can access the thread any time via static accessor, if it is active! */
@@ -40,18 +40,18 @@ private:
 	float style;
 	float use_speaker_boost;
 	int PreviousBytes = 0;
-	bool isStreaming;
+	bool isStreaming, synthesize;
 
 public:
 
 	//~~~ Thread Core Functions ~~~
 
 	//Constructor
-	ElevenLabsTTSThread(FString inKey, FString inText, FString inID, FString inVoiceID, FString inModelID, float inStability, float inSimilarity_boost, float inStyle, bool inUse_speaker_boost, bool stream);
+	ElevenLabsTTSThread(FString inKey, FString inVoiceID, FString inModelID, float inStability, float inSimilarity_boost, float inStyle, bool inUse_speaker_boost, bool stream);
 
 	virtual ~ElevenLabsTTSThread();
 
-	static ElevenLabsTTSThread* setup(FString key, FString text, FString inID, FString voiceID, FString modelID, float stability, float similarity_boost, float style, bool use_speaker_boost, bool stream);
+	static ElevenLabsTTSThread* setup(FString key, FString voiceID, FString modelID, float stability, float similarity_boost, float style, bool use_speaker_boost, bool stream);
 
 	// Begin FRunnable interface.
 	virtual bool Init();
@@ -59,7 +59,8 @@ public:
 	virtual void Stop();
 	// End FRunnable interface
 
-	void Synthesize() override;
+	void SynthesizeLoop();
+	void Synthesize(FString text, FString inID);
 
 	/** Makes sure this thread has stopped properly */
 	void EnsureCompletion();
@@ -67,8 +68,8 @@ public:
 	/** Shuts down the thread. Static so it can easily be called from outside the thread context */
 	static void Shutdown();
 
-	FDelegateHandle TTSResultAvailableSubscribeUser(FTTSResultAvailableDelegate& UseDelegate) override;
-	void TTSResultAvailableUnsubscribeUser(FDelegateHandle DelegateHandle) override;
+	FDelegateHandle TTSResultAvailableSubscribeUser(FTTSResultAvailableDelegate& UseDelegate) ;
+	void TTSResultAvailableUnsubscribeUser(FDelegateHandle DelegateHandle) ;
 	FDelegateHandle TTSPartialResultAvailableSubscribeUser(FTTSPartialResultAvailableDelegate& UseDelegate);
 	void TTSPartialResultAvailableUnsubscribeUser(FDelegateHandle DelegateHandle);
 };

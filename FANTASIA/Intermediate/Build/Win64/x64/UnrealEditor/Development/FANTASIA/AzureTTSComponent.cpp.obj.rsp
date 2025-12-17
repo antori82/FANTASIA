@@ -1,12 +1,12 @@
-"D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/AzureTTSComponent.cpp"
-@"D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/FANTASIA.Shared.rsp"
-/FI"D:/Perforce/FANTASIADevelopment/Intermediate/Build/Win64/x64/FANTASIADevelopmentEditor/Development/UnrealEd/SharedPCH.UnrealEd.Project.ValApi.ValExpApi.Cpp20.h"
-/FI"D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Definitions.FANTASIA.h"
-/Yu"D:/Perforce/FANTASIADevelopment/Intermediate/Build/Win64/x64/FANTASIADevelopmentEditor/Development/UnrealEd/SharedPCH.UnrealEd.Project.ValApi.ValExpApi.Cpp20.h"
-/Fp"D:/Perforce/FANTASIADevelopment/Intermediate/Build/Win64/x64/FANTASIADevelopmentEditor/Development/UnrealEd/SharedPCH.UnrealEd.Project.ValApi.ValExpApi.Cpp20.h.pch"
-/Fo"D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/AzureTTSComponent.cpp.obj"
-/experimental:log "D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/AzureTTSComponent.cpp.sarif"
-/sourceDependencies "D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/AzureTTSComponent.cpp.dep.json"
+"D:/Perforce/5G2025/EmotionalMemory/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Private/AzureTTSComponent.cpp"
+@"D:/Perforce/5G2025/EmotionalMemory/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/FANTASIA.Shared.rsp"
+/FI"D:/Perforce/5G2025/EmotionalMemory/Intermediate/Build/Win64/x64/EmotionalMemoryEditor/Development/UnrealEd/SharedPCH.UnrealEd.Project.ValApi.ValExpApi.Cpp20.h"
+/FI"D:/Perforce/5G2025/EmotionalMemory/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/Definitions.FANTASIA.h"
+/Yu"D:/Perforce/5G2025/EmotionalMemory/Intermediate/Build/Win64/x64/EmotionalMemoryEditor/Development/UnrealEd/SharedPCH.UnrealEd.Project.ValApi.ValExpApi.Cpp20.h"
+/Fp"D:/Perforce/5G2025/EmotionalMemory/Intermediate/Build/Win64/x64/EmotionalMemoryEditor/Development/UnrealEd/SharedPCH.UnrealEd.Project.ValApi.ValExpApi.Cpp20.h.pch"
+/Fo"D:/Perforce/5G2025/EmotionalMemory/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/AzureTTSComponent.cpp.obj"
+/experimental:log "D:/Perforce/5G2025/EmotionalMemory/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/AzureTTSComponent.cpp.sarif"
+/sourceDependencies "D:/Perforce/5G2025/EmotionalMemory/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/AzureTTSComponent.cpp.dep.json"
 /d2ssa-cfg-question-
 /Zc:inline
 /nologo
