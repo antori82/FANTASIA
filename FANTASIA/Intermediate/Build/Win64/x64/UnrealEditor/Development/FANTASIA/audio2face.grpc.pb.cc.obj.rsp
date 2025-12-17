@@ -1,7 +1,7 @@
 "D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Public/Audio2Face/audio2face.grpc.pb.cc"
 @"D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/FANTASIA.Shared.rsp"
 /external:W0
-/external:I "C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.50.35717/INCLUDE"
+/external:I "C:/Program Files/Microsoft Visual Studio/2022/Professional/VC/Tools/MSVC/14.38.33130/INCLUDE"
 /external:I "C:/Program Files (x86)/Windows Kits/10/include/10.0.26100.0/ucrt"
 /external:I "C:/Program Files (x86)/Windows Kits/10/include/10.0.26100.0/shared"
 /external:I "C:/Program Files (x86)/Windows Kits/10/include/10.0.26100.0/um"
@@ -13,6 +13,7 @@
 /Fo"D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/audio2face.grpc.pb.cc.obj"
 /experimental:log "D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/audio2face.grpc.pb.cc.sarif"
 /sourceDependencies "D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/Development/FANTASIA/audio2face.grpc.pb.cc.dep.json"
+/d2ssa-cfg-question-
 /Zc:inline
 /nologo
 /Oi

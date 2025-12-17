@@ -33,11 +33,11 @@
                             "id": 0,
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.50.35717/INCLUDE/iterator"
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Professional/VC/Tools/MSVC/14.38.33130/INCLUDE/iterator"
                                 },
                                 "region": {
-                                    "startLine": 1501,
-                                    "startColumn": 35,
+                                    "startLine": 1470,
+                                    "startColumn": 1,
                                     "snippet": {
                                         "text": "class _DEPRECATE_STDEXT_ARR_ITERS checked_array_iterator { // wrap a pointer with checking"
                                     }
@@ -184,11 +184,11 @@
                             "id": 0,
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.50.35717/INCLUDE/iterator"
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Professional/VC/Tools/MSVC/14.38.33130/INCLUDE/iterator"
                                 },
                                 "region": {
-                                    "startLine": 1501,
-                                    "startColumn": 35,
+                                    "startLine": 1470,
+                                    "startColumn": 1,
                                     "snippet": {
                                         "text": "class _DEPRECATE_STDEXT_ARR_ITERS checked_array_iterator { // wrap a pointer with checking"
                                     }
@@ -314,11 +314,11 @@
                             "id": 0,
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.50.35717/INCLUDE/iterator"
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Professional/VC/Tools/MSVC/14.38.33130/INCLUDE/iterator"
                                 },
                                 "region": {
-                                    "startLine": 1501,
-                                    "startColumn": 35,
+                                    "startLine": 1470,
+                                    "startColumn": 1,
                                     "snippet": {
                                         "text": "class _DEPRECATE_STDEXT_ARR_ITERS checked_array_iterator { // wrap a pointer with checking"
                                     }
@@ -427,10 +427,10 @@
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.50.35717/INCLUDE/xutility"
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Professional/VC/Tools/MSVC/14.38.33130/INCLUDE/xutility"
                                 },
                                 "region": {
-                                    "startLine": 1407,
+                                    "startLine": 1141,
                                     "startColumn": 31,
                                     "snippet": {
                                         "text": "    is_same_v<_Iter, typename _Iter::_Prevent_inheriting_unwrap>;"
@@ -444,11 +444,11 @@
                             "id": 0,
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.50.35717/INCLUDE/iterator"
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Professional/VC/Tools/MSVC/14.38.33130/INCLUDE/iterator"
                                 },
                                 "region": {
-                                    "startLine": 1501,
-                                    "startColumn": 35,
+                                    "startLine": 1470,
+                                    "startColumn": 1,
                                     "snippet": {
                                         "text": "class _DEPRECATE_STDEXT_ARR_ITERS checked_array_iterator { // wrap a pointer with checking"
                                     }
@@ -462,10 +462,10 @@
                             "id": 1,
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.50.35717/INCLUDE/xutility"
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Professional/VC/Tools/MSVC/14.38.33130/INCLUDE/xutility"
                                 },
                                 "region": {
-                                    "startLine": 1407,
+                                    "startLine": 1141,
                                     "startColumn": 31,
                                     "snippet": {
                                         "text": "    is_same_v<_Iter, typename _Iter::_Prevent_inheriting_unwrap>;"
@@ -543,18 +543,18 @@
                             "id": 5,
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.50.35717/INCLUDE/xutility"
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Professional/VC/Tools/MSVC/14.38.33130/INCLUDE/xutility"
                                 },
                                 "region": {
-                                    "startLine": 4975,
-                                    "startColumn": 31,
+                                    "startLine": 4610,
+                                    "startColumn": 26,
                                     "snippet": {
-                                        "text": "    auto _UDest        = _STD _Get_unwrapped_n(_STD move(_Dest), _STD _Idl_distance<_InIt>(_UFirst, _ULast));"
+                                        "text": "    const auto _UDest  = _Get_unwrapped_n(_Dest, _Idl_distance<_InIt>(_UFirst, _ULast));"
                                     }
                                 }
                             },
                             "message": {
-                                "text": "vedere il riferimento all'istanza 'decltype(auto) std::_Get_unwrapped_n<stdext::checked_array_iterator<T *>,__int64>(_Iter &&,const _Diff)' della funzione modello di cui è in corso la compilazione\n        with\n        [\n            T=unsigned char,\n            _Iter=stdext::checked_array_iterator<unsigned char *>,\n            _Diff=__int64\n        ]"
+                                "text": "vedere il riferimento all'istanza 'decltype(auto) std::_Get_unwrapped_n<_OutIt&,__int64>(_Iter,const _Diff)' della funzione modello di cui è in corso la compilazione\n        with\n        [\n            _OutIt=stdext::checked_array_iterator<unsigned char *>,\n            _Iter=stdext::checked_array_iterator<unsigned char *> &,\n            _Diff=__int64\n        ]"
                             },
                             "properties": {
                                 "nestingLevel": 1
@@ -564,18 +564,18 @@
                             "id": 6,
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.50.35717/INCLUDE/xutility"
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Professional/VC/Tools/MSVC/14.38.33130/INCLUDE/xutility"
                                 },
                                 "region": {
-                                    "startLine": 1512,
+                                    "startLine": 1244,
                                     "startColumn": 26,
                                     "snippet": {
-                                        "text": "    } else if constexpr (_Unwrappable_for_offset_v<_Iter> && _Integer_like<_Diff>) {"
+                                        "text": "    } else if constexpr (_Unwrappable_for_offset_v<_Iter> && is_integral_v<_Diff>) {"
                                     }
                                 }
                             },
                             "message": {
-                                "text": "vedere il riferimento al modello di variabile 'const bool _Unwrappable_for_offset_v<stdext::checked_array_iterator<unsigned char *> >' di cui è in corso la compilazione"
+                                "text": "vedere il riferimento al modello di variabile 'const bool _Unwrappable_for_offset_v<stdext::checked_array_iterator<unsigned char *> &>' di cui è in corso la compilazione"
                             },
                             "properties": {
                                 "nestingLevel": 1
@@ -585,18 +585,18 @@
                             "id": 7,
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.50.35717/INCLUDE/xutility"
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Professional/VC/Tools/MSVC/14.38.33130/INCLUDE/xutility"
                                 },
                                 "region": {
-                                    "startLine": 1506,
-                                    "startColumn": 44,
+                                    "startLine": 1238,
+                                    "startColumn": 5,
                                     "snippet": {
-                                        "text": "constexpr bool _Unwrappable_for_offset_v = _Unwrappable_v<_Iter> && _Offset_verifiable_v<_Remove_cvref_t<_Iter>>;"
+                                        "text": "    _Unwrappable_v<_Iter> && _Offset_verifiable_v<_Remove_cvref_t<_Iter>>;"
                                     }
                                 }
                             },
                             "message": {
-                                "text": "vedere il riferimento al modello di variabile 'const bool _Unwrappable_v<stdext::checked_array_iterator<unsigned char *>,void>' di cui è in corso la compilazione"
+                                "text": "vedere il riferimento al modello di variabile 'const bool _Unwrappable_v<stdext::checked_array_iterator<unsigned char *> &,void>' di cui è in corso la compilazione"
                             },
                             "properties": {
                                 "nestingLevel": 1
@@ -606,10 +606,10 @@
                             "id": 8,
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.50.35717/INCLUDE/xutility"
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Professional/VC/Tools/MSVC/14.38.33130/INCLUDE/xutility"
                                 },
                                 "region": {
-                                    "startLine": 1435,
+                                    "startLine": 1165,
                                     "startColumn": 5,
                                     "snippet": {
                                         "text": "    _Allow_inheriting_unwrap_v<_Remove_cvref_t<_Iter>>;"
@@ -637,13 +637,13 @@
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.50.35717/INCLUDE/__msvc_iter_core.hpp"
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Professional/VC/Tools/MSVC/14.38.33130/INCLUDE/__msvc_iter_core.hpp"
                                 },
                                 "region": {
-                                    "startLine": 190,
-                                    "startColumn": 31,
+                                    "startLine": 184,
+                                    "startColumn": 40,
                                     "snippet": {
-                                        "text": "    using iterator_category = _It::iterator_category;"
+                                        "text": "    using iterator_category = typename _It::iterator_category;"
                                     }
                                 }
                             }
@@ -654,11 +654,11 @@
                             "id": 0,
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.50.35717/INCLUDE/iterator"
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Professional/VC/Tools/MSVC/14.38.33130/INCLUDE/iterator"
                                 },
                                 "region": {
-                                    "startLine": 1501,
-                                    "startColumn": 35,
+                                    "startLine": 1470,
+                                    "startColumn": 1,
                                     "snippet": {
                                         "text": "class _DEPRECATE_STDEXT_ARR_ITERS checked_array_iterator { // wrap a pointer with checking"
                                     }
@@ -672,13 +672,13 @@
                             "id": 1,
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.50.35717/INCLUDE/__msvc_iter_core.hpp"
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Professional/VC/Tools/MSVC/14.38.33130/INCLUDE/__msvc_iter_core.hpp"
                                 },
                                 "region": {
-                                    "startLine": 190,
-                                    "startColumn": 31,
+                                    "startLine": 184,
+                                    "startColumn": 40,
                                     "snippet": {
-                                        "text": "    using iterator_category = _It::iterator_category;"
+                                        "text": "    using iterator_category = typename _It::iterator_category;"
                                     }
                                 }
                             },
@@ -690,10 +690,10 @@
                             "id": 2,
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.50.35717/INCLUDE/xutility"
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Professional/VC/Tools/MSVC/14.38.33130/INCLUDE/xutility"
                                 },
                                 "region": {
-                                    "startLine": 1502,
+                                    "startLine": 1233,
                                     "startColumn": 93,
                                     "snippet": {
                                         "text": "    _Offset_verifiable_v<_Iter, void_t<decltype(_STD declval<const _Iter&>()._Verify_offset(_Iter_diff_t<_Iter>{}))>> ="
@@ -711,10 +711,10 @@
                             "id": 3,
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.50.35717/INCLUDE/xutility"
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Professional/VC/Tools/MSVC/14.38.33130/INCLUDE/xutility"
                                 },
                                 "region": {
-                                    "startLine": 1301,
+                                    "startLine": 1046,
                                     "startColumn": 22,
                                     "snippet": {
                                         "text": "using _Iter_diff_t = iter_difference_t<_Iter>;"
@@ -732,18 +732,18 @@
                             "id": 4,
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.50.35717/INCLUDE/__msvc_iter_core.hpp"
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Professional/VC/Tools/MSVC/14.38.33130/INCLUDE/__msvc_iter_core.hpp"
                                 },
                                 "region": {
-                                    "startLine": 120,
-                                    "startColumn": 41,
+                                    "startLine": 114,
+                                    "startColumn": 50,
                                     "snippet": {
-                                        "text": "using iter_difference_t = conditional_t<_Is_from_primary<iterator_traits<remove_cvref_t<_Ty>>>,"
+                                        "text": "using iter_difference_t = typename conditional_t<_Is_from_primary<iterator_traits<remove_cvref_t<_Ty>>>,"
                                     }
                                 }
                             },
                             "message": {
-                                "text": "durante la valutazione del concetto '_Is_from_primary<std::iterator_traits<stdext::checked_array_iterator<unsigned char *> > >'"
+                                "text": "vedere il riferimento al modello di variabile 'bool _Is_from_primary<std::iterator_traits<stdext::checked_array_iterator<unsigned char *> > >' di cui è in corso la compilazione"
                             },
                             "properties": {
                                 "nestingLevel": 1
@@ -753,11 +753,11 @@
                             "id": 5,
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.50.35717/INCLUDE/__msvc_iter_core.hpp"
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Professional/VC/Tools/MSVC/14.38.33130/INCLUDE/__msvc_iter_core.hpp"
                                 },
                                 "region": {
-                                    "startLine": 114,
-                                    "startColumn": 53,
+                                    "startLine": 108,
+                                    "startColumn": 28,
                                     "snippet": {
                                         "text": "concept _Is_from_primary = _Same_impl<typename _Ty::_From_primary, _Ty>;"
                                     }
@@ -774,10 +774,10 @@
                             "id": 6,
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.50.35717/INCLUDE/__msvc_iter_core.hpp"
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Professional/VC/Tools/MSVC/14.38.33130/INCLUDE/__msvc_iter_core.hpp"
                                 },
                                 "region": {
-                                    "startLine": 366,
+                                    "startLine": 367,
                                     "startColumn": 26,
                                     "snippet": {
                                         "text": "struct iterator_traits : _Iterator_traits_base<_Ty> {"
@@ -805,13 +805,13 @@
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.50.35717/INCLUDE/__msvc_iter_core.hpp"
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Professional/VC/Tools/MSVC/14.38.33130/INCLUDE/__msvc_iter_core.hpp"
                                 },
                                 "region": {
-                                    "startLine": 190,
-                                    "startColumn": 36,
+                                    "startLine": 184,
+                                    "startColumn": 31,
                                     "snippet": {
-                                        "text": "    using iterator_category = _It::iterator_category;"
+                                        "text": "    using iterator_category = typename _It::iterator_category;"
                                     }
                                 }
                             }
@@ -830,13 +830,13 @@
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.50.35717/INCLUDE/__msvc_iter_core.hpp"
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Professional/VC/Tools/MSVC/14.38.33130/INCLUDE/__msvc_iter_core.hpp"
                                 },
                                 "region": {
-                                    "startLine": 191,
-                                    "startColumn": 31,
+                                    "startLine": 185,
+                                    "startColumn": 40,
                                     "snippet": {
-                                        "text": "    using value_type        = _It::value_type;"
+                                        "text": "    using value_type        = typename _It::value_type;"
                                     }
                                 }
                             }
@@ -847,11 +847,11 @@
                             "id": 0,
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.50.35717/INCLUDE/iterator"
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Professional/VC/Tools/MSVC/14.38.33130/INCLUDE/iterator"
                                 },
                                 "region": {
-                                    "startLine": 1501,
-                                    "startColumn": 35,
+                                    "startLine": 1470,
+                                    "startColumn": 1,
                                     "snippet": {
                                         "text": "class _DEPRECATE_STDEXT_ARR_ITERS checked_array_iterator { // wrap a pointer with checking"
                                     }
@@ -875,13 +875,13 @@
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.50.35717/INCLUDE/__msvc_iter_core.hpp"
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Professional/VC/Tools/MSVC/14.38.33130/INCLUDE/__msvc_iter_core.hpp"
                                 },
                                 "region": {
-                                    "startLine": 191,
-                                    "startColumn": 36,
+                                    "startLine": 185,
+                                    "startColumn": 31,
                                     "snippet": {
-                                        "text": "    using value_type        = _It::value_type;"
+                                        "text": "    using value_type        = typename _It::value_type;"
                                     }
                                 }
                             }
@@ -900,13 +900,13 @@
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.50.35717/INCLUDE/__msvc_iter_core.hpp"
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Professional/VC/Tools/MSVC/14.38.33130/INCLUDE/__msvc_iter_core.hpp"
                                 },
                                 "region": {
-                                    "startLine": 192,
-                                    "startColumn": 31,
+                                    "startLine": 186,
+                                    "startColumn": 40,
                                     "snippet": {
-                                        "text": "    using difference_type   = _It::difference_type;"
+                                        "text": "    using difference_type   = typename _It::difference_type;"
                                     }
                                 }
                             }
@@ -917,11 +917,11 @@
                             "id": 0,
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.50.35717/INCLUDE/iterator"
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Professional/VC/Tools/MSVC/14.38.33130/INCLUDE/iterator"
                                 },
                                 "region": {
-                                    "startLine": 1501,
-                                    "startColumn": 35,
+                                    "startLine": 1470,
+                                    "startColumn": 1,
                                     "snippet": {
                                         "text": "class _DEPRECATE_STDEXT_ARR_ITERS checked_array_iterator { // wrap a pointer with checking"
                                     }
@@ -945,13 +945,13 @@
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.50.35717/INCLUDE/__msvc_iter_core.hpp"
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Professional/VC/Tools/MSVC/14.38.33130/INCLUDE/__msvc_iter_core.hpp"
                                 },
                                 "region": {
-                                    "startLine": 192,
-                                    "startColumn": 36,
+                                    "startLine": 186,
+                                    "startColumn": 31,
                                     "snippet": {
-                                        "text": "    using difference_type   = _It::difference_type;"
+                                        "text": "    using difference_type   = typename _It::difference_type;"
                                     }
                                 }
                             }
@@ -970,13 +970,13 @@
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.50.35717/INCLUDE/__msvc_iter_core.hpp"
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Professional/VC/Tools/MSVC/14.38.33130/INCLUDE/__msvc_iter_core.hpp"
                                 },
                                 "region": {
-                                    "startLine": 179,
-                                    "startColumn": 20,
+                                    "startLine": 173,
+                                    "startColumn": 29,
                                     "snippet": {
-                                        "text": "    using _Apply = _It::pointer;"
+                                        "text": "    using _Apply = typename _It::pointer;"
                                     }
                                 }
                             }
@@ -987,11 +987,11 @@
                             "id": 0,
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.50.35717/INCLUDE/iterator"
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Professional/VC/Tools/MSVC/14.38.33130/INCLUDE/iterator"
                                 },
                                 "region": {
-                                    "startLine": 1501,
-                                    "startColumn": 35,
+                                    "startLine": 1470,
+                                    "startColumn": 1,
                                     "snippet": {
                                         "text": "class _DEPRECATE_STDEXT_ARR_ITERS checked_array_iterator { // wrap a pointer with checking"
                                     }
@@ -1005,13 +1005,13 @@
                             "id": 1,
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.50.35717/INCLUDE/__msvc_iter_core.hpp"
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Professional/VC/Tools/MSVC/14.38.33130/INCLUDE/__msvc_iter_core.hpp"
                                 },
                                 "region": {
-                                    "startLine": 179,
-                                    "startColumn": 20,
+                                    "startLine": 173,
+                                    "startColumn": 29,
                                     "snippet": {
-                                        "text": "    using _Apply = _It::pointer;"
+                                        "text": "    using _Apply = typename _It::pointer;"
                                     }
                                 }
                             },
@@ -1023,13 +1023,13 @@
                             "id": 2,
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.50.35717/INCLUDE/__msvc_iter_core.hpp"
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Professional/VC/Tools/MSVC/14.38.33130/INCLUDE/__msvc_iter_core.hpp"
                                 },
                                 "region": {
-                                    "startLine": 193,
-                                    "startColumn": 92,
+                                    "startLine": 187,
+                                    "startColumn": 101,
                                     "snippet": {
-                                        "text": "    using pointer           = _Old_iter_traits_pointer<_Has_member_pointer<_It>>::template _Apply<_It>;"
+                                        "text": "    using pointer           = typename _Old_iter_traits_pointer<_Has_member_pointer<_It>>::template _Apply<_It>;"
                                     }
                                 }
                             },
@@ -1054,13 +1054,13 @@
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.50.35717/INCLUDE/__msvc_iter_core.hpp"
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Professional/VC/Tools/MSVC/14.38.33130/INCLUDE/__msvc_iter_core.hpp"
                                 },
                                 "region": {
-                                    "startLine": 194,
-                                    "startColumn": 31,
+                                    "startLine": 188,
+                                    "startColumn": 40,
                                     "snippet": {
-                                        "text": "    using reference         = _It::reference;"
+                                        "text": "    using reference         = typename _It::reference;"
                                     }
                                 }
                             }
@@ -1071,11 +1071,11 @@
                             "id": 0,
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.50.35717/INCLUDE/iterator"
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Professional/VC/Tools/MSVC/14.38.33130/INCLUDE/iterator"
                                 },
                                 "region": {
-                                    "startLine": 1501,
-                                    "startColumn": 35,
+                                    "startLine": 1470,
+                                    "startColumn": 1,
                                     "snippet": {
                                         "text": "class _DEPRECATE_STDEXT_ARR_ITERS checked_array_iterator { // wrap a pointer with checking"
                                     }
@@ -1099,13 +1099,13 @@
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.50.35717/INCLUDE/__msvc_iter_core.hpp"
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Professional/VC/Tools/MSVC/14.38.33130/INCLUDE/__msvc_iter_core.hpp"
                                 },
                                 "region": {
-                                    "startLine": 194,
-                                    "startColumn": 36,
+                                    "startLine": 188,
+                                    "startColumn": 31,
                                     "snippet": {
-                                        "text": "    using reference         = _It::reference;"
+                                        "text": "    using reference         = typename _It::reference;"
                                     }
                                 }
                             }
@@ -1124,13 +1124,13 @@
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.50.35717/INCLUDE/__msvc_iter_core.hpp"
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Professional/VC/Tools/MSVC/14.38.33130/INCLUDE/__msvc_iter_core.hpp"
                                 },
                                 "region": {
-                                    "startLine": 99,
-                                    "startColumn": 29,
+                                    "startLine": 93,
+                                    "startColumn": 38,
                                     "snippet": {
-                                        "text": "    using difference_type = _Ty::difference_type;"
+                                        "text": "    using difference_type = typename _Ty::difference_type;"
                                     }
                                 }
                             }
@@ -1141,11 +1141,11 @@
                             "id": 0,
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.50.35717/INCLUDE/iterator"
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Professional/VC/Tools/MSVC/14.38.33130/INCLUDE/iterator"
                                 },
                                 "region": {
-                                    "startLine": 1501,
-                                    "startColumn": 35,
+                                    "startLine": 1470,
+                                    "startColumn": 1,
                                     "snippet": {
                                         "text": "class _DEPRECATE_STDEXT_ARR_ITERS checked_array_iterator { // wrap a pointer with checking"
                                     }
@@ -1159,13 +1159,13 @@
                             "id": 1,
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.50.35717/INCLUDE/__msvc_iter_core.hpp"
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Professional/VC/Tools/MSVC/14.38.33130/INCLUDE/__msvc_iter_core.hpp"
                                 },
                                 "region": {
-                                    "startLine": 99,
-                                    "startColumn": 29,
+                                    "startLine": 93,
+                                    "startColumn": 38,
                                     "snippet": {
-                                        "text": "    using difference_type = _Ty::difference_type;"
+                                        "text": "    using difference_type = typename _Ty::difference_type;"
                                     }
                                 }
                             },
@@ -1177,13 +1177,13 @@
                             "id": 2,
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.50.35717/INCLUDE/__msvc_iter_core.hpp"
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Professional/VC/Tools/MSVC/14.38.33130/INCLUDE/xutility"
                                 },
                                 "region": {
-                                    "startLine": 121,
-                                    "startColumn": 87,
+                                    "startLine": 1046,
+                                    "startColumn": 22,
                                     "snippet": {
-                                        "text": "    incrementable_traits<remove_cvref_t<_Ty>>, iterator_traits<remove_cvref_t<_Ty>>>::difference_type;"
+                                        "text": "using _Iter_diff_t = iter_difference_t<_Iter>;"
                                     }
                                 }
                             },
@@ -1208,13 +1208,13 @@
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.50.35717/INCLUDE/__msvc_iter_core.hpp"
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Professional/VC/Tools/MSVC/14.38.33130/INCLUDE/__msvc_iter_core.hpp"
                                 },
                                 "region": {
-                                    "startLine": 99,
-                                    "startColumn": 34,
+                                    "startLine": 93,
+                                    "startColumn": 29,
                                     "snippet": {
-                                        "text": "    using difference_type = _Ty::difference_type;"
+                                        "text": "    using difference_type = typename _Ty::difference_type;"
                                     }
                                 }
                             }
@@ -1233,11 +1233,11 @@
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.50.35717/INCLUDE/xutility"
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Professional/VC/Tools/MSVC/14.38.33130/INCLUDE/xutility"
                                 },
                                 "region": {
-                                    "startLine": 1523,
-                                    "startColumn": 13,
+                                    "startLine": 1255,
+                                    "startColumn": 12,
                                     "snippet": {
                                         "text": "        _It._Verify_offset(static_cast<_IDiff>(_Off));"
                                     }
@@ -1258,11 +1258,11 @@
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.50.35717/INCLUDE/xutility"
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Professional/VC/Tools/MSVC/14.38.33130/INCLUDE/xutility"
                                 },
                                 "region": {
-                                    "startLine": 1524,
-                                    "startColumn": 42,
+                                    "startLine": 1256,
+                                    "startColumn": 41,
                                     "snippet": {
                                         "text": "        return static_cast<_Iter&&>(_It)._Unwrapped();"
                                     }
@@ -1283,11 +1283,11 @@
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.50.35717/INCLUDE/xutility"
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Professional/VC/Tools/MSVC/14.38.33130/INCLUDE/xutility"
                                 },
                                 "region": {
-                                    "startLine": 1545,
-                                    "startColumn": 13,
+                                    "startLine": 1277,
+                                    "startColumn": 12,
                                     "snippet": {
                                         "text": "        _It._Seek_to(_STD forward<_UIter>(_UIt));"
                                     }
@@ -1300,11 +1300,11 @@
                             "id": 0,
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.50.35717/INCLUDE/xutility"
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Professional/VC/Tools/MSVC/14.38.33130/INCLUDE/xutility"
                                 },
                                 "region": {
-                                    "startLine": 1545,
-                                    "startColumn": 13,
+                                    "startLine": 1277,
+                                    "startColumn": 12,
                                     "snippet": {
                                         "text": "        _It._Seek_to(_STD forward<_UIter>(_UIt));"
                                     }
@@ -1339,18 +1339,18 @@
                             "id": 2,
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.50.35717/INCLUDE/xutility"
+                                    "uri": "file:///C:/Program Files/Microsoft Visual Studio/2022/Professional/VC/Tools/MSVC/14.38.33130/INCLUDE/xutility"
                                 },
                                 "region": {
-                                    "startLine": 4976,
-                                    "startColumn": 10,
+                                    "startLine": 4611,
+                                    "startColumn": 5,
                                     "snippet": {
-                                        "text": "    _STD _Seek_wrapped(_Dest, _STD _Copy_unchecked(_UFirst, _ULast, _STD move(_UDest)));"
+                                        "text": "    _Seek_wrapped(_Dest, _STD _Copy_unchecked(_UFirst, _ULast, _UDest));"
                                     }
                                 }
                             },
                             "message": {
-                                "text": "vedere il riferimento all'istanza 'void std::_Seek_wrapped<_OutIt,unsigned char*>(_Iter &,_UIter &&)' della funzione modello di cui è in corso la compilazione\n        with\n        [\n            _OutIt=stdext::checked_array_iterator<unsigned char *>,\n            _Iter=stdext::checked_array_iterator<unsigned char *>,\n            _UIter=uint8_t *\n        ]"
+                                "text": "vedere il riferimento all'istanza 'void std::_Seek_wrapped<_OutIt,unsigned char*>(_Iter &,_UIter &&)' della funzione modello di cui è in corso la compilazione\n        with\n        [\n            _OutIt=stdext::checked_array_iterator<unsigned char *>,\n            _Iter=stdext::checked_array_iterator<unsigned char *>,\n            _UIter=unsigned char *\n        ]"
                             },
                             "properties": {
                                 "nestingLevel": 1

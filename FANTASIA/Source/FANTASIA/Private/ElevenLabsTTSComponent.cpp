@@ -28,7 +28,7 @@ void UElevenLabsTTSComponent::BeginPlay()
 				for (int i = 0; i < currentData; i++)
 					outData.Add(sendData[i]);
 
-				FACERuntimeModule::Get().AnimateFromAudioSamples(A2Fpointer, outData, 1, 16000, false, EmotionParameters, A2FParameters, FName("LocalA2F-James"));
+				FACERuntimeModule::Get().AnimateFromAudioSamples(A2Fpointer, outData, 1, 16000, false, EmotionParameters, A2FParameters, A2FProvider);
 				outData.Empty();
 
 				for (int i = 0; i < currentData; i++)

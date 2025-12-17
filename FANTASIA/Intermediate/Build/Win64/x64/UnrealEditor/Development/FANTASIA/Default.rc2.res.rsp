@@ -2,7 +2,7 @@
 /D_WIN64
 /l 0x409
 /I "."
-/I "C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.50.35717/INCLUDE"
+/I "C:/Program Files/Microsoft Visual Studio/2022/Professional/VC/Tools/MSVC/14.38.33130/INCLUDE"
 /I "C:/Program Files (x86)/Windows Kits/10/include/10.0.26100.0/ucrt"
 /I "C:/Program Files (x86)/Windows Kits/10/include/10.0.26100.0/shared"
 /I "C:/Program Files (x86)/Windows Kits/10/include/10.0.26100.0/um"

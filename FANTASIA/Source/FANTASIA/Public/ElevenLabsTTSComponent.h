@@ -56,8 +56,6 @@ public:
 	// Sets default values for this component's properties
 	UElevenLabsTTSComponent();
 
-	
-
 	UPROPERTY(BlueprintReadWrite, Category = "TTS")
 	UACEAudioCurveSourceComponent* A2Fpointer;
 
@@ -66,6 +64,9 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, Category = "TTS")
 	UAudio2FaceParameters* A2FParameters;
+
+	UPROPERTY(BlueprintReadWrite, Category = "TTS")
+	FName A2FProvider;
 
 	UPROPERTY(BlueprintAssignable, Category = "Speech to Text")
 	FSynthesizedEvent SynthesisReady;

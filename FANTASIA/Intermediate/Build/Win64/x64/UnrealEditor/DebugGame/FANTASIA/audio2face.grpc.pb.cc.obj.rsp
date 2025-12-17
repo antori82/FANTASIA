@@ -1,18 +1,19 @@
-"D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Public/Audio2Face/audio2face.grpc.pb.cc"
-@"D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/DebugGame/FANTASIA/FANTASIA.Shared.rsp"
+"D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Source/FANTASIA/Public/Audio2Face/audio2face.grpc.pb.cc"
+@"D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/DebugGame/FANTASIA/FANTASIA.Shared.rsp"
 /external:W0
-/external:I "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/INCLUDE"
+/external:I "C:/Program Files/Microsoft Visual Studio/2022/Professional/VC/Tools/MSVC/14.38.33130/INCLUDE"
 /external:I "C:/Program Files (x86)/Windows Kits/10/include/10.0.26100.0/ucrt"
 /external:I "C:/Program Files (x86)/Windows Kits/10/include/10.0.26100.0/shared"
 /external:I "C:/Program Files (x86)/Windows Kits/10/include/10.0.26100.0/um"
 /external:I "C:/Program Files (x86)/Windows Kits/10/include/10.0.26100.0/winrt"
-/FI"D:/Perforce/FANTASIATemplate/Intermediate/Build/Win64/x64/FANTASIATemplateEditor/DebugGame/UnrealEd/SharedPCH.UnrealEd.Project.NonOptimized.ValApi.ValExpApi.Cpp20.h"
-/FI"D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/DebugGame/FANTASIA/Definitions.FANTASIA.h"
-/Yu"D:/Perforce/FANTASIATemplate/Intermediate/Build/Win64/x64/FANTASIATemplateEditor/DebugGame/UnrealEd/SharedPCH.UnrealEd.Project.NonOptimized.ValApi.ValExpApi.Cpp20.h"
-/Fp"D:/Perforce/FANTASIATemplate/Intermediate/Build/Win64/x64/FANTASIATemplateEditor/DebugGame/UnrealEd/SharedPCH.UnrealEd.Project.NonOptimized.ValApi.ValExpApi.Cpp20.h.pch"
-/Fo"D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/DebugGame/FANTASIA/audio2face.grpc.pb.cc.obj"
-/experimental:log "D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/DebugGame/FANTASIA/audio2face.grpc.pb.cc.sarif"
-/sourceDependencies "D:/Perforce/FANTASIATemplate/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/DebugGame/FANTASIA/audio2face.grpc.pb.cc.dep.json"
+/FI"D:/Perforce/FANTASIADevelopment/Intermediate/Build/Win64/x64/FANTASIADevelopmentEditor/DebugGame/UnrealEd/SharedPCH.UnrealEd.Project.NonOptimized.ValApi.ValExpApi.Cpp20.h"
+/FI"D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/DebugGame/FANTASIA/Definitions.FANTASIA.h"
+/Yu"D:/Perforce/FANTASIADevelopment/Intermediate/Build/Win64/x64/FANTASIADevelopmentEditor/DebugGame/UnrealEd/SharedPCH.UnrealEd.Project.NonOptimized.ValApi.ValExpApi.Cpp20.h"
+/Fp"D:/Perforce/FANTASIADevelopment/Intermediate/Build/Win64/x64/FANTASIADevelopmentEditor/DebugGame/UnrealEd/SharedPCH.UnrealEd.Project.NonOptimized.ValApi.ValExpApi.Cpp20.h.pch"
+/Fo"D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/DebugGame/FANTASIA/audio2face.grpc.pb.cc.obj"
+/experimental:log "D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/DebugGame/FANTASIA/audio2face.grpc.pb.cc.sarif"
+/sourceDependencies "D:/Perforce/FANTASIADevelopment/Plugins/FANTASIA/FANTASIA/Intermediate/Build/Win64/x64/UnrealEditor/DebugGame/FANTASIA/audio2face.grpc.pb.cc.dep.json"
+/d2ssa-cfg-question-
 /Zc:inline
 /nologo
 /Oi
