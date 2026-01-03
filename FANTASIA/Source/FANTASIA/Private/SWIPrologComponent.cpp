@@ -21,12 +21,12 @@ void USWIPrologComponent::SWIPLsubmitQuery(USWIPrologTerm* inRuleOrFactTerm) {
 	handle->submitQuery(inRuleOrFactTerm);
 }
 
-void USWIPrologComponent::SWIPLassert(USWIPrologObject* prologObject, bool asFirstClause, bool& bResult) {
-	handle->SWIPLassert(prologObject, asFirstClause, bResult);
+void USWIPrologComponent::SWIPLassert(USWIPrologObject* prologObject, bool asFirstClause) {
+	handle->SWIPLassert(prologObject, asFirstClause);
 }
 
-void USWIPrologComponent::SWIPLretract(USWIPrologTerm* ruleOrFactTerm, bool& bResult) {
-	handle->SWIPLretract(ruleOrFactTerm, bResult);
+void USWIPrologComponent::SWIPLretract(USWIPrologTerm* ruleOrFactTerm) {
+	handle->SWIPLretract(ruleOrFactTerm);
 }
 
 

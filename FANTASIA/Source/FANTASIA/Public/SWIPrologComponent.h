@@ -40,10 +40,10 @@ public:
 	void nextSolution();
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Assert", AutoCreateRefTerm = "parameters"), Category = "SWIProlog")
-	void SWIPLassert(USWIPrologObject* prologObject, bool asFirstClause, bool& bResult);
+	void SWIPLassert(USWIPrologObject* prologObject, bool asFirstClause);
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Retract", AutoCreateRefTerm = "parameters"), Category = "SWIProlog")
-	void SWIPLretract(USWIPrologTerm* ruleOrFact, bool& bResult);
+	void SWIPLretract(USWIPrologTerm* ruleOrFact);
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Open Prolog file", AutoCreateRefTerm = "parameters"), Category = "SWIProlog")
 	void openPrologFile(const FString filename);

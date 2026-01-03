@@ -153,7 +153,6 @@ struct Z_Construct_UFunction_USWIPrologComponent_SWIPLassert_Statics
 	{
 		USWIPrologObject* prologObject;
 		bool asFirstClause;
-		bool bResult;
 	};
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
@@ -166,8 +165,6 @@ struct Z_Construct_UFunction_USWIPrologComponent_SWIPLassert_Statics
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_prologObject;
 	static void NewProp_asFirstClause_SetBit(void* Obj);
 	static const UECodeGen_Private::FBoolPropertyParams NewProp_asFirstClause;
-	static void NewProp_bResult_SetBit(void* Obj);
-	static const UECodeGen_Private::FBoolPropertyParams NewProp_bResult;
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
@@ -177,18 +174,12 @@ void Z_Construct_UFunction_USWIPrologComponent_SWIPLassert_Statics::NewProp_asFi
 	((SWIPrologComponent_eventSWIPLassert_Parms*)Obj)->asFirstClause = 1;
 }
 const UECodeGen_Private::FBoolPropertyParams Z_Construct_UFunction_USWIPrologComponent_SWIPLassert_Statics::NewProp_asFirstClause = { "asFirstClause", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, sizeof(bool), sizeof(SWIPrologComponent_eventSWIPLassert_Parms), &Z_Construct_UFunction_USWIPrologComponent_SWIPLassert_Statics::NewProp_asFirstClause_SetBit, METADATA_PARAMS(0, nullptr) };
-void Z_Construct_UFunction_USWIPrologComponent_SWIPLassert_Statics::NewProp_bResult_SetBit(void* Obj)
-{
-	((SWIPrologComponent_eventSWIPLassert_Parms*)Obj)->bResult = 1;
-}
-const UECodeGen_Private::FBoolPropertyParams Z_Construct_UFunction_USWIPrologComponent_SWIPLassert_Statics::NewProp_bResult = { "bResult", nullptr, (EPropertyFlags)0x0010000000000180, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, sizeof(bool), sizeof(SWIPrologComponent_eventSWIPLassert_Parms), &Z_Construct_UFunction_USWIPrologComponent_SWIPLassert_Statics::NewProp_bResult_SetBit, METADATA_PARAMS(0, nullptr) };
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_USWIPrologComponent_SWIPLassert_Statics::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_USWIPrologComponent_SWIPLassert_Statics::NewProp_prologObject,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_USWIPrologComponent_SWIPLassert_Statics::NewProp_asFirstClause,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_USWIPrologComponent_SWIPLassert_Statics::NewProp_bResult,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_USWIPrologComponent_SWIPLassert_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_USWIPrologComponent_SWIPLassert_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_USWIPrologComponent, nullptr, "SWIPLassert", Z_Construct_UFunction_USWIPrologComponent_SWIPLassert_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_USWIPrologComponent_SWIPLassert_Statics::PropPointers), sizeof(Z_Construct_UFunction_USWIPrologComponent_SWIPLassert_Statics::SWIPrologComponent_eventSWIPLassert_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04420401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_USWIPrologComponent_SWIPLassert_Statics::Function_MetaDataParams), Z_Construct_UFunction_USWIPrologComponent_SWIPLassert_Statics::Function_MetaDataParams)},  };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_USWIPrologComponent_SWIPLassert_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_USWIPrologComponent, nullptr, "SWIPLassert", Z_Construct_UFunction_USWIPrologComponent_SWIPLassert_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_USWIPrologComponent_SWIPLassert_Statics::PropPointers), sizeof(Z_Construct_UFunction_USWIPrologComponent_SWIPLassert_Statics::SWIPrologComponent_eventSWIPLassert_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_USWIPrologComponent_SWIPLassert_Statics::Function_MetaDataParams), Z_Construct_UFunction_USWIPrologComponent_SWIPLassert_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(Z_Construct_UFunction_USWIPrologComponent_SWIPLassert_Statics::SWIPrologComponent_eventSWIPLassert_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_USWIPrologComponent_SWIPLassert()
 {
@@ -203,10 +194,9 @@ DEFINE_FUNCTION(USWIPrologComponent::execSWIPLassert)
 {
 	P_GET_OBJECT(USWIPrologObject,Z_Param_prologObject);
 	P_GET_UBOOL(Z_Param_asFirstClause);
-	P_GET_UBOOL_REF(Z_Param_Out_bResult);
 	P_FINISH;
 	P_NATIVE_BEGIN;
-	P_THIS->SWIPLassert(Z_Param_prologObject,Z_Param_asFirstClause,Z_Param_Out_bResult);
+	P_THIS->SWIPLassert(Z_Param_prologObject,Z_Param_asFirstClause);
 	P_NATIVE_END;
 }
 // ********** End Class USWIPrologComponent Function SWIPLassert ***********************************
@@ -217,7 +207,6 @@ struct Z_Construct_UFunction_USWIPrologComponent_SWIPLretract_Statics
 	struct SWIPrologComponent_eventSWIPLretract_Parms
 	{
 		USWIPrologTerm* ruleOrFact;
-		bool bResult;
 	};
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
@@ -228,23 +217,15 @@ struct Z_Construct_UFunction_USWIPrologComponent_SWIPLretract_Statics
 	};
 #endif // WITH_METADATA
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_ruleOrFact;
-	static void NewProp_bResult_SetBit(void* Obj);
-	static const UECodeGen_Private::FBoolPropertyParams NewProp_bResult;
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
 const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_USWIPrologComponent_SWIPLretract_Statics::NewProp_ruleOrFact = { "ruleOrFact", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(SWIPrologComponent_eventSWIPLretract_Parms, ruleOrFact), Z_Construct_UClass_USWIPrologTerm_NoRegister, METADATA_PARAMS(0, nullptr) };
-void Z_Construct_UFunction_USWIPrologComponent_SWIPLretract_Statics::NewProp_bResult_SetBit(void* Obj)
-{
-	((SWIPrologComponent_eventSWIPLretract_Parms*)Obj)->bResult = 1;
-}
-const UECodeGen_Private::FBoolPropertyParams Z_Construct_UFunction_USWIPrologComponent_SWIPLretract_Statics::NewProp_bResult = { "bResult", nullptr, (EPropertyFlags)0x0010000000000180, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, sizeof(bool), sizeof(SWIPrologComponent_eventSWIPLretract_Parms), &Z_Construct_UFunction_USWIPrologComponent_SWIPLretract_Statics::NewProp_bResult_SetBit, METADATA_PARAMS(0, nullptr) };
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_USWIPrologComponent_SWIPLretract_Statics::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_USWIPrologComponent_SWIPLretract_Statics::NewProp_ruleOrFact,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_USWIPrologComponent_SWIPLretract_Statics::NewProp_bResult,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_USWIPrologComponent_SWIPLretract_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_USWIPrologComponent_SWIPLretract_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_USWIPrologComponent, nullptr, "SWIPLretract", Z_Construct_UFunction_USWIPrologComponent_SWIPLretract_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_USWIPrologComponent_SWIPLretract_Statics::PropPointers), sizeof(Z_Construct_UFunction_USWIPrologComponent_SWIPLretract_Statics::SWIPrologComponent_eventSWIPLretract_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04420401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_USWIPrologComponent_SWIPLretract_Statics::Function_MetaDataParams), Z_Construct_UFunction_USWIPrologComponent_SWIPLretract_Statics::Function_MetaDataParams)},  };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_USWIPrologComponent_SWIPLretract_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_USWIPrologComponent, nullptr, "SWIPLretract", Z_Construct_UFunction_USWIPrologComponent_SWIPLretract_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_USWIPrologComponent_SWIPLretract_Statics::PropPointers), sizeof(Z_Construct_UFunction_USWIPrologComponent_SWIPLretract_Statics::SWIPrologComponent_eventSWIPLretract_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_USWIPrologComponent_SWIPLretract_Statics::Function_MetaDataParams), Z_Construct_UFunction_USWIPrologComponent_SWIPLretract_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(Z_Construct_UFunction_USWIPrologComponent_SWIPLretract_Statics::SWIPrologComponent_eventSWIPLretract_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_USWIPrologComponent_SWIPLretract()
 {
@@ -258,10 +239,9 @@ UFunction* Z_Construct_UFunction_USWIPrologComponent_SWIPLretract()
 DEFINE_FUNCTION(USWIPrologComponent::execSWIPLretract)
 {
 	P_GET_OBJECT(USWIPrologTerm,Z_Param_ruleOrFact);
-	P_GET_UBOOL_REF(Z_Param_Out_bResult);
 	P_FINISH;
 	P_NATIVE_BEGIN;
-	P_THIS->SWIPLretract(Z_Param_ruleOrFact,Z_Param_Out_bResult);
+	P_THIS->SWIPLretract(Z_Param_ruleOrFact);
 	P_NATIVE_END;
 }
 // ********** End Class USWIPrologComponent Function SWIPLretract **********************************
@@ -372,8 +352,8 @@ struct Z_Construct_UClass_USWIPrologComponent_Statics
 	static constexpr FClassFunctionLinkInfo FuncInfo[] = {
 		{ &Z_Construct_UFunction_USWIPrologComponent_nextSolution, "nextSolution" }, // 1978471812
 		{ &Z_Construct_UFunction_USWIPrologComponent_openPrologFile, "openPrologFile" }, // 3560174317
-		{ &Z_Construct_UFunction_USWIPrologComponent_SWIPLassert, "SWIPLassert" }, // 865406047
-		{ &Z_Construct_UFunction_USWIPrologComponent_SWIPLretract, "SWIPLretract" }, // 3635694515
+		{ &Z_Construct_UFunction_USWIPrologComponent_SWIPLassert, "SWIPLassert" }, // 1070324667
+		{ &Z_Construct_UFunction_USWIPrologComponent_SWIPLretract, "SWIPLretract" }, // 2895667261
 		{ &Z_Construct_UFunction_USWIPrologComponent_SWIPLsubmitQuery, "SWIPLsubmitQuery" }, // 2986795859
 	};
 	static_assert(UE_ARRAY_COUNT(FuncInfo) < 2048);
@@ -423,10 +403,10 @@ USWIPrologComponent::~USWIPrologComponent() {}
 struct Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_SWIPrologComponent_h__Script_FANTASIA_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_USWIPrologComponent, USWIPrologComponent::StaticClass, TEXT("USWIPrologComponent"), &Z_Registration_Info_UClass_USWIPrologComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(USWIPrologComponent), 3793481642U) },
+		{ Z_Construct_UClass_USWIPrologComponent, USWIPrologComponent::StaticClass, TEXT("USWIPrologComponent"), &Z_Registration_Info_UClass_USWIPrologComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(USWIPrologComponent), 1880897524U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_SWIPrologComponent_h__Script_FANTASIA_2566427075(TEXT("/Script/FANTASIA"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_SWIPrologComponent_h__Script_FANTASIA_1420337903(TEXT("/Script/FANTASIA"),
 	Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_SWIPrologComponent_h__Script_FANTASIA_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_FANTASIADevelopment_Plugins_FANTASIA_FANTASIA_Source_FANTASIA_Public_SWIPrologComponent_h__Script_FANTASIA_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);

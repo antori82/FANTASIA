@@ -4,6 +4,7 @@
 
 SWIPrologThread* SWIPrologThread::Runnable = NULL;
 bool SWIPrologThread::stop = false;
+bool SWIPrologThread::initialised = false;
 
 SWIPrologThread::SWIPrologThread() : StopTaskCounter(0) {
 	Thread = FRunnableThread::Create(this, TEXT("SWIPrologThread"), 0, TPri_BelowNormal);
@@ -19,8 +20,8 @@ bool SWIPrologThread::Init() {
 }
 
 uint32 SWIPrologThread::Run() {
-	startProlog();
 	stop = false;
+	initialised = false;
 	currentSolution = NewObject<USWIPrologSolution>();
 	executeCommands();
 	return 0;
@@ -72,40 +73,18 @@ void SWIPrologThread::openPrologFile(FString filename) {
 	consultFile = filename;
 }
 
-void SWIPrologThread::SWIPLassert(USWIPrologObject* prologObject, bool asFirstClause, bool& bResult) {
-	FString ruleOrFact;
+void SWIPrologThread::SWIPLassert(USWIPrologObject* prologObject, bool firstClause) {
 
 	if (USWIPrologTerm* fact = Cast<USWIPrologTerm>(prologObject))
-		ruleOrFact = translateTerm(fact);
+		assertRuleOrFact = translateTerm(fact);
 	else
-		ruleOrFact = translateRule(Cast<USWIPrologRule>(prologObject));
+		assertRuleOrFact = translateRule(Cast<USWIPrologRule>(prologObject));
 
-	char* stringRuleOrFact = TCHAR_TO_ANSI(*ruleOrFact);
-	try {
-		PlCall(asFirstClause ? "asserta" : "assertz", PlTermv(PlCompound(stringRuleOrFact)));
-		bResult = true;
-		UE_LOG(LogTemp, Display, TEXT("Assert Fact %s successful"), *ruleOrFact);
-	}
-	catch (PlException err) {
-		bResult = false;
-		FString FsError = FString(ANSI_TO_TCHAR(err.what()));
-		UE_LOG(LogTemp, Warning, TEXT("error occurred while asserting rule or fact: %s"), *FsError);
-	}
+	asFirstClause = firstClause;
 }
 
-void SWIPrologThread::SWIPLretract(USWIPrologTerm* ruleOrFactTerm, bool& bResult) {
-	FString ruleOrFact = translateTerm(ruleOrFactTerm);
-	char* stringRuleOrFact = TCHAR_TO_ANSI(*ruleOrFact);
-	try {
-		PlCall("retract", PlTermv(PlCompound(stringRuleOrFact)));
-		bResult = true;
-		UE_LOG(LogTemp, Display, TEXT("Retract successful"));
-	}
-	catch (PlException err) {
-		bResult = false;
-		FString FsError = FString(ANSI_TO_TCHAR(err.what()));
-		UE_LOG(LogTemp, Warning, TEXT("error occurred while asserting rule or fact: %s"), *FsError);
-	}
+void SWIPrologThread::SWIPLretract(USWIPrologTerm* ruleOrFactTerm) {
+	retractRuleOrFact = translateTerm(ruleOrFactTerm);	
 }
 
 void SWIPrologThread::startProlog() {
@@ -284,16 +263,41 @@ FString SWIPrologThread::translateRuleBody(UObject* ruleBodyObject) {
 }
 
 void SWIPrologThread::executeCommands() {
-	while (true) {
-		if (stop)
-			break;
+	while (!stop) {
 
+		if (!initialised) {
+			startProlog();
+			initialised = true;
+		}
+			
 		if (consultFile != "")
 		{
 			openPrologFile_(consultFile);
 			consultFile = "";
 		}
-			
+
+		if (assertRuleOrFact != "") {
+			try {
+				PlCall(asFirstClause ? "asserta" : "assertz", PlTermv(PlCompound(TCHAR_TO_ANSI(*assertRuleOrFact))));
+				assertRuleOrFact = "";
+			}
+			catch (PlException err) {
+				FString FsError = FString(ANSI_TO_TCHAR(err.what()));
+				UE_LOG(LogTemp, Warning, TEXT("error occurred while asserting rule or fact: %s"), *FsError);
+			}
+		}
+
+		if (retractRuleOrFact != "") {
+			char* stringRuleOrFact = TCHAR_TO_ANSI(*retractRuleOrFact);
+			try {
+				PlCall("retract", PlTermv(PlCompound(stringRuleOrFact)));
+				retractRuleOrFact = "";
+			}
+			catch (PlException err) {
+				FString FsError = FString(ANSI_TO_TCHAR(err.what()));
+				UE_LOG(LogTemp, Warning, TEXT("error occurred while asserting rule or fact: %s"), *FsError);
+			}
+		}
 
 		if (IsValid(currentQuery)) {
 			if (myQuery != NULL)
@@ -331,7 +335,6 @@ void SWIPrologThread::executeCommands() {
 
 			nextSolution();
 			currentQuery = NULL;
-			//currentQuery->ConditionalBeginDestroy();
 		}
 	}
 }

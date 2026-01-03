@@ -43,7 +43,10 @@ private:
 	USWIPrologTerm* currentQuery = NULL;
 	FString consultFile = "";
 	int inArity;
-
+	FString assertRuleOrFact;
+	FString retractRuleOrFact;
+	bool asFirstClause;
+	static bool initialised;
 	static bool stop;
 	FString translateTerm(UObject* term);
 	FString translateRule(UObject* rule);
@@ -82,8 +85,8 @@ public:
 	void submitQuery(USWIPrologTerm* inRuleOrFactTerm);
 	void nextSolution();
 	void openPrologFile(FString myfile);
-	void SWIPLassert(USWIPrologObject* prologObject, bool asFirstClause, bool& bResult);
-	void SWIPLretract(USWIPrologTerm* ruleOrFactTerm, bool& bResult);
+	void SWIPLassert(USWIPrologObject* prologObject, bool firstClause);
+	void SWIPLretract(USWIPrologTerm* ruleOrFactTerm);
 
 	FDelegateHandle SolutionAvailableSubscribeUser(SolutionAvailableDelegate& UseDelegate);
 	void SolutionAvailableUnsubscribeUser(FDelegateHandle DelegateHandle);
