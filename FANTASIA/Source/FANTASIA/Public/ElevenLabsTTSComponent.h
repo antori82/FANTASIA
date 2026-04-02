@@ -7,7 +7,7 @@
 #include "Components/ActorComponent.h"
 #include "FANTASIATypes.h"
 #include "ElevenLabsTTSThread.h"
-#include <iostream>
+#include <atomic>
 #include <string>
 #include "Runtime/Engine/Classes/Sound/SoundWaveProcedural.h"
 #include "Runtime/Online/HTTP/Public/Http.h"
@@ -17,7 +17,10 @@
 #include "ACEAudioCurveSourceComponent.h"
 #include "ElevenLabsTTSComponent.generated.h"
 
-using namespace std;
+// [OPT] Removed: using namespace std (pollutes global namespace in headers)
+
+/** Minimum number of float samples to batch before sending to A2F during streaming. */
+static constexpr int32 A2F_STREAMING_BATCH_SIZE = 100;
 
 UCLASS(meta = (BlueprintSpawnableComponent), Config = Game)
 class UElevenLabsTTSComponent : public UActorComponent
@@ -25,34 +28,39 @@ class UElevenLabsTTSComponent : public UActorComponent
 	GENERATED_BODY()
 
 protected:
-	// Called when the game starts
 	virtual void BeginPlay() override;
-
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
 private:
 
 	TMap<FString, FTTSData> Buffer;
-	TMap<FString, TArray<float>> StreamingBuffer;
-	TMap<FString, FString> PendingSSML;
-	ElevenLabsTTSThread* handle;
+	// [OPT] Removed: StreamingBuffer, PendingSSML, SyntheticVoicePCMData — all unused dead code
+
+	ElevenLabsTTSThread* handle = nullptr;
 	FDelegateHandle TTSResultAvailableHandle;
 	FDelegateHandle TTSPartialResultAvailableHandle;
-	FSynthesizedInternalEvent synthesisReadyInternal;
+
 	FString idSynthesisReady = "";
 	FString idPartialSynthesisReady = "";
 
 	void getResult(FTTSData response, FString id);
 	void getPartialResult(TArray<uint8> response, FString id);
 
-	bool usingStreamingBuffer = false;
-	bool bufferOpen = false;
+	// [OPT] All cross-thread flags are now atomic to prevent data races.
+	//       Plain bool was read/written by HTTP thread, consumer thread, and game thread simultaneously.
+	std::atomic<bool> usingStreamingBuffer{false};
+	std::atomic<bool> bufferOpen{false};
+	std::atomic<bool> isPlaying{false};
+	std::atomic<bool> needsFlush{false};     // [OPT] Signals consumer to discard stale data (the buffer bleed fix)
+
 	TQueue<float, EQueueMode::Spsc> sendData;
-	bool isPlaying = false;
-	TArray<uint8> SyntheticVoicePCMData;
+
+	// [OPT] Event-based wake replaces CPU-burning spin loop.
+	//       The consumer thread blocks on this instead of tight-polling sendData.IsEmpty().
+	FEventRef ConsumerWakeEvent{EEventMode::ManualReset};
+
 public:
 
-	// Sets default values for this component's properties
 	UElevenLabsTTSComponent();
 
 	UPROPERTY(BlueprintReadWrite, Category = "TTS")
@@ -94,7 +102,6 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Voice Settings", meta = (UIMin = "0.0", UIMax = "1.0"))
 	bool use_speaker_boost;
 
-	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction);
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "TTS Start", Keywords = "ElevenLabs TTS"), Category = "TTS")

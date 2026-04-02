@@ -67,6 +67,7 @@ public class FANTASIA : ModuleRules
     public void InitialUeConfig()//Config for  UE usage
     {
         PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
+        CStandard = CStandardVersion.C11;
 
         bEnableExceptions = true;
     }
@@ -91,8 +92,12 @@ public class FANTASIA : ModuleRules
             new string[]
             {
                 "Core",
-                "Projects"
-				// ... add other public dependencies that you statically link with here ...
+                "Projects",
+                "AudioCapture",
+                "AudioCaptureCore",
+                "AudioMixer",
+                "AudioMixerCore",
+                "SignalProcessing"
 			}
             );
 
@@ -110,7 +115,7 @@ public class FANTASIA : ModuleRules
                 "HTTP",
                 "ACERuntime",
                 "ACECore"
-			}
+            }
             );
     }
 
@@ -146,6 +151,101 @@ public class FANTASIA : ModuleRules
         }
     }
 
+    private void LoadWhisper(ReadOnlyTargetRules Target, string ThirdPartyPath)
+    {
+        string WhisperRoot = Path.GetFullPath(
+            Path.Combine(ThirdPartyPath, "whisper_cpp"));
+
+        string StagingDir = Path.Combine(ModuleDirectory, "Private", "whisper_staged");
+
+        // Verify setup
+        bool bHasWhisperSource = Directory.Exists(WhisperRoot) &&
+            (File.Exists(Path.Combine(WhisperRoot, "include", "whisper.h")) ||
+             File.Exists(Path.Combine(WhisperRoot, "whisper.h")));
+
+        int StagedFileCount = 0;
+        if (Directory.Exists(StagingDir))
+        {
+            StagedFileCount = Directory.GetFiles(StagingDir, "*.c").Length +
+                Directory.GetFiles(StagingDir, "*.cpp").Length;
+        }
+
+        System.Console.WriteLine("[FANTASIA-Whisper] Whisper source: " +
+            (bHasWhisperSource ? WhisperRoot : "NOT FOUND"));
+        System.Console.WriteLine("[FANTASIA-Whisper] Staged files:   " +
+            StagedFileCount + " in " + StagingDir);
+
+        if (!bHasWhisperSource)
+        {
+            System.Console.WriteLine("[FANTASIA-Whisper] WARNING: whisper.cpp not found in " + WhisperRoot + " — Whisper ASR disabled.");
+            return;
+        }
+        if (StagedFileCount == 0)
+        {
+            System.Console.WriteLine("[FANTASIA-Whisper] WARNING: No staged files! Run setup_whisper.bat (or .sh) first.");
+            return;
+        }
+
+        // Include paths
+        AddInclude(WhisperRoot);
+        AddInclude(Path.Combine(WhisperRoot, "include"));
+        AddInclude(Path.Combine(WhisperRoot, "src"));
+        AddInclude(Path.Combine(WhisperRoot, "ggml", "include"));
+        AddInclude(Path.Combine(WhisperRoot, "ggml", "src"));
+        AddInclude(Path.Combine(WhisperRoot, "ggml", "src", "ggml-cpu"));
+
+        string ArchDir = GetArchDir(Target);
+        if (ArchDir != null)
+            AddInclude(Path.Combine(WhisperRoot, "ggml", "src", "ggml-cpu", "arch", ArchDir));
+
+        AddInclude(StagingDir);
+
+        // Definitions normally set by CMake
+        PrivateDefinitions.Add("GGML_VERSION=\"0.0.0\"");
+        PrivateDefinitions.Add("GGML_BUILD_NUMBER=0");
+        PrivateDefinitions.Add("GGML_BUILD_COMMIT=\"unknown\"");
+        PrivateDefinitions.Add("GGML_COMMIT=\"unknown\"");
+        PrivateDefinitions.Add("WHISPER_VERSION=\"0.0.0\"");
+        PrivateDefinitions.Add("WHISPER_BUILD_NUMBER=0");
+        PrivateDefinitions.Add("WHISPER_BUILD_COMMIT=\"unknown\"");
+        PrivateDefinitions.Add("WHISPER_COMMIT=\"unknown\"");
+
+        // Enable the CPU backend
+        PrivateDefinitions.Add("GGML_USE_CPU");
+
+        if (Target.Platform == UnrealTargetPlatform.Win64)
+        {
+            PrivateDefinitions.Add("_CRT_SECURE_NO_WARNINGS");
+            PrivateDefinitions.Add("NOMINMAX");
+            PublicDefinitions.Add("_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS");
+        }
+
+        if (Target.Platform == UnrealTargetPlatform.Linux ||
+            Target.Platform == UnrealTargetPlatform.Mac)
+        {
+            PublicDefinitions.Add("_GNU_SOURCE");
+        }
+    }
+
+    private void AddInclude(string Dir)
+    {
+        if (Directory.Exists(Dir))
+        {
+            PublicIncludePaths.Add(Dir);
+            PrivateIncludePaths.Add(Dir);
+        }
+    }
+
+    private static string GetArchDir(ReadOnlyTargetRules Target)
+    {
+        if (Target.Platform == UnrealTargetPlatform.Win64 ||
+            Target.Platform == UnrealTargetPlatform.Linux)
+            return "x86";
+        if (Target.Platform == UnrealTargetPlatform.Mac)
+            return "arm";
+        return null;
+    }
+
     public void PrologLibs(string ThirdParty)
     {
         string PrologDllPath = Path.Combine(ThirdParty, "SWIProlog", "PrologDlls");
@@ -173,6 +273,15 @@ public class FANTASIA : ModuleRules
 
         DependeciesAndPaths();
 
+        #if UE_5_3_OR_LATER
+			// Increase to AVX2 OR AVX512 for better performance (if your CPU supports it)
+			MinCpuArchX64 = MinimumCpuArchitectureX64.AVX;
+        #else
+            bUseAVX = true;
+        #endif
+
+        PublicDefinitions.Add("_UCRT_LEGACY_INFINITY");
+
         string ModulePath = ModuleDirectory;
         string ThirdParty = Path.GetFullPath(Path.Combine(ModulePath, "../../ThirdParty/"));
 
@@ -190,6 +299,7 @@ public class FANTASIA : ModuleRules
                 }
             );
         }
+
         string Redist = Path.Combine(ThirdParty, "Redist");
 
         DllLoad(Redist);
@@ -197,9 +307,12 @@ public class FANTASIA : ModuleRules
         PrologLibs(ThirdParty);
 
         CppStandard = CppStandardVersion.Cpp20;
+        bUseRTTI = false;
+        bUseUnity = false;
 
         LoadAgrum(Target, ThirdParty);
         LoadGrpc(Target, ThirdParty);
+        LoadWhisper(Target, ThirdParty);
 
         PublicIncludePaths.Add(Path.Combine(ThirdParty, "kdepp"));
 
