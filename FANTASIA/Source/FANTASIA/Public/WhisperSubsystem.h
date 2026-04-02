@@ -23,7 +23,7 @@ struct whisper_context;
  *   4. Receive results via OnTranscriptionComplete.
  */
 UCLASS()
-class WHISPERASR_API UWhisperSubsystem : public UGameInstanceSubsystem
+class FANTASIA_API UWhisperSubsystem : public UGameInstanceSubsystem
 {
 	GENERATED_BODY()
 

@@ -1,7 +1,8 @@
 // Copyright (c) 2024 WhisperASR Plugin. All Rights Reserved.
 
 #include "WhisperSubsystem.h"
-#include "WhisperASRModule.h"
+
+DEFINE_LOG_CATEGORY(LogWhisperASR);
 #include "Async/Async.h"
 #include "HAL/FileManager.h"
 #include "Interfaces/IPluginManager.h"

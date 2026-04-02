@@ -8,12 +8,12 @@
 
 $ErrorActionPreference = "Stop"
 $PluginDir   = Split-Path -Parent $MyInvocation.MyCommand.Path
-$WhisperRoot = Join-Path $PluginDir "Source\ThirdParty\whisper_cpp"
-$StagingDir  = Join-Path $PluginDir "Source\WhisperASR\Private\whisper_staged"
+$WhisperRoot = Join-Path $PluginDir "ThirdParty\whisper_cpp"
+$StagingDir  = Join-Path $PluginDir "Source\FANTASIA\Private\whisper_staged"
 
 # Relative path from staging dir to whisper root:
-#   whisper_staged/ → Private/ → WhisperASR/ → Source/ → ThirdParty/whisper_cpp/
-$RelativePrefix = "../../../ThirdParty/whisper_cpp"
+#   whisper_staged/ → Private/ → FANTASIA/ → Source/ → (plugin root) → ThirdParty/whisper_cpp/
+$RelativePrefix = "../../../../ThirdParty/whisper_cpp"
 
 Write-Host "[WhisperASR Setup]"
 Write-Host "  Whisper src: $WhisperRoot"

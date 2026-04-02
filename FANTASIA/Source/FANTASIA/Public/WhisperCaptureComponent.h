@@ -40,9 +40,9 @@ class UWhisperSubsystem;
  * Results arrive via OnCaptureTranscriptionComplete (and optionally
  * per-segment via OnStreamingSegment in streaming mode).
  */
-UCLASS(ClassGroup = (WhisperASR), meta = (BlueprintSpawnableComponent,
+UCLASS(ClassGroup = (FANTASIA), meta = (BlueprintSpawnableComponent,
 	DisplayName = "Whisper Audio Capture"))
-class WHISPERASR_API UWhisperCaptureComponent : public UActorComponent
+class FANTASIA_API UWhisperCaptureComponent : public UActorComponent
 {
 	GENERATED_BODY()
 

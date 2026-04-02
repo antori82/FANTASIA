@@ -5,6 +5,8 @@
 #include "CoreMinimal.h"
 #include "WhisperTypes.generated.h"
 
+DECLARE_LOG_CATEGORY_EXTERN(LogWhisperASR, Log, All);
+
 // ─── Language enum (subset of Whisper-supported languages) ────────────────────
 
 UENUM(BlueprintType)
@@ -66,7 +68,7 @@ enum class EWhisperStatus : uint8
 // ─── A single transcription segment ─────────────────────────────────────────
 
 USTRUCT(BlueprintType)
-struct WHISPERASR_API FWhisperSegment
+struct FANTASIA_API FWhisperSegment
 {
 	GENERATED_BODY()
 
@@ -90,7 +92,7 @@ struct WHISPERASR_API FWhisperSegment
 // ─── Full transcription result ───────────────────────────────────────────────
 
 USTRUCT(BlueprintType)
-struct WHISPERASR_API FWhisperResult
+struct FANTASIA_API FWhisperResult
 {
 	GENERATED_BODY()
 
@@ -122,7 +124,7 @@ struct WHISPERASR_API FWhisperResult
 // ─── Configuration for a transcription request ──────────────────────────────
 
 USTRUCT(BlueprintType)
-struct WHISPERASR_API FWhisperConfig
+struct FANTASIA_API FWhisperConfig
 {
 	GENERATED_BODY()
 

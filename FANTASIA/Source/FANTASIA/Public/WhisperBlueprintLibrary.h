@@ -12,7 +12,7 @@
  * These do not require a subsystem reference.
  */
 UCLASS()
-class WHISPERASR_API UWhisperBlueprintLibrary : public UBlueprintFunctionLibrary
+class FANTASIA_API UWhisperBlueprintLibrary : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
 

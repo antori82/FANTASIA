@@ -2,7 +2,6 @@
 
 #include "WhisperCaptureComponent.h"
 #include "WhisperSubsystem.h"
-#include "WhisperASRModule.h"
 #include "Engine/GameInstance.h"
 #include "AudioCaptureCore.h"
 
