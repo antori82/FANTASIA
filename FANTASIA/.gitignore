@@ -1,0 +1,24 @@
+# Build output
+Binaries/
+Intermediate/
+
+# UE generated
+Saved/
+DerivedDataCache/
+
+# IDE
+.vs/
+.idea/
+*.sln
+*.suo
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Python
+*.pyc
+__pycache__/
+
+# Tools
+.claude/

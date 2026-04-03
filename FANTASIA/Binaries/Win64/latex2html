@@ -1,5 +1,0 @@
-#!/bin/sh
-
-SWIPL=./bin/x64-win64/swipl
-
-$SWIPL -f none -s $libdir/latex2html.pl -t halt -- $*
