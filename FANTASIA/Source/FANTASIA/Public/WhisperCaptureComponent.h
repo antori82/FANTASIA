@@ -40,7 +40,7 @@ class UWhisperSubsystem;
  * Results arrive via OnCaptureTranscriptionComplete (and optionally
  * per-segment via OnStreamingSegment in streaming mode).
  */
-UCLASS(ClassGroup = (FANTASIA), meta = (BlueprintSpawnableComponent,
+UCLASS(ClassGroup = (FANTASIA), Config = Game, meta = (BlueprintSpawnableComponent,
 	DisplayName = "Whisper Audio Capture"))
 class FANTASIA_API UWhisperCaptureComponent : public UActorComponent
 {
@@ -61,11 +61,11 @@ public:
 	 * If true, automatically transcribe every N seconds of buffered audio
 	 * while capture is active (chunked streaming mode).
 	 */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "WhisperASR|Capture")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "WhisperASR|Capture", Config)
 	bool bStreamingMode = false;
 
 	/** Seconds between streaming transcriptions (if bStreamingMode) */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "WhisperASR|Capture",
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "WhisperASR|Capture", Config,
 		meta = (EditCondition = "bStreamingMode", ClampMin = "1.0", ClampMax = "30.0"))
 	float StreamingIntervalSeconds = 5.0f;
 
@@ -75,7 +75,7 @@ public:
 	 * words at chunk boundaries from being cut in half and garbled.
 	 * Recommended: 1.0–2.0 seconds.
 	 */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "WhisperASR|Capture",
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "WhisperASR|Capture", Config,
 		meta = (EditCondition = "bStreamingMode", ClampMin = "0.0", ClampMax = "5.0"))
 	float StreamingOverlapSeconds = 1.0f;
 
@@ -83,7 +83,7 @@ public:
 	 * Maximum buffer duration in seconds. Oldest samples are discarded
 	 * when the buffer exceeds this length.
 	 */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "WhisperASR|Capture",
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "WhisperASR|Capture", Config,
 		meta = (ClampMin = "1.0", ClampMax = "300.0"))
 	float MaxBufferDurationSeconds = 30.0f;
 
@@ -93,7 +93,7 @@ public:
 	 * Use CalibrateNoiseFloor() to set this automatically.
 	 * Set to 0.0 to disable VAD filtering.
 	 */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "WhisperASR|Capture",
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "WhisperASR|Capture", Config,
 		meta = (ClampMin = "0.0", ClampMax = "1.0"))
 	float VadEnergyThreshold = 0.01f;
 
@@ -103,14 +103,14 @@ public:
 	 * No manual StopCapture needed — stays active for the next utterance.
 	 * Uses VadEnergyThreshold to distinguish speech from silence.
 	 */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "WhisperASR|Capture")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "WhisperASR|Capture", Config)
 	bool bAutoDetectSpeech = true;
 
 	/**
 	 * How long silence must persist after speech before the utterance
 	 * is considered finished and sent for transcription (seconds).
 	 */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "WhisperASR|Capture",
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "WhisperASR|Capture", Config,
 		meta = (EditCondition = "bAutoDetectSpeech", ClampMin = "0.3", ClampMax = "10.0"))
 	float SilenceTimeoutSeconds = 1.5f;
 
