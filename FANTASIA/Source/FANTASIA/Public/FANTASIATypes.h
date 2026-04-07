@@ -273,6 +273,20 @@ enum class BayesianNodeType : uint8 {
 };
 
 UENUM(BlueprintType)
+enum class InferenceAlgs : uint8
+{
+	Lazy_Propagation UMETA(DisplayName = "Lazy Propagation"),
+	ShaferShenoy UMETA(DisplayName = "Shafer Shenoy Inference"),
+	VariableElimination UMETA(DisplayName = "Variable Elimination")
+};
+
+UENUM(BlueprintType)
+enum class InferenceIDAlgs : uint8
+{
+	ShaferShenoyLIMID UMETA(DisplayName = "Shafer Shenoy LIMID Inference"),
+};
+
+UENUM(BlueprintType)
 enum class TTSVoiceType : uint8 {
 	NEURAL = 0 UMETA(DisplayName = "Neural"),
 	STANDARD = 1 UMETA(DisplayName = "Standard")

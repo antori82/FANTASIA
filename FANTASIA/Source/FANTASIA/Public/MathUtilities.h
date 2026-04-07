@@ -3,8 +3,11 @@
 #include "FANTASIA.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "kde.h"
+#include <vector>
 
 #include "MathUtilities.generated.h"
+
+std::vector<float> Linspace(float Start, float End, int Points);
 
 UCLASS(Blueprintable, BlueprintType)
 class FANTASIA_API UKernelDensityEstimator : public UObject

@@ -1,15 +1,21 @@
 #include "MathUtilities.h"
 
+std::vector<float> Linspace(float Start, float End, int Points)
+{
+	std::vector<float> Res(Points);
+	const float Step = (End - Start) / (Points - 1);
+	int i = 0;
+	for (auto& e : Res)
+	{
+		const float Cand = Start + Step * i++;
+		e = (Cand < End) ? Cand : End;
+	}
+	return Res;
+}
+
 std::vector<float> linspace(float start, float end, size_t points)
 {
-	std::vector<float> res(points);
-	float step = (end - start) / (points - 1);
-	size_t i = 0;
-	for (auto& e : res)
-	{
-		e = start + step * i++;
-	}
-	return res;
+	return Linspace(start, end, static_cast<int>(points));
 }
 
 UKernelDensityEstimator::UKernelDensityEstimator(const FObjectInitializer& ObjectInitializer)

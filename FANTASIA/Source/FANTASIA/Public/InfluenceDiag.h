@@ -13,11 +13,11 @@
 
 #include "FANTASIA.h"
 #include "FANTASIATypes.h"
-#include "BayesianInferenceThreads.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "Runtime\Core\Public\Misc\Paths.h"
 #include "Runtime\Core\Public\Misc\FileHelper.h"
 #include <Runtime/Core/Public/Async/Async.h>
+#include <atomic>
 
 #include "agrum/ID/influenceDiagram.h"
 #include "agrum/ID/inference/tools/influenceDiagramInference.h"
@@ -33,12 +33,6 @@
 #pragma warning (default : 4264)
 #pragma warning (default : 4265)
 #pragma warning (default : 4701)
-
-UENUM(BlueprintType)
-enum class InferenceIDAlgs : uint8
-{
-	ShaferShenoyLIMID UMETA(DisplayName = "Shafer Shenoy LIMID Inference"),
-};
 
 USTRUCT(Blueprintable)
 struct FInfluenceDiagArcStruct
@@ -57,31 +51,31 @@ struct FInfluenceDiagNodeStruct
 {
 	GENERATED_USTRUCT_BODY()
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FString name;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<FString> variables;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<double> values;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<FString> parents;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	InfluenceNodeType nodeType = InfluenceNodeType::CHANCE;
 };
 
 USTRUCT(Blueprintable)
-struct FArrayFloat 
+struct FArrayFloat
 {
 	GENERATED_USTRUCT_BODY()
 
 public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TArray<float> arrayFloat;
-	
+
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FIDInferenceAvailableEvent);
@@ -93,18 +87,17 @@ class FANTASIA_API UInfluenceDiag : public UObject
 
 private:
 	gum::InfluenceDiagram<double> id;
-	gum::InfluenceDiagramInference<double>* inference = new gum::ShaferShenoyLIMIDInference<double>(&id);
+	TUniquePtr<gum::InfluenceDiagramInference<double>> inference;
 	bool initialized = false;
-	FDelegateHandle InferenceAvailableHandle;
-	BayesianInferenceThread* handle;
-
-	void inferenceComplete();
+	std::atomic<bool> bInferenceRunning{false};
+	TSet<FString> arcSet;
+	TSet<FString> nodeNameSet;
 
 public:
 	UPROPERTY(BlueprintAssignable, BlueprintCallable)
 	FIDInferenceAvailableEvent InferenceReady;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TArray<FInfluenceDiagNodeStruct> serializedNodes;
 
 	UPROPERTY(BlueprintReadOnly)
@@ -119,60 +112,60 @@ public:
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Init"), Category = "Influence_Diagram")
 	void Init();
 
-	UFUNCTION(BlueprintCallable, meta = (DisplayName = "makeInference", Keywords = "Inference", AutoCreateRefTerm = "evidences"), Category = "Influence_Diagram")
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "makeInference", Keywords = "Inference"), Category = "Influence_Diagram")
 	void makeInference();
 
-	UFUNCTION(BlueprintCallable, meta = (DisplayName = "getPosterior", Keywords = "Inference", AutoCreateRefTerm = "evidences"), Category = "Influence_Diagram")
-	TMap<FString, float> getPosterior(FString variable);
+	UFUNCTION(BlueprintCallable, BlueprintPure, meta = (DisplayName = "getPosterior", Keywords = "Inference"), Category = "Influence_Diagram")
+	TMap<FString, float> getPosterior(const FString& variable);
 
-	UFUNCTION(BlueprintCallable, meta = (DisplayName = "getPosteriorUtility", Keywords = "Inference", AutoCreateRefTerm = "evidences"), Category = "Influence_Diagram")
-	TMap<FString, float> getPosteriorUtility(FString variable);
+	UFUNCTION(BlueprintCallable, BlueprintPure, meta = (DisplayName = "getPosteriorUtility", Keywords = "Inference"), Category = "Influence_Diagram")
+	TMap<FString, float> getPosteriorUtility(const FString& variable);
 
-	UFUNCTION(BlueprintCallable, meta = (DisplayName = "getMEU", Keywords = "Inference", AutoCreateRefTerm = "evidences"), Category = "Influence_Diagram")
+	UFUNCTION(BlueprintCallable, BlueprintPure, meta = (DisplayName = "getMEU", Keywords = "Inference"), Category = "Influence_Diagram")
 	TMap<FString, float> getMEU();
 
-	UFUNCTION(BlueprintCallable, meta = (DisplayName = "getEntropy"), Category = "Influence_Diagram")
-	double getEntropy(FString variable);
+	UFUNCTION(BlueprintCallable, BlueprintPure, meta = (DisplayName = "getEntropy"), Category = "Influence_Diagram")
+	double getEntropy(const FString& variable);
 
-	UFUNCTION(BlueprintCallable, meta = (DisplayName = "optimalDecision", Keywords = "Inference", AutoCreateRefTerm = "evidences"), Category = "Influence_Diagram")
-	TMap<FString, FArrayFloat> optimalDecision(FString variable);
+	UFUNCTION(BlueprintCallable, BlueprintPure, meta = (DisplayName = "optimalDecision", Keywords = "Inference"), Category = "Influence_Diagram")
+	TMap<FString, FArrayFloat> optimalDecision(const FString& variable);
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "addEvidence"), Category = "Influence_Diagram")
-	void addEvidence(FString variable, TArray<float> data);
+	void addEvidence(const FString& variable, const TArray<float>& data);
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "eraseAllEvidence"), Category = "Influence_Diagram")
 	void eraseAllEvidence();
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "eraseEvidence"), Category = "Influence_Diagram")
-	void eraseEvidence(FString variable);
+	void eraseEvidence(const FString& variable);
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "addDiscretizedVariable"), Category = "Influence_Diagram")
-	void addDiscretizedVariable(FString variable, FString description, float minTick, float maxTick, float nPoints, InfluenceNodeType nodeType);
+	void addDiscretizedVariable(const FString& variable, const FString& description, float minTick, float maxTick, float nPoints, InfluenceNodeType nodeType);
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "addLabelizedVariable"), Category = "Influence_Diagram")
-	void addLabelizedVariable(FString variable, FString description, TArray<FString> labels, InfluenceNodeType nodeType);
+	void addLabelizedVariable(const FString& variable, const FString& description, const TArray<FString>& labels, InfluenceNodeType nodeType);
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "addArc"), Category = "Influence_Diagram")
-	void addArc(FString parent, FString child);
+	void addArc(const FString& parent, const FString& child);
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "fillCPT"), Category = "Influence_Diagram")
-	void fillCPT(FString variable, TArray<float> values);
+	void fillCPT(const FString& variable, const TArray<float>& values);
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "fillUtility"), Category = "Influence_Diagram")
-	void fillUtility(FString variable, TArray<float> values);
+	void fillUtility(const FString& variable, const TArray<float>& values);
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "writeBIFXML"), Category = "Influence_Diagram")
-	void writeBIFXML(FString file);
+	void writeBIFXML(const FString& file);
 
-	UFUNCTION(BlueprintCallable, meta = (DisplayName = "clear"), Category = "Influence_Diagram")
-	void erase(FString variable);
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "EraseNode"), Category = "Influence_Diagram")
+	void erase(const FString& variable);
 
-	UFUNCTION(BlueprintCallable, meta = (DisplayName = "idFromName"), Category = "Influence_Diagram")
-	int idFromName(FString variable);
+	UFUNCTION(BlueprintCallable, BlueprintPure, meta = (DisplayName = "idFromName"), Category = "Influence_Diagram")
+	int idFromName(const FString& variable);
 
-	UFUNCTION(BlueprintCallable, meta = (DisplayName = "decisionOrderExists"), Category = "Influence_Diagram")
+	UFUNCTION(BlueprintCallable, BlueprintPure, meta = (DisplayName = "decisionOrderExists"), Category = "Influence_Diagram")
 	bool decisionOrderExists();
 
-	UFUNCTION(BlueprintCallable, meta = (DisplayName = "decisionOrder"), Category = "Influence_Diagram")
+	UFUNCTION(BlueprintCallable, BlueprintPure, meta = (DisplayName = "decisionOrder"), Category = "Influence_Diagram")
 	TArray<int> decisionOrder();
 };
