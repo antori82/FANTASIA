@@ -21,14 +21,14 @@
 using namespace std;
 using namespace Microsoft::CognitiveServices::Speech;
 
-UCLASS(ClassGroup = (Azure), meta = (BlueprintSpawnableComponent))
-class UAzureTTSComponent : public UActorComponent, public ITTSInterface
+UCLASS(ClassGroup = (Azure), meta = (BlueprintSpawnableComponent, Deprecated, DeprecationMessage = "AzureTTSComponent is deprecated and will be removed after switching to UE 5.7."))
+class UDEPRECATED_AzureTTSComponent : public UActorComponent, public ITTSInterface
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this component's properties
-	UAzureTTSComponent();
+	UDEPRECATED_AzureTTSComponent();
 
 protected:
 	// Called when the game starts
@@ -78,12 +78,12 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	UFUNCTION(BlueprintCallable, meta = (DisplayName = "TTS Start", Keywords = "Azure Plugin TTS"), Category = "TTS")
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "TTS Start", Keywords = "Azure Plugin TTS", DeprecatedFunction, DeprecationMessage = "AzureTTSComponent is deprecated and will be removed after switching to UE 5.7."), Category = "TTS")
 	void TTSSynthesize(FString ssml, FString id) override;
 
-	UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Sound", Keywords = "Azure Plugin TTS"), Category = "TTS")
+	UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Sound", Keywords = "Azure Plugin TTS", DeprecatedFunction, DeprecationMessage = "AzureTTSComponent is deprecated and will be removed after switching to UE 5.7."), Category = "TTS")
 	USoundWave* TTSGetSound(FString id) override;
 
-	UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Raw Sound", Keywords = "Azure Plugin TTS"), Category = "TTS")
+	UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Raw Sound", Keywords = "Azure Plugin TTS", DeprecatedFunction, DeprecationMessage = "AzureTTSComponent is deprecated and will be removed after switching to UE 5.7."), Category = "TTS")
 	TArray<float> TTSGetRawSound(FString id);
 };

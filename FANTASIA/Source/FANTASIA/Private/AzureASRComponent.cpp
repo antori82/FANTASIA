@@ -8,7 +8,7 @@ using namespace Microsoft::CognitiveServices::Speech;
 using namespace Microsoft::CognitiveServices::Speech::Audio;
 
 // Sets default values for this component's properties
-UAzureASRComponent::UAzureASRComponent()
+UDEPRECATED_AzureASRComponent::UDEPRECATED_AzureASRComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
@@ -19,22 +19,24 @@ UAzureASRComponent::UAzureASRComponent()
 
 
 // Called when the game starts
-void UAzureASRComponent::BeginPlay()
+void UDEPRECATED_AzureASRComponent::BeginPlay()
 {
 	Super::BeginPlay();
+
+	UE_LOG(LogTemp, Warning, TEXT("[AzureASRComponent] This component is deprecated and will be removed after switching to UE 5.7."));
 
 	config = SpeechConfig::FromSubscription(std::string(TCHAR_TO_UTF8(*Key)), std::string(TCHAR_TO_UTF8(*Region)));
 	config->SetEndpointId(std::string(TCHAR_TO_UTF8(*Endpoint)));
 	config->SetSpeechRecognitionLanguage(std::string(TCHAR_TO_UTF8(*Language)));
 }
 
-void UAzureASRComponent::getPartialRecognition(FString text)
+void UDEPRECATED_AzureASRComponent::getPartialRecognition(FString text)
 {
 	outPartialResponse = text;
 	partialResponseReady = true;
 }
 
-void UAzureASRComponent::getFinalRecognition(FString text){
+void UDEPRECATED_AzureASRComponent::getFinalRecognition(FString text){
 	handle->Shutdown();
 
 	outResponse = text;
@@ -42,7 +44,7 @@ void UAzureASRComponent::getFinalRecognition(FString text){
 }
 
 // Called every frame
-void UAzureASRComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+void UDEPRECATED_AzureASRComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
@@ -57,19 +59,19 @@ void UAzureASRComponent::TickComponent(float DeltaTime, ELevelTick TickType, FAc
 	}
 }
 
-void UAzureASRComponent::AzureASRStart(EAzureASREnum mode)
+void UDEPRECATED_AzureASRComponent::AzureASRStart(EAzureASREnum mode)
 {
 	FPartialRecognitionAvailableDelegate PartialRecognitionSubscriber;
 	FFinalRecognitionAvailableDelegate FinalRecognitionSubscriber;
 
-	PartialRecognitionSubscriber.BindUObject(this, &UAzureASRComponent::getPartialRecognition);
-	FinalRecognitionSubscriber.BindUObject(this, &UAzureASRComponent::getFinalRecognition);
+	PartialRecognitionSubscriber.BindUObject(this, &UDEPRECATED_AzureASRComponent::getPartialRecognition);
+	FinalRecognitionSubscriber.BindUObject(this, &UDEPRECATED_AzureASRComponent::getFinalRecognition);
 	handle = AzureASRThread::setup(config, audioInput, mode);
 	PartialRecognitionAvailableHandle = handle->PartialRecognitionAvailableSubscribeUser(PartialRecognitionSubscriber);
 	FinalRecognitionAvailableHandle = handle->FinalRecognitionAvailableSubscribeUser(FinalRecognitionSubscriber);
 }
 
-void UAzureASRComponent::AzureASRStop() {
+void UDEPRECATED_AzureASRComponent::AzureASRStop() {
 	handle->Shutdown();
 	pushStream->Close();
 	VoiceCapture->Stop();

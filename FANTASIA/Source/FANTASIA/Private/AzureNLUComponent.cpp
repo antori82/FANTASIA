@@ -5,7 +5,7 @@ using namespace std;
 using namespace Microsoft::CognitiveServices::Speech;
 
 // Sets default values for this component's properties
-UAzureNLUComponent::UAzureNLUComponent()
+UDEPRECATED_AzureNLUComponent::UDEPRECATED_AzureNLUComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
@@ -14,7 +14,7 @@ UAzureNLUComponent::UAzureNLUComponent()
 	VoiceCapture = FVoiceModule::Get().CreateVoiceCapture("");
 }
 
-bool UAzureNLUComponent::checkConfigIsValid() {
+bool UDEPRECATED_AzureNLUComponent::checkConfigIsValid() {
 	if (SpeechKey.IsEmpty()) {
 		UE_LOG(LogTemp, Error, TEXT("[AzureNLUComponent] SpeechKey field cannot be empty"));
 		return false;
@@ -54,9 +54,11 @@ bool UAzureNLUComponent::checkConfigIsValid() {
 }
 
 // Called when the game starts
-void UAzureNLUComponent::BeginPlay()
+void UDEPRECATED_AzureNLUComponent::BeginPlay()
 {
 	Super::BeginPlay();
+
+	UE_LOG(LogTemp, Warning, TEXT("[AzureNLUComponent] This component is deprecated and will be removed after switching to UE 5.7."));
 
 	if (!checkConfigIsValid())
 		return;
@@ -73,7 +75,7 @@ void UAzureNLUComponent::BeginPlay()
 	models.push_back(cluModel);
 }
 
-void UAzureNLUComponent::getResult(FNLUResponse response)
+void UDEPRECATED_AzureNLUComponent::getResult(FNLUResponse response)
 {
 	handle->NLUResultAvailableUnsubscribeUser(NLUResultAvailableHandle);
 	handle->Shutdown();
@@ -84,7 +86,7 @@ void UAzureNLUComponent::getResult(FNLUResponse response)
 }
 
 // Called every frame
-void UAzureNLUComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+void UDEPRECATED_AzureNLUComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	if (responseReady) {
 		responseReady = false;
@@ -93,13 +95,13 @@ void UAzureNLUComponent::TickComponent(float DeltaTime, ELevelTick TickType, FAc
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 }
 
-void UAzureNLUComponent::AzureNLUStart()
+void UDEPRECATED_AzureNLUComponent::AzureNLUStart()
 {
 	if (!checkConfigIsValid())
 		return;
 
 	FNLUResultAvailableDelegate NLUResultSubscriber;
-	NLUResultSubscriber.BindUObject(this, &UAzureNLUComponent::getResult);
+	NLUResultSubscriber.BindUObject(this, &UDEPRECATED_AzureNLUComponent::getResult);
 	handle = AzureNLUThread::setup(config, models);
 	NLUResultAvailableHandle = handle->NLUResultAvailableSubscribeUser(NLUResultSubscriber);
 }

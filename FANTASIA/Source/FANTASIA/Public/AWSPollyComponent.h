@@ -14,14 +14,14 @@
 
 //using namespace std;
 
-UCLASS(ClassGroup = (AmazonWebServices), meta = (BlueprintSpawnableComponent), config = Game)
-class UAWSPollyComponent : public UActorComponent
+UCLASS(ClassGroup = (AmazonWebServices), meta = (BlueprintSpawnableComponent, Deprecated, DeprecationMessage = "AWSPollyComponent is deprecated and will be removed after switching to UE 5.7."), config = Game)
+class UDEPRECATED_AWSPollyComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this component's properties
-	UAWSPollyComponent();
+	UDEPRECATED_AWSPollyComponent();
 
 	UPROPERTY(BlueprintReadWrite, Category = "Speech to Text")
 	UAudioComponent* Speaker;
@@ -44,19 +44,19 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	UFUNCTION(BlueprintCallable, meta = (DisplayName = "TTS Start", Keywords = "AWS Plugin TTS"), Category = "TTS")
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "TTS Start", Keywords = "AWS Plugin TTS", DeprecatedFunction, DeprecationMessage = "AWSPollyComponent is deprecated and will be removed after switching to UE 5.7."), Category = "TTS")
 	void AWSPollySynthesize(FString ssml, FString id, bool getLipSync);
 
-	UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Sound", Keywords = "AWS Plugin TTS"), Category = "TTS")
+	UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Sound", Keywords = "AWS Plugin TTS", DeprecatedFunction, DeprecationMessage = "AWSPollyComponent is deprecated and will be removed after switching to UE 5.7."), Category = "TTS")
 	USoundWave* AWSPollyGetSound(FString id);
 
-	UFUNCTION(BlueprintPure, meta = (DisplayName = "Get LipSync", Keywords = "AWS Plugin TTS"), Category = "TTS")
+	UFUNCTION(BlueprintPure, meta = (DisplayName = "Get LipSync", Keywords = "AWS Plugin TTS", DeprecatedFunction, DeprecationMessage = "AWSPollyComponent is deprecated and will be removed after switching to UE 5.7."), Category = "TTS")
 	TArray<FTTSTimedStruct> AWSPollyGetLipSync(FString id);
 
-	UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Notifies", Keywords = "AWS Plugin TTS"), Category = "TTS")
+	UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Notifies", Keywords = "AWS Plugin TTS", DeprecatedFunction, DeprecationMessage = "AWSPollyComponent is deprecated and will be removed after switching to UE 5.7."), Category = "TTS")
 	TArray<FTTSTimedStruct> AWSPollyGetNotifies(FString id);
 
-	UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Raw Sound", Keywords = "Azure Plugin TTS"), Category = "TTS")
+	UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Raw Sound", Keywords = "Azure Plugin TTS", DeprecatedFunction, DeprecationMessage = "AWSPollyComponent is deprecated and will be removed after switching to UE 5.7."), Category = "TTS")
 	TArray<float> TTSGetRawSound(FString id);
 
 protected:

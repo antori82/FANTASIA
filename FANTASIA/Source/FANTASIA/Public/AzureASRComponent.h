@@ -22,14 +22,14 @@ using namespace Microsoft::CognitiveServices::Speech::Audio;
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FIncomingPartialASREvent, FString, message);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FIncomingFinalASREvent, FString, message);
 
-UCLASS( ClassGroup=(Azure), meta=(BlueprintSpawnableComponent), config= Game)
-class UAzureASRComponent : public UActorComponent
+UCLASS( ClassGroup=(Azure), meta=(BlueprintSpawnableComponent, Deprecated, DeprecationMessage = "AzureASRComponent is deprecated and will be removed after switching to UE 5.7."), config= Game)
+class UDEPRECATED_AzureASRComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
 public:	
 	// Sets default values for this component's properties
-	UAzureASRComponent();
+	UDEPRECATED_AzureASRComponent();
 
 protected:
 	// Called when the game starts
@@ -79,9 +79,9 @@ public:
 	UPROPERTY(BlueprintAssignable, Category = "Speech Recognition")
 		FIncomingPartialASREvent IncomingPartialMessage;
 
-	UFUNCTION(BlueprintCallable, meta = (DisplayName = "ASR Start", Keywords = "AzureASRPlugin ASR"), Category = "ASR")
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "ASR Start", Keywords = "AzureASRPlugin ASR", DeprecatedFunction, DeprecationMessage = "AzureASRComponent is deprecated and will be removed after switching to UE 5.7."), Category = "ASR")
 	void AzureASRStart(EAzureASREnum mode = EAzureASREnum::ASR_ONESHOT);
 
-	UFUNCTION(BlueprintCallable, meta = (DisplayName = "ASR Stop", Keywords = "AzureASRPlugin ASR"), Category = "ASR")
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "ASR Stop", Keywords = "AzureASRPlugin ASR", DeprecatedFunction, DeprecationMessage = "AzureASRComponent is deprecated and will be removed after switching to UE 5.7."), Category = "ASR")
 	void AzureASRStop();
 };

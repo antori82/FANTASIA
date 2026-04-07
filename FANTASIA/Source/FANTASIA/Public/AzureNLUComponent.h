@@ -22,14 +22,14 @@ using namespace Microsoft::CognitiveServices::Speech::Intent;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FIncomingNLUEvent, FNLUResponse, NLUResponse);
 
-UCLASS(ClassGroup = (Azure), meta = (BlueprintSpawnableComponent), config = Game)
-class UAzureNLUComponent : public UActorComponent
+UCLASS(ClassGroup = (Azure), meta = (BlueprintSpawnableComponent, Deprecated, DeprecationMessage = "AzureNLUComponent is deprecated and will be removed after switching to UE 5.7."), config = Game)
+class UDEPRECATED_AzureNLUComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this component's properties
-	UAzureNLUComponent();
+	UDEPRECATED_AzureNLUComponent();
 
 protected:
 	// Called when the game starts
@@ -80,6 +80,6 @@ public:
 	UPROPERTY(BlueprintAssignable, Category = "Speech Understanding")
 	FIncomingNLUEvent IncomingMessage;
 
-	UFUNCTION(BlueprintCallable, meta = (DisplayName = "NLU Start", Keywords = "Azure Plugin NLU"), Category = "NLU")
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "NLU Start", Keywords = "Azure Plugin NLU", DeprecatedFunction, DeprecationMessage = "AzureNLUComponent is deprecated and will be removed after switching to UE 5.7."), Category = "NLU")
 	void AzureNLUStart();
 };

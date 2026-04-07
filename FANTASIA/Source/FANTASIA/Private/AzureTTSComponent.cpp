@@ -6,7 +6,7 @@ using namespace std;
 using namespace Microsoft::CognitiveServices::Speech;
 
 // Sets default values for this component's properties
-UAzureTTSComponent::UAzureTTSComponent()
+UDEPRECATED_AzureTTSComponent::UDEPRECATED_AzureTTSComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
@@ -15,9 +15,11 @@ UAzureTTSComponent::UAzureTTSComponent()
 
 
 // Called when the game starts
-void UAzureTTSComponent::BeginPlay()
+void UDEPRECATED_AzureTTSComponent::BeginPlay()
 {
 	Super::BeginPlay();
+
+	UE_LOG(LogTemp, Warning, TEXT("[AzureTTSComponent] This component is deprecated and will be removed after switching to UE 5.7."));
 
 	config = SpeechConfig::FromSubscription(std::string(TCHAR_TO_UTF8(*Key)), std::string(TCHAR_TO_UTF8(*Region)));
 	config->SetEndpointId(std::string(TCHAR_TO_UTF8(*Endpoint)));
@@ -27,7 +29,7 @@ void UAzureTTSComponent::BeginPlay()
 }
 
 // Called every frame
-void UAzureTTSComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+void UDEPRECATED_AzureTTSComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
@@ -37,7 +39,7 @@ void UAzureTTSComponent::TickComponent(float DeltaTime, ELevelTick TickType, FAc
 	}
 }
 
-void UAzureTTSComponent::getResult(FTTSData response, FString id)
+void UDEPRECATED_AzureTTSComponent::getResult(FTTSData response, FString id)
 {
 	handle->TTSResultAvailableUnsubscribeUser(TTSResultAvailableHandle);
 	handle->Shutdown();
@@ -47,15 +49,15 @@ void UAzureTTSComponent::getResult(FTTSData response, FString id)
 	idSynthesisReady = id;
 }
 
-void UAzureTTSComponent::TTSSynthesize(FString ssml, FString id)
+void UDEPRECATED_AzureTTSComponent::TTSSynthesize(FString ssml, FString id)
 {
 	FTTSResultAvailableDelegate TTSResultSubscriber;
-	TTSResultSubscriber.BindUObject(this, &UAzureTTSComponent::getResult);
+	TTSResultSubscriber.BindUObject(this, &UDEPRECATED_AzureTTSComponent::getResult);
 	handle = AzureTTSThread::setup(config, Language, Voice, Key, Region, ssml, id);
 	TTSResultAvailableHandle = handle->TTSResultAvailableSubscribeUser(TTSResultSubscriber);
 }
 
-USoundWave* UAzureTTSComponent::TTSGetSound(FString id) {
+USoundWave* UDEPRECATED_AzureTTSComponent::TTSGetSound(FString id) {
 	uint32 SAMPLING_RATE = 16000;
 
 	USoundWaveProcedural* SyntheticVoice = NewObject<USoundWaveProcedural>();
@@ -68,7 +70,7 @@ USoundWave* UAzureTTSComponent::TTSGetSound(FString id) {
 	return SyntheticVoice;
 }
 
-TArray<float> UAzureTTSComponent::TTSGetRawSound(FString id) {
+TArray<float> UDEPRECATED_AzureTTSComponent::TTSGetRawSound(FString id) {
 	TArray<float> AudioData;
 
 	for (int i = 0; i < Buffer[id].AudioData.Num() * sizeof(uint8); i += 2) {
