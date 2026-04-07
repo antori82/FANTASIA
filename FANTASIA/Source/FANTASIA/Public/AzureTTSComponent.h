@@ -15,20 +15,19 @@
 #include "Runtime/Online/HTTP/Public/Http.h"
 #include "Runtime/Json/Public/Json.h"
 #include "Runtime/JsonUtilities/Public/JsonUtilities.h"
-#include "TTSInterface.h"
 #include "AzureTTSComponent.generated.h"
 
 using namespace std;
 using namespace Microsoft::CognitiveServices::Speech;
 
 UCLASS(ClassGroup = (Azure), meta = (BlueprintSpawnableComponent, Deprecated, DeprecationMessage = "AzureTTSComponent is deprecated and will be removed after switching to UE 5.7."))
-class UDEPRECATED_AzureTTSComponent : public UActorComponent, public ITTSInterface
+class UAzureTTSComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this component's properties
-	UDEPRECATED_AzureTTSComponent();
+	UAzureTTSComponent();
 
 protected:
 	// Called when the game starts
@@ -43,7 +42,7 @@ private:
 
 	FDelegateHandle TTSResultAvailableHandle;
 
-	void getResult(FTTSData response, FString id) override;
+	void getResult(FTTSData response, FString id);
 
 	FSynthesizedInternalEvent synthesisReadyInternal;
 
@@ -79,10 +78,10 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "TTS Start", Keywords = "Azure Plugin TTS", DeprecatedFunction, DeprecationMessage = "AzureTTSComponent is deprecated and will be removed after switching to UE 5.7."), Category = "TTS")
-	void TTSSynthesize(FString ssml, FString id) override;
+	void TTSSynthesize(FString ssml, FString id);
 
 	UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Sound", Keywords = "Azure Plugin TTS", DeprecatedFunction, DeprecationMessage = "AzureTTSComponent is deprecated and will be removed after switching to UE 5.7."), Category = "TTS")
-	USoundWave* TTSGetSound(FString id) override;
+	USoundWave* TTSGetSound(FString id);
 
 	UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Raw Sound", Keywords = "Azure Plugin TTS", DeprecatedFunction, DeprecationMessage = "AzureTTSComponent is deprecated and will be removed after switching to UE 5.7."), Category = "TTS")
 	TArray<float> TTSGetRawSound(FString id);

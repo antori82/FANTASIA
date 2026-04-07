@@ -5,7 +5,7 @@
 using namespace std;
 
 // Sets default values for this component's properties
-UDEPRECATED_AWSPollyComponent::UDEPRECATED_AWSPollyComponent() {
+UAWSPollyComponent::UAWSPollyComponent() {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
@@ -13,14 +13,14 @@ UDEPRECATED_AWSPollyComponent::UDEPRECATED_AWSPollyComponent() {
 
 
 // Called when the game starts
-void UDEPRECATED_AWSPollyComponent::BeginPlay() {
+void UAWSPollyComponent::BeginPlay() {
 	Super::BeginPlay();
 
 	UE_LOG(LogTemp, Warning, TEXT("[AWSPollyComponent] This component is deprecated and will be removed after switching to UE 5.7."));
 }
 
 // Called every frame
-void UDEPRECATED_AWSPollyComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) {
+void UAWSPollyComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	if (idSynthesisReady != "") {
@@ -30,7 +30,7 @@ void UDEPRECATED_AWSPollyComponent::TickComponent(float DeltaTime, ELevelTick Ti
 		
 }
 
-void UDEPRECATED_AWSPollyComponent::getResult(FTTSData response, FString id) {
+void UAWSPollyComponent::getResult(FTTSData response, FString id) {
 	handle->TTSResultAvailableUnsubscribeUser(TTSResultAvailableHandle);
 	handle->Shutdown();
 
@@ -38,27 +38,27 @@ void UDEPRECATED_AWSPollyComponent::getResult(FTTSData response, FString id) {
 	idSynthesisReady = id;
 }
 
-void UDEPRECATED_AWSPollyComponent::AWSPollySynthesize(FString ssml, FString id, bool getLipSync) {
+void UAWSPollyComponent::AWSPollySynthesize(FString ssml, FString id, bool getLipSync) {
 	ssml = "<speak>" + ssml + "</speak>";
 	FTTSResultAvailableDelegate TTSResultSubscriber;
-	TTSResultSubscriber.BindUObject(this, &UDEPRECATED_AWSPollyComponent::getResult);
+	TTSResultSubscriber.BindUObject(this, &UAWSPollyComponent::getResult);
 	handle = AWSPollyThread::setup(voiceType, Voice, AccessKey, SecretAccessKey, ssml, id, getLipSync);
 	TTSResultAvailableHandle = handle->TTSResultAvailableSubscribeUser(TTSResultSubscriber);
 }
 
-TArray<FTTSTimedStruct> UDEPRECATED_AWSPollyComponent::AWSPollyGetLipSync(FString id) {
+TArray<FTTSTimedStruct> UAWSPollyComponent::AWSPollyGetLipSync(FString id) {
 	TArray<FTTSTimedStruct> outStruct = Buffer[id].lipsync;
 
 	return outStruct;
 }
 
-TArray<FTTSTimedStruct> UDEPRECATED_AWSPollyComponent::AWSPollyGetNotifies(FString id) {
+TArray<FTTSTimedStruct> UAWSPollyComponent::AWSPollyGetNotifies(FString id) {
 	TArray<FTTSTimedStruct> outStruct = Buffer[id].notifies;
 
 	return outStruct;
 }
 
-USoundWave* UDEPRECATED_AWSPollyComponent::AWSPollyGetSound(FString id) {
+USoundWave* UAWSPollyComponent::AWSPollyGetSound(FString id) {
 	uint32 SAMPLING_RATE = 16000;
 
 	USoundWaveProcedural* SyntheticVoice = NewObject<USoundWaveProcedural>();
@@ -71,7 +71,7 @@ USoundWave* UDEPRECATED_AWSPollyComponent::AWSPollyGetSound(FString id) {
 	return SyntheticVoice;
 }
 
-TArray<float> UDEPRECATED_AWSPollyComponent::TTSGetRawSound(FString id) {
+TArray<float> UAWSPollyComponent::TTSGetRawSound(FString id) {
 	TArray<float> AudioData;
 
 	for (int i = 0; i < Buffer[id].AudioData.Num() * sizeof(uint8); i += 2) {

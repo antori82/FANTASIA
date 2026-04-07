@@ -23,13 +23,13 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FIncomingPartialASREvent, FString, m
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FIncomingFinalASREvent, FString, message);
 
 UCLASS( ClassGroup=(Azure), meta=(BlueprintSpawnableComponent, Deprecated, DeprecationMessage = "AzureASRComponent is deprecated and will be removed after switching to UE 5.7."), config= Game)
-class UDEPRECATED_AzureASRComponent : public UActorComponent
+class UAzureASRComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
 public:	
 	// Sets default values for this component's properties
-	UDEPRECATED_AzureASRComponent();
+	UAzureASRComponent();
 
 protected:
 	// Called when the game starts

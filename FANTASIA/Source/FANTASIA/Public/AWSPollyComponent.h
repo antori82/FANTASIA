@@ -15,13 +15,13 @@
 //using namespace std;
 
 UCLASS(ClassGroup = (AmazonWebServices), meta = (BlueprintSpawnableComponent, Deprecated, DeprecationMessage = "AWSPollyComponent is deprecated and will be removed after switching to UE 5.7."), config = Game)
-class UDEPRECATED_AWSPollyComponent : public UActorComponent
+class UAWSPollyComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this component's properties
-	UDEPRECATED_AWSPollyComponent();
+	UAWSPollyComponent();
 
 	UPROPERTY(BlueprintReadWrite, Category = "Speech to Text")
 	UAudioComponent* Speaker;

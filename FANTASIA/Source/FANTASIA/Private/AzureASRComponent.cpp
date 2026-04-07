@@ -8,7 +8,7 @@ using namespace Microsoft::CognitiveServices::Speech;
 using namespace Microsoft::CognitiveServices::Speech::Audio;
 
 // Sets default values for this component's properties
-UDEPRECATED_AzureASRComponent::UDEPRECATED_AzureASRComponent()
+UAzureASRComponent::UAzureASRComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
@@ -19,7 +19,7 @@ UDEPRECATED_AzureASRComponent::UDEPRECATED_AzureASRComponent()
 
 
 // Called when the game starts
-void UDEPRECATED_AzureASRComponent::BeginPlay()
+void UAzureASRComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
@@ -30,13 +30,13 @@ void UDEPRECATED_AzureASRComponent::BeginPlay()
 	config->SetSpeechRecognitionLanguage(std::string(TCHAR_TO_UTF8(*Language)));
 }
 
-void UDEPRECATED_AzureASRComponent::getPartialRecognition(FString text)
+void UAzureASRComponent::getPartialRecognition(FString text)
 {
 	outPartialResponse = text;
 	partialResponseReady = true;
 }
 
-void UDEPRECATED_AzureASRComponent::getFinalRecognition(FString text){
+void UAzureASRComponent::getFinalRecognition(FString text){
 	handle->Shutdown();
 
 	outResponse = text;
@@ -44,7 +44,7 @@ void UDEPRECATED_AzureASRComponent::getFinalRecognition(FString text){
 }
 
 // Called every frame
-void UDEPRECATED_AzureASRComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+void UAzureASRComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
@@ -59,19 +59,19 @@ void UDEPRECATED_AzureASRComponent::TickComponent(float DeltaTime, ELevelTick Ti
 	}
 }
 
-void UDEPRECATED_AzureASRComponent::AzureASRStart(EAzureASREnum mode)
+void UAzureASRComponent::AzureASRStart(EAzureASREnum mode)
 {
 	FPartialRecognitionAvailableDelegate PartialRecognitionSubscriber;
 	FFinalRecognitionAvailableDelegate FinalRecognitionSubscriber;
 
-	PartialRecognitionSubscriber.BindUObject(this, &UDEPRECATED_AzureASRComponent::getPartialRecognition);
-	FinalRecognitionSubscriber.BindUObject(this, &UDEPRECATED_AzureASRComponent::getFinalRecognition);
+	PartialRecognitionSubscriber.BindUObject(this, &UAzureASRComponent::getPartialRecognition);
+	FinalRecognitionSubscriber.BindUObject(this, &UAzureASRComponent::getFinalRecognition);
 	handle = AzureASRThread::setup(config, audioInput, mode);
 	PartialRecognitionAvailableHandle = handle->PartialRecognitionAvailableSubscribeUser(PartialRecognitionSubscriber);
 	FinalRecognitionAvailableHandle = handle->FinalRecognitionAvailableSubscribeUser(FinalRecognitionSubscriber);
 }
 
-void UDEPRECATED_AzureASRComponent::AzureASRStop() {
+void UAzureASRComponent::AzureASRStop() {
 	handle->Shutdown();
 	pushStream->Close();
 	VoiceCapture->Stop();
