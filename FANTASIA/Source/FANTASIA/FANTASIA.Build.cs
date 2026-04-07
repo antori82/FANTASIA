@@ -314,26 +314,37 @@ public class FANTASIA : ModuleRules
         PublicDefinitions.Add("FANTASIA_WITH_CUDA=1");
 
         // Ship CUDA runtime shared libraries so end users don't need the toolkit.
-        // build_whisper_cuda.bat copies DLLs into build/bin/ (Windows).
-        // build_whisper_cuda.sh copies .so files into build/lib/ (Linux).
-        string[] SharedLibDirs = new string[] {
-            Path.Combine(BuildLibDir, "bin"),  // Windows DLLs
-            Path.Combine(BuildLibDir, "lib"),  // Linux .so files
-        };
+        // Platform-specific: .dll from build/bin/ on Windows, .so from build/lib/ on Linux.
+        string SharedLibDir;
+        string SharedLibPattern;
+
+        if (Target.Platform == UnrealTargetPlatform.Win64)
+        {
+            SharedLibDir = Path.Combine(BuildLibDir, "bin");
+            SharedLibPattern = "*.dll";
+        }
+        else
+        {
+            SharedLibDir = Path.Combine(BuildLibDir, "lib");
+            SharedLibPattern = "*.so*";
+        }
 
         int SharedLibCount = 0;
-        foreach (string SharedLibDir in SharedLibDirs)
+        if (Directory.Exists(SharedLibDir))
         {
-            if (!Directory.Exists(SharedLibDir)) continue;
-
-            // Collect .dll (Windows) and .so* (Linux)
-            string[] Patterns = new string[] { "*.dll", "*.so", "*.so.*" };
-            foreach (string Pattern in Patterns)
+            // Directory.GetFiles doesn't support "*.so*" wildcard on all platforms,
+            // so enumerate all files and filter manually for .so variants.
+            string[] AllFiles = Directory.GetFiles(SharedLibDir);
+            foreach (string Lib in AllFiles)
             {
-                string[] SharedLibs = Directory.GetFiles(SharedLibDir, Pattern);
-                foreach (string Lib in SharedLibs)
+                string FileName = Path.GetFileName(Lib);
+                bool bMatch = (Target.Platform == UnrealTargetPlatform.Win64)
+                    ? FileName.EndsWith(".dll", StringComparison.OrdinalIgnoreCase)
+                    : FileName.Contains(".so");
+
+                if (bMatch)
                 {
-                    string DestPath = Path.Combine("$(BinaryOutputDir)", Path.GetFileName(Lib));
+                    string DestPath = Path.Combine("$(BinaryOutputDir)", FileName);
                     RuntimeDependencies.Add(DestPath, Lib);
                     SharedLibCount++;
                 }
@@ -343,12 +354,12 @@ public class FANTASIA : ModuleRules
         if (SharedLibCount > 0)
         {
             System.Console.WriteLine("[FANTASIA-Whisper] Registered " +
-                SharedLibCount + " CUDA runtime shared lib(s) for shipping.");
+                SharedLibCount + " CUDA runtime shared lib(s) for shipping from " + SharedLibDir);
         }
         else
         {
-            System.Console.WriteLine("[FANTASIA-Whisper] WARNING: No CUDA shared libs found " +
-                "— end users will need CUDA Toolkit installed.");
+            System.Console.WriteLine("[FANTASIA-Whisper] WARNING: No CUDA shared libs found in " +
+                SharedLibDir + " — end users will need CUDA Toolkit installed.");
         }
 
         // When using prebuilt libs, staged source files must not be compiled
