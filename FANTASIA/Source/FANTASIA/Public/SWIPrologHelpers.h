@@ -6,7 +6,7 @@
 #include "SWIPrologHelpers.generated.h"
 
 UCLASS()
-class USWIPrologHelpers : public UBlueprintFunctionLibrary
+class FANTASIA_API USWIPrologHelpers : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
 

@@ -1,0 +1,3 @@
+#include "FANTASIATests.h"
+
+IMPLEMENT_MODULE(FFANTASIATestsModule, FANTASIATests)

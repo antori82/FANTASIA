@@ -1,6 +1,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "FANTASIA.h"
 
 enum class EBoltValueType : uint8
 {
@@ -18,7 +19,7 @@ struct FBoltStructure
 	FBoltValueArray Fields;
 };
 
-struct FBoltValue
+struct FANTASIA_API FBoltValue
 {
 	EBoltValueType Type = EBoltValueType::Null;
 	bool BoolVal = false;
@@ -54,7 +55,7 @@ struct FBoltValue
 	FString AsString() const;
 };
 
-class FBoltPackStreamWriter
+class FANTASIA_API FBoltPackStreamWriter
 {
 public:
 	void WriteNull();
@@ -81,7 +82,7 @@ private:
 	TArray<uint8> Buffer;
 };
 
-class FBoltPackStreamReader
+class FANTASIA_API FBoltPackStreamReader
 {
 public:
 	FBoltPackStreamReader(const TArray<uint8>& InData);
