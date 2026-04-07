@@ -178,19 +178,35 @@ public class FANTASIA : ModuleRules
         if (ArchDir != null)
             AddInclude(Path.Combine(WhisperRoot, "ggml", "src", "ggml-cpu", "arch", ArchDir));
 
-        // ── Check for prebuilt CUDA libraries (from build_whisper_cuda.bat) ──
+        // ── Check for prebuilt CUDA libraries (from build_whisper_cuda.bat/.sh) ──
         string BuildLibDir = Path.Combine(WhisperRoot, "build");
-        string WhisperLib = Path.Combine(BuildLibDir, "src", "Release", "whisper.lib");
-        string GgmlLib = Path.Combine(BuildLibDir, "ggml", "src", "Release", "ggml.lib");
-        string GgmlBaseLib = Path.Combine(BuildLibDir, "ggml", "src", "Release", "ggml-base.lib");
-        string GgmlCpuLib = Path.Combine(BuildLibDir, "ggml", "src", "Release", "ggml-cpu.lib");
-        string GgmlCudaLib = Path.Combine(BuildLibDir, "ggml", "src", "ggml-cuda", "Release", "ggml-cuda.lib");
+        bool bHasPrebuiltCuda = false;
+        string WhisperLib = "", GgmlLib = "", GgmlBaseLib = "", GgmlCpuLib = "", GgmlCudaLib = "";
 
-        bool bHasPrebuiltCuda = File.Exists(WhisperLib) && File.Exists(GgmlCudaLib);
-
-        if (bHasPrebuiltCuda && Target.Platform == UnrealTargetPlatform.Win64)
+        if (Target.Platform == UnrealTargetPlatform.Win64)
         {
-            LoadWhisperPrebuiltCuda(BuildLibDir, WhisperLib, GgmlLib, GgmlBaseLib, GgmlCpuLib, GgmlCudaLib);
+            // Windows: CMake puts libs in <target>/Release/*.lib
+            WhisperLib  = Path.Combine(BuildLibDir, "src", "Release", "whisper.lib");
+            GgmlLib     = Path.Combine(BuildLibDir, "ggml", "src", "Release", "ggml.lib");
+            GgmlBaseLib = Path.Combine(BuildLibDir, "ggml", "src", "Release", "ggml-base.lib");
+            GgmlCpuLib  = Path.Combine(BuildLibDir, "ggml", "src", "Release", "ggml-cpu.lib");
+            GgmlCudaLib = Path.Combine(BuildLibDir, "ggml", "src", "ggml-cuda", "Release", "ggml-cuda.lib");
+            bHasPrebuiltCuda = File.Exists(WhisperLib) && File.Exists(GgmlCudaLib);
+        }
+        else if (Target.Platform == UnrealTargetPlatform.Linux)
+        {
+            // Linux: CMake puts libs directly in the target dir as lib*.a
+            WhisperLib  = Path.Combine(BuildLibDir, "src", "libwhisper.a");
+            GgmlLib     = Path.Combine(BuildLibDir, "ggml", "src", "libggml.a");
+            GgmlBaseLib = Path.Combine(BuildLibDir, "ggml", "src", "libggml-base.a");
+            GgmlCpuLib  = Path.Combine(BuildLibDir, "ggml", "src", "libggml-cpu.a");
+            GgmlCudaLib = Path.Combine(BuildLibDir, "ggml", "src", "ggml-cuda", "libggml-cuda.a");
+            bHasPrebuiltCuda = File.Exists(WhisperLib) && File.Exists(GgmlCudaLib);
+        }
+
+        if (bHasPrebuiltCuda)
+        {
+            LoadWhisperPrebuiltCuda(Target, BuildLibDir, WhisperLib, GgmlLib, GgmlBaseLib, GgmlCpuLib, GgmlCudaLib);
         }
         else
         {
@@ -227,11 +243,12 @@ public class FANTASIA : ModuleRules
 
     /// <summary>
     /// Link prebuilt whisper.cpp static libraries with CUDA support.
-    /// Produced by build_whisper_cuda.bat.
+    /// Produced by build_whisper_cuda.bat (Windows) or build_whisper_cuda.sh (Linux).
     /// </summary>
     private void LoadWhisperPrebuiltCuda(
-        string BuildLibDir, string WhisperLib, string GgmlLib,
-        string GgmlBaseLib, string GgmlCpuLib, string GgmlCudaLib)
+        ReadOnlyTargetRules Target, string BuildLibDir,
+        string WhisperLib, string GgmlLib, string GgmlBaseLib,
+        string GgmlCpuLib, string GgmlCudaLib)
     {
         System.Console.WriteLine("[FANTASIA-Whisper] Using PREBUILT libraries with CUDA.");
 
@@ -242,13 +259,20 @@ public class FANTASIA : ModuleRules
         if (File.Exists(GgmlCpuLib))    PublicAdditionalLibraries.Add(GgmlCpuLib);
         PublicAdditionalLibraries.Add(GgmlCudaLib);
 
-        // Link CUDA toolkit libraries
+        // Link CUDA toolkit libraries (platform-specific)
         string CudaPath = Environment.GetEnvironmentVariable("CUDA_PATH");
+        if (string.IsNullOrEmpty(CudaPath) && Target.Platform == UnrealTargetPlatform.Linux)
+        {
+            // Common Linux default
+            if (Directory.Exists("/usr/local/cuda"))
+                CudaPath = "/usr/local/cuda";
+        }
+
         if (string.IsNullOrEmpty(CudaPath))
         {
             System.Console.WriteLine("[FANTASIA-Whisper] WARNING: CUDA_PATH not set! CUDA link may fail.");
         }
-        else
+        else if (Target.Platform == UnrealTargetPlatform.Win64)
         {
             string CudaLibDir = Path.Combine(CudaPath, "lib", "x64");
             System.Console.WriteLine("[FANTASIA-Whisper] CUDA libs: " + CudaLibDir);
@@ -258,27 +282,73 @@ public class FANTASIA : ModuleRules
             PublicAdditionalLibraries.Add(Path.Combine(CudaLibDir, "cublasLt.lib"));
             PublicAdditionalLibraries.Add(Path.Combine(CudaLibDir, "cuda.lib"));
         }
+        else if (Target.Platform == UnrealTargetPlatform.Linux)
+        {
+            // Linux: try lib64/ first (most distros), then lib/
+            string CudaLibDir = Path.Combine(CudaPath, "lib64");
+            if (!Directory.Exists(CudaLibDir))
+                CudaLibDir = Path.Combine(CudaPath, "lib");
+            System.Console.WriteLine("[FANTASIA-Whisper] CUDA libs: " + CudaLibDir);
+
+            string CudartStatic = Path.Combine(CudaLibDir, "libcudart_static.a");
+            if (File.Exists(CudartStatic))
+                PublicAdditionalLibraries.Add(CudartStatic);
+
+            string CublasLib = Path.Combine(CudaLibDir, "libcublas.so");
+            if (File.Exists(CublasLib))
+                PublicAdditionalLibraries.Add(CublasLib);
+
+            string CublasLtLib = Path.Combine(CudaLibDir, "libcublasLt.so");
+            if (File.Exists(CublasLtLib))
+                PublicAdditionalLibraries.Add(CublasLtLib);
+
+            // libcuda.so is provided by the NVIDIA driver, not the toolkit.
+            // Link against the stub from the toolkit.
+            string CudaDriverStub = Path.Combine(CudaPath, "lib64", "stubs", "libcuda.so");
+            if (!File.Exists(CudaDriverStub))
+                CudaDriverStub = Path.Combine(CudaPath, "lib", "stubs", "libcuda.so");
+            if (File.Exists(CudaDriverStub))
+                PublicAdditionalLibraries.Add(CudaDriverStub);
+        }
 
         PublicDefinitions.Add("FANTASIA_WITH_CUDA=1");
 
-        // Ship CUDA runtime DLLs so end users don't need the CUDA Toolkit.
-        // build_whisper_cuda.bat copies them into ThirdParty/whisper_cpp/build/bin/.
-        string CudaDllDir = Path.Combine(BuildLibDir, "bin");
-        if (Directory.Exists(CudaDllDir))
+        // Ship CUDA runtime shared libraries so end users don't need the toolkit.
+        // build_whisper_cuda.bat copies DLLs into build/bin/ (Windows).
+        // build_whisper_cuda.sh copies .so files into build/lib/ (Linux).
+        string[] SharedLibDirs = new string[] {
+            Path.Combine(BuildLibDir, "bin"),  // Windows DLLs
+            Path.Combine(BuildLibDir, "lib"),  // Linux .so files
+        };
+
+        int SharedLibCount = 0;
+        foreach (string SharedLibDir in SharedLibDirs)
         {
-            string[] CudaDlls = Directory.GetFiles(CudaDllDir, "*.dll");
-            foreach (string Dll in CudaDlls)
+            if (!Directory.Exists(SharedLibDir)) continue;
+
+            // Collect .dll (Windows) and .so* (Linux)
+            string[] Patterns = new string[] { "*.dll", "*.so", "*.so.*" };
+            foreach (string Pattern in Patterns)
             {
-                string DestPath = Path.Combine("$(BinaryOutputDir)", Path.GetFileName(Dll));
-                RuntimeDependencies.Add(DestPath, Dll);
+                string[] SharedLibs = Directory.GetFiles(SharedLibDir, Pattern);
+                foreach (string Lib in SharedLibs)
+                {
+                    string DestPath = Path.Combine("$(BinaryOutputDir)", Path.GetFileName(Lib));
+                    RuntimeDependencies.Add(DestPath, Lib);
+                    SharedLibCount++;
+                }
             }
+        }
+
+        if (SharedLibCount > 0)
+        {
             System.Console.WriteLine("[FANTASIA-Whisper] Registered " +
-                CudaDlls.Length + " CUDA runtime DLL(s) for shipping.");
+                SharedLibCount + " CUDA runtime shared lib(s) for shipping.");
         }
         else
         {
-            System.Console.WriteLine("[FANTASIA-Whisper] WARNING: No CUDA DLLs found at " +
-                CudaDllDir + " — end users will need CUDA Toolkit installed.");
+            System.Console.WriteLine("[FANTASIA-Whisper] WARNING: No CUDA shared libs found " +
+                "— end users will need CUDA Toolkit installed.");
         }
 
         // When using prebuilt libs, staged source files must not be compiled
