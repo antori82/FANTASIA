@@ -97,6 +97,8 @@ public:
 	UPROPERTY(BlueprintAssignable, BlueprintCallable)
 	FIDInferenceAvailableEvent InferenceReady;
 
+	FSimpleMulticastDelegate OnInferenceReady;
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TArray<FInfluenceDiagNodeStruct> serializedNodes;
 

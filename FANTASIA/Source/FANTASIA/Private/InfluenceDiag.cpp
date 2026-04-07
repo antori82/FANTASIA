@@ -73,6 +73,7 @@ void UInfluenceDiag::makeInference()
 			bInferenceRunning.store(false);
 			RemoveFromRoot();
 			InferenceReady.Broadcast();
+			OnInferenceReady.Broadcast();
 		});
 	});
 }

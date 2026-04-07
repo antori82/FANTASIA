@@ -100,6 +100,8 @@ public:
 	UPROPERTY(BlueprintAssignable, BlueprintCallable)
 	FBNInferenceAvailableEvent InferenceReady;
 
+	FSimpleMulticastDelegate OnInferenceReady;
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TArray<FBayesianNodeStruct> serializedNodes;
 

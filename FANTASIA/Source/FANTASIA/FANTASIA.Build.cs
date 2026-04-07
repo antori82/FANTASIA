@@ -316,17 +316,14 @@ public class FANTASIA : ModuleRules
         // Ship CUDA runtime shared libraries so end users don't need the toolkit.
         // Platform-specific: .dll from build/bin/ on Windows, .so from build/lib/ on Linux.
         string SharedLibDir;
-        string SharedLibPattern;
 
         if (Target.Platform == UnrealTargetPlatform.Win64)
         {
             SharedLibDir = Path.Combine(BuildLibDir, "bin");
-            SharedLibPattern = "*.dll";
         }
         else
         {
             SharedLibDir = Path.Combine(BuildLibDir, "lib");
-            SharedLibPattern = "*.so*";
         }
 
         int SharedLibCount = 0;
