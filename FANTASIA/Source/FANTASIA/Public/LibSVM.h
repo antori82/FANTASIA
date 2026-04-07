@@ -102,12 +102,17 @@ class FANTASIA_API ULibSVM : public UObject
 	GENERATED_UCLASS_BODY()
 
 private:
-	struct svm_model* model = NULL;
-	struct svm_problem prob;
+	struct svm_model* model = nullptr;
+	struct svm_problem prob = {};
 	int nFeatures = 0;
-	struct svm_parameter svmParameters;
+	struct svm_parameter svmParameters = {};
+
+	void FreeProblem();
+	void FreeModel();
 
 public:
+
+	virtual void BeginDestroy() override;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<FCLFSample> trainingSet;
@@ -119,7 +124,7 @@ public:
 	void train();
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "SVM Predict", Keywords = "SVM Predict"), Category = "SVM")
-	TArray<struct FCLFResult> predict(TArray<FCLFSample> samples);
+	TArray<struct FCLFResult> predict(const TArray<FCLFSample>& samples);
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Load SVM", Keywords = "Load SVM"), Category = "SVM")
 	void load(FString path);

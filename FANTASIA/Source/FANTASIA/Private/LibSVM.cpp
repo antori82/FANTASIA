@@ -7,30 +7,51 @@ ULibSVM::ULibSVM(const FObjectInitializer& ObjectInitializer)
 : Super(ObjectInitializer) {
 }
 
-
-void ULibSVM::load(FString path) {
-	model = svm_load_model(TCHAR_TO_UTF8(*path));
-}
-
-void ULibSVM::train() {
-	
+void ULibSVM::FreeProblem() {
 	for (int i = 0; i < prob.l; i++)
 		FMemory::Free(prob.x[i]);
 
 	FMemory::Free(prob.x);
 	FMemory::Free(prob.y);
 
+	prob.x = nullptr;
+	prob.y = nullptr;
+	prob.l = 0;
+}
+
+void ULibSVM::FreeModel() {
+	if (model) {
+		svm_free_and_destroy_model(&model);
+		model = nullptr;
+	}
+}
+
+void ULibSVM::BeginDestroy() {
+	FreeModel();
+	FreeProblem();
+	Super::BeginDestroy();
+}
+
+void ULibSVM::load(FString path) {
+	FreeModel();
+	model = svm_load_model(TCHAR_TO_UTF8(*path));
+}
+
+void ULibSVM::train() {
+	FreeModel();
+	FreeProblem();
+
 	nFeatures = trainingSet[0].features.Num();
 
 	prob.l = trainingSet.Num();
-	prob.y = (double*) FMemory::Malloc(trainingSet.Num() * sizeof(double));
-	prob.x = (struct svm_node**) FMemory::Malloc(trainingSet.Num() * sizeof(struct svm_node*));
+	prob.y = (double*) FMemory::Malloc(prob.l * sizeof(double));
+	prob.x = (struct svm_node**) FMemory::Malloc(prob.l * sizeof(struct svm_node*));
 
-	for (int i=0; i< trainingSet.Num(); i++)
+	for (int i = 0; i < prob.l; i++)
 		prob.x[i] = (struct svm_node*) FMemory::Malloc((nFeatures + 1) * sizeof(struct svm_node));
 
 	if (prob.x != NULL) {
-		for (int i = 0; i < trainingSet.Num(); i++) {
+		for (int i = 0; i < prob.l; i++) {
 			for (int j = 0; j < nFeatures; j++) {
 				prob.x[i][j].value = trainingSet[i].features[j];
 				prob.x[i][j].index = j;
@@ -44,38 +65,41 @@ void ULibSVM::train() {
 		svmParameters.kernel_type = (int) SVMParameters.KernelType;
 		svmParameters.C = SVMParameters.C;
 		svmParameters.gamma = SVMParameters.gamma;
+		svmParameters.degree = (int) SVMParameters.degree;
+		svmParameters.coef0 = SVMParameters.coef0;
+		svmParameters.nu = SVMParameters.nu;
+		svmParameters.p = SVMParameters.svrEpsilon;
 		svmParameters.cache_size = SVMParameters.cachesize;
 		svmParameters.eps = SVMParameters.epsilon;
-
-		//svmParameters.nr_weight = SVMParameters.classWeights.Num();
-		//svmParameters. = (double*) FMemory::Malloc(SVMParameters.classWeights.Num() * sizeof(double));
-		//for (int i = 0; i < SVMParameters.classWeights.Num());
-		//	SVMParameters.classWeights[i] = SVMParameters.classWeights[i];
-		
-		svmParameters.probability = 1;
 		svmParameters.shrinking = SVMParameters.shrinking ? 1 : 0;
+		svmParameters.probability = 1;
+		svmParameters.nr_weight = 0;
+		svmParameters.weight_label = nullptr;
+		svmParameters.weight = nullptr;
 
 		model = svm_train(&prob, &svmParameters);
 	}
 }
 
 
-TArray<struct FCLFResult> ULibSVM::predict(TArray<FCLFSample> samples) {
-	double* prob_estimates = NULL;
-	int svm_type = model->param.svm_type;
-	int nr_class = model->nr_class;
-	struct svm_node* x;
+TArray<struct FCLFResult> ULibSVM::predict(const TArray<FCLFSample>& samples) {
 	TArray<struct FCLFResult> result;
-	struct FCLFResult sampleResult;
 
-	x = (struct svm_node*) FMemory::Malloc((samples[0].features.Num() + 1) * sizeof(struct svm_node));
-	prob_estimates = (double*) FMemory::Malloc(nr_class * sizeof(double));
+	if (!model || samples.Num() == 0)
+		return result;
 
-	if (x != NULL && prob_estimates != NULL) {
-		x[samples[0].features.Num()].index = -1;
+	int nr_class = model->nr_class;
+	int numFeatures = samples[0].features.Num();
 
-		for (FCLFSample sample : samples) {
+	struct svm_node* x = (struct svm_node*) FMemory::Malloc((numFeatures + 1) * sizeof(struct svm_node));
+	double* prob_estimates = (double*) FMemory::Malloc(nr_class * sizeof(double));
 
+	if (x != nullptr && prob_estimates != nullptr) {
+		x[numFeatures].index = -1;
+
+		result.Reserve(samples.Num());
+
+		for (const FCLFSample& sample : samples) {
 			for (int i = 0; i < sample.features.Num(); i++) {
 				x[i].value = sample.features[i];
 				x[i].index = i;
@@ -83,18 +107,15 @@ TArray<struct FCLFResult> ULibSVM::predict(TArray<FCLFSample> samples) {
 
 			svm_predict_probability(model, x, prob_estimates);
 
-			sampleResult.probabilities.Empty();
-			for (int i = 0; i < nr_class; i++)
-				sampleResult.probabilities.Add(prob_estimates[i]);
-
+			FCLFResult& sampleResult = result.AddDefaulted_GetRef();
 			sampleResult.sampleID = sample.sampleID;
-			result.Add(sampleResult);
+			sampleResult.probabilities.SetNumUninitialized(nr_class);
+			FMemory::Memcpy(sampleResult.probabilities.GetData(), prob_estimates, nr_class * sizeof(double));
 		}
-
-		FMemory::Free(x);
-		FMemory::Free(prob_estimates);
 	}
-	
+
+	FMemory::Free(x);
+	FMemory::Free(prob_estimates);
 
 	return result;
 }
