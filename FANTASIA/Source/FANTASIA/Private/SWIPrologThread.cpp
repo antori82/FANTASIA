@@ -1,18 +1,22 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 #include "SWIPrologThread.h"
+#include "Async/Async.h"
 
 
 SWIPrologThread* SWIPrologThread::Runnable = NULL;
-bool SWIPrologThread::stop = false;
-bool SWIPrologThread::initialised = false;
+std::atomic<bool> SWIPrologThread::stop{false};
+std::atomic<bool> SWIPrologThread::initialised{false};
 
 SWIPrologThread::SWIPrologThread() : StopTaskCounter(0) {
-	Thread = FRunnableThread::Create(this, TEXT("SWIPrologThread"), 0, TPri_BelowNormal);
+	WakeEvent = FPlatformProcess::GetSynchEventFromPool(false);
+	Thread = FRunnableThread::Create(this, TEXT("SWIPrologThread"), 0, TPri_Normal);
 }
 
 SWIPrologThread::~SWIPrologThread() {
 	delete Thread;
 	Thread = NULL;
+	FPlatformProcess::ReturnSynchEventToPool(WakeEvent);
+	WakeEvent = nullptr;
 }
 
 bool SWIPrologThread::Init() {
@@ -20,9 +24,8 @@ bool SWIPrologThread::Init() {
 }
 
 uint32 SWIPrologThread::Run() {
-	stop = false;
-	initialised = false;
-	currentSolution = NewObject<USWIPrologSolution>();
+	stop.store(false, std::memory_order_relaxed);
+	initialised.store(false, std::memory_order_relaxed);
 	executeCommands();
 	return 0;
 }
@@ -33,12 +36,16 @@ void SWIPrologThread::Stop() {
 
 void SWIPrologThread::EnsureCompletion() {
 	Stop();
-	//Thread->WaitForCompletion();
+	stop.store(true, std::memory_order_release);
+	if (WakeEvent)
+	{
+		WakeEvent->Trigger();
+	}
 }
 
 void SWIPrologThread::Shutdown() {
 	if (Runnable) {
-		stop = true;
+		Runnable->EnsureCompletion();
 		Runnable = NULL;
 	}
 }
@@ -57,34 +64,130 @@ void SWIPrologThread::SolutionAvailableUnsubscribeUser(FDelegateHandle DelegateH
 	SolutionAvailable.Remove(DelegateHandle);
 }
 
-void SWIPrologThread::openPrologFile_(FString filename) {
-	char* myfile = TCHAR_TO_ANSI(*filename);
+void SWIPrologThread::openPrologFile_(const FString& filename) {
 	try {
-		PlCall("consult", PlTermv(PlAtom(myfile)));
+		PlCall("consult", PlTermv(PlAtom(TCHAR_TO_ANSI(*filename))));
 		UE_LOG(LogTemp, Warning, TEXT("File %s opened successfully"), *filename);
 	}
 	catch (const PlException& err) {
 		FString FsError = FString(ANSI_TO_TCHAR(err.what()));
 		UE_LOG(LogTemp, Warning, TEXT("error occurred while consulting file: %s"), *FsError);
+		broadcastError(FsError);
 	}
 }
 
-void SWIPrologThread::openPrologFile(FString filename) {
-	consultFile = filename;
+// --- Public command submission (called from game thread) ---
+// All of these translate UObjects to strings on the calling (game) thread,
+// then enqueue plain data for the worker. No UObject* crosses threads.
+
+void SWIPrologThread::openPrologFile(const FString& filename) {
+	FPrologCommand Cmd;
+	Cmd.Type = EPrologCommandType::ConsultFile;
+	Cmd.StringData = filename;
+	CommandQueue.Enqueue(MoveTemp(Cmd));
+	WakeEvent->Trigger();
+}
+
+void SWIPrologThread::consultString(const FString& prologCode) {
+	FPrologCommand Cmd;
+	Cmd.Type = EPrologCommandType::ConsultString;
+	Cmd.StringData = prologCode;
+	CommandQueue.Enqueue(MoveTemp(Cmd));
+	WakeEvent->Trigger();
 }
 
 void SWIPrologThread::SWIPLassert(USWIPrologObject* prologObject, bool firstClause) {
-
+	// Translate on game thread — safe to access UObject here
+	FString translated;
 	if (USWIPrologTerm* fact = Cast<USWIPrologTerm>(prologObject))
-		assertRuleOrFact = translateTerm(fact);
+		translated = translateTerm(fact);
 	else
-		assertRuleOrFact = translateRule(Cast<USWIPrologRule>(prologObject));
+		translated = translateRule(Cast<USWIPrologRule>(prologObject));
 
-	asFirstClause = firstClause;
+	FPrologCommand Cmd;
+	Cmd.Type = EPrologCommandType::Assert;
+	Cmd.StringData = MoveTemp(translated);
+	Cmd.BoolData = firstClause;
+	CommandQueue.Enqueue(MoveTemp(Cmd));
+	WakeEvent->Trigger();
 }
 
 void SWIPrologThread::SWIPLretract(USWIPrologTerm* ruleOrFactTerm) {
-	retractRuleOrFact = translateTerm(ruleOrFactTerm);	
+	// Translate on game thread — safe to access UObject here
+	FPrologCommand Cmd;
+	Cmd.Type = EPrologCommandType::Retract;
+	Cmd.StringData = translateTerm(ruleOrFactTerm);
+	CommandQueue.Enqueue(MoveTemp(Cmd));
+	WakeEvent->Trigger();
+}
+
+void SWIPrologThread::submitQuery(USWIPrologTerm* inRuleOrFactTerm) {
+	// Translate the UObject term tree to a Prolog string on the game thread,
+	// so no UObject pointer crosses to the worker thread.
+	FPrologCommand Cmd;
+	Cmd.Type = EPrologCommandType::QueryString;
+	Cmd.StringData = translateTerm(inRuleOrFactTerm);
+	CommandQueue.Enqueue(MoveTemp(Cmd));
+	WakeEvent->Trigger();
+}
+
+void SWIPrologThread::submitQueryString(const FString& queryString) {
+	FPrologCommand Cmd;
+	Cmd.Type = EPrologCommandType::QueryString;
+	Cmd.StringData = queryString;
+	CommandQueue.Enqueue(MoveTemp(Cmd));
+	WakeEvent->Trigger();
+}
+
+void SWIPrologThread::submitFindAll(const FString& queryString) {
+	FPrologCommand Cmd;
+	Cmd.Type = EPrologCommandType::FindAll;
+	Cmd.StringData = queryString;
+	CommandQueue.Enqueue(MoveTemp(Cmd));
+	WakeEvent->Trigger();
+}
+
+void SWIPrologThread::requestNextSolution() {
+	FPrologCommand Cmd;
+	Cmd.Type = EPrologCommandType::NextSolution;
+	CommandQueue.Enqueue(MoveTemp(Cmd));
+	WakeEvent->Trigger();
+}
+
+// --- Worker thread internals ---
+
+void SWIPrologThread::nextSolution() {
+	if (myQuery == NULL)
+	{
+		return;
+	}
+
+	int bResult;
+	try {
+		bResult = myQuery->next_solution();
+
+		// Build result data on the worker thread (plain data, no UObjects)
+		TArray<FString> resultSet;
+		resultSet.Reserve(inArity);
+		bool verified = (bResult == PL_S_TRUE);
+
+		for (int i = 0; i < inArity; i++) {
+			resultSet.Emplace(ANSI_TO_TCHAR(inQueryElements[i].as_string().c_str()));
+		}
+
+		// Marshal to game thread: create UObject and broadcast there
+		AsyncTask(ENamedThreads::GameThread, [this, ResultSet = MoveTemp(resultSet), verified]() mutable {
+			currentSolution = NewObject<USWIPrologSolution>();
+			currentSolution->verified = verified;
+			currentSolution->resultSet = MoveTemp(ResultSet);
+			SolutionAvailable.Broadcast();
+		});
+	}
+	catch (PlException err) {
+		FString FsError = FString(ANSI_TO_TCHAR(err.what()));
+		UE_LOG(LogTemp, Warning, TEXT("error occurred while performing query: %s"), *FsError);
+		broadcastError(FsError);
+	}
 }
 
 void SWIPrologThread::startProlog() {
@@ -113,76 +216,89 @@ void SWIPrologThread::startProlog() {
 	else {
 		resFolderPath = FPaths::ConvertRelativePathToFull(FPaths::ProjectDir()) + "Resources/";
 		PlTermv dir(2);
-		dir[1].unify_atom(PlAtom(TCHAR_TO_ANSI(*resFolderPath)));
+		(void)dir[1].unify_atom(PlAtom(TCHAR_TO_ANSI(*resFolderPath)));
 		PlCall("working_directory", dir);
 
 		UE_LOG(LogTemp, Display, TEXT("Prolog initialised succesfully"));
-
 	}
 }
 
 FString SWIPrologThread::translateTerm(UObject* term) {
 	if (USWIPrologAtom* atom = Cast<USWIPrologAtom>(term)) {
-		return "'" + atom->atomValue + "'";
+		FString result;
+		result.Reserve(atom->atomValue.Len() + 2);
+		result.AppendChar('\'');
+		result.Append(atom->atomValue);
+		result.AppendChar('\'');
+		return result;
 	}
 	if (USWIPrologVariable* var = Cast<USWIPrologVariable>(term)) {
-		return "_" + var->varName;
+		FString result;
+		result.Reserve(var->varName.Len() + 1);
+		result.AppendChar('_');
+		result.Append(var->varName);
+		return result;
 	}
 	if (USWIPrologInteger* num = Cast<USWIPrologInteger>(term)) {
 		return FString::FromInt(num->intValue);
 	}
 	if (USWIPrologFloat* num = Cast<USWIPrologFloat>(term)) {
-		return FString::FromInt(num->floatValue);
+		return FString::SanitizeFloat(num->floatValue);
 	}
 	if (USWIPrologCut* cut = Cast<USWIPrologCut>(term)) {
-		return "!";
+		return TEXT("!");
 	}
 	if (USWIPrologCompound* compound = Cast<USWIPrologCompound>(term)) {
-		TArray arguments = compound->arguments;
-		USWIPrologTerm** termRef = arguments.GetData();
-		FString terms = "";
-		for (int i = 0; i < arguments.Num(); i++) {
-			terms = terms + translateTerm(termRef[i]);
-			if ((i + 1) < arguments.Num()) terms = terms + ",";
+		const TArray<USWIPrologTerm*>& arguments = compound->arguments;
+		int32 numArgs = arguments.Num();
+		FString result;
+		result.Reserve(64);
+		result.Append(compound->compoundName);
+		result.AppendChar('(');
+		for (int i = 0; i < numArgs; i++) {
+			if (i > 0) result.AppendChar(',');
+			result.Append(translateTerm(arguments[i]));
 		}
-		return compound->compoundName + "(" + terms + ")";
+		result.AppendChar(')');
+		return result;
 	}
 	if (USWIPrologList* list = Cast<USWIPrologList>(term)) {
-		FString terms = "";
-		for (int i = 0; i < list->elements.Num(); i++) {
-			terms = terms + translateTerm(list->elements[i]);
-			if ((i + 1) < list->elements.Num()) terms = terms + ",";
+		int32 numElements = list->elements.Num();
+		FString result;
+		result.Reserve(64);
+		result.AppendChar('[');
+		for (int i = 0; i < numElements; i++) {
+			if (i > 0) result.AppendChar(',');
+			result.Append(translateTerm(list->elements[i]));
 		}
-		return "[" + terms + "]";
+		result.AppendChar(']');
+		return result;
 	}
 	if (USWIPrologHeadToTail* list = Cast<USWIPrologHeadToTail>(term)) {
-		FString headTerms = "";
-		for (int i = 0; i < list->headElements.Num(); i++) {
-			headTerms = headTerms + translateTerm(list->headElements[i]);
-			if ((i + 1) < list->headElements.Num()) headTerms = headTerms + ",";
+		int32 numHeadElements = list->headElements.Num();
+		FString result;
+		result.Reserve(64);
+		result.AppendChar('[');
+		for (int i = 0; i < numHeadElements; i++) {
+			if (i > 0) result.AppendChar(',');
+			result.Append(translateTerm(list->headElements[i]));
 		}
-		UObject* tail = list->tail;
-		FString tailString = "";
-		if (USWIPrologVariable* tailVar = Cast<USWIPrologVariable>(tail)) {
-			tailString = "_" + tailVar->varName;
-		}
-		else if (USWIPrologList* tailList = Cast<USWIPrologList>(tail)) {
-			tailString = translateTerm(tailList);
-		}
-		else {
-			USWIPrologHeadToTail* headToTail = Cast<USWIPrologHeadToTail>(tail);
-			tailString = translateTerm(headToTail);
-		}
-		return "[" + headTerms + "|" + tailString + "]";
+		result.AppendChar('|');
+		result.Append(translateTerm(list->tail));
+		result.AppendChar(']');
+		return result;
 	}
-	return "";
+	return TEXT("");
 }
 
 FString SWIPrologThread::translateRule(UObject* rule) {
 	USWIPrologRule* rulePtr = Cast<USWIPrologRule>(rule);
-	FString head = translateTerm(rulePtr->head);
-	FString body = translateRuleBody(rulePtr->body);
-	return head + ":-" + body;
+	FString result;
+	result.Reserve(128);
+	result.Append(translateTerm(rulePtr->head));
+	result.Append(TEXT(":-"));
+	result.Append(translateRuleBody(rulePtr->body));
+	return result;
 }
 
 FString SWIPrologThread::translateRuleBody(UObject* ruleBodyObject) {
@@ -190,179 +306,219 @@ FString SWIPrologThread::translateRuleBody(UObject* ruleBodyObject) {
 		return translateTerm(term);
 	}
 	USWIPrologRuleBody* ruleBody = Cast<USWIPrologRuleBody>(ruleBodyObject);
-	FString swiOperator;
+
+	const TCHAR* swiOperator;
 	switch (ruleBody->prologOperator) {
-	case SWIPrologOperation::OR:
-		swiOperator = ";";
-		break;
-	case SWIPrologOperation::CONDITION:
-		swiOperator = "->";
-		break;
-	case SWIPrologOperation::AND:
-		swiOperator = ",";
-		break;
-	case SWIPrologOperation::DIVIDE:
-		swiOperator = "/";
-		break;
-	case SWIPrologOperation::EQUAL:
-		swiOperator = "=:=";
-		break;
-	case SWIPrologOperation::IS:
-		swiOperator = " is ";
-		break;
-	case SWIPrologOperation::MINUS:
-		swiOperator = "-";
-		break;
-	case SWIPrologOperation::MULTIPLY:
-		swiOperator = "*";
-		break;
-	case SWIPrologOperation::PLUS:
-		swiOperator = "+";
-		break;
-	case SWIPrologOperation::UNEQUAL:
-		swiOperator = "=\\=";
-		break;
-	case SWIPrologOperation::LESSTHAN:
-		swiOperator = "<";
-		break;
-	case SWIPrologOperation::MORETHAN:
-		swiOperator = ">";
-		break;
-	case SWIPrologOperation::LESSOREQUAL:
-		swiOperator = "=<";
-		break;
-	case SWIPrologOperation::MOREOREQUAL:
-		swiOperator = ">=";
-		break;
-	case SWIPrologOperation::TERMEQUAL:
-		swiOperator = "==";
-		break;
-	case SWIPrologOperation::TERMNOTEQUAL:
-		swiOperator = "\\==";
-		break;
+	case SWIPrologOperation::OR:          swiOperator = TEXT(";");    break;
+	case SWIPrologOperation::CONDITION:   swiOperator = TEXT("->");   break;
+	case SWIPrologOperation::AND:         swiOperator = TEXT(",");    break;
+	case SWIPrologOperation::DIVIDE:      swiOperator = TEXT("/");    break;
+	case SWIPrologOperation::EQUAL:       swiOperator = TEXT("=:=");  break;
+	case SWIPrologOperation::IS:          swiOperator = TEXT(" is "); break;
+	case SWIPrologOperation::MINUS:       swiOperator = TEXT("-");    break;
+	case SWIPrologOperation::MULTIPLY:    swiOperator = TEXT("*");    break;
+	case SWIPrologOperation::PLUS:        swiOperator = TEXT("+");    break;
+	case SWIPrologOperation::UNEQUAL:     swiOperator = TEXT("=\\="); break;
+	case SWIPrologOperation::LESSTHAN:    swiOperator = TEXT("<");    break;
+	case SWIPrologOperation::MORETHAN:    swiOperator = TEXT(">");    break;
+	case SWIPrologOperation::LESSOREQUAL: swiOperator = TEXT("=<");   break;
+	case SWIPrologOperation::MOREOREQUAL: swiOperator = TEXT(">=");   break;
+	case SWIPrologOperation::TERMEQUAL:   swiOperator = TEXT("==");   break;
+	case SWIPrologOperation::TERMNOTEQUAL:swiOperator = TEXT("\\=="); break;
+	default:                              swiOperator = TEXT(",");    break;
 	}
-	FString firstString = "";
-	FString secondString = "";
-	UObject* first = ruleBody->firstRule;
-	UObject* second = ruleBody->secondRule;
-	if (USWIPrologTerm* firstTerm = Cast<USWIPrologTerm>(first)) {
-		firstString = translateTerm(firstTerm);
-	}
-	else {
-		USWIPrologRuleBody* firstRuleBody = Cast<USWIPrologRuleBody>(first);
-		firstString = translateRuleBody(firstRuleBody);
-	}
-	if (USWIPrologTerm* secondTerm = Cast<USWIPrologTerm>(second)) {
-		secondString = translateTerm(secondTerm);
-	}
-	else {
-		USWIPrologRuleBody* secondRuleBody = Cast<USWIPrologRuleBody>(second);
-		secondString = translateRuleBody(secondRuleBody);
-	}
-	return firstString + swiOperator + secondString;
+
+	FString result;
+	result.Reserve(128);
+
+	if (USWIPrologTerm* firstTerm = Cast<USWIPrologTerm>(ruleBody->firstRule))
+		result.Append(translateTerm(firstTerm));
+	else
+		result.Append(translateRuleBody(ruleBody->firstRule));
+
+	result.Append(swiOperator);
+
+	if (USWIPrologTerm* secondTerm = Cast<USWIPrologTerm>(ruleBody->secondRule))
+		result.Append(translateTerm(secondTerm));
+	else
+		result.Append(translateRuleBody(ruleBody->secondRule));
+
+	return result;
 }
 
-void SWIPrologThread::executeCommands() {
-	while (!stop) {
-
-		if (!initialised) {
-			startProlog();
-			initialised = true;
-		}
-			
-		if (consultFile != "")
-		{
-			openPrologFile_(consultFile);
-			consultFile = "";
-		}
-
-		if (assertRuleOrFact != "") {
-			try {
-				PlCall(asFirstClause ? "asserta" : "assertz", PlTermv(PlCompound(TCHAR_TO_ANSI(*assertRuleOrFact))));
-				assertRuleOrFact = "";
-			}
-			catch (PlException err) {
-				FString FsError = FString(ANSI_TO_TCHAR(err.what()));
-				UE_LOG(LogTemp, Warning, TEXT("error occurred while asserting rule or fact: %s"), *FsError);
-			}
-		}
-
-		if (retractRuleOrFact != "") {
-			char* stringRuleOrFact = TCHAR_TO_ANSI(*retractRuleOrFact);
-			try {
-				PlCall("retract", PlTermv(PlCompound(stringRuleOrFact)));
-				retractRuleOrFact = "";
-			}
-			catch (PlException err) {
-				FString FsError = FString(ANSI_TO_TCHAR(err.what()));
-				UE_LOG(LogTemp, Warning, TEXT("error occurred while asserting rule or fact: %s"), *FsError);
-			}
-		}
-
-		if (IsValid(currentQuery)) {
-			if (myQuery != NULL)
-				myQuery->close_destroy();
-
-			int arity = 0;
-			char* queryTerm;
-			TArray<FString> inElements;
-			if (USWIPrologCompound* compound = Cast<USWIPrologCompound>(currentQuery)) {
-				queryTerm = TCHAR_TO_ANSI(*compound->compoundName);
-				UE_LOG(LogTemp, Display, TEXT("Query name %s part of the compound"), *compound->compoundName);
-				for (USWIPrologTerm* term : compound->arguments) {
-					arity = arity + 1;
-					inElements.Add(translateTerm(term));
-					UE_LOG(LogTemp, Display, TEXT("Query element %s part of the compound"), *translateTerm(term));
-				}
-			}
-			else {
-				USWIPrologAtom* atom = Cast<USWIPrologAtom>(currentQuery);
-				queryTerm = TCHAR_TO_ANSI(*atom->atomValue);
-			}
-			PlTermv queryElements(arity);
-			int32 index = 0;
-			for (FString element : inElements) {
-				char* term = TCHAR_TO_ANSI(*element);
-				queryElements[index] = PlCompound(term);
-				index++;
-				UE_LOG(LogTemp, Display, TEXT("element %s inside query vector"), *element);
-			}
-
-			myQuery = new PlQuery(queryTerm, queryElements);
-
-			inArity = arity;
-			inQueryElements = queryElements;
-
-			nextSolution();
-			currentQuery = NULL;
-		}
-	}
+void SWIPrologThread::broadcastError(const FString& errorMessage) {
+	AsyncTask(ENamedThreads::GameThread, [this, Error = errorMessage]() {
+		QueryError.Broadcast(Error);
+	});
 }
 
+void SWIPrologThread::executeQueryFromString(const FString& queryString) {
+	if (myQuery != NULL)
+		myQuery->close_destroy();
 
-void SWIPrologThread::nextSolution() {
-	int bResult;
 	try {
-		bResult = myQuery->next_solution();
-		if (bResult == PL_S_FALSE)
-			currentSolution->verified = false;
-		if (bResult == PL_S_TRUE)
-			currentSolution->verified = true;
+		// Parse the string as a Prolog term using term_to_atom
+		PlTermv av(2);
+		(void)av[1].unify_atom(PlAtom(TCHAR_TO_ANSI(*queryString)));
+		PlCall("term_to_atom", av);
+		// av[0] now holds the parsed term — extract functor and arity
+		std::string functorName = av[0].name().as_string();
+		size_t arity = av[0].arity();
 
-		currentSolution->resultSet.Empty();
-
-		for (int i = 0; i < inArity; i++) {
-			FString sResult = FString(ANSI_TO_TCHAR(inQueryElements[i].as_string().c_str()));
-			currentSolution->resultSet.Add(sResult);
+		PlTermv queryElements(arity);
+		for (size_t i = 0; i < arity; i++) {
+			(void)queryElements[i].unify_term(av[0][i + 1]);
 		}
-		SolutionAvailable.Broadcast();
+
+		myQuery = new PlQuery(functorName.c_str(), queryElements);
+		inArity = static_cast<int>(arity);
+		inQueryElements = queryElements;
+
+		nextSolution();
 	}
 	catch (PlException err) {
 		FString FsError = FString(ANSI_TO_TCHAR(err.what()));
-		UE_LOG(LogTemp, Warning, TEXT("error occurred while performing query: %s"), *FsError);
+		UE_LOG(LogTemp, Warning, TEXT("error parsing query string '%s': %s"), *queryString, *FsError);
+		broadcastError(FsError);
 	}
 }
 
-void SWIPrologThread::submitQuery(USWIPrologTerm* inRuleOrFactTerm) {
-	currentQuery = inRuleOrFactTerm;
+void SWIPrologThread::executeFindAll(const FString& queryString) {
+	if (myQuery != NULL)
+	{
+		myQuery->close_destroy();
+		myQuery = NULL;
+	}
+
+	try {
+		PlTermv av(2);
+		(void)av[1].unify_atom(PlAtom(TCHAR_TO_ANSI(*queryString)));
+		PlCall("term_to_atom", av);
+		std::string functorName = av[0].name().as_string();
+		size_t arity = av[0].arity();
+
+		PlTermv queryElements(arity);
+		for (size_t i = 0; i < arity; i++) {
+			(void)queryElements[i].unify_term(av[0][i + 1]);
+		}
+
+		PlQuery query(functorName.c_str(), queryElements);
+
+		// Collect raw results on worker thread (plain data, no UObjects)
+		struct FSolutionData {
+			TArray<FString> ResultSet;
+			bool Verified;
+		};
+		TArray<FSolutionData> allResults;
+
+		int bResult;
+		while (true) {
+			bResult = query.next_solution();
+			if (bResult == PL_S_FALSE)
+				break;
+
+			FSolutionData& data = allResults.AddDefaulted_GetRef();
+			data.Verified = (bResult == PL_S_TRUE);
+			data.ResultSet.Reserve(static_cast<int32>(arity));
+			for (size_t i = 0; i < arity; i++) {
+				data.ResultSet.Emplace(ANSI_TO_TCHAR(queryElements[i].as_string().c_str()));
+			}
+
+			if (bResult != PL_S_TRUE)
+				break;
+		}
+
+		// Marshal to game thread: create UObjects there
+		AsyncTask(ENamedThreads::GameThread, [this, Results = MoveTemp(allResults)]() {
+			TArray<USWIPrologSolution*> Solutions;
+			Solutions.Reserve(Results.Num());
+			for (const auto& Data : Results) {
+				USWIPrologSolution* Sol = NewObject<USWIPrologSolution>();
+				Sol->verified = Data.Verified;
+				Sol->resultSet = Data.ResultSet;
+				Solutions.Add(Sol);
+			}
+			AllSolutionsReady.Broadcast(Solutions);
+		});
+	}
+	catch (PlException err) {
+		FString FsError = FString(ANSI_TO_TCHAR(err.what()));
+		UE_LOG(LogTemp, Warning, TEXT("error in findall for '%s': %s"), *queryString, *FsError);
+		broadcastError(FsError);
+	}
+}
+
+void SWIPrologThread::processCommand(const FPrologCommand& Command) {
+	switch (Command.Type)
+	{
+	case EPrologCommandType::ConsultFile:
+		openPrologFile_(Command.StringData);
+		break;
+
+	case EPrologCommandType::ConsultString:
+		try {
+			FString consultCmd = FString::Printf(TEXT("atom_to_term('%s', T, _), assert(T)"), *Command.StringData);
+			PlCall(TCHAR_TO_ANSI(*consultCmd));
+		}
+		catch (PlException err) {
+			FString FsError = FString(ANSI_TO_TCHAR(err.what()));
+			UE_LOG(LogTemp, Warning, TEXT("error consulting string: %s"), *FsError);
+			broadcastError(FsError);
+		}
+		break;
+
+	case EPrologCommandType::Assert:
+		try {
+			PlCall(Command.BoolData ? "asserta" : "assertz", PlTermv(PlCompound(TCHAR_TO_ANSI(*Command.StringData))));
+		}
+		catch (PlException err) {
+			FString FsError = FString(ANSI_TO_TCHAR(err.what()));
+			UE_LOG(LogTemp, Warning, TEXT("error occurred while asserting rule or fact: %s"), *FsError);
+			broadcastError(FsError);
+		}
+		break;
+
+	case EPrologCommandType::Retract:
+		try {
+			PlCall("retract", PlTermv(PlCompound(TCHAR_TO_ANSI(*Command.StringData))));
+		}
+		catch (PlException err) {
+			FString FsError = FString(ANSI_TO_TCHAR(err.what()));
+			UE_LOG(LogTemp, Warning, TEXT("error occurred while retracting rule or fact: %s"), *FsError);
+			broadcastError(FsError);
+		}
+		break;
+
+	case EPrologCommandType::QueryString:
+		executeQueryFromString(Command.StringData);
+		break;
+
+	case EPrologCommandType::NextSolution:
+		nextSolution();
+		break;
+
+	case EPrologCommandType::FindAll:
+		executeFindAll(Command.StringData);
+		break;
+	}
+}
+
+void SWIPrologThread::executeCommands() {
+	while (!stop.load(std::memory_order_relaxed)) {
+
+		if (!initialised.load(std::memory_order_relaxed)) {
+			startProlog();
+			initialised.store(true, std::memory_order_relaxed);
+		}
+
+		// Block until a command is enqueued or stop is requested
+		WakeEvent->Wait();
+
+		// Process all queued commands
+		FPrologCommand Command;
+		while (CommandQueue.Dequeue(Command)) {
+			if (stop.load(std::memory_order_relaxed)) break;
+			processCommand(Command);
+		}
+	}
 }

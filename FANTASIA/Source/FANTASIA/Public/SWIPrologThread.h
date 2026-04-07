@@ -6,6 +6,8 @@
 #pragma warning (disable : 4834)
 
 #include "FANTASIATypes.h"
+#include "Containers/Queue.h"
+#include <atomic>
 #include "Windows/AllowWindowsPlatformTypes.h"
 #include "Windows/AllowWindowsPlatformAtomics.h"
 #pragma push_macro("verify")
@@ -24,6 +26,24 @@
 DECLARE_DELEGATE(SolutionAvailableDelegate);
 DECLARE_EVENT(SWIPrologThread, SolutionAvailableEvent);
 
+enum class EPrologCommandType : uint8
+{
+	ConsultFile,
+	ConsultString,
+	Assert,
+	Retract,
+	QueryString,
+	NextSolution,
+	FindAll
+};
+
+struct FPrologCommand
+{
+	EPrologCommandType Type;
+	FString StringData;
+	bool BoolData = false;
+};
+
 class SWIPrologThread : public FRunnable
 {
 
@@ -37,24 +57,31 @@ private:
 	/** Thread to run the worker FRunnable on */
 	FRunnableThread* Thread;
 
+	/** Event to wake the worker thread when commands are enqueued */
+	FEvent* WakeEvent;
+
+	/** Lock-free MPSC command queue (multiple game-thread producers, single worker consumer) */
+	TQueue<FPrologCommand, EQueueMode::Mpsc> CommandQueue;
+
 	PlQuery* myQuery = NULL;
 	FString resFolderPath;
 	PlTermv inQueryElements;
-	USWIPrologTerm* currentQuery = NULL;
-	FString consultFile = "";
-	int inArity;
-	FString assertRuleOrFact;
-	FString retractRuleOrFact;
-	bool asFirstClause;
-	static bool initialised;
-	static bool stop;
+	int inArity = 0;
+	static std::atomic<bool> initialised;
+	static std::atomic<bool> stop;
+
 	FString translateTerm(UObject* term);
 	FString translateRule(UObject* rule);
 	FString translateRuleBody(UObject* ruleBodyObject);
 
 	void startProlog();
 	void executeCommands();
-	void openPrologFile_(FString myfile);
+	void openPrologFile_(const FString& filename);
+	void processCommand(const FPrologCommand& Command);
+	void executeQueryFromString(const FString& queryString);
+	void executeFindAll(const FString& queryString);
+	void nextSolution();
+	void broadcastError(const FString& errorMessage);
 
 public:
 
@@ -64,7 +91,17 @@ public:
 	SWIPrologThread();
 
 	SolutionAvailableEvent SolutionAvailable;
-	USWIPrologSolution* currentSolution = NewObject<USWIPrologSolution>();
+
+	// Delegate for all-solutions results (FindAll)
+	DECLARE_EVENT_OneParam(SWIPrologThread, FAllSolutionsReadyEvent, TArray<USWIPrologSolution*>);
+	FAllSolutionsReadyEvent AllSolutionsReady;
+
+	// Delegate for query errors
+	DECLARE_EVENT_OneParam(SWIPrologThread, FQueryErrorEvent, FString);
+	FQueryErrorEvent QueryError;
+
+	/** Latest solution snapshot, safe to read from game thread only inside delegate callbacks */
+	USWIPrologSolution* currentSolution = nullptr;
 
 	virtual ~SWIPrologThread();
 
@@ -82,9 +119,13 @@ public:
 
 	static SWIPrologThread* setup();
 
+	/** Submit a query from UObject term tree. Translates to string on calling thread. */
 	void submitQuery(USWIPrologTerm* inRuleOrFactTerm);
-	void nextSolution();
-	void openPrologFile(FString myfile);
+	void submitQueryString(const FString& queryString);
+	void submitFindAll(const FString& queryString);
+	void requestNextSolution();
+	void openPrologFile(const FString& filename);
+	void consultString(const FString& prologCode);
 	void SWIPLassert(USWIPrologObject* prologObject, bool firstClause);
 	void SWIPLretract(USWIPrologTerm* ruleOrFactTerm);
 
