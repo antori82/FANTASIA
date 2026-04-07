@@ -1,7 +1,6 @@
 #pragma once
 //#include "Core.h"
 #include "FANTASIATypes.h"
-#include "TTSThreadInterface.h"
 #include <speechapi_cxx.h>
 
 using namespace std;
@@ -10,7 +9,7 @@ using namespace Microsoft::CognitiveServices::Speech;
 DECLARE_EVENT_TwoParams(AzureTTSThread, FAzureResultAvailableEvent, FTTSData, FString);
 
 //~~~~~ Multi Threading ~~~
-class AzureTTSThread : public FRunnable, public ITTSThreadInterface
+class AzureTTSThread : public FRunnable
 {
 private:
 	/** Singleton instance, can access the thread any time via static accessor, if it is active! */
@@ -51,7 +50,7 @@ public:
 	virtual void Stop();
 	// End FRunnable interface
 
-	void Synthesize() override;
+	void Synthesize();
 
 	/** Makes sure this thread has stopped properly */
 	void EnsureCompletion();
@@ -59,6 +58,6 @@ public:
 	/** Shuts down the thread. Static so it can easily be called from outside the thread context */
 	static void Shutdown();
 
-	FDelegateHandle TTSResultAvailableSubscribeUser(FTTSResultAvailableDelegate& UseDelegate) override;
-	void TTSResultAvailableUnsubscribeUser(FDelegateHandle DelegateHandle) override;
+	FDelegateHandle TTSResultAvailableSubscribeUser(FTTSResultAvailableDelegate& UseDelegate);
+	void TTSResultAvailableUnsubscribeUser(FDelegateHandle DelegateHandle);
 };
