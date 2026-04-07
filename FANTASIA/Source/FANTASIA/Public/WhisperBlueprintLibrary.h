@@ -67,6 +67,21 @@ public:
 	UFUNCTION(BlueprintPure, Category = "WhisperASR|Model")
 	static bool DoesModelFileExist(const FString& FilePath);
 
+	/**
+	 * Scan the model search directories for ggml-*.bin files and return
+	 * info about each discovered model, parsed from the HuggingFace
+	 * whisper.cpp naming convention.
+	 */
+	UFUNCTION(BlueprintCallable, Category = "WhisperASR|Model")
+	static TArray<FWhisperModelInfo> GetAvailableModels();
+
+	/**
+	 * Parse a ggml model filename into a FWhisperModelInfo struct.
+	 * The naming convention is: ggml-{size}[.en][-v{N}][-turbo][-{quant}].bin
+	 */
+	UFUNCTION(BlueprintPure, Category = "WhisperASR|Model")
+	static FWhisperModelInfo ParseModelFileName(const FString& FilePath);
+
 private:
 
 	/** Internal: format seconds as HH:MM:SS,mmm for SRT */

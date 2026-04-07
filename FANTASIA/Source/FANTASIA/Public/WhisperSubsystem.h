@@ -69,6 +69,13 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "WhisperASR|Model")
 	void LoadModelBySize(EWhisperModelSize Size);
 
+	/**
+	 * Load a model by filename (e.g. "ggml-base.en-q8_0.bin").
+	 * Searches the standard model directories for a matching file.
+	 */
+	UFUNCTION(BlueprintCallable, Category = "WhisperASR|Model")
+	void LoadModelByName(const FString& ModelFileName);
+
 	/** Unload the currently loaded model and free memory */
 	UFUNCTION(BlueprintCallable, Category = "WhisperASR|Model")
 	void UnloadModel();
@@ -80,6 +87,21 @@ public:
 	/** Returns the current subsystem status */
 	UFUNCTION(BlueprintPure, Category = "WhisperASR|Model")
 	EWhisperStatus GetStatus() const { return CurrentStatus; }
+
+	/** Returns true if the plugin was compiled with CUDA GPU support */
+	UFUNCTION(BlueprintPure, Category = "WhisperASR|Model")
+	static bool IsGPUSupported();
+
+	/**
+	 * When true and GPU support is compiled in, models are loaded onto the GPU.
+	 * Set this BEFORE calling LoadModel / LoadModelBySize / LoadModelByName.
+	 */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "WhisperASR|Model")
+	bool bUseGPU = true;
+
+	/** GPU device index (0 = first CUDA device). Only relevant when bUseGPU is true. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "WhisperASR|Model")
+	int32 GPUDeviceIndex = 0;
 
 	// ── Transcription (file-based) ───────────────────────────────────────
 

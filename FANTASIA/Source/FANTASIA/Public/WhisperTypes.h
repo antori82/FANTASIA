@@ -161,6 +161,42 @@ struct FANTASIA_API FWhisperConfig
 	float Temperature = 0.0f;
 };
 
+// ─── Discovered model info (from scanning Resources folder) ────────────────
+
+USTRUCT(BlueprintType)
+struct FANTASIA_API FWhisperModelInfo
+{
+	GENERATED_BODY()
+
+	/** Filename without path (e.g. "ggml-base.en-q8_0.bin") */
+	UPROPERTY(BlueprintReadOnly, Category = "WhisperASR")
+	FString FileName;
+
+	/** Human-readable display name (e.g. "Base English Q8_0") */
+	UPROPERTY(BlueprintReadOnly, Category = "WhisperASR")
+	FString DisplayName;
+
+	/** Absolute path to the model file */
+	UPROPERTY(BlueprintReadOnly, Category = "WhisperASR")
+	FString FilePath;
+
+	/** Base size: tiny, base, small, medium, large */
+	UPROPERTY(BlueprintReadOnly, Category = "WhisperASR")
+	FString Size;
+
+	/** Version string if present (e.g. "v2", "v3-turbo"), empty otherwise */
+	UPROPERTY(BlueprintReadOnly, Category = "WhisperASR")
+	FString Version;
+
+	/** Quantization tag if present (e.g. "q5_0", "q8_0"), empty for full-precision */
+	UPROPERTY(BlueprintReadOnly, Category = "WhisperASR")
+	FString Quantization;
+
+	/** True if this is an English-only model (.en variant) */
+	UPROPERTY(BlueprintReadOnly, Category = "WhisperASR")
+	bool bEnglishOnly = false;
+};
+
 // ─── Delegates ───────────────────────────────────────────────────────────────
 
 /** Fired when model loading completes */
@@ -174,3 +210,6 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnWhisperSegmentReady, const FWhisp
 
 /** Fired when status changes */
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnWhisperStatusChanged, EWhisperStatus, NewStatus);
+
+/** Fired when noise floor calibration completes */
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnWhisperNoiseCalibrationComplete, float, NoiseLevel, float, NewThreshold);

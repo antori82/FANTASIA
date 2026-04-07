@@ -38,11 +38,43 @@ void UWhisperCaptureComponent::BeginPlay()
 
 void UWhisperCaptureComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
+	// Force-stop everything — critical for PIE shutdown to not lock the editor
+	bIsCalibrating = false;
+	bCalibrationOwnsMic = false;
+	bSpeechDetected = false;
+
 	if (bIsCapturing)
 	{
-		CancelCapture();
+		// Stop the stream immediately without transcribing
+		if (AudioCapture && AudioCapture->IsStreamOpen() && AudioCapture->IsCapturing())
+		{
+			AudioCapture->StopStream();
+		}
+		bIsCapturing = false;
+		SetComponentTickEnabled(false);
+		bTranscriptionInFlight = false;
 	}
+
+	// Unbind from subsystem delegates before it deinitializes
+	UGameInstance* GI = GetOwner() ? GetOwner()->GetGameInstance() : nullptr;
+	if (GI)
+	{
+		if (UWhisperSubsystem* Whisper = GI->GetSubsystem<UWhisperSubsystem>())
+		{
+			Whisper->OnTranscriptionComplete.RemoveDynamic(
+				this, &UWhisperCaptureComponent::HandleTranscriptionResult);
+			Whisper->OnSegmentReady.RemoveDynamic(
+				this, &UWhisperCaptureComponent::HandleSegmentReady);
+		}
+	}
+
 	CloseCaptureDevice();
+
+	{
+		FScopeLock Lock(&BufferCritSection);
+		AudioBuffer.Reset();
+	}
+
 	Super::EndPlay(EndPlayReason);
 }
 
@@ -54,6 +86,115 @@ void UWhisperCaptureComponent::TickComponent(float DeltaTime, ELevelTick TickTyp
 	if (!bIsCapturing)
 	{
 		return;
+	}
+
+	// ── Noise calibration tick ───────────────────────────────────────────
+	if (bIsCalibrating)
+	{
+		CalibrationTimer += DeltaTime;
+
+		if (CalibrationTimer >= CalibrationDuration)
+		{
+			// Snapshot the buffer that accumulated during calibration
+			float PeakAmplitude = 0.f;
+			{
+				FScopeLock Lock(&BufferCritSection);
+				for (int32 i = 0; i < AudioBuffer.Num(); ++i)
+				{
+					float Abs = FMath::Abs(AudioBuffer[i]);
+					if (Abs > PeakAmplitude) PeakAmplitude = Abs;
+				}
+			}
+
+			LastMeasuredNoiseFloor = PeakAmplitude;
+			const float NewThreshold = PeakAmplitude * CalibrationMultiplier;
+			VadEnergyThreshold = NewThreshold;
+
+			UE_LOG(LogWhisperASR, Log,
+				TEXT("Noise calibration complete: noise=%.5f, threshold=%.5f"),
+				PeakAmplitude, NewThreshold);
+
+			bIsCalibrating = false;
+
+			// If we opened the mic just for calibration, shut it down
+			if (bCalibrationOwnsMic)
+			{
+				if (AudioCapture && AudioCapture->IsStreamOpen() && AudioCapture->IsCapturing())
+				{
+					AudioCapture->StopStream();
+				}
+				bIsCapturing = false;
+				SetComponentTickEnabled(false);
+				CloseCaptureDevice();
+				{
+					FScopeLock Lock(&BufferCritSection);
+					AudioBuffer.Reset();
+					ResamplePhase = 0.0;
+				}
+				bCalibrationOwnsMic = false;
+			}
+
+			OnNoiseCalibrationComplete.Broadcast(PeakAmplitude, NewThreshold);
+			return;
+		}
+	}
+
+	// ── VAD auto-detect: continuous listen → auto-transcribe on silence ──
+	if (bAutoDetectSpeech && !bStreamingMode && !bIsCalibrating)
+	{
+		VadCheckTimer += DeltaTime;
+		if (VadCheckTimer >= 0.2f) // Check 5 times per second
+		{
+			VadCheckTimer = 0.f;
+			const float Peak = GetRecentPeak();
+			const bool bIsSpeaking = (Peak > VadEnergyThreshold);
+
+			UE_LOG(LogWhisperASR, Verbose,
+				TEXT("VAD: peak=%.5f, threshold=%.5f, speaking=%s, detected=%s, silence=%.1fs"),
+				Peak, VadEnergyThreshold,
+				bIsSpeaking ? TEXT("Y") : TEXT("N"),
+				bSpeechDetected ? TEXT("Y") : TEXT("N"),
+				SilenceTimer);
+
+			// While a transcription is in-flight, discard audio and skip VAD.
+			// Otherwise the buffer grows with silence and the next submission
+			// sends minutes of dead air to Whisper, causing huge latency spikes.
+			if (bTranscriptionInFlight)
+			{
+				FScopeLock Lock(&BufferCritSection);
+				AudioBuffer.Reset();
+				ResamplePhase = 0.0;
+			}
+			else if (bIsSpeaking)
+			{
+				SilenceTimer = 0.f;
+				bSpeechDetected = true;
+			}
+			else if (bSpeechDetected)
+			{
+				SilenceTimer += 0.2f;
+				if (SilenceTimer >= SilenceTimeoutSeconds)
+				{
+					UE_LOG(LogWhisperASR, Log,
+						TEXT("VAD: silence timeout (%.1fs) — transcribing utterance."),
+						SilenceTimer);
+					TranscribeBuffer();
+					bSpeechDetected = false;
+					SilenceTimer = 0.f;
+				}
+			}
+			else
+			{
+				// No speech detected yet — trim silence to prevent unbounded growth
+				FScopeLock Lock(&BufferCritSection);
+				const int32 KeepSamples = 2 * WHISPER_SAMPLE_RATE; // Keep last 2s
+				if (AudioBuffer.Num() > KeepSamples)
+				{
+					const int32 Excess = AudioBuffer.Num() - KeepSamples;
+					AudioBuffer.RemoveAt(0, Excess, EAllowShrinking::No);
+				}
+			}
+		}
 	}
 
 	if (bStreamingMode)
@@ -191,8 +332,18 @@ bool UWhisperCaptureComponent::OpenCaptureDevice()
 
 			// Resample + mono-mix + buffer (thread-safe)
 			FScopeLock Lock(&BufferCritSection);
+			const int32 PrevCount = AudioBuffer.Num();
 			ResampleAndMixToMono(InAudio, NumFrames, NumChannels, SampleRate, AudioBuffer);
 			TrimBufferLocked();
+
+			// Track peak of newly appended samples for VAD
+			float CallbackPeak = 0.f;
+			for (int32 i = FMath::Max(0, PrevCount); i < AudioBuffer.Num(); ++i)
+			{
+				float Abs = FMath::Abs(AudioBuffer[i]);
+				if (Abs > CallbackPeak) CallbackPeak = Abs;
+			}
+			SetRecentPeak(CallbackPeak);
 
 			// Update RMS level from the most recent 100 ms of buffered audio
 			const int32 RMSWindowSamples = WHISPER_SAMPLE_RATE / 10; // 1600 samples
@@ -270,9 +421,13 @@ bool UWhisperCaptureComponent::StartCapture()
 	}
 	StreamingTimer = 0.f;
 	SetRMSLevel(0.f);
+	SetRecentPeak(0.f);
 	ResamplePhase = 0.0;
 	bTranscriptionInFlight = false;
 	bWasSpeaking = false;
+	bSpeechDetected = false;
+	SilenceTimer = 0.f;
+	VadCheckTimer = 0.f;
 	AccumulatedResult = FWhisperResult();
 
 	// Open the microphone
@@ -501,6 +656,104 @@ void UWhisperCaptureComponent::CancelCapture()
 	Whisper->TranscribeAudioData(BufferCopy, TranscriptionConfig);
 }
 
+// ─────────────────────────────────────────────────────────────────────────────
+// Noise floor calibration
+// ─────────────────────────────────────────────────────────────────────────────
+
+void UWhisperCaptureComponent::CalibrateNoiseFloor(float DurationSeconds, float Multiplier)
+{
+	if (bIsCalibrating)
+	{
+		UE_LOG(LogWhisperASR, Warning, TEXT("CalibrateNoiseFloor: calibration already in progress."));
+		return;
+	}
+
+	CalibrationDuration = FMath::Max(0.1f, DurationSeconds);
+	CalibrationMultiplier = FMath::Max(1.0f, Multiplier);
+	CalibrationTimer = 0.f;
+
+	// If the mic isn't already open, open it just for calibration
+	bCalibrationOwnsMic = !bIsCapturing;
+	if (bCalibrationOwnsMic)
+	{
+		if (!OpenCaptureDevice())
+		{
+			UE_LOG(LogWhisperASR, Error, TEXT("CalibrateNoiseFloor: failed to open mic."));
+			OnNoiseCalibrationComplete.Broadcast(-1.f, VadEnergyThreshold);
+			return;
+		}
+
+		// Clear the shared buffer so we only measure fresh audio
+		{
+			FScopeLock Lock(&BufferCritSection);
+			AudioBuffer.Reset();
+			ResamplePhase = 0.0;
+		}
+
+		// Temporarily set capturing so the audio callback stores samples
+		bIsCapturing = true;
+
+		if (!AudioCapture->StartStream())
+		{
+			UE_LOG(LogWhisperASR, Error, TEXT("CalibrateNoiseFloor: failed to start stream."));
+			bIsCapturing = false;
+			CloseCaptureDevice();
+			OnNoiseCalibrationComplete.Broadcast(-1.f, VadEnergyThreshold);
+			return;
+		}
+	}
+
+	bIsCalibrating = true;
+	SetComponentTickEnabled(true);
+
+	UE_LOG(LogWhisperASR, Log,
+		TEXT("Noise floor calibration started (%.1fs, multiplier=%.1f)."),
+		CalibrationDuration, CalibrationMultiplier);
+}
+
+void UWhisperCaptureComponent::LogAudioDiagnostics()
+{
+	FScopeLock Lock(&BufferCritSection);
+
+	float Peak = 0.f;
+	for (int32 i = 0; i < AudioBuffer.Num(); ++i)
+	{
+		float Abs = FMath::Abs(AudioBuffer[i]);
+		if (Abs > Peak) Peak = Abs;
+	}
+
+	float RMS = 0.f;
+	if (AudioBuffer.Num() > 0)
+	{
+		RMS = ComputeRMS(AudioBuffer.GetData(), AudioBuffer.Num());
+	}
+
+	UE_LOG(LogWhisperASR, Warning,
+		TEXT("=== AUDIO DIAGNOSTICS ===\n")
+		TEXT("  Capturing:      %s\n")
+		TEXT("  Calibrating:    %s\n")
+		TEXT("  StreamingMode:  %s\n")
+		TEXT("  Device:         %d Hz, %d ch\n")
+		TEXT("  Buffer:         %d samples (%.2f sec)\n")
+		TEXT("  Peak amplitude: %.6f\n")
+		TEXT("  RMS level:      %.6f\n")
+		TEXT("  VAD threshold:  %.6f\n")
+		TEXT("  Peak > VAD:     %s\n")
+		TEXT("  Noise floor:    %.6f\n")
+		TEXT("========================="),
+		bIsCapturing ? TEXT("YES") : TEXT("NO"),
+		bIsCalibrating ? TEXT("YES") : TEXT("NO"),
+		bStreamingMode ? TEXT("YES") : TEXT("NO"),
+		DeviceSampleRate, DeviceNumChannels,
+		AudioBuffer.Num(),
+		static_cast<float>(AudioBuffer.Num()) / static_cast<float>(WHISPER_SAMPLE_RATE),
+		Peak,
+		RMS,
+		VadEnergyThreshold,
+		(Peak > VadEnergyThreshold) ? TEXT("YES") : TEXT("NO"),
+		LastMeasuredNoiseFloor);
+}
+
 void UWhisperCaptureComponent::ClearBuffer()
 {
 	FScopeLock Lock(&BufferCritSection);
@@ -534,6 +787,16 @@ float UWhisperCaptureComponent::GetRMSLevel() const
 	return static_cast<float>(CurrentRMSLevelFixed.GetValue()) / 10000.f;
 }
 
+void UWhisperCaptureComponent::SetRecentPeak(float Value)
+{
+	RecentPeakFixed.Set(FMath::RoundToInt(Value * 10000.f));
+}
+
+float UWhisperCaptureComponent::GetRecentPeak() const
+{
+	return static_cast<float>(RecentPeakFixed.GetValue()) / 10000.f;
+}
+
 // ─────────────────────────────────────────────────────────────────────────────
 // Resampling (called from audio thread under lock)
 // ─────────────────────────────────────────────────────────────────────────────
@@ -554,12 +817,7 @@ void UWhisperCaptureComponent::ResampleAndMixToMono(
 		return;
 	}
 
-	// Step 1: Mix to mono (if multi-channel)
-	// We do this in-place into a temp buffer to avoid allocating per-callback
-	// when the channel count is 1.
-	const float InvChannels = 1.0f / NumChannels;
-
-	// Step 2: Resample using linear interpolation with persistent phase
+	// Resample using linear interpolation with persistent phase
 	const double SrcToDst = static_cast<double>(SrcRate) / static_cast<double>(WHISPER_SAMPLE_RATE);
 
 	// Calculate how many output samples this chunk produces
@@ -585,22 +843,17 @@ void UWhisperCaptureComponent::ResampleAndMixToMono(
 		const int32 Idx1 = FMath::Min(Idx0 + 1, NumFrames - 1);
 		const float Frac = static_cast<float>(Phase - static_cast<double>(Idx0));
 
-		// Mix channels for both tap points
+		// Pick the loudest channel for each tap point.
+		// Multi-channel mic arrays may carry speech on any channel;
+		// averaging dilutes the signal, and channel 0 isn't always
+		// the primary. Taking the max preserves full amplitude.
 		float S0 = 0.f, S1 = 0.f;
-		if (NumChannels == 1)
+		for (int32 ch = 0; ch < NumChannels; ++ch)
 		{
-			S0 = InAudio[Idx0];
-			S1 = InAudio[Idx1];
-		}
-		else
-		{
-			for (int32 ch = 0; ch < NumChannels; ++ch)
-			{
-				S0 += InAudio[Idx0 * NumChannels + ch];
-				S1 += InAudio[Idx1 * NumChannels + ch];
-			}
-			S0 *= InvChannels;
-			S1 *= InvChannels;
+			float A0 = InAudio[Idx0 * NumChannels + ch];
+			float A1 = InAudio[Idx1 * NumChannels + ch];
+			if (FMath::Abs(A0) > FMath::Abs(S0)) S0 = A0;
+			if (FMath::Abs(A1) > FMath::Abs(S1)) S1 = A1;
 		}
 
 		OutPtr[Written] = FMath::Lerp(S0, S1, Frac);
@@ -655,9 +908,27 @@ void UWhisperCaptureComponent::HandleTranscriptionResult(const FWhisperResult& R
 {
 	bTranscriptionInFlight = false;
 
-	if (Result.bSuccess)
+	if (!Result.bSuccess)
 	{
-		// Accumulate segments and text from this chunk
+		return;
+	}
+
+	if (bAutoDetectSpeech && !bStreamingMode)
+	{
+		// In auto-detect mode, each transcription is a complete utterance.
+		// Fire the event immediately.
+		UE_LOG(LogWhisperASR, Log, TEXT("VAD utterance: '%s'"), *Result.FullText);
+		OnCaptureTranscriptionComplete.Broadcast(Result);
+
+		// Clear the buffer for the next utterance
+		FScopeLock Lock(&BufferCritSection);
+		AudioBuffer.Reset();
+		ResamplePhase = 0.0;
+	}
+	else
+	{
+		// Streaming mode: accumulate segments across chunks.
+		// OnCaptureTranscriptionComplete fires in TickComponent on silence.
 		AccumulatedResult.Segments.Append(Result.Segments);
 		if (AccumulatedResult.FullText.Len() > 0 && Result.FullText.Len() > 0)
 		{
@@ -667,9 +938,6 @@ void UWhisperCaptureComponent::HandleTranscriptionResult(const FWhisperResult& R
 		AccumulatedResult.Language = Result.Language;
 		AccumulatedResult.ProcessingTimeSeconds += Result.ProcessingTimeSeconds;
 	}
-
-	// Note: OnCaptureTranscriptionComplete is NOT fired here.
-	// It fires in TickComponent when silence is detected after speech.
 }
 
 void UWhisperCaptureComponent::HandleSegmentReady(const FWhisperSegment& Segment)

@@ -89,13 +89,30 @@ public:
 
 	/**
 	 * Minimum peak amplitude to consider as speech (voice activity gate).
-	 * Audio chunks where no sample exceeds this value are discarded as silence.
-	 * Your mic showed peak ~0.09 during speech and ~0.004 during silence,
-	 * so 0.01 is a good default. Set to 0.0 to disable.
+	 * Typical values: 0.01–0.05 depending on microphone gain.
+	 * Use CalibrateNoiseFloor() to set this automatically.
+	 * Set to 0.0 to disable VAD filtering.
 	 */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "WhisperASR|Capture",
 		meta = (ClampMin = "0.0", ClampMax = "1.0"))
 	float VadEnergyThreshold = 0.01f;
+
+	/**
+	 * When true, the component continuously listens and automatically
+	 * transcribes each utterance when silence is detected after speech.
+	 * No manual StopCapture needed — stays active for the next utterance.
+	 * Uses VadEnergyThreshold to distinguish speech from silence.
+	 */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "WhisperASR|Capture")
+	bool bAutoDetectSpeech = true;
+
+	/**
+	 * How long silence must persist after speech before the utterance
+	 * is considered finished and sent for transcription (seconds).
+	 */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "WhisperASR|Capture",
+		meta = (EditCondition = "bAutoDetectSpeech", ClampMin = "0.3", ClampMax = "10.0"))
+	float SilenceTimeoutSeconds = 1.5f;
 
 	/**
 	 * Index of the audio input device to use.
@@ -114,6 +131,10 @@ public:
 	/** Fired per-segment during streaming transcription */
 	UPROPERTY(BlueprintAssignable, Category = "WhisperASR|Capture|Events")
 	FOnWhisperSegmentReady OnStreamingSegment;
+
+	/** Fired when noise floor calibration completes */
+	UPROPERTY(BlueprintAssignable, Category = "WhisperASR|Capture|Events")
+	FOnWhisperNoiseCalibrationComplete OnNoiseCalibrationComplete;
 
 	// ── Controls ─────────────────────────────────────────────────────────
 
@@ -136,6 +157,28 @@ public:
 	/** Clear the audio buffer without transcribing */
 	UFUNCTION(BlueprintCallable, Category = "WhisperASR|Capture")
 	void ClearBuffer();
+
+	/**
+	 * Record background noise for DurationSeconds, then set VadEnergyThreshold
+	 * to the measured peak amplitude times Multiplier.
+	 * Fires OnNoiseCalibrationComplete when done.
+	 * If the mic is already capturing, calibration runs alongside; otherwise
+	 * the mic is opened temporarily and closed when calibration finishes.
+	 */
+	UFUNCTION(BlueprintCallable, Category = "WhisperASR|Capture")
+	void CalibrateNoiseFloor(float DurationSeconds = 1.0f, float Multiplier = 2.0f);
+
+	/** Returns the last measured noise floor (peak amplitude), or -1 if never calibrated */
+	UFUNCTION(BlueprintPure, Category = "WhisperASR|Capture")
+	float GetNoiseFloor() const { return LastMeasuredNoiseFloor; }
+
+	/**
+	 * Log detailed audio diagnostics to the output log:
+	 * buffer size, peak amplitude, RMS level, device info, and threshold.
+	 * Call this while capturing to diagnose VAD issues.
+	 */
+	UFUNCTION(BlueprintCallable, Category = "WhisperASR|Capture")
+	void LogAudioDiagnostics();
 
 	/** Check if the microphone is currently active */
 	UFUNCTION(BlueprintPure, Category = "WhisperASR|Capture")
@@ -199,6 +242,24 @@ private:
 
 	bool bIsCapturing = false;
 	float StreamingTimer = 0.f;
+
+	// ── VAD auto-detect state ───────────────────────────────────────────
+	float SilenceTimer = 0.f;
+	float VadCheckTimer = 0.f;
+	bool bSpeechDetected = false;
+
+	/** Peak amplitude updated atomically by the audio callback (fixed-point * 10000) */
+	FThreadSafeCounter RecentPeakFixed;
+	void SetRecentPeak(float Value);
+	float GetRecentPeak() const;
+
+	// ── Noise calibration state ─────────────────────────────────────────
+	bool bIsCalibrating = false;
+	bool bCalibrationOwnsMic = false; // true if we opened the mic just for calibration
+	float CalibrationDuration = 1.0f;
+	float CalibrationMultiplier = 2.0f;
+	float CalibrationTimer = 0.f;
+	float LastMeasuredNoiseFloor = -1.f;
 
 	/** Whether the previous tick interval detected speech */
 	bool bWasSpeaking = false;

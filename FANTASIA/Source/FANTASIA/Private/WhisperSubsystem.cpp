@@ -56,10 +56,14 @@ void UWhisperSubsystem::Initialize(FSubsystemCollectionBase& Collection)
 
 void UWhisperSubsystem::Deinitialize()
 {
-	// Signal shutdown — prevents new transcriptions and skips async callbacks
+	UE_LOG(LogWhisperASR, Log, TEXT("WhisperSubsystem shutting down..."));
+
+	// Signal shutdown first — all async tasks check this flag
 	bShuttingDown = true;
 
+	// Free the whisper context (waits for in-flight inference via InferenceMutex)
 	UnloadModel();
+
 	Super::Deinitialize();
 	UE_LOG(LogWhisperASR, Log, TEXT("WhisperSubsystem deinitialized."));
 }
@@ -114,34 +118,85 @@ void UWhisperSubsystem::LoadModel(const FString& ModelFilePath)
 
 	SetStatus(EWhisperStatus::Loading);
 
-	// Load on a background thread to avoid blocking the game thread
+	// Load on a background thread to avoid blocking the game thread.
+	// Use a weak pointer so PIE shutdown doesn't crash if loading outlives us.
 	FString PathCopy = ModelFilePath;
-	AsyncTask(ENamedThreads::AnyBackgroundThreadNormalTask, [this, PathCopy]()
+	TWeakObjectPtr<UWhisperSubsystem> WeakThis(this);
+	const bool bWantGPU = bUseGPU;
+	const int32 DeviceIdx = GPUDeviceIndex;
+
+	AsyncTask(ENamedThreads::AnyBackgroundThreadNormalTask, [WeakThis, PathCopy, bWantGPU, DeviceIdx]()
 	{
-		UE_LOG(LogWhisperASR, Log, TEXT("Loading Whisper model from: %s"), *PathCopy);
+		UE_LOG(LogWhisperASR, Log, TEXT("Loading Whisper model from: %s (GPU=%s, device=%d)"),
+			*PathCopy, bWantGPU ? TEXT("ON") : TEXT("OFF"), DeviceIdx);
+
+		// Check before the expensive load
+		UWhisperSubsystem* Self = WeakThis.Get();
+		if (!Self || Self->bShuttingDown)
+		{
+			UE_LOG(LogWhisperASR, Warning, TEXT("Model load aborted — subsystem shutting down."));
+			return;
+		}
 
 		whisper_context_params CtxParams = whisper_context_default_params();
+#if FANTASIA_WITH_CUDA
+		CtxParams.use_gpu = bWantGPU;
+		CtxParams.gpu_device = DeviceIdx;
+		if (bWantGPU)
+		{
+			UE_LOG(LogWhisperASR, Log, TEXT("CUDA GPU acceleration enabled (device %d)."), DeviceIdx);
+		}
+#else
+		CtxParams.use_gpu = false;
+		if (bWantGPU)
+		{
+			UE_LOG(LogWhisperASR, Warning, TEXT("GPU requested but plugin was built without CUDA. Using CPU."));
+		}
+#endif
 		whisper_context* Ctx = whisper_init_from_file_with_params(
 			TCHAR_TO_UTF8(*PathCopy), CtxParams);
 
 		// Return to game thread to update state
-		AsyncTask(ENamedThreads::GameThread, [this, Ctx]()
+		AsyncTask(ENamedThreads::GameThread, [WeakThis, Ctx]()
 		{
+			UWhisperSubsystem* GameSelf = WeakThis.Get();
+			if (!GameSelf || GameSelf->bShuttingDown)
+			{
+				// Subsystem already gone — free the context we just loaded
+				if (Ctx)
+				{
+					whisper_free(Ctx);
+				}
+				return;
+			}
+
 			if (Ctx)
 			{
-				WhisperCtx = Ctx;
-				SetStatus(EWhisperStatus::Ready);
+				GameSelf->WhisperCtx = Ctx;
+				GameSelf->SetStatus(EWhisperStatus::Ready);
 				UE_LOG(LogWhisperASR, Log, TEXT("Whisper model loaded successfully."));
-				OnModelLoaded.Broadcast(true);
+				GameSelf->OnModelLoaded.Broadcast(true);
 			}
 			else
 			{
-				SetStatus(EWhisperStatus::Error);
+				GameSelf->SetStatus(EWhisperStatus::Error);
 				UE_LOG(LogWhisperASR, Error, TEXT("Failed to load Whisper model."));
-				OnModelLoaded.Broadcast(false);
+				GameSelf->OnModelLoaded.Broadcast(false);
 			}
 		});
 	});
+}
+
+/** Locate the FANTASIA plugin base directory via IPluginManager. */
+static FString GetFantasiaPluginBaseDir()
+{
+	TSharedPtr<IPlugin> Plugin = IPluginManager::Get().FindPlugin(TEXT("FANTASIA"));
+	if (Plugin.IsValid())
+	{
+		return Plugin->GetBaseDir();
+	}
+	// Fallback: assume project-level Plugins/FANTASIA
+	return FPaths::Combine(FPaths::ProjectPluginsDir(), TEXT("FANTASIA"));
 }
 
 void UWhisperSubsystem::LoadModelBySize(EWhisperModelSize Size)
@@ -162,6 +217,31 @@ void UWhisperSubsystem::LoadModelBySize(EWhisperModelSize Size)
 	LoadModel(FullPath);
 }
 
+void UWhisperSubsystem::LoadModelByName(const FString& ModelFileName)
+{
+	const FString PluginDir = GetFantasiaPluginBaseDir();
+
+	// Search the standard model directories for the given filename
+	TArray<FString> SearchDirs;
+	SearchDirs.Add(FPaths::Combine(PluginDir, TEXT("Resources")));
+	SearchDirs.Add(FPaths::Combine(PluginDir, TEXT("Content"), TEXT("Models")));
+	SearchDirs.Add(FPaths::Combine(FPaths::ProjectContentDir(), TEXT("WhisperModels")));
+
+	for (const FString& Dir : SearchDirs)
+	{
+		FString FullPath = FPaths::Combine(Dir, ModelFileName);
+		if (FPaths::FileExists(FullPath))
+		{
+			LoadModel(FullPath);
+			return;
+		}
+	}
+
+	UE_LOG(LogWhisperASR, Error, TEXT("Model file '%s' not found in any search directory."), *ModelFileName);
+	SetStatus(EWhisperStatus::Error);
+	OnModelLoaded.Broadcast(false);
+}
+
 void UWhisperSubsystem::UnloadModel()
 {
 	if (WhisperCtx)
@@ -179,6 +259,15 @@ void UWhisperSubsystem::UnloadModel()
 bool UWhisperSubsystem::IsModelLoaded() const
 {
 	return WhisperCtx != nullptr && CurrentStatus == EWhisperStatus::Ready;
+}
+
+bool UWhisperSubsystem::IsGPUSupported()
+{
+#if FANTASIA_WITH_CUDA
+	return true;
+#else
+	return false;
+#endif
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -337,10 +426,11 @@ FWhisperResult UWhisperSubsystem::RunInference(const TArray<float>& Samples,
 	// Build whisper_full_params
 	whisper_full_params Params = whisper_full_default_params(WHISPER_SAMPLING_GREEDY);
 
-	// Thread count
+	// Thread count — use physical cores only. Hyperthreads share SIMD
+	// execution units and actually slow down ggml's vectorized loops.
 	Params.n_threads = (Config.NumThreads > 0)
 		? Config.NumThreads
-		: FMath::Max(1, static_cast<int>(FPlatformMisc::NumberOfCoresIncludingHyperthreads()) - 1);
+		: FMath::Max(1, static_cast<int>(FPlatformMisc::NumberOfCores()));
 
 	// Task
 	Params.translate = (Config.Task == EWhisperTask::Translate);
@@ -647,19 +737,17 @@ FString UWhisperSubsystem::LanguageToString(EWhisperLanguage Language)
 
 FString UWhisperSubsystem::GetDefaultModelDirectory()
 {
-	// Search several standard locations in order of priority
+	const FString PluginDir = GetFantasiaPluginBaseDir();
 
 	// 1. Plugin Resources/ folder (ships with the plugin)
-	FString ResourcesDir = FPaths::Combine(
-		FPaths::ProjectPluginsDir(), TEXT("WhisperASR"), TEXT("Resources"));
+	FString ResourcesDir = FPaths::Combine(PluginDir, TEXT("Resources"));
 	if (FPaths::DirectoryExists(ResourcesDir))
 	{
 		return ResourcesDir;
 	}
 
 	// 2. Plugin Content/Models/
-	FString ContentDir = FPaths::Combine(
-		FPaths::ProjectPluginsDir(), TEXT("WhisperASR"), TEXT("Content"), TEXT("Models"));
+	FString ContentDir = FPaths::Combine(PluginDir, TEXT("Content"), TEXT("Models"));
 	if (FPaths::DirectoryExists(ContentDir))
 	{
 		return ContentDir;
