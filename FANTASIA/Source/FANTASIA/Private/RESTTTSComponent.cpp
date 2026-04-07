@@ -9,7 +9,7 @@ void URESTTTSComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	isPlaying.store(true);
+	bIsPlaying.store(true);
 
 	AsyncTask(ENamedThreads::AnyHiPriThreadNormalTask, [this]()
 	{
@@ -17,28 +17,28 @@ void URESTTTSComponent::BeginPlay()
 		outData.Reserve(A2F_STREAMING_BATCH_SIZE);
 		float item;
 
-		while (isPlaying.load(std::memory_order_relaxed))
+		while (bIsPlaying.load(std::memory_order_relaxed))
 		{
 			ConsumerWakeEvent->Wait(50);
 			ConsumerWakeEvent->Reset();
 
-			if (needsFlush.load(std::memory_order_acquire))
+			if (bNeedsFlush.load(std::memory_order_acquire))
 			{
-				while (sendData.Dequeue(item)) {}
+				while (SendData.Dequeue(item)) {}
 				outData.Empty();
-				bufferOpen.store(false);
-				needsFlush.store(false, std::memory_order_release);
+				bBufferOpen.store(false);
+				bNeedsFlush.store(false, std::memory_order_release);
 				continue;
 			}
 
-			if (!sendData.IsEmpty())
-				bufferOpen.store(true);
+			if (!SendData.IsEmpty())
+				bBufferOpen.store(true);
 
-			if (usingStreamingBuffer.load(std::memory_order_acquire) && sendData.Dequeue(item))
+			if (bUsingStreamingBuffer.load(std::memory_order_acquire) && SendData.Dequeue(item))
 			{
 				outData.Add(item);
 
-				while (outData.Num() < A2F_STREAMING_BATCH_SIZE && sendData.Dequeue(item))
+				while (outData.Num() < A2F_STREAMING_BATCH_SIZE && SendData.Dequeue(item))
 				{
 					outData.Add(item);
 				}
@@ -51,15 +51,15 @@ void URESTTTSComponent::BeginPlay()
 					outData.Empty();
 				}
 			}
-			else if (!usingStreamingBuffer.load(std::memory_order_acquire) && bufferOpen.load())
+			else if (!bUsingStreamingBuffer.load(std::memory_order_acquire) && bBufferOpen.load())
 			{
-				while (sendData.Dequeue(item))
+				while (SendData.Dequeue(item))
 					outData.Add(item);
 				FACERuntimeModule::Get().AnimateFromAudioSamples(
 					A2Fpointer, outData, 1, 16000, true,
 					EmotionParameters, A2FParameters, A2FProvider);
 				outData.Empty();
-				bufferOpen.store(false);
+				bBufferOpen.store(false);
 			}
 		}
 	});
@@ -69,7 +69,7 @@ void URESTTTSComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
 	Super::EndPlay(EndPlayReason);
 
-	isPlaying.store(false);
+	bIsPlaying.store(false);
 	ConsumerWakeEvent->Trigger();
 }
 
@@ -81,24 +81,24 @@ void URESTTTSComponent::TickComponent(float DeltaTime, ELevelTick TickType, FAct
 	if (bSynthesisResultReady.load(std::memory_order_acquire))
 	{
 		bSynthesisResultReady.store(false, std::memory_order_relaxed);
-		SynthesisReady.Broadcast(idSynthesisReady);
-		idSynthesisReady.Empty();
+		SynthesisReady.Broadcast(IdSynthesisReady);
+		IdSynthesisReady.Empty();
 	}
 
 	if (bPartialResultReady.load(std::memory_order_acquire))
 	{
 		bPartialResultReady.store(false, std::memory_order_relaxed);
-		PartialSynthesisReady.Broadcast(idPartialSynthesisReady);
-		idPartialSynthesisReady.Empty();
+		PartialSynthesisReady.Broadcast(IdPartialSynthesisReady);
+		IdPartialSynthesisReady.Empty();
 	}
 }
 
-void URESTTTSComponent::getResult(FTTSData response, FString id)
+void URESTTTSComponent::HandleResult(FTTSData response, FString id)
 {
-	if (IsValid(A2Fpointer) && usingStreamingBuffer.load())
+	if (IsValid(A2Fpointer) && bUsingStreamingBuffer.load())
 	{
-		usingStreamingBuffer.store(false);
-		needsFlush.store(true, std::memory_order_release);
+		bUsingStreamingBuffer.store(false);
+		bNeedsFlush.store(true, std::memory_order_release);
 		ConsumerWakeEvent->Trigger();
 	}
 
@@ -136,12 +136,12 @@ void URESTTTSComponent::getResult(FTTSData response, FString id)
 		FScopeLock Lock(&BufferMutex);
 		Buffer.FindOrAdd(id) = MoveTemp(response);
 	}
-	idSynthesisReady = id;
+	IdSynthesisReady = id;
 	// Release ensures Buffer write is visible before game thread reads it via acquire in TickComponent
 	bSynthesisResultReady.store(true, std::memory_order_release);
 }
 
-void URESTTTSComponent::getPartialResult(TArray<uint8> response, FString id)
+void URESTTTSComponent::HandlePartialResult(TArray<uint8> response, FString id)
 {
 	const int32 NumBytes = response.Num();
 	if (NumBytes < 2) return;
@@ -149,18 +149,18 @@ void URESTTTSComponent::getPartialResult(TArray<uint8> response, FString id)
 	const uint8* RawData = response.GetData();
 	for (int32 i = 0; i <= NumBytes - 2; i += 2)
 	{
-		sendData.Enqueue(static_cast<float>(*reinterpret_cast<const int16*>(RawData + i)) / 32768.0f);
+		SendData.Enqueue(static_cast<float>(*reinterpret_cast<const int16*>(RawData + i)) / 32768.0f);
 	}
 
-	if (IsValid(A2Fpointer) && !usingStreamingBuffer.load() && !bufferOpen.load())
+	if (IsValid(A2Fpointer) && !bUsingStreamingBuffer.load() && !bBufferOpen.load())
 	{
-		usingStreamingBuffer.store(true);
-		bufferOpen.store(true);
+		bUsingStreamingBuffer.store(true);
+		bBufferOpen.store(true);
 	}
 
 	ConsumerWakeEvent->Trigger();
 
-	idPartialSynthesisReady = id;
+	IdPartialSynthesisReady = id;
 	bPartialResultReady.store(true, std::memory_order_release);
 }
 
@@ -214,7 +214,7 @@ void URESTTTSComponent::IssueHttpRequest(FTTSSynthesisRequest Request)
 					TArray<uint8> SynthResult(&Content[StreamingNum], Aligned);
 					StreamingNum += Aligned;
 					PreviousBytes = BytesReceived;
-					getPartialResult(SynthResult, RequestID);
+					HandlePartialResult(SynthResult, RequestID);
 				}
 			}
 		});
@@ -231,13 +231,13 @@ void URESTTTSComponent::IssueHttpRequest(FTTSSynthesisRequest Request)
 				TArray<uint8> Remaining(&Content[StreamingNum], Content.Num() - StreamingNum);
 				PreviousBytes = 0;
 				StreamingNum = 0;
-				getPartialResult(Remaining, RequestID);
+				HandlePartialResult(Remaining, RequestID);
 			}
 
 			FTTSData SynthResult;
 			SynthResult.AudioData = Content;
 			SynthResult.ssml = RequestText;
-			getResult(SynthResult, RequestID);
+			HandleResult(SynthResult, RequestID);
 		}
 		else
 		{

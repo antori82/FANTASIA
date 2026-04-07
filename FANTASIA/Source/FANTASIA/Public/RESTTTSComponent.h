@@ -38,7 +38,7 @@ protected:
 	virtual FTTSSynthesisRequest BuildSynthesisRequest(const FString& Text, const FString& ID);
 
 	/** Extract additional data (word timing, lipsync, notifies) from the raw HTTP response.
-	 *  Called in getResult after WAV detection and resampling.
+	 *  Called in HandleResult after WAV detection and resampling.
 	 *  Base implementation is a no-op. */
 	virtual void ProcessResponse(const TArray<uint8>& RawResponse, FTTSData& OutResult);
 
@@ -57,14 +57,14 @@ private:
 
 	void IssueHttpRequest(FTTSSynthesisRequest Request);
 
-	FString idSynthesisReady;
+	FString IdSynthesisReady;
 	std::atomic<bool> bSynthesisResultReady{false};
 
-	FString idPartialSynthesisReady;
+	FString IdPartialSynthesisReady;
 	std::atomic<bool> bPartialResultReady{false};
 
-	void getResult(FTTSData response, FString id);
-	void getPartialResult(TArray<uint8> response, FString id);
+	void HandleResult(FTTSData Response, FString Id);
+	void HandlePartialResult(TArray<uint8> Response, FString Id);
 
 	/** Parse a WAV header. Returns true if data starts with RIFF/WAVE magic.
 	 *  On success, sets OutSampleRate and OutDataOffset (byte offset where PCM data begins). */
@@ -74,11 +74,11 @@ private:
 	 *  Takes raw pointer + byte count to avoid intermediate TArray copies. */
 	static TArray<uint8> ResampleTo16kHz(const uint8* PCMData, int32 NumBytes, int32 SourceRate, int32 NumChannels);
 
-	std::atomic<bool> usingStreamingBuffer{false};
-	std::atomic<bool> bufferOpen{false};
-	std::atomic<bool> isPlaying{false};
-	std::atomic<bool> needsFlush{false};
-	TQueue<float, EQueueMode::Spsc> sendData;
+	std::atomic<bool> bUsingStreamingBuffer{false};
+	std::atomic<bool> bBufferOpen{false};
+	std::atomic<bool> bIsPlaying{false};
+	std::atomic<bool> bNeedsFlush{false};
+	TQueue<float, EQueueMode::Spsc> SendData;
 	FEventRef ConsumerWakeEvent{EEventMode::ManualReset};
 
 public:

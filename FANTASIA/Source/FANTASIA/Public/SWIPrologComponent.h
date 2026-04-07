@@ -20,11 +20,11 @@ private:
 	FDelegateHandle SolutionAvailableHandle;
 	FDelegateHandle AllSolutionsHandle;
 	FDelegateHandle QueryErrorHandle;
-	SWIPrologThread* handle = nullptr;
+	SWIPrologThread* ThreadHandle = nullptr;
 
-	void inferenceComplete();
-	void onAllSolutions(TArray<USWIPrologSolution*> solutions);
-	void onQueryError(FString errorMessage);
+	void HandleInferenceComplete();
+	void HandleAllSolutions(TArray<USWIPrologSolution*> Solutions);
+	void HandleQueryError(FString ErrorMessage);
 
 public:
 	// Sets default values for this component's properties

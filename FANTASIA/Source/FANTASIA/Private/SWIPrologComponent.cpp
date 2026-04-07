@@ -10,47 +10,47 @@ USWIPrologComponent::USWIPrologComponent()
 }
 
 void USWIPrologComponent::SWIPLsubmitQuery(USWIPrologTerm* inRuleOrFactTerm) {
-	handle->submitQuery(inRuleOrFactTerm);
+	ThreadHandle->submitQuery(inRuleOrFactTerm);
 }
 
 void USWIPrologComponent::SWIPLqueryString(const FString& Query) {
-	handle->submitQueryString(Query);
+	ThreadHandle->submitQueryString(Query);
 }
 
 void USWIPrologComponent::SWIPLfindAll(const FString& Query) {
-	handle->submitFindAll(Query);
+	ThreadHandle->submitFindAll(Query);
 }
 
 void USWIPrologComponent::SWIPLassert(USWIPrologObject* prologObject, bool asFirstClause) {
-	handle->SWIPLassert(prologObject, asFirstClause);
+	ThreadHandle->SWIPLassert(prologObject, asFirstClause);
 }
 
 void USWIPrologComponent::SWIPLretract(USWIPrologTerm* ruleOrFactTerm) {
-	handle->SWIPLretract(ruleOrFactTerm);
+	ThreadHandle->SWIPLretract(ruleOrFactTerm);
 }
 
 void USWIPrologComponent::openPrologFile(const FString& filename) {
-	handle->openPrologFile(filename);
+	ThreadHandle->openPrologFile(filename);
 }
 
 void USWIPrologComponent::SWIPLconsultString(const FString& PrologCode) {
-	handle->consultString(PrologCode);
+	ThreadHandle->consultString(PrologCode);
 }
 
-void USWIPrologComponent::inferenceComplete() {
-	SolutionAvailable.Broadcast(handle->currentSolution);
+void USWIPrologComponent::HandleInferenceComplete() {
+	SolutionAvailable.Broadcast(ThreadHandle->currentSolution);
 }
 
-void USWIPrologComponent::onAllSolutions(TArray<USWIPrologSolution*> solutions) {
+void USWIPrologComponent::HandleAllSolutions(TArray<USWIPrologSolution*> solutions) {
 	AllSolutionsReady.Broadcast(solutions);
 }
 
-void USWIPrologComponent::onQueryError(FString errorMessage) {
+void USWIPrologComponent::HandleQueryError(FString errorMessage) {
 	QueryFailed.Broadcast(errorMessage);
 }
 
 void USWIPrologComponent::nextSolution() {
-	handle->requestNextSolution();
+	ThreadHandle->requestNextSolution();
 }
 
 // Called when the game starts
@@ -58,16 +58,16 @@ void USWIPrologComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (!handle)
+	if (!ThreadHandle)
 	{
 		SolutionAvailableDelegate InferenceAvailableSubscriber;
-		InferenceAvailableSubscriber.BindUObject(this, &USWIPrologComponent::inferenceComplete);
+		InferenceAvailableSubscriber.BindUObject(this, &USWIPrologComponent::HandleInferenceComplete);
 
-		handle = SWIPrologThread::setup();
-		SolutionAvailableHandle = handle->SolutionAvailableSubscribeUser(InferenceAvailableSubscriber);
+		ThreadHandle = SWIPrologThread::setup();
+		SolutionAvailableHandle = ThreadHandle->SolutionAvailableSubscribeUser(InferenceAvailableSubscriber);
 
-		AllSolutionsHandle = handle->AllSolutionsReady.AddUObject(this, &USWIPrologComponent::onAllSolutions);
-		QueryErrorHandle = handle->QueryError.AddUObject(this, &USWIPrologComponent::onQueryError);
+		AllSolutionsHandle = ThreadHandle->AllSolutionsReady.AddUObject(this, &USWIPrologComponent::HandleAllSolutions);
+		QueryErrorHandle = ThreadHandle->QueryError.AddUObject(this, &USWIPrologComponent::HandleQueryError);
 	}
 }
 
@@ -75,10 +75,10 @@ void USWIPrologComponent::BeginPlay()
 void USWIPrologComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
 	Super::EndPlay(EndPlayReason);
-	if (handle)
+	if (ThreadHandle)
 	{
-		handle->SolutionAvailableUnsubscribeUser(SolutionAvailableHandle);
-		handle->AllSolutionsReady.Remove(AllSolutionsHandle);
-		handle->QueryError.Remove(QueryErrorHandle);
+		ThreadHandle->SolutionAvailableUnsubscribeUser(SolutionAvailableHandle);
+		ThreadHandle->AllSolutionsReady.Remove(AllSolutionsHandle);
+		ThreadHandle->QueryError.Remove(QueryErrorHandle);
 	}
 }
