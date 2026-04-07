@@ -19,15 +19,23 @@ void ULangGraphComponent::OnLangGraphResponseReceived(FHttpRequestPtr Request, F
 		TSharedPtr<FJsonValue> JsonValue;
 		TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(Response->GetContentAsString());
 		FString checkRole;
-		GPTRoleType role;
+		GPTRoleType role = GPTRoleType::ASSISTANT;
 
 		if (FJsonSerializer::Deserialize(Reader, JsonValue))
 		{
-			FString temp = Response->GetContentAsString();
 			const TSharedPtr<FJsonObject>* FileMessageObject;
 
 			if (JsonValue->TryGetObject(FileMessageObject)) {
-				checkRole = FileMessageObject->Get()->GetArrayField(TEXT("messages")).Last()->AsObject()->GetStringField(TEXT("type"));
+				const TArray<TSharedPtr<FJsonValue>>& messages = FileMessageObject->Get()->GetArrayField(TEXT("messages"));
+
+				if (messages.Num() == 0)
+				{
+					// Pipeline completed with no message content — signal completion with empty string
+					IncomingLangGraphResponse.Broadcast(FString(), GPTRoleType::ASSISTANT);
+					return;
+				}
+
+				checkRole = messages.Last()->AsObject()->GetStringField(TEXT("type"));
 
 				if (checkRole == "system")
 					role = GPTRoleType::SYSTEM;
@@ -37,8 +45,13 @@ void ULangGraphComponent::OnLangGraphResponseReceived(FHttpRequestPtr Request, F
 					role = GPTRoleType::FUNCTION;
 				else if (checkRole == "human")
 					role = GPTRoleType::USER;
-				
-				IncomingLangGraphResponse.Broadcast(FileMessageObject->Get()->GetArrayField(TEXT("messages")).Last()->AsObject()->GetStringField(TEXT("content")), role);
+
+				IncomingLangGraphResponse.Broadcast(messages.Last()->AsObject()->GetStringField(TEXT("content")), role);
+			}
+			else
+			{
+				// Valid JSON but no object — treat as empty completion
+				IncomingLangGraphResponse.Broadcast(FString(), GPTRoleType::ASSISTANT);
 			}
 		}
 	}
@@ -74,9 +87,23 @@ void ULangGraphComponent::OnLangGraphPartialResponseReceived(FHttpRequestPtr req
 				TArray<FString> keys;
 				FileMessageObject->Get()->Values.GetKeys(keys);
 
-				FString key = keys[0];
+				if (keys.Num() == 0)
+				{
+					IncomingLangGraphStreamResponse.Broadcast(FString(), GPTRoleType::ASSISTANT, true);
+					return;
+				}
 
-				checkRole = FileMessageObject->Get()->GetObjectField(key)->GetArrayField(TEXT("messages"))[0]->AsObject()->GetStringField(TEXT("type"));
+				FString key = keys[0];
+				const TArray<TSharedPtr<FJsonValue>>& messages = FileMessageObject->Get()->GetObjectField(key)->GetArrayField(TEXT("messages"));
+
+				if (messages.Num() == 0)
+				{
+					// Stream update with no messages — signal completion
+					IncomingLangGraphStreamResponse.Broadcast(FString(), GPTRoleType::ASSISTANT, true);
+					return;
+				}
+
+				checkRole = messages[0]->AsObject()->GetStringField(TEXT("type"));
 
 				if (checkRole == "system")
 					role = GPTRoleType::SYSTEM;
@@ -87,7 +114,7 @@ void ULangGraphComponent::OnLangGraphPartialResponseReceived(FHttpRequestPtr req
 				else if (checkRole == "human")
 					role = GPTRoleType::USER;
 
-				IncomingLangGraphStreamResponse.Broadcast(FileMessageObject->Get()->GetObjectField(key)->GetArrayField(TEXT("messages"))[0]->AsObject()->GetStringField(TEXT("content")), role, role == GPTRoleType::ASSISTANT);
+				IncomingLangGraphStreamResponse.Broadcast(messages[0]->AsObject()->GetStringField(TEXT("content")), role, role == GPTRoleType::ASSISTANT);
 			}
 		}
 	}
