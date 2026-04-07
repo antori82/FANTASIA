@@ -11,16 +11,6 @@ void URESTTTSComponent::BeginPlay()
 
 	isPlaying.store(true);
 
-	FTTSResultAvailableDelegate TTSResultSubscriber;
-	FTTSPartialResultAvailableDelegate TTSPartialResultSubscriber;
-
-	TTSResultSubscriber.BindUObject(this, &URESTTTSComponent::getResult);
-	TTSPartialResultSubscriber.BindUObject(this, &URESTTTSComponent::getPartialResult);
-
-	ThreadHandle = new RESTTTSThread();
-	TTSResultAvailableHandle = ThreadHandle->TTSResultAvailableSubscribeUser(TTSResultSubscriber);
-	TTSPartialResultAvailableHandle = ThreadHandle->TTSPartialResultAvailableSubscribeUser(TTSPartialResultSubscriber);
-
 	AsyncTask(ENamedThreads::AnyHiPriThreadNormalTask, [this]()
 	{
 		TArray<float> outData;
@@ -81,13 +71,6 @@ void URESTTTSComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 
 	isPlaying.store(false);
 	ConsumerWakeEvent->Trigger();
-
-	if (ThreadHandle)
-	{
-		ThreadHandle->EnsureCompletion();
-		delete ThreadHandle;
-		ThreadHandle = nullptr;
-	}
 }
 
 void URESTTTSComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
@@ -183,7 +166,86 @@ void URESTTTSComponent::getPartialResult(TArray<uint8> response, FString id)
 
 void URESTTTSComponent::TTSSynthesize(FString text, FString id)
 {
-	ThreadHandle->Synthesize(BuildSynthesisRequest(text, id));
+	IssueHttpRequest(BuildSynthesisRequest(text, id));
+}
+
+void URESTTTSComponent::IssueHttpRequest(FTTSSynthesisRequest Request)
+{
+	TSharedRef<IHttpRequest, ESPMode::ThreadSafe> HttpRequest = FHttpModule::Get().CreateRequest();
+
+	HttpRequest->SetURL(Request.URL);
+
+	if (Request.Body.IsEmpty())
+	{
+		HttpRequest->SetVerb("GET");
+	}
+	else
+	{
+		HttpRequest->SetVerb("POST");
+		HttpRequest->SetContentAsString(Request.Body);
+	}
+
+	for (const auto& Header : Request.Headers)
+	{
+		HttpRequest->SetHeader(Header.Key, Header.Value);
+	}
+
+	const FString RequestID = Request.ID;
+	const FString RequestText = Request.OriginalText;
+	const bool bIsStreaming = Request.bStreaming;
+
+	PreviousBytes = 0;
+	StreamingNum = 0;
+
+	if (bIsStreaming)
+	{
+		HttpRequest->OnRequestProgress64().BindLambda([this, RequestID](FHttpRequestPtr Req, int64 BytesSent, int64 BytesReceived)
+		{
+			if (BytesReceived > 0 && PreviousBytes < BytesReceived && Req->GetResponse().IsValid())
+			{
+				const TArray<uint8>& Content = Req->GetResponse()->GetContent();
+				const int64 len = Content.Num();
+
+				if (StreamingNum < len)
+				{
+					const int64 Available = len - StreamingNum;
+					const int64 Aligned = Available - (Available & 1);
+
+					TArray<uint8> SynthResult(&Content[StreamingNum], Aligned);
+					StreamingNum += Aligned;
+					PreviousBytes = BytesReceived;
+					getPartialResult(SynthResult, RequestID);
+				}
+			}
+		});
+	}
+
+	HttpRequest->OnProcessRequestComplete().BindLambda([this, RequestID, RequestText, bIsStreaming](FHttpRequestPtr Req, FHttpResponsePtr Response, bool bWasSuccessful)
+	{
+		if (bWasSuccessful && Response.IsValid())
+		{
+			const TArray<uint8>& Content = Response->GetContent();
+
+			if (bIsStreaming && Content.Num() > StreamingNum)
+			{
+				TArray<uint8> Remaining(&Content[StreamingNum], Content.Num() - StreamingNum);
+				PreviousBytes = 0;
+				StreamingNum = 0;
+				getPartialResult(Remaining, RequestID);
+			}
+
+			FTTSData SynthResult;
+			SynthResult.AudioData = Content;
+			SynthResult.ssml = RequestText;
+			getResult(SynthResult, RequestID);
+		}
+		else
+		{
+			UE_LOG(LogTemp, Error, TEXT("Connection to the TTS endpoint failed."));
+		}
+	});
+
+	HttpRequest->ProcessRequest();
 }
 
 FTTSSynthesisRequest URESTTTSComponent::BuildSynthesisRequest(const FString& Text, const FString& ID)

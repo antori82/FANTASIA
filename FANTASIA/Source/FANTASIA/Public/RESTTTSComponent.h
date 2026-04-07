@@ -4,12 +4,22 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "FANTASIATypes.h"
-#include "RESTTTSThread.h"
+#include "Http.h"
 #include <atomic>
 #include "Runtime/Engine/Classes/Sound/SoundWaveProcedural.h"
 #include "ACERuntimeModule.h"
 #include "ACEAudioCurveSourceComponent.h"
 #include "RESTTTSComponent.generated.h"
+
+struct FTTSSynthesisRequest
+{
+	FString URL;
+	TMap<FString, FString> Headers;
+	FString Body;           // empty = GET request, non-empty = POST with this body
+	FString ID;
+	FString OriginalText;
+	bool bStreaming = false;
+};
 
 static constexpr int32 A2F_STREAMING_BATCH_SIZE = 100;
 
@@ -42,9 +52,10 @@ private:
 	TMap<FString, FTTSData> Buffer;
 	FCriticalSection BufferMutex;
 
-	RESTTTSThread* ThreadHandle = nullptr;
-	FDelegateHandle TTSResultAvailableHandle;
-	FDelegateHandle TTSPartialResultAvailableHandle;
+	int64 StreamingNum = 0;
+	int64 PreviousBytes = 0;
+
+	void IssueHttpRequest(FTTSSynthesisRequest Request);
 
 	FString idSynthesisReady;
 	std::atomic<bool> bSynthesisResultReady{false};
