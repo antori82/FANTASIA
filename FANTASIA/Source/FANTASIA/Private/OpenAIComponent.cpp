@@ -100,6 +100,7 @@ void UOpenAIComponent::OnGPTPartialResponseReceived(FHttpRequestPtr request, uin
 }
 
 void UOpenAIComponent::getGPTCompletion(TArray<FChatTurn> messages, FString apiMethod, bool stream) {
+	UE_LOG(LogTemp, Warning, TEXT("[OpenAIComponent] This component is deprecated. Please use OpenAICompatibleComponent instead."));
 	FHttpModule* Http = &FHttpModule::Get();
 	FString payload;
 	TSharedRef<IHttpRequest, ESPMode::ThreadSafe> Request = Http->CreateRequest();

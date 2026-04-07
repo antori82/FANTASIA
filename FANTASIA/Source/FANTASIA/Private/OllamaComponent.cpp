@@ -106,6 +106,7 @@ void UOllamaComponent::OnGPTPartialResponseReceived(FHttpRequestPtr request, uin
 }
 
 void UOllamaComponent::getGPTCompletion(TArray<FChatTurn> messages, FString apiMethod, bool stream) {
+	UE_LOG(LogTemp, Warning, TEXT("[OllamaComponent] This component is deprecated. Please use OpenAICompatibleComponent instead."));
 	FHttpModule* Http = &FHttpModule::Get();
 	FString payload;
 	TSharedRef<IHttpRequest, ESPMode::ThreadSafe> Request = Http->CreateRequest();

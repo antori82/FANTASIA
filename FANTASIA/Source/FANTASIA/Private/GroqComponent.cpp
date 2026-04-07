@@ -98,6 +98,7 @@ void UGroqComponent::OnGPTPartialResponseReceived(FHttpRequestPtr request, uint6
 }
 
 void UGroqComponent::getGPTCompletion(TArray<FChatTurn> messages, FString apiMethod, bool stream) {
+	UE_LOG(LogTemp, Warning, TEXT("[GroqComponent] This component is deprecated. Please use OpenAICompatibleComponent instead."));
 	FHttpModule* Http = &FHttpModule::Get();
 	FString payload;
 	TSharedRef<IHttpRequest, ESPMode::ThreadSafe> Request = Http->CreateRequest();

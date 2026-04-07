@@ -29,7 +29,7 @@ public:
 	UPROPERTY(BlueprintAssignable, BlueprintCallable)
 	FIncomingGPTResponseEvent IncomingGPTResponse;
 
-	UFUNCTION(BlueprintCallable, meta = (DisplayName = "GetChatGPTCompletion", AutoCreateRefTerm = "messages"), Category = "GPT")
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "GetChatGPTCompletion", AutoCreateRefTerm = "messages", DeprecatedFunction, DeprecationMessage = "Use OpenAICompatibleComponent instead."), Category = "GPT")
 	void getGPTCompletion(TArray<FChatTurn> messages, FString apiMethod = "gpt-4-turbo-preview", bool stream = false);
 
 	// Called every frame

@@ -33,7 +33,7 @@ public:
 	UPROPERTY(BlueprintAssignable, BlueprintCallable)
 	FIncomingGPTStreamResponseEvent IncomingGPTStreamResponse;
 
-	UFUNCTION(BlueprintCallable, meta = (DisplayName = "GetGroqGPTCompletion", AutoCreateRefTerm = "messages"), Category = "GPT")
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "GetGroqGPTCompletion", AutoCreateRefTerm = "messages", DeprecatedFunction, DeprecationMessage = "Use OpenAICompatibleComponent instead."), Category = "GPT")
 	void getGPTCompletion(TArray<FChatTurn> messages, FString apiMethod = "llama3-8b-8192", bool stream = false);
 
 	// Called every frame
