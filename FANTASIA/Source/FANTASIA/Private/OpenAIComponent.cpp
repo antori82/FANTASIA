@@ -1,13 +1,21 @@
+/**
+ * @file OpenAIComponent.cpp
+ * @brief Implementation of the deprecated UOpenAIComponent.
+ * @deprecated Prefer UOpenAICompatibleComponent for all new work.
+ * @see UOpenAICompatibleComponent
+ */
+
 // Fill out your copyright notice in the Description page of Project Settings.
 #include "OpenAIComponent.h"
 #include "Misc/Base64.h"
 
-// Sets default values for this component's properties
 UOpenAIComponent::UOpenAIComponent() {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = false;
 }
+
+// ── Non-streaming response handler ──────────────────────────────────────────
 
 void UOpenAIComponent::OnGPTResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful) {
 	if (bWasSuccessful) {
@@ -43,6 +51,8 @@ void UOpenAIComponent::OnGPTResponseReceived(FHttpRequestPtr Request, FHttpRespo
 		}
 	}
 }
+
+// ── Streaming (SSE) response handler ────────────────────────────────────────
 
 void UOpenAIComponent::OnGPTPartialResponseReceived(FHttpRequestPtr request, uint64 bytesSent, uint64 bytesReceived) {
 	FHttpResponsePtr test;
@@ -98,6 +108,8 @@ void UOpenAIComponent::OnGPTPartialResponseReceived(FHttpRequestPtr request, uin
 		IncomingGPTStreamResponse.Broadcast(outFragment, role, endStream == "stop");
 	}
 }
+
+// ── Chat-completion request ─────────────────────────────────────────────────
 
 void UOpenAIComponent::getGPTCompletion(TArray<FChatTurn> messages, FString apiMethod, bool stream) {
 	UE_LOG(LogTemp, Warning, TEXT("[OpenAIComponent] This component is deprecated. Please use OpenAICompatibleComponent instead."));

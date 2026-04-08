@@ -1,9 +1,16 @@
+/**
+ * @file OllamaComponent.cpp
+ * @brief Implementation of the deprecated UOllamaComponent.
+ * @deprecated Prefer UOpenAICompatibleComponent with an Ollama preset.
+ * @see UOpenAICompatibleComponent
+ */
+
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "OllamaComponent.h"
 #include "Misc/Base64.h"
-// Sets default values for this component's properties
+
 UOllamaComponent::UOllamaComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
@@ -14,6 +21,8 @@ UOllamaComponent::UOllamaComponent()
 }
 
 
+
+// ── Non-streaming response handler ──────────────────────────────────────────
 
 void UOllamaComponent::OnGPTResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful) {
 	if (bWasSuccessful) {
@@ -49,6 +58,8 @@ void UOllamaComponent::OnGPTResponseReceived(FHttpRequestPtr Request, FHttpRespo
 		}
 	}
 }
+
+// ── Streaming response handler (Ollama native format) ───────────────────────
 
 void UOllamaComponent::OnGPTPartialResponseReceived(FHttpRequestPtr request, uint64 bytesSent, uint64 bytesReceived) {
 	FHttpResponsePtr test;
@@ -104,6 +115,8 @@ void UOllamaComponent::OnGPTPartialResponseReceived(FHttpRequestPtr request, uin
 		IncomingGPTStreamResponse.Broadcast(outFragment, role, endStream);
 	}
 }
+
+// ── Chat-completion request ─────────────────────────────────────────────────
 
 void UOllamaComponent::getGPTCompletion(TArray<FChatTurn> messages, FString apiMethod, bool stream) {
 	UE_LOG(LogTemp, Warning, TEXT("[OllamaComponent] This component is deprecated. Please use OpenAICompatibleComponent instead."));

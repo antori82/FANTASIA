@@ -1,3 +1,9 @@
+/**
+ * @file MathUtilitiesTests.cpp
+ * @brief Tests for math utilities: Linspace point generation and
+ *        UKernelDensityEstimator evaluation and PDF output.
+ */
+
 #include "Misc/AutomationTest.h"
 #include "MathUtilities.h"
 

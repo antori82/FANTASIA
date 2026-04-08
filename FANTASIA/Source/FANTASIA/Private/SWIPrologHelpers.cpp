@@ -1,3 +1,8 @@
+/**
+ * @file SWIPrologHelpers.cpp
+ * @brief Implementation of Blueprint helper functions for constructing Prolog term objects.
+ */
+
 #include "SWIPrologHelpers.h"
 
 USWIPrologAtom* USWIPrologHelpers::MakeAtom(const FString& Value)

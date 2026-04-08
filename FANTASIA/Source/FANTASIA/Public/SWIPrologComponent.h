@@ -1,3 +1,8 @@
+/**
+ * @file SWIPrologComponent.h
+ * @brief Unreal Engine actor component providing Blueprint access to an embedded SWI-Prolog engine.
+ */
+
 #pragma once
 
 #include "CoreMinimal.h"
@@ -6,28 +11,60 @@
 #include "SWIPrologThread.h"
 #include "SWIPrologComponent.generated.h"
 
+/** Delegate broadcast when a single Prolog solution becomes available. */
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FSolutionAvailableEvent, USWIPrologSolution*, solution);
+
+/** Delegate broadcast when all solutions for a FindAll query have been collected. */
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FAllSolutionsEvent, const TArray<USWIPrologSolution*>&, Solutions);
+
+/** Delegate broadcast when a Prolog query or operation fails with an error. */
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FQueryFailedEvent, FString, ErrorMessage);
 
+/**
+ * @brief Actor component that exposes SWI-Prolog logic programming to Blueprints.
+ *
+ * Attach this component to any actor to consult Prolog files, assert/retract
+ * facts and rules, submit queries, and receive solutions asynchronously via
+ * delegates. All Prolog work runs on a dedicated background thread managed by
+ * SWIPrologThread.
+ *
+ * @see SWIPrologThread
+ * @see USWIPrologHelpers
+ */
 UCLASS(ClassGroup = (SWIProlog), meta = (BlueprintSpawnableComponent), config = Game)
 class USWIPrologComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
+	// ── Private State ────────────────────────────────────────────────────
+
 private:
 
+	/** Handle for the single-solution delegate subscription. */
 	FDelegateHandle SolutionAvailableHandle;
+
+	/** Handle for the all-solutions delegate subscription. */
 	FDelegateHandle AllSolutionsHandle;
+
+	/** Handle for the query-error delegate subscription. */
 	FDelegateHandle QueryErrorHandle;
+
+	/** Owning pointer to the shared Prolog worker thread. */
 	SWIPrologThread* ThreadHandle = nullptr;
 
+	/** Callback invoked on the game thread when a single solution is ready. */
 	void HandleInferenceComplete();
+
+	/** Callback invoked on the game thread when all solutions have been collected. */
 	void HandleAllSolutions(TArray<USWIPrologSolution*> Solutions);
+
+	/** Callback invoked on the game thread when a query error occurs. */
 	void HandleQueryError(FString ErrorMessage);
 
+	// ── Public Interface ─────────────────────────────────────────────────
+
 public:
-	// Sets default values for this component's properties
+	/** Default constructor. Disables ticking. */
 	USWIPrologComponent();
 
 	/** Fired when a single solution is available (from SubmitQuery / NextSolution). */
@@ -74,10 +111,13 @@ public:
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Consult string"), Category = "SWIProlog")
 	void SWIPLconsultString(const FString& PrologCode);
 
+	// ── Lifecycle ────────────────────────────────────────────────────────
+
 protected:
-	// Called when the game starts
+	/** Initializes the Prolog thread and subscribes to its delegates. */
 	virtual void BeginPlay() override;
 
+	/** Unsubscribes from the Prolog thread delegates on teardown. */
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
 };

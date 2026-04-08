@@ -1,19 +1,23 @@
-﻿#pragma once
+﻿/**
+ * @file paramObject.h
+ * @brief Lightweight parameter container exposed to Blueprints.
+ */
+
+#pragma once
 
 #include "CoreMinimal.h"
 #include "paramObject.generated.h"
 
-
-//If you want this to appear in BP, make sure to use this instead
+/**
+ * A simple array-of-strings wrapper used to pass multi-valued parameters
+ * through Blueprint-accessible APIs (e.g. Neo4j query parameters).
+ */
 USTRUCT(BlueprintType)
 struct FparamValues
 {
 	GENERATED_BODY()
 
-	//Always make USTRUCT variables into UPROPERTY()
-	//    any non-UPROPERTY() struct vars are not replicated
-	
-	// So to simplify your life for later debugging, always use UPROPERTY()
+	/** The parameter values. */
 	UPROPERTY(BlueprintReadOnly)
 	TArray<FString> values;
 

@@ -1,9 +1,13 @@
+/**
+ * @file SWIPrologComponent.cpp
+ * @brief Implementation of USWIPrologComponent -- game-thread facade for SWI-Prolog operations.
+ */
+
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "SWIPrologComponent.h"
 
 
-// Sets default values for this component's properties
 USWIPrologComponent::USWIPrologComponent()
 {
 	PrimaryComponentTick.bCanEverTick = false;
@@ -37,6 +41,8 @@ void USWIPrologComponent::SWIPLconsultString(const FString& PrologCode) {
 	ThreadHandle->consultString(PrologCode);
 }
 
+// ── Delegate Callbacks (game thread) ─────────────────────────────────────────
+
 void USWIPrologComponent::HandleInferenceComplete() {
 	SolutionAvailable.Broadcast(ThreadHandle->currentSolution);
 }
@@ -53,7 +59,8 @@ void USWIPrologComponent::nextSolution() {
 	ThreadHandle->requestNextSolution();
 }
 
-// Called when the game starts
+// ── Lifecycle ────────────────────────────────────────────────────────────────
+
 void USWIPrologComponent::BeginPlay()
 {
 	Super::BeginPlay();
@@ -71,7 +78,6 @@ void USWIPrologComponent::BeginPlay()
 	}
 }
 
-// Called when the game ends
 void USWIPrologComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
 	Super::EndPlay(EndPlayReason);

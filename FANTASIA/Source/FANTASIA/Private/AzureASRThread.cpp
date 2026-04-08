@@ -1,3 +1,10 @@
+/**
+ * @file AzureASRThread.cpp
+ * @brief Implementation of AzureASRThread -- background Azure ASR recognition worker.
+ * @deprecated Part of the deprecated AzureASR pipeline. Will be removed after UE 5.7.
+ *             Use WhisperCaptureComponent for local ASR instead.
+ */
+
 #include "AzureASRThread.h"
 
 using namespace Microsoft::CognitiveServices::Speech;
@@ -72,6 +79,10 @@ void AzureASRThread::Shutdown() {
 	}
 }
 
+/**
+ * Subscribes to Recognizing/Recognized/Canceled/SessionStopped events,
+ * starts continuous recognition, and blocks until the session ends.
+ */
 void AzureASRThread::StartContinuousRecognition() {
 
 	// promise for synchronization of recognition end.
@@ -125,6 +136,7 @@ void AzureASRThread::StopContinuousRecognition() {
 	recognizer->StopContinuousRecognitionAsync().get();
 }
 
+/** Performs a single recognition call and broadcasts the result (or NOMATCH/CANCELLED). */
 void AzureASRThread::StartOneShotRecognition()
 {
 	auto result = recognizer->RecognizeOnceAsync().get();

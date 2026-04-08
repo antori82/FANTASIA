@@ -1,3 +1,9 @@
+/**
+ * @file LibSVMTests.cpp
+ * @brief Tests for ULibSVM: prediction without a model, training on linearly
+ *        separable data, and empty-sample edge case.
+ */
+
 #include "Misc/AutomationTest.h"
 #include "LibSVM.h"
 

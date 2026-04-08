@@ -1,10 +1,15 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+/**
+ * @file AWSPollyComponent.cpp
+ * @brief Implementation of UAWSPollyComponent -- Amazon Polly TTS actor component.
+ * @deprecated This component is deprecated and will be removed after switching to UE 5.7.
+ */
+
 #include "AWSPollyComponent.h"
 
 using namespace std;
 
-// Sets default values for this component's properties
 UAWSPollyComponent::UAWSPollyComponent() {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
@@ -12,14 +17,13 @@ UAWSPollyComponent::UAWSPollyComponent() {
 }
 
 
-// Called when the game starts
 void UAWSPollyComponent::BeginPlay() {
 	Super::BeginPlay();
 
 	UE_LOG(LogTemp, Warning, TEXT("[AWSPollyComponent] This component is deprecated and will be removed after switching to UE 5.7."));
 }
 
-// Called every frame
+/** Broadcasts the synthesis-ready event on the game thread when a result is pending. */
 void UAWSPollyComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
@@ -30,6 +34,7 @@ void UAWSPollyComponent::TickComponent(float DeltaTime, ELevelTick TickType, FAc
 		
 }
 
+/** Worker-thread callback: stores the result and flags it for game-thread broadcast. */
 void UAWSPollyComponent::getResult(FTTSData response, FString id) {
 	handle->TTSResultAvailableUnsubscribeUser(TTSResultAvailableHandle);
 	handle->Shutdown();
@@ -38,6 +43,7 @@ void UAWSPollyComponent::getResult(FTTSData response, FString id) {
 	idSynthesisReady = id;
 }
 
+/** Wraps SSML in <speak> tags, spawns AWSPollyThread, and subscribes to its result event. */
 void UAWSPollyComponent::AWSPollySynthesize(FString ssml, FString id, bool getLipSync) {
 	ssml = "<speak>" + ssml + "</speak>";
 	FTTSResultAvailableDelegate TTSResultSubscriber;
@@ -58,6 +64,7 @@ TArray<FTTSTimedStruct> UAWSPollyComponent::AWSPollyGetNotifies(FString id) {
 	return outStruct;
 }
 
+/** Creates a procedural SoundWave from buffered 16 kHz mono PCM data. */
 USoundWave* UAWSPollyComponent::AWSPollyGetSound(FString id) {
 	uint32 SAMPLING_RATE = 16000;
 
@@ -71,6 +78,7 @@ USoundWave* UAWSPollyComponent::AWSPollyGetSound(FString id) {
 	return SyntheticVoice;
 }
 
+/** Converts buffered 16-bit PCM bytes to normalized float samples in [-1.0, 1.0]. */
 TArray<float> UAWSPollyComponent::TTSGetRawSound(FString id) {
 	TArray<float> AudioData;
 

@@ -1,3 +1,11 @@
+/**
+ * @file OpenAICompatibleConfigTests.cpp
+ * @brief Tests for FOpenAICompatibleConfig factory presets (OpenAI, Groq, Ollama, LM Studio, vLLM).
+ *
+ * Verifies that each preset returns the expected URL, default model, timeout,
+ * and authentication requirement.
+ */
+
 #include "Misc/AutomationTest.h"
 #include "OpenAICompatibleComponent.h"
 

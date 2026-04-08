@@ -1,3 +1,8 @@
+/**
+ * @file WhisperSubsystem.h
+ * @brief Game-instance subsystem managing Whisper ASR model lifecycle and transcription APIs.
+ */
+
 // Copyright (c) 2024 WhisperASR Plugin. All Rights Reserved.
 
 #pragma once

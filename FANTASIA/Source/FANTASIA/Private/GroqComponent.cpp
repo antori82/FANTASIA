@@ -1,15 +1,24 @@
+/**
+ * @file GroqComponent.cpp
+ * @brief Implementation of the deprecated UGroqComponent.
+ * @deprecated Prefer UOpenAICompatibleComponent with a Groq preset.
+ * @see UOpenAICompatibleComponent
+ */
+
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "GroqComponent.h"
 #include "Misc/Base64.h"
-// Sets default values for this component's properties
+
 UGroqComponent::UGroqComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = false;
 }
+
+// ── Non-streaming response handler ──────────────────────────────────────────
 
 void UGroqComponent::OnGPTResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful) {
 	if (bWasSuccessful) {
@@ -41,6 +50,8 @@ void UGroqComponent::OnGPTResponseReceived(FHttpRequestPtr Request, FHttpRespons
 		}
 	}
 }
+
+// ── Streaming (SSE) response handler ────────────────────────────────────────
 
 void UGroqComponent::OnGPTPartialResponseReceived(FHttpRequestPtr request, uint64 bytesSent, uint64 bytesReceived) {
 	FHttpResponsePtr test;
@@ -96,6 +107,8 @@ void UGroqComponent::OnGPTPartialResponseReceived(FHttpRequestPtr request, uint6
 		IncomingGPTStreamResponse.Broadcast(outFragment, role, endStream == "stop");
 	}
 }
+
+// ── Chat-completion request ─────────────────────────────────────────────────
 
 void UGroqComponent::getGPTCompletion(TArray<FChatTurn> messages, FString apiMethod, bool stream) {
 	UE_LOG(LogTemp, Warning, TEXT("[GroqComponent] This component is deprecated. Please use OpenAICompatibleComponent instead."));

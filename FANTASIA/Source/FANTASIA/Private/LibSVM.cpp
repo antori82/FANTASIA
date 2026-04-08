@@ -1,3 +1,8 @@
+/**
+ * @file LibSVM.cpp
+ * @brief Implementation of ULibSVM — training, prediction, and model loading.
+ */
+
 // Copyright 1998-2019 Epic Games, Inc. All Rights Reserved.
 
 #include "LibSVM.h"

@@ -1,10 +1,16 @@
 // Fill out your copyright notice in the Description page of Project Settings.
+
+/**
+ * @file AzureNLUComponent.cpp
+ * @brief Implementation of UAzureNLUComponent -- Azure CLU natural language understanding actor component.
+ * @deprecated This component is deprecated and will be removed after switching to UE 5.7.
+ */
+
 #include "AzureNLUComponent.h"
 
 using namespace std;
 using namespace Microsoft::CognitiveServices::Speech;
 
-// Sets default values for this component's properties
 UAzureNLUComponent::UAzureNLUComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
@@ -14,6 +20,7 @@ UAzureNLUComponent::UAzureNLUComponent()
 	VoiceCapture = FVoiceModule::Get().CreateVoiceCapture("");
 }
 
+/** Validates that all required configuration fields (SpeechKey, Region, etc.) are non-empty. */
 bool UAzureNLUComponent::checkConfigIsValid() {
 	if (SpeechKey.IsEmpty()) {
 		UE_LOG(LogTemp, Error, TEXT("[AzureNLUComponent] SpeechKey field cannot be empty"));
@@ -53,7 +60,7 @@ bool UAzureNLUComponent::checkConfigIsValid() {
 	return true;
 }
 
-// Called when the game starts
+/** Configures Azure SpeechConfig and registers the CLU model from the configured resource. */
 void UAzureNLUComponent::BeginPlay()
 {
 	Super::BeginPlay();
@@ -75,6 +82,7 @@ void UAzureNLUComponent::BeginPlay()
 	models.push_back(cluModel);
 }
 
+/** Worker-thread callback: stores the NLU result and flags it for game-thread broadcast. */
 void UAzureNLUComponent::getResult(FNLUResponse response)
 {
 	handle->NLUResultAvailableUnsubscribeUser(NLUResultAvailableHandle);
@@ -85,7 +93,7 @@ void UAzureNLUComponent::getResult(FNLUResponse response)
 	responseReady = true;
 }
 
-// Called every frame
+/** Broadcasts the NLU result on the game thread when ready. */
 void UAzureNLUComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	if (responseReady) {
@@ -95,6 +103,7 @@ void UAzureNLUComponent::TickComponent(float DeltaTime, ELevelTick TickType, FAc
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 }
 
+/** Validates config, spawns an AzureNLUThread, and subscribes to its result event. */
 void UAzureNLUComponent::AzureNLUStart()
 {
 	if (!checkConfigIsValid())

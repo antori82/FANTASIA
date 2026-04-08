@@ -1,11 +1,16 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+/**
+ * @file AzureTTSComponent.cpp
+ * @brief Implementation of UAzureTTSComponent -- Azure Cognitive Services TTS actor component.
+ * @deprecated This component is deprecated and will be removed after switching to UE 5.7.
+ */
+
 #include "AzureTTSComponent.h"
 
 using namespace std;
 using namespace Microsoft::CognitiveServices::Speech;
 
-// Sets default values for this component's properties
 UAzureTTSComponent::UAzureTTSComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
@@ -14,7 +19,7 @@ UAzureTTSComponent::UAzureTTSComponent()
 }
 
 
-// Called when the game starts
+/** Configures Azure SpeechConfig from subscription key, region, and endpoint. */
 void UAzureTTSComponent::BeginPlay()
 {
 	Super::BeginPlay();
@@ -28,7 +33,7 @@ void UAzureTTSComponent::BeginPlay()
 	//config-> SpeechSynthesisLanguage = std::string(TCHAR_TO_UTF8(*Language));
 }
 
-// Called every frame
+/** Broadcasts the synthesis-ready event on the game thread when a result is pending. */
 void UAzureTTSComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
@@ -39,6 +44,7 @@ void UAzureTTSComponent::TickComponent(float DeltaTime, ELevelTick TickType, FAc
 	}
 }
 
+/** Worker-thread callback: stores the result and flags it for game-thread broadcast. */
 void UAzureTTSComponent::getResult(FTTSData response, FString id)
 {
 	handle->TTSResultAvailableUnsubscribeUser(TTSResultAvailableHandle);
@@ -57,6 +63,7 @@ void UAzureTTSComponent::TTSSynthesize(FString ssml, FString id)
 	TTSResultAvailableHandle = handle->TTSResultAvailableSubscribeUser(TTSResultSubscriber);
 }
 
+/** Creates a procedural SoundWave from buffered 16 kHz mono PCM data. */
 USoundWave* UAzureTTSComponent::TTSGetSound(FString id) {
 	uint32 SAMPLING_RATE = 16000;
 
@@ -70,6 +77,7 @@ USoundWave* UAzureTTSComponent::TTSGetSound(FString id) {
 	return SyntheticVoice;
 }
 
+/** Converts buffered 16-bit PCM bytes to normalized float samples in [-1.0, 1.0]. */
 TArray<float> UAzureTTSComponent::TTSGetRawSound(FString id) {
 	TArray<float> AudioData;
 

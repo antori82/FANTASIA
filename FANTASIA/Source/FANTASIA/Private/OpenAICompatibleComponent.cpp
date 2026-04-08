@@ -1,14 +1,24 @@
+/**
+ * @file OpenAICompatibleComponent.cpp
+ * @brief Implementation of UOpenAICompatibleComponent -- unified LLM chat-completion component.
+ */
+
 #include "OpenAICompatibleComponent.h"
 
 namespace
 {
+	/** @brief Regex for extracting JSON payloads from Server-Sent Events lines. */
 	const FRegexPattern SSEPattern(TEXT("data: (\\{.*\\})"));
 }
+
+// ── Construction ────────────────────────────────────────────────────────────
 
 UOpenAICompatibleComponent::UOpenAICompatibleComponent()
 {
 	PrimaryComponentTick.bCanEverTick = false;
 }
+
+// ── Role conversion helpers ─────────────────────────────────────────────────
 
 GPTRoleType UOpenAICompatibleComponent::ParseRole(const FString& RoleString)
 {
@@ -41,6 +51,8 @@ const FString& UOpenAICompatibleComponent::RoleToString(GPTRoleType Role)
 	}
 }
 
+// ── Sentence-level buffering for TTS ────────────────────────────────────────
+
 void UOpenAICompatibleComponent::FlushSentenceBuffer(bool bEndStream)
 {
 	if (SentenceBuffer.Len() > 0 || bEndStream)
@@ -49,6 +61,8 @@ void UOpenAICompatibleComponent::FlushSentenceBuffer(bool bEndStream)
 		SentenceBuffer.Empty();
 	}
 }
+
+// ── Chat-completion request ─────────────────────────────────────────────────
 
 void UOpenAICompatibleComponent::GetChatCompletion(const TArray<FChatTurn>& messages, bool bStream, const FString& ModelOverride)
 {
@@ -104,6 +118,8 @@ void UOpenAICompatibleComponent::GetChatCompletion(const TArray<FChatTurn>& mess
 	Request->ProcessRequest();
 }
 
+// ── Non-streaming response handler ──────────────────────────────────────────
+
 void UOpenAICompatibleComponent::OnResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful)
 {
 	if (!bWasSuccessful || !Response.IsValid())
@@ -151,6 +167,8 @@ void UOpenAICompatibleComponent::OnResponseReceived(FHttpRequestPtr Request, FHt
 
 	IncomingGPTResponse.Broadcast(Content, Role);
 }
+
+// ── Streaming (SSE) response handler ────────────────────────────────────────
 
 void UOpenAICompatibleComponent::OnPartialResponseReceived(FHttpRequestPtr Request, uint64 BytesSent, uint64 BytesReceived)
 {
@@ -250,6 +268,8 @@ void UOpenAICompatibleComponent::OnPartialResponseReceived(FHttpRequestPtr Reque
 	if (bEndStream)
 		FlushSentenceBuffer(true);
 }
+
+// ── Provider presets ────────────────────────────────────────────────────────
 
 void UOpenAICompatibleComponent::ApplyPreset(ELLMProvider Provider)
 {

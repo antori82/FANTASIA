@@ -1,3 +1,8 @@
+/**
+ * @file WhisperCaptureComponent.h
+ * @brief Actor component for real-time microphone capture and Whisper transcription.
+ */
+
 // Copyright (c) 2024 WhisperASR Plugin. All Rights Reserved.
 
 #pragma once

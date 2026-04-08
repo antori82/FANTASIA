@@ -1,3 +1,8 @@
+/**
+ * @file WhisperSubsystem.cpp
+ * @brief Implementation of UWhisperSubsystem — model loading, async inference, and WAV utilities.
+ */
+
 // Copyright (c) 2024 WhisperASR Plugin. All Rights Reserved.
 
 #include "WhisperSubsystem.h"

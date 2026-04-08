@@ -1,3 +1,8 @@
+/**
+ * @file WhisperTypes.h
+ * @brief Type definitions for the Whisper ASR subsystem — enums, structs, and delegates.
+ */
+
 // Copyright (c) 2024 WhisperASR Plugin. All Rights Reserved.
 
 #pragma once
@@ -9,6 +14,7 @@ DECLARE_LOG_CATEGORY_EXTERN(LogWhisperASR, Log, All);
 
 // ─── Language enum (subset of Whisper-supported languages) ────────────────────
 
+/** Language hint for Whisper transcription. Auto lets the model detect the language. */
 UENUM(BlueprintType)
 enum class EWhisperLanguage : uint8
 {
@@ -34,6 +40,7 @@ enum class EWhisperLanguage : uint8
 
 // ─── Model size presets ──────────────────────────────────────────────────────
 
+/** Whisper GGML model size presets. Larger models are more accurate but slower. */
 UENUM(BlueprintType)
 enum class EWhisperModelSize : uint8
 {
@@ -46,6 +53,7 @@ enum class EWhisperModelSize : uint8
 
 // ─── Task type ───────────────────────────────────────────────────────────────
 
+/** Whisper inference task mode. */
 UENUM(BlueprintType)
 enum class EWhisperTask : uint8
 {
@@ -55,6 +63,7 @@ enum class EWhisperTask : uint8
 
 // ─── Status of the ASR subsystem ─────────────────────────────────────────────
 
+/** Operational state of the Whisper ASR subsystem. */
 UENUM(BlueprintType)
 enum class EWhisperStatus : uint8
 {

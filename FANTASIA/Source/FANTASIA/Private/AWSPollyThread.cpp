@@ -1,3 +1,9 @@
+/**
+ * @file AWSPollyThread.cpp
+ * @brief Implementation of AWSPollyThread -- background Amazon Polly synthesis worker.
+ * @deprecated Part of the deprecated AWSPolly pipeline. Will be removed after UE 5.7.
+ */
+
 #include "AWSPollyThread.h"
 #include "Internationalization/Regex.h"
 
@@ -65,6 +71,10 @@ void AWSPollyThread::Shutdown()
 	}
 }
 
+/**
+ * Initializes the AWS SDK, creates a PollyClient, synthesizes PCM audio,
+ * and optionally fetches viseme/SSML mark data via a second request.
+ */
 void AWSPollyThread::Synthesize()
 {
 	Aws::SDKOptions options;

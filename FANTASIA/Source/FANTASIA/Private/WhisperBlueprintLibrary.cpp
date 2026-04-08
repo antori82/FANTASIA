@@ -1,3 +1,8 @@
+/**
+ * @file WhisperBlueprintLibrary.cpp
+ * @brief Implementation of UWhisperBlueprintLibrary — result formatting, config presets, and model discovery.
+ */
+
 // Copyright (c) 2024 WhisperASR Plugin. All Rights Reserved.
 
 #include "WhisperBlueprintLibrary.h"

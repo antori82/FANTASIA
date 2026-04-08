@@ -1,3 +1,8 @@
+/**
+ * @file BoltPackStream.cpp
+ * @brief Implementation of Bolt PackStream reader, writer, and value-to-string conversion.
+ */
+
 #include "BoltPackStream.h"
 
 FString FBoltValue::AsString() const

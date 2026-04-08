@@ -1,3 +1,12 @@
+/**
+ * @file BoltPackStreamTests.cpp
+ * @brief Tests for the Bolt PackStream binary serialization protocol used by Neo4j.
+ *
+ * Covers FBoltValue factory methods, AsString() formatting, write-then-read
+ * round-trip correctness for all value types (including nested structures),
+ * and FBoltPackStreamReader state management.
+ */
+
 #include "Misc/AutomationTest.h"
 #include "BoltPackStream.h"
 

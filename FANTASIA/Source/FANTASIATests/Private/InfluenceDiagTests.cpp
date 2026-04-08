@@ -1,9 +1,21 @@
+/**
+ * @file InfluenceDiagTests.cpp
+ * @brief Tests for UInfluenceDiag: node/arc management, utility nodes, and MEU inference.
+ *
+ * Only compiled when the aGrUM binding is available (WITH_AGRUM_BINDING).
+ */
+
 #if WITH_AGRUM_BINDING
 
 #include "Misc/AutomationTest.h"
 #include "InfluenceDiag.h"
 #include "Async/TaskGraphInterfaces.h"
 
+/**
+ * @brief Pumps GameThread tasks until a condition is met or a timeout elapses.
+ * @param bCondition Reference to a bool that signals completion.
+ * @param TimeoutSeconds Maximum seconds to wait before giving up.
+ */
 static void PumpGameThreadID(const bool& bCondition, double TimeoutSeconds = 3.0)
 {
 	const double Start = FPlatformTime::Seconds();
@@ -14,15 +26,16 @@ static void PumpGameThreadID(const bool& bCondition, double TimeoutSeconds = 3.0
 	}
 }
 
-// Build a valid influence diagram for inference.
-// aGrUM requires utility nodes to have EXACTLY domainSize == 1 (single label).
-//
-// Structure:
-//   Weather (chance, {sunny,rainy}) --> Umbrella (decision, {no,yes})
-//   Weather --> Satisfaction (utility, {u})   <-- single label!
-//   Umbrella --> Satisfaction
-//
-// Utility table has 2*2 = 4 entries (one per Weather x Umbrella combination).
+/**
+ * @brief Builds a valid influence diagram for inference testing.
+ *
+ * Structure: Weather (chance) -> Umbrella (decision) -> Satisfaction (utility),
+ * with Weather also connected to Satisfaction. The utility node has exactly one
+ * label as required by aGrUM, and the utility table encodes four parent
+ * combinations (Weather x Umbrella).
+ *
+ * @return A UInfluenceDiag ready for Init() and makeInference().
+ */
 static UInfluenceDiag* BuildValidDiagram()
 {
 	UInfluenceDiag* ID = NewObject<UInfluenceDiag>();

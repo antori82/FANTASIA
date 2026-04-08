@@ -1,10 +1,24 @@
+/**
+ * @file BayesianNetworkTests.cpp
+ * @brief Tests for UBayesianNetwork: variable/arc management, CPT filling, inference, and entropy.
+ *
+ * Only compiled when the aGrUM binding is available (WITH_AGRUM_BINDING).
+ */
+
 #if WITH_AGRUM_BINDING
 
 #include "Misc/AutomationTest.h"
 #include "BayesianNetwork.h"
 #include "Async/TaskGraphInterfaces.h"
 
-// Helper: pump GameThread tasks so async callbacks can execute
+/**
+ * @brief Pumps GameThread tasks until a condition is met or a timeout elapses.
+ *
+ * Used to drive async inference callbacks that are dispatched on the GameThread.
+ *
+ * @param bCondition Reference to a bool that signals completion.
+ * @param TimeoutSeconds Maximum seconds to wait before giving up.
+ */
 static void PumpGameThread(const bool& bCondition, double TimeoutSeconds = 3.0)
 {
 	const double Start = FPlatformTime::Seconds();
@@ -15,7 +29,10 @@ static void PumpGameThread(const bool& bCondition, double TimeoutSeconds = 3.0)
 	}
 }
 
-// Helper: build a simple Rain -> WetGrass <- Sprinkler network (structure only)
+/**
+ * @brief Builds a simple Rain -> WetGrass <- Sprinkler network (structure only, no CPTs).
+ * @return A UBayesianNetwork with three binary nodes and two arcs.
+ */
 static UBayesianNetwork* BuildRainSprinklerNetwork()
 {
 	UBayesianNetwork* BN = NewObject<UBayesianNetwork>();
@@ -30,9 +47,14 @@ static UBayesianNetwork* BuildRainSprinklerNetwork()
 	return BN;
 }
 
-// Helper: build the simplest possible valid BN for inference testing.
-// Single chain A -> B, both binary, with uniform CPTs (fillWith).
-// No parent-ordering ambiguity since A is a root node and B has exactly one parent.
+/**
+ * @brief Builds a minimal valid Bayesian network for inference testing.
+ *
+ * Creates a single chain A -> B with binary nodes. A has a 60/40 prior;
+ * B is filled uniformly (0.5) to avoid parent-ordering ambiguity.
+ *
+ * @return A UBayesianNetwork ready for Init() and makeInference().
+ */
 static UBayesianNetwork* BuildSimpleInferenceNetwork()
 {
 	UBayesianNetwork* BN = NewObject<UBayesianNetwork>();

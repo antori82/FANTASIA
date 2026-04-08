@@ -1,3 +1,9 @@
+/**
+ * @file FANTASIATypesTests.cpp
+ * @brief Tests for FANTASIA data types: FChatTurn, FSVMParameters, FWhisperConfig,
+ *        FWhisperResult defaults, and Neo4j result cell class hierarchy.
+ */
+
 #include "Misc/AutomationTest.h"
 #include "FANTASIATypes.h"
 #include "WhisperTypes.h"

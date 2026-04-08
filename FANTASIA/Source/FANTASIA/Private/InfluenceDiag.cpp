@@ -1,9 +1,17 @@
+/**
+ * @file InfluenceDiag.cpp
+ * @brief Implementation of UInfluenceDiag -- aGrUM-based influence diagram with async LIMID inference.
+ */
+
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "InfluenceDiag.h"
 #include <vector>
 
+// ── Static Utility Functions ─────────────────────────────────────────────────
+
+/** Convert a TArray<float> to a std::vector<double> for aGrUM API consumption. */
 static std::vector<double> ToStdVector(const TArray<float>& Values)
 {
 	std::vector<double> Result;
@@ -13,6 +21,7 @@ static std::vector<double> ToStdVector(const TArray<float>& Values)
 	return Result;
 }
 
+/** Convert an aGrUM Potential into a Blueprint-friendly TMap<FString, float>. */
 static TMap<FString, float> PotentialToMap(const gum::Potential<double>& Result)
 {
 	TMap<FString, float> Out;
@@ -25,9 +34,13 @@ static TMap<FString, float> PotentialToMap(const gum::Potential<double>& Result)
 	return Out;
 }
 
+// ── Construction ─────────────────────────────────────────────────────────────
+
 UInfluenceDiag::UInfluenceDiag(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 {}
+
+// ── Inference ────────────────────────────────────────────────────────────────
 
 void UInfluenceDiag::Init()
 {
@@ -199,6 +212,8 @@ TMap<FString, FArrayFloat> UInfluenceDiag::optimalDecision(const FString& variab
 	return out;
 }
 
+// ── Evidence ─────────────────────────────────────────────────────────────────
+
 void UInfluenceDiag::addEvidence(const FString& variable, const TArray<float>& data)
 {
 	if (bInferenceRunning.load())
@@ -233,6 +248,8 @@ void UInfluenceDiag::eraseEvidence(const FString& variable)
 	}
 	inference->eraseEvidence(TCHAR_TO_UTF8(*variable));
 }
+
+// ── Diagram Construction ─────────────────────────────────────────────────────
 
 void UInfluenceDiag::addDiscretizedVariable(const FString& variable, const FString& description, float minTick, float maxTick, float nPoints, InfluenceNodeType nodeType)
 {
@@ -317,6 +334,8 @@ void UInfluenceDiag::writeBIFXML(const FString& file) {
 	writer.write(TCHAR_TO_UTF8(*file), id);
 }
 
+// ── Node Removal ─────────────────────────────────────────────────────────────
+
 void UInfluenceDiag::erase(const FString& variable) {
 	const std::string nodeName(TCHAR_TO_UTF8(*variable));
 
@@ -333,6 +352,8 @@ void UInfluenceDiag::erase(const FString& variable) {
 	nodeNameSet.Remove(variable);
 	nodeDescriptions.Remove(variable);
 }
+
+// ── Queries ──────────────────────────────────────────────────────────────────
 
 int UInfluenceDiag::idFromName(const FString& variable) {
 	return id.idFromName(TCHAR_TO_UTF8(*variable));

@@ -1,3 +1,8 @@
+/**
+ * @file Neo4jComponent.cpp
+ * @brief Implementation of UNeo4jComponent — Bolt handshake, transport, query dispatch, and result conversion.
+ */
+
 #include "Neo4jComponent.h"
 #include "BoltProtocol.h"
 #include "WebSocketsModule.h"

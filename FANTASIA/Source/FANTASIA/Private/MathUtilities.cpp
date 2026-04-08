@@ -1,3 +1,8 @@
+/**
+ * @file MathUtilities.cpp
+ * @brief Implementation of Linspace and UKernelDensityEstimator methods.
+ */
+
 #include "MathUtilities.h"
 
 std::vector<float> Linspace(float Start, float End, int Points)

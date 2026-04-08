@@ -1,3 +1,9 @@
+/**
+ * @file AzureTTSThread.cpp
+ * @brief Implementation of AzureTTSThread -- background Azure TTS synthesis worker.
+ * @deprecated Part of the deprecated AzureTTS pipeline. Will be removed after UE 5.7.
+ */
+
 #include "AzureTTSThread.h"
 
 using namespace std;
@@ -63,6 +69,11 @@ void AzureTTSThread::Shutdown()
 	}
 }
 
+/**
+ * Creates a SpeechSynthesizer, wraps the text in an SSML envelope with the
+ * configured voice/language, calls SpeakSsmlAsync, and reads the resulting
+ * audio stream byte by byte into FTTSData before broadcasting.
+ */
 void AzureTTSThread::Synthesize()
 {
 	synthesizer = SpeechSynthesizer::FromConfig(TTSConfig, NULL);

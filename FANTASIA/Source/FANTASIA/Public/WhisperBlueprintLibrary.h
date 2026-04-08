@@ -1,3 +1,8 @@
+/**
+ * @file WhisperBlueprintLibrary.h
+ * @brief Static Blueprint helper functions for Whisper ASR results and configuration.
+ */
+
 // Copyright (c) 2024 WhisperASR Plugin. All Rights Reserved.
 
 #pragma once

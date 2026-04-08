@@ -1,3 +1,9 @@
+/**
+ * @file AzureNLUThread.cpp
+ * @brief Implementation of AzureNLUThread -- background Azure CLU intent recognition worker.
+ * @deprecated Part of the deprecated AzureNLU pipeline. Will be removed after UE 5.7.
+ */
+
 #include "AzureNLUThread.h"
 
 using namespace Microsoft::CognitiveServices::Speech;
@@ -58,6 +64,10 @@ void AzureNLUThread::Shutdown()
 	}
 }
 
+/**
+ * Parses the CLU entities JSON array, creating UNLUEntity objects with text,
+ * category, offset, score, and any child resolutions or extra information.
+ */
 TArray<UNLUEntity*> AzureNLUThread::BuildEntities(TArray<TSharedPtr<FJsonValue>> items, TArray<UNLUEntity*> entities) {
 	const TArray<TSharedPtr<FJsonValue>>* arrayField;
 	TArray<TSharedPtr<FJsonValue>> children;
@@ -99,6 +109,7 @@ TArray<UNLUEntity*> AzureNLUThread::BuildEntities(TArray<TSharedPtr<FJsonValue>>
 	return entities;
 }
 
+/** Parses the CLU intents JSON array, creating UNLUIntent objects with category and confidence. */
 TArray<UNLUIntent*> AzureNLUThread::BuildIntents(TArray<TSharedPtr<FJsonValue>> items, TArray<UNLUIntent*> intents) {
 
 	for (TSharedPtr<FJsonValue> item : items) {
@@ -111,6 +122,11 @@ TArray<UNLUIntent*> AzureNLUThread::BuildIntents(TArray<TSharedPtr<FJsonValue>> 
 	return intents;
 }
 
+/**
+ * Creates an IntentRecognizer from default microphone input, applies CLU models,
+ * performs a one-shot recognition, parses the JSON result into intents and entities,
+ * and broadcasts the FNLUResponse. Handles NoMatch and Canceled cases.
+ */
 void AzureNLUThread::StartOneShotRecognition()
 {
 	auto audioConfig = AudioConfig::FromDefaultMicrophoneInput();

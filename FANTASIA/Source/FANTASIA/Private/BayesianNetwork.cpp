@@ -1,8 +1,16 @@
+/**
+ * @file BayesianNetwork.cpp
+ * @brief Implementation of UBayesianNetwork -- aGrUM-based Bayesian network with async inference.
+ */
+
 // Copyright 1998-2019 Epic Games, Inc. All Rights Reserved.
 
 #include "BayesianNetwork.h"
 #include <vector>
 
+// ── Static Utility Functions ─────────────────────────────────────────────────
+
+/** Convert a TArray<float> to a std::vector<double> for aGrUM API consumption. */
 static std::vector<double> ToStdVector(const TArray<float>& Values)
 {
 	std::vector<double> Result;
@@ -12,6 +20,7 @@ static std::vector<double> ToStdVector(const TArray<float>& Values)
 	return Result;
 }
 
+/** Convert an aGrUM Potential into a Blueprint-friendly TMap<FString, float>. */
 static TMap<FString, float> PotentialToMap(const gum::Potential<double>& Result)
 {
 	TMap<FString, float> Out;
@@ -24,9 +33,13 @@ static TMap<FString, float> PotentialToMap(const gum::Potential<double>& Result)
 	return Out;
 }
 
+// ── Construction ─────────────────────────────────────────────────────────────
+
 UBayesianNetwork::UBayesianNetwork(const FObjectInitializer& ObjectInitializer)
 : Super(ObjectInitializer) {
 }
+
+// ── Inference Engine ─────────────────────────────────────────────────────────
 
 void UBayesianNetwork::CreateInferenceEngine() {
 	switch (InferenceAlgorithm)
@@ -130,6 +143,8 @@ void UBayesianNetwork::erase(const FString& variable) {
 	nodeDescriptions.Remove(variable);
 }
 
+// ── BIF Loading ──────────────────────────────────────────────────────────────
+
 void UBayesianNetwork::setBN(const FString& Filename) {
 	if (bInferenceRunning.load())
 	{
@@ -165,6 +180,8 @@ void UBayesianNetwork::setBN(const FString& Filename) {
 	}
 	initialized = true;
 }
+
+// ── Network Construction ─────────────────────────────────────────────────────
 
 void UBayesianNetwork::addLabelizedVariable(const FString& variable, const FString& description, const TArray<FString>& labels) {
 	if (!nodeNameSet.Contains(variable)) {
@@ -245,6 +262,8 @@ void UBayesianNetwork::fillCPT(const FString& variable, const TArray<float>& val
 	catch (gum::NotFound& e)
 		UE_LOG(LogTemp, Warning, TEXT("%hs from %hs while filling"), e.errorType().c_str(), e.errorContent().c_str());
 }
+
+// ── Evidence ─────────────────────────────────────────────────────────────────
 
 void UBayesianNetwork::setEvidence(const FString& variable, const TArray<float>& data) {
 	if (bInferenceRunning.load())

@@ -1,3 +1,8 @@
+/**
+ * @file BoltProtocol.cpp
+ * @brief Implementation of Bolt protocol framing, message serialization, and de-chunking.
+ */
+
 #include "BoltProtocol.h"
 
 // ============================================================================

@@ -1,3 +1,9 @@
+/**
+ * @file SWIPrologHelpersTests.cpp
+ * @brief Tests for USWIPrologHelpers factory functions: atoms, variables, integers,
+ *        floats, compound terms, lists, and nested structures.
+ */
+
 #include "Misc/AutomationTest.h"
 #include "SWIPrologHelpers.h"
 #include "FANTASIATypes.h"

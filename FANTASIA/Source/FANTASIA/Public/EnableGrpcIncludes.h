@@ -1,3 +1,11 @@
+/**
+ * @file EnableGrpcIncludes.h
+ * @brief Include-guard preamble that suppresses compiler warnings and defines
+ *        macros required before including gRPC / Protobuf headers on Windows.
+ *
+ * Must be paired with DisableGrpcIncludes.h after the gRPC headers.
+ */
+
 #pragma once
 #define GRPC_USE_PROTO_LITE 1
 

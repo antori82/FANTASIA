@@ -1,8 +1,17 @@
+/**
+ * @file WhisperBlueprintLibraryTests.cpp
+ * @brief Tests for UWhisperBlueprintLibrary: result accessors, SRT/VTT subtitle
+ *        formatting, config factory helpers, and model file name parsing.
+ */
+
 #include "Misc/AutomationTest.h"
 #include "WhisperBlueprintLibrary.h"
 #include "WhisperTypes.h"
 
-// Helper: create a FWhisperResult with segments
+/**
+ * @brief Creates a sample FWhisperResult with two segments for use in tests.
+ * @return A successful FWhisperResult containing two timed segments.
+ */
 static FWhisperResult MakeTestResult()
 {
 	FWhisperResult Result;

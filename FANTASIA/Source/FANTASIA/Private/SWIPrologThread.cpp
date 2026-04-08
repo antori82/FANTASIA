@@ -1,11 +1,19 @@
+/**
+ * @file SWIPrologThread.cpp
+ * @brief Implementation of the SWI-Prolog worker thread, command dispatch, and term translation.
+ */
+
 // Fill out your copyright notice in the Description page of Project Settings.
 #include "SWIPrologThread.h"
 #include "Async/Async.h"
 
+// ── Static Members ───────────────────────────────────────────────────────────
 
 SWIPrologThread* SWIPrologThread::Runnable = NULL;
 std::atomic<bool> SWIPrologThread::stop{false};
 std::atomic<bool> SWIPrologThread::initialised{false};
+
+// ── Construction / Destruction ────────────────────────────────────────────────
 
 SWIPrologThread::SWIPrologThread() : StopTaskCounter(0) {
 	WakeEvent = FPlatformProcess::GetSynchEventFromPool(false);
@@ -18,6 +26,8 @@ SWIPrologThread::~SWIPrologThread() {
 	FPlatformProcess::ReturnSynchEventToPool(WakeEvent);
 	WakeEvent = nullptr;
 }
+
+// ── FRunnable Interface ──────────────────────────────────────────────────────
 
 bool SWIPrologThread::Init() {
 	return true;
@@ -63,6 +73,8 @@ FDelegateHandle SWIPrologThread::SolutionAvailableSubscribeUser(SolutionAvailabl
 void SWIPrologThread::SolutionAvailableUnsubscribeUser(FDelegateHandle DelegateHandle) {
 	SolutionAvailable.Remove(DelegateHandle);
 }
+
+// ── Internal Helpers (worker thread) ─────────────────────────────────────────
 
 void SWIPrologThread::openPrologFile_(const FString& filename) {
 	try {
@@ -154,7 +166,7 @@ void SWIPrologThread::requestNextSolution() {
 	WakeEvent->Trigger();
 }
 
-// --- Worker thread internals ---
+// ── Query Execution (worker thread) ──────────────────────────────────────────
 
 void SWIPrologThread::nextSolution() {
 	if (myQuery == NULL)
@@ -190,6 +202,8 @@ void SWIPrologThread::nextSolution() {
 	}
 }
 
+// ── Prolog Engine Initialization ─────────────────────────────────────────────
+
 void SWIPrologThread::startProlog() {
 
 	std::string ProjectPath = TCHAR_TO_UTF8(*FPaths::ConvertRelativePathToFull(FPaths::ProjectDir()));
@@ -222,6 +236,8 @@ void SWIPrologThread::startProlog() {
 		UE_LOG(LogTemp, Display, TEXT("Prolog initialised succesfully"));
 	}
 }
+
+// ── Term Translation (game thread) ───────────────────────────────────────────
 
 FString SWIPrologThread::translateTerm(UObject* term) {
 	if (USWIPrologAtom* atom = Cast<USWIPrologAtom>(term)) {
@@ -448,6 +464,8 @@ void SWIPrologThread::executeFindAll(const FString& queryString) {
 	}
 }
 
+// ── Command Dispatch (worker thread) ─────────────────────────────────────────
+
 void SWIPrologThread::processCommand(const FPrologCommand& Command) {
 	switch (Command.Type)
 	{
@@ -502,6 +520,8 @@ void SWIPrologThread::processCommand(const FPrologCommand& Command) {
 		break;
 	}
 }
+
+// ── Main Loop ────────────────────────────────────────────────────────────────
 
 void SWIPrologThread::executeCommands() {
 	while (!stop.load(std::memory_order_relaxed)) {

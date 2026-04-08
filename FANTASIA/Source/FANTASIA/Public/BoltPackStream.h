@@ -1,24 +1,49 @@
+/**
+ * @file BoltPackStream.h
+ * @brief Neo4j Bolt PackStream serialization — value types, writer, and reader.
+ *
+ * Implements the PackStream binary encoding used by the Neo4j Bolt protocol.
+ * All Bolt messages are serialized into PackStream before framing, and
+ * deserialized back after de-chunking.
+ *
+ * @see BoltProtocol.h, Neo4jComponent.h
+ */
+
 #pragma once
 
 #include "CoreMinimal.h"
 #include "FANTASIA.h"
 
+/** Discriminator for the variant value stored in FBoltValue. */
 enum class EBoltValueType : uint8
 {
 	Null, Bool, Int, Float, String, Bytes, List, Map, Structure
 };
 
 struct FBoltValue;
+
+/** Shared pointer to a PackStream value (used throughout the Bolt layer). */
 using FBoltValuePtr = TSharedPtr<FBoltValue>;
+
+/** Ordered array of PackStream values. */
 using FBoltValueArray = TArray<FBoltValuePtr>;
+
+/** String-keyed map of PackStream values. */
 using FBoltValueMap = TMap<FString, FBoltValuePtr>;
 
+/** A PackStream structure — a tagged tuple (e.g. Node, Relationship). */
 struct FBoltStructure
 {
-	uint8 Tag = 0;
-	FBoltValueArray Fields;
+	uint8 Tag = 0;              ///< Structure signature byte.
+	FBoltValueArray Fields;     ///< Positional fields within the structure.
 };
 
+/**
+ * A variant value in the Bolt PackStream encoding.
+ *
+ * Supports null, bool, int64, double, string, bytes, list, map, and
+ * structure types. Provides static factory methods for convenient construction.
+ */
 struct FANTASIA_API FBoltValue
 {
 	EBoltValueType Type = EBoltValueType::Null;
@@ -31,6 +56,8 @@ struct FANTASIA_API FBoltValue
 	FBoltValueMap MapVal;
 	FBoltStructure StructVal;
 
+	/** @name Factory methods */
+	///@{
 	static FBoltValuePtr MakeNull() { auto V = MakeShared<FBoltValue>(); return V; }
 	static FBoltValuePtr MakeBool(bool B) { auto V = MakeShared<FBoltValue>(); V->Type = EBoltValueType::Bool; V->BoolVal = B; return V; }
 	static FBoltValuePtr MakeInt(int64 I) { auto V = MakeShared<FBoltValue>(); V->Type = EBoltValueType::Int; V->IntVal = I; return V; }
@@ -51,10 +78,18 @@ struct FANTASIA_API FBoltValue
 	{
 		auto V = MakeShared<FBoltValue>(); V->Type = EBoltValueType::Structure; V->StructVal.Tag = Tag; V->StructVal.Fields = MoveTemp(Fields); return V;
 	}
+	///@}
 
+	/** Convert this value to a human-readable string representation. */
 	FString AsString() const;
 };
 
+/**
+ * Sequential writer for the Bolt PackStream binary encoding.
+ *
+ * Call the typed Write methods in order, then retrieve the raw bytes via
+ * GetBuffer(). Reset() clears the internal buffer for reuse.
+ */
 class FANTASIA_API FBoltPackStreamWriter
 {
 public:
@@ -67,9 +102,14 @@ public:
 	void WriteListHeader(int32 Size);
 	void WriteMapHeader(int32 Size);
 	void WriteStructureHeader(uint8 Tag, int32 NumFields);
+
+	/** Write a complete FBoltValue tree recursively. */
 	void WriteValue(const FBoltValuePtr& Value);
 
+	/** Access the serialized byte buffer. */
 	const TArray<uint8>& GetBuffer() const { return Buffer; }
+
+	/** Clear the internal buffer for reuse. */
 	void Reset() { Buffer.Empty(); }
 
 private:
@@ -82,12 +122,25 @@ private:
 	TArray<uint8> Buffer;
 };
 
+/**
+ * Sequential reader for the Bolt PackStream binary encoding.
+ *
+ * Constructed with a raw byte buffer; call ReadValue() repeatedly until
+ * HasMore() returns false.
+ */
 class FANTASIA_API FBoltPackStreamReader
 {
 public:
+	/** Construct a reader over @p InData. Does not copy the buffer. */
 	FBoltPackStreamReader(const TArray<uint8>& InData);
+
+	/** Read and return the next PackStream value. */
 	FBoltValuePtr ReadValue();
+
+	/** Returns true if unread bytes remain. */
 	bool HasMore() const;
+
+	/** Peek at the next marker byte without advancing the cursor. */
 	uint8 PeekMarker() const;
 
 private:

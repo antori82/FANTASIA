@@ -1,12 +1,22 @@
+/**
+ * @file ElevenLabsTTSComponent.cpp
+ * @brief Implementation of UElevenLabsTTSComponent -- ElevenLabs TTS specialization.
+ */
+
 #include "ElevenLabsTTSComponent.h"
 #include "Runtime/Json/Public/Json.h"
 
+/** Sets default streaming mode and 16 kHz sample rate for ElevenLabs output. */
 UElevenLabsTTSComponent::UElevenLabsTTSComponent()
 {
 	bStreaming = true;
 	SampleRate = 16000;
 }
 
+/**
+ * Constructs an ElevenLabs streaming TTS request with voice settings JSON payload.
+ * Targets the /v1/text-to-speech/{VoiceID}/stream endpoint with pcm_16000 output.
+ */
 FTTSSynthesisRequest UElevenLabsTTSComponent::BuildSynthesisRequest(const FString& Text, const FString& ID)
 {
 	FTTSSynthesisRequest Request;
