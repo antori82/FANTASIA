@@ -1,10 +1,19 @@
+/**
+ * @file RESTTTSComponent.cpp
+ * @brief Implementation of URESTTTSComponent -- generic REST-based TTS with streaming and Audio2Face.
+ */
+
 #include "RESTTTSComponent.h"
 
 URESTTTSComponent::URESTTTSComponent()
 {
-	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryComponentTick.bCanEverTick = false;
 }
 
+/**
+ * Launches the Audio2Face consumer async task that batches float samples from
+ * SendData and feeds them to ACE AnimateFromAudioSamples.
+ */
 void URESTTTSComponent::BeginPlay()
 {
 	Super::BeginPlay();
@@ -73,26 +82,12 @@ void URESTTTSComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 	ConsumerWakeEvent->Trigger();
 }
 
-void URESTTTSComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	// Acquire ensures all Buffer/id writes from the HTTP thread are visible
-	if (bSynthesisResultReady.load(std::memory_order_acquire))
-	{
-		bSynthesisResultReady.store(false, std::memory_order_relaxed);
-		SynthesisReady.Broadcast(IdSynthesisReady);
-		IdSynthesisReady.Empty();
-	}
-
-	if (bPartialResultReady.load(std::memory_order_acquire))
-	{
-		bPartialResultReady.store(false, std::memory_order_relaxed);
-		PartialSynthesisReady.Broadcast(IdPartialSynthesisReady);
-		IdPartialSynthesisReady.Empty();
-	}
-}
-
+/**
+ * Processes a complete HTTP response: flushes streaming state, calls ProcessResponse
+ * for subclass metadata extraction, auto-detects WAV headers, resamples to 16 kHz,
+ * and stores the result in the thread-safe Buffer.
+ */
 void URESTTTSComponent::HandleResult(FTTSData response, FString id)
 {
 	if (IsValid(A2Fpointer) && bUsingStreamingBuffer.load())
@@ -136,11 +131,14 @@ void URESTTTSComponent::HandleResult(FTTSData response, FString id)
 		FScopeLock Lock(&BufferMutex);
 		Buffer.FindOrAdd(id) = MoveTemp(response);
 	}
-	IdSynthesisReady = id;
-	// Release ensures Buffer write is visible before game thread reads it via acquire in TickComponent
-	bSynthesisResultReady.store(true, std::memory_order_release);
+
+	AsyncTask(ENamedThreads::GameThread, [this, id]()
+	{
+		SynthesisReady.Broadcast(id);
+	});
 }
 
+/** Converts a streaming PCM chunk to float samples and enqueues them for Audio2Face. */
 void URESTTTSComponent::HandlePartialResult(TArray<uint8> response, FString id)
 {
 	const int32 NumBytes = response.Num();
@@ -160,8 +158,10 @@ void URESTTTSComponent::HandlePartialResult(TArray<uint8> response, FString id)
 
 	ConsumerWakeEvent->Trigger();
 
-	IdPartialSynthesisReady = id;
-	bPartialResultReady.store(true, std::memory_order_release);
+	AsyncTask(ENamedThreads::GameThread, [this, id]()
+	{
+		PartialSynthesisReady.Broadcast(id);
+	});
 }
 
 void URESTTTSComponent::TTSSynthesize(FString text, FString id)
@@ -169,6 +169,11 @@ void URESTTTSComponent::TTSSynthesize(FString text, FString id)
 	IssueHttpRequest(BuildSynthesisRequest(text, id));
 }
 
+/**
+ * Creates and sends an HTTP request from the given descriptor. Sets up streaming
+ * progress callbacks (if bStreaming) and the completion callback that invokes
+ * HandleResult / HandlePartialResult.
+ */
 void URESTTTSComponent::IssueHttpRequest(FTTSSynthesisRequest Request)
 {
 	TSharedRef<IHttpRequest, ESPMode::ThreadSafe> HttpRequest = FHttpModule::Get().CreateRequest();
@@ -248,6 +253,11 @@ void URESTTTSComponent::IssueHttpRequest(FTTSSynthesisRequest Request)
 	HttpRequest->ProcessRequest();
 }
 
+/**
+ * Base implementation: uses URL/Headers/BodyTemplate properties.
+ * GET mode if BodyTemplate is empty (text is URL-encoded in URL), POST otherwise.
+ * JSON-escapes the text before substituting into BodyTemplate.
+ */
 FTTSSynthesisRequest URESTTTSComponent::BuildSynthesisRequest(const FString& Text, const FString& ID)
 {
 	FTTSSynthesisRequest Request;
@@ -290,6 +300,7 @@ void URESTTTSComponent::ProcessResponse(const TArray<uint8>& RawResponse, FTTSDa
 	// Base implementation: no additional processing
 }
 
+/** Creates a procedural SoundWave from buffered 16 kHz mono PCM data (thread-safe). */
 USoundWaveProcedural* URESTTTSComponent::TTSGetSound(FString id)
 {
 	constexpr float OutputSamplingRate = 16000.f;
@@ -319,6 +330,10 @@ TArray<uint8> URESTTTSComponent::TTSGetRawSound(FString id)
 	return Found ? Found->AudioData : TArray<uint8>();
 }
 
+/**
+ * Checks for RIFF/WAVE magic, parses fmt chunk fields, then walks sub-chunks
+ * to locate the "data" chunk offset. Falls back to standard 44-byte offset.
+ */
 bool URESTTTSComponent::TryParseWavHeader(const TArray<uint8>& Data, int32& OutSampleRate, int32& OutNumChannels, int32& OutBitsPerSample, int32& OutDataOffset)
 {
 	if (Data.Num() < 44)
@@ -361,6 +376,10 @@ bool URESTTTSComponent::TryParseWavHeader(const TArray<uint8>& Data, int32& OutS
 	return true;
 }
 
+/**
+ * Resamples multi-channel 16-bit PCM to mono 16 kHz using linear interpolation.
+ * Takes the first channel only if input is multi-channel.
+ */
 TArray<uint8> URESTTTSComponent::ResampleTo16kHz(const uint8* PCMData, int32 NumBytes, int32 SourceRate, int32 NumChannels)
 {
 	constexpr int32 BytesPerSample = 2; // 16-bit PCM

@@ -1,17 +1,24 @@
+/**
+ * @file LangGraphComponent.cpp
+ * @brief Implementation of ULangGraphComponent -- thread-based LangGraph agent queries.
+ */
+
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "LangGraphComponent.h"
 #include "Misc/Base64.h"
-// Sets default values for this component's properties
+
 ULangGraphComponent::ULangGraphComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryComponentTick.bCanEverTick = false;
 
 	// ...
 }
+
+// ── Non-streaming query response handler ────────────────────────────────────
 
 void ULangGraphComponent::OnLangGraphResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful) {
 	if (bWasSuccessful) {
@@ -56,6 +63,8 @@ void ULangGraphComponent::OnLangGraphResponseReceived(FHttpRequestPtr Request, F
 		}
 	}
 }
+
+// ── Streaming (SSE updates) response handler ────────────────────────────────
 
 void ULangGraphComponent::OnLangGraphPartialResponseReceived(FHttpRequestPtr request, uint64 bytesSent, uint64 bytesReceived) {
 	FHttpResponsePtr test;
@@ -120,6 +129,8 @@ void ULangGraphComponent::OnLangGraphPartialResponseReceived(FHttpRequestPtr req
 	}
 }
 
+// ── Thread-creation response handler ────────────────────────────────────────
+
 void ULangGraphComponent::OnLangGraphThreadCreateResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful) {
 	FHttpResponsePtr test;
 	FString message, threadID;
@@ -141,6 +152,8 @@ void ULangGraphComponent::OnLangGraphThreadCreateResponseReceived(FHttpRequestPt
 		}
 	}
 }
+
+// ── Thread lifecycle ────────────────────────────────────────────────────────
 
 void ULangGraphComponent::createLangGraphThread(FString threadID) {
 	FHttpModule* Http = &FHttpModule::Get();
@@ -176,6 +189,8 @@ void ULangGraphComponent::deleteLangGraphThread(FString threadID) {
 
 	Request->ProcessRequest();
 }
+
+// ── Query execution ─────────────────────────────────────────────────────────
 
 void ULangGraphComponent::langGraphQuery(TArray<FChatTurn> messages, FString threadID, FString assistantID, FString model, int recursionLimit, bool stream) {
 	FHttpModule* Http = &FHttpModule::Get();
@@ -244,10 +259,3 @@ void ULangGraphComponent::BeginPlay()
 
 }
 
-// Called every frame
-void ULangGraphComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	// ...
-}

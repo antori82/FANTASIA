@@ -1,3 +1,8 @@
+/**
+ * @file WhisperCaptureComponent.cpp
+ * @brief Implementation of UWhisperCaptureComponent — microphone capture, resampling, and VAD logic.
+ */
+
 // Copyright (c) 2024 WhisperASR Plugin. All Rights Reserved.
 
 #include "WhisperCaptureComponent.h"
@@ -19,6 +24,7 @@ UWhisperCaptureComponent::UWhisperCaptureComponent()
 {
 	PrimaryComponentTick.bCanEverTick = true;
 	PrimaryComponentTick.bStartWithTickEnabled = false;
+	PrimaryComponentTick.TickInterval = 0.1f; // 10 Hz — sufficient for VAD and streaming checks
 	bTranscriptionInFlight = false;
 }
 
