@@ -4,6 +4,37 @@ FANTASIA/Intermediate/
 # Debug symbols (large, not needed for plugin users)
 *.pdb
 
+# Whisper models — only the selected quantized model is tracked
+FANTASIA/Resources/ggml-*.bin
+!FANTASIA/Resources/ggml-large-v3-turbo-q5_0.bin
+
+# whisper.cpp CMake build output (prebuilt libs are checked in separately)
+FANTASIA/ThirdParty/whisper_cpp/build/
+
+# Azure Speech SDK — non-Win64 platforms (not needed for this plugin)
+FANTASIA/ThirdParty/Microsoft.CognitiveServices.Speech.*/build/Xamarin.iOS/
+FANTASIA/ThirdParty/Microsoft.CognitiveServices.Speech.*/build/monoandroid/
+FANTASIA/ThirdParty/Microsoft.CognitiveServices.Speech.*/build/native/ARM/
+FANTASIA/ThirdParty/Microsoft.CognitiveServices.Speech.*/build/native/ARM64/
+FANTASIA/ThirdParty/Microsoft.CognitiveServices.Speech.*/build/native/Win32/
+FANTASIA/ThirdParty/Microsoft.CognitiveServices.Speech.*/build/native/uap/
+FANTASIA/ThirdParty/Microsoft.CognitiveServices.Speech.*/lib/Xamarin.iOS/
+FANTASIA/ThirdParty/Microsoft.CognitiveServices.Speech.*/lib/monoandroid/
+FANTASIA/ThirdParty/Microsoft.CognitiveServices.Speech.*/lib/net462/
+FANTASIA/ThirdParty/Microsoft.CognitiveServices.Speech.*/lib/net6.0-*/
+FANTASIA/ThirdParty/Microsoft.CognitiveServices.Speech.*/lib/netstandard2.0/
+FANTASIA/ThirdParty/Microsoft.CognitiveServices.Speech.*/lib/uap10.0/
+FANTASIA/ThirdParty/Microsoft.CognitiveServices.Speech.*/runtimes/android-*/
+FANTASIA/ThirdParty/Microsoft.CognitiveServices.Speech.*/runtimes/centos7-*/
+FANTASIA/ThirdParty/Microsoft.CognitiveServices.Speech.*/runtimes/ios-*/
+FANTASIA/ThirdParty/Microsoft.CognitiveServices.Speech.*/runtimes/iossimulator-*/
+FANTASIA/ThirdParty/Microsoft.CognitiveServices.Speech.*/runtimes/linux-*/
+FANTASIA/ThirdParty/Microsoft.CognitiveServices.Speech.*/runtimes/maccatalyst-*/
+FANTASIA/ThirdParty/Microsoft.CognitiveServices.Speech.*/runtimes/osx-*/
+FANTASIA/ThirdParty/Microsoft.CognitiveServices.Speech.*/runtimes/win-x86/
+FANTASIA/ThirdParty/Microsoft.CognitiveServices.Speech.*/runtimes/win10-arm/
+FANTASIA/ThirdParty/Microsoft.CognitiveServices.Speech.*/runtimes/win10-arm64/
+
 # UE generated
 Saved/
 DerivedDataCache/
