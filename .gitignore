@@ -8,8 +8,26 @@ FANTASIA/Intermediate/
 FANTASIA/Resources/ggml-*.bin
 !FANTASIA/Resources/ggml-large-v3-turbo-q5_0.bin
 
-# whisper.cpp CMake build output (prebuilt libs are checked in separately)
+# whisper.cpp — only source, headers, and prebuilt libs are needed
 FANTASIA/ThirdParty/whisper_cpp/build/
+FANTASIA/ThirdParty/whisper_cpp/examples/
+FANTASIA/ThirdParty/whisper_cpp/bindings/
+FANTASIA/ThirdParty/whisper_cpp/tests/
+FANTASIA/ThirdParty/whisper_cpp/scripts/
+FANTASIA/ThirdParty/whisper_cpp/samples/
+FANTASIA/ThirdParty/whisper_cpp/models/
+FANTASIA/ThirdParty/whisper_cpp/grammars/
+FANTASIA/ThirdParty/whisper_cpp/.github/
+FANTASIA/ThirdParty/whisper_cpp/.devops/
+FANTASIA/ThirdParty/whisper_cpp/ci/
+FANTASIA/ThirdParty/whisper_cpp/.dockerignore
+FANTASIA/ThirdParty/whisper_cpp/.gitignore
+FANTASIA/ThirdParty/whisper_cpp/AUTHORS
+FANTASIA/ThirdParty/whisper_cpp/Makefile
+FANTASIA/ThirdParty/whisper_cpp/README.md
+FANTASIA/ThirdParty/whisper_cpp/README_sycl.md
+FANTASIA/ThirdParty/whisper_cpp/build-xcframework.sh
+FANTASIA/ThirdParty/whisper_cpp/close-issue.yml
 
 # Azure Speech SDK — non-Win64 platforms (not needed for this plugin)
 FANTASIA/ThirdParty/Microsoft.CognitiveServices.Speech.*/build/Xamarin.iOS/
