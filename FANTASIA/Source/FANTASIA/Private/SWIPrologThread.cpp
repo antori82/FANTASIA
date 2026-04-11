@@ -78,7 +78,8 @@ void SWIPrologThread::SolutionAvailableUnsubscribeUser(FDelegateHandle DelegateH
 
 void SWIPrologThread::openPrologFile_(const FString& filename) {
 	try {
-		PlCall("consult", PlTermv(PlAtom(TCHAR_TO_ANSI(*filename))));
+		// Pass FString's wide-char data directly — no TCHAR→ANSI conversion needed
+		PlCall("consult", PlTermv(PlAtom(*filename)));
 		UE_LOG(LogTemp, Warning, TEXT("File %s opened successfully"), *filename);
 	}
 	catch (const PlException& err) {
@@ -178,13 +179,16 @@ void SWIPrologThread::nextSolution() {
 	try {
 		bResult = myQuery->next_solution();
 
-		// Build result data on the worker thread (plain data, no UObjects)
+		// Build result data on the worker thread (plain data, no UObjects).
+		// Use as_wstring() to get native UTF-16 directly from Prolog — avoids
+		// the ANSI→TCHAR charset conversion that as_string() + ANSI_TO_TCHAR does.
 		TArray<FString> resultSet;
 		resultSet.Reserve(inArity);
-		bool verified = (bResult == PL_S_TRUE);
+		const bool verified = (bResult == PL_S_TRUE);
 
 		for (int i = 0; i < inArity; i++) {
-			resultSet.Emplace(ANSI_TO_TCHAR(inQueryElements[i].as_string().c_str()));
+			const std::wstring ws = inQueryElements[i].as_wstring();
+			resultSet.Emplace(ws.c_str());
 		}
 
 		// Marshal to game thread: create UObject and broadcast there
@@ -230,7 +234,7 @@ void SWIPrologThread::startProlog() {
 	else {
 		resFolderPath = FPaths::ConvertRelativePathToFull(FPaths::ProjectDir()) + "Resources/";
 		PlTermv dir(2);
-		(void)dir[1].unify_atom(PlAtom(TCHAR_TO_ANSI(*resFolderPath)));
+		(void)dir[1].unify_atom(PlAtom(*resFolderPath));
 		PlCall("working_directory", dir);
 
 		UE_LOG(LogTemp, Display, TEXT("Prolog initialised succesfully"));
@@ -370,20 +374,22 @@ void SWIPrologThread::broadcastError(const FString& errorMessage) {
 
 void SWIPrologThread::executeQueryFromString(const FString& queryString) {
 	if (myQuery != NULL)
+	{
 		myQuery->close_destroy();
+		myQuery = NULL;
+	}
 
 	try {
-		// Parse the string as a Prolog term using term_to_atom
-		PlTermv av(2);
-		(void)av[1].unify_atom(PlAtom(TCHAR_TO_ANSI(*queryString)));
-		PlCall("term_to_atom", av);
-		// av[0] now holds the parsed term — extract functor and arity
-		std::string functorName = av[0].name().as_string();
-		size_t arity = av[0].arity();
+		// Parse the query string directly via the C++ API — PlCompound(const wchar_t*)
+		// uses SWI-Prolog's native C parser, skipping the PlCall("term_to_atom", ...)
+		// roundtrip through the Prolog engine. Pass FString's wide-char data directly.
+		PlCompound parsed(*queryString);
+		const std::string functorName = parsed.name().as_string();
+		const size_t arity = parsed.arity();
 
 		PlTermv queryElements(arity);
 		for (size_t i = 0; i < arity; i++) {
-			(void)queryElements[i].unify_term(av[0][i + 1]);
+			(void)queryElements[i].unify_term(parsed[i + 1]);
 		}
 
 		myQuery = new PlQuery(functorName.c_str(), queryElements);
@@ -407,15 +413,14 @@ void SWIPrologThread::executeFindAll(const FString& queryString) {
 	}
 
 	try {
-		PlTermv av(2);
-		(void)av[1].unify_atom(PlAtom(TCHAR_TO_ANSI(*queryString)));
-		PlCall("term_to_atom", av);
-		std::string functorName = av[0].name().as_string();
-		size_t arity = av[0].arity();
+		// Parse the query string directly via the C++ API (skip term_to_atom roundtrip)
+		PlCompound parsed(*queryString);
+		const std::string functorName = parsed.name().as_string();
+		const size_t arity = parsed.arity();
 
 		PlTermv queryElements(arity);
 		for (size_t i = 0; i < arity; i++) {
-			(void)queryElements[i].unify_term(av[0][i + 1]);
+			(void)queryElements[i].unify_term(parsed[i + 1]);
 		}
 
 		PlQuery query(functorName.c_str(), queryElements);
@@ -437,21 +442,24 @@ void SWIPrologThread::executeFindAll(const FString& queryString) {
 			data.Verified = (bResult == PL_S_TRUE);
 			data.ResultSet.Reserve(static_cast<int32>(arity));
 			for (size_t i = 0; i < arity; i++) {
-				data.ResultSet.Emplace(ANSI_TO_TCHAR(queryElements[i].as_string().c_str()));
+				const std::wstring ws = queryElements[i].as_wstring();
+				data.ResultSet.Emplace(ws.c_str());
 			}
 
 			if (bResult != PL_S_TRUE)
 				break;
 		}
 
-		// Marshal to game thread: create UObjects there
-		AsyncTask(ENamedThreads::GameThread, [this, Results = MoveTemp(allResults)]() {
+		// Marshal to game thread: create UObjects there. The lambda is mutable
+		// so we can move the collected result data into the UObjects instead
+		// of copying.
+		AsyncTask(ENamedThreads::GameThread, [this, Results = MoveTemp(allResults)]() mutable {
 			TArray<USWIPrologSolution*> Solutions;
 			Solutions.Reserve(Results.Num());
-			for (const auto& Data : Results) {
+			for (FSolutionData& Data : Results) {
 				USWIPrologSolution* Sol = NewObject<USWIPrologSolution>();
 				Sol->verified = Data.Verified;
-				Sol->resultSet = Data.ResultSet;
+				Sol->resultSet = MoveTemp(Data.ResultSet);
 				Solutions.Add(Sol);
 			}
 			AllSolutionsReady.Broadcast(Solutions);
@@ -486,8 +494,10 @@ void SWIPrologThread::processCommand(const FPrologCommand& Command) {
 
 	case EPrologCommandType::ConsultString:
 		try {
-			FString consultCmd = FString::Printf(TEXT("atom_to_term('%s', T, _), assert(T)"), *Command.StringData);
-			PlCall(TCHAR_TO_ANSI(*consultCmd));
+			// Parse the clause directly via the C++ parser and assert it. This
+			// avoids the old Printf+atom_to_term/3 roundtrip (slower and had
+			// a single-quote injection problem when the user's code contained ').
+			PlCall("assertz", PlTermv(PlCompound(*Command.StringData)));
 		}
 		catch (PlException err) {
 			FString FsError = FString(ANSI_TO_TCHAR(err.what()));
@@ -498,7 +508,7 @@ void SWIPrologThread::processCommand(const FPrologCommand& Command) {
 
 	case EPrologCommandType::Assert:
 		try {
-			PlCall(Command.BoolData ? "asserta" : "assertz", PlTermv(PlCompound(TCHAR_TO_ANSI(*Command.StringData))));
+			PlCall(Command.BoolData ? "asserta" : "assertz", PlTermv(PlCompound(*Command.StringData)));
 		}
 		catch (PlException err) {
 			FString FsError = FString(ANSI_TO_TCHAR(err.what()));
@@ -509,7 +519,7 @@ void SWIPrologThread::processCommand(const FPrologCommand& Command) {
 
 	case EPrologCommandType::Retract:
 		try {
-			PlCall("retract", PlTermv(PlCompound(TCHAR_TO_ANSI(*Command.StringData))));
+			PlCall("retract", PlTermv(PlCompound(*Command.StringData)));
 		}
 		catch (PlException err) {
 			FString FsError = FString(ANSI_TO_TCHAR(err.what()));
