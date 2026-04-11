@@ -21,112 +21,141 @@ ULangGraphComponent::ULangGraphComponent()
 // ── Non-streaming query response handler ────────────────────────────────────
 
 void ULangGraphComponent::OnLangGraphResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful) {
-	if (bWasSuccessful) {
+	if (!bWasSuccessful || !Response.IsValid())
+		return;
 
-		TSharedPtr<FJsonValue> JsonValue;
-		TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(Response->GetContentAsString());
-		FString checkRole;
-		GPTRoleType role = GPTRoleType::ASSISTANT;
+	TSharedPtr<FJsonValue> JsonValue;
+	TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(Response->GetContentAsString());
 
-		if (FJsonSerializer::Deserialize(Reader, JsonValue))
-		{
-			const TSharedPtr<FJsonObject>* FileMessageObject;
+	if (!FJsonSerializer::Deserialize(Reader, JsonValue) || !JsonValue.IsValid())
+		return;
 
-			if (JsonValue->TryGetObject(FileMessageObject)) {
-				const TArray<TSharedPtr<FJsonValue>>& messages = FileMessageObject->Get()->GetArrayField(TEXT("messages"));
-
-				if (messages.Num() == 0)
-				{
-					// Pipeline completed with no message content — signal completion with empty string
-					IncomingLangGraphResponse.Broadcast(FString(), GPTRoleType::ASSISTANT);
-					return;
-				}
-
-				checkRole = messages.Last()->AsObject()->GetStringField(TEXT("type"));
-
-				if (checkRole == "system")
-					role = GPTRoleType::SYSTEM;
-				else if (checkRole == "ai")
-					role = GPTRoleType::ASSISTANT;
-				else if (checkRole == "function")
-					role = GPTRoleType::FUNCTION;
-				else if (checkRole == "human")
-					role = GPTRoleType::USER;
-
-				IncomingLangGraphResponse.Broadcast(messages.Last()->AsObject()->GetStringField(TEXT("content")), role);
-			}
-			else
-			{
-				// Valid JSON but no object — treat as empty completion
-				IncomingLangGraphResponse.Broadcast(FString(), GPTRoleType::ASSISTANT);
-			}
-		}
+	const TSharedPtr<FJsonObject>* OuterPtr = nullptr;
+	if (!JsonValue->TryGetObject(OuterPtr) || !OuterPtr || !OuterPtr->IsValid())
+	{
+		// Valid JSON but no object — treat as empty completion
+		IncomingLangGraphResponse.Broadcast(FString(), GPTRoleType::ASSISTANT);
+		return;
 	}
+
+	const FJsonObject& Outer = **OuterPtr;
+
+	const TArray<TSharedPtr<FJsonValue>>* MessagesPtr = nullptr;
+	if (!Outer.TryGetArrayField(TEXT("messages"), MessagesPtr) || !MessagesPtr || MessagesPtr->Num() == 0)
+	{
+		// Pipeline completed with no message content — signal completion with empty string
+		IncomingLangGraphResponse.Broadcast(FString(), GPTRoleType::ASSISTANT);
+		return;
+	}
+
+	const TSharedPtr<FJsonObject> LastMsg = MessagesPtr->Last()->AsObject();
+	if (!LastMsg.IsValid())
+	{
+		IncomingLangGraphResponse.Broadcast(FString(), GPTRoleType::ASSISTANT);
+		return;
+	}
+
+	GPTRoleType role = GPTRoleType::ASSISTANT;
+	FString checkRole;
+	if (LastMsg->TryGetStringField(TEXT("type"), checkRole))
+	{
+		if      (checkRole == TEXT("system"))   role = GPTRoleType::SYSTEM;
+		else if (checkRole == TEXT("ai"))       role = GPTRoleType::ASSISTANT;
+		else if (checkRole == TEXT("function")) role = GPTRoleType::FUNCTION;
+		else if (checkRole == TEXT("human"))    role = GPTRoleType::USER;
+	}
+
+	FString Content;
+	LastMsg->TryGetStringField(TEXT("content"), Content);
+	IncomingLangGraphResponse.Broadcast(Content, role);
 }
 
 // ── Streaming (SSE updates) response handler ────────────────────────────────
 
 void ULangGraphComponent::OnLangGraphPartialResponseReceived(FHttpRequestPtr request, uint64 bytesSent, uint64 bytesReceived) {
-	FHttpResponsePtr test;
-	FString message;
+	if (bytesReceived == 0 || !request.IsValid())
+		return;
 
-	if (bytesReceived > 0) {
+	FHttpResponsePtr Response = request->GetResponse();
+	if (!Response.IsValid())
+		return;
 
-		FString checkRole, update;
-		GPTRoleType role;
+	const FString& FullBuffer = Response->GetContentAsString();
+	const int32 FullLen = FullBuffer.Len();
+	if (FullLen <= StreamScanOffset)
+		return;
 
-		test = request->GetResponse();
-		message = test->GetContentAsString();
+	// Compile the SSE pattern exactly once per process.
+	static const FRegexPattern SsePattern(TEXT("event: updates\\s*data:(.*)"));
 
-		const FRegexPattern myPattern(TEXT("event: updates\\s*data:(.*)"));
+	// Scan only the unseen tail of the buffer. Of all events found, we
+	// broadcast the last one (matches legacy "latest state" semantics).
+	// We advance StreamScanOffset to the START of the last matched event so
+	// that a partial trailing event gets re-matched next callback once more
+	// bytes have arrived (self-healing for partial data lines).
+	const FString Tail = FullBuffer.Mid(StreamScanOffset);
+	FRegexMatcher Matcher(SsePattern, Tail);
 
-		FRegexMatcher myMatcher(myPattern, message);
-
-		while (myMatcher.FindNext())
-			update = myMatcher.GetCaptureGroup(1);
-
-		TSharedPtr<FJsonValue> JsonValue;
-		TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(update);
-
-		if (FJsonSerializer::Deserialize(Reader, JsonValue))
-		{
-			const TSharedPtr<FJsonObject>* FileMessageObject;
-
-			if (JsonValue->TryGetObject(FileMessageObject)) {
-				TArray<FString> keys;
-				FileMessageObject->Get()->Values.GetKeys(keys);
-
-				if (keys.Num() == 0)
-				{
-					IncomingLangGraphStreamResponse.Broadcast(FString(), GPTRoleType::ASSISTANT, true);
-					return;
-				}
-
-				FString key = keys[0];
-				const TArray<TSharedPtr<FJsonValue>>& messages = FileMessageObject->Get()->GetObjectField(key)->GetArrayField(TEXT("messages"));
-
-				if (messages.Num() == 0)
-				{
-					// Stream update with no messages — signal completion
-					IncomingLangGraphStreamResponse.Broadcast(FString(), GPTRoleType::ASSISTANT, true);
-					return;
-				}
-
-				checkRole = messages[0]->AsObject()->GetStringField(TEXT("type"));
-
-				if (checkRole == "system")
-					role = GPTRoleType::SYSTEM;
-				else if (checkRole == "ai")
-					role = GPTRoleType::ASSISTANT;
-				else if (checkRole == "tool")
-					role = GPTRoleType::FUNCTION;
-				else if (checkRole == "human")
-					role = GPTRoleType::USER;
-
-				IncomingLangGraphStreamResponse.Broadcast(messages[0]->AsObject()->GetStringField(TEXT("content")), role, role == GPTRoleType::ASSISTANT);
-			}
-		}
+	int32 LastMatchStart = INDEX_NONE;
+	FString Update;
+	while (Matcher.FindNext())
+	{
+		LastMatchStart = Matcher.GetMatchBeginning();
+		Update = Matcher.GetCaptureGroup(1);
 	}
+	if (LastMatchStart == INDEX_NONE)
+		return;
+
+	StreamScanOffset += LastMatchStart;
+
+	TSharedPtr<FJsonValue> JsonValue;
+	TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(Update);
+	if (!FJsonSerializer::Deserialize(Reader, JsonValue) || !JsonValue.IsValid())
+		return;
+
+	const TSharedPtr<FJsonObject>* OuterPtr = nullptr;
+	if (!JsonValue->TryGetObject(OuterPtr) || !OuterPtr || !OuterPtr->IsValid())
+		return;
+
+	const FJsonObject& Outer = **OuterPtr;
+
+	// Grab the first (and typically only) key without allocating a TArray.
+	if (Outer.Values.Num() == 0)
+	{
+		IncomingLangGraphStreamResponse.Broadcast(FString(), GPTRoleType::ASSISTANT, true);
+		return;
+	}
+
+	const TSharedPtr<FJsonValue>& FirstValue = Outer.Values.CreateConstIterator()->Value;
+	const TSharedPtr<FJsonObject> Inner = FirstValue.IsValid() ? FirstValue->AsObject() : nullptr;
+	if (!Inner.IsValid())
+		return;
+
+	const TArray<TSharedPtr<FJsonValue>>* MessagesPtr = nullptr;
+	if (!Inner->TryGetArrayField(TEXT("messages"), MessagesPtr) || !MessagesPtr || MessagesPtr->Num() == 0)
+	{
+		// Stream update with no messages — signal completion
+		IncomingLangGraphStreamResponse.Broadcast(FString(), GPTRoleType::ASSISTANT, true);
+		return;
+	}
+
+	const TSharedPtr<FJsonObject> FirstMsg = (*MessagesPtr)[0]->AsObject();
+	if (!FirstMsg.IsValid())
+		return;
+
+	GPTRoleType role = GPTRoleType::ASSISTANT;
+	FString checkRole;
+	if (FirstMsg->TryGetStringField(TEXT("type"), checkRole))
+	{
+		if      (checkRole == TEXT("system")) role = GPTRoleType::SYSTEM;
+		else if (checkRole == TEXT("ai"))     role = GPTRoleType::ASSISTANT;
+		else if (checkRole == TEXT("tool"))   role = GPTRoleType::FUNCTION;
+		else if (checkRole == TEXT("human"))  role = GPTRoleType::USER;
+	}
+
+	FString Content;
+	FirstMsg->TryGetStringField(TEXT("content"), Content);
+	IncomingLangGraphStreamResponse.Broadcast(Content, role, role == GPTRoleType::ASSISTANT);
 }
 
 // ── Thread-creation response handler ────────────────────────────────────────
@@ -234,9 +263,8 @@ void ULangGraphComponent::deleteLangGraphThread(FString threadID) {
 
 // ── Query execution ─────────────────────────────────────────────────────────
 
-void ULangGraphComponent::langGraphQuery(TArray<FChatTurn> messages, FString threadID, FString assistantID, FString model, int recursionLimit, bool stream) {
+void ULangGraphComponent::langGraphQuery(const TArray<FChatTurn>& messages, FString threadID, FString assistantID, FString model, int recursionLimit, bool stream) {
 	FHttpModule* Http = &FHttpModule::Get();
-	FString payload;
 	TSharedRef<IHttpRequest, ESPMode::ThreadSafe> Request = Http->CreateRequest();
 
 	Request->SetVerb("POST");
@@ -244,48 +272,57 @@ void ULangGraphComponent::langGraphQuery(TArray<FChatTurn> messages, FString thr
 	Request->SetHeader(TEXT("User-Agent"), "X-UnrealEngine-Agent");
 
 	TSharedPtr<FJsonObject> payloadObject = MakeShareable(new FJsonObject());
-
 	payloadObject->SetStringField("assistant_id", assistantID);
 
 	TArray<TSharedPtr<FJsonValue>> jsonMessages;
-	for (int i = 0; i < messages.Num(); i++)
+	jsonMessages.Reserve(messages.Num());
+	for (const FChatTurn& Turn : messages)
 	{
-		TSharedPtr<FJsonObject> turn = MakeShareable(new FJsonObject());
-		FText enumValueText;
-		UEnum::GetDisplayValueAsText(messages[i].role, enumValueText);
-		turn->SetStringField("role", enumValueText.ToString().ToLower());
-		turn->SetStringField("content", messages[i].content);
+		// Fast role → string mapping (avoids UEnum reflection lookup per message).
+		const TCHAR* RoleStr = TEXT("user");
+		switch (Turn.role)
+		{
+			case GPTRoleType::SYSTEM:    RoleStr = TEXT("system");    break;
+			case GPTRoleType::ASSISTANT: RoleStr = TEXT("assistant"); break;
+			case GPTRoleType::USER:      RoleStr = TEXT("user");      break;
+			case GPTRoleType::FUNCTION:  RoleStr = TEXT("function");  break;
+		}
 
-		jsonMessages.Add(MakeShareable(new FJsonValueObject(turn)));
+		TSharedPtr<FJsonObject> TurnObj = MakeShareable(new FJsonObject());
+		TurnObj->SetStringField(TEXT("role"), RoleStr);
+		TurnObj->SetStringField(TEXT("content"), Turn.content);
+		jsonMessages.Add(MakeShareable(new FJsonValueObject(TurnObj)));
 	}
 
 	TSharedPtr<FJsonObject> inputObject = MakeShareable(new FJsonObject());
-
 	inputObject->SetArrayField(TEXT("messages"), jsonMessages);
 	payloadObject->SetObjectField("input", inputObject);
 
+	// Build URL once; both branches share the common prefix.
+	const FString UrlBase = endpoint + TEXT(":") + FString::FromInt(port) + TEXT("/threads/") + threadID + TEXT("/runs/");
+
 	if (stream) {
+		// Reset the per-stream scan cursor so the next progress callback starts fresh.
+		StreamScanOffset = 0;
 		Request->OnRequestProgress64().BindUObject(this, &ULangGraphComponent::OnLangGraphPartialResponseReceived);
-		payloadObject->SetStringField("stream_mode", "updates");
-		Request->SetURL(endpoint + ":" + FString::FromInt(port) + "/threads/" + threadID + "/runs/stream");
+		payloadObject->SetStringField(TEXT("stream_mode"), TEXT("updates"));
+		Request->SetURL(UrlBase + TEXT("stream"));
 	}
 	else {
 		Request->OnProcessRequestComplete().BindUObject(this, &ULangGraphComponent::OnLangGraphResponseReceived);
-		Request->SetURL(endpoint + ":" + FString::FromInt(port) + "/threads/" + threadID + "/runs/wait");
+		Request->SetURL(UrlBase + TEXT("wait"));
 	}
-	
-	
+
+	TSharedPtr<FJsonObject> configurableObject = MakeShareable(new FJsonObject());
+	configurableObject->SetStringField(TEXT("model"), model);
 
 	TSharedPtr<FJsonObject> configObject = MakeShareable(new FJsonObject());
-	TSharedPtr<FJsonObject> configurableObject = MakeShareable(new FJsonObject());
+	configObject->SetNumberField(TEXT("recursion_limit"), recursionLimit);
+	configObject->SetObjectField(TEXT("configurable"), configurableObject);
 
-	configurableObject->SetStringField("model", model);
+	payloadObject->SetObjectField(TEXT("config"), configObject);
 
-	configObject->SetNumberField("recursion_limit", recursionLimit);
-	configObject->SetObjectField("configurable", configurableObject);
-
-	payloadObject->SetObjectField("config", configObject);
-
+	FString payload;
 	FJsonSerializer::Serialize(payloadObject.ToSharedRef(), TJsonWriterFactory<>::Create(&payload));
 
 	Request->SetContentAsString(payload);

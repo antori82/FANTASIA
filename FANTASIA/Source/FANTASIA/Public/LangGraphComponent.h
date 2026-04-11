@@ -46,6 +46,9 @@ private:
 	/** @brief Callback invoked when a thread-creation request completes. */
 	void OnLangGraphThreadCreateResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful);
 
+	/** @brief Offset into the streaming response buffer already scanned; avoids re-scanning the whole buffer on each progress callback. */
+	int32 StreamScanOffset = 0;
+
 	// ── Public interface ────────────────────────────────────────────────
 
 public:
@@ -100,7 +103,7 @@ public:
 	 * @param stream         If true, responses arrive incrementally via IncomingLangGraphStreamResponse.
 	 */
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "LangGraph query", AutoCreateRefTerm = "messages"), Category = "LangGraph")
-	void langGraphQuery(TArray<FChatTurn> messages, FString threadID, FString assistantID, FString model = "openai/gpt-4o", int recursionLimit = 10, bool stream = false);
+	void langGraphQuery(const TArray<FChatTurn>& messages, FString threadID, FString assistantID, FString model = "openai/gpt-4o", int recursionLimit = 10, bool stream = false);
 
 
 
