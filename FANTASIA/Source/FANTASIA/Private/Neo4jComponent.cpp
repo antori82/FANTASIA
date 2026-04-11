@@ -46,6 +46,13 @@ bool UNeo4jComponent::ShouldUseSSL(const FString& Url)
 		|| Url.StartsWith(TEXT("https://")) || Url.StartsWith(TEXT("wss://"));
 }
 
+bool UNeo4jComponent::SchemeRequiresRouting(const FString& Url)
+{
+	// neo4j:// / neo4j+s:// / neo4j+ssc:// all require the routing protocol.
+	// bolt:// / bolt+s:// / bolt+ssc:// are direct connections.
+	return Url.StartsWith(TEXT("neo4j://")) || Url.StartsWith(TEXT("neo4j+s://")) || Url.StartsWith(TEXT("neo4j+ssc://"));
+}
+
 // ============================================================================
 // Lifecycle
 // ============================================================================
@@ -53,55 +60,136 @@ bool UNeo4jComponent::ShouldUseSSL(const FString& Url)
 void UNeo4jComponent::BeginPlay()
 {
 	Super::BeginPlay();
-	Dechunker = MakeUnique<FBoltDechunker>();
 
 	// Auto-detect SSL from endpoint scheme
 	if (ShouldUseSSL(endpoint))
 		UseSSL = true;
-	else if (endpoint.StartsWith(TEXT("neo4j://")) || endpoint.StartsWith(TEXT("bolt://"))
+	else if (endpoint.StartsWith(TEXT("bolt://"))
 		|| endpoint.StartsWith(TEXT("http://")) || endpoint.StartsWith(TEXT("ws://")))
 		UseSSL = false;
 	// else: respect the UseSSL property as configured
 
+	// Detect whether the URL scheme requires the Bolt routing protocol
+	// (neo4j://, neo4j+s://, neo4j+ssc://). These are used by clustered
+	// deployments and Neo4j Aura and require discovering a backend server
+	// via dbms.routing.getRoutingTable before any Cypher query can run.
+	bNeedsRouting = SchemeRequiresRouting(endpoint);
+	bRoutingDone = false;
+
+	const FString Hostname = ExtractHostname(endpoint);
+	InitiateConnection(Hostname, port);
+}
+
+void UNeo4jComponent::InitiateConnection(const FString& Hostname, int32 InPort)
+{
+	// Reset per-connection state (chunker, handshake buffer, phase flags).
+	Dechunker = MakeUnique<FBoltDechunker>();
+	HandshakeBuffer.Empty();
+	QueryPhase = EBoltQueryPhase::Idle;
+	RoutingPhase = EBoltRoutingPhase::Idle;
+	NegotiatedBoltMajor = 0;
+	NegotiatedBoltMinor = 0;
+
+	ActiveHostname = Hostname;
+	ActivePort = InPort;
+
 	if (UseSSL)
 	{
-		FString Hostname = ExtractHostname(endpoint);
-		UE_LOG(LogTemp, Log, TEXT("Neo4j: Connecting via TCP+TLS to %s:%d"), *Hostname, port);
+		++ConnectionEpoch;
+		UE_LOG(LogTemp, Log, TEXT("Neo4j: Connecting via TCP+TLS to %s:%d"), *Hostname, InPort);
 		ConnectionState = EBoltConnectionState::Connecting;
-		TcpSslConnect(Hostname, port);
+		TcpSslConnect(Hostname, InPort);
 	}
 	else
 	{
 		FWebSocketsModule::Get();
 
-		FString WsUrl = endpoint;
-		if (WsUrl.StartsWith(TEXT("neo4j+s://")) || WsUrl.StartsWith(TEXT("neo4j+ssc://")))
-			WsUrl = TEXT("wss://") + WsUrl.Mid(WsUrl.Find(TEXT("://")) + 3);
-		else if (WsUrl.StartsWith(TEXT("neo4j://")))
-			WsUrl = TEXT("ws://") + WsUrl.Mid(8);
-		else if (WsUrl.StartsWith(TEXT("bolt+s://")) || WsUrl.StartsWith(TEXT("bolt+ssc://")))
-			WsUrl = TEXT("wss://") + WsUrl.Mid(WsUrl.Find(TEXT("://")) + 3);
-		else if (WsUrl.StartsWith(TEXT("bolt://")))
-			WsUrl = TEXT("ws://") + WsUrl.Mid(7);
-		else if (WsUrl.StartsWith(TEXT("http://")))
-			WsUrl = TEXT("ws://") + WsUrl.Mid(7);
-		else if (WsUrl.StartsWith(TEXT("https://")))
-			WsUrl = TEXT("wss://") + WsUrl.Mid(8);
-		else if (!WsUrl.StartsWith(TEXT("ws://")) && !WsUrl.StartsWith(TEXT("wss://")))
+		// Build a ws:// / wss:// URL from a bare hostname (routing / reconnect path)
+		// or from an existing full URL (original BeginPlay path).
+		FString WsUrl = Hostname;
+		if (WsUrl.Contains(TEXT("://")))
+		{
+			if (WsUrl.StartsWith(TEXT("neo4j+s://")) || WsUrl.StartsWith(TEXT("neo4j+ssc://")))
+				WsUrl = TEXT("wss://") + WsUrl.Mid(WsUrl.Find(TEXT("://")) + 3);
+			else if (WsUrl.StartsWith(TEXT("neo4j://")))
+				WsUrl = TEXT("ws://") + WsUrl.Mid(8);
+			else if (WsUrl.StartsWith(TEXT("bolt+s://")) || WsUrl.StartsWith(TEXT("bolt+ssc://")))
+				WsUrl = TEXT("wss://") + WsUrl.Mid(WsUrl.Find(TEXT("://")) + 3);
+			else if (WsUrl.StartsWith(TEXT("bolt://")))
+				WsUrl = TEXT("ws://") + WsUrl.Mid(7);
+			else if (WsUrl.StartsWith(TEXT("http://")))
+				WsUrl = TEXT("ws://") + WsUrl.Mid(7);
+			else if (WsUrl.StartsWith(TEXT("https://")))
+				WsUrl = TEXT("wss://") + WsUrl.Mid(8);
+		}
+		else
+		{
 			WsUrl = TEXT("ws://") + WsUrl;
+		}
 
-		WsUrl += TEXT(":") + FString::FromInt(port);
+		WsUrl += TEXT(":") + FString::FromInt(InPort);
+
+		// Bump the epoch so any stale callbacks from a previously torn-down
+		// socket will be filtered out in the OnWebSocket* handlers.
+		const int32 Epoch = ++ConnectionEpoch;
+		TWeakObjectPtr<UNeo4jComponent> WeakThis(this);
 
 		WebSocket = FWebSocketsModule::Get().CreateWebSocket(WsUrl, TEXT(""));
-		WebSocket->OnConnected().AddUObject(this, &UNeo4jComponent::OnWebSocketConnected);
-		WebSocket->OnConnectionError().AddUObject(this, &UNeo4jComponent::OnWebSocketConnectionError);
-		WebSocket->OnClosed().AddUObject(this, &UNeo4jComponent::OnWebSocketClosed);
-		WebSocket->OnRawMessage().AddUObject(this, &UNeo4jComponent::OnWebSocketBinaryMessage);
+		WebSocket->OnConnected().AddLambda([WeakThis, Epoch]()
+		{
+			if (UNeo4jComponent* Self = WeakThis.Get())
+				Self->OnWebSocketConnected(Epoch);
+		});
+		WebSocket->OnConnectionError().AddLambda([WeakThis, Epoch](const FString& Error)
+		{
+			if (UNeo4jComponent* Self = WeakThis.Get())
+				Self->OnWebSocketConnectionError(Epoch, Error);
+		});
+		WebSocket->OnClosed().AddLambda([WeakThis, Epoch](int32 StatusCode, const FString& Reason, bool bWasClean)
+		{
+			if (UNeo4jComponent* Self = WeakThis.Get())
+				Self->OnWebSocketClosed(Epoch, StatusCode, Reason, bWasClean);
+		});
+		WebSocket->OnRawMessage().AddLambda([WeakThis, Epoch](const void* Data, SIZE_T Size, SIZE_T BytesRemaining)
+		{
+			if (UNeo4jComponent* Self = WeakThis.Get())
+				Self->OnWebSocketBinaryMessage(Epoch, Data, Size, BytesRemaining);
+		});
 
 		UE_LOG(LogTemp, Log, TEXT("Neo4j: Connecting via WebSocket to %s"), *WsUrl);
 		ConnectionState = EBoltConnectionState::Connecting;
 		WebSocket->Connect();
 	}
+}
+
+void UNeo4jComponent::TearDownCurrentConnection()
+{
+	// Send GOODBYE if we're still in an authenticated state (best-effort).
+	if (ConnectionState != EBoltConnectionState::Closed
+		&& ConnectionState != EBoltConnectionState::Disconnected
+		&& ConnectionState != EBoltConnectionState::Connecting
+		&& ConnectionState != EBoltConnectionState::HandshakePending)
+	{
+		SendChunkedMessage(BoltMessages::BuildGoodbye());
+		if (UseSSL && SslBio)
+			BIO_flush(static_cast<BIO*>(SslBio));
+	}
+
+	if (UseSSL)
+	{
+		TcpSslDisconnect();
+	}
+	else
+	{
+		if (WebSocket.IsValid())
+		{
+			if (WebSocket->IsConnected())
+				WebSocket->Close();
+			WebSocket.Reset();
+		}
+	}
+
+	ConnectionState = EBoltConnectionState::Disconnected;
 }
 
 void UNeo4jComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
@@ -234,6 +322,14 @@ void UNeo4jComponent::TcpRecvLoop()
 	uint8 Buffer[16384];
 	BIO* Bio = static_cast<BIO*>(SslBio);
 
+	// Snapshot the epoch at the time this thread was started. Any game-thread
+	// tasks this loop dispatches will carry this epoch. When they run, they
+	// check that the component is still on the same connection epoch — if we
+	// have since torn down this connection and reconnected (e.g. during
+	// routing), the old tasks are silently discarded.
+	const int32 Epoch = ConnectionEpoch;
+	TWeakObjectPtr<UNeo4jComponent> WeakThis(this);
+
 	while (bRecvThreadRunning.load())
 	{
 		int BytesRead = BIO_read(Bio, Buffer, sizeof(Buffer));
@@ -242,16 +338,23 @@ void UNeo4jComponent::TcpRecvLoop()
 			TArray<uint8> Data;
 			Data.Append(Buffer, BytesRead);
 
-			AsyncTask(ENamedThreads::GameThread, [this, RecvData = MoveTemp(Data)]()
+			AsyncTask(ENamedThreads::GameThread, [WeakThis, Epoch, RecvData = MoveTemp(Data)]()
 			{
-				if (ConnectionState != EBoltConnectionState::Closed)
-					OnDataReceived(RecvData.GetData(), RecvData.Num());
+				UNeo4jComponent* Self = WeakThis.Get();
+				if (!Self || Self->ConnectionEpoch != Epoch) return;
+				if (Self->ConnectionState != EBoltConnectionState::Closed)
+					Self->OnDataReceived(RecvData.GetData(), RecvData.Num());
 			});
 		}
 		else if (BytesRead == 0)
 		{
 			UE_LOG(LogTemp, Log, TEXT("Neo4j: Server closed connection"));
-			AsyncTask(ENamedThreads::GameThread, [this]() { ConnectionState = EBoltConnectionState::Closed; });
+			AsyncTask(ENamedThreads::GameThread, [WeakThis, Epoch]()
+			{
+				UNeo4jComponent* Self = WeakThis.Get();
+				if (!Self || Self->ConnectionEpoch != Epoch) return;
+				Self->ConnectionState = EBoltConnectionState::Closed;
+			});
 			break;
 		}
 		else
@@ -259,7 +362,12 @@ void UNeo4jComponent::TcpRecvLoop()
 			if (!BIO_should_retry(Bio))
 			{
 				UE_LOG(LogTemp, Error, TEXT("Neo4j: BIO_read error"));
-				AsyncTask(ENamedThreads::GameThread, [this]() { ConnectionState = EBoltConnectionState::Closed; });
+				AsyncTask(ENamedThreads::GameThread, [WeakThis, Epoch]()
+				{
+					UNeo4jComponent* Self = WeakThis.Get();
+					if (!Self || Self->ConnectionEpoch != Epoch) return;
+					Self->ConnectionState = EBoltConnectionState::Closed;
+				});
 				break;
 			}
 		}
@@ -359,28 +467,37 @@ void UNeo4jComponent::OnDataReceived(const void* Data, SIZE_T Size)
 // WebSocket Callbacks (delegate to OnDataReceived)
 // ============================================================================
 
-void UNeo4jComponent::OnWebSocketConnected()
+void UNeo4jComponent::OnWebSocketConnected(int32 Epoch)
 {
+	// Ignore callbacks from stale sockets (e.g. the frontend socket after
+	// we've torn it down during routing reconnect).
+	if (Epoch != ConnectionEpoch) return;
+
 	UE_LOG(LogTemp, Log, TEXT("Neo4j: WebSocket connected, sending Bolt handshake"));
 	ConnectionState = EBoltConnectionState::HandshakePending;
 	HandshakeBuffer.Empty();
 	SendBoltHandshake();
 }
 
-void UNeo4jComponent::OnWebSocketConnectionError(const FString& Error)
+void UNeo4jComponent::OnWebSocketConnectionError(int32 Epoch, const FString& Error)
 {
+	if (Epoch != ConnectionEpoch) return;
 	UE_LOG(LogTemp, Error, TEXT("Neo4j: WebSocket connection error: %s"), *Error);
 	ConnectionState = EBoltConnectionState::Closed;
 }
 
-void UNeo4jComponent::OnWebSocketClosed(int32 StatusCode, const FString& Reason, bool bWasClean)
+void UNeo4jComponent::OnWebSocketClosed(int32 Epoch, int32 StatusCode, const FString& Reason, bool bWasClean)
 {
+	// Stale close event from a previous connection — do not clobber the
+	// state of the current (newly reconnected) socket.
+	if (Epoch != ConnectionEpoch) return;
 	UE_LOG(LogTemp, Log, TEXT("Neo4j: WebSocket closed (code=%d, reason=%s, clean=%d)"), StatusCode, *Reason, bWasClean);
 	ConnectionState = EBoltConnectionState::Closed;
 }
 
-void UNeo4jComponent::OnWebSocketBinaryMessage(const void* Data, SIZE_T Size, SIZE_T BytesRemaining)
+void UNeo4jComponent::OnWebSocketBinaryMessage(int32 Epoch, const void* Data, SIZE_T Size, SIZE_T BytesRemaining)
 {
+	if (Epoch != ConnectionEpoch) return;
 	OnDataReceived(Data, Size);
 }
 
@@ -458,8 +575,7 @@ void UNeo4jComponent::HandleServerMessage(const FBoltServerMessage& Msg)
 			else
 			{
 				UE_LOG(LogTemp, Log, TEXT("Neo4j: Authenticated (Bolt %d.%d)"), NegotiatedBoltMajor, NegotiatedBoltMinor);
-				ConnectionState = EBoltConnectionState::Ready;
-				ProcessNextCommand();
+				OnAuthenticationComplete();
 			}
 		}
 		else if (Msg.Tag == BoltMsg::FAILURE)
@@ -477,8 +593,7 @@ void UNeo4jComponent::HandleServerMessage(const FBoltServerMessage& Msg)
 		if (Msg.Tag == BoltMsg::SUCCESS)
 		{
 			UE_LOG(LogTemp, Log, TEXT("Neo4j: Authenticated via LOGON (Bolt %d.%d)"), NegotiatedBoltMajor, NegotiatedBoltMinor);
-			ConnectionState = EBoltConnectionState::Ready;
-			ProcessNextCommand();
+			OnAuthenticationComplete();
 		}
 		else if (Msg.Tag == BoltMsg::FAILURE)
 		{
@@ -487,6 +602,12 @@ void UNeo4jComponent::HandleServerMessage(const FBoltServerMessage& Msg)
 			UE_LOG(LogTemp, Error, TEXT("Neo4j: LOGON failed: %s - %s"), *Code, *Message);
 			ConnectionState = EBoltConnectionState::Closed;
 		}
+		break;
+	}
+
+	case EBoltConnectionState::RoutingDiscovery:
+	{
+		HandleRoutingMessage(Msg);
 		break;
 	}
 
@@ -619,9 +740,10 @@ void UNeo4jComponent::HandleServerMessage(const FBoltServerMessage& Msg)
 
 void UNeo4jComponent::submitQuery(FString query, Neo4jOperation operation, FString transactionID, TMap<FString, FString> parameters, FString database)
 {
-	if (database.IsEmpty())
-		database = TEXT("neo4j");
-
+	// An empty database string means "use the server's default database".
+	// The dispatch code below will omit the "db" extra entirely so the server
+	// picks its own default (which may not be literally named "neo4j" — for
+	// example on Neo4j Aura it's the instance ID).
 	FBoltPendingCommand Cmd;
 	Cmd.Operation = operation;
 	Cmd.Query = query;
@@ -660,7 +782,10 @@ void UNeo4jComponent::DispatchCommand(const FBoltPendingCommand& Cmd)
 	case Neo4jOperation::SINGLE_REQUEST:
 	{
 		FBoltValueMap Extra;
-		Extra.Add(TEXT("db"), FBoltValue::MakeString(Cmd.Database));
+		// Only include "db" when the caller actually specified a database;
+		// otherwise the server uses its default.
+		if (!Cmd.Database.IsEmpty())
+			Extra.Add(TEXT("db"), FBoltValue::MakeString(Cmd.Database));
 		ConnectionState = EBoltConnectionState::Streaming;
 		QueryPhase = EBoltQueryPhase::WaitingRunSuccess;
 		TArray<uint8> Pipelined = BoltMessages::BuildRunAndPull(Cmd.Query, BoltParams, Extra);
@@ -694,6 +819,191 @@ void UNeo4jComponent::SendChunkedMessage(const TArray<uint8>& MessageData)
 {
 	TArray<uint8> Chunked = BoltFraming::ChunkMessage(MessageData);
 	SendRawBytes(Chunked.GetData(), Chunked.Num());
+}
+
+// ============================================================================
+// Routing Discovery (Bolt routing for clustered / Aura deployments)
+// ============================================================================
+
+void UNeo4jComponent::OnAuthenticationComplete()
+{
+	// If the URL scheme is routing-aware and we haven't yet discovered the
+	// backend server, send the routing query. Otherwise proceed to Ready.
+	if (bNeedsRouting && !bRoutingDone)
+	{
+		ConnectionState = EBoltConnectionState::RoutingDiscovery;
+		SendRoutingQuery();
+	}
+	else
+	{
+		ConnectionState = EBoltConnectionState::Ready;
+		ProcessNextCommand();
+	}
+}
+
+void UNeo4jComponent::SendRoutingQuery()
+{
+	// Determine which database the client wants — needed for routing so the
+	// server can return the correct backend shard. We look at the first
+	// pending command; if none are queued yet we fall back to "neo4j" which
+	// is the default database name on most setups.
+	FString TargetDatabase;
+	if (PendingCommands.Num() > PendingCommandIndex)
+		TargetDatabase = PendingCommands[PendingCommandIndex].Database;
+	if (TargetDatabase.IsEmpty())
+		TargetDatabase = TEXT("neo4j");
+
+	// Build the call: CALL dbms.routing.getRoutingTable($context, $database)
+	// - $context is an empty map (no client-side routing hints)
+	// - $database is the string we want to route for
+	const FString Query = TEXT("CALL dbms.routing.getRoutingTable($context, $database)");
+
+	FBoltValueMap Params;
+	FBoltValueMap EmptyContext;
+	Params.Add(TEXT("context"), FBoltValue::MakeMap(MoveTemp(EmptyContext)));
+	Params.Add(TEXT("database"), FBoltValue::MakeString(TargetDatabase));
+
+	// The routing procedure lives in the "system" database on newer Neo4j
+	// versions; older versions accept it from any database. Routing against
+	// "system" works in both cases.
+	FBoltValueMap Extra;
+	Extra.Add(TEXT("db"), FBoltValue::MakeString(TEXT("system")));
+
+	RoutingRecords.Reset();
+	RoutingPhase = EBoltRoutingPhase::WaitingRunSuccess;
+
+	UE_LOG(LogTemp, Log, TEXT("Neo4j: Sending routing discovery query for database '%s'"), *TargetDatabase);
+
+	TArray<uint8> Pipelined = BoltMessages::BuildRunAndPull(Query, Params, Extra);
+	SendRawBytes(Pipelined.GetData(), Pipelined.Num());
+}
+
+void UNeo4jComponent::HandleRoutingMessage(const FBoltServerMessage& Msg)
+{
+	if (RoutingPhase == EBoltRoutingPhase::WaitingRunSuccess)
+	{
+		if (Msg.Tag == BoltMsg::SUCCESS)
+		{
+			// RUN acknowledged; next messages will be RECORD(s) then final SUCCESS.
+			RoutingPhase = EBoltRoutingPhase::WaitingPullRecords;
+		}
+		else if (Msg.Tag == BoltMsg::FAILURE)
+		{
+			FString Code = Msg.Metadata.Contains(TEXT("code")) ? Msg.Metadata[TEXT("code")]->AsString() : TEXT("unknown");
+			FString Message = Msg.Metadata.Contains(TEXT("message")) ? Msg.Metadata[TEXT("message")]->AsString() : TEXT("unknown");
+			UE_LOG(LogTemp, Error, TEXT("Neo4j: Routing query RUN failed: %s - %s"), *Code, *Message);
+			RoutingPhase = EBoltRoutingPhase::Idle;
+			ConnectionState = EBoltConnectionState::Failed;
+			SendChunkedMessage(BoltMessages::BuildReset());
+		}
+		return;
+	}
+
+	if (RoutingPhase == EBoltRoutingPhase::WaitingPullRecords)
+	{
+		if (Msg.Tag == BoltMsg::RECORD)
+		{
+			RoutingRecords.Emplace(MoveTemp(const_cast<FBoltServerMessage&>(Msg).Fields));
+		}
+		else if (Msg.Tag == BoltMsg::SUCCESS)
+		{
+			// PULL complete — we should have exactly one record with [ttl, servers, db?].
+			FString WriteAddress;
+			for (const FBoltValueArray& Record : RoutingRecords)
+			{
+				WriteAddress = PickWriteAddressFromRoutingRecord(Record);
+				if (!WriteAddress.IsEmpty())
+					break;
+			}
+
+			RoutingPhase = EBoltRoutingPhase::Idle;
+			RoutingRecords.Reset();
+
+			if (WriteAddress.IsEmpty())
+			{
+				UE_LOG(LogTemp, Error, TEXT("Neo4j: Routing table returned no WRITE server address"));
+				ConnectionState = EBoltConnectionState::Closed;
+				return;
+			}
+
+			UE_LOG(LogTemp, Log, TEXT("Neo4j: Routing discovered backend address '%s'"), *WriteAddress);
+			bRoutingDone = true;
+			ReconnectToBackendAddress(WriteAddress);
+		}
+		else if (Msg.Tag == BoltMsg::FAILURE)
+		{
+			FString Code = Msg.Metadata.Contains(TEXT("code")) ? Msg.Metadata[TEXT("code")]->AsString() : TEXT("unknown");
+			FString Message = Msg.Metadata.Contains(TEXT("message")) ? Msg.Metadata[TEXT("message")]->AsString() : TEXT("unknown");
+			UE_LOG(LogTemp, Error, TEXT("Neo4j: Routing query PULL failed: %s - %s"), *Code, *Message);
+			RoutingPhase = EBoltRoutingPhase::Idle;
+			ConnectionState = EBoltConnectionState::Failed;
+			SendChunkedMessage(BoltMessages::BuildReset());
+		}
+	}
+}
+
+FString UNeo4jComponent::PickWriteAddressFromRoutingRecord(const FBoltValueArray& RecordFields)
+{
+	// Neo4j's dbms.routing.getRoutingTable returns a record with columns:
+	//   [0] ttl :: INTEGER
+	//   [1] servers :: LIST OF MAP { addresses: LIST OF STRING, role: STRING }
+	//   [2] db :: STRING (optional, Neo4j 4.3+)
+	//
+	// We scan the servers list, find a WRITE entry, and return the first
+	// "host:port" address from its addresses list.
+	if (RecordFields.Num() < 2) return FString();
+
+	const FBoltValuePtr& ServersVal = RecordFields[1];
+	if (!ServersVal || ServersVal->Type != EBoltValueType::List) return FString();
+
+	FString FirstWrite, FirstRead, FirstRoute;
+
+	for (const FBoltValuePtr& ServerEntry : ServersVal->ListVal)
+	{
+		if (!ServerEntry || ServerEntry->Type != EBoltValueType::Map) continue;
+
+		const FBoltValueMap& EntryMap = ServerEntry->MapVal;
+		const FBoltValuePtr* RolePtr = EntryMap.Find(TEXT("role"));
+		const FBoltValuePtr* AddrPtr = EntryMap.Find(TEXT("addresses"));
+		if (!RolePtr || !AddrPtr || !(*RolePtr) || !(*AddrPtr)) continue;
+
+		const FString Role = (*RolePtr)->StringVal;
+		if ((*AddrPtr)->Type != EBoltValueType::List || (*AddrPtr)->ListVal.Num() == 0) continue;
+
+		const FString FirstAddr = (*AddrPtr)->ListVal[0]->StringVal;
+		if (Role == TEXT("WRITE") && FirstWrite.IsEmpty())      FirstWrite = FirstAddr;
+		else if (Role == TEXT("READ") && FirstRead.IsEmpty())   FirstRead = FirstAddr;
+		else if (Role == TEXT("ROUTE") && FirstRoute.IsEmpty()) FirstRoute = FirstAddr;
+	}
+
+	// Prefer WRITE, fall back to READ, then ROUTE.
+	if (!FirstWrite.IsEmpty()) return FirstWrite;
+	if (!FirstRead.IsEmpty())  return FirstRead;
+	return FirstRoute;
+}
+
+void UNeo4jComponent::ReconnectToBackendAddress(const FString& AddressHostPort)
+{
+	// Parse "host:port" (IPv4 or hostname). IPv6 with brackets isn't expected
+	// from routing output in practice.
+	FString BackendHost = AddressHostPort;
+	int32 BackendPort = port;
+	int32 Colon = BackendHost.Find(TEXT(":"), ESearchCase::CaseSensitive, ESearchDir::FromEnd);
+	if (Colon != INDEX_NONE)
+	{
+		BackendPort = FCString::Atoi(*BackendHost.Mid(Colon + 1));
+		BackendHost = BackendHost.Left(Colon);
+	}
+
+	// Tear down the frontend connection first (GOODBYE + close socket).
+	TearDownCurrentConnection();
+
+	// Now reconnect to the backend host:port using the same transport mode
+	// (TCP+TLS or WebSocket). The new connection will do handshake + HELLO +
+	// LOGON again; since bRoutingDone is now true, OnAuthenticationComplete
+	// will skip routing and go straight to Ready, dispatching any queued
+	// pending commands.
+	InitiateConnection(BackendHost, BackendPort);
 }
 
 // ============================================================================

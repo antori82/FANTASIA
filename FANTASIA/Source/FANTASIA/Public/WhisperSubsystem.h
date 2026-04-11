@@ -62,7 +62,13 @@ public:
 	/**
 	 * Load a Whisper GGML model from disk (async, fires OnModelLoaded).
 	 *
-	 * @param ModelFilePath  Absolute path to a .bin ggml model file.
+	 * Accepts either:
+	 *   - An absolute path to a .bin ggml model file, or
+	 *   - A bare filename (e.g. "ggml-base.bin") — in which case the standard
+	 *     model directories are searched automatically, equivalent to
+	 *     LoadModelByName.
+	 *
+	 * @param ModelFilePath  Absolute path or bare filename of a ggml model.
 	 */
 	UFUNCTION(BlueprintCallable, Category = "WhisperASR|Model")
 	void LoadModel(const FString& ModelFilePath);

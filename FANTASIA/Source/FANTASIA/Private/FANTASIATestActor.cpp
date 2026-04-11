@@ -14,6 +14,7 @@
 #include "WhisperBlueprintLibrary.h"
 #include "WhisperTypes.h"
 #include "RESTTTSComponent.h"
+#include "ElevenLabsTTSComponent.h"
 #include "LangGraphComponent.h"
 #include "BayesianNetwork.h"
 #include "InfluenceDiag.h"
@@ -26,12 +27,20 @@ AFANTASIATestActor::AFANTASIATestActor()
 {
 	PrimaryActorTick.bCanEverTick = false;
 
-	LLMComponent = CreateDefaultSubobject<UOpenAICompatibleComponent>(TEXT("LLMComponent"));
-	Neo4jComponent = CreateDefaultSubobject<UNeo4jComponent>(TEXT("Neo4jComponent"));
-	PrologComponent = CreateDefaultSubobject<USWIPrologComponent>(TEXT("PrologComponent"));
-	WhisperCapture = CreateDefaultSubobject<UWhisperCaptureComponent>(TEXT("WhisperCapture"));
-	TTSComponent = CreateDefaultSubobject<URESTTTSComponent>(TEXT("TTSComponent"));
-	LangGraphComponent = CreateDefaultSubobject<ULangGraphComponent>(TEXT("LangGraphComponent"));
+	// Components are created lazily inside each Test* function to avoid side effects
+	// (e.g. Neo4jComponent opening a WebSocket in BeginPlay with default settings).
+}
+
+/** Lazily create and register a UActorComponent on this actor. */
+template <typename T>
+static T* EnsureComponent(AActor* Owner, T*& Slot, const FName& Name)
+{
+	if (!Slot)
+	{
+		Slot = NewObject<T>(Owner, Name);
+		Slot->RegisterComponent();
+	}
+	return Slot;
 }
 
 // ════════════════════════════════════════════════════════════════════════
@@ -72,12 +81,24 @@ void AFANTASIATestActor::RunAllTests()
 	PassCount = 0;
 	FailCount = 0;
 
-	// Count expected tests: 6 offline always + online only if configured
-	TotalExpected = 6;
-	if (!OpenAIKey.IsEmpty()) TotalExpected++;
+	// Local providers (Ollama/LMStudio/vLLM) don't need an API key, so LLM runs
+	// whenever the provider is one of those OR a key is supplied.
+	// Custom runs when a URL is supplied (auth key optional).
+	const bool bLLMConfigured =
+		LLMProvider == ELLMProvider::Ollama ||
+		LLMProvider == ELLMProvider::LMStudio ||
+		LLMProvider == ELLMProvider::vLLM ||
+		(LLMProvider == ELLMProvider::Custom && !LLMCustomURL.IsEmpty()) ||
+		(LLMProvider != ELLMProvider::Custom && !LLMAPIKey.IsEmpty());
+
+	// Count expected tests: 7 offline always + online only if configured
+	TotalExpected = 7; // BN, ID, SVM, KDE, PrologHelpers, WhisperFormatting, WhisperCapture
+	if (bLLMConfigured) TotalExpected++;
 	if (!Neo4jPassword.IsEmpty()) TotalExpected++;
 	if (!WhisperModelPath.IsEmpty()) TotalExpected++;
 	if (!TTSEndpoint.IsEmpty()) TotalExpected++;
+	if (!ElevenLabsKey.IsEmpty()) TotalExpected++;
+	if (!LangGraphEndpoint.IsEmpty()) TotalExpected++;
 	// Prolog is local but needs the DLL to be loaded at runtime
 	TotalExpected++;
 
@@ -90,12 +111,13 @@ void AFANTASIATestActor::RunAllTests()
 	TestKDE();
 	TestPrologHelpers();
 	TestWhisperFormatting();
+	TestWhisperCapture();
 
 	// Online tests (skipped if config is empty)
-	if (!OpenAIKey.IsEmpty())
+	if (bLLMConfigured)
 		TestLLM();
 	else
-		UE_LOG(LogTemp, Warning, TEXT("[FANTASIA Tests] Skipping LLM test - no API key"));
+		UE_LOG(LogTemp, Warning, TEXT("[FANTASIA Tests] Skipping LLM test - no API key for cloud provider"));
 
 	if (!Neo4jPassword.IsEmpty())
 		TestNeo4j();
@@ -111,6 +133,16 @@ void AFANTASIATestActor::RunAllTests()
 		TestTTS();
 	else
 		UE_LOG(LogTemp, Warning, TEXT("[FANTASIA Tests] Skipping TTS test - no endpoint"));
+
+	if (!ElevenLabsKey.IsEmpty())
+		TestElevenLabsTTS();
+	else
+		UE_LOG(LogTemp, Warning, TEXT("[FANTASIA Tests] Skipping ElevenLabs test - no API key"));
+
+	if (!LangGraphEndpoint.IsEmpty())
+		TestLangGraph();
+	else
+		UE_LOG(LogTemp, Warning, TEXT("[FANTASIA Tests] Skipping LangGraph test - no endpoint"));
 
 	TestProlog();
 }
@@ -257,6 +289,15 @@ void AFANTASIATestActor::TestPrologHelpers()
 		      : TEXT("One or more term creation failures"));
 }
 
+void AFANTASIATestActor::TestWhisperCapture()
+{
+	TArray<FString> Devices = UWhisperCaptureComponent::GetAvailableInputDevices();
+	bool bPass = Devices.Num() > 0;
+	ReportTest(TEXT("WhisperCapture"), bPass,
+		bPass ? FString::Printf(TEXT("Found %d audio input device(s)"), Devices.Num())
+		      : TEXT("No audio input devices enumerated"));
+}
+
 void AFANTASIATestActor::TestWhisperFormatting()
 {
 	// Build a test result
@@ -298,12 +339,23 @@ void AFANTASIATestActor::TestWhisperFormatting()
 
 void AFANTASIATestActor::TestLLM()
 {
-	LLMComponent->Config.APIKey = OpenAIKey;
-	LLMComponent->Config.DefaultModel = OpenAIModel;
-	LLMComponent->ApplyPreset(ELLMProvider::OpenAI);
-	LLMComponent->Config.APIKey = OpenAIKey;
-	if (!OpenAIModel.IsEmpty())
-		LLMComponent->Config.DefaultModel = OpenAIModel;
+	EnsureComponent(this, LLMComponent, TEXT("LLMComponent"));
+
+	// Apply the selected provider preset first (sets URL, default model, timeout, auth flag).
+	// For Custom, ApplyPreset is a no-op: we fill in URL and auth flag from our own fields.
+	LLMComponent->ApplyPreset(LLMProvider);
+
+	if (LLMProvider == ELLMProvider::Custom)
+	{
+		LLMComponent->Config.URL = LLMCustomURL;
+		LLMComponent->Config.bRequiresAuth = bLLMCustomRequiresAuth;
+		LLMComponent->Config.TimeoutSeconds = 60;
+	}
+
+	// Override with user-supplied key/model if provided
+	LLMComponent->Config.APIKey = LLMAPIKey;
+	if (!LLMModel.IsEmpty())
+		LLMComponent->Config.DefaultModel = LLMModel;
 
 	LLMComponent->IncomingGPTResponse.AddDynamic(this, &AFANTASIATestActor::OnLLMResponse);
 
@@ -318,24 +370,43 @@ void AFANTASIATestActor::TestLLM()
 
 void AFANTASIATestActor::TestNeo4j()
 {
-	Neo4jComponent->endpoint = Neo4jEndpoint;
-	Neo4jComponent->port = Neo4jPort;
-	Neo4jComponent->user = Neo4jUser;
-	Neo4jComponent->password = Neo4jPassword;
+	// Create the component and configure it BEFORE RegisterComponent() runs BeginPlay(),
+	// so the connection is attempted with user-supplied credentials rather than defaults.
+	if (!Neo4jComponent)
+	{
+		Neo4jComponent = NewObject<UNeo4jComponent>(this, TEXT("Neo4jComponent"));
+		Neo4jComponent->endpoint = Neo4jEndpoint;
+		Neo4jComponent->port = Neo4jPort;
+		Neo4jComponent->user = Neo4jUser;
+		Neo4jComponent->password = Neo4jPassword;
+		Neo4jComponent->RegisterComponent();
+	}
 
 	Neo4jComponent->IncomingResponse.AddDynamic(this, &AFANTASIATestActor::OnNeo4jResponse);
 
 	TMap<FString, FString> EmptyParams;
 	Neo4jComponent->submitQuery(TEXT("RETURN 1 AS n"), Neo4jOperation::SINGLE_REQUEST,
-		TEXT(""), EmptyParams, TEXT(""));
+		TEXT(""), EmptyParams, Neo4jDatabase);
 }
 
 void AFANTASIATestActor::TestProlog()
 {
+	EnsureComponent(this, PrologComponent, TEXT("PrologComponent"));
+
 	PrologComponent->AllSolutionsReady.AddDynamic(this, &AFANTASIATestActor::OnPrologAllSolutions);
 
-	PrologComponent->SWIPLconsultString(TEXT("color(red). color(green). color(blue)."));
-	PrologComponent->SWIPLfindAll(TEXT("color(X)"));
+	// Start clean: retract any leftover facts from previous test runs.
+	// SWIPLqueryString executes the goal directly (unlike SWIPLconsultString
+	// which wraps input in assert(T)). retractall/1 in SWI-Prolog is a no-op
+	// on unknown predicates, so this is safe on the first run.
+	PrologComponent->SWIPLqueryString(TEXT("retractall(fantasia_color(_))"));
+
+	// SWIPLconsultString parses ONE term per call (via atom_to_term + assert),
+	// so we must assert each fact individually.
+	PrologComponent->SWIPLconsultString(TEXT("fantasia_color(red)"));
+	PrologComponent->SWIPLconsultString(TEXT("fantasia_color(green)"));
+	PrologComponent->SWIPLconsultString(TEXT("fantasia_color(blue)"));
+	PrologComponent->SWIPLfindAll(TEXT("fantasia_color(X)"));
 }
 
 void AFANTASIATestActor::TestWhisperModel()
@@ -348,11 +419,32 @@ void AFANTASIATestActor::TestWhisperModel()
 	}
 
 	Whisper->OnModelLoaded.AddDynamic(this, &AFANTASIATestActor::OnWhisperModelLoaded);
+	// LoadModel accepts both absolute paths and bare filenames, delegating
+	// to LoadModelByName internally when given a filename.
 	Whisper->LoadModel(WhisperModelPath);
+}
+
+void AFANTASIATestActor::TestLangGraph()
+{
+	if (!LangGraphComponent)
+	{
+		LangGraphComponent = NewObject<ULangGraphComponent>(this, TEXT("LangGraphComponent"));
+		LangGraphComponent->endpoint = LangGraphEndpoint;
+		LangGraphComponent->port = LangGraphPort;
+		LangGraphComponent->RegisterComponent();
+	}
+
+	LangGraphComponent->LangGraphThreadCreateResponse.AddDynamic(this, &AFANTASIATestActor::OnLangGraphThreadCreated);
+
+	// The component substitutes an auto-generated UUID if LangGraphTestThreadID
+	// is empty or not a valid UUID, so we can pass it through directly.
+	LangGraphComponent->createLangGraphThread(LangGraphTestThreadID);
 }
 
 void AFANTASIATestActor::TestTTS()
 {
+	EnsureComponent(this, TTSComponent, TEXT("TTSComponent"));
+
 	TTSComponent->URL = TTSEndpoint;
 	if (!TTSBody.IsEmpty())
 		TTSComponent->BodyTemplate = TTSBody;
@@ -361,11 +453,23 @@ void AFANTASIATestActor::TestTTS()
 	TTSComponent->TTSSynthesize(TEXT("Hello, this is a test."), TEXT("test_tts"));
 }
 
+void AFANTASIATestActor::TestElevenLabsTTS()
+{
+	EnsureComponent(this, ElevenLabsComponent, TEXT("ElevenLabsComponent"));
+
+	ElevenLabsComponent->Key = ElevenLabsKey;
+	ElevenLabsComponent->VoiceID = ElevenLabsVoiceID;
+	ElevenLabsComponent->ModelID = ElevenLabsModelID;
+
+	ElevenLabsComponent->SynthesisReady.AddDynamic(this, &AFANTASIATestActor::OnElevenLabsSynthesisReady);
+	ElevenLabsComponent->TTSSynthesize(TEXT("Hello, this is an ElevenLabs test."), TEXT("test_eleven"));
+}
+
 // ════════════════════════════════════════════════════════════════════════
 // Online Test Callbacks
 // ════════════════════════════════════════════════════════════════════════
 
-void AFANTASIATestActor::OnLLMResponse(FString Response, GPTRoleType Role)
+void AFANTASIATestActor::OnLLMResponse(FString Response, GPTRoleType gptRole)
 {
 	LLMComponent->IncomingGPTResponse.RemoveDynamic(this, &AFANTASIATestActor::OnLLMResponse);
 	bool bPass = !Response.IsEmpty();
@@ -410,4 +514,26 @@ void AFANTASIATestActor::OnTTSSynthesisReady(FString Id)
 	ReportTest(TEXT("TTS"), bPass,
 		bPass ? FString::Printf(TEXT("Synthesis complete for id '%s'"), *Id)
 		      : TEXT("Synthesis returned empty id"));
+}
+
+void AFANTASIATestActor::OnElevenLabsSynthesisReady(FString Id)
+{
+	ElevenLabsComponent->SynthesisReady.RemoveDynamic(this, &AFANTASIATestActor::OnElevenLabsSynthesisReady);
+	bool bPass = !Id.IsEmpty();
+	ReportTest(TEXT("ElevenLabs"), bPass,
+		bPass ? FString::Printf(TEXT("Synthesis complete for id '%s'"), *Id)
+		      : TEXT("Synthesis returned empty id"));
+}
+
+void AFANTASIATestActor::OnLangGraphThreadCreated(FString ThreadID)
+{
+	LangGraphComponent->LangGraphThreadCreateResponse.RemoveDynamic(this, &AFANTASIATestActor::OnLangGraphThreadCreated);
+	bool bPass = !ThreadID.IsEmpty();
+	ReportTest(TEXT("LangGraph"), bPass,
+		bPass ? FString::Printf(TEXT("Thread created: %s"), *ThreadID)
+		      : TEXT("Thread creation returned empty ID"));
+
+	// Clean up the test thread
+	if (bPass && LangGraphComponent)
+		LangGraphComponent->deleteLangGraphThread(ThreadID);
 }

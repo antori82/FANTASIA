@@ -54,9 +54,12 @@ void URESTTTSComponent::BeginPlay()
 
 				if (outData.Num() >= A2F_STREAMING_BATCH_SIZE)
 				{
-					FACERuntimeModule::Get().AnimateFromAudioSamples(
-						A2Fpointer, outData, 1, 16000, false,
-						EmotionParameters, A2FParameters, A2FProvider);
+					if (IsValid(A2Fpointer))
+					{
+						FACERuntimeModule::Get().AnimateFromAudioSamples(
+							A2Fpointer, outData, 1, 16000, false,
+							EmotionParameters, A2FParameters, A2FProvider);
+					}
 					outData.Empty();
 				}
 			}
@@ -64,9 +67,12 @@ void URESTTTSComponent::BeginPlay()
 			{
 				while (SendData.Dequeue(item))
 					outData.Add(item);
-				FACERuntimeModule::Get().AnimateFromAudioSamples(
-					A2Fpointer, outData, 1, 16000, true,
-					EmotionParameters, A2FParameters, A2FProvider);
+				if (IsValid(A2Fpointer))
+				{
+					FACERuntimeModule::Get().AnimateFromAudioSamples(
+						A2Fpointer, outData, 1, 16000, true,
+						EmotionParameters, A2FParameters, A2FProvider);
+				}
 				outData.Empty();
 				bBufferOpen.store(false);
 			}

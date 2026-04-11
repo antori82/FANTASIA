@@ -110,6 +110,18 @@ void UWhisperSubsystem::LoadModel(const FString& ModelFilePath)
 		return;
 	}
 
+	// Accept either an absolute filesystem path or a bare filename.
+	// If the input has no directory separator, treat it as a filename and
+	// delegate to LoadModelByName which searches the standard model
+	// directories (Plugins/FANTASIA/Resources, Content/Models, etc).
+	if (!ModelFilePath.IsEmpty()
+		&& !ModelFilePath.Contains(TEXT("/"))
+		&& !ModelFilePath.Contains(TEXT("\\")))
+	{
+		LoadModelByName(ModelFilePath);
+		return;
+	}
+
 	// Unload any existing model first
 	UnloadModel();
 

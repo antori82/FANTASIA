@@ -132,30 +132,72 @@ void ULangGraphComponent::OnLangGraphPartialResponseReceived(FHttpRequestPtr req
 // ── Thread-creation response handler ────────────────────────────────────────
 
 void ULangGraphComponent::OnLangGraphThreadCreateResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful) {
-	FHttpResponsePtr test;
-	FString message, threadID;
+	// Always broadcast exactly once — callers rely on this for synchronization.
+	// Broadcast an empty string on any error path so listeners can detect failure.
+	FString ThreadID;
 
-	if (bWasSuccessful) {
-		test = Request->GetResponse();
-		message = test->GetContentAsString();
-
-		TSharedPtr<FJsonValue> JsonValue;
-		TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(message);
-
-		if (FJsonSerializer::Deserialize(Reader, JsonValue)) {
-			const TSharedPtr<FJsonObject>* FileMessageObject;
-
-			if (JsonValue->TryGetObject(FileMessageObject)) {
-				threadID = FileMessageObject->Get()->GetStringField(TEXT("thread_id"));
-				LangGraphThreadCreateResponse.Broadcast(threadID);
-			}
-		}
+	if (!bWasSuccessful || !Response.IsValid())
+	{
+		UE_LOG(LogTemp, Error, TEXT("LangGraph: thread creation request failed (transport error)"));
+		LangGraphThreadCreateResponse.Broadcast(ThreadID);
+		return;
 	}
+
+	const int32 StatusCode = Response->GetResponseCode();
+	const FString Body = Response->GetContentAsString();
+
+	if (StatusCode < 200 || StatusCode >= 300)
+	{
+		UE_LOG(LogTemp, Error, TEXT("LangGraph: thread creation HTTP %d: %s"), StatusCode, *Body);
+		LangGraphThreadCreateResponse.Broadcast(ThreadID);
+		return;
+	}
+
+	TSharedPtr<FJsonValue> JsonValue;
+	TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(Body);
+	if (!FJsonSerializer::Deserialize(Reader, JsonValue) || !JsonValue.IsValid())
+	{
+		UE_LOG(LogTemp, Error, TEXT("LangGraph: thread creation response was not valid JSON: %s"), *Body);
+		LangGraphThreadCreateResponse.Broadcast(ThreadID);
+		return;
+	}
+
+	const TSharedPtr<FJsonObject>* Obj = nullptr;
+	if (!JsonValue->TryGetObject(Obj) || !Obj || !(*Obj).IsValid())
+	{
+		UE_LOG(LogTemp, Error, TEXT("LangGraph: thread creation response was not a JSON object: %s"), *Body);
+		LangGraphThreadCreateResponse.Broadcast(ThreadID);
+		return;
+	}
+
+	if (!(*Obj)->TryGetStringField(TEXT("thread_id"), ThreadID))
+	{
+		UE_LOG(LogTemp, Error, TEXT("LangGraph: thread creation response missing 'thread_id' field: %s"), *Body);
+	}
+
+	LangGraphThreadCreateResponse.Broadcast(ThreadID);
 }
 
 // ── Thread lifecycle ────────────────────────────────────────────────────────
 
 void ULangGraphComponent::createLangGraphThread(FString threadID) {
+	// LangGraph Platform requires thread_id to be a valid UUID. If the caller
+	// passes an empty string or anything else, substitute a freshly-generated
+	// UUID so we don't incur an HTTP 422 round-trip. The actual id assigned
+	// by the server is broadcast via LangGraphThreadCreateResponse so callers
+	// can learn what to use for subsequent queries.
+	FGuid Parsed;
+	if (!FGuid::Parse(threadID, Parsed))
+	{
+		if (!threadID.IsEmpty())
+		{
+			UE_LOG(LogTemp, Warning,
+				TEXT("LangGraph: thread_id '%s' is not a valid UUID; substituting a generated one"),
+				*threadID);
+		}
+		threadID = FGuid::NewGuid().ToString(EGuidFormats::DigitsWithHyphensLower);
+	}
+
 	FHttpModule* Http = &FHttpModule::Get();
 	FString payload;
 	TSharedRef<IHttpRequest, ESPMode::ThreadSafe> Request = Http->CreateRequest();

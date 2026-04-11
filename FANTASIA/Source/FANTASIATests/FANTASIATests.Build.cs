@@ -17,6 +17,7 @@ public class FANTASIATests : ModuleRules
             "Core",
             "CoreUObject",
             "Engine",
+            "WebSockets",
             "FANTASIA"
         });
 

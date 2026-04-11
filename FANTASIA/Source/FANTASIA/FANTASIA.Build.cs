@@ -97,7 +97,9 @@ public class FANTASIA : ModuleRules
                 "AudioCaptureCore",
                 "AudioMixer",
                 "AudioMixerCore",
-                "SignalProcessing"
+                "SignalProcessing",
+                "ACERuntime",
+                "ACECore"
 			}
             );
 
@@ -113,9 +115,7 @@ public class FANTASIA : ModuleRules
                 "Json",
                 "JsonUtilities",
                 "HTTP",
-                "WebSockets",
-                "ACERuntime",
-                "ACECore"
+                "WebSockets"
             }
             );
     }

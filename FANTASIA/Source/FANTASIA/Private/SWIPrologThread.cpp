@@ -467,6 +467,17 @@ void SWIPrologThread::executeFindAll(const FString& queryString) {
 // ── Command Dispatch (worker thread) ─────────────────────────────────────────
 
 void SWIPrologThread::processCommand(const FPrologCommand& Command) {
+	// Ensure a clean query state before every command except NextSolution
+	// (which is the only command that legitimately needs myQuery to remain
+	// open across dispatches). Without this, a side-effecting PlCall in
+	// ConsultString/Assert/Retract could nest inside a previously-opened
+	// query's scope and its effects would be invisible to later queries.
+	if (Command.Type != EPrologCommandType::NextSolution && myQuery != NULL)
+	{
+		myQuery->close_destroy();
+		myQuery = NULL;
+	}
+
 	switch (Command.Type)
 	{
 	case EPrologCommandType::ConsultFile:

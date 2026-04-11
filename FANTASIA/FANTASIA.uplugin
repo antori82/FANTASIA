@@ -23,7 +23,7 @@
 		},
 		{
 			"Name": "FANTASIATests",
-			"Type": "Editor",
+			"Type": "UncookedOnly",
 			"LoadingPhase": "Default"
 		}
 	],

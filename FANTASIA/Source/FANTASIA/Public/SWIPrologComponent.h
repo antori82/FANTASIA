@@ -32,7 +32,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FQueryFailedEvent, FString, ErrorMes
  * @see USWIPrologHelpers
  */
 UCLASS(ClassGroup = (SWIProlog), meta = (BlueprintSpawnableComponent), config = Game)
-class USWIPrologComponent : public UActorComponent
+class FANTASIA_API USWIPrologComponent : public UActorComponent
 {
 	GENERATED_BODY()
 

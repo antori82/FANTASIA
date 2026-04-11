@@ -12,6 +12,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "FANTASIATypes.h"
+#include "OpenAICompatibleComponent.h"
 #include "FANTASIATestActor.generated.h"
 
 class UOpenAICompatibleComponent;
@@ -30,7 +31,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnFANTASIATestCompleted, FString
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnFANTASIAAllTestsCompleted, int32, Passed, int32, Failed);
 
 UCLASS(Blueprintable, meta = (DisplayName = "FANTASIA Test Actor"))
-class FANTASIATESTS_API AFANTASIATestActor : public AActor
+class FANTASIA_API AFANTASIATestActor : public AActor
 {
 	GENERATED_BODY()
 
@@ -47,33 +48,54 @@ public:
 	UPROPERTY(BlueprintAssignable, Category = "FANTASIA Tests|Events")
 	FOnFANTASIAAllTestsCompleted OnAllTestsCompleted;
 
-	// ── Components (visible in Details panel) ───────────────────────────
+	// ── Components (hidden from Details panel to avoid duplicate configuration) ──
+	// Use the "FANTASIA Tests" category properties below to configure tests.
+	// The components themselves are still accessible from Blueprint via their accessors.
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "FANTASIA Tests|Components")
+	UPROPERTY(BlueprintReadOnly, Category = "FANTASIA Tests|Components")
 	UOpenAICompatibleComponent* LLMComponent;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "FANTASIA Tests|Components")
+	UPROPERTY(BlueprintReadOnly, Category = "FANTASIA Tests|Components")
 	UNeo4jComponent* Neo4jComponent;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "FANTASIA Tests|Components")
+	UPROPERTY(BlueprintReadOnly, Category = "FANTASIA Tests|Components")
 	USWIPrologComponent* PrologComponent;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "FANTASIA Tests|Components")
+	UPROPERTY(BlueprintReadOnly, Category = "FANTASIA Tests|Components")
 	UWhisperCaptureComponent* WhisperCapture;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "FANTASIA Tests|Components")
+	UPROPERTY(BlueprintReadOnly, Category = "FANTASIA Tests|Components")
 	URESTTTSComponent* TTSComponent;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "FANTASIA Tests|Components")
+	UPROPERTY(BlueprintReadOnly, Category = "FANTASIA Tests|Components")
+	UElevenLabsTTSComponent* ElevenLabsComponent;
+
+	UPROPERTY(BlueprintReadOnly, Category = "FANTASIA Tests|Components")
 	ULangGraphComponent* LangGraphComponent;
 
 	// ── Online Test Configuration ───────────────────────────────────────
 
+	/** Which LLM provider preset to apply before running the test. Select Custom to use LLMCustomURL. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FANTASIA Tests|LLM")
-	FString OpenAIKey;
+	ELLMProvider LLMProvider = ELLMProvider::OpenAI;
 
+	/** Full chat-completions endpoint URL. Only used when LLMProvider == Custom. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FANTASIA Tests|LLM",
+		meta = (EditCondition = "LLMProvider == ELLMProvider::Custom"))
+	FString LLMCustomURL;
+
+	/** Whether the custom endpoint requires an Authorization: Bearer header. Only used when LLMProvider == Custom. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FANTASIA Tests|LLM",
+		meta = (EditCondition = "LLMProvider == ELLMProvider::Custom"))
+	bool bLLMCustomRequiresAuth = true;
+
+	/** API key for the selected provider (leave blank for providers that don't require auth, e.g. Ollama). */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FANTASIA Tests|LLM")
-	FString OpenAIModel = TEXT("gpt-4-turbo-preview");
+	FString LLMAPIKey;
+
+	/** Model to use. Leave blank to keep the preset default. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FANTASIA Tests|LLM")
+	FString LLMModel;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FANTASIA Tests|Neo4j")
 	FString Neo4jEndpoint = TEXT("localhost");
@@ -87,14 +109,54 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FANTASIA Tests|Neo4j")
 	FString Neo4jPassword;
 
+	/** Database to query. Leave blank to use the server's default ('neo4j' on most installations). */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FANTASIA Tests|Neo4j")
+	FString Neo4jDatabase;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FANTASIA Tests|TTS")
 	FString TTSEndpoint;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FANTASIA Tests|TTS")
 	FString TTSBody;
 
+	/** ElevenLabs API key. Leave blank to skip the ElevenLabs test. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FANTASIA Tests|ElevenLabs")
+	FString ElevenLabsKey;
+
+	/** ElevenLabs voice ID to use (e.g. "21m00Tcm4TlvDq8ikWAM" for Rachel). */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FANTASIA Tests|ElevenLabs")
+	FString ElevenLabsVoiceID = TEXT("21m00Tcm4TlvDq8ikWAM");
+
+	/** ElevenLabs model ID. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FANTASIA Tests|ElevenLabs")
+	FString ElevenLabsModelID = TEXT("eleven_multilingual_v2");
+
+	/**
+	 * Whisper model to load. Can be either:
+	 *   - An absolute path to a .bin file (e.g. "D:/Models/ggml-base.bin"), OR
+	 *   - A bare filename (e.g. "ggml-base.bin") — the subsystem will search
+	 *     Plugins/FANTASIA/Resources, Plugins/FANTASIA/Content/Models, and
+	 *     Content/WhisperModels in that order.
+	 * Leave blank to skip the Whisper model test.
+	 */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FANTASIA Tests|Whisper")
-	FString WhisperModelPath;
+	FString WhisperModelPath = TEXT("ggml-large-v3-turbo.bin");
+
+	/** LangGraph server hostname (e.g. "http://localhost"). Leave blank to skip the test. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FANTASIA Tests|LangGraph")
+	FString LangGraphEndpoint;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FANTASIA Tests|LangGraph")
+	int32 LangGraphPort = 2024;
+
+	/**
+	 * Thread ID to create and delete during the LangGraph test.
+	 * LangGraph Platform requires this to be a valid UUID (e.g.
+	 * "550e8400-e29b-41d4-a716-446655440000"). If left blank or not a valid
+	 * UUID, the test generates a fresh UUID at runtime.
+	 */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FANTASIA Tests|LangGraph")
+	FString LangGraphTestThreadID;
 
 	// ── Test Functions (all BlueprintCallable) ──────────────────────────
 
@@ -128,6 +190,10 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "FANTASIA Tests|Offline")
 	void TestWhisperFormatting();
 
+	/** Enumerate audio input devices; verifies the audio subsystem is functional. */
+	UFUNCTION(BlueprintCallable, Category = "FANTASIA Tests|Offline")
+	void TestWhisperCapture();
+
 	// Online tests — need credentials / services
 
 	/** Send a chat completion to the LLM, verify response arrives. */
@@ -146,16 +212,24 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "FANTASIA Tests|Online")
 	void TestWhisperModel();
 
-	/** Synthesize text via the REST TTS endpoint. */
+	/** Synthesize text via the generic REST TTS endpoint. */
 	UFUNCTION(BlueprintCallable, Category = "FANTASIA Tests|Online")
 	void TestTTS();
+
+	/** Synthesize text via the ElevenLabs TTS API. */
+	UFUNCTION(BlueprintCallable, Category = "FANTASIA Tests|Online")
+	void TestElevenLabsTTS();
+
+	/** Create a LangGraph thread against the configured server, verify the ID comes back. */
+	UFUNCTION(BlueprintCallable, Category = "FANTASIA Tests|Online")
+	void TestLangGraph();
 
 private:
 	void ReportTest(const FString& Name, bool bSuccess, const FString& Msg);
 
 	// Callbacks for online test delegates (must be UFUNCTION for dynamic binding)
 	UFUNCTION()
-	void OnLLMResponse(FString Response, GPTRoleType Role);
+	void OnLLMResponse(FString Response, GPTRoleType gptRole);
 
 	UFUNCTION()
 	void OnNeo4jResponse(FNeo4jResponse Response);
@@ -168,6 +242,12 @@ private:
 
 	UFUNCTION()
 	void OnTTSSynthesisReady(FString Id);
+
+	UFUNCTION()
+	void OnElevenLabsSynthesisReady(FString Id);
+
+	UFUNCTION()
+	void OnLangGraphThreadCreated(FString ThreadID);
 
 	UPROPERTY()
 	UBayesianNetwork* BayesianNet = nullptr;

@@ -22,12 +22,21 @@ enum class EBoltConnectionState : uint8
 	HandshakePending,   ///< Bolt handshake sent, awaiting version negotiation response.
 	Authenticating,     ///< HELLO / LOGON sent, awaiting SUCCESS.
 	LogonPending,       ///< Bolt 5.1+ two-phase auth: HELLO succeeded, LOGON in flight.
+	RoutingDiscovery,   ///< Sent dbms.routing.getRoutingTable, awaiting records + SUCCESS.
 	Ready,              ///< Authenticated and idle — ready to accept queries.
 	Streaming,          ///< A RUN/PULL cycle is in progress (auto-commit).
 	TxReady,            ///< Inside an explicit transaction, idle.
 	TxStreaming,        ///< Inside an explicit transaction, RUN/PULL in progress.
 	Failed,             ///< A protocol or transport error has occurred.
 	Closed              ///< Connection was cleanly closed.
+};
+
+/** Phase within the routing discovery query (RUN + PULL). */
+enum class EBoltRoutingPhase : uint8
+{
+	Idle,
+	WaitingRunSuccess,
+	WaitingPullRecords
 };
 
 /** Phase within a single Cypher query execution (RUN → PULL). */
@@ -62,7 +71,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FIncomingNeo4jResponseEvent, FNeo4jR
  * @see UBoltProtocol, UBoltPackStream
  */
 UCLASS(ClassGroup = (Neo4j), meta = (BlueprintSpawnableComponent), config=Game)
-class UNeo4jComponent : public UActorComponent
+class FANTASIA_API UNeo4jComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
@@ -139,12 +148,21 @@ private:
 	int32 TransactionCounter = 0;
 	TArray<uint8> HandshakeBuffer;
 
+	// ── Server-side routing (Neo4j cluster / Aura) ───────────────────────
+	bool bNeedsRouting = false;         ///< URL scheme indicates routing-aware driver required.
+	bool bRoutingDone = false;          ///< Backend has been discovered and we are connected to it.
+	EBoltRoutingPhase RoutingPhase = EBoltRoutingPhase::Idle;
+	FString ActiveHostname;             ///< Current hostname we are connected to (frontend or backend).
+	int32 ActivePort = 0;               ///< Current port we are connected to.
+	TArray<FBoltValueArray> RoutingRecords; ///< Buffered records from the routing discovery call.
+
 	// ── WebSocket transport (UseSSL == false) ────────────────────────────
 	TSharedPtr<IWebSocket> WebSocket;
-	void OnWebSocketConnected();
-	void OnWebSocketConnectionError(const FString& Error);
-	void OnWebSocketClosed(int32 StatusCode, const FString& Reason, bool bWasClean);
-	void OnWebSocketBinaryMessage(const void* Data, SIZE_T Size, SIZE_T BytesRemaining);
+	int32 ConnectionEpoch = 0;  ///< Incremented on every new connection; stale callbacks are filtered.
+	void OnWebSocketConnected(int32 Epoch);
+	void OnWebSocketConnectionError(int32 Epoch, const FString& Error);
+	void OnWebSocketClosed(int32 Epoch, int32 StatusCode, const FString& Reason, bool bWasClean);
+	void OnWebSocketBinaryMessage(int32 Epoch, const void* Data, SIZE_T Size, SIZE_T BytesRemaining);
 
 	// ── TCP+TLS transport (UseSSL == true) ───────────────────────────────
 	void* SslCtx = nullptr;
@@ -172,9 +190,19 @@ private:
 	UNeo4jResultCell* ConvertBoltValueToCell(const FBoltValuePtr& Value);
 	FBoltValueMap ConvertParameters(const TMap<FString, FString>& InParams);
 
+	// ── Routing discovery (Bolt routing for clustered / Aura deployments) ───
+	void InitiateConnection(const FString& Hostname, int32 InPort);
+	void TearDownCurrentConnection();
+	void OnAuthenticationComplete();
+	void SendRoutingQuery();
+	void HandleRoutingMessage(const FBoltServerMessage& Msg);
+	void ReconnectToBackendAddress(const FString& AddressHostPort);
+	FString PickWriteAddressFromRoutingRecord(const FBoltValueArray& RecordFields);
+
 	// ── Helpers ──────────────────────────────────────────────────────────
 	FString ExtractHostname(const FString& Url);
 	bool ShouldUseSSL(const FString& Url);
+	bool SchemeRequiresRouting(const FString& Url);
 
 	friend class FNeo4jRecvRunnable;
 };
