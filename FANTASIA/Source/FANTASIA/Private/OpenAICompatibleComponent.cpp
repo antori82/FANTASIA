@@ -68,7 +68,7 @@ void UOpenAICompatibleComponent::GetChatCompletion(const TArray<FChatTurn>& mess
 {
 	StreamParseOffset = 0;
 	StreamCurrentRole = GPTRoleType::ASSISTANT;
-	SentenceBuffer.Empty();
+	SentenceBuffer.Reset(512);
 
 	FHttpModule* Http = &FHttpModule::Get();
 	TSharedRef<IHttpRequest, ESPMode::ThreadSafe> Request = Http->CreateRequest();
@@ -180,14 +180,20 @@ void UOpenAICompatibleComponent::OnPartialResponseReceived(FHttpRequestPtr Reque
 		return;
 
 	const FString FullContent = Response->GetContentAsString();
+	const int32 ContentLen = FullContent.Len();
 
-	// Only scan new data from where we left off last time
-	const FString NewContent = FullContent.Mid(StreamParseOffset);
-	FRegexMatcher Matcher(SSEPattern, NewContent);
+	// Nothing new since last callback
+	if (ContentLen <= StreamParseOffset)
+		return;
+
+	// Scan only the unparsed tail of the buffer via SetLimits (avoids the Mid copy)
+	FRegexMatcher Matcher(SSEPattern, FullContent);
+	Matcher.SetLimits(StreamParseOffset, ContentLen);
 
 	FString OutFragment;
+	OutFragment.Reserve((ContentLen - StreamParseOffset) / 2);
 	bool bEndStream = false;
-	int32 LastMatchEnd = 0;
+	int32 LastMatchEnd = StreamParseOffset;
 
 	while (Matcher.FindNext())
 	{
@@ -228,14 +234,13 @@ void UOpenAICompatibleComponent::OnPartialResponseReceived(FHttpRequestPtr Reque
 
 				FString Content;
 				if ((*DeltaObj)->TryGetStringField(TEXT("content"), Content))
-					OutFragment.Append(Content);
+					OutFragment.Append(MoveTemp(Content));
 			}
 		}
 	}
 
-	// Advance offset to just past the last fully matched SSE event
-	if (LastMatchEnd > 0)
-		StreamParseOffset += LastMatchEnd;
+	// Absolute offset past the last fully matched SSE event
+	StreamParseOffset = LastMatchEnd;
 
 	// Token-level delegate: only broadcast when there's actual content or stream end
 	if (OutFragment.Len() > 0 || bEndStream)
@@ -244,21 +249,26 @@ void UOpenAICompatibleComponent::OnPartialResponseReceived(FHttpRequestPtr Reque
 	// Sentence-level buffering for TTS: accumulate tokens, flush on sentence boundaries
 	if (OutFragment.Len() > 0)
 	{
-		SentenceBuffer.Append(OutFragment);
+		// Boundary pairs (i, i+1) with i+1 <= PrevLen-1 were already checked last callback.
+		// New pairs start at i = PrevLen - 1 (last old char + first new char).
+		const int32 PrevLen = SentenceBuffer.Len();
+		const int32 ScanStart = PrevLen > 0 ? PrevLen - 1 : 0;
+		SentenceBuffer.Append(MoveTemp(OutFragment));
 
-		// Scan for sentence-ending punctuation followed by whitespace
 		int32 FlushUpTo = -1;
-		for (int32 i = 0; i < SentenceBuffer.Len() - 1; i++)
+		const int32 BufLen = SentenceBuffer.Len();
+		const TCHAR* BufData = *SentenceBuffer;
+		for (int32 i = ScanStart; i < BufLen - 1; i++)
 		{
-			const TCHAR C = SentenceBuffer[i];
-			if ((C == '.' || C == '!' || C == '?' || C == ':' || C == ';') && FChar::IsWhitespace(SentenceBuffer[i + 1]))
+			const TCHAR C = BufData[i];
+			if ((C == '.' || C == '!' || C == '?' || C == ':' || C == ';') && FChar::IsWhitespace(BufData[i + 1]))
 				FlushUpTo = i + 1;
 		}
 
 		if (FlushUpTo >= 0)
 		{
 			const FString Sentence = SentenceBuffer.Left(FlushUpTo + 1).TrimStartAndEnd();
-			SentenceBuffer = SentenceBuffer.Mid(FlushUpTo + 1);
+			SentenceBuffer.RemoveAt(0, FlushUpTo + 1);
 			if (Sentence.Len() > 0)
 				IncomingSentenceResponse.Broadcast(Sentence, StreamCurrentRole, false);
 		}
