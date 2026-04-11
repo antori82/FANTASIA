@@ -2,6 +2,7 @@
 	"BuildId": "43139311",
 	"Modules": 
 	{
-		"FANTASIA": "UnrealEditor-FANTASIA-Win64-DebugGame.dll"
+		"FANTASIA": "UnrealEditor-FANTASIA-Win64-DebugGame.dll",
+		"FANTASIATests": "UnrealEditor-FANTASIATests-Win64-DebugGame.dll"
 	}
 }

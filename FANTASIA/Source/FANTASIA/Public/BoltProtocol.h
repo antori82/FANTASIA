@@ -130,8 +130,29 @@ namespace BoltMessages
 	/** Cached GOODBYE message. */
 	const TArray<uint8>& BuildGoodbye();
 
+	/** @name Pre-framed (chunked) cached messages — ready to push directly to the socket. */
+	///@{
+	/** Pre-chunked COMMIT message — no allocation at call time. */
+	const TArray<uint8>& BuildCommitFramed();
+
+	/** Pre-chunked ROLLBACK message. */
+	const TArray<uint8>& BuildRollbackFramed();
+
+	/** Pre-chunked RESET message. */
+	const TArray<uint8>& BuildResetFramed();
+
+	/** Pre-chunked GOODBYE message. */
+	const TArray<uint8>& BuildGoodbyeFramed();
+
+	/** Pre-chunked PULL{"n":-1} message (the only variant we ever send). */
+	const TArray<uint8>& BuildPullAllFramed();
+	///@}
+
 	/**
 	 * Pipeline a RUN + PULL in a single send (saves one round-trip).
+	 *
+	 * When @p PullN is -1 the call uses the cached pre-chunked PULL to avoid
+	 * an extra allocation and serialization pass.
 	 */
 	TArray<uint8> BuildRunAndPull(const FString& Query, const FBoltValueMap& Parameters, const FBoltValueMap& Extra, int64 PullN = -1);
 }

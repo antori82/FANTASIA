@@ -17,6 +17,47 @@ THIRD_PARTY_INCLUDES_START
 THIRD_PARTY_INCLUDES_END
 #undef UI
 
+// ----------------------------------------------------------------------------
+// Hot-path helpers (file-scope)
+// ----------------------------------------------------------------------------
+
+/** Extract a string field from a Bolt metadata map with a single lookup. */
+static FString GetMetadataString(const FBoltValueMap& Metadata, const TCHAR* Key, const TCHAR* DefaultValue = TEXT("unknown"))
+{
+	if (const FBoltValuePtr* Ptr = Metadata.Find(Key))
+	{
+		if (*Ptr) return (*Ptr)->AsString();
+	}
+	return DefaultValue;
+}
+
+/** Copy a Bolt property map into a UObject string→string map with reserve + list join. */
+static void CopyBoltPropertiesToMap(const FBoltValueMap& Src, TMap<FString, FString>& Dest)
+{
+	Dest.Reserve(Src.Num());
+	for (const auto& Prop : Src)
+	{
+		if (!Prop.Value) continue;
+		if (Prop.Value->Type == EBoltValueType::List)
+		{
+			// Pipe-join list values into a single string.
+			const FBoltValueArray& Items = Prop.Value->ListVal;
+			FString Joined;
+			const int32 ItemCount = Items.Num();
+			for (int32 i = 0; i < ItemCount; i++)
+			{
+				if (i > 0) Joined += TEXT("|");
+				if (Items[i]) Joined += Items[i]->AsString();
+			}
+			Dest.Add(Prop.Key, MoveTemp(Joined));
+		}
+		else
+		{
+			Dest.Add(Prop.Key, Prop.Value->AsString());
+		}
+	}
+}
+
 UNeo4jComponent::UNeo4jComponent()
 {
 	PrimaryComponentTick.bCanEverTick = false;
@@ -170,7 +211,8 @@ void UNeo4jComponent::TearDownCurrentConnection()
 		&& ConnectionState != EBoltConnectionState::Connecting
 		&& ConnectionState != EBoltConnectionState::HandshakePending)
 	{
-		SendChunkedMessage(BoltMessages::BuildGoodbye());
+		const TArray<uint8>& GoodbyeFramed = BoltMessages::BuildGoodbyeFramed();
+		SendRawBytes(GoodbyeFramed.GetData(), GoodbyeFramed.Num());
 		if (UseSSL && SslBio)
 			BIO_flush(static_cast<BIO*>(SslBio));
 	}
@@ -199,9 +241,13 @@ void UNeo4jComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 	{
 		if (ConnectionState == EBoltConnectionState::TxReady || ConnectionState == EBoltConnectionState::TxStreaming
 			|| ConnectionState == EBoltConnectionState::Streaming || ConnectionState == EBoltConnectionState::Failed)
-			SendChunkedMessage(BoltMessages::BuildReset());
+		{
+			const TArray<uint8>& ResetFramed = BoltMessages::BuildResetFramed();
+			SendRawBytes(ResetFramed.GetData(), ResetFramed.Num());
+		}
 
-		SendChunkedMessage(BoltMessages::BuildGoodbye());
+		const TArray<uint8>& GoodbyeFramed = BoltMessages::BuildGoodbyeFramed();
+		SendRawBytes(GoodbyeFramed.GetData(), GoodbyeFramed.Num());
 
 		// Give the server a moment to process GOODBYE before we tear down the socket
 		if (UseSSL && SslBio)
@@ -580,9 +626,9 @@ void UNeo4jComponent::HandleServerMessage(const FBoltServerMessage& Msg)
 		}
 		else if (Msg.Tag == BoltMsg::FAILURE)
 		{
-			FString Code = Msg.Metadata.Contains(TEXT("code")) ? Msg.Metadata[TEXT("code")]->AsString() : TEXT("unknown");
-			FString Message = Msg.Metadata.Contains(TEXT("message")) ? Msg.Metadata[TEXT("message")]->AsString() : TEXT("unknown");
-			UE_LOG(LogTemp, Error, TEXT("Neo4j: Auth failed: %s - %s"), *Code, *Message);
+			UE_LOG(LogTemp, Error, TEXT("Neo4j: Auth failed: %s - %s"),
+				*GetMetadataString(Msg.Metadata, TEXT("code")),
+				*GetMetadataString(Msg.Metadata, TEXT("message")));
 			ConnectionState = EBoltConnectionState::Closed;
 		}
 		break;
@@ -597,9 +643,9 @@ void UNeo4jComponent::HandleServerMessage(const FBoltServerMessage& Msg)
 		}
 		else if (Msg.Tag == BoltMsg::FAILURE)
 		{
-			FString Code = Msg.Metadata.Contains(TEXT("code")) ? Msg.Metadata[TEXT("code")]->AsString() : TEXT("unknown");
-			FString Message = Msg.Metadata.Contains(TEXT("message")) ? Msg.Metadata[TEXT("message")]->AsString() : TEXT("unknown");
-			UE_LOG(LogTemp, Error, TEXT("Neo4j: LOGON failed: %s - %s"), *Code, *Message);
+			UE_LOG(LogTemp, Error, TEXT("Neo4j: LOGON failed: %s - %s"),
+				*GetMetadataString(Msg.Metadata, TEXT("code")),
+				*GetMetadataString(Msg.Metadata, TEXT("message")));
 			ConnectionState = EBoltConnectionState::Closed;
 		}
 		break;
@@ -645,11 +691,12 @@ void UNeo4jComponent::HandleServerMessage(const FBoltServerMessage& Msg)
 		}
 		else if (Msg.Tag == BoltMsg::FAILURE)
 		{
-			FString Code = Msg.Metadata.Contains(TEXT("code")) ? Msg.Metadata[TEXT("code")]->AsString() : TEXT("unknown");
-			FString Message = Msg.Metadata.Contains(TEXT("message")) ? Msg.Metadata[TEXT("message")]->AsString() : TEXT("unknown");
-			UE_LOG(LogTemp, Error, TEXT("Neo4j: Query failed: %s - %s"), *Code, *Message);
+			UE_LOG(LogTemp, Error, TEXT("Neo4j: Query failed: %s - %s"),
+				*GetMetadataString(Msg.Metadata, TEXT("code")),
+				*GetMetadataString(Msg.Metadata, TEXT("message")));
 			ConnectionState = EBoltConnectionState::Failed;
-			SendChunkedMessage(BoltMessages::BuildReset());
+			const TArray<uint8>& ResetFramed = BoltMessages::BuildResetFramed();
+			SendRawBytes(ResetFramed.GetData(), ResetFramed.Num());
 		}
 		break;
 	}
@@ -661,14 +708,14 @@ void UNeo4jComponent::HandleServerMessage(const FBoltServerMessage& Msg)
 		{
 			if (Msg.Tag == BoltMsg::SUCCESS)
 			{
-				CurrentFieldNames.Empty();
-				if (Msg.Metadata.Contains(TEXT("fields")))
+				CurrentFieldNames.Reset();
+				if (const FBoltValuePtr* FieldsPtr = Msg.Metadata.Find(TEXT("fields")))
 				{
-					const FBoltValuePtr& FieldsVal = Msg.Metadata[TEXT("fields")];
-					if (FieldsVal && FieldsVal->Type == EBoltValueType::List)
+					if (*FieldsPtr && (*FieldsPtr)->Type == EBoltValueType::List)
 					{
-						CurrentFieldNames.Reserve(FieldsVal->ListVal.Num());
-						for (const FBoltValuePtr& F : FieldsVal->ListVal)
+						const FBoltValueArray& FieldList = (*FieldsPtr)->ListVal;
+						CurrentFieldNames.Reserve(FieldList.Num());
+						for (const FBoltValuePtr& F : FieldList)
 							CurrentFieldNames.Add(F->StringVal);
 					}
 				}
@@ -676,18 +723,21 @@ void UNeo4jComponent::HandleServerMessage(const FBoltServerMessage& Msg)
 			}
 			else if (Msg.Tag == BoltMsg::FAILURE)
 			{
-				FString Code = Msg.Metadata.Contains(TEXT("code")) ? Msg.Metadata[TEXT("code")]->AsString() : TEXT("unknown");
-				FString Message = Msg.Metadata.Contains(TEXT("message")) ? Msg.Metadata[TEXT("message")]->AsString() : TEXT("unknown");
-				UE_LOG(LogTemp, Error, TEXT("Neo4j: RUN failed: %s - %s"), *Code, *Message);
+				UE_LOG(LogTemp, Error, TEXT("Neo4j: RUN failed: %s - %s"),
+					*GetMetadataString(Msg.Metadata, TEXT("code")),
+					*GetMetadataString(Msg.Metadata, TEXT("message")));
 				QueryPhase = EBoltQueryPhase::Idle;
 				ConnectionState = EBoltConnectionState::Failed;
-				SendChunkedMessage(BoltMessages::BuildReset());
+				const TArray<uint8>& ResetFramed = BoltMessages::BuildResetFramed();
+				SendRawBytes(ResetFramed.GetData(), ResetFramed.Num());
 			}
 		}
 		else if (QueryPhase == EBoltQueryPhase::WaitingPullRecords)
 		{
 			if (Msg.Tag == BoltMsg::RECORD)
 			{
+				// Move the record fields out of the message — Fields is a
+				// TArray<TSharedPtr>, so this is a single pointer swap.
 				CurrentRecords.Emplace(MoveTemp(const_cast<FBoltServerMessage&>(Msg).Fields));
 			}
 			else if (Msg.Tag == BoltMsg::SUCCESS)
@@ -701,12 +751,13 @@ void UNeo4jComponent::HandleServerMessage(const FBoltServerMessage& Msg)
 			}
 			else if (Msg.Tag == BoltMsg::FAILURE)
 			{
-				FString Code = Msg.Metadata.Contains(TEXT("code")) ? Msg.Metadata[TEXT("code")]->AsString() : TEXT("unknown");
-				FString Message = Msg.Metadata.Contains(TEXT("message")) ? Msg.Metadata[TEXT("message")]->AsString() : TEXT("unknown");
-				UE_LOG(LogTemp, Error, TEXT("Neo4j: PULL failed: %s - %s"), *Code, *Message);
+				UE_LOG(LogTemp, Error, TEXT("Neo4j: PULL failed: %s - %s"),
+					*GetMetadataString(Msg.Metadata, TEXT("code")),
+					*GetMetadataString(Msg.Metadata, TEXT("message")));
 				QueryPhase = EBoltQueryPhase::Idle;
 				ConnectionState = EBoltConnectionState::Failed;
-				SendChunkedMessage(BoltMessages::BuildReset());
+				const TArray<uint8>& ResetFramed = BoltMessages::BuildResetFramed();
+				SendRawBytes(ResetFramed.GetData(), ResetFramed.Num());
 			}
 		}
 		break;
@@ -805,11 +856,17 @@ void UNeo4jComponent::DispatchCommand(const FBoltPendingCommand& Cmd)
 		break;
 	}
 	case Neo4jOperation::COMMIT_TRANSACTION:
-		SendChunkedMessage(BoltMessages::BuildCommit());
+	{
+		const TArray<uint8>& Framed = BoltMessages::BuildCommitFramed();
+		SendRawBytes(Framed.GetData(), Framed.Num());
 		break;
+	}
 	case Neo4jOperation::ROLLBACK_TRANSACTION:
-		SendChunkedMessage(BoltMessages::BuildRollback());
+	{
+		const TArray<uint8>& Framed = BoltMessages::BuildRollbackFramed();
+		SendRawBytes(Framed.GetData(), Framed.Num());
 		break;
+	}
 	default:
 		break;
 	}
@@ -889,12 +946,13 @@ void UNeo4jComponent::HandleRoutingMessage(const FBoltServerMessage& Msg)
 		}
 		else if (Msg.Tag == BoltMsg::FAILURE)
 		{
-			FString Code = Msg.Metadata.Contains(TEXT("code")) ? Msg.Metadata[TEXT("code")]->AsString() : TEXT("unknown");
-			FString Message = Msg.Metadata.Contains(TEXT("message")) ? Msg.Metadata[TEXT("message")]->AsString() : TEXT("unknown");
-			UE_LOG(LogTemp, Error, TEXT("Neo4j: Routing query RUN failed: %s - %s"), *Code, *Message);
+			UE_LOG(LogTemp, Error, TEXT("Neo4j: Routing query RUN failed: %s - %s"),
+				*GetMetadataString(Msg.Metadata, TEXT("code")),
+				*GetMetadataString(Msg.Metadata, TEXT("message")));
 			RoutingPhase = EBoltRoutingPhase::Idle;
 			ConnectionState = EBoltConnectionState::Failed;
-			SendChunkedMessage(BoltMessages::BuildReset());
+			const TArray<uint8>& ResetFramed = BoltMessages::BuildResetFramed();
+			SendRawBytes(ResetFramed.GetData(), ResetFramed.Num());
 		}
 		return;
 	}
@@ -932,12 +990,13 @@ void UNeo4jComponent::HandleRoutingMessage(const FBoltServerMessage& Msg)
 		}
 		else if (Msg.Tag == BoltMsg::FAILURE)
 		{
-			FString Code = Msg.Metadata.Contains(TEXT("code")) ? Msg.Metadata[TEXT("code")]->AsString() : TEXT("unknown");
-			FString Message = Msg.Metadata.Contains(TEXT("message")) ? Msg.Metadata[TEXT("message")]->AsString() : TEXT("unknown");
-			UE_LOG(LogTemp, Error, TEXT("Neo4j: Routing query PULL failed: %s - %s"), *Code, *Message);
+			UE_LOG(LogTemp, Error, TEXT("Neo4j: Routing query PULL failed: %s - %s"),
+				*GetMetadataString(Msg.Metadata, TEXT("code")),
+				*GetMetadataString(Msg.Metadata, TEXT("message")));
 			RoutingPhase = EBoltRoutingPhase::Idle;
 			ConnectionState = EBoltConnectionState::Failed;
-			SendChunkedMessage(BoltMessages::BuildReset());
+			const TArray<uint8>& ResetFramed = BoltMessages::BuildResetFramed();
+			SendRawBytes(ResetFramed.GetData(), ResetFramed.Num());
 		}
 	}
 }
@@ -1044,15 +1103,27 @@ FNeo4jResponse UNeo4jComponent::ConvertBoltRecordsToResponse()
 {
 	FNeo4jResponse Resp;
 	Resp.transactionID = ActiveTransactionID;
-	Resp.headers = CurrentFieldNames;
+	// Move field names into the response — CurrentFieldNames will be reset on
+	// the next DispatchCommand, so there's no need to keep a copy here.
+	Resp.headers = MoveTemp(CurrentFieldNames);
 
-	for (const FBoltValueArray& RecordFields : CurrentRecords)
+	const int32 NumRows = CurrentRecords.Num();
+	const int32 NumCols = Resp.headers.Num();
+	Resp.rows.Reserve(NumRows);
+
+	for (FBoltValueArray& RecordFields : CurrentRecords)
 	{
 		UNeo4jResultRow* Row = NewObject<UNeo4jResultRow>();
-		for (int32 i = 0; i < Resp.headers.Num() && i < RecordFields.Num(); i++)
+		const int32 RecordNum = RecordFields.Num();
+		const int32 Lim = FMath::Min(NumCols, RecordNum);
+		Row->cells.Reserve(Lim);
+		for (int32 i = 0; i < Lim; i++)
 			Row->cells.Add(Resp.headers[i], ConvertBoltValueToCell(RecordFields[i]));
 		Resp.rows.Add(Row);
 	}
+
+	// We've consumed all records — drop them so the next query starts clean.
+	CurrentRecords.Reset();
 	return Resp;
 }
 
@@ -1061,56 +1132,38 @@ UNeo4jResultCell* UNeo4jComponent::ConvertBoltValueToCell(const FBoltValuePtr& V
 	if (Value && Value->Type == EBoltValueType::Structure)
 	{
 		const FBoltStructure& S = Value->StructVal;
-		if (S.Tag == BoltStruct::NODE && S.Fields.Num() >= 3)
+		const int32 NumFields = S.Fields.Num();
+
+		if (S.Tag == BoltStruct::NODE && NumFields >= 3)
 		{
 			UNeo4jResultCellNode* Cell = NewObject<UNeo4jResultCellNode>();
 			Cell->id = static_cast<int>(S.Fields[0]->IntVal);
+
+			// Labels (Field 1 — list of strings)
 			if (S.Fields[1]->Type == EBoltValueType::List)
-				for (const auto& Label : S.Fields[1]->ListVal)
-					Cell->labels.Add(Label->StringVal);
-			if (S.Fields[2]->Type == EBoltValueType::Map)
 			{
-				for (const auto& Prop : S.Fields[2]->MapVal)
-				{
-					if (Prop.Value->Type == EBoltValueType::List)
-					{
-						FString List;
-						for (const auto& Item : Prop.Value->ListVal)
-						{
-							if (!List.IsEmpty()) List += TEXT("|");
-							List += Item->AsString();
-						}
-						Cell->properties.Add(Prop.Key, List);
-					}
-					else
-						Cell->properties.Add(Prop.Key, Prop.Value->AsString());
-				}
+				const FBoltValueArray& Labels = S.Fields[1]->ListVal;
+				Cell->labels.Reserve(Labels.Num());
+				for (const FBoltValuePtr& Label : Labels)
+					if (Label) Cell->labels.Add(Label->StringVal);
 			}
+
+			// Properties (Field 2 — map)
+			if (S.Fields[2]->Type == EBoltValueType::Map)
+				CopyBoltPropertiesToMap(S.Fields[2]->MapVal, Cell->properties);
+
 			return Cell;
 		}
-		else if (S.Tag == BoltStruct::RELATIONSHIP && S.Fields.Num() >= 5)
+		else if (S.Tag == BoltStruct::RELATIONSHIP && NumFields >= 5)
 		{
 			UNeo4jResultCellRelationship* Cell = NewObject<UNeo4jResultCellRelationship>();
 			Cell->id = static_cast<int>(S.Fields[0]->IntVal);
 			Cell->label = S.Fields[3]->StringVal;
+
+			// Properties (Field 4 — map)
 			if (S.Fields[4]->Type == EBoltValueType::Map)
-			{
-				for (const auto& Prop : S.Fields[4]->MapVal)
-				{
-					if (Prop.Value->Type == EBoltValueType::List)
-					{
-						FString List;
-						for (const auto& Item : Prop.Value->ListVal)
-						{
-							if (!List.IsEmpty()) List += TEXT("|");
-							List += Item->AsString();
-						}
-						Cell->properties.Add(Prop.Key, List);
-					}
-					else
-						Cell->properties.Add(Prop.Key, Prop.Value->AsString());
-				}
-			}
+				CopyBoltPropertiesToMap(S.Fields[4]->MapVal, Cell->properties);
+
 			return Cell;
 		}
 	}

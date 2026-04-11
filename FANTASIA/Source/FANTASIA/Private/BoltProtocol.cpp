@@ -269,13 +269,57 @@ const TArray<uint8>& BoltMessages::BuildGoodbye()
 	return Msg;
 }
 
+// Pre-framed (chunked) variants — built once, zero allocation per send.
+const TArray<uint8>& BoltMessages::BuildCommitFramed()
+{
+	static const TArray<uint8> Msg = BoltFraming::ChunkMessage(BuildCommit());
+	return Msg;
+}
+
+const TArray<uint8>& BoltMessages::BuildRollbackFramed()
+{
+	static const TArray<uint8> Msg = BoltFraming::ChunkMessage(BuildRollback());
+	return Msg;
+}
+
+const TArray<uint8>& BoltMessages::BuildResetFramed()
+{
+	static const TArray<uint8> Msg = BoltFraming::ChunkMessage(BuildReset());
+	return Msg;
+}
+
+const TArray<uint8>& BoltMessages::BuildGoodbyeFramed()
+{
+	static const TArray<uint8> Msg = BoltFraming::ChunkMessage(BuildGoodbye());
+	return Msg;
+}
+
+const TArray<uint8>& BoltMessages::BuildPullAllFramed()
+{
+	static const TArray<uint8> Msg = BoltFraming::ChunkMessage(BuildPull(-1));
+	return Msg;
+}
+
 // Pipeline: RUN + PULL concatenated into a single chunked payload (saves a round-trip)
 TArray<uint8> BoltMessages::BuildRunAndPull(const FString& Query, const FBoltValueMap& Params, const FBoltValueMap& Extra, int64 PullN)
 {
-	TArray<uint8> RunChunked = BoltFraming::ChunkMessage(BuildRun(Query, Params, Extra));
-	TArray<uint8> PullChunked = BoltFraming::ChunkMessage(BuildPull(PullN));
-	RunChunked.Append(PullChunked);
-	return RunChunked;
+	// Build + chunk RUN. This is the only unavoidable allocation.
+	TArray<uint8> Out = BoltFraming::ChunkMessage(BuildRun(Query, Params, Extra));
+
+	// PULL {"n":-1} is the only variant we ever send in practice — use the
+	// pre-framed cached version and just append, avoiding an extra
+	// PackStream serialization pass plus a ChunkMessage allocation.
+	if (PullN == -1)
+	{
+		const TArray<uint8>& PullFramed = BuildPullAllFramed();
+		Out.Reserve(Out.Num() + PullFramed.Num());
+		Out.Append(PullFramed);
+		return Out;
+	}
+
+	// Fallback for custom PullN (never hit by the component today).
+	Out.Append(BoltFraming::ChunkMessage(BuildPull(PullN)));
+	return Out;
 }
 
 // ============================================================================
