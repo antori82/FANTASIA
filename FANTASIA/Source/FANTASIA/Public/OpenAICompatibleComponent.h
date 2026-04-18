@@ -156,8 +156,11 @@ private:
 	/** @brief Accumulates tokens until a sentence boundary is detected. */
 	FString SentenceBuffer;
 
-	/** @brief Callback for non-streaming HTTP responses. */
-	void OnResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful);
+	/** @brief True while a streaming request is in flight; prevents OnRequestCompleted from broadcasting the full response. */
+	bool bStreamingActive = false;
+
+	/** @brief Callback for completed HTTP responses (error handling + non-streaming results). */
+	void OnRequestCompleted(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful);
 
 	/** @brief Callback invoked incrementally as streaming SSE data arrives. */
 	void OnPartialResponseReceived(FHttpRequestPtr Request, uint64 BytesSent, uint64 BytesReceived);

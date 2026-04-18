@@ -69,14 +69,15 @@ void UOpenAICompatibleComponent::GetChatCompletion(const TArray<FChatTurn>& mess
 	StreamParseOffset = 0;
 	StreamCurrentRole = GPTRoleType::ASSISTANT;
 	SentenceBuffer.Reset(512);
+	bStreamingActive = bStream;
 
 	FHttpModule* Http = &FHttpModule::Get();
 	TSharedRef<IHttpRequest, ESPMode::ThreadSafe> Request = Http->CreateRequest();
 
+	// Always bind completion callback for error handling; additionally bind progress for streaming
+	Request->OnProcessRequestComplete().BindUObject(this, &UOpenAICompatibleComponent::OnRequestCompleted);
 	if (bStream)
 		Request->OnRequestProgress64().BindUObject(this, &UOpenAICompatibleComponent::OnPartialResponseReceived);
-	else
-		Request->OnProcessRequestComplete().BindUObject(this, &UOpenAICompatibleComponent::OnResponseReceived);
 
 	Request->SetURL(Config.URL);
 	Request->SetVerb(TEXT("POST"));
@@ -118,9 +119,9 @@ void UOpenAICompatibleComponent::GetChatCompletion(const TArray<FChatTurn>& mess
 	Request->ProcessRequest();
 }
 
-// ── Non-streaming response handler ──────────────────────────────────────────
+// ── Request completion handler (error detection + non-streaming results) ────
 
-void UOpenAICompatibleComponent::OnResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful)
+void UOpenAICompatibleComponent::OnRequestCompleted(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful)
 {
 	if (!bWasSuccessful || !Response.IsValid())
 	{
@@ -135,6 +136,10 @@ void UOpenAICompatibleComponent::OnResponseReceived(FHttpRequestPtr Request, FHt
 		return;
 	}
 
+	// Streaming mode: data was already handled by OnPartialResponseReceived; nothing more to do
+	if (bStreamingActive)
+		return;
+
 	TSharedPtr<FJsonValue> JsonValue;
 	TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(Response->GetContentAsString());
 
@@ -146,7 +151,10 @@ void UOpenAICompatibleComponent::OnResponseReceived(FHttpRequestPtr Request, FHt
 
 	const TSharedPtr<FJsonObject>* RootObject;
 	if (!JsonValue->TryGetObject(RootObject))
+	{
+		UE_LOG(LogTemp, Error, TEXT("[OpenAICompatible] Response is not a JSON object."));
 		return;
+	}
 
 	if ((*RootObject)->HasField(TEXT("error")))
 	{
@@ -159,7 +167,10 @@ void UOpenAICompatibleComponent::OnResponseReceived(FHttpRequestPtr Request, FHt
 
 	const TArray<TSharedPtr<FJsonValue>>& Choices = (*RootObject)->GetArrayField(TEXT("choices"));
 	if (Choices.Num() == 0)
+	{
+		UE_LOG(LogTemp, Error, TEXT("[OpenAICompatible] Response contains no choices."));
 		return;
+	}
 
 	const TSharedPtr<FJsonObject> MessageObj = Choices[0]->AsObject()->GetObjectField(TEXT("message"));
 	const FString Content = MessageObj->GetStringField(TEXT("content"));
@@ -308,7 +319,7 @@ FOpenAICompatibleConfig UOpenAICompatibleComponent::MakeGroqConfig()
 {
 	FOpenAICompatibleConfig C;
 	C.URL = TEXT("https://api.groq.com/openai/v1/chat/completions");
-	C.DefaultModel = TEXT("llama3-8b-8192");
+	C.DefaultModel = TEXT("llama-3.3-70b-versatile");
 	C.TimeoutSeconds = 30;
 	C.bRequiresAuth = true;
 	return C;
