@@ -900,36 +900,37 @@ void UNeo4jComponent::OnAuthenticationComplete()
 
 void UNeo4jComponent::SendRoutingQuery()
 {
-	// Determine which database the client wants — needed for routing so the
-	// server can return the correct backend shard. We look at the first
-	// pending command; if none are queued yet we fall back to "neo4j" which
-	// is the default database name on most setups.
+	// Determine which database the client wants. Check pending commands first;
+	// if none are queued yet, pass NULL to let the server route for its own
+	// default database. Hardcoding "neo4j" doesn't work on Aura where the
+	// default database is the instance ID (e.g. "d4a77368").
 	FString TargetDatabase;
 	if (PendingCommands.Num() > PendingCommandIndex)
 		TargetDatabase = PendingCommands[PendingCommandIndex].Database;
-	if (TargetDatabase.IsEmpty())
-		TargetDatabase = TEXT("neo4j");
 
 	// Build the call: CALL dbms.routing.getRoutingTable($context, $database)
-	// - $context is an empty map (no client-side routing hints)
-	// - $database is the string we want to route for
 	const FString Query = TEXT("CALL dbms.routing.getRoutingTable($context, $database)");
 
 	FBoltValueMap Params;
 	FBoltValueMap EmptyContext;
 	Params.Add(TEXT("context"), FBoltValue::MakeMap(MoveTemp(EmptyContext)));
-	Params.Add(TEXT("database"), FBoltValue::MakeString(TargetDatabase));
 
-	// The routing procedure lives in the "system" database on newer Neo4j
-	// versions; older versions accept it from any database. Routing against
-	// "system" works in both cases.
+	// Pass the database name if known, otherwise pass NULL so the server
+	// routes for its configured default database.
+	if (TargetDatabase.IsEmpty())
+		Params.Add(TEXT("database"), FBoltValue::MakeNull());
+	else
+		Params.Add(TEXT("database"), FBoltValue::MakeString(TargetDatabase));
+
+	// The routing procedure lives in the "system" database.
 	FBoltValueMap Extra;
 	Extra.Add(TEXT("db"), FBoltValue::MakeString(TEXT("system")));
 
 	RoutingRecords.Reset();
 	RoutingPhase = EBoltRoutingPhase::WaitingRunSuccess;
 
-	UE_LOG(LogTemp, Log, TEXT("Neo4j: Sending routing discovery query for database '%s'"), *TargetDatabase);
+	UE_LOG(LogTemp, Log, TEXT("Neo4j: Sending routing discovery query (database: %s)"),
+		TargetDatabase.IsEmpty() ? TEXT("<default>") : *TargetDatabase);
 
 	TArray<uint8> Pipelined = BoltMessages::BuildRunAndPull(Query, Params, Extra);
 	SendRawBytes(Pipelined.GetData(), Pipelined.Num());
@@ -946,10 +947,12 @@ void UNeo4jComponent::HandleRoutingMessage(const FBoltServerMessage& Msg)
 		}
 		else if (Msg.Tag == BoltMsg::FAILURE)
 		{
-			UE_LOG(LogTemp, Error, TEXT("Neo4j: Routing query RUN failed: %s - %s"),
-				*GetMetadataString(Msg.Metadata, TEXT("code")),
+			UE_LOG(LogTemp, Warning, TEXT("Neo4j: Routing not supported by this server, falling back to direct connection (%s)"),
 				*GetMetadataString(Msg.Metadata, TEXT("message")));
 			RoutingPhase = EBoltRoutingPhase::Idle;
+			bNeedsRouting = false;
+			bRoutingDone = true;
+			// RESET to clear the failure state, then go to Ready on SUCCESS
 			ConnectionState = EBoltConnectionState::Failed;
 			const TArray<uint8>& ResetFramed = BoltMessages::BuildResetFramed();
 			SendRawBytes(ResetFramed.GetData(), ResetFramed.Num());
@@ -990,10 +993,13 @@ void UNeo4jComponent::HandleRoutingMessage(const FBoltServerMessage& Msg)
 		}
 		else if (Msg.Tag == BoltMsg::FAILURE)
 		{
-			UE_LOG(LogTemp, Error, TEXT("Neo4j: Routing query PULL failed: %s - %s"),
-				*GetMetadataString(Msg.Metadata, TEXT("code")),
+			UE_LOG(LogTemp, Warning, TEXT("Neo4j: Routing discovery failed, falling back to direct connection (%s)"),
 				*GetMetadataString(Msg.Metadata, TEXT("message")));
 			RoutingPhase = EBoltRoutingPhase::Idle;
+			RoutingRecords.Reset();
+			bNeedsRouting = false;
+			bRoutingDone = true;
+			// RESET to clear the failure state, then go to Ready on SUCCESS
 			ConnectionState = EBoltConnectionState::Failed;
 			const TArray<uint8>& ResetFramed = BoltMessages::BuildResetFramed();
 			SendRawBytes(ResetFramed.GetData(), ResetFramed.Num());
