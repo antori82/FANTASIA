@@ -264,6 +264,20 @@ void ULangGraphComponent::deleteLangGraphThread(FString threadID) {
 // ── Query execution ─────────────────────────────────────────────────────────
 
 void ULangGraphComponent::langGraphQuery(const TArray<FChatTurn>& messages, FString threadID, FString assistantID, FString model, int recursionLimit, bool stream) {
+	// Guard against empty thread IDs — otherwise the URL becomes ".../threads//runs/stream"
+	// which the server rejects and wastes a round-trip. This typically indicates the
+	// caller never received a valid thread ID from createLangGraphThread (e.g. the
+	// creation request failed and broadcast an empty string on the error path).
+	if (threadID.IsEmpty())
+	{
+		UE_LOG(LogTemp, Error, TEXT("LangGraph: langGraphQuery called with empty threadID; aborting request"));
+		if (stream)
+			IncomingLangGraphStreamResponse.Broadcast(FString(), GPTRoleType::ASSISTANT, true);
+		else
+			IncomingLangGraphResponse.Broadcast(FString(), GPTRoleType::ASSISTANT);
+		return;
+	}
+
 	FHttpModule* Http = &FHttpModule::Get();
 	TSharedRef<IHttpRequest, ESPMode::ThreadSafe> Request = Http->CreateRequest();
 
