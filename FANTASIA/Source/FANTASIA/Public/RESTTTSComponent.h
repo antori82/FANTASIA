@@ -14,16 +14,14 @@
 #include "Runtime/Engine/Classes/Sound/SoundWaveProcedural.h"
 
 // NVIDIA ACE types can't be referenced directly in UPROPERTY declarations
-// here, because UHT needs the full UCLASS definition at parse time and the
-// ACE headers are only available when the NV_ACE_Reference plugin is
-// installed. So the Audio2Face pointer UPROPERTYs below use UObject* and
-// the .cpp casts to the real ACE types (inside FANTASIA_WITH_ACE guards).
-// The Blueprint editor presents a generic object picker; users wire the
-// ACE component normally and runtime Cast<> validates the type.
-#if FANTASIA_WITH_ACE
-#include "ACERuntimeModule.h"
-#include "ACEAudioCurveSourceComponent.h"
-#endif
+// here: UHT needs the full UCLASS definition at parse time and the ACE
+// headers are only available when the NV_ACE_Reference plugin is installed.
+// So A2Fpointer / A2FParameters use UObject* in the reflected layout and
+// EmotionParameters uses the FANTASIA-local mirror struct
+// FFantasiaAudio2FaceEmotion (declared in FANTASIATypes.h). The .cpp casts
+// pointers to the real ACE types and copies the emotion fields into a real
+// FAudio2FaceEmotion inside #if FANTASIA_WITH_ACE. Blueprint authoring
+// experience matches the old API; runtime Cast<> validates pointer types.
 
 #include "RESTTTSComponent.generated.h"
 
@@ -189,16 +187,15 @@ public:
 	UPROPERTY(BlueprintReadWrite, Category = "TTS")
 	FName A2FProvider;
 
-#if FANTASIA_WITH_ACE
 	/**
 	 * Emotion parameters passed to Audio2Face during streaming.
-	 * Not a UPROPERTY: UHT forbids conditional UPROPERTYs, and FAudio2FaceEmotion
-	 * is an ACE-defined struct that can't be forward-declared as a by-value field.
-	 * In builds without ACE this field is compiled out entirely; users who need
-	 * Blueprint-level control over emotion must rebuild the plugin with ACE.
+	 * Uses FANTASIA's mirror struct (FFantasiaAudio2FaceEmotion) so Blueprint
+	 * access works whether or not ACE is present. When FANTASIA_WITH_ACE=1
+	 * the .cpp copies these fields into ACE's real FAudio2FaceEmotion before
+	 * calling AnimateFromAudioSamples.
 	 */
-	FAudio2FaceEmotion EmotionParameters;
-#endif // FANTASIA_WITH_ACE
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TTS")
+	FFantasiaAudio2FaceEmotion EmotionParameters;
 
 	// ── Events ─────────────────────────────────────────────────────────
 

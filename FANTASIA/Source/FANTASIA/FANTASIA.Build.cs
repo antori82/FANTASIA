@@ -480,6 +480,16 @@ public class FANTASIA : ModuleRules
     /// (typical for a fresh install without the NVIDIA plugin), the define is
     /// set to 0 so the Audio2Face code in RESTTTSComponent is compiled out —
     /// the rest of FANTASIA still builds and runs normally.
+    ///
+    /// Detection checks three locations, in order:
+    ///   1. Sibling plugin in the host project's Plugins/ folder.
+    ///   2. The host project's .uproject — is NV_ACE_Reference enabled?
+    ///      (Projects often enable the plugin by reference only, with the
+    ///      actual plugin files installed at the engine level via Marketplace.)
+    ///   3. Recursive search under the project's Plugins/ folder.
+    /// We deliberately do NOT probe the engine's Plugins/ folder directly, so
+    /// that a release build from a machine with ACE installed engine-wide
+    /// still produces a no-ACE DLL unless a project opts in.
     /// </summary>
     private bool ConfigureACE()
     {
@@ -491,7 +501,7 @@ public class FANTASIA : ModuleRules
         bool bFoundACE = false;
         string FoundPath = null;
 
-        // Fast path: sibling plugin in the same Plugins/ folder.
+        // 1) Fast path: sibling plugin in the same Plugins/ folder.
         string SiblingCandidate = Path.Combine(PluginsDir, "NV_ACE_Reference", "NV_ACE_Reference.uplugin");
         if (File.Exists(SiblingCandidate))
         {
@@ -499,8 +509,35 @@ public class FANTASIA : ModuleRules
             FoundPath = SiblingCandidate;
         }
 
-        // Fallback: recursive search under Plugins/ in case the ACE plugin
-        // is nested (e.g. under a Marketplace/ subfolder).
+        // 2) Host project opt-in via .uproject. Parse it looking for an
+        //    enabled NV_ACE_Reference plugin reference. This catches the
+        //    Alice/MetaFamily pattern where the plugin lives at engine level
+        //    but the project explicitly enables it.
+        if (!bFoundACE && Target.ProjectFile != null && File.Exists(Target.ProjectFile.FullName))
+        {
+            try
+            {
+                string UProjectText = File.ReadAllText(Target.ProjectFile.FullName);
+                // Collapse whitespace so "Name": "NV_ACE_Reference" and the
+                // matching "Enabled": true span are both easy to find.
+                string Collapsed = System.Text.RegularExpressions.Regex.Replace(UProjectText, @"\s+", " ");
+                // Rough but targeted match: look for NV_ACE_Reference name and a
+                // subsequent Enabled: true inside the same plugin entry (before
+                // the next closing brace).
+                var m = System.Text.RegularExpressions.Regex.Match(
+                    Collapsed,
+                    "\"Name\"\\s*:\\s*\"NV_ACE_Reference\"[^}]*\"Enabled\"\\s*:\\s*true");
+                if (m.Success)
+                {
+                    bFoundACE = true;
+                    FoundPath = Target.ProjectFile.FullName + " (NV_ACE_Reference enabled in .uproject)";
+                }
+            }
+            catch { /* unreadable .uproject — treat as no ACE */ }
+        }
+
+        // 3) Fallback: recursive search under Plugins/ in case the ACE plugin
+        //    is nested (e.g. under a Marketplace/ subfolder).
         if (!bFoundACE && Directory.Exists(PluginsDir))
         {
             try

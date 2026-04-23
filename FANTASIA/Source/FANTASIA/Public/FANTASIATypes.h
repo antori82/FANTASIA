@@ -673,3 +673,103 @@ public:
 	UPROPERTY(BlueprintReadOnly)
 	FString value;
 };
+
+// ── Audio2Face Emotion Mirror Structs ───────────────────────────────────────
+// These mirror the shape of NVIDIA ACE's FAudio2FaceEmotion /
+// FAudio2FaceEmotionOverride (from ACECore in NV_ACE_Reference) so that
+// the FANTASIA plugin can expose emotion-parameter UPROPERTYs on
+// URESTTTSComponent without a hard build-time dependency on ACE.
+// RESTTTSComponent.cpp copies field-by-field into the real ACE structs
+// inside #if FANTASIA_WITH_ACE before passing to AnimateFromAudioSamples.
+// Field names, default values, and metadata (clamps etc.) match ACE's
+// definitions so Blueprint experience is identical.
+
+USTRUCT(BlueprintType, meta = (DisplayName = "FANTASIA Audio2Face Emotion Overrides"))
+struct FFantasiaAudio2FaceEmotionOverride
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "General")
+	bool bOverrideAmazement = false;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "General", meta = (ClampMin = "0.0", ClampMax = "1.0", EditCondition = "bOverrideAmazement"))
+	float Amazement = 0.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "General")
+	bool bOverrideAnger = false;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "General", meta = (ClampMin = "0.0", ClampMax = "1.0", EditCondition = "bOverrideAnger"))
+	float Anger = 0.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "General")
+	bool bOverrideCheekiness = false;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "General", meta = (ClampMin = "0.0", ClampMax = "1.0", EditCondition = "bOverrideCheekiness"))
+	float Cheekiness = 0.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "General")
+	bool bOverrideDisgust = false;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "General", meta = (ClampMin = "0.0", ClampMax = "1.0", EditCondition = "bOverrideDisgust"))
+	float Disgust = 0.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "General")
+	bool bOverrideFear = false;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "General", meta = (ClampMin = "0.0", ClampMax = "1.0", EditCondition = "bOverrideFear"))
+	float Fear = 0.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "General")
+	bool bOverrideGrief = false;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "General", meta = (ClampMin = "0.0", ClampMax = "1.0", EditCondition = "bOverrideGrief"))
+	float Grief = 0.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "General")
+	bool bOverrideJoy = false;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "General", meta = (ClampMin = "0.0", ClampMax = "1.0", EditCondition = "bOverrideJoy"))
+	float Joy = 0.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "General")
+	bool bOverrideOutOfBreath = false;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "General", meta = (ClampMin = "0.0", ClampMax = "1.0", EditCondition = "bOverrideOutOfBreath"))
+	float OutOfBreath = 0.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "General")
+	bool bOverridePain = false;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "General", meta = (ClampMin = "0.0", ClampMax = "1.0", EditCondition = "bOverridePain"))
+	float Pain = 0.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "General")
+	bool bOverrideSadness = false;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "General", meta = (ClampMin = "0.0", ClampMax = "1.0", EditCondition = "bOverrideSadness"))
+	float Sadness = 0.0f;
+};
+
+USTRUCT(BlueprintType, meta = (DisplayName = "FANTASIA Audio2Face Emotion Parameters"))
+struct FFantasiaAudio2FaceEmotion
+{
+	GENERATED_BODY()
+
+	/** Overall strength of generated emotion (ACE default 0.6). */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "General", meta = (ClampMin = "0.0", ClampMax = "1.0"))
+	float OverallEmotionStrength = 0.6f;
+
+	/** Spread between detected emotion values (ACE default 1.0). */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Detected Emotion", meta = (ClampMin = "0.3", ClampMax = "3.0"))
+	float DetectedEmotionContrast = 1.0f;
+
+	/** Max detected emotions to engage simultaneously (ACE default 3). */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Detected Emotion", meta = (ClampMin = "1", ClampMax = "6"))
+	int32 MaxDetectedEmotions = 3;
+
+	/** Temporal smoothing of detected emotion (ACE default 0.7). */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Detected Emotion", meta = (ClampMin = "0.0", ClampMax = "1.0"))
+	float DetectedEmotionSmoothing = 0.7f;
+
+	/** Enable application emotion overrides (ACE default true). */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Application Overrides", meta = (InlineEditConditionToggle))
+	bool bEnableEmotionOverride = true;
+
+	/** Strength of application overrides vs detected emotion (ACE default 0.5). */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Application Overrides", meta = (ClampMin = "0.0", ClampMax = "1.0", EditCondition = "bEnableEmotionOverride"))
+	float EmotionOverrideStrength = 0.5f;
+
+	/** Per-emotion override toggles and values. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Application Overrides", meta = (EditCondition = "bEnableEmotionOverride && (EmotionOverrideStrength > 0.0)"))
+	FFantasiaAudio2FaceEmotionOverride EmotionOverrides;
+};

@@ -5,6 +5,51 @@
 
 #include "RESTTTSComponent.h"
 
+#if FANTASIA_WITH_ACE
+#include "ACERuntimeModule.h"
+#include "ACEAudioCurveSourceComponent.h"
+#include "Audio2FaceParameters.h" // UAudio2FaceParameters
+#include "ACETypes.h" // FAudio2FaceEmotion / FAudio2FaceEmotionOverride
+
+/**
+ * Copy FANTASIA's mirror emotion struct into ACE's real FAudio2FaceEmotion
+ * field-for-field. Kept in one place so adding a new field to ACE's struct
+ * (and our mirror) is a single-site change.
+ */
+static FAudio2FaceEmotion ConvertToACEEmotion(const FFantasiaAudio2FaceEmotion& Src)
+{
+	FAudio2FaceEmotion Dst;
+	Dst.OverallEmotionStrength    = Src.OverallEmotionStrength;
+	Dst.DetectedEmotionContrast   = Src.DetectedEmotionContrast;
+	Dst.MaxDetectedEmotions       = Src.MaxDetectedEmotions;
+	Dst.DetectedEmotionSmoothing  = Src.DetectedEmotionSmoothing;
+	Dst.bEnableEmotionOverride    = Src.bEnableEmotionOverride;
+	Dst.EmotionOverrideStrength   = Src.EmotionOverrideStrength;
+
+	Dst.EmotionOverrides.bOverrideAmazement    = Src.EmotionOverrides.bOverrideAmazement;
+	Dst.EmotionOverrides.Amazement             = Src.EmotionOverrides.Amazement;
+	Dst.EmotionOverrides.bOverrideAnger        = Src.EmotionOverrides.bOverrideAnger;
+	Dst.EmotionOverrides.Anger                 = Src.EmotionOverrides.Anger;
+	Dst.EmotionOverrides.bOverrideCheekiness   = Src.EmotionOverrides.bOverrideCheekiness;
+	Dst.EmotionOverrides.Cheekiness            = Src.EmotionOverrides.Cheekiness;
+	Dst.EmotionOverrides.bOverrideDisgust      = Src.EmotionOverrides.bOverrideDisgust;
+	Dst.EmotionOverrides.Disgust               = Src.EmotionOverrides.Disgust;
+	Dst.EmotionOverrides.bOverrideFear         = Src.EmotionOverrides.bOverrideFear;
+	Dst.EmotionOverrides.Fear                  = Src.EmotionOverrides.Fear;
+	Dst.EmotionOverrides.bOverrideGrief        = Src.EmotionOverrides.bOverrideGrief;
+	Dst.EmotionOverrides.Grief                 = Src.EmotionOverrides.Grief;
+	Dst.EmotionOverrides.bOverrideJoy          = Src.EmotionOverrides.bOverrideJoy;
+	Dst.EmotionOverrides.Joy                   = Src.EmotionOverrides.Joy;
+	Dst.EmotionOverrides.bOverrideOutOfBreath  = Src.EmotionOverrides.bOverrideOutOfBreath;
+	Dst.EmotionOverrides.OutOfBreath           = Src.EmotionOverrides.OutOfBreath;
+	Dst.EmotionOverrides.bOverridePain         = Src.EmotionOverrides.bOverridePain;
+	Dst.EmotionOverrides.Pain                  = Src.EmotionOverrides.Pain;
+	Dst.EmotionOverrides.bOverrideSadness      = Src.EmotionOverrides.bOverrideSadness;
+	Dst.EmotionOverrides.Sadness               = Src.EmotionOverrides.Sadness;
+	return Dst;
+}
+#endif // FANTASIA_WITH_ACE
+
 URESTTTSComponent::URESTTTSComponent()
 {
 	PrimaryComponentTick.bCanEverTick = false;
@@ -59,9 +104,10 @@ void URESTTTSComponent::BeginPlay()
 					UAudio2FaceParameters* TypedParams = Cast<UAudio2FaceParameters>(A2FParameters);
 					if (IsValid(TypedA2F))
 					{
+						FAudio2FaceEmotion AceEmotion = ConvertToACEEmotion(EmotionParameters);
 						FACERuntimeModule::Get().AnimateFromAudioSamples(
 							TypedA2F, outData, 1, 16000, false,
-							EmotionParameters, TypedParams, A2FProvider);
+							AceEmotion, TypedParams, A2FProvider);
 					}
 					outData.Empty();
 				}
@@ -74,9 +120,10 @@ void URESTTTSComponent::BeginPlay()
 				UAudio2FaceParameters* TypedParams = Cast<UAudio2FaceParameters>(A2FParameters);
 				if (IsValid(TypedA2F))
 				{
+					FAudio2FaceEmotion AceEmotion = ConvertToACEEmotion(EmotionParameters);
 					FACERuntimeModule::Get().AnimateFromAudioSamples(
 						TypedA2F, outData, 1, 16000, true,
-						EmotionParameters, TypedParams, A2FProvider);
+						AceEmotion, TypedParams, A2FProvider);
 				}
 				outData.Empty();
 				bBufferOpen.store(false);
