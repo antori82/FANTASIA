@@ -29,7 +29,7 @@
 	],
 	"Plugins": [
 		{
-			"Name": "NV_ACE_Reference",
+			"Name": "AudioCapture",
 			"Enabled": true
 		}
 	]

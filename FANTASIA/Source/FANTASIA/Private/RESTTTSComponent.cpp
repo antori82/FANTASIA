@@ -20,6 +20,7 @@ void URESTTTSComponent::BeginPlay()
 
 	bIsPlaying.store(true);
 
+#if FANTASIA_WITH_ACE
 	AsyncTask(ENamedThreads::AnyHiPriThreadNormalTask, [this]()
 	{
 		TArray<float> outData;
@@ -54,11 +55,13 @@ void URESTTTSComponent::BeginPlay()
 
 				if (outData.Num() >= A2F_STREAMING_BATCH_SIZE)
 				{
-					if (IsValid(A2Fpointer))
+					UACEAudioCurveSourceComponent* TypedA2F = Cast<UACEAudioCurveSourceComponent>(A2Fpointer);
+					UAudio2FaceParameters* TypedParams = Cast<UAudio2FaceParameters>(A2FParameters);
+					if (IsValid(TypedA2F))
 					{
 						FACERuntimeModule::Get().AnimateFromAudioSamples(
-							A2Fpointer, outData, 1, 16000, false,
-							EmotionParameters, A2FParameters, A2FProvider);
+							TypedA2F, outData, 1, 16000, false,
+							EmotionParameters, TypedParams, A2FProvider);
 					}
 					outData.Empty();
 				}
@@ -67,17 +70,20 @@ void URESTTTSComponent::BeginPlay()
 			{
 				while (SendData.Dequeue(item))
 					outData.Add(item);
-				if (IsValid(A2Fpointer))
+				UACEAudioCurveSourceComponent* TypedA2F = Cast<UACEAudioCurveSourceComponent>(A2Fpointer);
+				UAudio2FaceParameters* TypedParams = Cast<UAudio2FaceParameters>(A2FParameters);
+				if (IsValid(TypedA2F))
 				{
 					FACERuntimeModule::Get().AnimateFromAudioSamples(
-						A2Fpointer, outData, 1, 16000, true,
-						EmotionParameters, A2FParameters, A2FProvider);
+						TypedA2F, outData, 1, 16000, true,
+						EmotionParameters, TypedParams, A2FProvider);
 				}
 				outData.Empty();
 				bBufferOpen.store(false);
 			}
 		}
 	});
+#endif // FANTASIA_WITH_ACE
 }
 
 void URESTTTSComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
@@ -96,12 +102,14 @@ void URESTTTSComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
  */
 void URESTTTSComponent::HandleResult(FTTSData response, FString id)
 {
+#if FANTASIA_WITH_ACE
 	if (IsValid(A2Fpointer) && bUsingStreamingBuffer.load())
 	{
 		bUsingStreamingBuffer.store(false);
 		bNeedsFlush.store(true, std::memory_order_release);
 		ConsumerWakeEvent->Trigger();
 	}
+#endif // FANTASIA_WITH_ACE
 
 	// Let subclasses extract timing/lipsync from the raw response BEFORE we modify AudioData.
 	// This avoids copying AudioData into a separate RawResponse array.
@@ -156,11 +164,13 @@ void URESTTTSComponent::HandlePartialResult(TArray<uint8> response, FString id)
 		SendData.Enqueue(static_cast<float>(*reinterpret_cast<const int16*>(RawData + i)) / 32768.0f);
 	}
 
+#if FANTASIA_WITH_ACE
 	if (IsValid(A2Fpointer) && !bUsingStreamingBuffer.load() && !bBufferOpen.load())
 	{
 		bUsingStreamingBuffer.store(true);
 		bBufferOpen.store(true);
 	}
+#endif // FANTASIA_WITH_ACE
 
 	ConsumerWakeEvent->Trigger();
 

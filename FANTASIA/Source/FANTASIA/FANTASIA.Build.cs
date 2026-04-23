@@ -97,9 +97,7 @@ public class FANTASIA : ModuleRules
                 "AudioCaptureCore",
                 "AudioMixer",
                 "AudioMixerCore",
-                "SignalProcessing",
-                "ACERuntime",
-                "ACECore"
+                "SignalProcessing"
 			}
             );
 
@@ -475,11 +473,71 @@ public class FANTASIA : ModuleRules
     }
 
 
+    /// <summary>
+    /// Detect whether NVIDIA's NV_ACE_Reference plugin is available and, if so,
+    /// wire up the ACERuntime / ACECore module dependencies and enable the
+    /// lipsync code paths via FANTASIA_WITH_ACE=1. When ACE is not available
+    /// (typical for a fresh install without the NVIDIA plugin), the define is
+    /// set to 0 so the Audio2Face code in RESTTTSComponent is compiled out —
+    /// the rest of FANTASIA still builds and runs normally.
+    /// </summary>
+    private bool ConfigureACE()
+    {
+        // ModuleDirectory  = .../Plugins/FANTASIA/Source/FANTASIA
+        // PluginRoot       = .../Plugins/FANTASIA
+        // PluginsDir       = .../Plugins
+        string PluginsDir = Path.GetFullPath(Path.Combine(ModuleDirectory, "..", "..", ".."));
+
+        bool bFoundACE = false;
+        string FoundPath = null;
+
+        // Fast path: sibling plugin in the same Plugins/ folder.
+        string SiblingCandidate = Path.Combine(PluginsDir, "NV_ACE_Reference", "NV_ACE_Reference.uplugin");
+        if (File.Exists(SiblingCandidate))
+        {
+            bFoundACE = true;
+            FoundPath = SiblingCandidate;
+        }
+
+        // Fallback: recursive search under Plugins/ in case the ACE plugin
+        // is nested (e.g. under a Marketplace/ subfolder).
+        if (!bFoundACE && Directory.Exists(PluginsDir))
+        {
+            try
+            {
+                string[] Matches = Directory.GetFiles(PluginsDir, "NV_ACE_Reference.uplugin", SearchOption.AllDirectories);
+                if (Matches.Length > 0)
+                {
+                    bFoundACE = true;
+                    FoundPath = Matches[0];
+                }
+            }
+            catch { /* ignore dirs we can't enumerate */ }
+        }
+
+        if (bFoundACE)
+        {
+            System.Console.WriteLine("[FANTASIA-ACE] Found NV_ACE_Reference at: " + FoundPath);
+            PublicDependencyModuleNames.AddRange(new string[] { "ACERuntime", "ACECore" });
+            PublicDefinitions.Add("FANTASIA_WITH_ACE=1");
+        }
+        else
+        {
+            System.Console.WriteLine("[FANTASIA-ACE] NV_ACE_Reference plugin not found — Audio2Face lipsync features disabled. Install NVIDIA's ACE Reference plugin to enable them.");
+            PublicDefinitions.Add("FANTASIA_WITH_ACE=0");
+        }
+
+        return bFoundACE;
+    }
+
+
     public FANTASIA(ReadOnlyTargetRules Target) : base(Target)
     {
         InitialUeConfig();
 
         DependeciesAndPaths();
+
+        ConfigureACE();
 
         #if UE_5_3_OR_LATER
 			// AVX2 required for ggml SIMD acceleration (any Intel/AMD CPU from ~2015+)
