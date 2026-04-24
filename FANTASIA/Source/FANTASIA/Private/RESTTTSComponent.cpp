@@ -150,10 +150,17 @@ void URESTTTSComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 void URESTTTSComponent::HandleResult(FTTSData response, FString id)
 {
 #if FANTASIA_WITH_ACE
+	// End of the streaming TTS response. Flip bUsingStreamingBuffer to false so
+	// the consumer task's drain branch runs on its next wake: it will pull the
+	// remaining samples from SendData and call AnimateFromAudioSamples with
+	// final=true. We deliberately do NOT trigger bNeedsFlush here — that path
+	// discards queued samples and is reserved for explicit cancellation. For
+	// short responses (e.g. ElevenLabs finishing in ~60 ms), most of the audio
+	// can still be in-flight in SendData at this point; triggering bNeedsFlush
+	// would throw it away and only the already-dequeued batch would reach A2F.
 	if (IsValid(A2Fpointer) && bUsingStreamingBuffer.load())
 	{
 		bUsingStreamingBuffer.store(false);
-		bNeedsFlush.store(true, std::memory_order_release);
 		ConsumerWakeEvent->Trigger();
 	}
 #endif // FANTASIA_WITH_ACE
