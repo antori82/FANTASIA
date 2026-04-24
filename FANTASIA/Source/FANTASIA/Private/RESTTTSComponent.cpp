@@ -4,6 +4,7 @@
  */
 
 #include "RESTTTSComponent.h"
+#include "Async/Async.h"
 
 #if FANTASIA_WITH_ACE
 #include "ACERuntimeModule.h"
@@ -66,7 +67,13 @@ void URESTTTSComponent::BeginPlay()
 	bIsPlaying.store(true);
 
 #if FANTASIA_WITH_ACE
-	AsyncTask(ENamedThreads::AnyHiPriThreadNormalTask, [this]()
+	// Use Async (not AsyncTask) so we get a future we can join on in EndPlay.
+	// Without the join, component EndPlay returns while the consumer is still
+	// in its 50 ms wake cycle; if BP EndPlay then deallocates ACE resources
+	// immediately after (as the Alice/MetaFamily setup does), the consumer can
+	// reach into half-torn-down ACE state via AnimateFromAudioSamples and
+	// trigger a use-after-free in NVIDIA's DirectML DLL (nvdxgdmal64.dll).
+	ConsumerTaskFuture = Async(EAsyncExecution::ThreadPool, [this]()
 	{
 		TArray<float> outData;
 		outData.Reserve(A2F_STREAMING_BATCH_SIZE);
@@ -135,10 +142,24 @@ void URESTTTSComponent::BeginPlay()
 
 void URESTTTSComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
-	Super::EndPlay(EndPlayReason);
-
+	// Signal the consumer task to exit, then wait for it to actually finish
+	// BEFORE handing control back to UE. This matters because the enclosing
+	// actor's BP EndPlay typically fires immediately after this one and, in
+	// the Alice/MetaFamily flow, Blueprint deallocates the A2F provider on
+	// EndPlay. If we don't join here, the consumer might still be mid-
+	// AnimateFromAudioSamples when ACE starts tearing down GPU resources,
+	// causing a use-after-free in NVIDIA's DirectML DLL (nvdxgdmal64.dll).
 	bIsPlaying.store(false);
 	ConsumerWakeEvent->Trigger();
+
+#if FANTASIA_WITH_ACE
+	if (ConsumerTaskFuture.IsValid())
+	{
+		ConsumerTaskFuture.Wait();
+	}
+#endif
+
+	Super::EndPlay(EndPlayReason);
 }
 
 

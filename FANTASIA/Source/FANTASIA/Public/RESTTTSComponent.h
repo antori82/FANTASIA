@@ -10,6 +10,7 @@
 #include "Components/ActorComponent.h"
 #include "FANTASIATypes.h"
 #include "Http.h"
+#include "Async/Future.h"
 #include <atomic>
 #include "Runtime/Engine/Classes/Sound/SoundWaveProcedural.h"
 
@@ -160,6 +161,7 @@ private:
 	std::atomic<bool> bNeedsFlush{false};             /**< Signals the consumer to discard queued data. */
 	TQueue<float, EQueueMode::Spsc> SendData;         /**< Lock-free queue of normalized float samples for A2F. */
 	FEventRef ConsumerWakeEvent{EEventMode::ManualReset}; /**< Wakes the A2F consumer task. */
+	TFuture<void> ConsumerTaskFuture;                 /**< Handle to the A2F consumer task, joined in EndPlay. */
 
 public:
 	URESTTTSComponent();
