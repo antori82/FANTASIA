@@ -57,7 +57,6 @@ FANTASIA bundles a set of independent components. Use only what you need.
 | Component | Purpose |
 | --- | --- |
 | **Whisper ASR** | Local, on-device speech-to-text via [whisper.cpp](https://github.com/ggerganov/whisper.cpp). Optional CUDA GPU acceleration. Real-time microphone capture with VAD and streaming modes. |
-| **AWS Polly TTS** | Cloud text-to-speech with viseme/lip-sync timeline. |
 | **ElevenLabs TTS** | Streaming text-to-speech via REST. |
 | **Generic REST TTS** | Base class for plugging in any HTTP TTS service. |
 
