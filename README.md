@@ -167,3 +167,4 @@ Special thanks to the students who contributed to FANTASIA:
 - [Marco Galantino](https://www.linkedin.com/in/marco-galantino-232a07300) — TTS general interface
 - [Yegor Napadystyy](https://www.linkedin.com/in/yegor-napadystyy-b5482b2bb/) — Audio2Face prototype connector
 - [Lorenzo Bracale](https://www.linkedin.com/in/lorenzo-bracale-6001b1331/) — Prolog component prototype development
+- [Raffaele Di Maso](https://www.linkedin.com/in/raffaele-di-maso-a976b6377/) — FANTASIA Interaction Model development
