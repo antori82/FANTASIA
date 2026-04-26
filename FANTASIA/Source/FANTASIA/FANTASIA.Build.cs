@@ -146,8 +146,42 @@ public class FANTASIA : ModuleRules
         foreach (string dllFile in Directory.GetFiles(Redist, "*"))
         {
             string destPath = Path.Combine("$(PluginDir)", "Binaries", "Win64", Path.GetFileName(dllFile));
-            RuntimeDependencies.Add(destPath, dllFile);
+            AddRedistDll(destPath, dllFile);
         }
+    }
+
+    /// <summary>
+    /// Register a redistributable DLL as a runtime dependency without forcing
+    /// a build-time copy when the destination is already deployed.
+    ///
+    /// Default `RuntimeDependencies.Add(destPath, sourcePath)` makes UBT
+    /// delete-and-recopy the destination on every build. That fails with
+    /// "Access denied" when the running editor has the DLL loaded into its
+    /// own process (the typical case when the user invokes Package Project
+    /// from inside the editor against a plugin that DllLoads vendor DLLs at
+    /// editor startup, e.g. CognitiveServices, AWS, SWIProlog).
+    ///
+    /// Workaround: if the destination file already exists with the same size
+    /// as the source, we assume it's identical and only register it for
+    /// staging — no build-time copy, no lock contention. First-time builds
+    /// (destination missing) and genuine version changes (different size)
+    /// still copy normally.
+    /// </summary>
+    private void AddRedistDll(string destPath, string sourcePath)
+    {
+        string PluginRoot = Path.GetFullPath(Path.Combine(ModuleDirectory, "..", ".."));
+        string destFullPath = destPath.Replace("$(PluginDir)", PluginRoot);
+
+        if (File.Exists(destFullPath) &&
+            new FileInfo(sourcePath).Length == new FileInfo(destFullPath).Length)
+        {
+            // Already deployed and same size — assume identical.
+            // Stage for packaging but skip the build-time copy.
+            RuntimeDependencies.Add(destPath);
+            return;
+        }
+
+        RuntimeDependencies.Add(destPath, sourcePath);
     }
 
     private void LoadWhisper(ReadOnlyTargetRules Target, string ThirdPartyPath)
@@ -458,7 +492,7 @@ public class FANTASIA : ModuleRules
         foreach (string dllFile in Directory.GetFiles(PrologDllPath, "*"))
         {
             string destPath = Path.Combine("$(PluginDir)", "Binaries", "Win64", Path.GetFileName(dllFile));
-            RuntimeDependencies.Add(destPath, dllFile);
+            AddRedistDll(destPath, dllFile);
         }
     }
 
