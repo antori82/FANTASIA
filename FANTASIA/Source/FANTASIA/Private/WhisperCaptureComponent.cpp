@@ -331,7 +331,7 @@ bool UWhisperCaptureComponent::OpenCaptureDevice()
 				UE_LOG(LogWhisperASR, Verbose, TEXT("Audio capture overflow detected."));
 			}
 
-			if (!bIsCapturing || NumFrames <= 0)
+			if (!bIsCapturing || NumFrames <= 0 || bIsMuted)
 			{
 				return;
 			}
@@ -432,6 +432,7 @@ bool UWhisperCaptureComponent::StartCapture()
 	bTranscriptionInFlight = false;
 	bWasSpeaking = false;
 	bSpeechDetected = false;
+	bIsMuted = false;
 	SilenceTimer = 0.f;
 	VadCheckTimer = 0.f;
 	AccumulatedResult = FWhisperResult();
@@ -758,6 +759,34 @@ void UWhisperCaptureComponent::LogAudioDiagnostics()
 		VadEnergyThreshold,
 		(Peak > VadEnergyThreshold) ? TEXT("YES") : TEXT("NO"),
 		LastMeasuredNoiseFloor);
+}
+
+void UWhisperCaptureComponent::SetMuted(bool bMute)
+{
+	if (bIsMuted == bMute) return;
+
+	bIsMuted = bMute;
+
+	if (bIsMuted)
+	{
+		// Clear buffer and reset VAD state so stale audio from
+		// the agent's voice doesn't get transcribed when unmuted.
+		{
+			FScopeLock Lock(&BufferCritSection);
+			AudioBuffer.Reset();
+			ResamplePhase = 0.0;
+		}
+		bSpeechDetected = false;
+		SilenceTimer = 0.f;
+		SetRMSLevel(0.f);
+		SetRecentPeak(0.f);
+
+		UE_LOG(LogWhisperASR, Log, TEXT("Capture muted."));
+	}
+	else
+	{
+		UE_LOG(LogWhisperASR, Log, TEXT("Capture unmuted."));
+	}
 }
 
 void UWhisperCaptureComponent::ClearBuffer()

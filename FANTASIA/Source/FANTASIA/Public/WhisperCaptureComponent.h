@@ -164,6 +164,22 @@ public:
 	void ClearBuffer();
 
 	/**
+	 * Mute or unmute the capture. While muted, incoming audio is discarded,
+	 * VAD is suppressed, and the buffer is cleared. The microphone stays open
+	 * so capture resumes instantly when unmuted.
+	 *
+	 * Typical use: call SetMuted(true) when your agent starts speaking (TTS),
+	 * then SetMuted(false) when it finishes, to prevent the agent's voice
+	 * from being transcribed.
+	 */
+	UFUNCTION(BlueprintCallable, Category = "WhisperASR|Capture")
+	void SetMuted(bool bMute);
+
+	/** Returns true if capture is currently muted */
+	UFUNCTION(BlueprintPure, Category = "WhisperASR|Capture")
+	bool IsMuted() const { return bIsMuted; }
+
+	/**
 	 * Record background noise for DurationSeconds, then set VadEnergyThreshold
 	 * to the measured peak amplitude times Multiplier.
 	 * Fires OnNoiseCalibrationComplete when done.
@@ -246,6 +262,7 @@ private:
 	FThreadSafeBool bTranscriptionInFlight;
 
 	bool bIsCapturing = false;
+	bool bIsMuted = false;
 	float StreamingTimer = 0.f;
 
 	// ── VAD auto-detect state ───────────────────────────────────────────
