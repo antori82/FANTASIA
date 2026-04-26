@@ -56,9 +56,8 @@ FANTASIA bundles a set of independent components. Use only what you need.
 
 | Component | Purpose |
 | --- | --- |
-| **Whisper ASR** *(recommended)* | Local, on-device speech-to-text via [whisper.cpp](https://github.com/ggerganov/whisper.cpp). Optional CUDA GPU acceleration. Real-time microphone capture with VAD and streaming modes. |
+| **Whisper ASR** | Local, on-device speech-to-text via [whisper.cpp](https://github.com/ggerganov/whisper.cpp). Optional CUDA GPU acceleration. Real-time microphone capture with VAD and streaming modes. |
 | **AWS Polly TTS** | Cloud text-to-speech with viseme/lip-sync timeline. |
-| **Azure TTS** | Cloud text-to-speech with viseme/lip-sync timeline. |
 | **ElevenLabs TTS** | Streaming text-to-speech via REST. |
 | **Generic REST TTS** | Base class for plugging in any HTTP TTS service. |
 
@@ -66,14 +65,8 @@ FANTASIA bundles a set of independent components. Use only what you need.
 
 | Component | Purpose |
 | --- | --- |
-| **OpenAI-Compatible LLM** *(recommended)* | One component for OpenAI, Groq, Ollama, LM Studio, vLLM, and any other OpenAI-compatible API. Streaming and non-streaming, with Blueprint presets. |
+| **OpenAI-Compatible LLM** | One component for OpenAI, Groq, Ollama, LM Studio, vLLM, and any other OpenAI-compatible API. Streaming and non-streaming, with Blueprint presets. |
 | **LangGraph** | Drive a remote LangGraph workflow as a conversational agent. |
-
-### Natural Language Understanding
-
-| Component | Purpose |
-| --- | --- |
-| **Azure CLU** | Intent and entity extraction from utterances. |
 
 ### Reasoning
 
