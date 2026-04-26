@@ -16,10 +16,6 @@
     <a href="https://forums.unrealengine.com/t/framework-for-advanced-natural-tools-and-applications-with-social-interactive-agents-fantasia/158706">Forum thread</a>
     ·
     <a href="https://www.youtube.com/channel/UChH-PYQw-_IZJM7nYJywevg">Youtube channel</a>
-    ·
-	<br />
-	<a href="https://github.com/antori82/FANTASIATemplate">FANTASIA Interaction Model demo project</a>
-	.
   </p>
 </p>
 
