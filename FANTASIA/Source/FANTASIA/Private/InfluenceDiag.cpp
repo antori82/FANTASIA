@@ -77,7 +77,7 @@ void UInfluenceDiag::makeInference()
 		try {
 			InfPtr->makeInference();
 		}
-		catch (gum::NotFound& e) {
+		catch ([[maybe_unused]] gum::NotFound& e) {
 			UE_LOG(LogTemp, Warning, TEXT("[Influence Diagram] %hs from %hs"), e.errorType().c_str(), e.errorContent().c_str());
 		}
 
@@ -104,7 +104,7 @@ TMap<FString, float> UInfluenceDiag::getPosterior(const FString& variable)
 	try {
 		return PotentialToMap(inference->posterior(nodeName));
 	}
-	catch (gum::NotFound& e) {
+	catch ([[maybe_unused]] gum::NotFound& e) {
 		UE_LOG(LogTemp, Warning, TEXT("[Influence Diagram] %hs from %hs"), e.errorType().c_str(), e.errorContent().c_str());
 	}
 
@@ -125,7 +125,7 @@ TMap<FString, float> UInfluenceDiag::getPosteriorUtility(const FString& variable
 		try {
 			return PotentialToMap(inference->posteriorUtility(nodeName));
 		}
-		catch (gum::NotFound& e)
+		catch ([[maybe_unused]] gum::NotFound& e)
 			UE_LOG(LogTemp, Warning, TEXT("[Influence Diagram] %hs from %hs"), e.errorType().c_str(), e.errorContent().c_str());
 	}
 	return TMap<FString, float>();
@@ -146,7 +146,7 @@ TMap<FString, float> UInfluenceDiag::getMEU() {
 		out.Add("MEU", MEU.first);
 		out.Add("Variance", MEU.second);
 	}
-	catch (gum::OperationNotAllowed& e)
+	catch ([[maybe_unused]] gum::OperationNotAllowed& e)
 		UE_LOG(LogTemp, Warning, TEXT("[Influence Diagram] %hs from %hs"), e.errorType().c_str(), e.errorContent().c_str());
 
 	return out;
@@ -206,7 +206,7 @@ TMap<FString, FArrayFloat> UInfluenceDiag::optimalDecision(const FString& variab
 			inst.setFirstVar(decisionVariable);
 		}
 	}
-	catch (gum::NotFound& e)
+	catch ([[maybe_unused]] gum::NotFound& e)
 		UE_LOG(LogTemp, Warning, TEXT("[Influence Diagram] %hs from %hs"), e.errorType().c_str(), e.errorContent().c_str());
 
 	return out;
@@ -301,7 +301,7 @@ void UInfluenceDiag::addArc(const FString& parent, const FString& child) {
 		arcs.Add(newArc);
 		arcSet.Add(newArc);
 	}
-	catch (gum::NotFound& e)
+	catch ([[maybe_unused]] gum::NotFound& e)
 		UE_LOG(LogTemp, Warning, TEXT("[Influence Diagram] %hs from %hs while adding arc"), e.errorType().c_str(), e.errorContent().c_str());
 }
 
@@ -312,7 +312,7 @@ void UInfluenceDiag::fillCPT(const FString& variable, const TArray<float>& value
 		try {
 			id.cpt(nodeName).fillWith(ToStdVector(values));
 		}
-		catch (gum::NotFound& e)
+		catch ([[maybe_unused]] gum::NotFound& e)
 			UE_LOG(LogTemp, Warning, TEXT("[Influence Diagram] %hs from %hs while filling"), e.errorType().c_str(), e.errorContent().c_str());
 	}
 }
@@ -324,7 +324,7 @@ void UInfluenceDiag::fillUtility(const FString& variable, const TArray<float>& v
 		try {
 			id.utility(nodeName).fillWith(ToStdVector(values));
 		}
-		catch (gum::NotFound& e)
+		catch ([[maybe_unused]] gum::NotFound& e)
 			UE_LOG(LogTemp, Warning, TEXT("[Influence Diagram] %hs from %hs while filling"), e.errorType().c_str(), e.errorContent().c_str());
 	}
 }

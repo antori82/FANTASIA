@@ -86,7 +86,7 @@ void UBayesianNetwork::makeInference() {
 		try {
 			InfPtr->makeInference();
 		}
-		catch (gum::NotFound& e) {
+		catch ([[maybe_unused]] gum::NotFound& e) {
 			UE_LOG(LogTemp, Warning, TEXT("[Bayesian Network] %hs from %hs"), e.errorType().c_str(), e.errorContent().c_str());
 		}
 
@@ -112,7 +112,7 @@ TMap<FString, float> UBayesianNetwork::getPosterior(const FString& variable) {
 	try {
 		return PotentialToMap(inference->posterior(nodeName));
 	}
-	catch (gum::NotFound& e)
+	catch ([[maybe_unused]] gum::NotFound& e)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("[Bayesian Network] %hs from %hs"), e.errorType().c_str(), e.errorContent().c_str());
 		TMap<FString, float> out;
@@ -234,7 +234,7 @@ void UBayesianNetwork::addArc(const FString& parent, const FString& child) {
 		arcs.Add(newArc);
 		arcSet.Add(newArc);
 	}
-	catch (gum::NotFound& e)
+	catch ([[maybe_unused]] gum::NotFound& e)
 		UE_LOG(LogTemp, Warning, TEXT("[Bayesian Network] %hs from %hs while adding arc"), e.errorType().c_str(), e.errorContent().c_str());
 }
 
@@ -249,7 +249,7 @@ void UBayesianNetwork::fillWith(const FString& variable, float value) {
 	try {
 		bn.cpt(TCHAR_TO_UTF8(*variable)).fillWith(value);
 	}
-	catch (gum::NotFound& e)
+	catch ([[maybe_unused]] gum::NotFound& e)
 		UE_LOG(LogTemp, Warning, TEXT("[Bayesian Network] %hs from %hs while filling"), e.errorType().c_str(), e.errorContent().c_str());
 }
 
@@ -259,7 +259,7 @@ void UBayesianNetwork::fillCPT(const FString& variable, const TArray<float>& val
 	try {
 		bn.cpt(nodeName).fillWith(ToStdVector(values));
 	}
-	catch (gum::NotFound& e)
+	catch ([[maybe_unused]] gum::NotFound& e)
 		UE_LOG(LogTemp, Warning, TEXT("%hs from %hs while filling"), e.errorType().c_str(), e.errorContent().c_str());
 }
 
@@ -279,7 +279,7 @@ void UBayesianNetwork::setEvidence(const FString& variable, const TArray<float>&
 			inference->eraseEvidence(var);
 		inference->addEvidence(var, ToStdVector(data));
 	}
-	catch (gum::NotFound& e)
+	catch ([[maybe_unused]] gum::NotFound& e)
 		UE_LOG(LogTemp, Warning, TEXT("[Bayesian Network] %hs from %hs while adding evidence"), e.errorType().c_str(), e.errorContent().c_str());
 }
 
