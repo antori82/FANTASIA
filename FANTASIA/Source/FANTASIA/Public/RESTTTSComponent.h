@@ -215,23 +215,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Configuration", Config)
 	FString URL;
 
-	/**
-	 * HTTP headers to include in every synthesis request.
-	 *
-	 * Marked Config so the values can live in DefaultGame.ini (or
-	 * Saved/Config/.../Game.ini) and stay out of the Blueprint .uasset.
-	 * Useful for secrets like ElevenLabs `xi-api-key` that you don't
-	 * want baked into a tracked Blueprint asset and pushed to a public
-	 * repo. Users gitignore Config/DefaultGame.ini and put their key
-	 * there. Set on the Blueprint instance only if you genuinely want
-	 * a per-instance override; otherwise leave the instance map empty
-	 * and let the CDO load its value from the config file.
-	 *
-	 * Format in DefaultGame.ini:
-	 *   [/Script/FANTASIA.RESTTTSComponent]
-	 *   +Headers=(Key="xi-api-key", Value="sk_...")
-	 */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Configuration", Config)
+	/** HTTP headers to include in every synthesis request. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Configuration")
 	TMap<FString, FString> Headers;
 
 	/**
