@@ -84,10 +84,10 @@ if not exist "%DLL_DIR%" mkdir "%DLL_DIR%"
 set CUDA_BIN=%CUDA_PATH%\bin\x64
 if not exist "%CUDA_BIN%" set CUDA_BIN=%CUDA_PATH%\bin
 
-for %%d in (cudart64_*.dll cublas64_*.dll cublasLt64_*.dll) do (
-    if exist "%CUDA_BIN%\%%d" (
-        copy /Y "%CUDA_BIN%\%%d" "%DLL_DIR%\" >nul
-        echo   Copied %%d
+for %%d in ("%CUDA_BIN%\cudart64_*.dll" "%CUDA_BIN%\cublas64_*.dll" "%CUDA_BIN%\cublasLt64_*.dll") do (
+    if exist "%%d" (
+        copy /Y "%%d" "%DLL_DIR%\" >nul
+        echo   Copied %%~nxd
     )
 )
 
