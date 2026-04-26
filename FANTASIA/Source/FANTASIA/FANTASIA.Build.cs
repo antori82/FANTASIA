@@ -357,22 +357,12 @@ public class FANTASIA : ModuleRules
                 SharedLibDir + " — end users will need CUDA Toolkit installed.");
         }
 
-        // When using prebuilt libs, staged source files must not be compiled
-        // or we get duplicate symbols. Verify they've been cleared.
-        string StagingDir = Path.Combine(ModuleDirectory, "Private", "whisper_staged");
-        if (Directory.Exists(StagingDir))
-        {
-            int StagedCount = Directory.GetFiles(StagingDir, "*.c").Length +
-                Directory.GetFiles(StagingDir, "*.cpp").Length;
-            if (StagedCount > 0)
-            {
-                System.Console.WriteLine("[FANTASIA-Whisper] WARNING: whisper_staged/ has " +
-                    StagedCount + " files that will conflict with prebuilt libs!");
-                System.Console.WriteLine("[FANTASIA-Whisper] Cleaning staged files...");
-                foreach (string f in Directory.GetFiles(StagingDir, "*.c")) File.Delete(f);
-                foreach (string f in Directory.GetFiles(StagingDir, "*.cpp")) File.Delete(f);
-            }
-        }
+        // The staged-source wrappers under Private/whisper_staged/ are gated by
+        // `#if !FANTASIA_WITH_CUDA` (defined just above as 1 here). When CUDA
+        // is on, each wrapper compiles to an empty translation unit, so they
+        // don't conflict with the prebuilt libs at link time and we don't have
+        // to delete them on disk. (Earlier versions deleted them, which made
+        // every CUDA build leave `git status` reporting 24 deleted files.)
     }
 
     /// <summary>
