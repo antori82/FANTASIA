@@ -14,6 +14,8 @@
     <br />
     <a href="https://github.com/antori82/FANTASIA/wiki"><strong>Documentation Wiki »</strong></a>
     ·
+    <a href="https://codeberg.org/antori/FANTASIA-LangGraphDemo">LangGraph Demo Project</a>
+    ·
     <a href="https://forums.unrealengine.com/t/framework-for-advanced-natural-tools-and-applications-with-social-interactive-agents-fantasia/158706">Forum</a>
     ·
     <a href="https://www.youtube.com/channel/UChH-PYQw-_IZJM7nYJywevg">YouTube</a>
@@ -26,6 +28,7 @@
   <ol>
     <li><a href="#about-the-project">About the Project</a></li>
     <li><a href="#whats-in-the-box">What's in the Box</a></li>
+    <li><a href="#quick-start">Quick Start</a></li>
     <li><a href="#installation">Installation</a></li>
     <li><a href="#troubleshooting">Troubleshooting</a></li>
     <li><a href="#citing-fantasia">Citing FANTASIA</a></li>
@@ -90,6 +93,14 @@ FANTASIA bundles a set of independent components. Use only what you need.
 | Integration | Purpose |
 | --- | --- |
 | **NVIDIA ACE** *(optional)* | Audio-driven facial animation via the [NVIDIA ACE Reference plugin](https://developer.nvidia.com/ace). When ACE is present, TTS audio drives lip-sync and emotion. |
+
+## Quick Start
+
+The fastest way to see FANTASIA running is the demo project:
+
+> **[FANTASIA-LangGraphDemo](https://codeberg.org/antori/FANTASIA-LangGraphDemo)** — a ready-to-run UE project wiring LangGraph + Whisper + ElevenLabs into a working Conversational AI pipeline. Clone, open, hit play.
+
+If you want to start from scratch, install the plugin into your own project (next section) and consult the [Wiki](https://github.com/antori82/FANTASIA/wiki) for component-by-component setup guides.
 
 ## Installation
 

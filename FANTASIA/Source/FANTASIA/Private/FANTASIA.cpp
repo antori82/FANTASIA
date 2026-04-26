@@ -20,6 +20,15 @@ void FFANTASIAModule::StartupModule()
 	UE_LOG(LogFANTASIA, Log,
 		TEXT("FANTASIA loaded. ACE and Whisper integrations may require a one-time C++ rebuild — ")
 		TEXT("see the installation guide at https://github.com/antori82/FANTASIA/wiki"));
+
+	// Pointer to a ready-to-run sample project that exercises the LangGraph,
+	// Whisper, and ElevenLabs components together — useful for users who want
+	// to validate their FANTASIA setup against a known-good Conversational AI
+	// pipeline before wiring up their own. Hosted on Codeberg because the
+	// project is too large for GitHub's repository limits.
+	UE_LOG(LogFANTASIA, Log,
+		TEXT("FANTASIA demo project (LangGraph + Whisper + ElevenLabs Conversational AI): ")
+		TEXT("https://codeberg.org/antori/FANTASIA-LangGraphDemo"));
 }
 
 void FFANTASIAModule::ShutdownModule()
