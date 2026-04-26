@@ -73,7 +73,7 @@ FANTASIA bundles a set of independent components. Use only what you need.
 | --- | --- |
 | **SWI-Prolog** | Embedded Prolog engine. Assert/retract facts, run queries, build terms from Blueprints. |
 | **Bayesian Networks** | Probabilistic inference using [aGrUM](https://agrum.gitlab.io/) (Lazy Propagation, Shafer-Shenoy, Variable Elimination). |
-| **Influence Diagrams** | Decision-making under uncertainty (LIMID inference). |
+| **Influence Diagrams** | Decision-making under uncertainty using [aGrUM](https://agrum.gitlab.io/) (Shafer-Shenoy LIMID inference). |
 
 ### Data
 
