@@ -30,6 +30,22 @@ if not exist "%WHISPER_DIR%\CMakeLists.txt" (
     exit /b 1
 )
 
+REM ─────────────────────────────────────────────────────────────────────
+REM Workaround for whisper.cpp's standalone CMake configure: it always
+REM runs configure_file on bindings/javascript/package-tmpl.json (top-level
+REM CMakeLists.txt around line 29). The FANTASIA distribution strips the
+REM bindings/ directory since nothing here builds JS bindings, so the
+REM configure step bails out before generating any library targets.
+REM Materialize an empty stub before invoking cmake — the configured output
+REM is never consumed by anything we build.
+REM ─────────────────────────────────────────────────────────────────────
+set BINDINGS_JS_DIR=%WHISPER_DIR%\bindings\javascript
+if not exist "%BINDINGS_JS_DIR%\package-tmpl.json" (
+    if not exist "%BINDINGS_JS_DIR%" mkdir "%BINDINGS_JS_DIR%"
+    > "%BINDINGS_JS_DIR%\package-tmpl.json" echo {}
+    echo Created stub bindings\javascript\package-tmpl.json to satisfy whisper.cpp configure.
+)
+
 echo.
 echo Configuring whisper.cpp with CUDA...
 echo.

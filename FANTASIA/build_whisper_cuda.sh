@@ -29,6 +29,22 @@ command -v cmake >/dev/null 2>&1 || { echo "ERROR: cmake not found in PATH."; ex
 # Check whisper source
 [ -f "${WHISPER_DIR}/CMakeLists.txt" ] || { echo "ERROR: whisper.cpp source not found at ${WHISPER_DIR}"; exit 1; }
 
+# ─────────────────────────────────────────────────────────────────────────
+# Workaround for whisper.cpp's standalone CMake configure: it always runs
+# configure_file on bindings/javascript/package-tmpl.json (top-level
+# CMakeLists.txt around line 29). The FANTASIA distribution strips the
+# bindings/ directory since nothing here builds JS bindings, so the
+# configure step bails out before generating any library targets.
+# Materialize an empty stub before invoking cmake — the configured output
+# is never consumed by anything we build.
+# ─────────────────────────────────────────────────────────────────────────
+BINDINGS_JS_DIR="${WHISPER_DIR}/bindings/javascript"
+if [ ! -f "${BINDINGS_JS_DIR}/package-tmpl.json" ]; then
+    mkdir -p "${BINDINGS_JS_DIR}"
+    echo '{}' > "${BINDINGS_JS_DIR}/package-tmpl.json"
+    echo "Created stub bindings/javascript/package-tmpl.json to satisfy whisper.cpp configure."
+fi
+
 echo
 echo "Configuring whisper.cpp with CUDA..."
 echo
