@@ -71,5 +71,8 @@ Thumbs.db
 *.pyc
 __pycache__/
 
-# Tools
+# Tools — keep Claude Code dev artifacts out of the repo
 .claude/
+.claude
+CLAUDE.md
+claude.md
