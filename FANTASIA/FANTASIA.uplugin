@@ -1,7 +1,7 @@
 {
 	"FileVersion": 3,
-	"Version": 1,
-	"VersionName": "0.9",
+	"Version": 2,
+	"VersionName": "1.0",
 	"FriendlyName": "FANTASIA",
 	"Description": "Framework for Advanced Natural Tools and Applications with Social Interactive Agents. See the Wiki for installation (ACE/Whisper require a rebuild until UE 5.7).",
 	"Category": "Other",
