@@ -139,7 +139,7 @@ If you use FANTASIA for your research, please cite the following papers:
 - **[SPECIAL](https://www.specialprojectunina.com/)** — Supporting Patients with Embodied Conversational Interfaces and Argumentative Language (funded by the University of Naples Federico II): a Virtual Human to increase health literacy and combat stereotypes about epilepsy.
 - **[VISIT3D](https://www.logogramma.com/artificial-intelligence/progetti-di-ricerca-e-sviluppo-sperimentale-co-finanziati/visit3d/)** — Logogramma S.r.l. in collaboration with the URBAN/ECO Research Center (University of Naples Federico II): a Virtual Reality guide for reflection on the visual arts.
 
-If you build something with FANTASIA we'd love to hear about it — open an issue or get in touch.
+If you build something with FANTASIA we'd love to hear about it — get in touch!
 
 <!-- CONTACT -->
 ## Contact
