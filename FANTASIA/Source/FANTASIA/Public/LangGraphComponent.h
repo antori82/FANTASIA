@@ -43,11 +43,26 @@ private:
 	/** @brief Callback invoked incrementally as streaming SSE updates arrive. */
 	void OnLangGraphPartialResponseReceived(FHttpRequestPtr request, uint64 bytesSent, uint64 bytesReceived);
 
+	/** @brief Callback invoked when the streaming SSE connection closes; flushes the sentence buffer and signals end-of-stream. */
+	void OnLangGraphStreamComplete(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful);
+
 	/** @brief Callback invoked when a thread-creation request completes. */
 	void OnLangGraphThreadCreateResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful);
 
-	/** @brief Offset into the streaming response buffer already scanned; avoids re-scanning the whole buffer on each progress callback. */
+	/** @brief Byte offset past the last fully-matched SSE event in the stream buffer. */
 	int32 StreamScanOffset = 0;
+
+	/** @brief Role carried forward across streaming update events; used by both token- and sentence-level delegates. */
+	GPTRoleType StreamCurrentRole = GPTRoleType::ASSISTANT;
+
+	/** @brief Accumulates streamed assistant text until a sentence boundary is detected. */
+	FString SentenceBuffer;
+
+	/**
+	 * @brief Broadcasts any remaining text in SentenceBuffer and clears it.
+	 * @param bEndStream If true, signals the end of the stream to listeners.
+	 */
+	void FlushSentenceBuffer(bool bEndStream);
 
 	// ── Public interface ────────────────────────────────────────────────
 
@@ -72,6 +87,16 @@ public:
 	/** @brief Broadcast with each streaming update chunk; the final call has endStream=true. */
 	UPROPERTY(BlueprintAssignable, BlueprintCallable)
 	FIncomingLangGraphStreamResponseEvent IncomingLangGraphStreamResponse;
+
+	/**
+	 * @brief Broadcast with complete sentences accumulated during streaming.
+	 *
+	 * Useful for driving text-to-speech: streamed assistant text is buffered until
+	 * sentence-ending punctuation is detected, then flushed as a single sentence.
+	 * The final call has endStream=true with whatever remains in the buffer.
+	 */
+	UPROPERTY(BlueprintAssignable, BlueprintCallable)
+	FIncomingLangGraphStreamResponseEvent IncomingLangGraphSentenceResponse;
 
 	/** @brief Broadcast when a thread is created, providing the new thread ID. */
 	UPROPERTY(BlueprintAssignable, BlueprintCallable)

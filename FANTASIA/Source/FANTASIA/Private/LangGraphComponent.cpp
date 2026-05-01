@@ -72,6 +72,15 @@ void ULangGraphComponent::OnLangGraphResponseReceived(FHttpRequestPtr Request, F
 
 // ── Streaming (SSE updates) response handler ────────────────────────────────
 
+void ULangGraphComponent::FlushSentenceBuffer(bool bEndStream)
+{
+	if (SentenceBuffer.Len() > 0 || bEndStream)
+	{
+		IncomingLangGraphSentenceResponse.Broadcast(SentenceBuffer.TrimStartAndEnd(), StreamCurrentRole, bEndStream);
+		SentenceBuffer.Empty();
+	}
+}
+
 void ULangGraphComponent::OnLangGraphPartialResponseReceived(FHttpRequestPtr request, uint64 bytesSent, uint64 bytesReceived) {
 	if (bytesReceived == 0 || !request.IsValid())
 		return;
@@ -80,82 +89,114 @@ void ULangGraphComponent::OnLangGraphPartialResponseReceived(FHttpRequestPtr req
 	if (!Response.IsValid())
 		return;
 
-	const FString& FullBuffer = Response->GetContentAsString();
+	const FString FullBuffer = Response->GetContentAsString();
 	const int32 FullLen = FullBuffer.Len();
 	if (FullLen <= StreamScanOffset)
 		return;
 
-	// Compile the SSE pattern exactly once per process.
-	static const FRegexPattern SsePattern(TEXT("event: updates\\s*data:(.*)"));
+	// Match each SSE "updates" event by capturing the JSON object on the data line.
+	// Greedy `\{.*\}` works because `.` does not cross newlines, so the match is
+	// bounded to a single data line. Partial events (no closing brace yet) do not
+	// match, so we never advance past incomplete data. Compiled once per process.
+	static const FRegexPattern SsePattern(TEXT("event:\\s*updates\\s+data:\\s*(\\{.*\\})"));
 
-	// Scan only the unseen tail of the buffer. Of all events found, we
-	// broadcast the last one (matches legacy "latest state" semantics).
-	// We advance StreamScanOffset to the START of the last matched event so
-	// that a partial trailing event gets re-matched next callback once more
-	// bytes have arrived (self-healing for partial data lines).
-	const FString Tail = FullBuffer.Mid(StreamScanOffset);
-	FRegexMatcher Matcher(SsePattern, Tail);
+	FRegexMatcher Matcher(SsePattern, FullBuffer);
+	Matcher.SetLimits(StreamScanOffset, FullLen);
 
-	int32 LastMatchStart = INDEX_NONE;
-	FString Update;
+	int32 LastMatchEnd = StreamScanOffset;
+
 	while (Matcher.FindNext())
 	{
-		LastMatchStart = Matcher.GetMatchBeginning();
-		Update = Matcher.GetCaptureGroup(1);
+		LastMatchEnd = Matcher.GetMatchEnding();
+		const FString Update = Matcher.GetCaptureGroup(1);
+
+		TSharedPtr<FJsonValue> JsonValue;
+		TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(Update);
+		if (!FJsonSerializer::Deserialize(Reader, JsonValue) || !JsonValue.IsValid())
+			continue;
+
+		const TSharedPtr<FJsonObject>* OuterPtr = nullptr;
+		if (!JsonValue->TryGetObject(OuterPtr) || !OuterPtr || !OuterPtr->IsValid())
+			continue;
+
+		const FJsonObject& Outer = **OuterPtr;
+		if (Outer.Values.Num() == 0)
+			continue;
+
+		// Grab the first (typically only) node-update key without allocating a TArray.
+		const TSharedPtr<FJsonValue>& FirstValue = Outer.Values.CreateConstIterator()->Value;
+		const TSharedPtr<FJsonObject> Inner = FirstValue.IsValid() ? FirstValue->AsObject() : nullptr;
+		if (!Inner.IsValid())
+			continue;
+
+		const TArray<TSharedPtr<FJsonValue>>* MessagesPtr = nullptr;
+		if (!Inner->TryGetArrayField(TEXT("messages"), MessagesPtr) || !MessagesPtr || MessagesPtr->Num() == 0)
+			continue;
+
+		const TSharedPtr<FJsonObject> FirstMsg = (*MessagesPtr)[0]->AsObject();
+		if (!FirstMsg.IsValid())
+			continue;
+
+		GPTRoleType role = GPTRoleType::ASSISTANT;
+		FString checkRole;
+		if (FirstMsg->TryGetStringField(TEXT("type"), checkRole))
+		{
+			if      (checkRole == TEXT("system")) role = GPTRoleType::SYSTEM;
+			else if (checkRole == TEXT("ai"))     role = GPTRoleType::ASSISTANT;
+			else if (checkRole == TEXT("tool"))   role = GPTRoleType::FUNCTION;
+			else if (checkRole == TEXT("human"))  role = GPTRoleType::USER;
+		}
+		StreamCurrentRole = role;
+
+		FString Content;
+		FirstMsg->TryGetStringField(TEXT("content"), Content);
+
+		// Token-level delegate (per-event, in arrival order).
+		IncomingLangGraphStreamResponse.Broadcast(Content, role, false);
+
+		// Sentence-level buffering for TTS: only assistant text drives the buffer.
+		// Boundary pairs (i, i+1) with i+1 <= PrevLen-1 were already checked last
+		// append; new pairs start at i = PrevLen - 1.
+		if (role == GPTRoleType::ASSISTANT && Content.Len() > 0)
+		{
+			const int32 PrevLen = SentenceBuffer.Len();
+			const int32 ScanStart = PrevLen > 0 ? PrevLen - 1 : 0;
+			SentenceBuffer.Append(MoveTemp(Content));
+
+			int32 FlushUpTo = -1;
+			const int32 BufLen = SentenceBuffer.Len();
+			const TCHAR* BufData = *SentenceBuffer;
+			for (int32 i = ScanStart; i < BufLen - 1; i++)
+			{
+				const TCHAR C = BufData[i];
+				if ((C == '.' || C == '!' || C == '?' || C == ':' || C == ';') && FChar::IsWhitespace(BufData[i + 1]))
+					FlushUpTo = i + 1;
+			}
+
+			if (FlushUpTo >= 0)
+			{
+				const FString Sentence = SentenceBuffer.Left(FlushUpTo + 1).TrimStartAndEnd();
+				SentenceBuffer.RemoveAt(0, FlushUpTo + 1);
+				if (Sentence.Len() > 0)
+					IncomingLangGraphSentenceResponse.Broadcast(Sentence, StreamCurrentRole, false);
+			}
+		}
 	}
-	if (LastMatchStart == INDEX_NONE)
-		return;
 
-	StreamScanOffset += LastMatchStart;
+	StreamScanOffset = LastMatchEnd;
+}
 
-	TSharedPtr<FJsonValue> JsonValue;
-	TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(Update);
-	if (!FJsonSerializer::Deserialize(Reader, JsonValue) || !JsonValue.IsValid())
-		return;
+void ULangGraphComponent::OnLangGraphStreamComplete(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful)
+{
+	// Catch any final event(s) the progress callback may have missed (e.g. arrived
+	// in the same chunk as the connection close).
+	if (bWasSuccessful && Request.IsValid() && Response.IsValid())
+		OnLangGraphPartialResponseReceived(Request, 0, /*bytesReceived=*/1);
 
-	const TSharedPtr<FJsonObject>* OuterPtr = nullptr;
-	if (!JsonValue->TryGetObject(OuterPtr) || !OuterPtr || !OuterPtr->IsValid())
-		return;
-
-	const FJsonObject& Outer = **OuterPtr;
-
-	// Grab the first (and typically only) key without allocating a TArray.
-	if (Outer.Values.Num() == 0)
-	{
-		IncomingLangGraphStreamResponse.Broadcast(FString(), GPTRoleType::ASSISTANT, true);
-		return;
-	}
-
-	const TSharedPtr<FJsonValue>& FirstValue = Outer.Values.CreateConstIterator()->Value;
-	const TSharedPtr<FJsonObject> Inner = FirstValue.IsValid() ? FirstValue->AsObject() : nullptr;
-	if (!Inner.IsValid())
-		return;
-
-	const TArray<TSharedPtr<FJsonValue>>* MessagesPtr = nullptr;
-	if (!Inner->TryGetArrayField(TEXT("messages"), MessagesPtr) || !MessagesPtr || MessagesPtr->Num() == 0)
-	{
-		// Stream update with no messages — signal completion
-		IncomingLangGraphStreamResponse.Broadcast(FString(), GPTRoleType::ASSISTANT, true);
-		return;
-	}
-
-	const TSharedPtr<FJsonObject> FirstMsg = (*MessagesPtr)[0]->AsObject();
-	if (!FirstMsg.IsValid())
-		return;
-
-	GPTRoleType role = GPTRoleType::ASSISTANT;
-	FString checkRole;
-	if (FirstMsg->TryGetStringField(TEXT("type"), checkRole))
-	{
-		if      (checkRole == TEXT("system")) role = GPTRoleType::SYSTEM;
-		else if (checkRole == TEXT("ai"))     role = GPTRoleType::ASSISTANT;
-		else if (checkRole == TEXT("tool"))   role = GPTRoleType::FUNCTION;
-		else if (checkRole == TEXT("human"))  role = GPTRoleType::USER;
-	}
-
-	FString Content;
-	FirstMsg->TryGetStringField(TEXT("content"), Content);
-	IncomingLangGraphStreamResponse.Broadcast(Content, role, role == GPTRoleType::ASSISTANT);
+	// Flush whatever remains in the sentence buffer with the end-of-stream flag,
+	// then signal end-of-stream on the token-level delegate as well.
+	FlushSentenceBuffer(true);
+	IncomingLangGraphStreamResponse.Broadcast(FString(), StreamCurrentRole, true);
 }
 
 // ── Thread-creation response handler ────────────────────────────────────────
@@ -272,9 +313,14 @@ void ULangGraphComponent::langGraphQuery(const TArray<FChatTurn>& messages, FStr
 	{
 		UE_LOG(LogTemp, Error, TEXT("LangGraph: langGraphQuery called with empty threadID; aborting request"));
 		if (stream)
+		{
 			IncomingLangGraphStreamResponse.Broadcast(FString(), GPTRoleType::ASSISTANT, true);
+			IncomingLangGraphSentenceResponse.Broadcast(FString(), GPTRoleType::ASSISTANT, true);
+		}
 		else
+		{
 			IncomingLangGraphResponse.Broadcast(FString(), GPTRoleType::ASSISTANT);
+		}
 		return;
 	}
 
@@ -316,9 +362,13 @@ void ULangGraphComponent::langGraphQuery(const TArray<FChatTurn>& messages, FStr
 	const FString UrlBase = endpoint + TEXT(":") + FString::FromInt(port) + TEXT("/threads/") + threadID + TEXT("/runs/");
 
 	if (stream) {
-		// Reset the per-stream scan cursor so the next progress callback starts fresh.
+		// Reset per-stream state so the next progress callback starts fresh.
 		StreamScanOffset = 0;
+		StreamCurrentRole = GPTRoleType::ASSISTANT;
+		SentenceBuffer.Reset(512);
+
 		Request->OnRequestProgress64().BindUObject(this, &ULangGraphComponent::OnLangGraphPartialResponseReceived);
+		Request->OnProcessRequestComplete().BindUObject(this, &ULangGraphComponent::OnLangGraphStreamComplete);
 		payloadObject->SetStringField(TEXT("stream_mode"), TEXT("updates"));
 		Request->SetURL(UrlBase + TEXT("stream"));
 	}
