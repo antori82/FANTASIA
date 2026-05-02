@@ -57,8 +57,14 @@ URESTTTSComponent::URESTTTSComponent()
 }
 
 /**
- * Launches the Audio2Face consumer async task that batches float samples from
- * SendData and feeds them to ACE AnimateFromAudioSamples.
+ * Launches the Audio2Face consumer async task. The task drains per-call
+ * audio buffers in submission order (PlaybackOrder), batches samples, and
+ * feeds them to ACE AnimateFromAudioSamples. Multiple TTSSynthesize calls
+ * may issue HTTP requests in parallel -- their per-call buffers fill up
+ * out of order, but this task plays them in call order, marking each
+ * buffer's tail with bIsLastChunk=true so A2F closes each utterance
+ * cleanly. Buffers are removed from BuffersByCaller and freed once
+ * fully drained; PlaybackComplete fires for the caller's id at that point.
  */
 void URESTTTSComponent::BeginPlay()
 {
@@ -75,65 +81,166 @@ void URESTTTSComponent::BeginPlay()
 	// trigger a use-after-free in NVIDIA's DirectML DLL (nvdxgdmal64.dll).
 	ConsumerTaskFuture = Async(EAsyncExecution::ThreadPool, [this]()
 	{
+		// Audio-realtime pacing: send exactly one BATCH_SIZE batch per
+		// AnimateFromAudioSamples call and sleep its audio duration. Burst-
+		// feeding huge batches makes ACE spawn overlapping audio outputs.
+		constexpr int32 SampleRateHz = 16000;
+		constexpr float BatchSeconds = float(A2F_STREAMING_BATCH_SIZE) / float(SampleRateHz);
+		constexpr float PaceSleep = BatchSeconds * 0.95f;
+
+		// outData persists across slot transitions: a slot's tail samples
+		// stay buffered and combine with the next slot's head into a full
+		// BATCH_SIZE batch. Keeps every send the same size so the pacing
+		// sleep stays accurate.
 		TArray<float> outData;
 		outData.Reserve(A2F_STREAMING_BATCH_SIZE);
-		float item;
+
+		auto SendOutData = [&](bool bIsLastChunk)
+		{
+			if (outData.Num() == 0) return;
+			UACEAudioCurveSourceComponent* TypedA2F = Cast<UACEAudioCurveSourceComponent>(A2Fpointer);
+			UAudio2FaceParameters* TypedParams = Cast<UAudio2FaceParameters>(A2FParameters);
+			if (IsValid(TypedA2F))
+			{
+				FAudio2FaceEmotion AceEmotion = ConvertToACEEmotion(EmotionParameters);
+				FACERuntimeModule::Get().AnimateFromAudioSamples(
+					TypedA2F, outData, 1, SampleRateHz, bIsLastChunk,
+					AceEmotion, TypedParams, A2FProvider);
+			}
+			outData.Empty();
+			FPlatformProcess::Sleep(PaceSleep);
+		};
 
 		while (bIsPlaying.load(std::memory_order_relaxed))
 		{
 			ConsumerWakeEvent->Wait(50);
 			ConsumerWakeEvent->Reset();
 
+			// ── Cancellation path ──────────────────────────────────────
 			if (bNeedsFlush.load(std::memory_order_acquire))
 			{
-				while (SendData.Dequeue(item)) {}
+				FPlaybackOrderEntry discard;
+				while (PlaybackOrder.Dequeue(discard)) {}
+				{
+					FScopeLock Lock(&BuffersMutex);
+					BuffersByCaller.Empty();
+				}
+				CurrentPlayback.Reset();
 				outData.Empty();
-				bBufferOpen.store(false);
 				bNeedsFlush.store(false, std::memory_order_release);
 				continue;
 			}
 
-			if (!SendData.IsEmpty())
-				bBufferOpen.store(true);
-
-			if (bUsingStreamingBuffer.load(std::memory_order_acquire) && SendData.Dequeue(item))
+			// ── Acquire next entry if idle ─────────────────────────────
+			if (!CurrentPlayback.IsSet())
 			{
-				outData.Add(item);
-
-				while (outData.Num() < A2F_STREAMING_BATCH_SIZE && SendData.Dequeue(item))
+				FPlaybackOrderEntry NextEntry;
+				if (!PlaybackOrder.Dequeue(NextEntry))
 				{
-					outData.Add(item);
-				}
-
-				if (outData.Num() >= A2F_STREAMING_BATCH_SIZE)
-				{
-					UACEAudioCurveSourceComponent* TypedA2F = Cast<UACEAudioCurveSourceComponent>(A2Fpointer);
-					UAudio2FaceParameters* TypedParams = Cast<UAudio2FaceParameters>(A2FParameters);
-					if (IsValid(TypedA2F))
+					// Nothing queued. If end-of-turn was signaled, send
+					// the buffered tail with bIsLastChunk=true so ACE
+					// finalizes the session and OnAnimationEnded fires
+					// (BP unmutes Whisper). If the last batch landed on
+					// a boundary and outData is empty, send one zeroed
+					// sample just to carry the close flag.
+					if (bTurnEndSignaled.load(std::memory_order_acquire))
 					{
-						FAudio2FaceEmotion AceEmotion = ConvertToACEEmotion(EmotionParameters);
-						FACERuntimeModule::Get().AnimateFromAudioSamples(
-							TypedA2F, outData, 1, 16000, false,
-							AceEmotion, TypedParams, A2FProvider);
+						if (outData.Num() > 0)
+						{
+							SendOutData(true);
+						}
+						else
+						{
+							UACEAudioCurveSourceComponent* TypedA2F = Cast<UACEAudioCurveSourceComponent>(A2Fpointer);
+							UAudio2FaceParameters* TypedParams = Cast<UAudio2FaceParameters>(A2FParameters);
+							if (IsValid(TypedA2F))
+							{
+								TArray<float> Tail;
+								Tail.Add(0.0f);
+								FAudio2FaceEmotion AceEmotion = ConvertToACEEmotion(EmotionParameters);
+								FACERuntimeModule::Get().AnimateFromAudioSamples(
+									TypedA2F, Tail, 1, SampleRateHz, /*bIsLastChunk=*/true,
+									AceEmotion, TypedParams, A2FProvider);
+							}
+						}
+						bTurnEndSignaled.store(false, std::memory_order_release);
 					}
-					outData.Empty();
+					continue;
 				}
+				CurrentPlayback = NextEntry;
 			}
-			else if (!bUsingStreamingBuffer.load(std::memory_order_acquire) && bBufferOpen.load())
+
+			FAudioBuffer* Target = CurrentPlayback->Buffer;
+			if (!Target)
 			{
-				while (SendData.Dequeue(item))
-					outData.Add(item);
-				UACEAudioCurveSourceComponent* TypedA2F = Cast<UACEAudioCurveSourceComponent>(A2Fpointer);
-				UAudio2FaceParameters* TypedParams = Cast<UAudio2FaceParameters>(A2FParameters);
-				if (IsValid(TypedA2F))
+				CurrentPlayback.Reset();
+				ConsumerWakeEvent->Trigger();
+				continue;
+			}
+
+			// ── Top up outData from current slot (up to BATCH_SIZE) ────
+			bool bSlotFullyConsumed = false;
+			{
+				FScopeLock BufferLock(&Target->Mutex);
+				const int32 NeedMore = A2F_STREAMING_BATCH_SIZE - outData.Num();
+				const int32 Available = Target->Samples.Num() - Target->ConsumedSamples;
+				const int32 ToTake = FMath::Min(NeedMore, Available);
+				if (ToTake > 0)
 				{
-					FAudio2FaceEmotion AceEmotion = ConvertToACEEmotion(EmotionParameters);
-					FACERuntimeModule::Get().AnimateFromAudioSamples(
-						TypedA2F, outData, 1, 16000, true,
-						AceEmotion, TypedParams, A2FProvider);
+					outData.Append(Target->Samples.GetData() + Target->ConsumedSamples, ToTake);
+					Target->ConsumedSamples += ToTake;
 				}
-				outData.Empty();
-				bBufferOpen.store(false);
+				// Memory order matters: HandleResult sets bSynthesisComplete
+				// AFTER its final append; acquire semantics here ensures we
+				// see those last samples.
+				const bool bComplete = Target->bSynthesisComplete.load(std::memory_order_acquire);
+				const bool bFullyDrained = (Target->ConsumedSamples >= Target->Samples.Num());
+				bSlotFullyConsumed = bComplete && bFullyDrained;
+			}
+
+			// ── Retire slot if consumed (carry outData into next slot) ─
+			if (bSlotFullyConsumed)
+			{
+				const FString FinishedCallerId = CurrentPlayback->CallerId;
+				FAudioBuffer* FinishedBuffer = CurrentPlayback->Buffer;
+
+				{
+					FScopeLock Lock(&BuffersMutex);
+					if (TArray<TUniquePtr<FAudioBuffer>>* List = BuffersByCaller.Find(FinishedCallerId))
+					{
+						for (int32 i = 0; i < List->Num(); ++i)
+						{
+							if ((*List)[i].Get() == FinishedBuffer)
+							{
+								List->RemoveAt(i);
+								break;
+							}
+						}
+						if (List->Num() == 0)
+						{
+							BuffersByCaller.Remove(FinishedCallerId);
+						}
+					}
+				}
+
+				CurrentPlayback.Reset();
+				AsyncTask(ENamedThreads::GameThread, [this, FinishedCallerId]()
+				{
+					PlaybackComplete.Broadcast(FinishedCallerId);
+				});
+				// Wake immediately so the next slot's samples flow
+				// without the 50 ms Wait timeout.
+				ConsumerWakeEvent->Trigger();
+			}
+
+			// ── Send if we have a full batch ───────────────────────────
+			if (outData.Num() >= A2F_STREAMING_BATCH_SIZE)
+			{
+				SendOutData(false);
+				if (CurrentPlayback.IsSet() || !PlaybackOrder.IsEmpty())
+				{
+					ConsumerWakeEvent->Trigger();
+				}
 			}
 		}
 	});
@@ -164,28 +271,16 @@ void URESTTTSComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 
 
 /**
- * Processes a complete HTTP response: flushes streaming state, calls ProcessResponse
- * for subclass metadata extraction, auto-detects WAV headers, resamples to 16 kHz,
- * and stores the result in the thread-safe Buffer.
+ * Processes a complete HTTP response: WAV detection + resample, stash in
+ * Buffer (for TTSGetSound retrieval by caller id), and -- in non-streaming
+ * mode -- push the full audio into the per-call buffer. Marks synthesis
+ * complete so the consumer task knows it can retire the buffer once drained.
+ *
+ * The buffer pointer was captured directly in the HTTP closure, so we
+ * write to the right buffer even when many calls share the same caller id.
  */
-void URESTTTSComponent::HandleResult(FTTSData response, FString id)
+void URESTTTSComponent::HandleResult(FTTSData response, FString id, FAudioBuffer* Target)
 {
-#if FANTASIA_WITH_ACE
-	// End of the streaming TTS response. Flip bUsingStreamingBuffer to false so
-	// the consumer task's drain branch runs on its next wake: it will pull the
-	// remaining samples from SendData and call AnimateFromAudioSamples with
-	// final=true. We deliberately do NOT trigger bNeedsFlush here — that path
-	// discards queued samples and is reserved for explicit cancellation. For
-	// short responses (e.g. ElevenLabs finishing in ~60 ms), most of the audio
-	// can still be in-flight in SendData at this point; triggering bNeedsFlush
-	// would throw it away and only the already-dequeued batch would reach A2F.
-	if (IsValid(A2Fpointer) && bUsingStreamingBuffer.load())
-	{
-		bUsingStreamingBuffer.store(false);
-		ConsumerWakeEvent->Trigger();
-	}
-#endif // FANTASIA_WITH_ACE
-
 	// Let subclasses extract timing/lipsync from the raw response BEFORE we modify AudioData.
 	// This avoids copying AudioData into a separate RawResponse array.
 	ProcessResponse(response.AudioData, response);
@@ -218,8 +313,42 @@ void URESTTTSComponent::HandleResult(FTTSData response, FString id)
 
 	{
 		FScopeLock Lock(&BufferMutex);
-		Buffer.FindOrAdd(id) = MoveTemp(response);
+		Buffer.FindOrAdd(id) = response;  // copy: we still need response.AudioData below.
+		// NOTE: when callers reuse the same id across calls, FindOrAdd
+		// overwrites; the most recent synthesis wins for TTSGetSound(id).
+		// This matches the pre-existing behavior.
 	}
+
+#if FANTASIA_WITH_ACE
+	if (Target)
+	{
+		// Streaming mode: HandlePartialResult already pushed everything and
+		// the OnProcessRequestComplete callback flushed the trailing bytes.
+		// Here we just mark synthesis complete so the consumer can retire
+		// the buffer once it's fully drained.
+		// Non-streaming mode: HandlePartialResult was never called; push
+		// the full PCM here, then mark complete.
+		if (!bStreaming)
+		{
+			const int32 NumSamples = response.AudioData.Num() / 2;
+			if (NumSamples > 0)
+			{
+				const uint8* RawData = response.AudioData.GetData();
+				FScopeLock BufferLock(&Target->Mutex);
+				Target->Samples.Reserve(Target->Samples.Num() + NumSamples);
+				for (int32 i = 0; i < NumSamples; ++i)
+				{
+					Target->Samples.Add(static_cast<float>(*reinterpret_cast<const int16*>(RawData + i*2)) / 32768.0f);
+				}
+			}
+		}
+		// Release-store: pairs with the consumer's acquire-load so any
+		// samples appended above (or by HandlePartialResult earlier) are
+		// visible before the consumer treats this buffer as final.
+		Target->bSynthesisComplete.store(true, std::memory_order_release);
+		ConsumerWakeEvent->Trigger();
+	}
+#endif // FANTASIA_WITH_ACE
 
 	AsyncTask(ENamedThreads::GameThread, [this, id]()
 	{
@@ -227,27 +356,32 @@ void URESTTTSComponent::HandleResult(FTTSData response, FString id)
 	});
 }
 
-/** Converts a streaming PCM chunk to float samples and enqueues them for Audio2Face. */
-void URESTTTSComponent::HandlePartialResult(TArray<uint8> response, FString id)
+/** Converts a streaming PCM chunk to float samples and appends them to
+ *  the request's specific per-call buffer (captured by pointer in the
+ *  HTTP closure -- never looked up by id). The consumer task drains
+ *  buffers in submission order via PlaybackOrder. */
+void URESTTTSComponent::HandlePartialResult(TArray<uint8> response, FString id, FAudioBuffer* Target)
 {
 	const int32 NumBytes = response.Num();
 	if (NumBytes < 2) return;
 
-	const uint8* RawData = response.GetData();
-	for (int32 i = 0; i <= NumBytes - 2; i += 2)
-	{
-		SendData.Enqueue(static_cast<float>(*reinterpret_cast<const int16*>(RawData + i)) / 32768.0f);
-	}
-
 #if FANTASIA_WITH_ACE
-	if (IsValid(A2Fpointer) && !bUsingStreamingBuffer.load() && !bBufferOpen.load())
+	if (Target)
 	{
-		bUsingStreamingBuffer.store(true);
-		bBufferOpen.store(true);
+		const int32 NumSamples = NumBytes / 2;
+		const uint8* RawData = response.GetData();
+		FScopeLock BufferLock(&Target->Mutex);
+		Target->Samples.Reserve(Target->Samples.Num() + NumSamples);
+		for (int32 i = 0; i < NumSamples; ++i)
+		{
+			Target->Samples.Add(static_cast<float>(*reinterpret_cast<const int16*>(RawData + i*2)) / 32768.0f);
+		}
+	}
+	if (IsValid(A2Fpointer))
+	{
+		ConsumerWakeEvent->Trigger();
 	}
 #endif // FANTASIA_WITH_ACE
-
-	ConsumerWakeEvent->Trigger();
 
 	AsyncTask(ENamedThreads::GameThread, [this, id]()
 	{
@@ -255,17 +389,58 @@ void URESTTTSComponent::HandlePartialResult(TArray<uint8> response, FString id)
 	});
 }
 
-void URESTTTSComponent::TTSSynthesize(FString text, FString id)
+/** Reserves a per-call audio buffer in submission order BEFORE issuing the
+ *  HTTP request. The buffer is appended to the caller-id's list (so callers
+ *  reusing the same id stack their buffers without collision); the global
+ *  PlaybackOrder FIFO records the (caller id, buffer pointer) so the
+ *  consumer plays them in TTSSynthesize call order regardless of when each
+ *  HTTP completes. The buffer pointer is captured directly in the HTTP
+ *  closure -- no by-id lookup that could race. */
+void URESTTTSComponent::TTSSynthesize(FString text, FString id, bool bEndTurn)
 {
-	IssueHttpRequest(BuildSynthesisRequest(text, id));
+	auto NewBuffer = MakeUnique<FAudioBuffer>();
+	FAudioBuffer* RawPtr = NewBuffer.Get();
+
+	{
+		FScopeLock Lock(&BuffersMutex);
+		BuffersByCaller.FindOrAdd(id).Add(MoveTemp(NewBuffer));
+	}
+	PlaybackOrder.Enqueue({id, RawPtr});
+
+	IssueHttpRequest(BuildSynthesisRequest(text, id), RawPtr);
+
+	// Set the close-stream flag AFTER the buffer is in PlaybackOrder.
+	// The consumer only acts on the flag when the queue is empty AND a
+	// slot is fully consumed -- and our new buffer guarantees the queue
+	// is non-empty at this moment. So the close defers naturally to
+	// THIS buffer's tail, with no race against earlier buffers.
+	if (bEndTurn)
+	{
+		EndTurn();
+	}
+}
+
+/** Signal that the current turn is over (without synthesizing more
+ *  text). Common case is the bEndTurn parameter on TTSSynthesize; this
+ *  standalone variant is for edge cases (e.g., closing the stream when
+ *  the LLM produced no final sentence). Safe to call from the game
+ *  thread. */
+void URESTTTSComponent::EndTurn()
+{
+	bTurnEndSignaled.store(true, std::memory_order_release);
+	ConsumerWakeEvent->Trigger();
 }
 
 /**
  * Creates and sends an HTTP request from the given descriptor. Sets up streaming
  * progress callbacks (if bStreaming) and the completion callback that invokes
  * HandleResult / HandlePartialResult.
+ *
+ * `Target` is the per-call audio buffer captured in both lambda closures so
+ * partial chunks and the final response always land in the right buffer,
+ * even when several requests with the same caller id run in parallel.
  */
-void URESTTTSComponent::IssueHttpRequest(FTTSSynthesisRequest Request)
+void URESTTTSComponent::IssueHttpRequest(FTTSSynthesisRequest Request, FAudioBuffer* Target)
 {
 	TSharedRef<IHttpRequest, ESPMode::ThreadSafe> HttpRequest = FHttpModule::Get().CreateRequest();
 
@@ -290,50 +465,58 @@ void URESTTTSComponent::IssueHttpRequest(FTTSSynthesisRequest Request)
 	const FString RequestText = Request.OriginalText;
 	const bool bIsStreaming = Request.bStreaming;
 
-	PreviousBytes = 0;
-	StreamingNum = 0;
+	// Per-request streaming counters, shared between the progress and
+	// completion lambdas. Used to live as member variables, but that was
+	// a parallelism bug: a second TTSSynthesize starting would reset the
+	// first request's counters, dropping or duplicating its trailing
+	// bytes. Heap-shared via TSharedRef so both closures see the same
+	// state with no contention from other in-flight requests.
+	TSharedRef<int64> StreamingNumPtr = MakeShared<int64>(0);
+	TSharedRef<int64> PreviousBytesPtr = MakeShared<int64>(0);
 
 	if (bIsStreaming)
 	{
-		HttpRequest->OnRequestProgress64().BindLambda([this, RequestID](FHttpRequestPtr Req, int64 BytesSent, int64 BytesReceived)
+		HttpRequest->OnRequestProgress64().BindLambda(
+			[this, RequestID, Target, StreamingNumPtr, PreviousBytesPtr]
+			(FHttpRequestPtr Req, int64 BytesSent, int64 BytesReceived)
 		{
-			if (BytesReceived > 0 && PreviousBytes < BytesReceived && Req->GetResponse().IsValid())
+			if (BytesReceived > 0 && *PreviousBytesPtr < BytesReceived && Req->GetResponse().IsValid())
 			{
 				const TArray<uint8>& Content = Req->GetResponse()->GetContent();
 				const int64 len = Content.Num();
 
-				if (StreamingNum < len)
+				if (*StreamingNumPtr < len)
 				{
-					const int64 Available = len - StreamingNum;
+					const int64 Available = len - *StreamingNumPtr;
 					const int64 Aligned = Available - (Available & 1);
 
-					TArray<uint8> SynthResult(&Content[StreamingNum], Aligned);
-					StreamingNum += Aligned;
-					PreviousBytes = BytesReceived;
-					HandlePartialResult(SynthResult, RequestID);
+					TArray<uint8> SynthResult(&Content[*StreamingNumPtr], Aligned);
+					*StreamingNumPtr += Aligned;
+					*PreviousBytesPtr = BytesReceived;
+					HandlePartialResult(SynthResult, RequestID, Target);
 				}
 			}
 		});
 	}
 
-	HttpRequest->OnProcessRequestComplete().BindLambda([this, RequestID, RequestText, bIsStreaming](FHttpRequestPtr Req, FHttpResponsePtr Response, bool bWasSuccessful)
+	HttpRequest->OnProcessRequestComplete().BindLambda(
+		[this, RequestID, RequestText, bIsStreaming, Target, StreamingNumPtr]
+		(FHttpRequestPtr Req, FHttpResponsePtr Response, bool bWasSuccessful)
 	{
 		if (bWasSuccessful && Response.IsValid())
 		{
 			const TArray<uint8>& Content = Response->GetContent();
 
-			if (bIsStreaming && Content.Num() > StreamingNum)
+			if (bIsStreaming && Content.Num() > *StreamingNumPtr)
 			{
-				TArray<uint8> Remaining(&Content[StreamingNum], Content.Num() - StreamingNum);
-				PreviousBytes = 0;
-				StreamingNum = 0;
-				HandlePartialResult(Remaining, RequestID);
+				TArray<uint8> Remaining(&Content[*StreamingNumPtr], Content.Num() - *StreamingNumPtr);
+				HandlePartialResult(Remaining, RequestID, Target);
 			}
 
 			FTTSData SynthResult;
 			SynthResult.AudioData = Content;
 			SynthResult.ssml = RequestText;
-			HandleResult(SynthResult, RequestID);
+			HandleResult(SynthResult, RequestID, Target);
 		}
 		else
 		{

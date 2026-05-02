@@ -46,6 +46,46 @@ struct FTTSSynthesisRequest
 static constexpr int32 A2F_STREAMING_BATCH_SIZE = 100;
 
 /**
+ * @brief Per-request audio buffer used for serial playback.
+ *
+ * One buffer is created per TTSSynthesize call and lives in a per-caller
+ * list (BuffersByCaller) until both synthesis is complete and the
+ * consumer has drained it. HTTP callbacks capture the buffer pointer
+ * directly, so there is no by-id lookup that could clobber an in-flight
+ * slot when the same caller id is reused (e.g. BP always passing
+ * "Answer" for every sentence in a turn).
+ *
+ * Synthesis runs in parallel across many calls; playback is serial,
+ * driven by PlaybackOrder (FIFO of buffer pointers in submission order).
+ */
+struct FAudioBuffer
+{
+	TArray<float> Samples;                          /**< Mono float samples at 16 kHz, in time order. */
+	int32 ConsumedSamples = 0;                      /**< Count already pushed to A2F. */
+	std::atomic<bool> bSynthesisComplete{false};    /**< Set once HTTP response is fully processed. */
+	FCriticalSection Mutex;                         /**< Protects Samples + ConsumedSamples. */
+};
+
+/** Submission-order entry: caller id (for delegate broadcasts) + raw
+ *  pointer to the audio buffer. The buffer's lifetime is owned by the
+ *  TUniquePtr inside BuffersByCaller; we only remove it (and free it)
+ *  AFTER bSynthesisComplete is observed AND the consumer has drained
+ *  it, so the raw pointer is stable for as long as the consumer or HTTP
+ *  callback could be holding it. */
+struct FPlaybackOrderEntry
+{
+	FString CallerId;
+	FAudioBuffer* Buffer;
+};
+
+/** Broadcast when a request's audio has finished playing (drained into A2F).
+ *  This is a SEPARATE signal from SynthesisReady (which fires when the HTTP
+ *  response has been received). PlaybackComplete is what callers should bind
+ *  to if they need "Federico finished speaking sentence N" semantics. The
+ *  Id is the caller's id passed to TTSSynthesize. */
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FPlaybackCompleteEvent, FString, Id);
+
+/**
  * @brief Generic REST-based text-to-speech actor component.
  *
  * Sends HTTP GET or POST requests to any TTS endpoint, receives PCM audio,
@@ -107,30 +147,35 @@ private:
 	/** Mutex protecting Buffer access from HTTP callback and game threads. */
 	FCriticalSection BufferMutex;
 
-	// ── Streaming State ────────────────────────────────────────────────
-
-	int64 StreamingNum = 0;     /**< Byte offset of the last processed streaming chunk. */
-	int64 PreviousBytes = 0;    /**< Previous BytesReceived value for delta detection. */
-
 	/**
 	 * @brief Issue an HTTP request from the given synthesis descriptor.
+	 *
+	 * The HTTP callbacks capture `Target` directly so they push samples
+	 * into the right buffer without any by-id lookup. This is what makes
+	 * same-id-reuse safe.
+	 *
 	 * @param Request  Fully populated synthesis request.
+	 * @param Target   Buffer to receive samples for this request. Owned
+	 *                 by BuffersByCaller; pointer is stable for the
+	 *                 buffer's lifetime.
 	 */
-	void IssueHttpRequest(FTTSSynthesisRequest Request);
+	void IssueHttpRequest(FTTSSynthesisRequest Request, FAudioBuffer* Target);
 
 	/**
 	 * @brief Process a complete synthesis response (WAV detection, resampling, buffering).
 	 * @param Response  Raw TTS data from the HTTP response.
-	 * @param Id        Request identifier.
+	 * @param Id        Caller's request identifier (used for Buffer storage and SynthesisReady broadcast).
+	 * @param Target    Per-call audio buffer to populate (non-streaming) and mark complete.
 	 */
-	void HandleResult(FTTSData Response, FString Id);
+	void HandleResult(FTTSData Response, FString Id, FAudioBuffer* Target);
 
 	/**
 	 * @brief Process a streaming audio chunk and forward to Audio2Face.
 	 * @param Response  Raw PCM bytes from the current streaming chunk.
-	 * @param Id        Request identifier.
+	 * @param Id        Caller's request identifier (used for PartialSynthesisReady broadcast).
+	 * @param Target    Per-call audio buffer to append to.
 	 */
-	void HandlePartialResult(TArray<uint8> Response, FString Id);
+	void HandlePartialResult(TArray<uint8> Response, FString Id, FAudioBuffer* Target);
 
 	/**
 	 * @brief Parse a WAV header. Returns true if data starts with RIFF/WAVE magic.
@@ -153,15 +198,41 @@ private:
 	 */
 	static TArray<uint8> ResampleTo16kHz(const uint8* PCMData, int32 NumBytes, int32 SourceRate, int32 NumChannels);
 
-	// ── Audio2Face Streaming ───────────────────────────────────────────
+	// ── Audio2Face Serial Playback ─────────────────────────────────────
 
-	std::atomic<bool> bUsingStreamingBuffer{false};  /**< True while streaming chunks to A2F. */
-	std::atomic<bool> bBufferOpen{false};             /**< True while the streaming buffer has data. */
 	std::atomic<bool> bIsPlaying{false};              /**< Controls the A2F consumer async task lifetime. */
 	std::atomic<bool> bNeedsFlush{false};             /**< Signals the consumer to discard queued data. */
-	TQueue<float, EQueueMode::Spsc> SendData;         /**< Lock-free queue of normalized float samples for A2F. */
 	FEventRef ConsumerWakeEvent{EEventMode::ManualReset}; /**< Wakes the A2F consumer task. */
 	TFuture<void> ConsumerTaskFuture;                 /**< Handle to the A2F consumer task, joined in EndPlay. */
+
+	/** Per-caller-id list of audio buffers, in submission order for that
+	 *  id. TTSSynthesize appends a new buffer to the list for the given
+	 *  id; the consumer drains from the head and pops once a buffer is
+	 *  fully played. The same id can have many in-flight buffers (e.g.
+	 *  when BP passes "Answer" for every sentence in a turn) without
+	 *  collisions, because each buffer is its own object accessed via
+	 *  raw pointer captured in the HTTP callback. */
+	TMap<FString, TArray<TUniquePtr<FAudioBuffer>>> BuffersByCaller;
+	FCriticalSection BuffersMutex;
+
+	/** Global submission-order FIFO of (caller id, buffer pointer).
+	 *  Cross-id ordering: if BP submits ("Answer", S1) then ("Answer", S2)
+	 *  then ("Greeting", G1), the consumer plays S1 -> S2 -> G1.
+	 *  SPSC: game thread is producer, consumer task is consumer. */
+	TQueue<FPlaybackOrderEntry, EQueueMode::Spsc> PlaybackOrder;
+
+	/** Entry currently being drained. Touched only by the consumer task. */
+	TOptional<FPlaybackOrderEntry> CurrentPlayback;
+
+	/** Set by EndTurn(); read by the consumer to decide when to send
+	 *  bIsLastChunk=true to ACE. Reset by the consumer after that
+	 *  closing chunk is dispatched. We can't infer turn end from
+	 *  PlaybackOrder.IsEmpty(): TTS synthesis is faster than the
+	 *  LangGraph sentence cadence, so the queue legitimately empties
+	 *  between sentences within the same turn. Closing on empty would
+	 *  finalize the ACE session mid-turn and force the next sentence
+	 *  to re-open it. */
+	std::atomic<bool> bTurnEndSignaled{false};
 
 public:
 	URESTTTSComponent();
@@ -209,6 +280,14 @@ public:
 	UPROPERTY(BlueprintAssignable, Category = "TTS")
 	FPartialSynthesizedEvent PartialSynthesisReady;
 
+	/** Broadcast when a request's audio has finished draining into A2F
+	 *  (i.e. Federico has finished speaking that sentence). Bind to this
+	 *  if you need to schedule follow-up actions after playback ends; it's
+	 *  the correct signal for "is the avatar still talking?", whereas
+	 *  SynthesisReady only tells you "the HTTP response arrived". */
+	UPROPERTY(BlueprintAssignable, Category = "TTS")
+	FPlaybackCompleteEvent PlaybackComplete;
+
 	// ── HTTP Configuration ─────────────────────────────────────────────
 
 	/** Base URL for the TTS endpoint. May contain {text} placeholder for GET mode. */
@@ -230,11 +309,39 @@ public:
 
 	/**
 	 * @brief Start a text-to-speech synthesis request.
-	 * @param text  Plain text to synthesize.
-	 * @param id    Unique identifier to retrieve results later.
+	 *
+	 * @param text       Plain text to synthesize.
+	 * @param id         Unique identifier to retrieve results later.
+	 * @param bEndTurn   If true, signal that this is the LAST sentence of
+	 *                   the current turn. The consumer closes the ACE
+	 *                   session cleanly (bIsLastChunk=true) on this
+	 *                   buffer's tail; OnAnimationEnded then fires so the
+	 *                   BP can unmute Whisper. If false (default), the
+	 *                   stream stays open and the next TTSSynthesize
+	 *                   continues it. Wire this from
+	 *                   `IncomingLangGraphSentenceResponse`'s `EndStream`
+	 *                   pin -- one TTS Start node, no Branch needed.
+	 *
+	 * Why the explicit signal: streamed synthesis (ElevenLabs) completes
+	 * faster than the upstream LLM produces the next sentence, so the
+	 * playback queue legitimately empties between sentences in the same
+	 * turn. Inferring "turn over" from an empty queue would close the
+	 * ACE session mid-turn.
 	 */
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "TTS Start", Keywords = "TTS"), Category = "TTS")
-	void TTSSynthesize(FString text, FString id);
+	void TTSSynthesize(FString text, FString id, bool bEndTurn = false);
+
+	/**
+	 * @brief Signal end-of-turn without synthesizing any new text.
+	 *
+	 * The common case is to use TTSSynthesize(text, id, bEndTurn=true)
+	 * which folds the signal into the last sentence call. This standalone
+	 * variant is for edge cases where you need to close the stream
+	 * without a final sentence (e.g., the LLM produced no final message
+	 * but you want the avatar to reset).
+	 */
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "TTS End Turn", Keywords = "TTS"), Category = "TTS")
+	void EndTurn();
 
 	/**
 	 * @brief Retrieve the synthesized audio as a USoundWaveProcedural.
