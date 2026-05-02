@@ -8,6 +8,40 @@
 
 #include "LangGraphComponent.h"
 #include "Misc/Base64.h"
+#include "Async/Async.h"
+
+// All broadcasts in this file fire from inside HTTP callbacks
+// (OnRequestProgress64 / OnProcessRequestComplete), which are invoked by
+// FHttpManager::Tick while it is iterating its global Requests array.
+// If a Blueprint listener responds by calling something that creates a
+// new HTTP request -- e.g. RESTTTSComponent::TTSSynthesize -> IssueHttpRequest
+// -> HttpRequest->ProcessRequest() -> FHttpManager::AddRequest -- the
+// Requests array mutates mid-iteration and the engine ensures with
+// "Array has changed during ranged-for iteration!". The iterator state
+// is then corrupt, so the very next progress callback dereferences a
+// freed pointer (sentinel 0xFFFFFFFFFFFFFFFF) and the process crashes
+// with EXCEPTION_ACCESS_VIOLATION inside FHttpManager::Tick.
+//
+// The fix is to defer every broadcast to the next game-thread task
+// processing point. AsyncTask(ENamedThreads::GameThread, ...) enqueues
+// the work even when we are already on the game thread, so the BP
+// listener chain runs AFTER FHttpManager::Tick's iteration ends, and
+// any new HTTP requests it creates are appended safely.
+//
+// We capture a TWeakObjectPtr to guard against the component being
+// torn down between enqueue and dispatch (e.g. PIE end, level unload).
+template <typename DelegateT, typename... ArgsT>
+static void DeferredBroadcast(ULangGraphComponent* Self, DelegateT& Delegate, ArgsT... Args)
+{
+	TWeakObjectPtr<ULangGraphComponent> WeakSelf(Self);
+	AsyncTask(ENamedThreads::GameThread, [WeakSelf, &Delegate, Args...]()
+	{
+		if (WeakSelf.IsValid())
+		{
+			Delegate.Broadcast(Args...);
+		}
+	});
+}
 
 ULangGraphComponent::ULangGraphComponent()
 {
@@ -34,7 +68,7 @@ void ULangGraphComponent::OnLangGraphResponseReceived(FHttpRequestPtr Request, F
 	if (!JsonValue->TryGetObject(OuterPtr) || !OuterPtr || !OuterPtr->IsValid())
 	{
 		// Valid JSON but no object — treat as empty completion
-		IncomingLangGraphResponse.Broadcast(FString(), GPTRoleType::ASSISTANT);
+		DeferredBroadcast(this, IncomingLangGraphResponse, FString(), GPTRoleType::ASSISTANT);
 		return;
 	}
 
@@ -44,14 +78,14 @@ void ULangGraphComponent::OnLangGraphResponseReceived(FHttpRequestPtr Request, F
 	if (!Outer.TryGetArrayField(TEXT("messages"), MessagesPtr) || !MessagesPtr || MessagesPtr->Num() == 0)
 	{
 		// Pipeline completed with no message content — signal completion with empty string
-		IncomingLangGraphResponse.Broadcast(FString(), GPTRoleType::ASSISTANT);
+		DeferredBroadcast(this, IncomingLangGraphResponse, FString(), GPTRoleType::ASSISTANT);
 		return;
 	}
 
 	const TSharedPtr<FJsonObject> LastMsg = MessagesPtr->Last()->AsObject();
 	if (!LastMsg.IsValid())
 	{
-		IncomingLangGraphResponse.Broadcast(FString(), GPTRoleType::ASSISTANT);
+		DeferredBroadcast(this, IncomingLangGraphResponse, FString(), GPTRoleType::ASSISTANT);
 		return;
 	}
 
@@ -67,18 +101,187 @@ void ULangGraphComponent::OnLangGraphResponseReceived(FHttpRequestPtr Request, F
 
 	FString Content;
 	LastMsg->TryGetStringField(TEXT("content"), Content);
-	IncomingLangGraphResponse.Broadcast(Content, role);
+	DeferredBroadcast(this, IncomingLangGraphResponse, Content, role);
 }
 
-// ── Streaming (SSE updates) response handler ────────────────────────────────
+// ── Streaming (SSE updates + messages) response handler ────────────────────
 
 void ULangGraphComponent::FlushSentenceBuffer(bool bEndStream)
 {
 	if (SentenceBuffer.Len() > 0 || bEndStream)
 	{
-		IncomingLangGraphSentenceResponse.Broadcast(SentenceBuffer.TrimStartAndEnd(), StreamCurrentRole, bEndStream);
+		DeferredBroadcast(this, IncomingLangGraphSentenceResponse, SentenceBuffer.TrimStartAndEnd(), StreamCurrentRole, bEndStream);
 		SentenceBuffer.Empty();
 	}
+}
+
+void ULangGraphComponent::AppendAndFlushSentences(const FString& Text)
+{
+	if (Text.IsEmpty())
+		return;
+
+	// New sentence boundaries can only appear straddling the buffer's previous
+	// last char and the new text, or inside the new text itself. Re-scanning
+	// from PrevLen-1 catches both cases without re-checking already-flushed
+	// regions.
+	const int32 PrevLen = SentenceBuffer.Len();
+	int32 ScanStart = PrevLen > 0 ? PrevLen - 1 : 0;
+	SentenceBuffer.Append(Text);
+
+	// Flush at every boundary, not just the last one. A single token can
+	// contain multiple complete sentences (especially when the model emits
+	// a burst at end-of-stream); merging them into one TTS call produces
+	// ~30 s "sentences" that overrun the per-buffer pacing budget. Splitting
+	// at the first boundary, then looping, gives one TTS call per sentence
+	// in submission order.
+	while (true)
+	{
+		int32 FlushUpTo = -1;
+		const int32 BufLen = SentenceBuffer.Len();
+		const TCHAR* BufData = *SentenceBuffer;
+		for (int32 i = ScanStart; i < BufLen - 1; i++)
+		{
+			const TCHAR C = BufData[i];
+			if ((C == '.' || C == '!' || C == '?' || C == ':' || C == ';') && FChar::IsWhitespace(BufData[i + 1]))
+			{
+				FlushUpTo = i + 1;
+				break;
+			}
+		}
+
+		if (FlushUpTo < 0)
+			break;
+
+		const FString Sentence = SentenceBuffer.Left(FlushUpTo + 1).TrimStartAndEnd();
+		SentenceBuffer.RemoveAt(0, FlushUpTo + 1);
+		if (Sentence.Len() > 0)
+			DeferredBroadcast(this, IncomingLangGraphSentenceResponse, Sentence, StreamCurrentRole, false);
+
+		// After a flush, the remainder is fresh content; rescan from the start.
+		ScanStart = 0;
+	}
+}
+
+void ULangGraphComponent::ProcessUpdatesEvent(const FString& Payload)
+{
+	TSharedPtr<FJsonValue> JsonValue;
+	TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(Payload);
+	if (!FJsonSerializer::Deserialize(Reader, JsonValue) || !JsonValue.IsValid())
+		return;
+
+	const TSharedPtr<FJsonObject>* OuterPtr = nullptr;
+	if (!JsonValue->TryGetObject(OuterPtr) || !OuterPtr || !OuterPtr->IsValid())
+		return;
+
+	const FJsonObject& Outer = **OuterPtr;
+	if (Outer.Values.Num() == 0)
+		return;
+
+	// Grab the first (typically only) node-update key without allocating a TArray.
+	const TSharedPtr<FJsonValue>& FirstValue = Outer.Values.CreateConstIterator()->Value;
+	const TSharedPtr<FJsonObject> Inner = FirstValue.IsValid() ? FirstValue->AsObject() : nullptr;
+	if (!Inner.IsValid())
+		return;
+
+	const TArray<TSharedPtr<FJsonValue>>* MessagesPtr = nullptr;
+	if (!Inner->TryGetArrayField(TEXT("messages"), MessagesPtr) || !MessagesPtr || MessagesPtr->Num() == 0)
+		return;
+
+	const TSharedPtr<FJsonObject> FirstMsg = (*MessagesPtr)[0]->AsObject();
+	if (!FirstMsg.IsValid())
+		return;
+
+	GPTRoleType role = GPTRoleType::ASSISTANT;
+	FString checkRole;
+	if (FirstMsg->TryGetStringField(TEXT("type"), checkRole))
+	{
+		if      (checkRole == TEXT("system")) role = GPTRoleType::SYSTEM;
+		else if (checkRole == TEXT("ai"))     role = GPTRoleType::ASSISTANT;
+		else if (checkRole == TEXT("tool"))   role = GPTRoleType::FUNCTION;
+		else if (checkRole == TEXT("human"))  role = GPTRoleType::USER;
+	}
+	StreamCurrentRole = role;
+
+	FString Content;
+	FirstMsg->TryGetStringField(TEXT("content"), Content);
+
+	// Token-level delegate (per-event, in arrival order).
+	DeferredBroadcast(this, IncomingLangGraphStreamResponse, Content, role, false);
+
+	// NOTE: do NOT feed Content into AppendAndFlushSentences here. The
+	// `updates` event for an assistant node carries the FULL synthesized
+	// message, which `messages-tuple` already streamed token-by-token into
+	// the sentence buffer. Re-appending the whole message duplicates every
+	// sentence -- the duplicated text gets merged into one giant TTS call
+	// that re-speaks the entire turn (observed: 65 s of audio in a single
+	// "sentence" buffer when the turn was ~30 s of real content).
+}
+
+void ULangGraphComponent::ProcessMessagesEvent(const FString& Payload)
+{
+	// LangGraph's `messages` stream mode wraps each LLM token chunk as a
+	// 2-element JSON array: [chunk_object, metadata_object]. We only need
+	// the chunk; the metadata is currently ignored.
+	TSharedPtr<FJsonValue> JsonValue;
+	TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(Payload);
+	if (!FJsonSerializer::Deserialize(Reader, JsonValue) || !JsonValue.IsValid())
+		return;
+
+	const TArray<TSharedPtr<FJsonValue>>* TuplePtr = nullptr;
+	if (!JsonValue->TryGetArray(TuplePtr) || !TuplePtr || TuplePtr->Num() < 1)
+		return;
+
+	const TSharedPtr<FJsonObject> Chunk = (*TuplePtr)[0]->AsObject();
+	if (!Chunk.IsValid())
+		return;
+
+	// Skip tokens emitted by structured-output calls (e.g. the LangGraph
+	// agent's triage node, which streams a JSON object whose colons would
+	// otherwise be misread as sentence boundaries by the TTS pipeline).
+	// The metadata tuple element carries the originating node's name.
+	if (TuplePtr->Num() >= 2)
+	{
+		const TSharedPtr<FJsonObject> Metadata = (*TuplePtr)[1]->AsObject();
+		if (Metadata.IsValid())
+		{
+			FString NodeName;
+			if (Metadata->TryGetStringField(TEXT("langgraph_node"), NodeName)
+				&& NodeName == TEXT("triage"))
+				return;
+		}
+	}
+
+	// Only keep AI text chunks. The messages stream interleaves several types:
+	//   "AIMessageChunk" -- the model's tokens (what we want).
+	//   "tool"           -- the tool's return value (search results, raw JSON).
+	//   "system"/"human" -- echoes of system/user messages (not produced by streaming
+	//                       in practice, but defensively filtered).
+	// Without this guard, tool-result JSON ends up in the TTS sentence buffer.
+	FString ChunkType;
+	if (Chunk->TryGetStringField(TEXT("type"), ChunkType)
+		&& ChunkType != TEXT("AIMessageChunk"))
+		return;
+
+	// Skip chunks that are part of a tool-call plan: their text content (if any)
+	// is reasoning about which tool to call, not the user-facing reply. Guarding
+	// here keeps tool-planning text out of the TTS sentence buffer.
+	const TArray<TSharedPtr<FJsonValue>>* ToolCallChunks = nullptr;
+	if (Chunk->TryGetArrayField(TEXT("tool_call_chunks"), ToolCallChunks)
+		&& ToolCallChunks && ToolCallChunks->Num() > 0)
+		return;
+
+	FString Token;
+	if (!Chunk->TryGetStringField(TEXT("content"), Token) || Token.IsEmpty())
+		return;
+
+	StreamCurrentRole = GPTRoleType::ASSISTANT;
+
+	// Per-token raw stream broadcast for consumers that want token-level events.
+	DeferredBroadcast(this, IncomingLangGraphStreamResponse, Token, GPTRoleType::ASSISTANT, false);
+
+	// Feed into the sentence buffer; complete sentences fan out to
+	// IncomingLangGraphSentenceResponse for TTS pipelining.
+	AppendAndFlushSentences(Token);
 }
 
 void ULangGraphComponent::OnLangGraphPartialResponseReceived(FHttpRequestPtr request, uint64 bytesSent, uint64 bytesReceived) {
@@ -94,11 +297,17 @@ void ULangGraphComponent::OnLangGraphPartialResponseReceived(FHttpRequestPtr req
 	if (FullLen <= StreamScanOffset)
 		return;
 
-	// Match each SSE "updates" event by capturing the JSON object on the data line.
-	// Greedy `\{.*\}` works because `.` does not cross newlines, so the match is
-	// bounded to a single data line. Partial events (no closing brace yet) do not
-	// match, so we never advance past incomplete data. Compiled once per process.
-	static const FRegexPattern SsePattern(TEXT("event:\\s*updates\\s+data:\\s*(\\{.*\\})"));
+	// One regex matches both event types we subscribe to, including subgraph-
+	// namespaced variants emitted when stream_subgraphs=true:
+	//   - "event: updates                  data: {...}"  parent-level node delta
+	//   - "event: updates|qa_node:<id>     data: {...}"  subgraph node delta
+	//   - "event: messages|qa_node:<id>    data: [...]"  per-token LLM chunk inside subgraph
+	// `.` does not cross newlines, so the match is bounded to a single data
+	// line. Partial events (no closing bracket yet) don't match, so we never
+	// advance past incomplete data. Compiled once per process.
+	static const FRegexPattern SsePattern(
+		TEXT("event:\\s*(updates|messages)(?:\\|[^\\s]+)?\\s+data:\\s*(\\{.*\\}|\\[.*\\])")
+	);
 
 	FRegexMatcher Matcher(SsePattern, FullBuffer);
 	Matcher.SetLimits(StreamScanOffset, FullLen);
@@ -108,79 +317,13 @@ void ULangGraphComponent::OnLangGraphPartialResponseReceived(FHttpRequestPtr req
 	while (Matcher.FindNext())
 	{
 		LastMatchEnd = Matcher.GetMatchEnding();
-		const FString Update = Matcher.GetCaptureGroup(1);
+		const FString EventName = Matcher.GetCaptureGroup(1);
+		const FString Payload   = Matcher.GetCaptureGroup(2);
 
-		TSharedPtr<FJsonValue> JsonValue;
-		TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(Update);
-		if (!FJsonSerializer::Deserialize(Reader, JsonValue) || !JsonValue.IsValid())
-			continue;
-
-		const TSharedPtr<FJsonObject>* OuterPtr = nullptr;
-		if (!JsonValue->TryGetObject(OuterPtr) || !OuterPtr || !OuterPtr->IsValid())
-			continue;
-
-		const FJsonObject& Outer = **OuterPtr;
-		if (Outer.Values.Num() == 0)
-			continue;
-
-		// Grab the first (typically only) node-update key without allocating a TArray.
-		const TSharedPtr<FJsonValue>& FirstValue = Outer.Values.CreateConstIterator()->Value;
-		const TSharedPtr<FJsonObject> Inner = FirstValue.IsValid() ? FirstValue->AsObject() : nullptr;
-		if (!Inner.IsValid())
-			continue;
-
-		const TArray<TSharedPtr<FJsonValue>>* MessagesPtr = nullptr;
-		if (!Inner->TryGetArrayField(TEXT("messages"), MessagesPtr) || !MessagesPtr || MessagesPtr->Num() == 0)
-			continue;
-
-		const TSharedPtr<FJsonObject> FirstMsg = (*MessagesPtr)[0]->AsObject();
-		if (!FirstMsg.IsValid())
-			continue;
-
-		GPTRoleType role = GPTRoleType::ASSISTANT;
-		FString checkRole;
-		if (FirstMsg->TryGetStringField(TEXT("type"), checkRole))
-		{
-			if      (checkRole == TEXT("system")) role = GPTRoleType::SYSTEM;
-			else if (checkRole == TEXT("ai"))     role = GPTRoleType::ASSISTANT;
-			else if (checkRole == TEXT("tool"))   role = GPTRoleType::FUNCTION;
-			else if (checkRole == TEXT("human"))  role = GPTRoleType::USER;
-		}
-		StreamCurrentRole = role;
-
-		FString Content;
-		FirstMsg->TryGetStringField(TEXT("content"), Content);
-
-		// Token-level delegate (per-event, in arrival order).
-		IncomingLangGraphStreamResponse.Broadcast(Content, role, false);
-
-		// Sentence-level buffering for TTS: only assistant text drives the buffer.
-		// Boundary pairs (i, i+1) with i+1 <= PrevLen-1 were already checked last
-		// append; new pairs start at i = PrevLen - 1.
-		if (role == GPTRoleType::ASSISTANT && Content.Len() > 0)
-		{
-			const int32 PrevLen = SentenceBuffer.Len();
-			const int32 ScanStart = PrevLen > 0 ? PrevLen - 1 : 0;
-			SentenceBuffer.Append(MoveTemp(Content));
-
-			int32 FlushUpTo = -1;
-			const int32 BufLen = SentenceBuffer.Len();
-			const TCHAR* BufData = *SentenceBuffer;
-			for (int32 i = ScanStart; i < BufLen - 1; i++)
-			{
-				const TCHAR C = BufData[i];
-				if ((C == '.' || C == '!' || C == '?' || C == ':' || C == ';') && FChar::IsWhitespace(BufData[i + 1]))
-					FlushUpTo = i + 1;
-			}
-
-			if (FlushUpTo >= 0)
-			{
-				const FString Sentence = SentenceBuffer.Left(FlushUpTo + 1).TrimStartAndEnd();
-				SentenceBuffer.RemoveAt(0, FlushUpTo + 1);
-				if (Sentence.Len() > 0)
-					IncomingLangGraphSentenceResponse.Broadcast(Sentence, StreamCurrentRole, false);
-			}
-		}
+		if (EventName == TEXT("updates"))
+			ProcessUpdatesEvent(Payload);
+		else if (EventName == TEXT("messages"))
+			ProcessMessagesEvent(Payload);
 	}
 
 	StreamScanOffset = LastMatchEnd;
@@ -196,7 +339,7 @@ void ULangGraphComponent::OnLangGraphStreamComplete(FHttpRequestPtr Request, FHt
 	// Flush whatever remains in the sentence buffer with the end-of-stream flag,
 	// then signal end-of-stream on the token-level delegate as well.
 	FlushSentenceBuffer(true);
-	IncomingLangGraphStreamResponse.Broadcast(FString(), StreamCurrentRole, true);
+	DeferredBroadcast(this, IncomingLangGraphStreamResponse, FString(), StreamCurrentRole, true);
 }
 
 // ── Thread-creation response handler ────────────────────────────────────────
@@ -209,7 +352,7 @@ void ULangGraphComponent::OnLangGraphThreadCreateResponseReceived(FHttpRequestPt
 	if (!bWasSuccessful || !Response.IsValid())
 	{
 		UE_LOG(LogTemp, Error, TEXT("LangGraph: thread creation request failed (transport error)"));
-		LangGraphThreadCreateResponse.Broadcast(ThreadID);
+		DeferredBroadcast(this, LangGraphThreadCreateResponse, ThreadID);
 		return;
 	}
 
@@ -219,7 +362,7 @@ void ULangGraphComponent::OnLangGraphThreadCreateResponseReceived(FHttpRequestPt
 	if (StatusCode < 200 || StatusCode >= 300)
 	{
 		UE_LOG(LogTemp, Error, TEXT("LangGraph: thread creation HTTP %d: %s"), StatusCode, *Body);
-		LangGraphThreadCreateResponse.Broadcast(ThreadID);
+		DeferredBroadcast(this, LangGraphThreadCreateResponse, ThreadID);
 		return;
 	}
 
@@ -228,7 +371,7 @@ void ULangGraphComponent::OnLangGraphThreadCreateResponseReceived(FHttpRequestPt
 	if (!FJsonSerializer::Deserialize(Reader, JsonValue) || !JsonValue.IsValid())
 	{
 		UE_LOG(LogTemp, Error, TEXT("LangGraph: thread creation response was not valid JSON: %s"), *Body);
-		LangGraphThreadCreateResponse.Broadcast(ThreadID);
+		DeferredBroadcast(this, LangGraphThreadCreateResponse, ThreadID);
 		return;
 	}
 
@@ -236,7 +379,7 @@ void ULangGraphComponent::OnLangGraphThreadCreateResponseReceived(FHttpRequestPt
 	if (!JsonValue->TryGetObject(Obj) || !Obj || !(*Obj).IsValid())
 	{
 		UE_LOG(LogTemp, Error, TEXT("LangGraph: thread creation response was not a JSON object: %s"), *Body);
-		LangGraphThreadCreateResponse.Broadcast(ThreadID);
+		DeferredBroadcast(this, LangGraphThreadCreateResponse, ThreadID);
 		return;
 	}
 
@@ -245,7 +388,7 @@ void ULangGraphComponent::OnLangGraphThreadCreateResponseReceived(FHttpRequestPt
 		UE_LOG(LogTemp, Error, TEXT("LangGraph: thread creation response missing 'thread_id' field: %s"), *Body);
 	}
 
-	LangGraphThreadCreateResponse.Broadcast(ThreadID);
+	DeferredBroadcast(this, LangGraphThreadCreateResponse, ThreadID);
 }
 
 // ── Thread lifecycle ────────────────────────────────────────────────────────
@@ -314,12 +457,12 @@ void ULangGraphComponent::langGraphQuery(const TArray<FChatTurn>& messages, FStr
 		UE_LOG(LogTemp, Error, TEXT("LangGraph: langGraphQuery called with empty threadID; aborting request"));
 		if (stream)
 		{
-			IncomingLangGraphStreamResponse.Broadcast(FString(), GPTRoleType::ASSISTANT, true);
-			IncomingLangGraphSentenceResponse.Broadcast(FString(), GPTRoleType::ASSISTANT, true);
+			DeferredBroadcast(this, IncomingLangGraphStreamResponse, FString(), GPTRoleType::ASSISTANT, true);
+			DeferredBroadcast(this, IncomingLangGraphSentenceResponse, FString(), GPTRoleType::ASSISTANT, true);
 		}
 		else
 		{
-			IncomingLangGraphResponse.Broadcast(FString(), GPTRoleType::ASSISTANT);
+			DeferredBroadcast(this, IncomingLangGraphResponse, FString(), GPTRoleType::ASSISTANT);
 		}
 		return;
 	}
@@ -369,7 +512,24 @@ void ULangGraphComponent::langGraphQuery(const TArray<FChatTurn>& messages, FStr
 
 		Request->OnRequestProgress64().BindUObject(this, &ULangGraphComponent::OnLangGraphPartialResponseReceived);
 		Request->OnProcessRequestComplete().BindUObject(this, &ULangGraphComponent::OnLangGraphStreamComplete);
-		payloadObject->SetStringField(TEXT("stream_mode"), TEXT("updates"));
+
+		// Subscribe to two complementary stream modes:
+		//   - "updates":        per-node state deltas (one event per node completion).
+		//                       Used for triage/agent completion semantics.
+		//   - "messages-tuple": per-token LLM chunks emitted as `[chunk, metadata]`.
+		//                       Streams as the model generates so TTS can start
+		//                       speaking the first sentence while later tokens
+		//                       are still being produced.
+		// stream_subgraphs=true is required for token events from inside a
+		// `create_react_agent` (or any nested compiled graph) to bubble up to
+		// the parent SSE stream. Without it, only the parent's direct LLM
+		// calls would emit messages events.
+		TArray<TSharedPtr<FJsonValue>> StreamModes;
+		StreamModes.Add(MakeShareable(new FJsonValueString(TEXT("updates"))));
+		StreamModes.Add(MakeShareable(new FJsonValueString(TEXT("messages-tuple"))));
+		payloadObject->SetArrayField(TEXT("stream_mode"), StreamModes);
+		payloadObject->SetBoolField(TEXT("stream_subgraphs"), true);
+
 		Request->SetURL(UrlBase + TEXT("stream"));
 	}
 	else {

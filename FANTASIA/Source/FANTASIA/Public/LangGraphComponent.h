@@ -59,6 +59,28 @@ private:
 	FString SentenceBuffer;
 
 	/**
+	 * @brief Process a single `event: updates` payload (per-node state delta).
+	 * @param Payload JSON object captured after the `data:` line.
+	 */
+	void ProcessUpdatesEvent(const FString& Payload);
+
+	/**
+	 * @brief Process a single `event: messages` payload (per-token LLM chunk).
+	 * @param Payload JSON array `[chunk, metadata]` captured after the `data:` line.
+	 */
+	void ProcessMessagesEvent(const FString& Payload);
+
+	/**
+	 * @brief Append assistant text to SentenceBuffer and flush completed sentences.
+	 *
+	 * Called by both Update and Messages branches so token-level (per-chunk) and
+	 * node-level (per-state-delta) streams share one consistent sentence boundary
+	 * scan. Only assistant-role text reaches this method.
+	 * @param Text Newly-arrived assistant content to append.
+	 */
+	void AppendAndFlushSentences(const FString& Text);
+
+	/**
 	 * @brief Broadcasts any remaining text in SentenceBuffer and clears it.
 	 * @param bEndStream If true, signals the end of the stream to listeners.
 	 */
