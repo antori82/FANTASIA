@@ -145,7 +145,17 @@ public class FANTASIA : ModuleRules
     {
         foreach (string dllFile in Directory.GetFiles(Redist, "*"))
         {
-            string destPath = Path.Combine("$(PluginDir)", "Binaries", "Win64", Path.GetFileName(dllFile));
+            // Stage to $(BinaryOutputDir) so the redist DLLs land next to
+            // the binary that imports them, regardless of build type:
+            //   - Editor (modular):  resolves to Plugin/Binaries/Win64,
+            //                        next to UnrealEditor-FANTASIA.dll.
+            //   - Monolithic Shipping: resolves to Project/Binaries/Win64,
+            //                          next to <Project>-Win64-Shipping.exe.
+            // Staging only to $(PluginDir)/Binaries/Win64 worked for the
+            // editor (where FANTASIA is its own DLL) but produced silent
+            // STATUS_DLL_NOT_FOUND failures in monolithic packaged builds
+            // because the project exe's own folder was never populated.
+            string destPath = Path.Combine("$(BinaryOutputDir)", Path.GetFileName(dllFile));
             AddRedistDll(destPath, dllFile);
         }
     }
@@ -169,16 +179,29 @@ public class FANTASIA : ModuleRules
     /// </summary>
     private void AddRedistDll(string destPath, string sourcePath)
     {
-        string PluginRoot = Path.GetFullPath(Path.Combine(ModuleDirectory, "..", ".."));
-        string destFullPath = destPath.Replace("$(PluginDir)", PluginRoot);
-
-        if (File.Exists(destFullPath) &&
-            new FileInfo(sourcePath).Length == new FileInfo(destFullPath).Length)
+        // The skip-copy shortcut only applies to editor builds: that's
+        // where the destination (plugin/Binaries/Win64) sits next to a
+        // running UnrealEditor.exe that may have the DLL loaded, and a
+        // build-time copy fails with "Access denied". For non-editor
+        // (monolithic) builds the destination is the project's fresh
+        // Binaries/Win64 with no locks, and the file genuinely needs to
+        // be copied from source -- so we never take the shortcut.
+        if (Target.Type == TargetRules.TargetType.Editor)
         {
-            // Already deployed and same size — assume identical.
-            // Stage for packaging but skip the build-time copy.
-            RuntimeDependencies.Add(destPath);
-            return;
+            string PluginRoot = Path.GetFullPath(Path.Combine(ModuleDirectory, "..", ".."));
+            string EditorBinDir = Path.Combine(PluginRoot, "Binaries", "Win64");
+            string destFullPath = destPath
+                .Replace("$(PluginDir)", PluginRoot)
+                .Replace("$(BinaryOutputDir)", EditorBinDir);
+
+            if (File.Exists(destFullPath) &&
+                new FileInfo(sourcePath).Length == new FileInfo(destFullPath).Length)
+            {
+                // Already deployed and same size — assume identical.
+                // Stage for packaging but skip the build-time copy.
+                RuntimeDependencies.Add(destPath);
+                return;
+            }
         }
 
         RuntimeDependencies.Add(destPath, sourcePath);
@@ -487,11 +510,13 @@ public class FANTASIA : ModuleRules
 
         PublicIncludePaths.Add(Path.Combine(ThirdParty, "SWIProlog", "headers"));
 
-        RuntimeDependencies.Add(Path.Combine(PrologCpp, "libswipl.dll"));
-
+        // libswipl.dll lives in both libs/ and PrologDlls/. The loop
+        // below stages it (and every other Prolog DLL) from PrologDlls/
+        // to $(BinaryOutputDir). No separate explicit add for libswipl
+        // -- doing both produces a duplicate-destination error from UBT.
         foreach (string dllFile in Directory.GetFiles(PrologDllPath, "*"))
         {
-            string destPath = Path.Combine("$(PluginDir)", "Binaries", "Win64", Path.GetFileName(dllFile));
+            string destPath = Path.Combine("$(BinaryOutputDir)", Path.GetFileName(dllFile));
             AddRedistDll(destPath, dllFile);
         }
     }

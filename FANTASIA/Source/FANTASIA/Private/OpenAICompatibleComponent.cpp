@@ -5,11 +5,15 @@
 
 #include "OpenAICompatibleComponent.h"
 
-namespace
-{
-	/** @brief Regex for extracting JSON payloads from Server-Sent Events lines. */
-	const FRegexPattern SSEPattern(TEXT("data: (\\{.*\\})"));
-}
+// NOTE: do NOT declare an FRegexPattern at namespace scope. Its constructor
+// reaches into the ICU regex singleton, which is not yet initialized when
+// global static initializers run in a monolithic build (Shipping/DebugGame).
+// The result is `Assertion failed: Singleton (ICURegex.cpp:104)` followed by
+// `__debugbreak`, which terminates the process before WinMain — silently,
+// because GLog isn't up yet either. Editor builds dodge this because the
+// FANTASIA module is its own DLL, loaded by LoadLibrary AFTER ICU init, so
+// the global is constructed late enough for the singleton to exist.
+// The pattern is now a function-static at the only call site below.
 
 // ── Construction ────────────────────────────────────────────────────────────
 
@@ -196,6 +200,11 @@ void UOpenAICompatibleComponent::OnPartialResponseReceived(FHttpRequestPtr Reque
 	// Nothing new since last callback
 	if (ContentLen <= StreamParseOffset)
 		return;
+
+	// Function-static: compiled once on first call, thread-safe per C++11
+	// magic statics. Must NOT be promoted to namespace scope — see the note
+	// at the top of this file about the ICU regex singleton.
+	static const FRegexPattern SSEPattern(TEXT("data: (\\{.*\\})"));
 
 	// Scan only the unparsed tail of the buffer via SetLimits (avoids the Mid copy)
 	FRegexMatcher Matcher(SSEPattern, FullContent);
