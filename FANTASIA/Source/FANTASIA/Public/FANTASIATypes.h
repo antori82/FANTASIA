@@ -684,6 +684,14 @@ public:
 // Field names, default values, and metadata (clamps etc.) match ACE's
 // definitions so Blueprint experience is identical.
 
+/**
+ * @brief Per-emotion override toggles and target values for Audio2Face.
+ *
+ * Mirrors the shape of NVIDIA ACE's @c FAudio2FaceEmotionOverride. Each
+ * emotion has a `bOverride*` boolean that gates a clamped-[0,1] strength
+ * value; only emotions whose override flag is set are passed through to
+ * ACE. Embedded inside FFantasiaAudio2FaceEmotion via @c EmotionOverrides.
+ */
 USTRUCT(BlueprintType, meta = (DisplayName = "FANTASIA Audio2Face Emotion Overrides"))
 struct FFantasiaAudio2FaceEmotionOverride
 {
@@ -740,6 +748,21 @@ struct FFantasiaAudio2FaceEmotionOverride
 	float Sadness = 0.0f;
 };
 
+/**
+ * @brief Audio2Face emotion parameter set passed to ACE during streaming.
+ *
+ * Mirrors the shape of NVIDIA ACE's @c FAudio2FaceEmotion so that
+ * URESTTTSComponent can expose emotion controls in Blueprints without a
+ * hard build-time dependency on ACE. When the plugin is built with
+ * @c FANTASIA_WITH_ACE=1, RESTTTSComponent.cpp copies these fields
+ * field-by-field into the real ACE struct before calling
+ * @c AnimateFromAudioSamples; without ACE the values are simply ignored.
+ *
+ * Field names, defaults, and clamps match ACE so the Blueprint editing
+ * experience is identical.
+ *
+ * @see FFantasiaAudio2FaceEmotionOverride
+ */
 USTRUCT(BlueprintType, meta = (DisplayName = "FANTASIA Audio2Face Emotion Parameters"))
 struct FFantasiaAudio2FaceEmotion
 {
