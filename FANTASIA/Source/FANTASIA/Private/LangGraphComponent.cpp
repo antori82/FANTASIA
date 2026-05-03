@@ -43,6 +43,48 @@ static void DeferredBroadcast(ULangGraphComponent* Self, DelegateT& Delegate, Ar
 	});
 }
 
+// Read the `content` field from a LangChain-shaped message or chunk JSON
+// object. OpenAI-compatible providers serialize `content` as a flat
+// string; Anthropic serializes it as an array of content blocks like
+//   [{"type": "text", "text": "..."}, {"type": "tool_use", ...}, ...]
+// In streamed AIMessageChunks the same array shape carries each token
+// (a single-element array with the per-token text). Without this helper
+// every Anthropic token would be dropped at the TryGetStringField call
+// site and the avatar would speak silence.
+static FString ExtractTextContent(const TSharedPtr<FJsonObject>& MsgOrChunk)
+{
+	if (!MsgOrChunk.IsValid())
+		return FString();
+
+	// String form -- OpenAI / serialized non-streaming responses.
+	FString AsString;
+	if (MsgOrChunk->TryGetStringField(TEXT("content"), AsString))
+		return AsString;
+
+	// Array form -- Anthropic, both /runs/wait final messages and
+	// streamed AIMessageChunks. Concatenate every "text" block.
+	const TArray<TSharedPtr<FJsonValue>>* Blocks = nullptr;
+	if (!MsgOrChunk->TryGetArrayField(TEXT("content"), Blocks) || !Blocks)
+		return FString();
+
+	FString Out;
+	for (const TSharedPtr<FJsonValue>& BlockValue : *Blocks)
+	{
+		if (!BlockValue.IsValid())
+			continue;
+		const TSharedPtr<FJsonObject> Block = BlockValue->AsObject();
+		if (!Block.IsValid())
+			continue;
+		FString BlockType;
+		if (!Block->TryGetStringField(TEXT("type"), BlockType) || BlockType != TEXT("text"))
+			continue;
+		FString BlockText;
+		if (Block->TryGetStringField(TEXT("text"), BlockText))
+			Out.Append(BlockText);
+	}
+	return Out;
+}
+
 ULangGraphComponent::ULangGraphComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
@@ -99,8 +141,7 @@ void ULangGraphComponent::OnLangGraphResponseReceived(FHttpRequestPtr Request, F
 		else if (checkRole == TEXT("human"))    role = GPTRoleType::USER;
 	}
 
-	FString Content;
-	LastMsg->TryGetStringField(TEXT("content"), Content);
+	const FString Content = ExtractTextContent(LastMsg);
 	DeferredBroadcast(this, IncomingLangGraphResponse, Content, role);
 }
 
@@ -202,8 +243,7 @@ void ULangGraphComponent::ProcessUpdatesEvent(const FString& Payload)
 	}
 	StreamCurrentRole = role;
 
-	FString Content;
-	FirstMsg->TryGetStringField(TEXT("content"), Content);
+	const FString Content = ExtractTextContent(FirstMsg);
 
 	// Token-level delegate (per-event, in arrival order).
 	DeferredBroadcast(this, IncomingLangGraphStreamResponse, Content, role, false);
@@ -270,8 +310,12 @@ void ULangGraphComponent::ProcessMessagesEvent(const FString& Payload)
 		&& ToolCallChunks && ToolCallChunks->Num() > 0)
 		return;
 
-	FString Token;
-	if (!Chunk->TryGetStringField(TEXT("content"), Token) || Token.IsEmpty())
+	// Anthropic streams each token as a single-element content-block array
+	// (e.g. [{"type":"text","text":"Hey"}]). OpenAI streams content as a
+	// flat string. ExtractTextContent collapses both shapes to a string so
+	// the sentence buffer sees the same form regardless of provider.
+	const FString Token = ExtractTextContent(Chunk);
+	if (Token.IsEmpty())
 		return;
 
 	StreamCurrentRole = GPTRoleType::ASSISTANT;
