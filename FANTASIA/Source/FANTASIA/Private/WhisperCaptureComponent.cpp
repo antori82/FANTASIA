@@ -1,6 +1,36 @@
 /**
  * @file WhisperCaptureComponent.cpp
  * @brief Implementation of UWhisperCaptureComponent — microphone capture, resampling, and VAD logic.
+ *
+ * AUDIO DATA FLOW (read once, then everything else makes sense):
+ *
+ *   Mic → audio callback → ResampleAndMixToMono → AudioBuffer (16 kHz mono)
+ *                                                    │
+ *                            ┌───────────────────────┴──────────────────┐
+ *                            │                                          │
+ *                  Compute RAW metrics                          Apply noise suppression
+ *                  (peak, RMS) on the                           (HPF + soft gate) IN-PLACE
+ *                  newly-appended samples                              on AudioBuffer
+ *                            │                                          │
+ *                            ▼                                          ▼
+ *                  RecentPeak  (atomic)                       AudioBuffer is now FILTERED.
+ *                  RMSLevel    (atomic)                       Whisper sees only filtered audio.
+ *                            │
+ *                            ▼
+ *                  TickComponent VAD (every 200 ms):
+ *                    Peak = GetRecentPeak(); SetRecentPeak(0)
+ *                    bIsSpeaking = Peak > VadEnergyThreshold
+ *
+ * INVARIANTS:
+ *   • AudioBuffer always contains FILTERED audio (the canonical store for transcription)
+ *   • RecentPeak / RMSLevel always reflect RAW audio (for VAD and meters)
+ *   • VadEnergyThreshold is calibrated against RAW audio
+ *   • CalibrateNoiseFloor measures RAW audio (skips filter while bIsCalibrating)
+ *   • All VAD branches (auto-detect AND streaming mode) use RecentPeak, never scan AudioBuffer
+ *
+ * Why two metrics? Decoupling means the gate can attenuate background noise for Whisper
+ * without starving the VAD. Mixing the two leads to a feedback loop where the gate
+ * suppresses speech below the VAD threshold.
  */
 
 // Copyright (c) 2024 WhisperASR Plugin. All Rights Reserved.
@@ -113,7 +143,22 @@ void UWhisperCaptureComponent::TickComponent(float DeltaTime, ELevelTick TickTyp
 			}
 
 			LastMeasuredNoiseFloor = PeakAmplitude;
-			const float NewThreshold = PeakAmplitude * CalibrationMultiplier;
+
+			// Guard against zero/very-low peak: if calibration captured nothing
+			// meaningful (mic not actually delivering data, called too early,
+			// near-silent environment), fall back to a sane default so VAD
+			// doesn't end up with threshold = 0 (which makes everything count
+			// as speech and breaks utterance segmentation).
+			constexpr float MinSaneThreshold = 0.005f;
+			float NewThreshold = PeakAmplitude * CalibrationMultiplier;
+			if (NewThreshold < MinSaneThreshold)
+			{
+				UE_LOG(LogWhisperASR, Warning,
+					TEXT("Calibration peak too low (%.6f) — using fallback threshold %.4f. "
+					     "Make sure the mic was capturing during calibration."),
+					PeakAmplitude, MinSaneThreshold);
+				NewThreshold = MinSaneThreshold;
+			}
 			VadEnergyThreshold = NewThreshold;
 
 			UE_LOG(LogWhisperASR, Log,
@@ -152,8 +197,13 @@ void UWhisperCaptureComponent::TickComponent(float DeltaTime, ELevelTick TickTyp
 		if (VadCheckTimer >= 0.2f) // Check 5 times per second
 		{
 			VadCheckTimer = 0.f;
+			// Read peak (max over the last 200 ms) and reset for the next window.
 			const float Peak = GetRecentPeak();
-			const bool bIsSpeaking = (Peak > VadEnergyThreshold);
+			SetRecentPeak(0.f);
+			// Clamp the threshold so a misconfigured 0 doesn't make every
+			// sample count as speech (which prevents silence-based segmentation).
+			const float EffectiveThreshold = FMath::Max(VadEnergyThreshold, 0.005f);
+			const bool bIsSpeaking = (Peak > EffectiveThreshold);
 
 			UE_LOG(LogWhisperASR, Verbose,
 				TEXT("VAD: peak=%.5f, threshold=%.5f, speaking=%s, detected=%s, silence=%.1fs"),
@@ -211,19 +261,20 @@ void UWhisperCaptureComponent::TickComponent(float DeltaTime, ELevelTick TickTyp
 		{
 			StreamingTimer = 0.f;
 
+			// Read peak from the raw-audio atomic counter (same as auto-detect VAD).
+			// Don't scan AudioBuffer — its contents are post-filter and would be
+			// compared against a threshold calibrated on raw audio.
+			const float PeakAmplitude = GetRecentPeak();
+			SetRecentPeak(0.f);
+
 			int32 BufferSamples = 0;
-			float PeakAmplitude = 0.f;
 			{
 				FScopeLock Lock(&BufferCritSection);
 				BufferSamples = AudioBuffer.Num();
-				for (int32 i = 0; i < AudioBuffer.Num(); ++i)
-				{
-					float Abs = FMath::Abs(AudioBuffer[i]);
-					if (Abs > PeakAmplitude) PeakAmplitude = Abs;
-				}
 			}
 
-			const bool bIsSpeaking = (PeakAmplitude > VadEnergyThreshold) && (BufferSamples > 0);
+			const float EffectiveThreshold = FMath::Max(VadEnergyThreshold, 0.005f);
+			const bool bIsSpeaking = (PeakAmplitude > EffectiveThreshold) && (BufferSamples > 0);
 
 			UE_LOG(LogWhisperASR, Verbose,
 				TEXT("Streaming tick: peak=%.4f, speaking=%s, wasSpeaking=%s, inflight=%s"),
@@ -340,23 +391,53 @@ bool UWhisperCaptureComponent::OpenCaptureDevice()
 			FScopeLock Lock(&BufferCritSection);
 			const int32 PrevCount = AudioBuffer.Num();
 			ResampleAndMixToMono(InAudio, NumFrames, NumChannels, SampleRate, AudioBuffer);
-			TrimBufferLocked();
 
-			// Track peak of newly appended samples for VAD
+			const int32 NewSamples = AudioBuffer.Num() - PrevCount;
+
+			// Compute peak and RMS on the RAW (pre-filter) audio so VAD and
+			// the audio-level meter reflect the true microphone signal, not
+			// the gated/filtered output. Otherwise the gate would suppress
+			// speech below the VAD threshold.
+			// Peak is MAXed (not overwritten) across callbacks so the VAD,
+			// which reads at 200 ms intervals, sees the loudest moment in
+			// that window — not just the last ~10 ms. Without this, brief
+			// quiet moments between syllables can fool VAD into missing
+			// the start of speech, or extending silence after speech ends.
 			float CallbackPeak = 0.f;
-			for (int32 i = FMath::Max(0, PrevCount); i < AudioBuffer.Num(); ++i)
+			for (int32 i = PrevCount; i < AudioBuffer.Num(); ++i)
 			{
 				float Abs = FMath::Abs(AudioBuffer[i]);
 				if (Abs > CallbackPeak) CallbackPeak = Abs;
 			}
-			SetRecentPeak(CallbackPeak);
+			const float ExistingPeak = GetRecentPeak();
+			if (CallbackPeak > ExistingPeak)
+			{
+				SetRecentPeak(CallbackPeak);
+			}
 
-			// Update RMS level from the most recent 100 ms of buffered audio
-			const int32 RMSWindowSamples = WHISPER_SAMPLE_RATE / 10; // 1600 samples
-			const int32 Count = FMath::Min(RMSWindowSamples, AudioBuffer.Num());
-			const float RMS = ComputeRMS(
-				AudioBuffer.GetData() + (AudioBuffer.Num() - Count), Count);
-			SetRMSLevel(RMS);
+			// Compute RMS only over the NEW (raw) samples in this callback.
+			// We can't use the last 100 ms of the buffer because earlier
+			// samples there were filtered by previous callbacks, which
+			// would make the audio level meter reflect filtered audio.
+			if (NewSamples > 0)
+			{
+				const float RMS = ComputeRMS(
+					AudioBuffer.GetData() + PrevCount, NewSamples);
+				SetRMSLevel(RMS);
+			}
+
+			// Apply high-pass + soft noise gate to the newly appended samples.
+			// Filter state is preserved across callbacks so there are no
+			// discontinuities at chunk boundaries.
+			// Skip during calibration so the measured noise floor reflects
+			// the true environment, not the gated/filtered audio.
+			if (NewSamples > 0 && !bIsCalibrating &&
+				(bEnableHighPassFilter || bEnableNoiseGate))
+			{
+				ApplyNoiseSuppression(AudioBuffer.GetData() + PrevCount, NewSamples);
+			}
+
+			TrimBufferLocked();
 		},
 		1024 // NumFramesDesired — small buffer for low-latency callbacks
 	);
@@ -429,6 +510,12 @@ bool UWhisperCaptureComponent::StartCapture()
 	SetRMSLevel(0.f);
 	SetRecentPeak(0.f);
 	ResamplePhase = 0.0;
+
+	// Reset noise suppression state so each session starts cleanly
+	HpfX1 = HpfX2 = HpfY1 = HpfY2 = 0.f;
+	HpfLastCutoff = -1.f; // forces coefficient recompute on first sample
+	NoiseGateEnvelope = 0.f;
+	NoiseGateGain = 1.f;
 	bTranscriptionInFlight = false;
 	bWasSpeaking = false;
 	bSpeechDetected = false;
@@ -679,6 +766,16 @@ void UWhisperCaptureComponent::CalibrateNoiseFloor(float DurationSeconds, float 
 	CalibrationMultiplier = FMath::Max(1.0f, Multiplier);
 	CalibrationTimer = 0.f;
 
+	// Clear the shared buffer so calibration only measures fresh audio.
+	// We do this regardless of who owns the mic — otherwise calibrating
+	// during an active capture would include pre-calibration filtered
+	// audio in the peak measurement, biasing the result low.
+	{
+		FScopeLock Lock(&BufferCritSection);
+		AudioBuffer.Reset();
+		ResamplePhase = 0.0;
+	}
+
 	// If the mic isn't already open, open it just for calibration
 	bCalibrationOwnsMic = !bIsCapturing;
 	if (bCalibrationOwnsMic)
@@ -688,13 +785,6 @@ void UWhisperCaptureComponent::CalibrateNoiseFloor(float DurationSeconds, float 
 			UE_LOG(LogWhisperASR, Error, TEXT("CalibrateNoiseFloor: failed to open mic."));
 			OnNoiseCalibrationComplete.Broadcast(-1.f, VadEnergyThreshold);
 			return;
-		}
-
-		// Clear the shared buffer so we only measure fresh audio
-		{
-			FScopeLock Lock(&BufferCritSection);
-			AudioBuffer.Reset();
-			ResamplePhase = 0.0;
 		}
 
 		// Temporarily set capturing so the audio callback stores samples
@@ -720,44 +810,63 @@ void UWhisperCaptureComponent::CalibrateNoiseFloor(float DurationSeconds, float 
 
 void UWhisperCaptureComponent::LogAudioDiagnostics()
 {
-	FScopeLock Lock(&BufferCritSection);
-
-	float Peak = 0.f;
-	for (int32 i = 0; i < AudioBuffer.Num(); ++i)
+	// Buffer (post-filter) peak/RMS — useful to see what Whisper receives
+	float FilteredPeak = 0.f;
+	float FilteredRMS = 0.f;
+	int32 BufferSize = 0;
 	{
-		float Abs = FMath::Abs(AudioBuffer[i]);
-		if (Abs > Peak) Peak = Abs;
+		FScopeLock Lock(&BufferCritSection);
+		BufferSize = AudioBuffer.Num();
+		for (int32 i = 0; i < BufferSize; ++i)
+		{
+			float Abs = FMath::Abs(AudioBuffer[i]);
+			if (Abs > FilteredPeak) FilteredPeak = Abs;
+		}
+		if (BufferSize > 0)
+		{
+			FilteredRMS = ComputeRMS(AudioBuffer.GetData(), BufferSize);
+		}
 	}
 
-	float RMS = 0.f;
-	if (AudioBuffer.Num() > 0)
-	{
-		RMS = ComputeRMS(AudioBuffer.GetData(), AudioBuffer.Num());
-	}
+	// Raw (pre-filter) peak/RMS — what VAD and the level meter see
+	const float RawPeak = GetRecentPeak();
+	const float RawRMS = GetRMSLevel();
 
 	UE_LOG(LogWhisperASR, Warning,
 		TEXT("=== AUDIO DIAGNOSTICS ===\n")
-		TEXT("  Capturing:      %s\n")
-		TEXT("  Calibrating:    %s\n")
-		TEXT("  StreamingMode:  %s\n")
-		TEXT("  Device:         %d Hz, %d ch\n")
-		TEXT("  Buffer:         %d samples (%.2f sec)\n")
-		TEXT("  Peak amplitude: %.6f\n")
-		TEXT("  RMS level:      %.6f\n")
-		TEXT("  VAD threshold:  %.6f\n")
-		TEXT("  Peak > VAD:     %s\n")
-		TEXT("  Noise floor:    %.6f\n")
+		TEXT("  Capturing:       %s\n")
+		TEXT("  Calibrating:     %s\n")
+		TEXT("  Muted:           %s\n")
+		TEXT("  StreamingMode:   %s\n")
+		TEXT("  AutoDetect:      %s\n")
+		TEXT("  HighPassFilter:  %s (%.0f Hz)\n")
+		TEXT("  NoiseGate:       %s (atten=%.2f)\n")
+		TEXT("  Device:          %d Hz, %d ch\n")
+		TEXT("  Buffer:          %d samples (%.2f sec)\n")
+		TEXT("  Raw peak (VAD):  %.6f\n")
+		TEXT("  Raw RMS (meter): %.6f\n")
+		TEXT("  Filt peak (buf): %.6f\n")
+		TEXT("  Filt RMS  (buf): %.6f\n")
+		TEXT("  VAD threshold:   %.6f\n")
+		TEXT("  Raw peak > VAD:  %s\n")
+		TEXT("  Noise floor:     %.6f\n")
 		TEXT("========================="),
 		bIsCapturing ? TEXT("YES") : TEXT("NO"),
 		bIsCalibrating ? TEXT("YES") : TEXT("NO"),
+		bIsMuted ? TEXT("YES") : TEXT("NO"),
 		bStreamingMode ? TEXT("YES") : TEXT("NO"),
+		bAutoDetectSpeech ? TEXT("YES") : TEXT("NO"),
+		bEnableHighPassFilter ? TEXT("ON") : TEXT("off"), HighPassCutoffHz,
+		bEnableNoiseGate ? TEXT("ON") : TEXT("off"), NoiseGateAttenuation,
 		DeviceSampleRate, DeviceNumChannels,
-		AudioBuffer.Num(),
-		static_cast<float>(AudioBuffer.Num()) / static_cast<float>(WHISPER_SAMPLE_RATE),
-		Peak,
-		RMS,
+		BufferSize,
+		static_cast<float>(BufferSize) / static_cast<float>(WHISPER_SAMPLE_RATE),
+		RawPeak,
+		RawRMS,
+		FilteredPeak,
+		FilteredRMS,
 		VadEnergyThreshold,
-		(Peak > VadEnergyThreshold) ? TEXT("YES") : TEXT("NO"),
+		(RawPeak > VadEnergyThreshold) ? TEXT("YES") : TEXT("NO"),
 		LastMeasuredNoiseFloor);
 }
 
@@ -785,6 +894,12 @@ void UWhisperCaptureComponent::SetMuted(bool bMute)
 	}
 	else
 	{
+		// Reset filter state on unmute — its history references audio
+		// from before the mute, which is now stale.
+		HpfX1 = HpfX2 = HpfY1 = HpfY2 = 0.f;
+		NoiseGateEnvelope = 0.f;
+		NoiseGateGain = 1.f;
+
 		UE_LOG(LogWhisperASR, Log, TEXT("Capture unmuted."));
 	}
 }
@@ -904,6 +1019,102 @@ void UWhisperCaptureComponent::ResampleAndMixToMono(
 
 	// Carry fractional phase into next callback (subtract consumed source frames)
 	ResamplePhase = Phase - SrcEnd;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Noise suppression (high-pass filter + soft noise gate)
+// ─────────────────────────────────────────────────────────────────────────────
+
+void UWhisperCaptureComponent::UpdateHighPassCoefficients()
+{
+	// RBJ biquad cookbook high-pass at given cutoff, Q = 0.707 (Butterworth)
+	const float SampleRate = static_cast<float>(WHISPER_SAMPLE_RATE);
+	const float Cutoff = FMath::Clamp(HighPassCutoffHz, 20.f, SampleRate * 0.45f);
+	const float Q = 0.7071f;
+
+	const float Omega = 2.f * PI * Cutoff / SampleRate;
+	const float CosOmega = FMath::Cos(Omega);
+	const float SinOmega = FMath::Sin(Omega);
+	const float Alpha = SinOmega / (2.f * Q);
+
+	const float A0 = 1.f + Alpha;
+	HpfB0 = ((1.f + CosOmega) * 0.5f) / A0;
+	HpfB1 = -(1.f + CosOmega) / A0;
+	HpfB2 = ((1.f + CosOmega) * 0.5f) / A0;
+	HpfA1 = (-2.f * CosOmega) / A0;
+	HpfA2 = (1.f - Alpha) / A0;
+
+	HpfLastCutoff = HighPassCutoffHz;
+}
+
+void UWhisperCaptureComponent::ApplyNoiseSuppression(float* Samples, int32 NumSamples)
+{
+	if (NumSamples <= 0) return;
+
+	// ── High-pass filter ───────────────────────────────────────────
+	if (bEnableHighPassFilter)
+	{
+		if (FMath::Abs(HpfLastCutoff - HighPassCutoffHz) > 0.01f)
+		{
+			UpdateHighPassCoefficients();
+		}
+
+		for (int32 i = 0; i < NumSamples; ++i)
+		{
+			const float X = Samples[i];
+			const float Y = HpfB0 * X + HpfB1 * HpfX1 + HpfB2 * HpfX2
+			              - HpfA1 * HpfY1 - HpfA2 * HpfY2;
+			HpfX2 = HpfX1; HpfX1 = X;
+			HpfY2 = HpfY1; HpfY1 = Y;
+			Samples[i] = Y;
+		}
+	}
+
+	// ── Soft noise gate (envelope-based) ──────────────────────────
+	if (bEnableNoiseGate)
+	{
+		// Threshold: noise floor * multiplier (or VAD threshold as fallback)
+		float Threshold = (LastMeasuredNoiseFloor > 0.f)
+			? LastMeasuredNoiseFloor * NoiseGateThresholdMultiplier
+			: VadEnergyThreshold;
+		Threshold = FMath::Max(Threshold, 0.0001f);
+
+		const float SampleRate = static_cast<float>(WHISPER_SAMPLE_RATE);
+
+		// Envelope follower coefficients (track audio level, not gate state):
+		//   fast attack so we don't miss speech onsets, slow release so the
+		//   envelope doesn't drop on zero crossings. Using fixed values here
+		//   to keep tuning predictable — these are signal characteristics,
+		//   not user preferences.
+		const float EnvAttackAlpha  = 1.f - FMath::Exp(-1.f / (SampleRate * 0.001f));   // ~1 ms
+		const float EnvReleaseAlpha = 1.f - FMath::Exp(-1.f / (SampleRate * 0.050f));   // ~50 ms
+
+		// Gate gain smoothing coefficients (user-controlled — these are how
+		// fast the gain ramps once the gate decides to open or close).
+		const float GainAttackAlpha  = 1.f - FMath::Exp(-1.f / (SampleRate * NoiseGateAttackMs  * 0.001f));
+		const float GainReleaseAlpha = 1.f - FMath::Exp(-1.f / (SampleRate * NoiseGateReleaseMs * 0.001f));
+
+		const float MinGain = FMath::Clamp(NoiseGateAttenuation, 0.f, 1.f);
+
+		for (int32 i = 0; i < NumSamples; ++i)
+		{
+			const float Abs = FMath::Abs(Samples[i]);
+
+			// 1. Update envelope follower (asymmetric: rises fast, falls slow)
+			const float EnvAlpha = (Abs > NoiseGateEnvelope) ? EnvAttackAlpha : EnvReleaseAlpha;
+			NoiseGateEnvelope += EnvAlpha * (Abs - NoiseGateEnvelope);
+
+			// 2. Decide gate target by comparing ENVELOPE to threshold
+			//    (stable — envelope doesn't dip to zero at sample crossings)
+			const float TargetGain = (NoiseGateEnvelope > Threshold) ? 1.f : MinGain;
+
+			// 3. Smooth the gain ramp (separate from envelope tracking)
+			const float GainAlpha = (TargetGain > NoiseGateGain) ? GainAttackAlpha : GainReleaseAlpha;
+			NoiseGateGain += GainAlpha * (TargetGain - NoiseGateGain);
+
+			Samples[i] *= NoiseGateGain;
+		}
+	}
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
