@@ -133,11 +133,11 @@ public:
 	 * Apply a high-pass filter to remove low-frequency rumble (AC hum,
 	 * fan noise, breath thumps). Adds negligible CPU overhead.
 	 */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "WhisperASR|Noise")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "WhisperASR|Noise", Config)
 	bool bEnableHighPassFilter = true;
 
 	/** High-pass cutoff frequency in Hz. 80-120 Hz works well for speech. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "WhisperASR|Noise",
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "WhisperASR|Noise", Config,
 		meta = (EditCondition = "bEnableHighPassFilter", ClampMin = "20.0", ClampMax = "300.0"))
 	float HighPassCutoffHz = 100.0f;
 
@@ -146,14 +146,14 @@ public:
 	 * the measured noise floor. Run CalibrateNoiseFloor first for best results.
 	 * Smoothed attack/release prevents clicks.
 	 */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "WhisperASR|Noise")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "WhisperASR|Noise", Config)
 	bool bEnableNoiseGate = true;
 
 	/**
 	 * Audio below NoiseGateThresholdMultiplier * LastMeasuredNoiseFloor
 	 * is attenuated. If no calibration was done, falls back to VadEnergyThreshold.
 	 */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "WhisperASR|Noise",
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "WhisperASR|Noise", Config,
 		meta = (EditCondition = "bEnableNoiseGate", ClampMin = "1.0", ClampMax = "10.0"))
 	float NoiseGateThresholdMultiplier = 1.5f;
 
@@ -162,17 +162,17 @@ public:
 	 * 0.1 = -20 dB, a good balance between aggressive noise removal and
 	 * preserving room ambience that helps Whisper detect end-of-speech.
 	 */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "WhisperASR|Noise",
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "WhisperASR|Noise", Config,
 		meta = (EditCondition = "bEnableNoiseGate", ClampMin = "0.0", ClampMax = "1.0"))
 	float NoiseGateAttenuation = 0.1f;
 
 	/** Attack time in milliseconds (how fast gate opens for speech). */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "WhisperASR|Noise",
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "WhisperASR|Noise", Config,
 		meta = (EditCondition = "bEnableNoiseGate", ClampMin = "1.0", ClampMax = "100.0"))
 	float NoiseGateAttackMs = 5.0f;
 
 	/** Release time in milliseconds (how fast gate closes after speech). */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "WhisperASR|Noise",
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "WhisperASR|Noise", Config,
 		meta = (EditCondition = "bEnableNoiseGate", ClampMin = "10.0", ClampMax = "500.0"))
 	float NoiseGateReleaseMs = 100.0f;
 
