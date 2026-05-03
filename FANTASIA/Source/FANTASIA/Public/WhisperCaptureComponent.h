@@ -127,6 +127,55 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "WhisperASR|Capture")
 	int32 AudioDeviceIndex = -1;
 
+	// ── Noise Suppression ────────────────────────────────────────────────
+
+	/**
+	 * Apply a high-pass filter to remove low-frequency rumble (AC hum,
+	 * fan noise, breath thumps). Adds negligible CPU overhead.
+	 */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "WhisperASR|Noise")
+	bool bEnableHighPassFilter = true;
+
+	/** High-pass cutoff frequency in Hz. 80-120 Hz works well for speech. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "WhisperASR|Noise",
+		meta = (EditCondition = "bEnableHighPassFilter", ClampMin = "20.0", ClampMax = "300.0"))
+	float HighPassCutoffHz = 100.0f;
+
+	/**
+	 * Apply a soft noise gate that attenuates audio below a multiple of
+	 * the measured noise floor. Run CalibrateNoiseFloor first for best results.
+	 * Smoothed attack/release prevents clicks.
+	 */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "WhisperASR|Noise")
+	bool bEnableNoiseGate = true;
+
+	/**
+	 * Audio below NoiseGateThresholdMultiplier * LastMeasuredNoiseFloor
+	 * is attenuated. If no calibration was done, falls back to VadEnergyThreshold.
+	 */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "WhisperASR|Noise",
+		meta = (EditCondition = "bEnableNoiseGate", ClampMin = "1.0", ClampMax = "10.0"))
+	float NoiseGateThresholdMultiplier = 1.5f;
+
+	/**
+	 * How much to attenuate noise (linear gain, 0.0 = silence, 1.0 = passthrough).
+	 * 0.1 = -20 dB, a good balance between aggressive noise removal and
+	 * preserving room ambience that helps Whisper detect end-of-speech.
+	 */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "WhisperASR|Noise",
+		meta = (EditCondition = "bEnableNoiseGate", ClampMin = "0.0", ClampMax = "1.0"))
+	float NoiseGateAttenuation = 0.1f;
+
+	/** Attack time in milliseconds (how fast gate opens for speech). */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "WhisperASR|Noise",
+		meta = (EditCondition = "bEnableNoiseGate", ClampMin = "1.0", ClampMax = "100.0"))
+	float NoiseGateAttackMs = 5.0f;
+
+	/** Release time in milliseconds (how fast gate closes after speech). */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "WhisperASR|Noise",
+		meta = (EditCondition = "bEnableNoiseGate", ClampMin = "10.0", ClampMax = "500.0"))
+	float NoiseGateReleaseMs = 100.0f;
+
 	// ── Events ───────────────────────────────────────────────────────────
 
 	/** Fired when captured audio finishes transcription */
@@ -264,6 +313,26 @@ private:
 	bool bIsCapturing = false;
 	bool bIsMuted = false;
 	float StreamingTimer = 0.f;
+
+	// ── Noise suppression state (audio thread) ──────────────────────────
+	// Biquad high-pass filter state (Direct Form II Transposed)
+	float HpfX1 = 0.f, HpfX2 = 0.f;
+	float HpfY1 = 0.f, HpfY2 = 0.f;
+	float HpfB0 = 1.f, HpfB1 = 0.f, HpfB2 = 0.f;
+	float HpfA1 = 0.f, HpfA2 = 0.f;
+	float HpfLastCutoff = -1.f;
+
+	// Envelope follower (smoothed |sample|, tracks audio level over ~ms timescale)
+	float NoiseGateEnvelope = 0.f;
+
+	// Soft gate gain state (smoothed gain, 0..1)
+	float NoiseGateGain = 1.f;
+
+	/** Recompute high-pass filter coefficients for the current cutoff and 16 kHz. */
+	void UpdateHighPassCoefficients();
+
+	/** Apply noise suppression in-place on a buffer of 16 kHz mono samples. */
+	void ApplyNoiseSuppression(float* Samples, int32 NumSamples);
 
 	// ── VAD auto-detect state ───────────────────────────────────────────
 	float SilenceTimer = 0.f;
