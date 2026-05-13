@@ -17,6 +17,17 @@ THIRD_PARTY_INCLUDES_START
 THIRD_PARTY_INCLUDES_END
 #undef UI
 
+// Platform socket headers — needed to call shutdown() on the underlying FD of
+// a plain-TCP BIO, which is how we unblock the recv thread on disconnect.
+// (TLS path uses SSL_shutdown for the same purpose.)
+#if PLATFORM_WINDOWS
+#include "Windows/AllowWindowsPlatformTypes.h"
+#include <winsock2.h>
+#include "Windows/HideWindowsPlatformTypes.h"
+#else
+#include <sys/socket.h>
+#endif
+
 // ----------------------------------------------------------------------------
 // Hot-path helpers (file-scope)
 // ----------------------------------------------------------------------------
@@ -133,13 +144,15 @@ void UNeo4jComponent::InitiateConnection(const FString& Hostname, int32 InPort)
 
 	ActiveHostname = Hostname;
 	ActivePort = InPort;
+	bActiveTls = UseSSL;
 
-	if (UseSSL)
+	if (Transport == EBoltTransport::PlainTCP)
 	{
 		++ConnectionEpoch;
-		UE_LOG(LogTemp, Log, TEXT("Neo4j: Connecting via TCP+TLS to %s:%d"), *Hostname, InPort);
+		UE_LOG(LogTemp, Log, TEXT("Neo4j: Connecting via %s to %s:%d"),
+			bActiveTls ? TEXT("TCP+TLS") : TEXT("plain TCP"), *Hostname, InPort);
 		ConnectionState = EBoltConnectionState::Connecting;
-		TcpSslConnect(Hostname, InPort);
+		TcpConnect(Hostname, InPort, bActiveTls);
 	}
 	else
 	{
@@ -165,8 +178,20 @@ void UNeo4jComponent::InitiateConnection(const FString& Hostname, int32 InPort)
 		}
 		else
 		{
-			WsUrl = TEXT("ws://") + WsUrl;
+			WsUrl = (bActiveTls ? TEXT("wss://") : TEXT("ws://")) + WsUrl;
 		}
+
+		// Honor UseSSL even when the scheme didn't already imply TLS — upgrades
+		// ws:// → wss:// when the user explicitly opted into encryption.
+		if (bActiveTls && WsUrl.StartsWith(TEXT("ws://")))
+			WsUrl = TEXT("wss://") + WsUrl.Mid(5);
+
+		// Force loopback to IPv4. Neo4j Desktop and most local installs on Windows
+		// bind only 0.0.0.0:7687 (IPv4), but modern Windows getaddrinfo resolves
+		// "localhost" to ::1 first per RFC 3484. libwebsockets then tries [::1]:7687,
+		// the server isn't listening there, and the connect fails with no useful
+		// diagnostic. 127.0.0.1 sidesteps the resolver entirely.
+		WsUrl.ReplaceInline(TEXT("://localhost"), TEXT("://127.0.0.1"), ESearchCase::IgnoreCase);
 
 		WsUrl += TEXT(":") + FString::FromInt(InPort);
 
@@ -213,13 +238,13 @@ void UNeo4jComponent::TearDownCurrentConnection()
 	{
 		const TArray<uint8>& GoodbyeFramed = BoltMessages::BuildGoodbyeFramed();
 		SendRawBytes(GoodbyeFramed.GetData(), GoodbyeFramed.Num());
-		if (UseSSL && SslBio)
-			BIO_flush(static_cast<BIO*>(SslBio));
+		if (Transport == EBoltTransport::PlainTCP && TcpBio)
+			BIO_flush(static_cast<BIO*>(TcpBio));
 	}
 
-	if (UseSSL)
+	if (Transport == EBoltTransport::PlainTCP)
 	{
-		TcpSslDisconnect();
+		TcpDisconnect();
 	}
 	else
 	{
@@ -250,13 +275,13 @@ void UNeo4jComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 		SendRawBytes(GoodbyeFramed.GetData(), GoodbyeFramed.Num());
 
 		// Give the server a moment to process GOODBYE before we tear down the socket
-		if (UseSSL && SslBio)
-			BIO_flush(static_cast<BIO*>(SslBio));
+		if (Transport == EBoltTransport::PlainTCP && TcpBio)
+			BIO_flush(static_cast<BIO*>(TcpBio));
 	}
 
-	if (UseSSL)
+	if (Transport == EBoltTransport::PlainTCP)
 	{
-		TcpSslDisconnect();
+		TcpDisconnect();
 	}
 	else
 	{
@@ -273,10 +298,10 @@ void UNeo4jComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActor
 }
 
 // ============================================================================
-// TCP+TLS Transport
+// TCP Transport (plain or TLS-wrapped — same recv thread, send path, teardown)
 // ============================================================================
 
-// Background receive thread runnable — must be defined before TcpSslConnect uses it
+// Background receive thread runnable — must be defined before TcpConnect uses it
 class FNeo4jRecvRunnable : public FRunnable
 {
 public:
@@ -286,70 +311,96 @@ private:
 	UNeo4jComponent* Owner;
 };
 
-void UNeo4jComponent::TcpSslConnect(const FString& Hostname, int32 InPort)
+void UNeo4jComponent::TcpConnect(const FString& Hostname, int32 InPort, bool bUseTls)
 {
-	// Initialize OpenSSL context
-	SSL_CTX* Ctx = SSL_CTX_new(TLS_client_method());
-	if (!Ctx)
+	BIO* Bio = nullptr;
+
+	if (bUseTls)
 	{
-		UE_LOG(LogTemp, Error, TEXT("Neo4j: SSL_CTX_new failed"));
-		ConnectionState = EBoltConnectionState::Closed;
-		return;
-	}
-	SslCtx = Ctx;
+		// TLS path: SSL_CTX wraps a connect BIO so OpenSSL handles DNS, TCP
+		// connect, and TLS handshake in a single chain.
+		SSL_CTX* Ctx = SSL_CTX_new(TLS_client_method());
+		if (!Ctx)
+		{
+			UE_LOG(LogTemp, Error, TEXT("Neo4j: SSL_CTX_new failed"));
+			ConnectionState = EBoltConnectionState::Closed;
+			return;
+		}
+		SslCtx = Ctx;
 
-	// Use OpenSSL's BIO for connection — it handles DNS, TCP connect, and TLS in one go
-	BIO* Bio = BIO_new_ssl_connect(Ctx);
-	if (!Bio)
+		Bio = BIO_new_ssl_connect(Ctx);
+		if (!Bio)
+		{
+			UE_LOG(LogTemp, Error, TEXT("Neo4j: BIO_new_ssl_connect failed"));
+			SSL_CTX_free(Ctx); SslCtx = nullptr;
+			ConnectionState = EBoltConnectionState::Closed;
+			return;
+		}
+
+		SSL* Ssl = nullptr;
+		BIO_get_ssl(Bio, &Ssl);
+		if (!Ssl)
+		{
+			UE_LOG(LogTemp, Error, TEXT("Neo4j: BIO_get_ssl failed"));
+			BIO_free_all(Bio);
+			SSL_CTX_free(Ctx); SslCtx = nullptr;
+			ConnectionState = EBoltConnectionState::Closed;
+			return;
+		}
+		SslHandle = Ssl;
+		SSL_set_mode(Ssl, SSL_MODE_AUTO_RETRY);
+
+		// Set SNI hostname (required for Aura)
+		SSL_set_tlsext_host_name(Ssl, TCHAR_TO_ANSI(*Hostname));
+	}
+	else
 	{
-		UE_LOG(LogTemp, Error, TEXT("Neo4j: BIO_new_ssl_connect failed"));
-		SSL_CTX_free(Ctx); SslCtx = nullptr;
-		ConnectionState = EBoltConnectionState::Closed;
-		return;
+		// Plain TCP path: same BIO API, no TLS wrap. Reuses the recv thread,
+		// SendRawBytes, and teardown — only the connect/handshake step differs.
+		Bio = BIO_new_connect(TCHAR_TO_ANSI(*FString::Printf(TEXT("%s:%d"), *Hostname, InPort)));
+		if (!Bio)
+		{
+			UE_LOG(LogTemp, Error, TEXT("Neo4j: BIO_new_connect failed"));
+			ConnectionState = EBoltConnectionState::Closed;
+			return;
+		}
 	}
-	SslBio = Bio;
 
-	// Get the SSL handle from the BIO chain
-	SSL* Ssl = nullptr;
-	BIO_get_ssl(Bio, &Ssl);
-	if (!Ssl)
-	{
-		UE_LOG(LogTemp, Error, TEXT("Neo4j: BIO_get_ssl failed"));
-		TcpSslDisconnect();
-		return;
-	}
-	SslHandle = Ssl;
-	SSL_set_mode(Ssl, SSL_MODE_AUTO_RETRY);
+	TcpBio = Bio;
 
-	// Set SNI hostname (required for Aura)
-	SSL_set_tlsext_host_name(Ssl, TCHAR_TO_ANSI(*Hostname));
-
-	// Set connection target
+	// For the TLS variant we still need to set the connection target on the
+	// connect BIO (the SSL BIO sits in front of it). For plain TCP this was
+	// done in BIO_new_connect itself, but calling it again is harmless.
 	FString ConnTarget = FString::Printf(TEXT("%s:%d"), *Hostname, InPort);
 	BIO_set_conn_hostname(Bio, TCHAR_TO_ANSI(*ConnTarget));
 
-	// Connect + TLS handshake
 	if (BIO_do_connect(Bio) <= 0)
 	{
 		unsigned long ErrCode = ERR_get_error();
 		char ErrBuf[256];
 		ERR_error_string_n(ErrCode, ErrBuf, sizeof(ErrBuf));
 		UE_LOG(LogTemp, Error, TEXT("Neo4j: BIO_do_connect failed to %s: %hs"), *ConnTarget, ErrBuf);
-		TcpSslDisconnect();
+		TcpDisconnect();
 		return;
 	}
 
-	if (BIO_do_handshake(Bio) <= 0)
+	if (bUseTls)
 	{
-		unsigned long ErrCode = ERR_get_error();
-		char ErrBuf[256];
-		ERR_error_string_n(ErrCode, ErrBuf, sizeof(ErrBuf));
-		UE_LOG(LogTemp, Error, TEXT("Neo4j: TLS handshake failed: %hs"), ErrBuf);
-		TcpSslDisconnect();
-		return;
+		if (BIO_do_handshake(Bio) <= 0)
+		{
+			unsigned long ErrCode = ERR_get_error();
+			char ErrBuf[256];
+			ERR_error_string_n(ErrCode, ErrBuf, sizeof(ErrBuf));
+			UE_LOG(LogTemp, Error, TEXT("Neo4j: TLS handshake failed: %hs"), ErrBuf);
+			TcpDisconnect();
+			return;
+		}
+		UE_LOG(LogTemp, Log, TEXT("Neo4j: TLS connected to %s"), *ConnTarget);
 	}
-
-	UE_LOG(LogTemp, Log, TEXT("Neo4j: TLS connected to %s"), *ConnTarget);
+	else
+	{
+		UE_LOG(LogTemp, Log, TEXT("Neo4j: TCP connected to %s"), *ConnTarget);
+	}
 
 	// Send Bolt handshake
 	ConnectionState = EBoltConnectionState::HandshakePending;
@@ -366,7 +417,7 @@ void UNeo4jComponent::TcpSslConnect(const FString& Hostname, int32 InPort)
 void UNeo4jComponent::TcpRecvLoop()
 {
 	uint8 Buffer[16384];
-	BIO* Bio = static_cast<BIO*>(SslBio);
+	BIO* Bio = static_cast<BIO*>(TcpBio);
 
 	// Snapshot the epoch at the time this thread was started. Any game-thread
 	// tasks this loop dispatches will carry this epoch. When they run, they
@@ -420,15 +471,24 @@ void UNeo4jComponent::TcpRecvLoop()
 	}
 }
 
-void UNeo4jComponent::TcpSslDisconnect()
+void UNeo4jComponent::TcpDisconnect()
 {
 	bRecvThreadRunning.store(false);
 
-	// Shut down SSL to unblock the recv thread's BIO_read.
-	// SSL_shutdown sends close_notify and causes BIO_read to return 0 or error.
+	// Unblock the recv thread's BIO_read:
+	//  - TLS: SSL_shutdown sends close_notify; server responds, BIO_read returns 0.
+	//  - Plain TCP: no SSL machinery, so shutdown() the underlying FD directly.
+	//    Constant 2 = SHUT_RDWR (POSIX) == SD_BOTH (Winsock).
 	if (SslHandle)
 	{
 		SSL_shutdown(static_cast<SSL*>(SslHandle));
+	}
+	else if (TcpBio)
+	{
+		int fd = -1;
+		BIO_get_fd(static_cast<BIO*>(TcpBio), &fd);
+		if (fd != -1)
+			::shutdown(fd, 2);
 	}
 
 	// Wait for recv thread to exit before freeing resources
@@ -440,10 +500,10 @@ void UNeo4jComponent::TcpSslDisconnect()
 	}
 
 	// Now safe to free — recv thread is no longer accessing the BIO
-	if (SslBio)
+	if (TcpBio)
 	{
-		BIO_free_all(static_cast<BIO*>(SslBio));
-		SslBio = nullptr;
+		BIO_free_all(static_cast<BIO*>(TcpBio));
+		TcpBio = nullptr;
 		SslHandle = nullptr; // freed by BIO_free_all
 	}
 
@@ -460,11 +520,11 @@ void UNeo4jComponent::TcpSslDisconnect()
 
 void UNeo4jComponent::SendRawBytes(const uint8* Data, int32 Len)
 {
-	if (UseSSL)
+	if (Transport == EBoltTransport::PlainTCP)
 	{
-		if (SslBio)
+		if (TcpBio)
 		{
-			BIO* Bio = static_cast<BIO*>(SslBio);
+			BIO* Bio = static_cast<BIO*>(TcpBio);
 			int32 Sent = 0;
 			while (Sent < Len)
 			{
@@ -528,7 +588,11 @@ void UNeo4jComponent::OnWebSocketConnected(int32 Epoch)
 void UNeo4jComponent::OnWebSocketConnectionError(int32 Epoch, const FString& Error)
 {
 	if (Epoch != ConnectionEpoch) return;
-	UE_LOG(LogTemp, Error, TEXT("Neo4j: WebSocket connection error: %s"), *Error);
+	UE_LOG(LogTemp, Error,
+		TEXT("Neo4j: WebSocket connect failed pre-handshake. URL=ws://%s:%d, libwebsockets error='%s'. ")
+		TEXT("Check (in order): server actually listening on that port (netstat), firewall/AV blocking loopback, ")
+		TEXT("server requires TLS (try Use SSL=true), or WebSocket transport disabled server-side."),
+		*ActiveHostname, ActivePort, *Error);
 	ConnectionState = EBoltConnectionState::Closed;
 }
 

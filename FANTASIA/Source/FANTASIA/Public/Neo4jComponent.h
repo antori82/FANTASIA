@@ -47,6 +47,20 @@ enum class EBoltQueryPhase : uint8
 	WaitingPullRecords   ///< PULL message sent, collecting RECORD / SUCCESS messages.
 };
 
+/**
+ * Transport framing for the Bolt protocol. Orthogonal to TLS — combined with
+ * @c UseSSL this yields four matrices (TCP/WS x plain/TLS). Plain TCP is the
+ * protocol native Neo4j drivers (Java/Python/cypher-shell) use and is the
+ * recommended default. WebSocket is only needed for browser-derived clients
+ * or environments that proxy Bolt over HTTP.
+ */
+UENUM(BlueprintType)
+enum class EBoltTransport : uint8
+{
+	PlainTCP    UMETA(DisplayName = "Plain TCP (recommended)"),
+	WebSocket   UMETA(DisplayName = "WebSocket (browser/legacy)")
+};
+
 /** A queued Bolt command awaiting execution. */
 struct FBoltPendingCommand
 {
@@ -64,9 +78,15 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FIncomingNeo4jResponseEvent, FNeo4jR
  * Actor component that connects to a Neo4j instance over the Bolt binary
  * protocol and executes Cypher queries exposed to Blueprints.
  *
- * Supports both WebSocket transport (plain) and TCP+TLS transport (when
- * @c UseSSL is enabled). Queries may run as auto-commit or inside explicit
- * transactions (BEGIN / ADD / COMMIT / ROLLBACK).
+ * Two orthogonal transport choices:
+ *   - @c Transport selects framing: plain TCP (default, native drivers) or
+ *     WebSocket (browser-driver legacy).
+ *   - @c UseSSL selects encryption: off (plain) or on (TLS, via OpenSSL for
+ *     TCP transport, via libwebsockets for WebSocket transport). Aura URLs
+ *     (@c bolt+s://, @c neo4j+s://) auto-enable @c UseSSL.
+ *
+ * Queries may run as auto-commit or inside explicit transactions
+ * (BEGIN / ADD / COMMIT / ROLLBACK).
  *
  * @see UBoltProtocol, UBoltPackStream
  */
@@ -96,9 +116,21 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
 	FString password;
 
-	/** When true, use TCP+TLS (OpenSSL) instead of WebSocket transport. */
+	/**
+	 * When true, the connection is encrypted (TLS for plain TCP, WSS for
+	 * WebSocket). Auto-enabled for @c bolt+s:// / @c neo4j+s:// endpoints.
+	 */
 	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
 	bool UseSSL = false;
+
+	/**
+	 * Bolt framing to use. PlainTCP (default) is what native Neo4j drivers
+	 * use and is the right choice for Aura, local Neo4j, and almost every
+	 * production deployment. WebSocket is only needed when connecting to a
+	 * browser-style HTTP-Upgrade endpoint.
+	 */
+	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
+	EBoltTransport Transport = EBoltTransport::PlainTCP;
 
 	// ── Events ───────────────────────────────────────────────────────────
 
@@ -156,7 +188,7 @@ private:
 	int32 ActivePort = 0;               ///< Current port we are connected to.
 	TArray<FBoltValueArray> RoutingRecords; ///< Buffered records from the routing discovery call.
 
-	// ── WebSocket transport (UseSSL == false) ────────────────────────────
+	// ── WebSocket transport (Transport == WebSocket) ─────────────────────
 	TSharedPtr<IWebSocket> WebSocket;
 	int32 ConnectionEpoch = 0;  ///< Incremented on every new connection; stale callbacks are filtered.
 	void OnWebSocketConnected(int32 Epoch);
@@ -164,15 +196,18 @@ private:
 	void OnWebSocketClosed(int32 Epoch, int32 StatusCode, const FString& Reason, bool bWasClean);
 	void OnWebSocketBinaryMessage(int32 Epoch, const void* Data, SIZE_T Size, SIZE_T BytesRemaining);
 
-	// ── TCP+TLS transport (UseSSL == true) ───────────────────────────────
-	void* SslCtx = nullptr;
-	void* SslHandle = nullptr;
-	void* SslBio = nullptr;
+	// ── TCP transport (Transport == PlainTCP, optionally TLS-wrapped) ────
+	void* SslCtx = nullptr;     ///< OpenSSL context (TLS only; nullptr for plain TCP).
+	void* SslHandle = nullptr;  ///< SSL handle (TLS only).
+	void* TcpBio = nullptr;     ///< OpenSSL BIO chain — TLS+TCP or plain TCP.
 	FRunnableThread* RecvThread = nullptr;
 	std::atomic<bool> bRecvThreadRunning{false};
-	void TcpSslConnect(const FString& Hostname, int32 InPort);
-	void TcpSslDisconnect();
+	void TcpConnect(const FString& Hostname, int32 InPort, bool bUseTls);
+	void TcpDisconnect();
 	void TcpRecvLoop();
+
+	/** Resolved at BeginPlay: whether the active connection is TLS-wrapped. */
+	bool bActiveTls = false;
 
 	// ── Transport dispatch ───────────────────────────────────────────────
 	void SendRawBytes(const uint8* Data, int32 Len);
