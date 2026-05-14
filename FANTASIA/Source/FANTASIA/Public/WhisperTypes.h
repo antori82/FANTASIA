@@ -61,6 +61,31 @@ enum class EWhisperTask : uint8
 	Translate	UMETA(DisplayName = "Translate to English"),
 };
 
+// ─── Backend selection (CPU vs GPU) ──────────────────────────────────────────
+
+/**
+ * Which whisper.cpp implementation FANTASIA should use at runtime.
+ *
+ * CPU: the static-linked whisper.cpp compiled into the FANTASIA module
+ *      (AVX/AVX2/FMA/F16C, no CUDA dependency). Ships with every install.
+ *
+ * GPU: a separately-loaded `fantasia_whisper_cuda.dll` that the user
+ *      drops into the plugin's Binaries/Win64/. Built with CUDA backend
+ *      so models can run on an NVIDIA GPU. If the DLL or the CUDA
+ *      runtime is missing at startup, FANTASIA logs a warning and
+ *      falls back to CPU.
+ *
+ * Default is CPU. Switch to GPU explicitly when you have built the
+ * CUDA DLL via build_whisper_cuda.{bat,sh} (with BUILD_SHARED_LIBS=ON)
+ * and placed the resulting DLLs in Binaries/Win64/.
+ */
+UENUM(BlueprintType)
+enum class EWhisperBackend : uint8
+{
+	CPU		UMETA(DisplayName = "CPU (built-in)"),
+	GPU		UMETA(DisplayName = "GPU (CUDA, dropped-in DLL)"),
+};
+
 // ─── Status of the ASR subsystem ─────────────────────────────────────────────
 
 /** Operational state of the Whisper ASR subsystem. */

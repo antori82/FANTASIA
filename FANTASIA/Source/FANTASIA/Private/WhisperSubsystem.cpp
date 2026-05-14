@@ -13,39 +13,14 @@ DEFINE_LOG_CATEGORY(LogWhisperASR);
 #include "Interfaces/IPluginManager.h"
 #include "Misc/Paths.h"
 
-// Suppress all warnings from third-party whisper.cpp / ggml headers.
-// NOTE: #pragma warning(push, 0) is NOT enough — UE adds /weXXXX flags
-// that override the warning level. Only explicit disable beats /we.
-#if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable: 4456 4457 4458 4459) // shadow variable
-#pragma warning(disable: 4244 4267)           // unsafe type cast
-#pragma warning(disable: 4800)                // implicit bool conversion
-#pragma warning(disable: 4756)                // constant arithmetic overflow
-#pragma warning(disable: 4100)                // unreferenced parameter
-#pragma warning(disable: 4127)                // conditional is constant
-#pragma warning(disable: 4189)                // local var not referenced
-#pragma warning(disable: 4706)                // assignment in conditional
-#pragma warning(disable: 4702)                // unreachable code
-#pragma warning(disable: 4310)                // cast truncates constant
-#pragma warning(disable: 4305)                // truncation from double to float
-#pragma warning(disable: 4242 4389)           // signed/unsigned mismatch
-#endif
-#if defined(__clang__)
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Weverything"
-#endif
-
-#include "ggml.h"
-#include "ggml-cpu.h"
-#include "whisper.h"
-
-#if defined(__clang__)
-#pragma clang diagnostic pop
-#endif
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif
+// WhisperBackend pulls in whisper.h with the same warning-suppression
+// dance and exposes the GApi function-pointer table FANTASIA routes
+// every whisper.cpp call through (CPU static-linked default, optionally
+// replaced with GPU CUDA DLL pointers at runtime).
+#include "WhisperBackend.h"
+// ggml-cpu.h is currently not referenced by this TU; keep the dispatch
+// header above as the single source of whisper.h type definitions.
+using FantasiaWhisper::GApi;
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Lifecycle
@@ -68,6 +43,11 @@ void UWhisperSubsystem::Deinitialize()
 
 	// Free the whisper context (waits for in-flight inference via InferenceMutex)
 	UnloadModel();
+
+	// Release the optional GPU library, if it was loaded. Safe no-op when
+	// the user never selected GPU. Done AFTER UnloadModel so the context
+	// is freed via the same GApi the load came from.
+	FantasiaWhisper::UnloadGpuLibrary();
 
 	Super::Deinitialize();
 	UE_LOG(LogWhisperASR, Log, TEXT("WhisperSubsystem deinitialized."));
@@ -135,17 +115,48 @@ void UWhisperSubsystem::LoadModel(const FString& ModelFilePath)
 
 	SetStatus(EWhisperStatus::Loading);
 
+	// Resolve the dispatch table BEFORE going to the background thread,
+	// since LoadGpuLibrary touches IPluginManager which is game-thread-only.
+	// Two ways the GPU path can be alive:
+	//   1) FANTASIA_WITH_CUDA=1 was defined at compile time, meaning the
+	//      statically-linked whisper.cpp IS the CUDA build. GApi's default
+	//      pointers already handle use_gpu=true natively.
+	//   2) The user dropped fantasia_whisper_cuda.dll into Binaries/Win64/
+	//      and we can LoadLibrary it. LoadGpuLibrary swaps GApi's pointers
+	//      to the dynamic ones.
+	// If the user picks GPU and neither is available we fall back to CPU
+	// with a warning. After this point GApi is stable for the load.
+	bool bUsingGpu = false;
+	if (Backend == EWhisperBackend::GPU)
+	{
+		const bool bDynamicCuda = FantasiaWhisper::LoadGpuLibrary();
+#if FANTASIA_WITH_CUDA
+		const bool bStaticCuda = true;
+#else
+		const bool bStaticCuda = false;
+#endif
+		if (bDynamicCuda || bStaticCuda)
+		{
+			bUsingGpu = true;
+		}
+		else
+		{
+			UE_LOG(LogWhisperASR, Warning,
+				TEXT("GPU backend requested but neither fantasia_whisper_cuda.dll "
+					 "nor statically-linked CUDA is available; loading model on CPU."));
+		}
+	}
+
 	// Load on a background thread to avoid blocking the game thread.
 	// Use a weak pointer so PIE shutdown doesn't crash if loading outlives us.
 	FString PathCopy = ModelFilePath;
 	TWeakObjectPtr<UWhisperSubsystem> WeakThis(this);
-	const bool bWantGPU = bUseGPU;
 	const int32 DeviceIdx = GPUDeviceIndex;
 
-	AsyncTask(ENamedThreads::AnyBackgroundThreadNormalTask, [WeakThis, PathCopy, bWantGPU, DeviceIdx]()
+	AsyncTask(ENamedThreads::AnyBackgroundThreadNormalTask, [WeakThis, PathCopy, bUsingGpu, DeviceIdx]()
 	{
-		UE_LOG(LogWhisperASR, Log, TEXT("Loading Whisper model from: %s (GPU=%s, device=%d)"),
-			*PathCopy, bWantGPU ? TEXT("ON") : TEXT("OFF"), DeviceIdx);
+		UE_LOG(LogWhisperASR, Log, TEXT("Loading Whisper model from: %s (backend=%s, device=%d)"),
+			*PathCopy, bUsingGpu ? TEXT("GPU") : TEXT("CPU"), DeviceIdx);
 
 		// Check before the expensive load
 		UWhisperSubsystem* Self = WeakThis.Get();
@@ -155,22 +166,14 @@ void UWhisperSubsystem::LoadModel(const FString& ModelFilePath)
 			return;
 		}
 
-		whisper_context_params CtxParams = whisper_context_default_params();
-#if FANTASIA_WITH_CUDA
-		CtxParams.use_gpu = bWantGPU;
+		whisper_context_params CtxParams = GApi.context_default_params();
+		CtxParams.use_gpu = bUsingGpu;
 		CtxParams.gpu_device = DeviceIdx;
-		if (bWantGPU)
+		if (bUsingGpu)
 		{
 			UE_LOG(LogWhisperASR, Log, TEXT("CUDA GPU acceleration enabled (device %d)."), DeviceIdx);
 		}
-#else
-		CtxParams.use_gpu = false;
-		if (bWantGPU)
-		{
-			UE_LOG(LogWhisperASR, Warning, TEXT("GPU requested but plugin was built without CUDA. Using CPU."));
-		}
-#endif
-		whisper_context* Ctx = whisper_init_from_file_with_params(
+		whisper_context* Ctx = GApi.init_from_file_with_params(
 			TCHAR_TO_UTF8(*PathCopy), CtxParams);
 
 		// Return to game thread to update state
@@ -182,7 +185,7 @@ void UWhisperSubsystem::LoadModel(const FString& ModelFilePath)
 				// Subsystem already gone — free the context we just loaded
 				if (Ctx)
 				{
-					whisper_free(Ctx);
+					GApi.free(Ctx);
 				}
 				return;
 			}
@@ -266,7 +269,7 @@ void UWhisperSubsystem::UnloadModel()
 		// Wait for any in-flight inference to finish before freeing
 		FScopeLock InferenceLock(&InferenceMutex);
 
-		whisper_free(WhisperCtx);
+		GApi.free(WhisperCtx);
 		WhisperCtx = nullptr;
 		SetStatus(EWhisperStatus::Uninitialized);
 		UE_LOG(LogWhisperASR, Log, TEXT("Whisper model unloaded."));
@@ -280,10 +283,16 @@ bool UWhisperSubsystem::IsModelLoaded() const
 
 bool UWhisperSubsystem::IsGPUSupported()
 {
+	// GPU is "supported" if EITHER:
+	//   - the plugin was statically built with CUDA (FANTASIA_WITH_CUDA=1), or
+	//   - a user-supplied fantasia_whisper_cuda.dll is sitting in the
+	//     plugin's Binaries/Win64/ folder.
+	// We don't try to LoadLibrary here -- this is a cheap pre-check used
+	// by BPs and editor UI to decide whether to expose the GPU option.
 #if FANTASIA_WITH_CUDA
 	return true;
 #else
-	return false;
+	return FantasiaWhisper::IsGpuLibraryAvailable();
 #endif
 }
 
@@ -441,7 +450,7 @@ FWhisperResult UWhisperSubsystem::RunInference(const TArray<float>& Samples,
 	const double StartTime = FPlatformTime::Seconds();
 
 	// Build whisper_full_params
-	whisper_full_params Params = whisper_full_default_params(WHISPER_SAMPLING_GREEDY);
+	whisper_full_params Params = GApi.full_default_params(WHISPER_SAMPLING_GREEDY);
 
 	// Thread count — use physical cores only. Hyperthreads share SIMD
 	// execution units and actually slow down ggml's vectorized loops.
@@ -488,20 +497,20 @@ FWhisperResult UWhisperSubsystem::RunInference(const TArray<float>& Samples,
 		UWhisperSubsystem* Self = static_cast<UWhisperSubsystem*>(UserData);
 		if (!Self || Self->bShuttingDown) return;
 
-		const int TotalSegments = whisper_full_n_segments(Ctx);
+		const int TotalSegments = GApi.full_n_segments(Ctx);
 		for (int i = TotalSegments - NewSegmentCount; i < TotalSegments; ++i)
 		{
 			FWhisperSegment Seg;
-			Seg.StartTime = static_cast<float>(whisper_full_get_segment_t0(Ctx, i)) / 100.0f;
-			Seg.EndTime   = static_cast<float>(whisper_full_get_segment_t1(Ctx, i)) / 100.0f;
-			Seg.Text      = UTF8_TO_TCHAR(whisper_full_get_segment_text(Ctx, i));
+			Seg.StartTime = static_cast<float>(GApi.full_get_segment_t0(Ctx, i)) / 100.0f;
+			Seg.EndTime   = static_cast<float>(GApi.full_get_segment_t1(Ctx, i)) / 100.0f;
+			Seg.Text      = UTF8_TO_TCHAR(GApi.full_get_segment_text(Ctx, i));
 			Seg.Text.TrimStartAndEndInline();
 
-			const int NumTokens = whisper_full_n_tokens(Ctx, i);
+			const int NumTokens = GApi.full_n_tokens(Ctx, i);
 			float SumProb = 0.f;
 			for (int t = 0; t < NumTokens; ++t)
 			{
-				SumProb += whisper_full_get_token_p(Ctx, i, t);
+				SumProb += GApi.full_get_token_p(Ctx, i, t);
 			}
 			Seg.Confidence = (NumTokens > 0) ? (SumProb / NumTokens) : 0.f;
 
@@ -521,7 +530,7 @@ FWhisperResult UWhisperSubsystem::RunInference(const TArray<float>& Samples,
 
 	// ── Run inference ────────────────────────────────────────────────────
 
-	int RetCode = whisper_full(WhisperCtx, Params, Samples.GetData(), Samples.Num());
+	int RetCode = GApi.full(WhisperCtx, Params, Samples.GetData(), Samples.Num());
 
 	const double EndTime = FPlatformTime::Seconds();
 	Result.ProcessingTimeSeconds = static_cast<float>(EndTime - StartTime);
@@ -536,22 +545,22 @@ FWhisperResult UWhisperSubsystem::RunInference(const TArray<float>& Samples,
 
 	// ── Collect segments ─────────────────────────────────────────────────
 
-	const int NumSegments = whisper_full_n_segments(WhisperCtx);
+	const int NumSegments = GApi.full_n_segments(WhisperCtx);
 	FString FullText;
 
 	for (int i = 0; i < NumSegments; ++i)
 	{
 		FWhisperSegment Seg;
-		Seg.StartTime = static_cast<float>(whisper_full_get_segment_t0(WhisperCtx, i)) / 100.0f;
-		Seg.EndTime   = static_cast<float>(whisper_full_get_segment_t1(WhisperCtx, i)) / 100.0f;
-		Seg.Text      = UTF8_TO_TCHAR(whisper_full_get_segment_text(WhisperCtx, i));
+		Seg.StartTime = static_cast<float>(GApi.full_get_segment_t0(WhisperCtx, i)) / 100.0f;
+		Seg.EndTime   = static_cast<float>(GApi.full_get_segment_t1(WhisperCtx, i)) / 100.0f;
+		Seg.Text      = UTF8_TO_TCHAR(GApi.full_get_segment_text(WhisperCtx, i));
 		Seg.Text.TrimStartAndEndInline();
 
-		const int NumTokens = whisper_full_n_tokens(WhisperCtx, i);
+		const int NumTokens = GApi.full_n_tokens(WhisperCtx, i);
 		float SumProb = 0.f;
 		for (int t = 0; t < NumTokens; ++t)
 		{
-			SumProb += whisper_full_get_token_p(WhisperCtx, i, t);
+			SumProb += GApi.full_get_token_p(WhisperCtx, i, t);
 		}
 		Seg.Confidence = (NumTokens > 0) ? (SumProb / NumTokens) : 0.f;
 
@@ -565,10 +574,10 @@ FWhisperResult UWhisperSubsystem::RunInference(const TArray<float>& Samples,
 	Result.bSuccess = true;
 
 	// Detected language
-	int LangId = whisper_full_lang_id(WhisperCtx);
+	int LangId = GApi.full_lang_id(WhisperCtx);
 	if (LangId >= 0)
 	{
-		Result.Language = UTF8_TO_TCHAR(whisper_lang_str(LangId));
+		Result.Language = UTF8_TO_TCHAR(GApi.lang_str(LangId));
 	}
 
 	UE_LOG(LogWhisperASR, Log,

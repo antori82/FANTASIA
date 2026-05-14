@@ -27,7 +27,7 @@ struct whisper_context;
  *   3. Call TranscribeAudioFile or TranscribeAudioData.
  *   4. Receive results via OnTranscriptionComplete.
  */
-UCLASS()
+UCLASS(Config = Game)
 class FANTASIA_API UWhisperSubsystem : public UGameInstanceSubsystem
 {
 	GENERATED_BODY()
@@ -99,19 +99,28 @@ public:
 	UFUNCTION(BlueprintPure, Category = "WhisperASR|Model")
 	EWhisperStatus GetStatus() const { return CurrentStatus; }
 
-	/** Returns true if the plugin was compiled with CUDA GPU support */
+	/**
+	 * True if a GPU whisper backend is available -- i.e. the user has
+	 * dropped `fantasia_whisper_cuda.dll` into the plugin's Binaries/
+	 * Win64/ folder. Does NOT verify that the CUDA runtime itself
+	 * resolves; loading may still fall back to CPU at LoadModel time
+	 * if the DLL can't actually link.
+	 */
 	UFUNCTION(BlueprintPure, Category = "WhisperASR|Model")
 	static bool IsGPUSupported();
 
 	/**
-	 * When true and GPU support is compiled in, models are loaded onto the GPU.
-	 * Set this BEFORE calling LoadModel / LoadModelBySize / LoadModelByName.
+	 * Which whisper backend to use. CPU (default) uses the static-linked
+	 * build that ships with FANTASIA. GPU loads `fantasia_whisper_cuda.dll`
+	 * at runtime; if missing or unloadable, falls back to CPU with a
+	 * warning. Set this BEFORE calling LoadModel / LoadModelBySize /
+	 * LoadModelByName -- the backend choice is locked in at model load.
 	 */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "WhisperASR|Model")
-	bool bUseGPU = true;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Config, Category = "WhisperASR|Model")
+	EWhisperBackend Backend = EWhisperBackend::CPU;
 
-	/** GPU device index (0 = first CUDA device). Only relevant when bUseGPU is true. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "WhisperASR|Model")
+	/** GPU device index (0 = first CUDA device). Only relevant when Backend == GPU. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Config, Category = "WhisperASR|Model")
 	int32 GPUDeviceIndex = 0;
 
 	// ── Transcription (file-based) ───────────────────────────────────────
