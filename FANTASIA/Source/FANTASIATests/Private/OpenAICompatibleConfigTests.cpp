@@ -27,7 +27,7 @@ bool FGroqConfigPreset::RunTest(const FString& Parameters)
 {
 	FOpenAICompatibleConfig C = UOpenAICompatibleComponent::MakeGroqConfig();
 	TestEqual(TEXT("URL"), C.URL, FString(TEXT("https://api.groq.com/openai/v1/chat/completions")));
-	TestEqual(TEXT("Model"), C.DefaultModel, FString(TEXT("llama-3.3-70b-versatile")));
+	TestEqual(TEXT("Model"), C.DefaultModel, FString(TEXT("llama3-8b-8192")));
 	TestEqual(TEXT("Timeout"), C.TimeoutSeconds, 30);
 	TestTrue(TEXT("Auth"), C.bRequiresAuth);
 	return true;

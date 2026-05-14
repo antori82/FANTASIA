@@ -92,11 +92,11 @@ public:
 	USWIPrologRuleBody() {};
 
 	/** Left-hand operand (may be another rule body or a term). */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowedClasses = "/Script/FANTASIA.SWIPrologRuleBody,/Script/FANTASIA.SWIPrologTerm"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowedClasses = "USWIPrologRuleBody, USWIPrologTerm"))
 	USWIPrologObject* firstRule;
 
 	/** Right-hand operand (may be another rule body or a term). */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowedClasses = "/Script/FANTASIA.SWIPrologRuleBody,/Script/FANTASIA.SWIPrologTerm"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowedClasses = "USWIPrologRuleBody, USWIPrologTerm"))
 	USWIPrologObject* secondRule;
 
 	/** Operator that joins the two operands. */
@@ -123,7 +123,7 @@ public:
 	USWIPrologTerm* head;
 
 	/** Body (conditions) of the rule — a term or a compound rule body. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowedClasses = "/Script/FANTASIA.SWIPrologRuleBody,/Script/FANTASIA.SWIPrologTerm"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowedClasses = "USWIPrologRuleBody, USWIPrologTerm"))
 	USWIPrologObject* body;
 };
 
@@ -267,7 +267,7 @@ public:
 	TArray<USWIPrologTerm*> headElements;
 
 	/** Remainder of the list after the head elements. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowedClasses = "/Script/FANTASIA.SWIPrologTerm,/Script/FANTASIA.SWIPrologList,/Script/FANTASIA.SWIPrologHeadToTail"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowedClasses = "USWIPrologTerm, USWIPrologList, USWIPrologHeatToTail"))
 	USWIPrologTerm* tail;
 
 };
@@ -307,6 +307,22 @@ public:
 	/** Whether the Prolog engine verified (proved) this solution. */
 	UPROPERTY(BlueprintReadOnly)
 	bool verified;
+};
+
+// ── Azure ASR Types ─────────────────────────────────────────────────────────
+
+/**
+ * Recognition mode for the Azure Automatic Speech Recognition service.
+ *
+ * @deprecated UAzureASRComponent is deprecated; prefer UWhisperCaptureComponent.
+ */
+UENUM(BlueprintType)
+enum EAzureASREnum : uint8
+{
+	/** Continuous recognition — keeps listening until explicitly stopped. */
+	ASR_CONTINUOUS,
+	/** One-shot recognition — returns a single utterance and stops. */
+	ASR_ONESHOT
 };
 
 // ── LLM / Chat Types ────────────────────────────────────────────────────────
@@ -482,6 +498,92 @@ struct FNeo4jResponse {
 	TArray<UNeo4jResultRow*> rows;
 };
 
+// ── NLU Types ───────────────────────────────────────────────────────────────
+
+/**
+ * Response from a Natural Language Understanding service (e.g. Azure CLU).
+ *
+ * Bundles the original query text together with extracted intents and entities.
+ */
+USTRUCT(BlueprintType)
+struct FNLUResponse {
+
+	GENERATED_BODY()
+
+	/** The original user utterance that was analyzed. */
+	UPROPERTY(BlueprintReadOnly)
+	FString query;
+
+	/** Entities extracted from the utterance. */
+	UPROPERTY(BlueprintReadWrite)
+	TArray<UNLUEntity*> entities;
+
+	/** Intents detected in the utterance, ordered by confidence. */
+	UPROPERTY(BlueprintReadWrite)
+	TArray<UNLUIntent*> intents;
+};
+
+/** A single intent detected by the NLU service. */
+UCLASS(ClassGroup = (Azure), BlueprintType)
+class UNLUIntent : public UObject {
+
+	GENERATED_BODY()
+
+	UNLUIntent() {};
+
+public:
+	/** Canonical name of the detected intent. */
+	UPROPERTY(BlueprintReadOnly)
+	FString intent;
+
+	/** Confidence score as a string (e.g. "0.95"). */
+	UPROPERTY(BlueprintReadOnly)
+	FString confidence;
+};
+
+/**
+ * A single entity extracted from an utterance by the NLU service.
+ *
+ * Entities may form a hierarchy via the @c children array (e.g. a
+ * "datetime" entity containing "date" and "time" sub-entities).
+ */
+UCLASS(ClassGroup = (Azure), BlueprintType)
+class UNLUEntity : public UObject {
+
+	GENERATED_BODY()
+
+	UNLUEntity() {};
+
+public:
+	/** Recognised text span of the entity. */
+	UPROPERTY(BlueprintReadWrite)
+	FString entity;
+
+	/** Entity type / category name. */
+	UPROPERTY(BlueprintReadWrite)
+	FString type;
+
+	/** Character offset where the entity begins in the original utterance. */
+	UPROPERTY(BlueprintReadWrite)
+	uint8 startIndex;
+
+	/** Character offset where the entity ends in the original utterance. */
+	UPROPERTY(BlueprintReadWrite)
+	uint8 endIndex;
+
+	/** Confidence score in [0, 1]. */
+	UPROPERTY(BlueprintReadWrite)
+	float score;
+
+	/** Name used to identify the child entity list (Azure CLU list-entity key). */
+	UPROPERTY(BlueprintReadWrite)
+	FString childName;
+
+	/** Nested sub-entities, if any. */
+	UPROPERTY(BlueprintReadWrite)
+	TArray<UNLUEntity*> children;
+};
+
 // ── Neo4j Result Classes ────────────────────────────────────────────────────
 
 /** A single row in a Neo4j query result, keyed by column name. */
@@ -572,9 +674,125 @@ public:
 	FString value;
 };
 
-// ── Audio2Face mirror structs (removed in 2.0) ──────────────────────────────
-// Pre-2.0 FANTASIA carried FFantasiaAudio2FaceEmotion / *Override mirror
-// structs so URESTTTSComponent could expose ACE emotion parameters without a
-// hard build-time ACE dependency. The 2.0 split moved Audio2Face entirely
-// into the optional FANTASIAACE plugin, which depends on NV_ACE_Reference
-// directly and uses ACE's real FAudio2FaceEmotion type without mirroring.
+// ── Audio2Face Emotion Mirror Structs ───────────────────────────────────────
+// These mirror the shape of NVIDIA ACE's FAudio2FaceEmotion /
+// FAudio2FaceEmotionOverride (from ACECore in NV_ACE_Reference) so that
+// the FANTASIA plugin can expose emotion-parameter UPROPERTYs on
+// URESTTTSComponent without a hard build-time dependency on ACE.
+// RESTTTSComponent.cpp copies field-by-field into the real ACE structs
+// inside #if FANTASIA_WITH_ACE before passing to AnimateFromAudioSamples.
+// Field names, default values, and metadata (clamps etc.) match ACE's
+// definitions so Blueprint experience is identical.
+
+/**
+ * @brief Per-emotion override toggles and target values for Audio2Face.
+ *
+ * Mirrors the shape of NVIDIA ACE's @c FAudio2FaceEmotionOverride. Each
+ * emotion has a `bOverride*` boolean that gates a clamped-[0,1] strength
+ * value; only emotions whose override flag is set are passed through to
+ * ACE. Embedded inside FFantasiaAudio2FaceEmotion via @c EmotionOverrides.
+ */
+USTRUCT(BlueprintType, meta = (DisplayName = "FANTASIA Audio2Face Emotion Overrides"))
+struct FFantasiaAudio2FaceEmotionOverride
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "General")
+	bool bOverrideAmazement = false;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "General", meta = (ClampMin = "0.0", ClampMax = "1.0", EditCondition = "bOverrideAmazement"))
+	float Amazement = 0.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "General")
+	bool bOverrideAnger = false;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "General", meta = (ClampMin = "0.0", ClampMax = "1.0", EditCondition = "bOverrideAnger"))
+	float Anger = 0.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "General")
+	bool bOverrideCheekiness = false;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "General", meta = (ClampMin = "0.0", ClampMax = "1.0", EditCondition = "bOverrideCheekiness"))
+	float Cheekiness = 0.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "General")
+	bool bOverrideDisgust = false;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "General", meta = (ClampMin = "0.0", ClampMax = "1.0", EditCondition = "bOverrideDisgust"))
+	float Disgust = 0.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "General")
+	bool bOverrideFear = false;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "General", meta = (ClampMin = "0.0", ClampMax = "1.0", EditCondition = "bOverrideFear"))
+	float Fear = 0.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "General")
+	bool bOverrideGrief = false;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "General", meta = (ClampMin = "0.0", ClampMax = "1.0", EditCondition = "bOverrideGrief"))
+	float Grief = 0.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "General")
+	bool bOverrideJoy = false;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "General", meta = (ClampMin = "0.0", ClampMax = "1.0", EditCondition = "bOverrideJoy"))
+	float Joy = 0.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "General")
+	bool bOverrideOutOfBreath = false;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "General", meta = (ClampMin = "0.0", ClampMax = "1.0", EditCondition = "bOverrideOutOfBreath"))
+	float OutOfBreath = 0.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "General")
+	bool bOverridePain = false;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "General", meta = (ClampMin = "0.0", ClampMax = "1.0", EditCondition = "bOverridePain"))
+	float Pain = 0.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "General")
+	bool bOverrideSadness = false;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "General", meta = (ClampMin = "0.0", ClampMax = "1.0", EditCondition = "bOverrideSadness"))
+	float Sadness = 0.0f;
+};
+
+/**
+ * @brief Audio2Face emotion parameter set passed to ACE during streaming.
+ *
+ * Mirrors the shape of NVIDIA ACE's @c FAudio2FaceEmotion so that
+ * URESTTTSComponent can expose emotion controls in Blueprints without a
+ * hard build-time dependency on ACE. When the plugin is built with
+ * @c FANTASIA_WITH_ACE=1, RESTTTSComponent.cpp copies these fields
+ * field-by-field into the real ACE struct before calling
+ * @c AnimateFromAudioSamples; without ACE the values are simply ignored.
+ *
+ * Field names, defaults, and clamps match ACE so the Blueprint editing
+ * experience is identical.
+ *
+ * @see FFantasiaAudio2FaceEmotionOverride
+ */
+USTRUCT(BlueprintType, meta = (DisplayName = "FANTASIA Audio2Face Emotion Parameters"))
+struct FFantasiaAudio2FaceEmotion
+{
+	GENERATED_BODY()
+
+	/** Overall strength of generated emotion (ACE default 0.6). */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "General", meta = (ClampMin = "0.0", ClampMax = "1.0"))
+	float OverallEmotionStrength = 0.6f;
+
+	/** Spread between detected emotion values (ACE default 1.0). */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Detected Emotion", meta = (ClampMin = "0.3", ClampMax = "3.0"))
+	float DetectedEmotionContrast = 1.0f;
+
+	/** Max detected emotions to engage simultaneously (ACE default 3). */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Detected Emotion", meta = (ClampMin = "1", ClampMax = "6"))
+	int32 MaxDetectedEmotions = 3;
+
+	/** Temporal smoothing of detected emotion (ACE default 0.7). */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Detected Emotion", meta = (ClampMin = "0.0", ClampMax = "1.0"))
+	float DetectedEmotionSmoothing = 0.7f;
+
+	/** Enable application emotion overrides (ACE default true). */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Application Overrides", meta = (InlineEditConditionToggle))
+	bool bEnableEmotionOverride = true;
+
+	/** Strength of application overrides vs detected emotion (ACE default 0.5). */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Application Overrides", meta = (ClampMin = "0.0", ClampMax = "1.0", EditCondition = "bEnableEmotionOverride"))
+	float EmotionOverrideStrength = 0.5f;
+
+	/** Per-emotion override toggles and values. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Application Overrides", meta = (EditCondition = "bEnableEmotionOverride && (EmotionOverrideStrength > 0.0)"))
+	FFantasiaAudio2FaceEmotionOverride EmotionOverrides;
+};

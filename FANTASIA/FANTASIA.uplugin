@@ -1,15 +1,15 @@
 {
 	"FileVersion": 3,
-	"Version": 3,
-	"VersionName": "2.0",
+	"Version": 2,
+	"VersionName": "1.0",
 	"FriendlyName": "FANTASIA",
-	"Description": "Framework for Advanced Natural Tools and Applications with Social Interactive Agents. NVIDIA Audio2Face lip-sync now ships in the optional FANTASIAACE plugin; install it alongside FANTASIA to enable lip-sync. See the Wiki for installation.",
+	"Description": "Framework for Advanced Natural Tools and Applications with Social Interactive Agents. See the Wiki for installation (ACE/Whisper require a rebuild until UE 5.7).",
 	"Category": "Other",
 	"CreatedBy": "Antonio Origlia",
 	"CreatedByURL": "",
 	"DocsURL": "https://github.com/antori82/FANTASIA/wiki",
 	"MarketplaceURL": "",
-	"EngineVersion": "5.7.0",
+	"EngineVersion": "5.6.0",
 	"SupportURL": "",
 	"CanContainContent": true,
 	"IsBetaVersion": false,
@@ -31,6 +31,11 @@
 		{
 			"Name": "AudioCapture",
 			"Enabled": true
+		},
+		{
+			"Name": "NV_ACE_Reference",
+			"Enabled": true,
+			"Optional": true
 		}
 	]
 }
