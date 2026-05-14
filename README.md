@@ -121,9 +121,17 @@ Since version 2.0, Audio2Face lives in a separate companion plugin (`FANTASIAACE
 
 The FANTASIAACE prebuilt DLL is compiled against the UE-shipped version of NV_ACE_Reference. If you have a different ACE version (e.g. a newer Marketplace update), you may need a one-time C++ rebuild of FANTASIAACE.
 
-### When a rebuild *is* needed
+### Optional: Whisper on GPU (CUDA)
 
-- **Whisper with CUDA** — the prebuilt FANTASIA DLL uses CPU inference. To enable GPU acceleration, follow the CUDA build instructions in the Wiki.
+The shipped FANTASIA DLL uses CPU inference for Whisper ASR. GPU acceleration is opt-in via runtime dispatch: no plugin rebuild required.
+
+Steps:
+
+1. Install the NVIDIA CUDA Toolkit (12.x or 13.x).
+2. Run `FANTASIA/build_whisper_cuda.bat --shared` (Windows) or `FANTASIA/build_whisper_cuda.sh --shared` (Linux). The script builds whisper.cpp as a shared library with CUDA enabled and stages `fantasia_whisper_cuda.dll` (plus its `ggml*.dll` and `cudart64_*.dll` / `cublas64_*.dll` dependencies) into `FANTASIA/Binaries/Win64/` (or `Binaries/Linux/`).
+3. In your project, on the `UWhisperSubsystem`, set `Backend = GPU` before calling `LoadModel`. The plugin's runtime dispatcher will `LoadLibrary` the CUDA DLL and route every `whisper_*` call through it. If the DLL is missing or the CUDA runtime fails to load, FANTASIA logs a warning and falls back to CPU automatically.
+
+You can also pass `--static` to the build script to fall back to the legacy static-link flow that compiles CUDA into `UnrealEditor-FANTASIA.dll` directly. That requires a full plugin rebuild after running the script and is no longer the default.
 
 > **See the [Wiki](https://github.com/antori82/FANTASIA/wiki) for the current installation procedure.**
 
