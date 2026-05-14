@@ -109,16 +109,23 @@ FANTASIA is distributed prebuilt — for most users, no compilation is required.
 1. Clone or download this repository.
 2. If your UE project does not already have one, create a `Plugins` folder at the project root.
 3. Copy the `FANTASIA` folder from this repository into that `Plugins` folder.
-4. Launch Unreal Engine. FANTASIA should appear in the **Plugins** list.
+4. (Optional) For NVIDIA Audio2Face lip-sync, also copy the `FANTASIAACE` folder from this repository into your project's `Plugins` folder.
+5. Launch Unreal Engine. FANTASIA should appear in the **Plugins** list (and FANTASIAACE if you copied it).
+
+### Optional: NVIDIA Audio2Face lip-sync
+
+Since version 2.0, Audio2Face lives in a separate companion plugin (`FANTASIAACE`) that depends on NVIDIA's `NV_ACE_Reference`. Core FANTASIA ships without any ACE bindings, so it loads on any system regardless of whether ACE is installed.
+
+- **You don't need lip-sync:** copy only the `FANTASIA` folder. The shipped DLL works out of the box.
+- **You want lip-sync:** install NVIDIA's `NV_ACE_Reference` plugin from the Marketplace, then copy both `FANTASIA` and `FANTASIAACE` into your project's `Plugins` folder. Enable both in the project settings. Use `UACERESTTTSComponent` (from FANTASIAACE) instead of `URESTTTSComponent` to get the A2F pointer / emotion UPROPERTYs.
+
+The FANTASIAACE prebuilt DLL is compiled against the UE-shipped version of NV_ACE_Reference. If you have a different ACE version (e.g. a newer Marketplace update), you may need a one-time C++ rebuild of FANTASIAACE.
 
 ### When a rebuild *is* needed
 
-The shipped DLL is built for the most common configuration. You will need a one-time C++ rebuild if you want either of these:
+- **Whisper with CUDA** — the prebuilt FANTASIA DLL uses CPU inference. To enable GPU acceleration, follow the CUDA build instructions in the Wiki.
 
-- **NVIDIA ACE lip-sync** — the prebuilt DLL omits ACE bindings so the plugin loads on systems without ACE installed. To enable ACE, follow the rebuild instructions in the Wiki.
-- **Whisper with CUDA** — the prebuilt DLL uses CPU inference. To enable GPU acceleration, follow the CUDA build instructions in the Wiki.
-
-> **See the [Wiki](https://github.com/antori82/FANTASIA/wiki) for the current installation procedure.** The ACE rebuild requirement will be lifted in a future release that splits the lipsync integration into its own optional plugin.
+> **See the [Wiki](https://github.com/antori82/FANTASIA/wiki) for the current installation procedure.**
 
 ## Troubleshooting
 
