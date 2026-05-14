@@ -1,9 +1,9 @@
 {
 	"FileVersion": 3,
-	"Version": 2,
-	"VersionName": "1.0",
+	"Version": 3,
+	"VersionName": "2.0",
 	"FriendlyName": "FANTASIA",
-	"Description": "Framework for Advanced Natural Tools and Applications with Social Interactive Agents. See the Wiki for installation (Whisper-CUDA still requires a rebuild).",
+	"Description": "Framework for Advanced Natural Tools and Applications with Social Interactive Agents. NVIDIA Audio2Face lip-sync now ships in the optional FANTASIAACE plugin; install it alongside FANTASIA to enable lip-sync. See the Wiki for installation.",
 	"Category": "Other",
 	"CreatedBy": "Antonio Origlia",
 	"CreatedByURL": "",
@@ -31,11 +31,6 @@
 		{
 			"Name": "AudioCapture",
 			"Enabled": true
-		},
-		{
-			"Name": "NV_ACE_Reference",
-			"Enabled": true,
-			"Optional": true
 		}
 	]
 }

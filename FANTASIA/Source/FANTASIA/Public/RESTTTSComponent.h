@@ -1,6 +1,14 @@
 /**
  * @file RESTTTSComponent.h
- * @brief Generic REST-based text-to-speech actor component with streaming and Audio2Face support.
+ * @brief Generic REST-based text-to-speech actor component with streaming
+ *        and a protected playback-buffer surface for ACE subclasses.
+ *
+ * This is the core, ACE-agnostic class. The NVIDIA Audio2Face integration
+ * lives in the optional FANTASIAACE plugin's UACERESTTTSComponent subclass
+ * (since the 2.0 split). The buffer scaffolding here (per-call FAudioBuffer
+ * objects, submission-order PlaybackOrder queue) is shaped so the ACE
+ * consumer task in the subclass can drain it without core having to know
+ * anything about ACE.
  */
 
 #pragma once
@@ -13,16 +21,6 @@
 #include "Async/Future.h"
 #include <atomic>
 #include "Runtime/Engine/Classes/Sound/SoundWaveProcedural.h"
-
-// NVIDIA ACE types can't be referenced directly in UPROPERTY declarations
-// here: UHT needs the full UCLASS definition at parse time and the ACE
-// headers are only available when the NV_ACE_Reference plugin is installed.
-// So A2Fpointer / A2FParameters use UObject* in the reflected layout and
-// EmotionParameters uses the FANTASIA-local mirror struct
-// FFantasiaAudio2FaceEmotion (declared in FANTASIATypes.h). The .cpp casts
-// pointers to the real ACE types and copies the emotion fields into a real
-// FAudio2FaceEmotion inside #if FANTASIA_WITH_ACE. Blueprint authoring
-// experience matches the old API; runtime Cast<> validates pointer types.
 
 #include "RESTTTSComponent.generated.h"
 
@@ -78,22 +76,29 @@ struct FPlaybackOrderEntry
 	FAudioBuffer* Buffer;
 };
 
-/** Broadcast when a request's audio has finished playing (drained into A2F).
- *  This is a SEPARATE signal from SynthesisReady (which fires when the HTTP
- *  response has been received). PlaybackComplete is what callers should bind
- *  to if they need "Federico finished speaking sentence N" semantics. The
- *  Id is the caller's id passed to TTSSynthesize. */
+/** Broadcast when a request's audio has finished playing (drained by a
+ *  subclass-installed consumer such as ACE Audio2Face). For the bare
+ *  core component (no subclass / no consumer), this fires immediately
+ *  after synthesis completes. SEPARATE from SynthesisReady, which fires
+ *  when the HTTP response arrives. */
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FPlaybackCompleteEvent, FString, Id);
 
 /**
  * @brief Generic REST-based text-to-speech actor component.
  *
- * Sends HTTP GET or POST requests to any TTS endpoint, receives PCM audio,
- * auto-detects WAV headers, resamples to 16 kHz, and optionally streams
- * audio chunks to NVIDIA Audio2Face for real-time lip animation.
+ * Sends HTTP GET or POST requests to any TTS endpoint, receives PCM
+ * audio, auto-detects WAV headers, resamples to 16 kHz, and exposes
+ * the audio via TTSGetSound / TTSGetRawSound. The component allocates
+ * a per-call FAudioBuffer and stages each call in a global
+ * submission-order queue (PlaybackOrder) so subclasses can install a
+ * consumer task that drains buffers in order.
  *
  * Subclasses (e.g. UElevenLabsTTSComponent) override BuildSynthesisRequest
  * and ProcessResponse to handle provider-specific protocols.
+ *
+ * The optional FANTASIAACE plugin's UACERESTTTSComponent subclass
+ * installs an Audio2Face consumer that drains the buffer scaffolding
+ * and animates a strongly-typed UACEAudioCurveSourceComponent.
  *
  * @see UElevenLabsTTSComponent, FTTSSynthesisRequest
  */
@@ -129,6 +134,18 @@ protected:
 	 */
 	virtual void ProcessResponse(const TArray<uint8>& RawResponse, FTTSData& OutResult);
 
+	/**
+	 * @brief Hook called whenever new audio samples are pushed into a
+	 *        per-call FAudioBuffer.
+	 *
+	 * Called from HandleResult (after the final PCM landed in Target) and
+	 * from HandlePartialResult (after each streaming chunk landed). Default
+	 * implementation is a no-op; the FANTASIAACE subclass overrides it
+	 * to trigger its ConsumerWakeEvent so the Audio2Face consumer task
+	 * picks up the new samples.
+	 */
+	virtual void WakeConsumer() {}
+
 	/** Expected sample rate of the incoming audio (used when no WAV header is present). */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Configuration")
 	int32 SampleRate = 16000;
@@ -136,6 +153,27 @@ protected:
 	/** If true, process audio chunks as they arrive (streaming mode). */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Configuration")
 	bool bStreaming = false;
+
+	// ── Per-call playback scaffolding (protected for subclass consumers) ──
+
+	/** Per-caller-id list of audio buffers, in submission order for that
+	 *  id. TTSSynthesize appends a new buffer to the list for the given
+	 *  id; a subclass consumer drains from the head and pops once a buffer
+	 *  is fully played. The same id can have many in-flight buffers (e.g.
+	 *  when BP passes "Answer" for every sentence in a turn) without
+	 *  collisions, because each buffer is its own object accessed via
+	 *  raw pointer captured in the HTTP callback. */
+	TMap<FString, TArray<TUniquePtr<FAudioBuffer>>> BuffersByCaller;
+	FCriticalSection BuffersMutex;
+
+	/** Global submission-order FIFO of (caller id, buffer pointer).
+	 *  Cross-id ordering: if BP submits ("Answer", S1) then ("Answer", S2)
+	 *  then ("Greeting", G1), the consumer plays S1 -> S2 -> G1.
+	 *  SPSC: game thread is producer, consumer task is consumer. */
+	TQueue<FPlaybackOrderEntry, EQueueMode::Spsc> PlaybackOrder;
+
+	/** Entry currently being drained. Touched only by a subclass consumer. */
+	TOptional<FPlaybackOrderEntry> CurrentPlayback;
 
 private:
 
@@ -170,7 +208,7 @@ private:
 	void HandleResult(FTTSData Response, FString Id, FAudioBuffer* Target);
 
 	/**
-	 * @brief Process a streaming audio chunk and forward to Audio2Face.
+	 * @brief Process a streaming audio chunk and append it to the buffer.
 	 * @param Response  Raw PCM bytes from the current streaming chunk.
 	 * @param Id        Caller's request identifier (used for PartialSynthesisReady broadcast).
 	 * @param Target    Per-call audio buffer to append to.
@@ -198,77 +236,8 @@ private:
 	 */
 	static TArray<uint8> ResampleTo16kHz(const uint8* PCMData, int32 NumBytes, int32 SourceRate, int32 NumChannels);
 
-	// ── Audio2Face Serial Playback ─────────────────────────────────────
-
-	std::atomic<bool> bIsPlaying{false};              /**< Controls the A2F consumer async task lifetime. */
-	std::atomic<bool> bNeedsFlush{false};             /**< Signals the consumer to discard queued data. */
-	FEventRef ConsumerWakeEvent{EEventMode::ManualReset}; /**< Wakes the A2F consumer task. */
-	TFuture<void> ConsumerTaskFuture;                 /**< Handle to the A2F consumer task, joined in EndPlay. */
-
-	/** Per-caller-id list of audio buffers, in submission order for that
-	 *  id. TTSSynthesize appends a new buffer to the list for the given
-	 *  id; the consumer drains from the head and pops once a buffer is
-	 *  fully played. The same id can have many in-flight buffers (e.g.
-	 *  when BP passes "Answer" for every sentence in a turn) without
-	 *  collisions, because each buffer is its own object accessed via
-	 *  raw pointer captured in the HTTP callback. */
-	TMap<FString, TArray<TUniquePtr<FAudioBuffer>>> BuffersByCaller;
-	FCriticalSection BuffersMutex;
-
-	/** Global submission-order FIFO of (caller id, buffer pointer).
-	 *  Cross-id ordering: if BP submits ("Answer", S1) then ("Answer", S2)
-	 *  then ("Greeting", G1), the consumer plays S1 -> S2 -> G1.
-	 *  SPSC: game thread is producer, consumer task is consumer. */
-	TQueue<FPlaybackOrderEntry, EQueueMode::Spsc> PlaybackOrder;
-
-	/** Entry currently being drained. Touched only by the consumer task. */
-	TOptional<FPlaybackOrderEntry> CurrentPlayback;
-
-	/** Set by EndTurn(); read by the consumer to decide when to send
-	 *  bIsLastChunk=true to ACE. Reset by the consumer after that
-	 *  closing chunk is dispatched. We can't infer turn end from
-	 *  PlaybackOrder.IsEmpty(): TTS synthesis is faster than the
-	 *  LangGraph sentence cadence, so the queue legitimately empties
-	 *  between sentences within the same turn. Closing on empty would
-	 *  finalize the ACE session mid-turn and force the next sentence
-	 *  to re-open it. */
-	std::atomic<bool> bTurnEndSignaled{false};
-
 public:
 	URESTTTSComponent();
-
-	// ── Audio2Face Integration ─────────────────────────────────────────
-	// UPROPERTYs must be declared unconditionally (UHT forbids #if around
-	// UPROPERTYs). To let FANTASIA ship a single DLL that loads with or
-	// without NVIDIA ACE, these use UObject* rather than the actual ACE
-	// types. The .cpp casts to UACEAudioCurveSourceComponent /
-	// UAudio2FaceParameters when FANTASIA_WITH_ACE=1. With ACE absent the
-	// pointers can still be set from Blueprint to any UObject but the
-	// lipsync code paths are compiled out so the values are simply ignored.
-
-	/** Pointer to the ACE Audio Curve Source component for Audio2Face animation.
-	 *  Expected concrete type: UACEAudioCurveSourceComponent (from NV_ACE_Reference). */
-	UPROPERTY(BlueprintReadWrite, Category = "TTS")
-	UObject* A2Fpointer;
-
-	/** Audio2Face parameters object for animation configuration.
-	 *  Expected concrete type: UAudio2FaceParameters (from NV_ACE_Reference). */
-	UPROPERTY(BlueprintReadWrite, Category = "TTS")
-	UObject* A2FParameters;
-
-	/** Named provider for the Audio2Face animation pipeline. */
-	UPROPERTY(BlueprintReadWrite, Category = "TTS")
-	FName A2FProvider;
-
-	/**
-	 * Emotion parameters passed to Audio2Face during streaming.
-	 * Uses FANTASIA's mirror struct (FFantasiaAudio2FaceEmotion) so Blueprint
-	 * access works whether or not ACE is present. When FANTASIA_WITH_ACE=1
-	 * the .cpp copies these fields into ACE's real FAudio2FaceEmotion before
-	 * calling AnimateFromAudioSamples.
-	 */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TTS")
-	FFantasiaAudio2FaceEmotion EmotionParameters;
 
 	// ── Events ─────────────────────────────────────────────────────────
 
@@ -280,11 +249,10 @@ public:
 	UPROPERTY(BlueprintAssignable, Category = "TTS")
 	FPartialSynthesizedEvent PartialSynthesisReady;
 
-	/** Broadcast when a request's audio has finished draining into A2F
-	 *  (i.e. Federico has finished speaking that sentence). Bind to this
-	 *  if you need to schedule follow-up actions after playback ends; it's
-	 *  the correct signal for "is the avatar still talking?", whereas
-	 *  SynthesisReady only tells you "the HTTP response arrived". */
+	/** Broadcast when a request's audio has finished playing (drained by
+	 *  a subclass-installed consumer such as ACE Audio2Face). For the bare
+	 *  core component with no consumer attached, this is fired immediately
+	 *  after synthesis completes. */
 	UPROPERTY(BlueprintAssignable, Category = "TTS")
 	FPlaybackCompleteEvent PlaybackComplete;
 
@@ -312,21 +280,16 @@ public:
 	 *
 	 * @param text       Plain text to synthesize.
 	 * @param id         Unique identifier to retrieve results later.
-	 * @param bEndTurn   If true, signal that this is the LAST sentence of
-	 *                   the current turn. The consumer closes the ACE
-	 *                   session cleanly (bIsLastChunk=true) on this
-	 *                   buffer's tail; OnAnimationEnded then fires so the
-	 *                   BP can unmute Whisper. If false (default), the
-	 *                   stream stays open and the next TTSSynthesize
-	 *                   continues it. Wire this from
-	 *                   `IncomingLangGraphSentenceResponse`'s `EndStream`
-	 *                   pin -- one TTS Start node, no Branch needed.
+	 * @param bEndTurn   Subclass-defined "this is the last sentence of the
+	 *                   turn" signal. For the bare core component it has
+	 *                   no effect. The FANTASIAACE subclass uses it to
+	 *                   close the Audio2Face stream cleanly on this
+	 *                   buffer's tail (OnAnimationEnded then fires so the
+	 *                   BP can unmute Whisper).
 	 *
-	 * Why the explicit signal: streamed synthesis (ElevenLabs) completes
-	 * faster than the upstream LLM produces the next sentence, so the
-	 * playback queue legitimately empties between sentences in the same
-	 * turn. Inferring "turn over" from an empty queue would close the
-	 * ACE session mid-turn.
+	 * Subclasses that implement end-of-turn semantics should override
+	 * EndTurn() (called by this method when bEndTurn is true) rather
+	 * than this method.
 	 */
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "TTS Start", Keywords = "TTS"), Category = "TTS")
 	void TTSSynthesize(FString text, FString id, bool bEndTurn = false);
@@ -334,14 +297,11 @@ public:
 	/**
 	 * @brief Signal end-of-turn without synthesizing any new text.
 	 *
-	 * The common case is to use TTSSynthesize(text, id, bEndTurn=true)
-	 * which folds the signal into the last sentence call. This standalone
-	 * variant is for edge cases where you need to close the stream
-	 * without a final sentence (e.g., the LLM produced no final message
-	 * but you want the avatar to reset).
+	 * Default (core) implementation is a no-op. Subclasses with a
+	 * playback consumer override this to close their stream cleanly.
 	 */
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "TTS End Turn", Keywords = "TTS"), Category = "TTS")
-	void EndTurn();
+	virtual void EndTurn();
 
 	/**
 	 * @brief Retrieve the synthesized audio as a USoundWaveProcedural.
