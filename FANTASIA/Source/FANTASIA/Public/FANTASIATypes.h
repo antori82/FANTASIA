@@ -92,11 +92,11 @@ public:
 	USWIPrologRuleBody() {};
 
 	/** Left-hand operand (may be another rule body or a term). */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowedClasses = "USWIPrologRuleBody, USWIPrologTerm"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowedClasses = "/Script/FANTASIA.SWIPrologRuleBody,/Script/FANTASIA.SWIPrologTerm"))
 	USWIPrologObject* firstRule;
 
 	/** Right-hand operand (may be another rule body or a term). */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowedClasses = "USWIPrologRuleBody, USWIPrologTerm"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowedClasses = "/Script/FANTASIA.SWIPrologRuleBody,/Script/FANTASIA.SWIPrologTerm"))
 	USWIPrologObject* secondRule;
 
 	/** Operator that joins the two operands. */
@@ -123,7 +123,7 @@ public:
 	USWIPrologTerm* head;
 
 	/** Body (conditions) of the rule — a term or a compound rule body. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowedClasses = "USWIPrologRuleBody, USWIPrologTerm"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowedClasses = "/Script/FANTASIA.SWIPrologRuleBody,/Script/FANTASIA.SWIPrologTerm"))
 	USWIPrologObject* body;
 };
 
@@ -267,7 +267,7 @@ public:
 	TArray<USWIPrologTerm*> headElements;
 
 	/** Remainder of the list after the head elements. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowedClasses = "USWIPrologTerm, USWIPrologList, USWIPrologHeatToTail"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowedClasses = "/Script/FANTASIA.SWIPrologTerm,/Script/FANTASIA.SWIPrologList,/Script/FANTASIA.SWIPrologHeadToTail"))
 	USWIPrologTerm* tail;
 
 };
@@ -307,22 +307,6 @@ public:
 	/** Whether the Prolog engine verified (proved) this solution. */
 	UPROPERTY(BlueprintReadOnly)
 	bool verified;
-};
-
-// ── Azure ASR Types ─────────────────────────────────────────────────────────
-
-/**
- * Recognition mode for the Azure Automatic Speech Recognition service.
- *
- * @deprecated UAzureASRComponent is deprecated; prefer UWhisperCaptureComponent.
- */
-UENUM(BlueprintType)
-enum EAzureASREnum : uint8
-{
-	/** Continuous recognition — keeps listening until explicitly stopped. */
-	ASR_CONTINUOUS,
-	/** One-shot recognition — returns a single utterance and stops. */
-	ASR_ONESHOT
 };
 
 // ── LLM / Chat Types ────────────────────────────────────────────────────────
@@ -496,92 +480,6 @@ struct FNeo4jResponse {
 	/** Ordered result rows, each containing one cell per header. */
 	UPROPERTY(BlueprintReadOnly)
 	TArray<UNeo4jResultRow*> rows;
-};
-
-// ── NLU Types ───────────────────────────────────────────────────────────────
-
-/**
- * Response from a Natural Language Understanding service (e.g. Azure CLU).
- *
- * Bundles the original query text together with extracted intents and entities.
- */
-USTRUCT(BlueprintType)
-struct FNLUResponse {
-
-	GENERATED_BODY()
-
-	/** The original user utterance that was analyzed. */
-	UPROPERTY(BlueprintReadOnly)
-	FString query;
-
-	/** Entities extracted from the utterance. */
-	UPROPERTY(BlueprintReadWrite)
-	TArray<UNLUEntity*> entities;
-
-	/** Intents detected in the utterance, ordered by confidence. */
-	UPROPERTY(BlueprintReadWrite)
-	TArray<UNLUIntent*> intents;
-};
-
-/** A single intent detected by the NLU service. */
-UCLASS(ClassGroup = (Azure), BlueprintType)
-class UNLUIntent : public UObject {
-
-	GENERATED_BODY()
-
-	UNLUIntent() {};
-
-public:
-	/** Canonical name of the detected intent. */
-	UPROPERTY(BlueprintReadOnly)
-	FString intent;
-
-	/** Confidence score as a string (e.g. "0.95"). */
-	UPROPERTY(BlueprintReadOnly)
-	FString confidence;
-};
-
-/**
- * A single entity extracted from an utterance by the NLU service.
- *
- * Entities may form a hierarchy via the @c children array (e.g. a
- * "datetime" entity containing "date" and "time" sub-entities).
- */
-UCLASS(ClassGroup = (Azure), BlueprintType)
-class UNLUEntity : public UObject {
-
-	GENERATED_BODY()
-
-	UNLUEntity() {};
-
-public:
-	/** Recognised text span of the entity. */
-	UPROPERTY(BlueprintReadWrite)
-	FString entity;
-
-	/** Entity type / category name. */
-	UPROPERTY(BlueprintReadWrite)
-	FString type;
-
-	/** Character offset where the entity begins in the original utterance. */
-	UPROPERTY(BlueprintReadWrite)
-	uint8 startIndex;
-
-	/** Character offset where the entity ends in the original utterance. */
-	UPROPERTY(BlueprintReadWrite)
-	uint8 endIndex;
-
-	/** Confidence score in [0, 1]. */
-	UPROPERTY(BlueprintReadWrite)
-	float score;
-
-	/** Name used to identify the child entity list (Azure CLU list-entity key). */
-	UPROPERTY(BlueprintReadWrite)
-	FString childName;
-
-	/** Nested sub-entities, if any. */
-	UPROPERTY(BlueprintReadWrite)
-	TArray<UNLUEntity*> children;
 };
 
 // ── Neo4j Result Classes ────────────────────────────────────────────────────

@@ -118,11 +118,11 @@ The shipped DLL is built for the most common configuration. You will need a one-
 - **NVIDIA ACE lip-sync** — the prebuilt DLL omits ACE bindings so the plugin loads on systems without ACE installed. To enable ACE, follow the rebuild instructions in the Wiki.
 - **Whisper with CUDA** — the prebuilt DLL uses CPU inference. To enable GPU acceleration, follow the CUDA build instructions in the Wiki.
 
-> **See the [Wiki](https://github.com/antori82/FANTASIA/wiki) for the current installation procedure.** This rebuild requirement will be lifted once we migrate to UE 5.7.
+> **See the [Wiki](https://github.com/antori82/FANTASIA/wiki) for the current installation procedure.** The ACE rebuild requirement will be lifted in a future release that splits the lipsync integration into its own optional plugin.
 
 ## Troubleshooting
 
-If the editor reports that your project cannot be launched because of FANTASIA, verify that the third-party DLLs in `ThirdParty/Redist/` have been copied to your project's `Binaries/Win64/` folder. Some FANTASIA components rely on dynamically linked libraries from Microsoft, Amazon, and other vendors that must sit alongside your project's binaries. If they are missing, copy them manually.
+If the editor reports that your project cannot be launched because of FANTASIA, verify that the SWI-Prolog runtime DLLs shipped alongside `UnrealEditor-FANTASIA.dll` in `FANTASIA/Binaries/Win64/` have been copied next to your project's binaries. The Prolog component loads its dependencies at editor startup; if they are missing, the plugin fails to initialize.
 
 For component-specific problems (API keys, microphone permissions, model file locations, etc.), see the [Wiki](https://github.com/antori82/FANTASIA/wiki).
 

@@ -118,48 +118,6 @@ public class FANTASIA : ModuleRules
             );
     }
 
-    public void MicrosoftLibs(string ThirdParty)
-    {
-        string LibraryPath = Path.Combine(ThirdParty, "Microsoft.CognitiveServices.Speech.1.32.1", "build", "native", "x64", "Release");
-        string IncludePath1 = Path.Combine(ThirdParty, "Microsoft.CognitiveServices.Speech.1.32.1", "build", "native", "include", "cxx_api");
-        string IncludePath2 = Path.Combine(ThirdParty, "Microsoft.CognitiveServices.Speech.1.32.1", "build", "native", "include", "c_api");
-
-        PublicAdditionalLibraries.Add(LibraryPath + "/Microsoft.CognitiveServices.Speech.core.lib");
-        PublicIncludePaths.AddRange(new string[] { IncludePath1, IncludePath2 });
-    }
-
-    public void AWSLibs(string ThirdParty)
-    {
-        string IncludePath3 = Path.Combine(ThirdParty, "AWS", "Core");
-        string IncludePath4 = Path.Combine(ThirdParty, "AWS", "Polly");
-        string IncludePath5 = Path.Combine(ThirdParty, "AWS", "TTS");
-        string LibraryPath = Path.Combine(ThirdParty, "AWS", "lib");
-
-        PublicAdditionalLibraries.Add(LibraryPath + "/aws-cpp-sdk-core.lib");
-        PublicAdditionalLibraries.Add(LibraryPath + "/aws-cpp-sdk-polly.lib");
-        PublicAdditionalLibraries.Add(LibraryPath + "/aws-cpp-sdk-text-to-speech.lib");
-        PublicIncludePaths.AddRange(new string[] { IncludePath3, IncludePath4, IncludePath5 });
-    }
-
-    public void DllLoad(string Redist)
-    {
-        foreach (string dllFile in Directory.GetFiles(Redist, "*"))
-        {
-            // Stage to $(BinaryOutputDir) so the redist DLLs land next to
-            // the binary that imports them, regardless of build type:
-            //   - Editor (modular):  resolves to Plugin/Binaries/Win64,
-            //                        next to UnrealEditor-FANTASIA.dll.
-            //   - Monolithic Shipping: resolves to Project/Binaries/Win64,
-            //                          next to <Project>-Win64-Shipping.exe.
-            // Staging only to $(PluginDir)/Binaries/Win64 worked for the
-            // editor (where FANTASIA is its own DLL) but produced silent
-            // STATUS_DLL_NOT_FOUND failures in monolithic packaged builds
-            // because the project exe's own folder was never populated.
-            string destPath = Path.Combine("$(BinaryOutputDir)", Path.GetFileName(dllFile));
-            AddRedistDll(destPath, dllFile);
-        }
-    }
-
     /// <summary>
     /// Register a redistributable DLL as a runtime dependency without forcing
     /// a build-time copy when the destination is already deployed.
@@ -625,6 +583,14 @@ public class FANTASIA : ModuleRules
 
         ConfigureACE();
 
+        // UE 5.7's V6 BuildSettings default elevates C4668 (undefined identifier
+        // in #if) from warning to error. whisper.cpp's ggml CPU backend probes
+        // feature macros (__AVX512F__, __AVXVNNIINT8__, __FINITE_MATH_ONLY__,
+        // GGML_USE_LLAMAFILE) that aren't defined in our toolchain. These are
+        // upstream headers we don't own, so relax the warning level for this
+        // module rather than patch vendor code.
+        UndefinedIdentifierWarningLevel = WarningLevel.Warning;
+
         #if UE_5_3_OR_LATER
 			// AVX2 required for ggml SIMD acceleration (any Intel/AMD CPU from ~2015+)
 			MinCpuArchX64 = MinimumCpuArchitectureX64.AVX2;
@@ -637,10 +603,6 @@ public class FANTASIA : ModuleRules
         string ModulePath = ModuleDirectory;
         string ThirdParty = Path.GetFullPath(Path.Combine(ModulePath, "../../ThirdParty/"));
 
-        MicrosoftLibs(ThirdParty);
-
-        AWSLibs(ThirdParty);
-
         if (Target.Type == TargetRules.TargetType.Editor)
         {
             PrivateDependencyModuleNames.AddRange(
@@ -651,10 +613,6 @@ public class FANTASIA : ModuleRules
                 }
             );
         }
-
-        string Redist = Path.Combine(ThirdParty, "Redist");
-
-        DllLoad(Redist);
 
         PrologLibs(ThirdParty);
 
