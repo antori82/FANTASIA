@@ -16,8 +16,6 @@
     ·
     <a href="https://codeberg.org/antori/FANTASIA-LangGraphDemo">LangGraph Demo Project</a>
     ·
-    <a href="https://forums.unrealengine.com/t/framework-for-advanced-natural-tools-and-applications-with-social-interactive-agents-fantasia/158706">Forum</a>
-    ·
     <a href="https://www.youtube.com/channel/UChH-PYQw-_IZJM7nYJywevg">YouTube</a>
   </p>
 </p>
@@ -149,7 +147,6 @@ If you build something with FANTASIA we'd love to hear about it — get in touch
 - Project: [github.com/antori82/FANTASIA](https://github.com/antori82/FANTASIA)
 - Wiki: [github.com/antori82/FANTASIA/wiki](https://github.com/antori82/FANTASIA/wiki)
 - YouTube: [Project channel](https://www.youtube.com/channel/UChH-PYQw-_IZJM7nYJywevg)
-- Forum: [Unreal Engine discussion](https://forums.unrealengine.com/t/framework-for-advanced-natural-tools-and-applications-with-social-interactive-agents-fantasia/158706)
 
 <!-- ACKNOWLEDGEMENTS -->
 ## Acknowledgements
