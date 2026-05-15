@@ -1,3 +1,8 @@
+/**
+ * @file FANTASIAACE.cpp
+ * @brief FANTASIAACE plugin module implementation.
+ */
+
 #include "FANTASIAACE.h"
 
 #define LOCTEXT_NAMESPACE "FFANTASIAACEModule"

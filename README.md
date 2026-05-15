@@ -79,7 +79,7 @@ FANTASIA bundles a set of independent components. Use only what you need.
 
 | Component | Purpose |
 | --- | --- |
-| **Neo4j** | Cypher queries against a Neo4j graph database via the native Bolt protocol (WebSocket or TCP+TLS). |
+| **Neo4j** | Cypher queries against a Neo4j graph database over the native Bolt protocol. Plain TCP framing (default, the same transport native Neo4j drivers use) or WebSocket, with optional TLS — works with Aura and local installs. |
 
 ### Math & ML
 
@@ -92,7 +92,7 @@ FANTASIA bundles a set of independent components. Use only what you need.
 
 | Integration | Purpose |
 | --- | --- |
-| **NVIDIA ACE** *(optional)* | Audio-driven facial animation via the [NVIDIA ACE Reference plugin](https://developer.nvidia.com/ace). When ACE is present, TTS audio drives lip-sync and emotion. |
+| **NVIDIA ACE** *(optional companion plugin)* | Audio-driven facial lip-sync and emotion. Ships since v2.0 as the separate **FANTASIAACE** plugin, which adds `UACERESTTTSComponent` and requires NVIDIA's [NV_ACE_Reference](https://developer.nvidia.com/ace). Core FANTASIA produces the audio; FANTASIAACE animates a face from it. See [Installation](#installation). |
 
 ## Quick Start
 
