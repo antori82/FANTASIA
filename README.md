@@ -105,10 +105,19 @@ If you want to start from scratch, install the plugin into your own project (nex
 FANTASIA is distributed prebuilt — for most users, no compilation is required.
 
 1. Clone or download this repository.
-2. If your UE project does not already have one, create a `Plugins` folder at the project root.
-3. Copy the `FANTASIA` folder from this repository into that `Plugins` folder.
-4. (Optional) For NVIDIA Audio2Face lip-sync, also copy the `FANTASIAACE` folder from this repository into your project's `Plugins` folder.
-5. Launch Unreal Engine. FANTASIA should appear in the **Plugins** list (and FANTASIAACE if you copied it).
+2. Run `FANTASIA/bootstrap.bat` (Windows) or `FANTASIA/bootstrap.sh` (Linux/macOS). This fetches the Whisper ASR model and (optionally) the prebuilt GPU whisper stack from this repo's GitHub Releases — they're hosted there instead of LFS to keep clones lean. The script is idempotent, so re-running is safe.
+3. If your UE project does not already have one, create a `Plugins` folder at the project root.
+4. Copy the `FANTASIA` folder from this repository into that `Plugins` folder.
+5. (Optional) For NVIDIA Audio2Face lip-sync, also copy the `FANTASIAACE` folder from this repository into your project's `Plugins` folder.
+6. Launch Unreal Engine. FANTASIA should appear in the **Plugins** list (and FANTASIAACE if you copied it).
+
+The bootstrap script takes optional flags:
+
+- `--model-only` — just the Whisper model (skip GPU stack, ~574 MB).
+- `--gpu-only` — just the GPU stack (skip Whisper model, ~540 MB).
+- `--force` — re-download even if the files are already present.
+
+If you don't need Whisper ASR at all, you can skip running the bootstrap entirely. The plugin loads fine without the model; the ASR components will just refuse to run until a model is available.
 
 ### Optional: NVIDIA Audio2Face lip-sync
 
@@ -123,11 +132,12 @@ The FANTASIAACE prebuilt DLL is compiled against the UE-shipped version of NV_AC
 
 The shipped FANTASIA DLL uses CPU inference for Whisper ASR. GPU acceleration is opt-in via runtime dispatch: no plugin rebuild required.
 
-Steps:
+If you ran `bootstrap.bat` / `bootstrap.sh` during installation, the GPU stack (`fantasia_whisper_cuda.dll` + `ggml*.dll` + CUDA runtime DLLs) is already staged in `FANTASIA/Binaries/Win64/`. To enable it, set `UWhisperSubsystem.Backend = GPU` (Blueprint or `DefaultGame.ini`) before calling `LoadModel`. The plugin's runtime dispatcher will `LoadLibrary` the CUDA DLL and route every `whisper_*` call through it; if the DLL or the CUDA runtime fails to load, FANTASIA logs a warning and falls back to CPU automatically.
+
+If you skipped the bootstrap (`--model-only`) or your GPU is not sm_89 (RTX 40-series) and you want kernels tuned for your hardware, you can build the GPU stack yourself:
 
 1. Install the NVIDIA CUDA Toolkit (12.x or 13.x).
 2. Run `FANTASIA/build_whisper_cuda.bat --shared` (Windows) or `FANTASIA/build_whisper_cuda.sh --shared` (Linux). The script builds whisper.cpp as a shared library with CUDA enabled and stages `fantasia_whisper_cuda.dll` (plus its `ggml*.dll` and `cudart64_*.dll` / `cublas64_*.dll` dependencies) into `FANTASIA/Binaries/Win64/` (or `Binaries/Linux/`).
-3. In your project, on the `UWhisperSubsystem`, set `Backend = GPU` before calling `LoadModel`. The plugin's runtime dispatcher will `LoadLibrary` the CUDA DLL and route every `whisper_*` call through it. If the DLL is missing or the CUDA runtime fails to load, FANTASIA logs a warning and falls back to CPU automatically.
 
 You can also pass `--static` to the build script to fall back to the legacy static-link flow that compiles CUDA into `UnrealEditor-FANTASIA.dll` directly. That requires a full plugin rebuild after running the script and is no longer the default.
 
