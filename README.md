@@ -143,6 +143,10 @@ You can also pass `--static` to the build script to fall back to the legacy stat
 
 > **See the [Wiki](https://github.com/antori82/FANTASIA/wiki) for the current installation procedure.**
 
+## Third-party licenses
+
+FANTASIA bundles or fetches code from several third-party projects (whisper.cpp, ggml, aGrUM, gRPC, SWI-Prolog, OpenSSL, the NVIDIA CUDA runtime, OpenAI's Whisper model weights, and others). See [`THIRD_PARTY_LICENSES.md`](THIRD_PARTY_LICENSES.md) for the per-component license summary. If you redistribute FANTASIA, you must also carry the corresponding upstream license text from each component.
+
 ## Troubleshooting
 
 If the editor reports that your project cannot be launched because of FANTASIA, verify that the SWI-Prolog runtime DLLs shipped alongside `UnrealEditor-FANTASIA.dll` in `FANTASIA/Binaries/Win64/` have been copied next to your project's binaries. The Prolog component loads its dependencies at editor startup; if they are missing, the plugin fails to initialize.
