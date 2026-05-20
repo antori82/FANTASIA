@@ -5,9 +5,27 @@ FANTASIAACE/Intermediate/
 # Debug symbols (large, not needed for plugin users)
 *.pdb
 
-# Whisper models — only the selected quantized model is tracked
+# Whisper models — fetched by bootstrap.{bat,sh} from the runtime-v2.0
+# release. Never tracked, since they're huge and live in release assets.
 FANTASIA/Resources/ggml-*.bin
-!FANTASIA/Resources/ggml-large-v3-turbo-q5_0.bin
+
+# GPU whisper stack — fetched by bootstrap.{bat,sh} from the runtime-v2.0
+# release. ~540 MB of CUDA-built DLLs that would otherwise dominate every
+# clone's LFS payload. The CPU path is statically linked into
+# UnrealEditor-FANTASIA.dll and needs none of these.
+FANTASIA/Binaries/Win64/fantasia_whisper_cuda.dll
+FANTASIA/Binaries/Win64/ggml.dll
+FANTASIA/Binaries/Win64/ggml-base.dll
+FANTASIA/Binaries/Win64/ggml-cpu.dll
+FANTASIA/Binaries/Win64/ggml-cuda.dll
+FANTASIA/Binaries/Win64/cudart64_*.dll
+FANTASIA/Binaries/Win64/cublas64_*.dll
+FANTASIA/Binaries/Win64/cublasLt64_*.dll
+FANTASIA/Binaries/Linux/libfantasia_whisper_cuda.so*
+FANTASIA/Binaries/Linux/libggml*.so*
+FANTASIA/Binaries/Linux/libcudart.so*
+FANTASIA/Binaries/Linux/libcublas.so*
+FANTASIA/Binaries/Linux/libcublasLt.so*
 
 # whisper.cpp — only source, headers, and prebuilt libs are needed
 FANTASIA/ThirdParty/whisper_cpp/build/
