@@ -4,9 +4,27 @@ FANTASIA/Intermediate/
 # Debug symbols (large, not needed for plugin users)
 *.pdb
 
-# Whisper models — only the selected quantized model is tracked
+# Whisper models — fetched by bootstrap.{bat,sh} from the runtime-v2.0
+# release. Never tracked; they're huge and live in release assets.
 FANTASIA/Resources/ggml-*.bin
-!FANTASIA/Resources/ggml-large-v3-turbo-q5_0.bin
+
+# CUDA leftover DLLs — removed from HEAD; the static-CUDA build pipeline
+# stages them automatically when a user runs build_whisper_cuda.bat
+FANTASIA/Binaries/Win64/cudart64_*.dll
+FANTASIA/Binaries/Win64/cublas64_*.dll
+FANTASIA/Binaries/Win64/cublasLt64_*.dll
+FANTASIA/Binaries/Win64/ggml-cuda.dll
+
+# Win64 build-time static libs — fetched by bootstrap.{bat,sh} from the
+# runtime-v2.0 release. ~330 MB uncompressed of aGrUM + gRPC + OpenSSL
+# Win64 static libs needed at plugin compile time.
+FANTASIA/ThirdParty/aGrUM/Libraries/agrum.x64.lib
+FANTASIA/ThirdParty/grpc/lib/win64/Release/
+FANTASIA/ThirdParty/OpenSSL/1.1.1t/lib/Win64/VS2015/Release/
+
+# Microsoft Speech SDK — fetched by bootstrap from the runtime-v2.0 release.
+# Used at build time + at runtime via vendor DLLs staged into Binaries/Win64.
+FANTASIA/ThirdParty/Microsoft.CognitiveServices.Speech.1.32.1/
 
 # whisper.cpp — only source, headers, and prebuilt libs are needed
 FANTASIA/ThirdParty/whisper_cpp/build/
@@ -28,30 +46,6 @@ FANTASIA/ThirdParty/whisper_cpp/README.md
 FANTASIA/ThirdParty/whisper_cpp/README_sycl.md
 FANTASIA/ThirdParty/whisper_cpp/build-xcframework.sh
 FANTASIA/ThirdParty/whisper_cpp/close-issue.yml
-
-# Azure Speech SDK — non-Win64 platforms (not needed for this plugin)
-FANTASIA/ThirdParty/Microsoft.CognitiveServices.Speech.*/build/Xamarin.iOS/
-FANTASIA/ThirdParty/Microsoft.CognitiveServices.Speech.*/build/monoandroid/
-FANTASIA/ThirdParty/Microsoft.CognitiveServices.Speech.*/build/native/ARM/
-FANTASIA/ThirdParty/Microsoft.CognitiveServices.Speech.*/build/native/ARM64/
-FANTASIA/ThirdParty/Microsoft.CognitiveServices.Speech.*/build/native/Win32/
-FANTASIA/ThirdParty/Microsoft.CognitiveServices.Speech.*/build/native/uap/
-FANTASIA/ThirdParty/Microsoft.CognitiveServices.Speech.*/lib/Xamarin.iOS/
-FANTASIA/ThirdParty/Microsoft.CognitiveServices.Speech.*/lib/monoandroid/
-FANTASIA/ThirdParty/Microsoft.CognitiveServices.Speech.*/lib/net462/
-FANTASIA/ThirdParty/Microsoft.CognitiveServices.Speech.*/lib/net6.0-*/
-FANTASIA/ThirdParty/Microsoft.CognitiveServices.Speech.*/lib/netstandard2.0/
-FANTASIA/ThirdParty/Microsoft.CognitiveServices.Speech.*/lib/uap10.0/
-FANTASIA/ThirdParty/Microsoft.CognitiveServices.Speech.*/runtimes/android-*/
-FANTASIA/ThirdParty/Microsoft.CognitiveServices.Speech.*/runtimes/centos7-*/
-FANTASIA/ThirdParty/Microsoft.CognitiveServices.Speech.*/runtimes/ios-*/
-FANTASIA/ThirdParty/Microsoft.CognitiveServices.Speech.*/runtimes/iossimulator-*/
-FANTASIA/ThirdParty/Microsoft.CognitiveServices.Speech.*/runtimes/linux-*/
-FANTASIA/ThirdParty/Microsoft.CognitiveServices.Speech.*/runtimes/maccatalyst-*/
-FANTASIA/ThirdParty/Microsoft.CognitiveServices.Speech.*/runtimes/osx-*/
-FANTASIA/ThirdParty/Microsoft.CognitiveServices.Speech.*/runtimes/win-x86/
-FANTASIA/ThirdParty/Microsoft.CognitiveServices.Speech.*/runtimes/win10-arm/
-FANTASIA/ThirdParty/Microsoft.CognitiveServices.Speech.*/runtimes/win10-arm64/
 
 # UE generated
 Saved/
