@@ -27,6 +27,15 @@ FANTASIA/Binaries/Linux/libcudart.so*
 FANTASIA/Binaries/Linux/libcublas.so*
 FANTASIA/Binaries/Linux/libcublasLt.so*
 
+# Win64 build-time static libs — fetched by bootstrap.{bat,sh} from the
+# runtime-v2.0 release. ~330 MB uncompressed of aGrUM + gRPC + OpenSSL
+# Win64 static libs needed at plugin compile time, not at runtime.
+# Blueprint-only users don't strictly need them but bootstrap fetches
+# them by default; the cost is disk space, not LFS bandwidth.
+FANTASIA/ThirdParty/aGrUM/Libraries/agrum.x64.lib
+FANTASIA/ThirdParty/grpc/lib/win64/Release/
+FANTASIA/ThirdParty/OpenSSL/1.1.1t/lib/Win64/VS2015/Release/
+
 # whisper.cpp — only source, headers, and prebuilt libs are needed
 FANTASIA/ThirdParty/whisper_cpp/build/
 FANTASIA/ThirdParty/whisper_cpp/examples/

@@ -105,7 +105,12 @@ If you want to start from scratch, install the plugin into your own project (nex
 FANTASIA is distributed prebuilt — for most users, no compilation is required.
 
 1. Clone or download this repository.
-2. Run `FANTASIA/bootstrap.bat` (Windows) or `FANTASIA/bootstrap.sh` (Linux/macOS). This fetches the Whisper ASR model and (optionally) the prebuilt GPU whisper stack from this repo's GitHub Releases — they're hosted there instead of LFS to keep clones lean. The script is idempotent, so re-running is safe.
+2. Run `FANTASIA/bootstrap.bat` (Windows) or `FANTASIA/bootstrap.sh` (Linux/macOS). This fetches three groups of artifacts from this repo's GitHub Releases — they're hosted there instead of LFS to keep clones lean:
+   - **Whisper ASR model** (~574 MB) for the Whisper component.
+   - **Prebuilt GPU whisper stack** (~540 MB) so you can flip `UWhisperSubsystem.Backend = GPU` without a rebuild.
+   - **Win64 build-time static libs** (~330 MB: aGrUM, gRPC, OpenSSL) so a C++ project can recompile the plugin.
+
+   The script is idempotent, so re-running is safe. Use `--runtime-only` if you're Blueprint-only and want to skip the build deps.
 3. If your UE project does not already have one, create a `Plugins` folder at the project root.
 4. Copy the `FANTASIA` folder from this repository into that `Plugins` folder.
 5. (Optional) For NVIDIA Audio2Face lip-sync, also copy the `FANTASIAACE` folder from this repository into your project's `Plugins` folder.
@@ -113,11 +118,13 @@ FANTASIA is distributed prebuilt — for most users, no compilation is required.
 
 The bootstrap script takes optional flags:
 
-- `--model-only` — just the Whisper model (skip GPU stack, ~574 MB).
-- `--gpu-only` — just the GPU stack (skip Whisper model, ~540 MB).
+- `--runtime-only` — skip the build-time static libs (Blueprint-only users who never recompile).
+- `--model-only` — just the Whisper model (~574 MB).
+- `--gpu-only` — just the GPU whisper stack (~540 MB).
+- `--deps-only` — just the Win64 build-time static libs (~330 MB uncompressed).
 - `--force` — re-download even if the files are already present.
 
-If you don't need Whisper ASR at all, you can skip running the bootstrap entirely. The plugin loads fine without the model; the ASR components will just refuse to run until a model is available.
+If you don't need Whisper ASR at all, you can skip running the bootstrap entirely **for a Blueprint-only install** — the plugin loads fine without the model. ASR components just refuse to run until a model is available. C++ projects always need the build deps; the no-flag default covers them.
 
 ### Optional: NVIDIA Audio2Face lip-sync
 
