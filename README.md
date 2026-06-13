@@ -104,16 +104,33 @@ If you want to start from scratch, install the plugin into your own project (nex
 
 FANTASIA is distributed prebuilt — for most users, no compilation is required.
 
-1. Clone or download this repository.
-2. Run `FANTASIA/bootstrap.bat` (Windows) or `FANTASIA/bootstrap.sh` (Linux/macOS). This fetches three groups of artifacts from this repo's GitHub Releases — they're hosted there instead of LFS to keep the clone lean:
+### Option A — Download the packaged plugin (recommended)
+
+The simplest path. No `git`, no Git LFS, nothing to fetch separately.
+
+1. Open the [latest release](https://github.com/antori82/FANTASIA/releases/latest) and download the full plugin zip for your engine version (e.g. `FANTASIA-ue5.6.zip` for UE 5.6).
+2. Extract it — you get a `FANTASIA` folder.
+3. If your UE project does not already have one, create a `Plugins` folder at the project root.
+4. Copy the extracted `FANTASIA` folder into that `Plugins` folder.
+5. Launch Unreal Engine. FANTASIA should appear in the **Plugins** list.
+
+The packaged zip already contains the prebuilt binaries, the Whisper ASR model, and every third-party dependency — everything needed to load and use the plugin out of the box.
+
+> **Match the engine version.** The packaged build is compiled for one Unreal minor version (the 5.6 zip is built against UE 5.6 **from the Epic Games Launcher**). Download the zip that matches your engine. If you run a source-built engine, or a different minor version with no packaged release, use **Option B** instead.
+
+### Option B — Clone and build from source
+
+For contributors, or when you need an engine version that has no packaged release:
+
+1. Install [Git LFS](https://git-lfs.com/) (the tracked binaries require it), then clone this repository. Use the branch matching your engine's minor version — `main` is UE 5.6.
+2. Run `FANTASIA/bootstrap.bat` (Windows) or `FANTASIA/bootstrap.sh` (Linux/macOS). It fetches the heavy artifacts from this repo's GitHub Releases — hosted there instead of LFS to keep the clone lean:
    - **Whisper ASR model** (~574 MB) for the Whisper component.
    - **Win64 build-time static libs** (~330 MB: aGrUM, gRPC, OpenSSL) so a C++ project can recompile the plugin.
    - **Microsoft Speech SDK** (~170 MB) needed by the Azure ASR/TTS/NLU components.
 
    The script is idempotent; re-running is safe. Use `--runtime-only` if you're Blueprint-only and don't need to recompile.
-3. If your UE project does not already have one, create a `Plugins` folder at the project root.
-4. Copy the `FANTASIA` folder from this repository into that `Plugins` folder.
-5. Launch Unreal Engine. FANTASIA should appear in the **Plugins** list.
+3. Copy the `FANTASIA` folder into your project's `Plugins` folder.
+4. Launch Unreal Engine.
 
 ### When a rebuild *is* needed
 
