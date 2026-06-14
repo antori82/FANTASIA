@@ -28,7 +28,8 @@ public class FANTASIAACE : ModuleRules
         {
             "Slate",
             "SlateCore",
-            "Projects"
+            "Projects",
+            "Json"
         });
     }
 }
