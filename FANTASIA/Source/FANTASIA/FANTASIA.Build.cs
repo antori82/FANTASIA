@@ -492,7 +492,7 @@ public class FANTASIA : ModuleRules
         // GGML_USE_LLAMAFILE) that aren't defined in our toolchain. These are
         // upstream headers we don't own, so relax the warning level for this
         // module rather than patch vendor code.
-        UndefinedIdentifierWarningLevel = WarningLevel.Warning;
+        CppCompileWarningSettings.UndefinedIdentifierWarningLevel = WarningLevel.Warning;
 
         #if UE_5_3_OR_LATER
 			// AVX2 required for ggml SIMD acceleration (any Intel/AMD CPU from ~2015+)
