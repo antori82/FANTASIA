@@ -39,8 +39,13 @@ while [ $# -gt 0 ]; do
         --model-only)   FETCH_GPU=0; FETCH_DEPS=0 ;;
         --gpu-only)     FETCH_MODEL=0; FETCH_DEPS=0 ;;
         --deps-only)    FETCH_MODEL=0; FETCH_GPU=0 ;;
+        --ace|--ace-only)
+            # The NVIDIA ACE / Audio2Face bundle is Win64-only (TensorRT/cuBLAS
+            # DLLs + Windows A2F runtime). Interactive MetaHumans via ACE is a
+            # Windows workflow; use bootstrap.bat --ace there.
+            echo "NOTE: the NVIDIA ACE / MetaHuman bundle is Windows-only; run bootstrap.bat --ace on Windows. Skipping on this platform." ;;
         --force)        FORCE=1 ;;
-        *) echo "Unknown argument: $1"; echo "Usage: bootstrap.sh [--runtime-only|--model-only|--gpu-only|--deps-only] [--force]"; exit 1 ;;
+        *) echo "Unknown argument: $1"; echo "Usage: bootstrap.sh [--runtime-only|--model-only|--gpu-only|--deps-only|--ace] [--force]"; exit 1 ;;
     esac
     shift
 done

@@ -36,6 +36,11 @@ FANTASIA/ThirdParty/aGrUM/Libraries/agrum.x64.lib
 FANTASIA/ThirdParty/grpc/lib/win64/Release/
 FANTASIA/ThirdParty/OpenSSL/1.1.1t/lib/Win64/VS2015/Release/
 
+# NVIDIA ACE 5.7 bundle — fetched by `bootstrap.bat --ace` from the
+# runtime-v2.0 release into this staging dir, then moved by the user into
+# their project's Plugins/ folder. Never tracked (it's NVIDIA's plugin).
+FANTASIA/ACE-UE57-Bundle/
+
 # whisper.cpp — only source, headers, and prebuilt libs are needed
 FANTASIA/ThirdParty/whisper_cpp/build/
 FANTASIA/ThirdParty/whisper_cpp/examples/
