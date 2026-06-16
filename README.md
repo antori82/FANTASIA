@@ -104,18 +104,18 @@ If you want to start from scratch, install the plugin into your own project (nex
 
 FANTASIA is distributed prebuilt — for most users, no compilation is required.
 
-1. Clone or download this repository.
-2. Run `FANTASIA/bootstrap.bat` (Windows) or `FANTASIA/bootstrap.sh` (Linux/macOS). **By default it installs everything** needed for a typical interactive MetaHuman, fetched from this repo's GitHub Releases (hosted there instead of LFS to keep clones lean). On Windows the default pulls:
+1. If your UE project does not already have one, create a `Plugins` folder at the project root.
+2. Clone or download this repository and put the `FANTASIA` and `FANTASIAACE` folders into that `Plugins` folder.
+3. From `Plugins/FANTASIA/FANTASIA/`, run `bootstrap.bat` (Windows) or `bootstrap.sh` (Linux/macOS). **By default it installs everything** needed for a typical interactive MetaHuman, fetched from this repo's GitHub Releases (hosted there instead of LFS to keep clones lean). On Windows the default pulls:
    - **Whisper ASR model** (~574 MB).
    - **Prebuilt GPU whisper stack** (~540 MB) — flip `UWhisperSubsystem.Backend = GPU`, no rebuild.
    - **Win64 build-time static libs** (~330 MB: aGrUM, gRPC, OpenSSL) for C++ recompiles.
-   - **NVIDIA ACE A2F runtime** (~656 MB) + **"Mark"** (~1.5 GB) and **"James"** (~1.5 GB) sample A2F characters — staged under `FANTASIA/NVIDIA-UE57-Bundle/`.
+   - **NVIDIA ACE A2F runtime** (~656 MB) + **"Mark"** (~1.5 GB) and **"James"** (~1.5 GB) sample A2F characters.
 
-   The script is idempotent (re-running is safe) and prints the final MetaHuman-setup steps. It's a big first download — see the opt-out flags below to trim it.
-3. If you fetched the NVIDIA bundle, **move the plugin folders** from `FANTASIA/NVIDIA-UE57-Bundle/` (`NV_ACE_Reference`, `NvAudio2FaceMark`, `NvAudio2FaceJames`) into your project's `Plugins` folder.
-4. If your UE project does not already have one, create a `Plugins` folder at the project root.
-5. Copy the `FANTASIA` and `FANTASIAACE` folders from this repository into that `Plugins` folder.
-6. Launch Unreal Engine. The plugins should appear in the **Plugins** list.
+   Because it runs from inside your `Plugins/` folder, the NVIDIA ACE/Mark/James plugins are **placed automatically** next to FANTASIA — no manual move. Add `--enable-plugins` to also switch the whole stack on in your project's `.uproject` (a `.uproject.bak` is written first). The script is idempotent (re-running is safe) and prints a final summary.
+4. Launch Unreal Engine. The plugins appear in the **Plugins** list (already enabled if you used `--enable-plugins`; otherwise enable them in the Plugins panel).
+
+> If you run the bootstrap from a **standalone clone** (not yet inside a project's `Plugins/`), it can't find a `Plugins/` folder to install into, so the NVIDIA plugins stay staged in `FANTASIA/NVIDIA-UE57-Bundle/` — move those folders into your `Plugins/` yourself.
 
 **Opt-out flags** (default installs everything; use these to skip parts):
 
@@ -125,6 +125,7 @@ FANTASIA is distributed prebuilt — for most users, no compilation is required.
 - `--no-mark` / `--no-james` — skip one sample character; `--no-characters` skips both.
 - `--no-nvidia` — skip ACE + Mark + James entirely (no MetaHuman lip-sync).
 - `--minimal` — Whisper model only (no GPU, deps, or NVIDIA components).
+- `--enable-plugins` — also enable the FANTASIA stack in your project's `.uproject` (writes a `.uproject.bak` first).
 - `--force` — re-download even if files are already present.
 
 ### NVIDIA Audio2Face lip-sync (bundled)

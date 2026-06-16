@@ -17,10 +17,12 @@ REM    NVIDIA "Mark" A2F character  -> NVIDIA-UE57-Bundle/         (~1.5 GB)
 REM    NVIDIA "James" A2F character -> NVIDIA-UE57-Bundle/         (~1.5 GB)
 REM
 REM  The NVIDIA ACE/Mark/James plugins (MIT + NVIDIA Community Model License) are
-REM  staged under NVIDIA-UE57-Bundle/; you then move them into your project's
-REM  Plugins/ folder (the script prints the steps). DLSS / Streamline are NOT
-REM  bundled — NVIDIA's RTX SDK license forbids standalone redistribution; install
-REM  them from the Epic Marketplace if you want them (not needed for lip-sync).
+REM  fetched into NVIDIA-UE57-Bundle/ and then, if this clone sits inside a UE
+REM  project's Plugins/ folder, MOVED automatically next to FANTASIA there.
+REM  (If no Plugins/ ancestor is found, they're left staged with instructions.)
+REM  DLSS / Streamline are NOT bundled — NVIDIA's RTX SDK license forbids
+REM  standalone redistribution; install them from the Epic Marketplace if you
+REM  want them (not needed for lip-sync).
 REM
 REM  Idempotent: files already present are skipped (size-checked); --force redoes.
 REM
@@ -34,6 +36,8 @@ REM    bootstrap.bat --no-james      skip the "James" character
 REM    bootstrap.bat --no-characters skip both Mark and James
 REM    bootstrap.bat --no-nvidia     skip ACE + Mark + James
 REM    bootstrap.bat --minimal       Whisper model only (no GPU/deps/NVIDIA)
+REM    bootstrap.bat --enable-plugins  edit the project's .uproject to enable the
+REM                                    FANTASIA stack (writes a .uproject.bak first)
 REM    bootstrap.bat --force         re-download even if present
 REM ─────────────────────────────────────────────────────────────────────────────
 
@@ -54,6 +58,8 @@ set FETCH_ACE=1
 set FETCH_MARK=1
 set FETCH_JAMES=1
 set FORCE=0
+set ENABLE_PLUGINS=0
+set PLACED=0
 
 REM Capture the script's own directory BEFORE the arg loop. The `shift`
 REM calls below shift %0 as well, after which %~dp0 would resolve against
@@ -75,9 +81,10 @@ if /I "%~1"=="--no-james"      ( set "FETCH_JAMES=0" & shift & goto :parse_args 
 if /I "%~1"=="--no-characters" ( set "FETCH_MARK=0" & set "FETCH_JAMES=0" & shift & goto :parse_args )
 if /I "%~1"=="--no-nvidia"     ( set "FETCH_ACE=0" & set "FETCH_MARK=0" & set "FETCH_JAMES=0" & shift & goto :parse_args )
 if /I "%~1"=="--minimal"       ( set "FETCH_GPU=0" & set "FETCH_DEPS=0" & set "FETCH_ACE=0" & set "FETCH_MARK=0" & set "FETCH_JAMES=0" & shift & goto :parse_args )
+if /I "%~1"=="--enable-plugins" ( set "ENABLE_PLUGINS=1" & shift & goto :parse_args )
 if /I "%~1"=="--force"         ( set "FORCE=1" & shift & goto :parse_args )
 echo Unknown argument: %~1
-echo Usage: bootstrap.bat [--no-model^|--no-gpu^|--no-deps^|--no-ace^|--no-mark^|--no-james^|--no-characters^|--no-nvidia^|--minimal] [--force]
+echo Usage: bootstrap.bat [--no-model^|--no-gpu^|--no-deps^|--no-ace^|--no-mark^|--no-james^|--no-characters^|--no-nvidia^|--minimal] [--enable-plugins] [--force]
 exit /b 1
 :args_done
 
@@ -275,21 +282,62 @@ del /F /Q "%NV_TGZ%" 2>nul
 echo NVIDIA "James" character staged.
 :after_james
 
+REM ── Auto-place the NVIDIA plugins into the project's Plugins/ folder ──────
+REM Walk up from SCRIPT_DIR to the nearest ancestor named "Plugins" (UE plugins
+REM always live under one). If found, move the fetched NVIDIA plugins there as
+REM siblings of FANTASIA; otherwise leave them staged in NV_DIR with a manual
+REM note. PowerShell does the ancestor walk (robust vs. batch path math).
+set PLUGINS_DIR=
+for /f "usebackq delims=" %%P in (`powershell -NoProfile -Command "$d=[System.IO.DirectoryInfo]'%SCRIPT_DIR%'; while($d -ne $null){ if($d.Name -ieq 'Plugins'){ $d.FullName; break }; $d=$d.Parent }"`) do set "PLUGINS_DIR=%%P"
+
+if not defined PLUGINS_DIR goto :nv_instructions
+
 echo.
+echo Installing NVIDIA plugins into %PLUGINS_DIR% ...
+for %%G in (NV_ACE_Reference NvAudio2FaceMark NvAudio2FaceJames) do (
+    if exist "%NV_DIR%\%%G\" (
+        if exist "%PLUGINS_DIR%\%%G\" (
+            echo   %%G already in Plugins ^(leaving the existing copy in place^).
+        ) else (
+            move "%NV_DIR%\%%G" "%PLUGINS_DIR%\" >nul
+            if errorlevel 1 ( echo   WARNING: could not move %%G; it remains in %NV_DIR% ) else ( echo   installed %%G )
+        )
+    )
+)
+set PLACED=1
+REM Remove the staging dir if it's now empty.
+rmdir "%NV_DIR%" 2>nul
+
+if "%ENABLE_PLUGINS%"=="1" (
+    echo.
+    echo Enabling the FANTASIA stack in the project .uproject ...
+    powershell -NoProfile -ExecutionPolicy Bypass -File "%SCRIPT_DIR%enable-plugins.ps1" -PluginsDir "%PLUGINS_DIR%"
+)
+
+:nv_instructions
+echo.
+if "%PLACED%"=="1" goto :instr_auto
+REM -- staged (no Plugins/ ancestor found) --
 echo  [Interactive MetaHuman setup — manual steps]
 echo    1. Move the plugin folders from:
 echo         %NV_DIR%
 echo       into your UE project's Plugins\ folder (alongside FANTASIA).
-echo    2. Add a MetaHuman to your project (MetaHuman Creator / Fab / Quixel Bridge),
-echo       or use NVIDIA's bundled "Mark" / "James" sample characters.
-echo    3. (Optional) For DLSS / Streamline performance, install them from the
-echo       Epic Marketplace -- they are NOT bundled (NVIDIA's RTX SDK license
-echo       forbids standalone redistribution) and are not required for lip-sync.
-echo    4. Enable FANTASIA, FANTASIAACE, NV_ACE_Reference (+ the character plugins)
-echo       in the project, and drive the face with UACERESTTTSComponent /
-echo       UACEElevenLabsTTSComponent (from FANTASIAACE).
-echo    Licensing + provenance: see
-echo      NVIDIA-UE57-Bundle\NV_ACE_Reference\README-FANTASIA-UE5.7-bundle.txt
+echo    2. Enable FANTASIA, FANTASIAACE, NV_ACE_Reference (+ the character plugins).
+goto :instr_common
+:instr_auto
+echo  [Interactive MetaHuman setup]
+echo    NVIDIA plugins installed into your Plugins\ folder.
+if "%ENABLE_PLUGINS%"=="1"     echo    The FANTASIA stack was enabled in your .uproject (backup: *.uproject.bak).
+if not "%ENABLE_PLUGINS%"=="1" echo    Enable FANTASIA, FANTASIAACE, NV_ACE_Reference (+ characters) in the
+if not "%ENABLE_PLUGINS%"=="1" echo    editor's Plugins panel, or re-run with --enable-plugins.
+:instr_common
+echo    - "Mark" / "James" are ready-to-use A2F characters; or import your own
+echo      MetaHuman via MetaHuman Creator / Fab / Quixel Bridge.
+echo    - (Optional) DLSS / Streamline performance: install from the Epic
+echo      Marketplace (NOT bundled; not required for lip-sync).
+echo    - Drive the face with UACERESTTTSComponent / UACEElevenLabsTTSComponent
+echo      (from FANTASIAACE).
+echo    Licensing + provenance: NV_ACE_Reference\README-FANTASIA-UE5.7-bundle.txt
 
 :done
 echo.
