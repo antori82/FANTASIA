@@ -84,9 +84,16 @@ if %errorlevel% neq 0 (
     echo ERROR: curl.exe not found on PATH. Install curl or upgrade to Windows 10 1803+.
     exit /b 1
 )
-where tar >nul 2>&1
-if %errorlevel% neq 0 (
-    echo ERROR: tar.exe not found on PATH. Install bsdtar/libarchive or upgrade to Windows 10 17063+.
+REM Pin tar to the Windows-bundled bsdtar at %SystemRoot%\System32\tar.exe
+REM instead of relying on PATH order. Git Bash's GNU tar usually wins the
+REM PATH lookup on developer machines, and GNU tar interprets `-C D:\path`
+REM (any drive-letter argument) as remote `host:path` syntax -- so the
+REM extraction step fails with "tar: Cannot connect to D: resolve failed".
+REM bsdtar parses the same path correctly. The bundled bsdtar has been in
+REM Windows 10 since build 17063 (April 2018), so this path is reliable.
+set TAR=%SystemRoot%\System32\tar.exe
+if not exist "%TAR%" (
+    echo ERROR: %TAR% not found. Install bsdtar/libarchive or upgrade to Windows 10 17063+.
     exit /b 1
 )
 
@@ -143,7 +150,7 @@ if %errorlevel% neq 0 (
 )
 
 echo Extracting into %BIN_DIR% ...
-tar -xf "%GPU_TGZ%" -C "%BIN_DIR%"
+"%TAR%" -xf "%GPU_TGZ%" -C "%BIN_DIR%"
 if %errorlevel% neq 0 (
     echo ERROR: failed to extract %GPU_ASSET%.
     exit /b 1
@@ -179,7 +186,7 @@ echo Extracting into %SCRIPT_DIR% ...
 REM %SCRIPT_DIR% always ends with a backslash. Quoting it directly to tar
 REM gives `"...\"` which tar parses as an unterminated quote. Tacking on
 REM `.` resolves to the same directory while breaking the escape.
-tar -xf "%DEPS_TGZ%" -C "%SCRIPT_DIR%."
+"%TAR%" -xf "%DEPS_TGZ%" -C "%SCRIPT_DIR%."
 if %errorlevel% neq 0 (
     echo ERROR: failed to extract %DEPS_ASSET%.
     exit /b 1
@@ -214,7 +221,7 @@ if %errorlevel% neq 0 (
 
 REM ACE_DIR has no trailing backslash, so quote it directly (no `.` trick needed).
 echo Extracting into %ACE_DIR% ...
-tar -xf "%ACE_TGZ%" -C "%ACE_DIR%"
+"%TAR%" -xf "%ACE_TGZ%" -C "%ACE_DIR%"
 if %errorlevel% neq 0 (
     echo ERROR: failed to extract %ACE_ASSET%.
     exit /b 1
