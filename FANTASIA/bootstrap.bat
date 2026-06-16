@@ -4,33 +4,37 @@ setlocal EnableDelayedExpansion
 REM ─────────────────────────────────────────────────────────────────────────────
 REM  FANTASIA artifact fetcher (Windows)
 REM
-REM  Downloads the heavy artifacts that don't live in git LFS anymore:
-REM    - Whisper ASR model            -> Resources/ggml-large-v3-turbo-q5_0.bin
-REM    - Prebuilt GPU whisper stack   -> Binaries/Win64/ (8 DLLs)
-REM    - Win64 build-time static libs -> ThirdParty/{aGrUM,grpc,OpenSSL}/...
+REM  Downloads, from the runtime-v2.0 GitHub Release, everything needed to run a
+REM  typical FANTASIA interactive MetaHuman with as little manual setup as
+REM  possible. By DEFAULT it installs EVERYTHING; use --no-* flags to opt out.
 REM
-REM  Source is the GitHub Release pinned via RELEASE_TAG below. Idempotent:
-REM  files already present at the expected paths are skipped (size-checked).
+REM  What it can fetch:
+REM    Whisper ASR model            -> Resources/                  (~574 MB)
+REM    Prebuilt GPU whisper stack   -> Binaries/Win64/             (~540 MB)
+REM    Win64 build-time static libs -> ThirdParty/                 (~330 MB)
+REM    NVIDIA ACE (A2F runtime)     -> NVIDIA-UE57-Bundle/         (~656 MB)
+REM    NVIDIA "Mark" A2F character  -> NVIDIA-UE57-Bundle/         (~1.5 GB)
+REM    NVIDIA "James" A2F character -> NVIDIA-UE57-Bundle/         (~1.5 GB)
 REM
-REM  Default with no args: fetch ALL three groups. C++ users need the build
-REM  deps; Blueprint-only users get an extra ~330 MB on disk but no extra
-REM  bandwidth (it's a Release asset, not LFS).
+REM  The NVIDIA ACE/Mark/James plugins (MIT + NVIDIA Community Model License) are
+REM  staged under NVIDIA-UE57-Bundle/; you then move them into your project's
+REM  Plugins/ folder (the script prints the steps). DLSS / Streamline are NOT
+REM  bundled — NVIDIA's RTX SDK license forbids standalone redistribution; install
+REM  them from the Epic Marketplace if you want them (not needed for lip-sync).
 REM
-REM  Optional NVIDIA ACE bundle (interactive MetaHumans / Audio2Face lip-sync),
-REM  opt-in via --ace because it is ~520 MB and only needed for ACE lip-sync:
-REM    - NV_ACE_Reference recompiled for UE 5.7 + A2F runtime + models
-REM      -> ACE-UE57-Bundle/NV_ACE_Reference/  (then moved into Plugins/)
+REM  Idempotent: files already present are skipped (size-checked); --force redoes.
 REM
 REM  Usage:
-REM    bootstrap.bat                  fetch model + GPU stack + build deps
-REM    bootstrap.bat --ace            also fetch the NVIDIA ACE 5.7 bundle
-REM                                   (= everything for interactive MetaHumans)
-REM    bootstrap.bat --runtime-only   skip build deps (Blueprint-only users)
-REM    bootstrap.bat --model-only     just the Whisper model
-REM    bootstrap.bat --gpu-only       just the GPU stack
-REM    bootstrap.bat --deps-only      just the build-time static libs
-REM    bootstrap.bat --ace-only       just the NVIDIA ACE 5.7 bundle
-REM    bootstrap.bat --force          re-download even if present
+REM    bootstrap.bat                 install everything (recommended, default)
+REM    bootstrap.bat --no-gpu        skip the CUDA GPU whisper stack
+REM    bootstrap.bat --no-deps       skip build-time libs (Blueprint-only users)
+REM    bootstrap.bat --no-ace        skip the NVIDIA ACE runtime
+REM    bootstrap.bat --no-mark       skip the "Mark" character
+REM    bootstrap.bat --no-james      skip the "James" character
+REM    bootstrap.bat --no-characters skip both Mark and James
+REM    bootstrap.bat --no-nvidia     skip ACE + Mark + James
+REM    bootstrap.bat --minimal       Whisper model only (no GPU/deps/NVIDIA)
+REM    bootstrap.bat --force         re-download even if present
 REM ─────────────────────────────────────────────────────────────────────────────
 
 set RELEASE_TAG=runtime-v2.0
@@ -39,11 +43,16 @@ set MODEL_ASSET=whisper-large-v3-turbo-q5_0.bin
 set GPU_ASSET=fantasia-gpu-cuda13-win64.tar.gz
 set DEPS_ASSET=fantasia-build-deps-win64.tar.gz
 set ACE_ASSET=nv-ace-reference-ue57-full.tar.gz
+set MARK_ASSET=nv-audio2face-mark-ue57.tar.gz
+set JAMES_ASSET=nv-audio2face-james-ue57.tar.gz
 
+REM Default: install EVERYTHING. The --no-* flags below turn parts off.
 set FETCH_MODEL=1
 set FETCH_GPU=1
 set FETCH_DEPS=1
-set FETCH_ACE=0
+set FETCH_ACE=1
+set FETCH_MARK=1
+set FETCH_JAMES=1
 set FORCE=0
 
 REM Capture the script's own directory BEFORE the arg loop. The `shift`
@@ -52,33 +61,35 @@ REM the current working directory instead of the script's location --
 REM sending all fetched artifacts one level too high when any flag is used.
 set SCRIPT_DIR=%~dp0
 
+REM NOTE: quoted `set "VAR=val"` is required throughout the parse loop -- an
+REM unquoted `set VAR=0 & ...` captures the space before `&` INTO the value
+REM ("0 "), which then fails the `=="1"` gate checks below.
 :parse_args
 if "%~1"=="" goto :args_done
-REM Quoted `set "VAR=val"` form is required: an unquoted `set VAR=0 & ...`
-REM captures the space before `&` INTO the value (VAR becomes "0 "), which
-REM then fails the `=="1"` gate checks below. Quotes delimit the value.
-if /I "%~1"=="--runtime-only" ( set "FETCH_DEPS=0" & shift & goto :parse_args )
-if /I "%~1"=="--model-only"   ( set "FETCH_GPU=0" & set "FETCH_DEPS=0" & shift & goto :parse_args )
-if /I "%~1"=="--gpu-only"     ( set "FETCH_MODEL=0" & set "FETCH_DEPS=0" & shift & goto :parse_args )
-if /I "%~1"=="--deps-only"    ( set "FETCH_MODEL=0" & set "FETCH_GPU=0" & shift & goto :parse_args )
-if /I "%~1"=="--ace"          ( set "FETCH_ACE=1" & shift & goto :parse_args )
-if /I "%~1"=="--ace-only"     ( set "FETCH_MODEL=0" & set "FETCH_GPU=0" & set "FETCH_DEPS=0" & set "FETCH_ACE=1" & shift & goto :parse_args )
-if /I "%~1"=="--force"        ( set "FORCE=1" & shift & goto :parse_args )
+if /I "%~1"=="--no-model"      ( set "FETCH_MODEL=0" & shift & goto :parse_args )
+if /I "%~1"=="--no-gpu"        ( set "FETCH_GPU=0" & shift & goto :parse_args )
+if /I "%~1"=="--no-deps"       ( set "FETCH_DEPS=0" & shift & goto :parse_args )
+if /I "%~1"=="--no-ace"        ( set "FETCH_ACE=0" & shift & goto :parse_args )
+if /I "%~1"=="--no-mark"       ( set "FETCH_MARK=0" & shift & goto :parse_args )
+if /I "%~1"=="--no-james"      ( set "FETCH_JAMES=0" & shift & goto :parse_args )
+if /I "%~1"=="--no-characters" ( set "FETCH_MARK=0" & set "FETCH_JAMES=0" & shift & goto :parse_args )
+if /I "%~1"=="--no-nvidia"     ( set "FETCH_ACE=0" & set "FETCH_MARK=0" & set "FETCH_JAMES=0" & shift & goto :parse_args )
+if /I "%~1"=="--minimal"       ( set "FETCH_GPU=0" & set "FETCH_DEPS=0" & set "FETCH_ACE=0" & set "FETCH_MARK=0" & set "FETCH_JAMES=0" & shift & goto :parse_args )
+if /I "%~1"=="--force"         ( set "FORCE=1" & shift & goto :parse_args )
 echo Unknown argument: %~1
-echo Usage: bootstrap.bat [--runtime-only ^| --model-only ^| --gpu-only ^| --deps-only ^| --ace ^| --ace-only] [--force]
+echo Usage: bootstrap.bat [--no-model^|--no-gpu^|--no-deps^|--no-ace^|--no-mark^|--no-james^|--no-characters^|--no-nvidia^|--minimal] [--force]
 exit /b 1
 :args_done
 
 set RES_DIR=%SCRIPT_DIR%Resources
 set BIN_DIR=%SCRIPT_DIR%Binaries\Win64
 set TP_DIR=%SCRIPT_DIR%ThirdParty
-set ACE_DIR=%SCRIPT_DIR%ACE-UE57-Bundle
+set NV_DIR=%SCRIPT_DIR%NVIDIA-UE57-Bundle
 
 if not exist "%RES_DIR%" mkdir "%RES_DIR%"
 if not exist "%BIN_DIR%" mkdir "%BIN_DIR%"
 if not exist "%TP_DIR%"  mkdir "%TP_DIR%"
 
-REM Confirm curl + tar are available (built into Windows 10+ since 2018).
 where curl >nul 2>&1
 if %errorlevel% neq 0 (
     echo ERROR: curl.exe not found on PATH. Install curl or upgrade to Windows 10 1803+.
@@ -168,7 +179,7 @@ goto :after_deps
 set DEPS_MARKER=%TP_DIR%\aGrUM\Libraries\agrum.x64.lib
 if "%FORCE%"=="0" if exist "%DEPS_MARKER%" (
     echo Build-time static libs already present under %TP_DIR% ^(skipping^).
-    goto :done
+    goto :after_deps
 )
 
 set DEPS_TGZ=%TEMP%\%DEPS_ASSET%
@@ -196,51 +207,89 @@ echo Build deps staged under %TP_DIR%
 
 :after_deps
 
-REM ── Fetch NVIDIA ACE 5.7 bundle (interactive MetaHumans / A2F lip-sync) ───
+REM ── Fetch NVIDIA plugins (ACE + Mark + James) into NVIDIA-UE57-Bundle/ ────
+set ANY_NV=0
+if "%FETCH_ACE%"=="1"   set ANY_NV=1
+if "%FETCH_MARK%"=="1"  set ANY_NV=1
+if "%FETCH_JAMES%"=="1" set ANY_NV=1
+if "%ANY_NV%"=="0" goto :done
+if not exist "%NV_DIR%" mkdir "%NV_DIR%"
+
+REM -- ACE A2F runtime --
 if "%FETCH_ACE%"=="1" goto :do_ace
-goto :done
-
+goto :after_ace
 :do_ace
-set ACE_MARKER=%ACE_DIR%\NV_ACE_Reference\NV_ACE_Reference.uplugin
-if "%FORCE%"=="0" if exist "%ACE_MARKER%" (
-    echo NVIDIA ACE 5.7 bundle already present at %ACE_DIR% ^(skipping^).
-    goto :ace_instructions
+if "%FORCE%"=="0" if exist "%NV_DIR%\NV_ACE_Reference\NV_ACE_Reference.uplugin" (
+    echo NVIDIA ACE runtime already present ^(skipping^).
+    goto :after_ace
 )
-if not exist "%ACE_DIR%" mkdir "%ACE_DIR%"
-
-set ACE_TGZ=%TEMP%\%ACE_ASSET%
+set NV_TGZ=%TEMP%\%ACE_ASSET%
 echo.
-echo Downloading NVIDIA ACE 5.7 bundle %ACE_ASSET% from %RELEASE_TAG% ...
-echo   ^(this is ~520 MB: NV_ACE_Reference recompiled for UE 5.7 + A2F runtime + models^)
-curl -L --fail --progress-bar -o "%ACE_TGZ%" "%RELEASE_BASE%/%ACE_ASSET%"
-if %errorlevel% neq 0 (
-    echo ERROR: failed to download %ACE_ASSET%.
-    del /F /Q "%ACE_TGZ%" 2>nul
-    exit /b 1
-)
+echo Downloading NVIDIA ACE A2F runtime %ACE_ASSET% ^(~656 MB^) ...
+curl -L --fail --progress-bar -o "%NV_TGZ%" "%RELEASE_BASE%/%ACE_ASSET%"
+if %errorlevel% neq 0 ( echo ERROR: failed to download %ACE_ASSET%. & del /F /Q "%NV_TGZ%" 2>nul & exit /b 1 )
+echo Extracting into %NV_DIR% ...
+"%TAR%" -xf "%NV_TGZ%" -C "%NV_DIR%"
+if %errorlevel% neq 0 ( echo ERROR: failed to extract %ACE_ASSET%. & exit /b 1 )
+del /F /Q "%NV_TGZ%" 2>nul
+echo NVIDIA ACE runtime staged.
+:after_ace
 
-REM ACE_DIR has no trailing backslash, so quote it directly (no `.` trick needed).
-echo Extracting into %ACE_DIR% ...
-"%TAR%" -xf "%ACE_TGZ%" -C "%ACE_DIR%"
-if %errorlevel% neq 0 (
-    echo ERROR: failed to extract %ACE_ASSET%.
-    exit /b 1
+REM -- "Mark" character --
+if "%FETCH_MARK%"=="1" goto :do_mark
+goto :after_mark
+:do_mark
+if "%FORCE%"=="0" if exist "%NV_DIR%\NvAudio2FaceMark\NvAudio2FaceMark.uplugin" (
+    echo NVIDIA "Mark" character already present ^(skipping^).
+    goto :after_mark
 )
-del /F /Q "%ACE_TGZ%" 2>nul
-echo ACE 5.7 bundle staged under %ACE_DIR%
+set NV_TGZ=%TEMP%\%MARK_ASSET%
+echo.
+echo Downloading NVIDIA "Mark" A2F character %MARK_ASSET% ^(~1.5 GB^) ...
+curl -L --fail --progress-bar -o "%NV_TGZ%" "%RELEASE_BASE%/%MARK_ASSET%"
+if %errorlevel% neq 0 ( echo ERROR: failed to download %MARK_ASSET%. & del /F /Q "%NV_TGZ%" 2>nul & exit /b 1 )
+echo Extracting into %NV_DIR% ...
+"%TAR%" -xf "%NV_TGZ%" -C "%NV_DIR%"
+if %errorlevel% neq 0 ( echo ERROR: failed to extract %MARK_ASSET%. & exit /b 1 )
+del /F /Q "%NV_TGZ%" 2>nul
+echo NVIDIA "Mark" character staged.
+:after_mark
 
-:ace_instructions
+REM -- "James" character --
+if "%FETCH_JAMES%"=="1" goto :do_james
+goto :after_james
+:do_james
+if "%FORCE%"=="0" if exist "%NV_DIR%\NvAudio2FaceJames\NvAudio2FaceJames.uplugin" (
+    echo NVIDIA "James" character already present ^(skipping^).
+    goto :after_james
+)
+set NV_TGZ=%TEMP%\%JAMES_ASSET%
+echo.
+echo Downloading NVIDIA "James" A2F character %JAMES_ASSET% ^(~1.5 GB^) ...
+curl -L --fail --progress-bar -o "%NV_TGZ%" "%RELEASE_BASE%/%JAMES_ASSET%"
+if %errorlevel% neq 0 ( echo ERROR: failed to download %JAMES_ASSET%. & del /F /Q "%NV_TGZ%" 2>nul & exit /b 1 )
+echo Extracting into %NV_DIR% ...
+"%TAR%" -xf "%NV_TGZ%" -C "%NV_DIR%"
+if %errorlevel% neq 0 ( echo ERROR: failed to extract %JAMES_ASSET%. & exit /b 1 )
+del /F /Q "%NV_TGZ%" 2>nul
+echo NVIDIA "James" character staged.
+:after_james
+
 echo.
 echo  [Interactive MetaHuman setup — manual steps]
-echo    1. Move the "NV_ACE_Reference" folder from:
-echo         %ACE_DIR%
+echo    1. Move the plugin folders from:
+echo         %NV_DIR%
 echo       into your UE project's Plugins\ folder (alongside FANTASIA).
-echo    2. Add a MetaHuman to your project (MetaHuman Creator / Fab / Quixel Bridge).
-echo    3. Enable FANTASIA, FANTASIAACE and NV_ACE_Reference in the project.
-echo    4. Drive the MetaHuman's face with UACERESTTTSComponent /
+echo    2. Add a MetaHuman to your project (MetaHuman Creator / Fab / Quixel Bridge),
+echo       or use NVIDIA's bundled "Mark" / "James" sample characters.
+echo    3. (Optional) For DLSS / Streamline performance, install them from the
+echo       Epic Marketplace -- they are NOT bundled (NVIDIA's RTX SDK license
+echo       forbids standalone redistribution) and are not required for lip-sync.
+echo    4. Enable FANTASIA, FANTASIAACE, NV_ACE_Reference (+ the character plugins)
+echo       in the project, and drive the face with UACERESTTTSComponent /
 echo       UACEElevenLabsTTSComponent (from FANTASIAACE).
 echo    Licensing + provenance: see
-echo      NV_ACE_Reference\README-FANTASIA-UE5.7-bundle.txt
+echo      NVIDIA-UE57-Bundle\NV_ACE_Reference\README-FANTASIA-UE5.7-bundle.txt
 
 :done
 echo.

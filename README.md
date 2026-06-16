@@ -105,35 +105,37 @@ If you want to start from scratch, install the plugin into your own project (nex
 FANTASIA is distributed prebuilt — for most users, no compilation is required.
 
 1. Clone or download this repository.
-2. Run `FANTASIA/bootstrap.bat` (Windows) or `FANTASIA/bootstrap.sh` (Linux/macOS). This fetches three groups of artifacts from this repo's GitHub Releases — they're hosted there instead of LFS to keep clones lean:
-   - **Whisper ASR model** (~574 MB) for the Whisper component.
-   - **Prebuilt GPU whisper stack** (~540 MB) so you can flip `UWhisperSubsystem.Backend = GPU` without a rebuild.
-   - **Win64 build-time static libs** (~330 MB: aGrUM, gRPC, OpenSSL) so a C++ project can recompile the plugin.
+2. Run `FANTASIA/bootstrap.bat` (Windows) or `FANTASIA/bootstrap.sh` (Linux/macOS). **By default it installs everything** needed for a typical interactive MetaHuman, fetched from this repo's GitHub Releases (hosted there instead of LFS to keep clones lean). On Windows the default pulls:
+   - **Whisper ASR model** (~574 MB).
+   - **Prebuilt GPU whisper stack** (~540 MB) — flip `UWhisperSubsystem.Backend = GPU`, no rebuild.
+   - **Win64 build-time static libs** (~330 MB: aGrUM, gRPC, OpenSSL) for C++ recompiles.
+   - **NVIDIA ACE A2F runtime** (~656 MB) + **"Mark"** (~1.5 GB) and **"James"** (~1.5 GB) sample A2F characters — staged under `FANTASIA/NVIDIA-UE57-Bundle/`.
 
-   The script is idempotent, so re-running is safe. Use `--runtime-only` if you're Blueprint-only and want to skip the build deps.
-3. If your UE project does not already have one, create a `Plugins` folder at the project root.
-4. Copy the `FANTASIA` folder from this repository into that `Plugins` folder.
-5. (Optional) For NVIDIA Audio2Face lip-sync, also copy the `FANTASIAACE` folder from this repository into your project's `Plugins` folder.
-6. Launch Unreal Engine. FANTASIA should appear in the **Plugins** list (and FANTASIAACE if you copied it).
+   The script is idempotent (re-running is safe) and prints the final MetaHuman-setup steps. It's a big first download — see the opt-out flags below to trim it.
+3. If you fetched the NVIDIA bundle, **move the plugin folders** from `FANTASIA/NVIDIA-UE57-Bundle/` (`NV_ACE_Reference`, `NvAudio2FaceMark`, `NvAudio2FaceJames`) into your project's `Plugins` folder.
+4. If your UE project does not already have one, create a `Plugins` folder at the project root.
+5. Copy the `FANTASIA` and `FANTASIAACE` folders from this repository into that `Plugins` folder.
+6. Launch Unreal Engine. The plugins should appear in the **Plugins** list.
 
-The bootstrap script takes optional flags:
+**Opt-out flags** (default installs everything; use these to skip parts):
 
-- `--runtime-only` — skip the build-time static libs (Blueprint-only users who never recompile).
-- `--model-only` — just the Whisper model (~574 MB).
-- `--gpu-only` — just the GPU whisper stack (~540 MB).
-- `--deps-only` — just the Win64 build-time static libs (~330 MB uncompressed).
-- `--force` — re-download even if the files are already present.
+- `--no-gpu` — skip the CUDA GPU whisper stack.
+- `--no-deps` — skip the build-time static libs (Blueprint-only users who never recompile).
+- `--no-ace` — skip the NVIDIA ACE A2F runtime.
+- `--no-mark` / `--no-james` — skip one sample character; `--no-characters` skips both.
+- `--no-nvidia` — skip ACE + Mark + James entirely (no MetaHuman lip-sync).
+- `--minimal` — Whisper model only (no GPU, deps, or NVIDIA components).
+- `--force` — re-download even if files are already present.
 
-If you don't need Whisper ASR at all, you can skip running the bootstrap entirely **for a Blueprint-only install** — the plugin loads fine without the model. ASR components just refuse to run until a model is available. C++ projects always need the build deps; the no-flag default covers them.
+### NVIDIA Audio2Face lip-sync (bundled)
 
-### Optional: NVIDIA Audio2Face lip-sync
+Since version 2.0, Audio2Face lives in the companion plugin `FANTASIAACE`, which drives a MetaHuman's face via NVIDIA's `NV_ACE_Reference`. The bootstrap fetches a complete, UE 5.7-recompiled NVIDIA stack — `NV_ACE_Reference` (A2F runtime + models) plus the ready-to-use `Mark` and `James` sample characters — into `FANTASIA/NVIDIA-UE57-Bundle/`. Move those folders into your `Plugins/`, enable FANTASIA + FANTASIAACE + NV_ACE_Reference (+ a character), and use `UACERESTTTSComponent` / `UACEElevenLabsTTSComponent` to animate the face from synthesized speech.
 
-Since version 2.0, Audio2Face lives in a separate companion plugin (`FANTASIAACE`) that depends on NVIDIA's `NV_ACE_Reference`. Core FANTASIA ships without any ACE bindings, so it loads on any system regardless of whether ACE is installed.
+- **You don't need lip-sync:** run `bootstrap.bat --no-nvidia` and copy only `FANTASIA`. The core plugin works out of the box on any system.
+- **DLSS / Streamline:** not bundled — NVIDIA's RTX SDK license forbids standalone redistribution, and they aren't required for lip-sync. Install them from the Epic Marketplace if you want the rendering-performance boost.
+- **MetaHumans:** the `Mark`/`James` samples are included; for your own character add a MetaHuman via MetaHuman Creator / Fab / Quixel Bridge.
 
-- **You don't need lip-sync:** copy only the `FANTASIA` folder. The shipped DLL works out of the box.
-- **You want lip-sync:** install NVIDIA's `NV_ACE_Reference` plugin from the Marketplace, then copy both `FANTASIA` and `FANTASIAACE` into your project's `Plugins` folder. Enable both in the project settings. Use `UACERESTTTSComponent` (from FANTASIAACE) instead of `URESTTTSComponent` to get the A2F pointer / emotion UPROPERTYs.
-
-The FANTASIAACE prebuilt DLL is compiled against the UE-shipped version of NV_ACE_Reference. If you have a different ACE version (e.g. a newer Marketplace update), you may need a one-time C++ rebuild of FANTASIAACE.
+The recompiled NVIDIA plugins target UE 5.7 (the official Marketplace build is 5.6 only). They're redistributed in good faith for this non-commercial academic project, with all NVIDIA license texts retained — see `NVIDIA-UE57-Bundle/NV_ACE_Reference/README-FANTASIA-UE5.7-bundle.txt`.
 
 ### Optional: Whisper on GPU (CUDA)
 
@@ -141,7 +143,7 @@ The shipped FANTASIA DLL uses CPU inference for Whisper ASR. GPU acceleration is
 
 If you ran `bootstrap.bat` / `bootstrap.sh` during installation, the GPU stack (`fantasia_whisper_cuda.dll` + `ggml*.dll` + CUDA runtime DLLs) is already staged in `FANTASIA/Binaries/Win64/`. To enable it, set `UWhisperSubsystem.Backend = GPU` (Blueprint or `DefaultGame.ini`) before calling `LoadModel`. The plugin's runtime dispatcher will `LoadLibrary` the CUDA DLL and route every `whisper_*` call through it; if the DLL or the CUDA runtime fails to load, FANTASIA logs a warning and falls back to CPU automatically.
 
-If you skipped the bootstrap (`--model-only`) or your GPU is not sm_89 (RTX 40-series) and you want kernels tuned for your hardware, you can build the GPU stack yourself:
+If you skipped the GPU stack (`--no-gpu`) or your GPU is not sm_89 (RTX 40-series) and you want kernels tuned for your hardware, you can build the GPU stack yourself:
 
 1. Install the NVIDIA CUDA Toolkit (12.x or 13.x).
 2. Run `FANTASIA/build_whisper_cuda.bat --shared` (Windows) or `FANTASIA/build_whisper_cuda.sh --shared` (Linux). The script builds whisper.cpp as a shared library with CUDA enabled and stages `fantasia_whisper_cuda.dll` (plus its `ggml*.dll` and `cudart64_*.dll` / `cublas64_*.dll` dependencies) into `FANTASIA/Binaries/Win64/` (or `Binaries/Linux/`).

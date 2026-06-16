@@ -10,17 +10,21 @@ set -euo pipefail
 #    - Win64 build-time static libs -> ThirdParty/{aGrUM,grpc,OpenSSL}/...
 #       (Win64 only at the moment; Linux build deps build from source via UE)
 #
-#  Default with no args: fetch everything. C++ users need the build deps;
-#  Blueprint-only users get an extra ~330 MB on disk but no extra bandwidth
-#  (it's a Release asset, not LFS).
+#  Default with no args: install everything available on this platform.
+#  Use --no-* flags to opt out. NOTE: the NVIDIA ACE / Mark / James bundles
+#  (interactive-MetaHuman lip-sync) are Win64-only (TensorRT/cuBLAS + Windows
+#  A2F runtime) -- run bootstrap.bat on Windows for those. On Linux this
+#  fetches the Whisper model + GPU whisper stack + build deps.
 #
 #  Usage:
-#    bootstrap.sh                  fetch everything (recommended)
-#    bootstrap.sh --runtime-only   skip build deps
-#    bootstrap.sh --model-only     just the Whisper model
-#    bootstrap.sh --gpu-only       just the GPU stack
-#    bootstrap.sh --deps-only      just the build-time static libs
+#    bootstrap.sh                  install everything available (default)
+#    bootstrap.sh --no-gpu         skip the CUDA GPU whisper stack
+#    bootstrap.sh --no-deps        skip build-time libs (Blueprint-only users)
+#    bootstrap.sh --minimal        Whisper model only
 #    bootstrap.sh --force          re-download even if present
+#    ( --no-ace / --no-mark / --no-james / --no-characters / --no-nvidia are
+#      accepted for parity with bootstrap.bat but are no-ops here: those
+#      NVIDIA plugins are Windows-only. )
 # ─────────────────────────────────────────────────────────────────────────────
 
 RELEASE_TAG="runtime-v2.0"
@@ -35,20 +39,21 @@ FETCH_DEPS=1
 FORCE=0
 while [ $# -gt 0 ]; do
     case "$1" in
-        --runtime-only) FETCH_DEPS=0 ;;
-        --model-only)   FETCH_GPU=0; FETCH_DEPS=0 ;;
-        --gpu-only)     FETCH_MODEL=0; FETCH_DEPS=0 ;;
-        --deps-only)    FETCH_MODEL=0; FETCH_GPU=0 ;;
-        --ace|--ace-only)
-            # The NVIDIA ACE / Audio2Face bundle is Win64-only (TensorRT/cuBLAS
-            # DLLs + Windows A2F runtime). Interactive MetaHumans via ACE is a
-            # Windows workflow; use bootstrap.bat --ace there.
-            echo "NOTE: the NVIDIA ACE / MetaHuman bundle is Windows-only; run bootstrap.bat --ace on Windows. Skipping on this platform." ;;
+        --no-model)     FETCH_MODEL=0 ;;
+        --no-gpu)       FETCH_GPU=0 ;;
+        --no-deps)      FETCH_DEPS=0 ;;
+        --minimal)      FETCH_GPU=0; FETCH_DEPS=0 ;;
+        --no-ace|--no-mark|--no-james|--no-characters|--no-nvidia)
+            : ;;  # NVIDIA ACE/Mark/James are Windows-only; no-op on Linux
         --force)        FORCE=1 ;;
-        *) echo "Unknown argument: $1"; echo "Usage: bootstrap.sh [--runtime-only|--model-only|--gpu-only|--deps-only|--ace] [--force]"; exit 1 ;;
+        *) echo "Unknown argument: $1"; echo "Usage: bootstrap.sh [--no-model|--no-gpu|--no-deps|--minimal] [--force]"; exit 1 ;;
     esac
     shift
 done
+
+# The NVIDIA ACE / Mark / James MetaHuman plugins are Win64-only. Mention it
+# once so Linux users know where interactive-MetaHuman support lives.
+echo "NOTE: NVIDIA ACE / Mark / James (interactive-MetaHuman lip-sync) are Windows-only; run bootstrap.bat on Windows to fetch them."
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 RES_DIR="${SCRIPT_DIR}/Resources"
