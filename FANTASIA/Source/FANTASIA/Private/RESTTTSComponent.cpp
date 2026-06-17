@@ -1,280 +1,35 @@
 /**
  * @file RESTTTSComponent.cpp
- * @brief Implementation of URESTTTSComponent -- generic REST-based TTS with streaming and Audio2Face.
+ * @brief Implementation of URESTTTSComponent -- generic REST-based TTS.
+ *
+ * No NVIDIA ACE / Audio2Face code here since the 2.0 split; that
+ * lives in the FANTASIAACE plugin's UACERESTTTSComponent subclass.
  */
 
 #include "RESTTTSComponent.h"
 #include "Async/Async.h"
-
-#if FANTASIA_WITH_ACE
-#include "ACERuntimeModule.h"
-#include "ACEAudioCurveSourceComponent.h"
-#include "Audio2FaceParameters.h" // UAudio2FaceParameters
-#include "ACETypes.h" // FAudio2FaceEmotion / FAudio2FaceEmotionOverride
-
-/**
- * Copy FANTASIA's mirror emotion struct into ACE's real FAudio2FaceEmotion
- * field-for-field. Kept in one place so adding a new field to ACE's struct
- * (and our mirror) is a single-site change.
- */
-static FAudio2FaceEmotion ConvertToACEEmotion(const FFantasiaAudio2FaceEmotion& Src)
-{
-	FAudio2FaceEmotion Dst;
-	Dst.OverallEmotionStrength    = Src.OverallEmotionStrength;
-	Dst.DetectedEmotionContrast   = Src.DetectedEmotionContrast;
-	Dst.MaxDetectedEmotions       = Src.MaxDetectedEmotions;
-	Dst.DetectedEmotionSmoothing  = Src.DetectedEmotionSmoothing;
-	Dst.bEnableEmotionOverride    = Src.bEnableEmotionOverride;
-	Dst.EmotionOverrideStrength   = Src.EmotionOverrideStrength;
-
-	Dst.EmotionOverrides.bOverrideAmazement    = Src.EmotionOverrides.bOverrideAmazement;
-	Dst.EmotionOverrides.Amazement             = Src.EmotionOverrides.Amazement;
-	Dst.EmotionOverrides.bOverrideAnger        = Src.EmotionOverrides.bOverrideAnger;
-	Dst.EmotionOverrides.Anger                 = Src.EmotionOverrides.Anger;
-	Dst.EmotionOverrides.bOverrideCheekiness   = Src.EmotionOverrides.bOverrideCheekiness;
-	Dst.EmotionOverrides.Cheekiness            = Src.EmotionOverrides.Cheekiness;
-	Dst.EmotionOverrides.bOverrideDisgust      = Src.EmotionOverrides.bOverrideDisgust;
-	Dst.EmotionOverrides.Disgust               = Src.EmotionOverrides.Disgust;
-	Dst.EmotionOverrides.bOverrideFear         = Src.EmotionOverrides.bOverrideFear;
-	Dst.EmotionOverrides.Fear                  = Src.EmotionOverrides.Fear;
-	Dst.EmotionOverrides.bOverrideGrief        = Src.EmotionOverrides.bOverrideGrief;
-	Dst.EmotionOverrides.Grief                 = Src.EmotionOverrides.Grief;
-	Dst.EmotionOverrides.bOverrideJoy          = Src.EmotionOverrides.bOverrideJoy;
-	Dst.EmotionOverrides.Joy                   = Src.EmotionOverrides.Joy;
-	Dst.EmotionOverrides.bOverrideOutOfBreath  = Src.EmotionOverrides.bOverrideOutOfBreath;
-	Dst.EmotionOverrides.OutOfBreath           = Src.EmotionOverrides.OutOfBreath;
-	Dst.EmotionOverrides.bOverridePain         = Src.EmotionOverrides.bOverridePain;
-	Dst.EmotionOverrides.Pain                  = Src.EmotionOverrides.Pain;
-	Dst.EmotionOverrides.bOverrideSadness      = Src.EmotionOverrides.bOverrideSadness;
-	Dst.EmotionOverrides.Sadness               = Src.EmotionOverrides.Sadness;
-	return Dst;
-}
-#endif // FANTASIA_WITH_ACE
 
 URESTTTSComponent::URESTTTSComponent()
 {
 	PrimaryComponentTick.bCanEverTick = false;
 }
 
-/**
- * Launches the Audio2Face consumer async task. The task drains per-call
- * audio buffers in submission order (PlaybackOrder), batches samples, and
- * feeds them to ACE AnimateFromAudioSamples. Multiple TTSSynthesize calls
- * may issue HTTP requests in parallel -- their per-call buffers fill up
- * out of order, but this task plays them in call order, marking each
- * buffer's tail with bIsLastChunk=true so A2F closes each utterance
- * cleanly. Buffers are removed from BuffersByCaller and freed once
- * fully drained; PlaybackComplete fires for the caller's id at that point.
- */
 void URESTTTSComponent::BeginPlay()
 {
 	Super::BeginPlay();
-
-	bIsPlaying.store(true);
-
-#if FANTASIA_WITH_ACE
-	// Use Async (not AsyncTask) so we get a future we can join on in EndPlay.
-	// Without the join, component EndPlay returns while the consumer is still
-	// in its 50 ms wake cycle; if BP EndPlay then deallocates ACE resources
-	// immediately after (as the Alice/MetaFamily setup does), the consumer can
-	// reach into half-torn-down ACE state via AnimateFromAudioSamples and
-	// trigger a use-after-free in NVIDIA's DirectML DLL (nvdxgdmal64.dll).
-	ConsumerTaskFuture = Async(EAsyncExecution::ThreadPool, [this]()
-	{
-		// Audio-realtime pacing: send exactly one BATCH_SIZE batch per
-		// AnimateFromAudioSamples call and sleep its audio duration. Burst-
-		// feeding huge batches makes ACE spawn overlapping audio outputs.
-		constexpr int32 SampleRateHz = 16000;
-		constexpr float BatchSeconds = float(A2F_STREAMING_BATCH_SIZE) / float(SampleRateHz);
-		constexpr float PaceSleep = BatchSeconds * 0.95f;
-
-		// outData persists across slot transitions: a slot's tail samples
-		// stay buffered and combine with the next slot's head into a full
-		// BATCH_SIZE batch. Keeps every send the same size so the pacing
-		// sleep stays accurate.
-		TArray<float> outData;
-		outData.Reserve(A2F_STREAMING_BATCH_SIZE);
-
-		auto SendOutData = [&](bool bIsLastChunk)
-		{
-			if (outData.Num() == 0) return;
-			UACEAudioCurveSourceComponent* TypedA2F = Cast<UACEAudioCurveSourceComponent>(A2Fpointer);
-			UAudio2FaceParameters* TypedParams = Cast<UAudio2FaceParameters>(A2FParameters);
-			if (IsValid(TypedA2F))
-			{
-				FAudio2FaceEmotion AceEmotion = ConvertToACEEmotion(EmotionParameters);
-				FACERuntimeModule::Get().AnimateFromAudioSamples(
-					TypedA2F, outData, 1, SampleRateHz, bIsLastChunk,
-					AceEmotion, TypedParams, A2FProvider);
-			}
-			outData.Empty();
-			FPlatformProcess::Sleep(PaceSleep);
-		};
-
-		while (bIsPlaying.load(std::memory_order_relaxed))
-		{
-			ConsumerWakeEvent->Wait(50);
-			ConsumerWakeEvent->Reset();
-
-			// ── Cancellation path ──────────────────────────────────────
-			if (bNeedsFlush.load(std::memory_order_acquire))
-			{
-				FPlaybackOrderEntry discard;
-				while (PlaybackOrder.Dequeue(discard)) {}
-				{
-					FScopeLock Lock(&BuffersMutex);
-					BuffersByCaller.Empty();
-				}
-				CurrentPlayback.Reset();
-				outData.Empty();
-				bNeedsFlush.store(false, std::memory_order_release);
-				continue;
-			}
-
-			// ── Acquire next entry if idle ─────────────────────────────
-			if (!CurrentPlayback.IsSet())
-			{
-				FPlaybackOrderEntry NextEntry;
-				if (!PlaybackOrder.Dequeue(NextEntry))
-				{
-					// Nothing queued. If end-of-turn was signaled, send
-					// the buffered tail with bIsLastChunk=true so ACE
-					// finalizes the session and OnAnimationEnded fires
-					// (BP unmutes Whisper). If the last batch landed on
-					// a boundary and outData is empty, send one zeroed
-					// sample just to carry the close flag.
-					if (bTurnEndSignaled.load(std::memory_order_acquire))
-					{
-						if (outData.Num() > 0)
-						{
-							SendOutData(true);
-						}
-						else
-						{
-							UACEAudioCurveSourceComponent* TypedA2F = Cast<UACEAudioCurveSourceComponent>(A2Fpointer);
-							UAudio2FaceParameters* TypedParams = Cast<UAudio2FaceParameters>(A2FParameters);
-							if (IsValid(TypedA2F))
-							{
-								TArray<float> Tail;
-								Tail.Add(0.0f);
-								FAudio2FaceEmotion AceEmotion = ConvertToACEEmotion(EmotionParameters);
-								FACERuntimeModule::Get().AnimateFromAudioSamples(
-									TypedA2F, Tail, 1, SampleRateHz, /*bIsLastChunk=*/true,
-									AceEmotion, TypedParams, A2FProvider);
-							}
-						}
-						bTurnEndSignaled.store(false, std::memory_order_release);
-					}
-					continue;
-				}
-				CurrentPlayback = NextEntry;
-			}
-
-			FAudioBuffer* Target = CurrentPlayback->Buffer;
-			if (!Target)
-			{
-				CurrentPlayback.Reset();
-				ConsumerWakeEvent->Trigger();
-				continue;
-			}
-
-			// ── Top up outData from current slot (up to BATCH_SIZE) ────
-			bool bSlotFullyConsumed = false;
-			{
-				FScopeLock BufferLock(&Target->Mutex);
-				const int32 NeedMore = A2F_STREAMING_BATCH_SIZE - outData.Num();
-				const int32 Available = Target->Samples.Num() - Target->ConsumedSamples;
-				const int32 ToTake = FMath::Min(NeedMore, Available);
-				if (ToTake > 0)
-				{
-					outData.Append(Target->Samples.GetData() + Target->ConsumedSamples, ToTake);
-					Target->ConsumedSamples += ToTake;
-				}
-				// Memory order matters: HandleResult sets bSynthesisComplete
-				// AFTER its final append; acquire semantics here ensures we
-				// see those last samples.
-				const bool bComplete = Target->bSynthesisComplete.load(std::memory_order_acquire);
-				const bool bFullyDrained = (Target->ConsumedSamples >= Target->Samples.Num());
-				bSlotFullyConsumed = bComplete && bFullyDrained;
-			}
-
-			// ── Retire slot if consumed (carry outData into next slot) ─
-			if (bSlotFullyConsumed)
-			{
-				const FString FinishedCallerId = CurrentPlayback->CallerId;
-				FAudioBuffer* FinishedBuffer = CurrentPlayback->Buffer;
-
-				{
-					FScopeLock Lock(&BuffersMutex);
-					if (TArray<TUniquePtr<FAudioBuffer>>* List = BuffersByCaller.Find(FinishedCallerId))
-					{
-						for (int32 i = 0; i < List->Num(); ++i)
-						{
-							if ((*List)[i].Get() == FinishedBuffer)
-							{
-								List->RemoveAt(i);
-								break;
-							}
-						}
-						if (List->Num() == 0)
-						{
-							BuffersByCaller.Remove(FinishedCallerId);
-						}
-					}
-				}
-
-				CurrentPlayback.Reset();
-				AsyncTask(ENamedThreads::GameThread, [this, FinishedCallerId]()
-				{
-					PlaybackComplete.Broadcast(FinishedCallerId);
-				});
-				// Wake immediately so the next slot's samples flow
-				// without the 50 ms Wait timeout.
-				ConsumerWakeEvent->Trigger();
-			}
-
-			// ── Send if we have a full batch ───────────────────────────
-			if (outData.Num() >= A2F_STREAMING_BATCH_SIZE)
-			{
-				SendOutData(false);
-				if (CurrentPlayback.IsSet() || !PlaybackOrder.IsEmpty())
-				{
-					ConsumerWakeEvent->Trigger();
-				}
-			}
-		}
-	});
-#endif // FANTASIA_WITH_ACE
 }
 
 void URESTTTSComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
-	// Signal the consumer task to exit, then wait for it to actually finish
-	// BEFORE handing control back to UE. This matters because the enclosing
-	// actor's BP EndPlay typically fires immediately after this one and, in
-	// the Alice/MetaFamily flow, Blueprint deallocates the A2F provider on
-	// EndPlay. If we don't join here, the consumer might still be mid-
-	// AnimateFromAudioSamples when ACE starts tearing down GPU resources,
-	// causing a use-after-free in NVIDIA's DirectML DLL (nvdxgdmal64.dll).
-	bIsPlaying.store(false);
-	ConsumerWakeEvent->Trigger();
-
-#if FANTASIA_WITH_ACE
-	if (ConsumerTaskFuture.IsValid())
-	{
-		ConsumerTaskFuture.Wait();
-	}
-#endif
-
 	Super::EndPlay(EndPlayReason);
 }
 
 
 /**
  * Processes a complete HTTP response: WAV detection + resample, stash in
- * Buffer (for TTSGetSound retrieval by caller id), and -- in non-streaming
- * mode -- push the full audio into the per-call buffer. Marks synthesis
- * complete so the consumer task knows it can retire the buffer once drained.
+ * Buffer (for TTSGetSound retrieval by caller id), push the full audio
+ * into the per-call buffer in non-streaming mode, mark synthesis
+ * complete, and wake any subclass-installed consumer.
  *
  * The buffer pointer was captured directly in the HTTP closure, so we
  * write to the right buffer even when many calls share the same caller id.
@@ -319,13 +74,12 @@ void URESTTTSComponent::HandleResult(FTTSData response, FString id, FAudioBuffer
 		// This matches the pre-existing behavior.
 	}
 
-#if FANTASIA_WITH_ACE
 	if (Target)
 	{
 		// Streaming mode: HandlePartialResult already pushed everything and
 		// the OnProcessRequestComplete callback flushed the trailing bytes.
-		// Here we just mark synthesis complete so the consumer can retire
-		// the buffer once it's fully drained.
+		// Here we just mark synthesis complete so a subclass consumer can
+		// retire the buffer once it's fully drained.
 		// Non-streaming mode: HandlePartialResult was never called; push
 		// the full PCM here, then mark complete.
 		if (!bStreaming)
@@ -346,9 +100,8 @@ void URESTTTSComponent::HandleResult(FTTSData response, FString id, FAudioBuffer
 		// samples appended above (or by HandlePartialResult earlier) are
 		// visible before the consumer treats this buffer as final.
 		Target->bSynthesisComplete.store(true, std::memory_order_release);
-		ConsumerWakeEvent->Trigger();
+		WakeConsumer();
 	}
-#endif // FANTASIA_WITH_ACE
 
 	AsyncTask(ENamedThreads::GameThread, [this, id]()
 	{
@@ -358,14 +111,13 @@ void URESTTTSComponent::HandleResult(FTTSData response, FString id, FAudioBuffer
 
 /** Converts a streaming PCM chunk to float samples and appends them to
  *  the request's specific per-call buffer (captured by pointer in the
- *  HTTP closure -- never looked up by id). The consumer task drains
+ *  HTTP closure -- never looked up by id). A subclass consumer drains
  *  buffers in submission order via PlaybackOrder. */
 void URESTTTSComponent::HandlePartialResult(TArray<uint8> response, FString id, FAudioBuffer* Target)
 {
 	const int32 NumBytes = response.Num();
 	if (NumBytes < 2) return;
 
-#if FANTASIA_WITH_ACE
 	if (Target)
 	{
 		const int32 NumSamples = NumBytes / 2;
@@ -376,12 +128,8 @@ void URESTTTSComponent::HandlePartialResult(TArray<uint8> response, FString id, 
 		{
 			Target->Samples.Add(static_cast<float>(*reinterpret_cast<const int16*>(RawData + i*2)) / 32768.0f);
 		}
+		WakeConsumer();
 	}
-	if (IsValid(A2Fpointer))
-	{
-		ConsumerWakeEvent->Trigger();
-	}
-#endif // FANTASIA_WITH_ACE
 
 	AsyncTask(ENamedThreads::GameThread, [this, id]()
 	{
@@ -392,7 +140,7 @@ void URESTTTSComponent::HandlePartialResult(TArray<uint8> response, FString id, 
 /** Reserves a per-call audio buffer in submission order BEFORE issuing the
  *  HTTP request. The buffer is appended to the caller-id's list (so callers
  *  reusing the same id stack their buffers without collision); the global
- *  PlaybackOrder FIFO records the (caller id, buffer pointer) so the
+ *  PlaybackOrder FIFO records the (caller id, buffer pointer) so a subclass
  *  consumer plays them in TTSSynthesize call order regardless of when each
  *  HTTP completes. The buffer pointer is captured directly in the HTTP
  *  closure -- no by-id lookup that could race. */
@@ -410,25 +158,20 @@ void URESTTTSComponent::TTSSynthesize(FString text, FString id, bool bEndTurn)
 	IssueHttpRequest(BuildSynthesisRequest(text, id), RawPtr);
 
 	// Set the close-stream flag AFTER the buffer is in PlaybackOrder.
-	// The consumer only acts on the flag when the queue is empty AND a
-	// slot is fully consumed -- and our new buffer guarantees the queue
-	// is non-empty at this moment. So the close defers naturally to
-	// THIS buffer's tail, with no race against earlier buffers.
+	// A subclass consumer only acts on the flag when the queue is empty
+	// AND a slot is fully consumed -- and our new buffer guarantees the
+	// queue is non-empty at this moment. So the close defers naturally
+	// to THIS buffer's tail, with no race against earlier buffers.
 	if (bEndTurn)
 	{
 		EndTurn();
 	}
 }
 
-/** Signal that the current turn is over (without synthesizing more
- *  text). Common case is the bEndTurn parameter on TTSSynthesize; this
- *  standalone variant is for edge cases (e.g., closing the stream when
- *  the LLM produced no final sentence). Safe to call from the game
- *  thread. */
+/** Default no-op. UACERESTTTSComponent overrides to set bTurnEndSignaled
+ *  and trigger its consumer wake event. */
 void URESTTTSComponent::EndTurn()
 {
-	bTurnEndSignaled.store(true, std::memory_order_release);
-	ConsumerWakeEvent->Trigger();
 }
 
 /**

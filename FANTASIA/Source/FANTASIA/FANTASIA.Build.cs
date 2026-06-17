@@ -118,48 +118,6 @@ public class FANTASIA : ModuleRules
             );
     }
 
-    public void MicrosoftLibs(string ThirdParty)
-    {
-        string LibraryPath = Path.Combine(ThirdParty, "Microsoft.CognitiveServices.Speech.1.32.1", "build", "native", "x64", "Release");
-        string IncludePath1 = Path.Combine(ThirdParty, "Microsoft.CognitiveServices.Speech.1.32.1", "build", "native", "include", "cxx_api");
-        string IncludePath2 = Path.Combine(ThirdParty, "Microsoft.CognitiveServices.Speech.1.32.1", "build", "native", "include", "c_api");
-
-        PublicAdditionalLibraries.Add(LibraryPath + "/Microsoft.CognitiveServices.Speech.core.lib");
-        PublicIncludePaths.AddRange(new string[] { IncludePath1, IncludePath2 });
-    }
-
-    public void AWSLibs(string ThirdParty)
-    {
-        string IncludePath3 = Path.Combine(ThirdParty, "AWS", "Core");
-        string IncludePath4 = Path.Combine(ThirdParty, "AWS", "Polly");
-        string IncludePath5 = Path.Combine(ThirdParty, "AWS", "TTS");
-        string LibraryPath = Path.Combine(ThirdParty, "AWS", "lib");
-
-        PublicAdditionalLibraries.Add(LibraryPath + "/aws-cpp-sdk-core.lib");
-        PublicAdditionalLibraries.Add(LibraryPath + "/aws-cpp-sdk-polly.lib");
-        PublicAdditionalLibraries.Add(LibraryPath + "/aws-cpp-sdk-text-to-speech.lib");
-        PublicIncludePaths.AddRange(new string[] { IncludePath3, IncludePath4, IncludePath5 });
-    }
-
-    public void DllLoad(string Redist)
-    {
-        foreach (string dllFile in Directory.GetFiles(Redist, "*"))
-        {
-            // Stage to $(BinaryOutputDir) so the redist DLLs land next to
-            // the binary that imports them, regardless of build type:
-            //   - Editor (modular):  resolves to Plugin/Binaries/Win64,
-            //                        next to UnrealEditor-FANTASIA.dll.
-            //   - Monolithic Shipping: resolves to Project/Binaries/Win64,
-            //                          next to <Project>-Win64-Shipping.exe.
-            // Staging only to $(PluginDir)/Binaries/Win64 worked for the
-            // editor (where FANTASIA is its own DLL) but produced silent
-            // STATUS_DLL_NOT_FOUND failures in monolithic packaged builds
-            // because the project exe's own folder was never populated.
-            string destPath = Path.Combine("$(BinaryOutputDir)", Path.GetFileName(dllFile));
-            AddRedistDll(destPath, dllFile);
-        }
-    }
-
     /// <summary>
     /// Register a redistributable DLL as a runtime dependency without forcing
     /// a build-time copy when the destination is already deployed.
@@ -522,108 +480,19 @@ public class FANTASIA : ModuleRules
     }
 
 
-    /// <summary>
-    /// Detect whether NVIDIA's NV_ACE_Reference plugin is available and, if so,
-    /// wire up the ACERuntime / ACECore module dependencies and enable the
-    /// lipsync code paths via FANTASIA_WITH_ACE=1. When ACE is not available
-    /// (typical for a fresh install without the NVIDIA plugin), the define is
-    /// set to 0 so the Audio2Face code in RESTTTSComponent is compiled out —
-    /// the rest of FANTASIA still builds and runs normally.
-    ///
-    /// Detection checks three locations, in order:
-    ///   1. Sibling plugin in the host project's Plugins/ folder.
-    ///   2. The host project's .uproject — is NV_ACE_Reference enabled?
-    ///      (Projects often enable the plugin by reference only, with the
-    ///      actual plugin files installed at the engine level via Marketplace.)
-    ///   3. Recursive search under the project's Plugins/ folder.
-    /// We deliberately do NOT probe the engine's Plugins/ folder directly, so
-    /// that a release build from a machine with ACE installed engine-wide
-    /// still produces a no-ACE DLL unless a project opts in.
-    /// </summary>
-    private bool ConfigureACE()
-    {
-        // ModuleDirectory  = .../Plugins/FANTASIA/Source/FANTASIA
-        // PluginRoot       = .../Plugins/FANTASIA
-        // PluginsDir       = .../Plugins
-        string PluginsDir = Path.GetFullPath(Path.Combine(ModuleDirectory, "..", "..", ".."));
-
-        bool bFoundACE = false;
-        string FoundPath = null;
-
-        // 1) Fast path: sibling plugin in the same Plugins/ folder.
-        string SiblingCandidate = Path.Combine(PluginsDir, "NV_ACE_Reference", "NV_ACE_Reference.uplugin");
-        if (File.Exists(SiblingCandidate))
-        {
-            bFoundACE = true;
-            FoundPath = SiblingCandidate;
-        }
-
-        // 2) Host project opt-in via .uproject. Parse it looking for an
-        //    enabled NV_ACE_Reference plugin reference. This catches the
-        //    Alice/MetaFamily pattern where the plugin lives at engine level
-        //    but the project explicitly enables it.
-        if (!bFoundACE && Target.ProjectFile != null && File.Exists(Target.ProjectFile.FullName))
-        {
-            try
-            {
-                string UProjectText = File.ReadAllText(Target.ProjectFile.FullName);
-                // Collapse whitespace so "Name": "NV_ACE_Reference" and the
-                // matching "Enabled": true span are both easy to find.
-                string Collapsed = System.Text.RegularExpressions.Regex.Replace(UProjectText, @"\s+", " ");
-                // Rough but targeted match: look for NV_ACE_Reference name and a
-                // subsequent Enabled: true inside the same plugin entry (before
-                // the next closing brace).
-                var m = System.Text.RegularExpressions.Regex.Match(
-                    Collapsed,
-                    "\"Name\"\\s*:\\s*\"NV_ACE_Reference\"[^}]*\"Enabled\"\\s*:\\s*true");
-                if (m.Success)
-                {
-                    bFoundACE = true;
-                    FoundPath = Target.ProjectFile.FullName + " (NV_ACE_Reference enabled in .uproject)";
-                }
-            }
-            catch { /* unreadable .uproject — treat as no ACE */ }
-        }
-
-        // 3) Fallback: recursive search under Plugins/ in case the ACE plugin
-        //    is nested (e.g. under a Marketplace/ subfolder).
-        if (!bFoundACE && Directory.Exists(PluginsDir))
-        {
-            try
-            {
-                string[] Matches = Directory.GetFiles(PluginsDir, "NV_ACE_Reference.uplugin", SearchOption.AllDirectories);
-                if (Matches.Length > 0)
-                {
-                    bFoundACE = true;
-                    FoundPath = Matches[0];
-                }
-            }
-            catch { /* ignore dirs we can't enumerate */ }
-        }
-
-        if (bFoundACE)
-        {
-            System.Console.WriteLine("[FANTASIA-ACE] Found NV_ACE_Reference at: " + FoundPath);
-            PublicDependencyModuleNames.AddRange(new string[] { "ACERuntime", "ACECore" });
-            PublicDefinitions.Add("FANTASIA_WITH_ACE=1");
-        }
-        else
-        {
-            System.Console.WriteLine("[FANTASIA-ACE] NV_ACE_Reference plugin not found — Audio2Face lipsync features disabled. Install NVIDIA's ACE Reference plugin to enable them.");
-            PublicDefinitions.Add("FANTASIA_WITH_ACE=0");
-        }
-
-        return bFoundACE;
-    }
-
-
     public FANTASIA(ReadOnlyTargetRules Target) : base(Target)
     {
         InitialUeConfig();
 
         DependeciesAndPaths();
 
-        ConfigureACE();
+        // UE 5.7's V6 BuildSettings default elevates C4668 (undefined identifier
+        // in #if) from warning to error. whisper.cpp's ggml CPU backend probes
+        // feature macros (__AVX512F__, __AVXVNNIINT8__, __FINITE_MATH_ONLY__,
+        // GGML_USE_LLAMAFILE) that aren't defined in our toolchain. These are
+        // upstream headers we don't own, so relax the warning level for this
+        // module rather than patch vendor code.
+        CppCompileWarningSettings.UndefinedIdentifierWarningLevel = WarningLevel.Warning;
 
         #if UE_5_3_OR_LATER
 			// AVX2 required for ggml SIMD acceleration (any Intel/AMD CPU from ~2015+)
@@ -637,10 +506,6 @@ public class FANTASIA : ModuleRules
         string ModulePath = ModuleDirectory;
         string ThirdParty = Path.GetFullPath(Path.Combine(ModulePath, "../../ThirdParty/"));
 
-        MicrosoftLibs(ThirdParty);
-
-        AWSLibs(ThirdParty);
-
         if (Target.Type == TargetRules.TargetType.Editor)
         {
             PrivateDependencyModuleNames.AddRange(
@@ -651,10 +516,6 @@ public class FANTASIA : ModuleRules
                 }
             );
         }
-
-        string Redist = Path.Combine(ThirdParty, "Redist");
-
-        DllLoad(Redist);
 
         PrologLibs(ThirdParty);
 
