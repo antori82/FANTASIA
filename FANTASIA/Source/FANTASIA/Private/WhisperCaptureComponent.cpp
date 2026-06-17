@@ -351,21 +351,49 @@ bool UWhisperCaptureComponent::OpenCaptureDevice()
 			Devices[i].PreferredSampleRate);
 	}
 
-	// Resolve device index
-	int32 ResolvedIndex = (AudioDeviceIndex >= 0 && AudioDeviceIndex < Devices.Num())
-		? AudioDeviceIndex
-		: 0; // Default device
+	// Resolve the capture device.
+	//   AudioDeviceIndex >= 0 → that explicit enumerated device.
+	//   AudioDeviceIndex <  0 → the OS default capture device (what the
+	//     property tooltip promises). We open with DeviceIndex = INDEX_NONE so
+	//     the backend follows the system default, and query that same default's
+	//     info for the channel count + logging. This is more robust than
+	//     grabbing enumeration slot 0, whose identity shifts when USB mics are
+	//     plugged/unplugged.
+	Audio::FCaptureDeviceInfo ChosenDevice;
+	int32 OpenDeviceIndex;
 
-	const Audio::FCaptureDeviceInfo& ChosenDevice = Devices[ResolvedIndex];
+	if (AudioDeviceIndex >= 0 && AudioDeviceIndex < Devices.Num())
+	{
+		ChosenDevice = Devices[AudioDeviceIndex];
+		OpenDeviceIndex = AudioDeviceIndex;
+	}
+	else
+	{
+		if (AudioDeviceIndex >= Devices.Num())
+		{
+			UE_LOG(LogWhisperASR, Warning,
+				TEXT("AudioDeviceIndex %d is out of range (%d device(s)); using the system default."),
+				AudioDeviceIndex, Devices.Num());
+		}
+		OpenDeviceIndex = INDEX_NONE; // backend default device
+		// INDEX_NONE asks GetCaptureDeviceInfo for the default device's info.
+		if (!AudioCapture->GetCaptureDeviceInfo(ChosenDevice, INDEX_NONE))
+		{
+			// Backend couldn't report a default — fall back to the first device.
+			ChosenDevice = Devices[0];
+		}
+	}
+
 	DeviceSampleRate  = ChosenDevice.PreferredSampleRate;
 	DeviceNumChannels = FMath::Max(1, static_cast<int32>(ChosenDevice.InputChannels));
 
-	UE_LOG(LogWhisperASR, Log, TEXT("Opening device [%d] \"%s\" (%d ch, %d Hz)"),
-		ResolvedIndex, *ChosenDevice.DeviceName, DeviceNumChannels, DeviceSampleRate);
+	UE_LOG(LogWhisperASR, Log, TEXT("Opening %s microphone \"%s\" (%d ch, %d Hz)"),
+		(OpenDeviceIndex == INDEX_NONE) ? TEXT("default") : TEXT("selected"),
+		*ChosenDevice.DeviceName, DeviceNumChannels, DeviceSampleRate);
 
 	// Configure and open the capture stream
 	Audio::FAudioCaptureDeviceParams Params;
-	Params.DeviceIndex = ResolvedIndex;
+	Params.DeviceIndex = OpenDeviceIndex;
 	Params.NumInputChannels = DeviceNumChannels;
 
 	// The OnCapture lambda is called from the audio thread with interleaved float data

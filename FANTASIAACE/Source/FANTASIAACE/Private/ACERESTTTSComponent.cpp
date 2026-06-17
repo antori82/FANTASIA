@@ -8,6 +8,7 @@
 #include "ACEAudioCurveSourceComponent.h"
 #include "Audio2FaceParameters.h"
 #include "Async/Async.h"
+#include "Engine/World.h"
 
 UACERESTTTSComponent::UACERESTTTSComponent()
 {
@@ -196,24 +197,57 @@ void UACERESTTTSComponent::BeginPlay()
             }
         }
     });
+
+    // Stop the consumer the moment the world begins tearing down. On PIE
+    // stop this fires (UWorld::BeginTearingDown) before the owning actor's
+    // BP Event EndPlay runs, and it's that BP EndPlay which frees the A2F
+    // provider. Joining the worker here -- not in our own EndPlay, which
+    // the engine routes AFTER the BP's -- is what prevents the consumer
+    // from calling AnimateFromAudioSamples into already-freed ACE GPU
+    // state (use-after-free in NVIDIA's nvdxgdmal64.dll).
+    WorldTearDownHandle = FWorldDelegates::OnWorldBeginTearDown.AddUObject(
+        this, &UACERESTTTSComponent::HandleWorldBeginTearDown);
 }
 
-void UACERESTTTSComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
+void UACERESTTTSComponent::HandleWorldBeginTearDown(UWorld* World)
 {
-    // Signal the consumer task to exit, then wait for it to actually finish
-    // BEFORE handing control back to UE. This matters because the enclosing
-    // actor's BP EndPlay typically fires immediately after this one and, in
-    // the Alice/MetaFamily flow, Blueprint deallocates the A2F provider on
-    // EndPlay. If we don't join here, the consumer might still be mid-
-    // AnimateFromAudioSamples when ACE starts tearing down GPU resources,
-    // causing a use-after-free in NVIDIA's DirectML DLL (nvdxgdmal64.dll).
-    bIsPlaying.store(false);
+    if (World == GetWorld())
+    {
+        StopConsumer();
+    }
+}
+
+void UACERESTTTSComponent::StopConsumer()
+{
+    // exchange makes this idempotent: only the caller that observes the
+    // true->false transition triggers the wake + joins. Both callers
+    // (teardown delegate, EndPlay) run on the game thread, so the join
+    // has fully completed before any second call returns.
+    if (!bIsPlaying.exchange(false))
+    {
+        return;
+    }
+
     ConsumerWakeEvent->Trigger();
 
     if (ConsumerTaskFuture.IsValid())
     {
         ConsumerTaskFuture.Wait();
     }
+}
+
+void UACERESTTTSComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+    if (WorldTearDownHandle.IsValid())
+    {
+        FWorldDelegates::OnWorldBeginTearDown.Remove(WorldTearDownHandle);
+        WorldTearDownHandle.Reset();
+    }
+
+    // On PIE stop the OnWorldBeginTearDown handler has already joined the
+    // consumer before the BP freed ACE; this is then a no-op. For non-PIE
+    // teardown (e.g. the actor destroyed at runtime) it's the join site.
+    StopConsumer();
 
     Super::EndPlay(EndPlayReason);
 }
