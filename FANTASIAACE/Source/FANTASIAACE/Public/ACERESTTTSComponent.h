@@ -76,7 +76,24 @@ protected:
 private:
     // ── Consumer task lifecycle ────────────────────────────────────────
 
-    /** Controls the consumer task's loop. Set false in EndPlay. */
+    /** Stop the consumer loop and BLOCK until the task has fully exited.
+     *  Idempotent: the first caller flips bIsPlaying and joins; later
+     *  calls are no-ops. Called from both OnWorldBeginTearDown (the
+     *  earliest PIE-stop signal, before any BP Event EndPlay deallocates
+     *  ACE) and EndPlay (covers non-PIE teardown). */
+    void StopConsumer();
+
+    /** OnWorldBeginTearDown handler. Stops the consumer the instant our
+     *  world starts tearing down -- this fires BEFORE the owning actor's
+     *  BP Event EndPlay, which is where the Alice/MetaFamily flow frees
+     *  the A2F provider. Joining here guarantees no AnimateFromAudioSamples
+     *  is in flight when ACE GPU state is torn down. */
+    void HandleWorldBeginTearDown(UWorld* World);
+
+    /** Registration handle for OnWorldBeginTearDown, removed in EndPlay. */
+    FDelegateHandle WorldTearDownHandle;
+
+    /** Controls the consumer task's loop. Set false by StopConsumer. */
     std::atomic<bool> bIsPlaying{false};
 
     /** Cancellation signal: drop queued buffers + reset state. */
@@ -90,7 +107,7 @@ private:
     /** Wakes the consumer task on new samples / end-of-turn. */
     FEventRef ConsumerWakeEvent{EEventMode::ManualReset};
 
-    /** Handle to the consumer task, joined in EndPlay so we don't tear
-     *  down ACE state while AnimateFromAudioSamples is still in flight. */
+    /** Handle to the consumer task, joined by StopConsumer so we don't
+     *  tear down ACE state while AnimateFromAudioSamples is still in flight. */
     TFuture<void> ConsumerTaskFuture;
 };
