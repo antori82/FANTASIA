@@ -110,9 +110,9 @@ FANTASIA is distributed prebuilt — for most users, no compilation is required.
    - **Whisper ASR model** (~574 MB).
    - **Prebuilt GPU whisper stack** (~540 MB) — flip `UWhisperSubsystem.Backend = GPU`, no rebuild.
    - **Win64 build-time static libs** (~330 MB: aGrUM, gRPC, OpenSSL) for C++ recompiles.
-   - **NVIDIA ACE A2F runtime** (~656 MB) + **"Mark"** (~1.5 GB) and **"James"** (~1.5 GB) sample A2F characters.
+   - **NVIDIA ACE A2F runtime** (~656 MB) + **"Mark"** (~1.5 GB), **"James"** (~1.5 GB) and **"Claire"** (~1.4 GB, Audio2Face-3D diffusion model) sample A2F characters.
 
-   Because it runs from inside your `Plugins/` folder, the NVIDIA ACE/Mark/James plugins are **placed automatically** next to FANTASIA — no manual move. Add `--enable-plugins` to also switch the whole stack on in your project's `.uproject` (a `.uproject.bak` is written first). The script is idempotent (re-running is safe) and prints a final summary.
+   Because it runs from inside your `Plugins/` folder, the NVIDIA ACE/Mark/James/Claire plugins are **placed automatically** next to FANTASIA — no manual move. Add `--enable-plugins` to also switch the whole stack on in your project's `.uproject` (a `.uproject.bak` is written first). The script is idempotent (re-running is safe) and prints a final summary.
 4. Launch Unreal Engine. The plugins appear in the **Plugins** list (already enabled if you used `--enable-plugins`; otherwise enable them in the Plugins panel).
 
 > If you run the bootstrap from a **standalone clone** (not yet inside a project's `Plugins/`), it can't find a `Plugins/` folder to install into, so the NVIDIA plugins stay staged in `FANTASIA/NVIDIA-UE57-Bundle/` — move those folders into your `Plugins/` yourself.
@@ -122,19 +122,19 @@ FANTASIA is distributed prebuilt — for most users, no compilation is required.
 - `--no-gpu` — skip the CUDA GPU whisper stack.
 - `--no-deps` — skip the build-time static libs (Blueprint-only users who never recompile).
 - `--no-ace` — skip the NVIDIA ACE A2F runtime.
-- `--no-mark` / `--no-james` — skip one sample character; `--no-characters` skips both.
-- `--no-nvidia` — skip ACE + Mark + James entirely (no MetaHuman lip-sync).
+- `--no-mark` / `--no-james` / `--no-claire` — skip one sample character; `--no-characters` skips all three.
+- `--no-nvidia` — skip ACE + Mark + James + Claire entirely (no MetaHuman lip-sync).
 - `--minimal` — Whisper model only (no GPU, deps, or NVIDIA components).
 - `--enable-plugins` — also enable the FANTASIA stack in your project's `.uproject` (writes a `.uproject.bak` first).
 - `--force` — re-download even if files are already present.
 
 ### NVIDIA Audio2Face lip-sync (bundled)
 
-Since version 2.0, Audio2Face lives in the companion plugin `FANTASIAACE`, which drives a MetaHuman's face via NVIDIA's `NV_ACE_Reference`. The bootstrap fetches a complete, UE 5.7-recompiled NVIDIA stack — `NV_ACE_Reference` (A2F runtime + models) plus the ready-to-use `Mark` and `James` sample characters — and, because you run it from inside your `Plugins/` folder, places them next to FANTASIA automatically (a standalone clone instead leaves them staged in `FANTASIA/NVIDIA-UE57-Bundle/` for you to move). Enable FANTASIA + FANTASIAACE + NV_ACE_Reference (+ a character) — or pass `--enable-plugins` to do that for you — and use `UACERESTTTSComponent` / `UACEElevenLabsTTSComponent` to animate the face from synthesized speech.
+Since version 2.0, Audio2Face lives in the companion plugin `FANTASIAACE`, which drives a MetaHuman's face via NVIDIA's `NV_ACE_Reference`. The bootstrap fetches a complete, UE 5.7-recompiled NVIDIA stack — `NV_ACE_Reference` (A2F runtime + models) plus the ready-to-use `Mark`, `James` and `Claire` sample characters — and, because you run it from inside your `Plugins/` folder, places them next to FANTASIA automatically (a standalone clone instead leaves them staged in `FANTASIA/NVIDIA-UE57-Bundle/` for you to move). Enable FANTASIA + FANTASIAACE + NV_ACE_Reference (+ a character) — or pass `--enable-plugins` to do that for you — and use `UACERESTTTSComponent` / `UACEElevenLabsTTSComponent` to animate the face from synthesized speech.
 
 - **You don't need lip-sync:** run `bootstrap.bat --no-nvidia` and copy only `FANTASIA`. The core plugin works out of the box on any system.
 - **DLSS / Streamline:** not bundled — NVIDIA's RTX SDK license forbids standalone redistribution, and they aren't required for lip-sync. Install them from the Epic Marketplace if you want the rendering-performance boost.
-- **MetaHumans:** the `Mark`/`James` samples are included; for your own character add a MetaHuman via MetaHuman Creator / Fab / Quixel Bridge.
+- **MetaHumans:** the `Mark`/`James`/`Claire` samples are included; for your own character add a MetaHuman via MetaHuman Creator / Fab / Quixel Bridge.
 
 The recompiled NVIDIA plugins target UE 5.7 (the official Marketplace build is 5.6 only). They're redistributed in good faith for this non-commercial academic project, with all NVIDIA license texts retained — see `NVIDIA-UE57-Bundle/NV_ACE_Reference/README-FANTASIA-UE5.7-bundle.txt`.
 
