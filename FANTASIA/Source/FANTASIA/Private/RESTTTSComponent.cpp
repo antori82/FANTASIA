@@ -9,6 +9,59 @@
 #include "RESTTTSComponent.h"
 #include "Async/Async.h"
 
+namespace
+{
+	/** Pack mono float samples in [-1,1] into little-endian 16-bit PCM bytes. */
+	TArray<uint8> SamplesToPcm16(const TArray<float>& Samples)
+	{
+		TArray<uint8> Pcm;
+		Pcm.SetNumUninitialized(Samples.Num() * 2);
+		int16* Out = reinterpret_cast<int16*>(Pcm.GetData());
+		for (int32 i = 0; i < Samples.Num(); ++i)
+		{
+			Out[i] = static_cast<int16>(FMath::Clamp(FMath::RoundToInt(Samples[i] * 32768.0f), -32768, 32767));
+		}
+		return Pcm;
+	}
+}
+
+/** Default raw-PCM16 streaming decode: little-endian int16 -> float, carrying
+ *  a trailing odd byte across Feed calls. Reproduces the pre-timing behaviour. */
+void FPcm16StreamDecoder::Feed(TArrayView<const uint8> NewBytes, FAudioBuffer* Target)
+{
+	if (!Target || NewBytes.Num() == 0)
+	{
+		return;
+	}
+
+	FScopeLock BufferLock(&Target->Mutex);
+
+	int32 Index = 0;
+	if (bHasPendingByte)
+	{
+		// Complete the sample whose low byte arrived in the previous chunk.
+		const uint16 Sample = static_cast<uint16>(PendingByte) | (static_cast<uint16>(NewBytes[0]) << 8);
+		Target->Samples.Add(static_cast<float>(static_cast<int16>(Sample)) / 32768.0f);
+		bHasPendingByte = false;
+		Index = 1;
+	}
+
+	const int32 NumSamples = (NewBytes.Num() - Index) / 2;
+	Target->Samples.Reserve(Target->Samples.Num() + NumSamples);
+	for (int32 i = 0; i < NumSamples; ++i)
+	{
+		const int16 Sample = *reinterpret_cast<const int16*>(NewBytes.GetData() + Index + i * 2);
+		Target->Samples.Add(static_cast<float>(Sample) / 32768.0f);
+	}
+	Index += NumSamples * 2;
+
+	if (Index < NewBytes.Num())
+	{
+		PendingByte = NewBytes[Index];
+		bHasPendingByte = true;
+	}
+}
+
 URESTTTSComponent::URESTTTSComponent()
 {
 	PrimaryComponentTick.bCanEverTick = false;
@@ -36,105 +89,102 @@ void URESTTTSComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
  */
 void URESTTTSComponent::HandleResult(FTTSData response, FString id, FAudioBuffer* Target)
 {
-	// Let subclasses extract timing/lipsync from the raw response BEFORE we modify AudioData.
-	// This avoids copying AudioData into a separate RawResponse array.
-	ProcessResponse(response.AudioData, response);
+	TArray<FTTSSegmentTiming> WordsForBroadcast;
 
-	// WAV auto-detection and resampling
-	int32 WavSampleRate = 0;
-	int32 WavChannels = 0;
-	int32 WavBitsPerSample = 0;
-	int32 DataOffset = 0;
-
-	if (TryParseWavHeader(response.AudioData, WavSampleRate, WavChannels, WavBitsPerSample, DataOffset))
+	if (!bStreaming)
 	{
-		if (WavSampleRate != 16000)
+		// Offline path: a subclass ProcessResponse may decode a provider
+		// envelope (e.g. ElevenLabs with-timestamps) into response.AudioData +
+		// Words/Characters before we touch the audio.
+		ProcessResponse(response.AudioData, response);
+
+		// WAV auto-detection and resampling
+		int32 WavSampleRate = 0;
+		int32 WavChannels = 0;
+		int32 WavBitsPerSample = 0;
+		int32 DataOffset = 0;
+
+		if (TryParseWavHeader(response.AudioData, WavSampleRate, WavChannels, WavBitsPerSample, DataOffset))
 		{
-			// Resample directly from the data portion (skip header), produces a new array
-			response.AudioData = ResampleTo16kHz(response.AudioData.GetData() + DataOffset,
-				response.AudioData.Num() - DataOffset, WavSampleRate, WavChannels);
+			if (WavSampleRate != 16000)
+			{
+				// Resample directly from the data portion (skip header), produces a new array
+				response.AudioData = ResampleTo16kHz(response.AudioData.GetData() + DataOffset,
+					response.AudioData.Num() - DataOffset, WavSampleRate, WavChannels);
+			}
+			else
+			{
+				// Strip WAV header in-place: shift data down, no allocation
+				response.AudioData.RemoveAt(0, DataOffset, EAllowShrinking::No);
+			}
 		}
-		else
+		else if (SampleRate != 16000)
 		{
-			// Strip WAV header in-place: shift data down, no allocation
-			response.AudioData.RemoveAt(0, DataOffset, EAllowShrinking::No);
+			response.AudioData = ResampleTo16kHz(response.AudioData.GetData(),
+				response.AudioData.Num(), SampleRate, 1);
 		}
-	}
-	else if (SampleRate != 16000)
-	{
-		response.AudioData = ResampleTo16kHz(response.AudioData.GetData(),
-			response.AudioData.Num(), SampleRate, 1);
-	}
 
-	{
-		FScopeLock Lock(&BufferMutex);
-		Buffer.FindOrAdd(id) = response;  // copy: we still need response.AudioData below.
-		// NOTE: when callers reuse the same id across calls, FindOrAdd
-		// overwrites; the most recent synthesis wins for TTSGetSound(id).
-		// This matches the pre-existing behavior.
-	}
-
-	if (Target)
-	{
-		// Streaming mode: HandlePartialResult already pushed everything and
-		// the OnProcessRequestComplete callback flushed the trailing bytes.
-		// Here we just mark synthesis complete so a subclass consumer can
-		// retire the buffer once it's fully drained.
-		// Non-streaming mode: HandlePartialResult was never called; push
-		// the full PCM here, then mark complete.
-		if (!bStreaming)
+		// Push the full PCM into the per-call buffer and carry the timing in so
+		// a subclass consumer can fire "segment played" events as it drains.
+		if (Target)
 		{
+			FScopeLock BufferLock(&Target->Mutex);
 			const int32 NumSamples = response.AudioData.Num() / 2;
 			if (NumSamples > 0)
 			{
 				const uint8* RawData = response.AudioData.GetData();
-				FScopeLock BufferLock(&Target->Mutex);
 				Target->Samples.Reserve(Target->Samples.Num() + NumSamples);
 				for (int32 i = 0; i < NumSamples; ++i)
 				{
-					Target->Samples.Add(static_cast<float>(*reinterpret_cast<const int16*>(RawData + i*2)) / 32768.0f);
+					Target->Samples.Add(static_cast<float>(*reinterpret_cast<const int16*>(RawData + i * 2)) / 32768.0f);
 				}
 			}
+			Target->Words = response.Words;
+			Target->Characters = response.Characters;
 		}
-		// Release-store: pairs with the consumer's acquire-load so any
-		// samples appended above (or by HandlePartialResult earlier) are
-		// visible before the consumer treats this buffer as final.
+		WordsForBroadcast = response.Words;
+	}
+	else if (Target)
+	{
+		// Streaming path: the per-request decoder already appended decoded
+		// samples and (for providers with alignment) Words/Characters to Target.
+		// Snapshot them into the stored FTTSData so TTSGetSound / GetWordTimings
+		// keep working after the stream completes. The raw streamed body in
+		// response.AudioData may be a JSON envelope, not audio -- ignore it.
+		FScopeLock BufferLock(&Target->Mutex);
+		response.AudioData = SamplesToPcm16(Target->Samples);
+		response.Words = Target->Words;
+		response.Characters = Target->Characters;
+		WordsForBroadcast = Target->Words;
+	}
+
+	{
+		FScopeLock Lock(&BufferMutex);
+		Buffer.FindOrAdd(id) = response;
+		// NOTE: when callers reuse the same id across calls, FindOrAdd
+		// overwrites; the most recent synthesis wins for TTSGetSound(id).
+	}
+
+	if (Target)
+	{
+		// Release-store: pairs with the consumer's acquire-load so all samples
+		// appended above are visible before the consumer treats this as final.
 		Target->bSynthesisComplete.store(true, std::memory_order_release);
 		WakeConsumer();
 	}
 
-	AsyncTask(ENamedThreads::GameThread, [this, id]()
+	AsyncTask(ENamedThreads::GameThread, [this, id, WordsForBroadcast]()
 	{
 		SynthesisReady.Broadcast(id);
+		OnWordTimingReady.Broadcast(id, WordsForBroadcast);
 	});
 }
 
-/** Converts a streaming PCM chunk to float samples and appends them to
- *  the request's specific per-call buffer (captured by pointer in the
- *  HTTP closure -- never looked up by id). A subclass consumer drains
- *  buffers in submission order via PlaybackOrder. */
-void URESTTTSComponent::HandlePartialResult(TArray<uint8> response, FString id, FAudioBuffer* Target)
+/** Default streaming decoder: raw little-endian 16-bit PCM, no timing.
+ *  Provider subclasses override to parse their envelope + alignment. */
+TSharedPtr<FTTSStreamDecoder> URESTTTSComponent::CreateStreamDecoder()
 {
-	const int32 NumBytes = response.Num();
-	if (NumBytes < 2) return;
-
-	if (Target)
-	{
-		const int32 NumSamples = NumBytes / 2;
-		const uint8* RawData = response.GetData();
-		FScopeLock BufferLock(&Target->Mutex);
-		Target->Samples.Reserve(Target->Samples.Num() + NumSamples);
-		for (int32 i = 0; i < NumSamples; ++i)
-		{
-			Target->Samples.Add(static_cast<float>(*reinterpret_cast<const int16*>(RawData + i*2)) / 32768.0f);
-		}
-		WakeConsumer();
-	}
-
-	AsyncTask(ENamedThreads::GameThread, [this, id]()
-	{
-		PartialSynthesisReady.Broadcast(id);
-	});
+	return MakeShared<FPcm16StreamDecoder>();
 }
 
 /** Reserves a per-call audio buffer in submission order BEFORE issuing the
@@ -217,10 +267,16 @@ void URESTTTSComponent::IssueHttpRequest(FTTSSynthesisRequest Request, FAudioBuf
 	TSharedRef<int64> StreamingNumPtr = MakeShared<int64>(0);
 	TSharedRef<int64> PreviousBytesPtr = MakeShared<int64>(0);
 
+	// Per-request streaming decoder (default raw PCM16; providers override
+	// CreateStreamDecoder to parse their envelope + alignment). It owns any
+	// partial-byte / partial-line buffering, so the core hands it every newly
+	// arrived byte without alignment concerns. Shared across both closures.
+	TSharedPtr<FTTSStreamDecoder> Decoder = bIsStreaming ? CreateStreamDecoder() : nullptr;
+
 	if (bIsStreaming)
 	{
 		HttpRequest->OnRequestProgress64().BindLambda(
-			[this, RequestID, Target, StreamingNumPtr, PreviousBytesPtr]
+			[this, RequestID, Target, Decoder, StreamingNumPtr, PreviousBytesPtr]
 			(FHttpRequestPtr Req, int64 BytesSent, int64 BytesReceived)
 		{
 			if (BytesReceived > 0 && *PreviousBytesPtr < BytesReceived && Req->GetResponse().IsValid())
@@ -230,30 +286,39 @@ void URESTTTSComponent::IssueHttpRequest(FTTSSynthesisRequest Request, FAudioBuf
 
 				if (*StreamingNumPtr < len)
 				{
-					const int64 Available = len - *StreamingNumPtr;
-					const int64 Aligned = Available - (Available & 1);
-
-					TArray<uint8> SynthResult(&Content[*StreamingNumPtr], Aligned);
-					*StreamingNumPtr += Aligned;
+					// Hand ALL new bytes to the decoder; it buffers any partial
+					// sample / partial JSON line internally, so no alignment here.
+					TArrayView<const uint8> NewBytes(Content.GetData() + *StreamingNumPtr, static_cast<int32>(len - *StreamingNumPtr));
+					*StreamingNumPtr = len;
 					*PreviousBytesPtr = BytesReceived;
-					HandlePartialResult(SynthResult, RequestID, Target);
+					Decoder->Feed(NewBytes, Target);
+					WakeConsumer();
+					AsyncTask(ENamedThreads::GameThread, [this, RequestID]()
+					{
+						PartialSynthesisReady.Broadcast(RequestID);
+					});
 				}
 			}
 		});
 	}
 
 	HttpRequest->OnProcessRequestComplete().BindLambda(
-		[this, RequestID, RequestText, bIsStreaming, Target, StreamingNumPtr]
+		[this, RequestID, RequestText, bIsStreaming, Target, Decoder, StreamingNumPtr]
 		(FHttpRequestPtr Req, FHttpResponsePtr Response, bool bWasSuccessful)
 	{
 		if (bWasSuccessful && Response.IsValid())
 		{
 			const TArray<uint8>& Content = Response->GetContent();
 
-			if (bIsStreaming && Content.Num() > *StreamingNumPtr)
+			if (bIsStreaming && Decoder.IsValid())
 			{
-				TArray<uint8> Remaining(&Content[*StreamingNumPtr], Content.Num() - *StreamingNumPtr);
-				HandlePartialResult(Remaining, RequestID, Target);
+				if (Content.Num() > *StreamingNumPtr)
+				{
+					TArrayView<const uint8> Remaining(Content.GetData() + *StreamingNumPtr, static_cast<int32>(Content.Num() - *StreamingNumPtr));
+					Decoder->Feed(Remaining, Target);
+				}
+				Decoder->Finish(Target);
+				WakeConsumer();
 			}
 
 			FTTSData SynthResult;
@@ -345,6 +410,20 @@ TArray<uint8> URESTTTSComponent::TTSGetRawSound(FString id)
 	FScopeLock Lock(&BufferMutex);
 	const FTTSData* Found = Buffer.Find(id);
 	return Found ? Found->AudioData : TArray<uint8>();
+}
+
+TArray<FTTSSegmentTiming> URESTTTSComponent::GetWordTimings(FString id)
+{
+	FScopeLock Lock(&BufferMutex);
+	const FTTSData* Found = Buffer.Find(id);
+	return Found ? Found->Words : TArray<FTTSSegmentTiming>();
+}
+
+TArray<FTTSSegmentTiming> URESTTTSComponent::GetCharacterTimings(FString id)
+{
+	FScopeLock Lock(&BufferMutex);
+	const FTTSData* Found = Buffer.Find(id);
+	return Found ? Found->Characters : TArray<FTTSSegmentTiming>();
 }
 
 /**

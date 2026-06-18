@@ -418,6 +418,37 @@ struct FTTSTimedStruct
 };
 
 /**
+ * A timed text segment (a word or a single character) extracted from a TTS
+ * provider's alignment data. One struct serves both granularities; a future
+ * syllable layer reuses it unchanged.
+ */
+USTRUCT(BlueprintType)
+struct FTTSSegmentTiming
+{
+	GENERATED_USTRUCT_BODY()
+
+	/** The word (or character) text. */
+	UPROPERTY(BlueprintReadWrite, Category = "TTS")
+	FString Text;
+
+	/** Start time in seconds, relative to the start of the utterance. */
+	UPROPERTY(BlueprintReadWrite, Category = "TTS")
+	float StartSeconds = 0.f;
+
+	/** End time in seconds, relative to the start of the utterance. */
+	UPROPERTY(BlueprintReadWrite, Category = "TTS")
+	float EndSeconds = 0.f;
+
+	/** Index of the first source character this segment spans. */
+	UPROPERTY(BlueprintReadWrite, Category = "TTS")
+	int32 CharStart = 0;
+
+	/** Index one past the last source character this segment spans. */
+	UPROPERTY(BlueprintReadWrite, Category = "TTS")
+	int32 CharEnd = 0;
+};
+
+/**
  * Complete TTS synthesis result containing raw audio and metadata.
  *
  * Produced internally by TTS threads and forwarded to the owning component.
@@ -438,6 +469,12 @@ struct FTTSData
 
 	/** Animation notify timeline. */
 	TArray<FTTSTimedStruct> notifies;
+
+	/** Per-word timing extracted from provider alignment (empty if unsupported). */
+	TArray<FTTSSegmentTiming> Words;
+
+	/** Per-character timing extracted from provider alignment (empty if unsupported). */
+	TArray<FTTSSegmentTiming> Characters;
 };
 
 /** Fired when a full TTS synthesis is complete; @p id identifies the request. */
@@ -457,6 +494,12 @@ DECLARE_DELEGATE_TwoParams(FTTSResultAvailableDelegate, FTTSData, FString);
 
 /** Non-dynamic delegate used by TTS threads to deliver a partial audio chunk. */
 DECLARE_DELEGATE_TwoParams(FTTSPartialResultAvailableDelegate, TArray<uint8>, FString);
+
+/** Fired when per-word timing for a synthesis is available; @p id identifies the request. */
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FWordTimingReadyEvent, FString, id, const TArray<FTTSSegmentTiming>&, words);
+
+/** Fired when Audio2Face reaches a given word/segment during playback. */
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FSegmentPlayedEvent, FString, id, FTTSSegmentTiming, segment);
 
 /**
  * Response from a Neo4j Cypher query executed through UNeo4jComponent.

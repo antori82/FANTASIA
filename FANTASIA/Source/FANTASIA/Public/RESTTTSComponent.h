@@ -61,7 +61,19 @@ struct FAudioBuffer
 	TArray<float> Samples;                          /**< Mono float samples at 16 kHz, in time order. */
 	int32 ConsumedSamples = 0;                      /**< Count already pushed to A2F. */
 	std::atomic<bool> bSynthesisComplete{false};    /**< Set once HTTP response is fully processed. */
-	FCriticalSection Mutex;                         /**< Protects Samples + ConsumedSamples. */
+	FCriticalSection Mutex;                         /**< Protects Samples, ConsumedSamples, Words, Characters. */
+
+	/** Per-word timing for this utterance (provider alignment), in submission
+	 *  order. Populated by a provider stream decoder / ProcessResponse; read by
+	 *  a subclass consumer to fire "segment played" events. */
+	TArray<FTTSSegmentTiming> Words;
+
+	/** Per-character timing for this utterance (provider alignment). */
+	TArray<FTTSSegmentTiming> Characters;
+
+	/** Index of the next word in Words that a consumer has not yet announced.
+	 *  Touched only by a subclass consumer. */
+	int32 FiredWordCursor = 0;
 };
 
 /** Submission-order entry: caller id (for delegate broadcasts) + raw
@@ -74,6 +86,42 @@ struct FPlaybackOrderEntry
 {
 	FString CallerId;
 	FAudioBuffer* Buffer;
+};
+
+/**
+ * @brief Per-request decoder turning raw streamed HTTP body bytes into PCM
+ *        float samples (appended to the per-call buffer) and optional
+ *        word/character timing.
+ *
+ * One decoder is created per streaming request via
+ * URESTTTSComponent::CreateStreamDecoder and owns any partial-byte /
+ * partial-line buffering across Feed calls, so the core can hand it every
+ * newly-arrived byte without alignment concerns. The base PCM16 decoder
+ * reproduces the raw-PCM streaming behaviour; provider subclasses (e.g.
+ * ElevenLabs with timestamps) return a decoder that parses a JSON envelope.
+ */
+struct FTTSStreamDecoder
+{
+	virtual ~FTTSStreamDecoder() = default;
+
+	/** Decode newly-arrived raw bytes and append the resulting samples (and
+	 *  any timing) to Target. Must lock Target->Mutex around mutations. */
+	virtual void Feed(TArrayView<const uint8> NewBytes, FAudioBuffer* Target) = 0;
+
+	/** Flush any buffered tail once the response is complete. */
+	virtual void Finish(FAudioBuffer* Target) {}
+};
+
+/** Default decoder: interprets the byte stream as little-endian 16-bit mono
+ *  PCM, carrying a trailing odd byte between Feed calls. Reproduces the
+ *  pre-timing streaming behaviour for generic REST providers. */
+struct FPcm16StreamDecoder final : public FTTSStreamDecoder
+{
+	virtual void Feed(TArrayView<const uint8> NewBytes, FAudioBuffer* Target) override;
+
+private:
+	uint8 PendingByte = 0;
+	bool bHasPendingByte = false;
 };
 
 /** Broadcast when a request's audio has finished playing (drained by a
@@ -146,6 +194,16 @@ protected:
 	 */
 	virtual void WakeConsumer() {}
 
+	/**
+	 * @brief Factory for the per-request streaming decoder.
+	 *
+	 * Default returns an FPcm16StreamDecoder (raw 16-bit PCM, current
+	 * behaviour). Provider subclasses override to parse their streaming
+	 * envelope (e.g. ElevenLabs with-timestamps NDJSON) and populate the
+	 * per-call buffer's Words/Characters timing.
+	 */
+	virtual TSharedPtr<FTTSStreamDecoder> CreateStreamDecoder();
+
 	/** Expected sample rate of the incoming audio (used when no WAV header is present). */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Configuration")
 	int32 SampleRate = 16000;
@@ -208,14 +266,6 @@ private:
 	void HandleResult(FTTSData Response, FString Id, FAudioBuffer* Target);
 
 	/**
-	 * @brief Process a streaming audio chunk and append it to the buffer.
-	 * @param Response  Raw PCM bytes from the current streaming chunk.
-	 * @param Id        Caller's request identifier (used for PartialSynthesisReady broadcast).
-	 * @param Target    Per-call audio buffer to append to.
-	 */
-	void HandlePartialResult(TArray<uint8> Response, FString Id, FAudioBuffer* Target);
-
-	/**
 	 * @brief Parse a WAV header. Returns true if data starts with RIFF/WAVE magic.
 	 * @param Data             Raw audio data to inspect.
 	 * @param OutSampleRate    Parsed sample rate.
@@ -255,6 +305,13 @@ public:
 	 *  after synthesis completes. */
 	UPROPERTY(BlueprintAssignable, Category = "TTS")
 	FPlaybackCompleteEvent PlaybackComplete;
+
+	/** Broadcast once per synthesis when per-word timing is available (after
+	 *  the response completes). Empty for providers that don't return
+	 *  alignment. The realtime "now speaking" signal is the FANTASIAACE
+	 *  subclass's OnSegmentPlayed. */
+	UPROPERTY(BlueprintAssignable, Category = "TTS")
+	FWordTimingReadyEvent OnWordTimingReady;
 
 	// ── HTTP Configuration ─────────────────────────────────────────────
 
@@ -318,4 +375,20 @@ public:
 	 */
 	UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Raw Sound", Keywords = "TTS"), Category = "TTS")
 	TArray<uint8> TTSGetRawSound(FString id);
+
+	/**
+	 * @brief Retrieve the per-word timing for a completed synthesis.
+	 * @param id  Identifier of a completed synthesis request.
+	 * @return Words with start/end seconds, or empty if none / provider unsupported.
+	 */
+	UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Word Timings", Keywords = "TTS timing"), Category = "TTS")
+	TArray<FTTSSegmentTiming> GetWordTimings(FString id);
+
+	/**
+	 * @brief Retrieve the per-character timing for a completed synthesis.
+	 * @param id  Identifier of a completed synthesis request.
+	 * @return Characters with start/end seconds, or empty if none / provider unsupported.
+	 */
+	UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Character Timings", Keywords = "TTS timing"), Category = "TTS")
+	TArray<FTTSSegmentTiming> GetCharacterTimings(FString id);
 };

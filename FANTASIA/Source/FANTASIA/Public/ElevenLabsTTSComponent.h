@@ -28,12 +28,18 @@ public:
 
 protected:
 	/**
-	 * @brief Build an ElevenLabs-specific HTTP synthesis request.
+	 * @brief Build an ElevenLabs with-timestamps synthesis request.
 	 * @param Text  Plain text to synthesize.
 	 * @param ID    Caller-assigned request identifier.
-	 * @return Fully populated FTTSSynthesisRequest for the ElevenLabs streaming API.
+	 * @return Fully populated FTTSSynthesisRequest (streaming or one-shot per bStreaming).
 	 */
 	virtual FTTSSynthesisRequest BuildSynthesisRequest(const FString& Text, const FString& ID) override;
+
+	/** Streaming NDJSON decoder (base64 audio + character alignment). */
+	virtual TSharedPtr<FTTSStreamDecoder> CreateStreamDecoder() override;
+
+	/** Offline path: parse the one-shot /with-timestamps JSON envelope. */
+	virtual void ProcessResponse(const TArray<uint8>& RawResponse, FTTSData& OutResult) override;
 
 public:
 

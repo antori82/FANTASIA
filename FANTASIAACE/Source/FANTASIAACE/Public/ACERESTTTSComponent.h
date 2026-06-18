@@ -64,6 +64,27 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TTS")
     FAudio2FaceEmotion EmotionParameters;
 
+    // ── Segment-played events ──────────────────────────────────────────
+
+    /** Fired on the game thread as Audio2Face reaches each word of an
+     *  utterance (requires a provider that returns word timing, e.g. the
+     *  ElevenLabs with-timestamps components). */
+    UPROPERTY(BlueprintAssignable, Category = "TTS")
+    FSegmentPlayedEvent OnSegmentPlayed;
+
+    /** Optional filter: if non-empty, only words in this set raise
+     *  OnSegmentPlayed (case-insensitive, ignoring surrounding punctuation).
+     *  Empty fires every word. */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TTS")
+    TSet<FString> SegmentWatchList;
+
+    /** Seconds to delay segment events so they line up with audible playback.
+     *  The consumer cursor counts samples *pushed* to Audio2Face, which run
+     *  ahead of audible output by roughly the ACE buffer length; this offset
+     *  compensates. 0 fires when samples are pushed; negative fires earlier. */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TTS")
+    float SegmentEventLatencySeconds = 0.1f;
+
 protected:
     virtual void BeginPlay() override;
     virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
@@ -74,6 +95,17 @@ protected:
     virtual void WakeConsumer() override;
 
 private:
+    // ── Segment-played helpers ─────────────────────────────────────────
+
+    /** Caller must hold Target->Mutex. Advances Target->FiredWordCursor over
+     *  any words whose audible time (Start + SegmentEventLatencySeconds) has
+     *  been reached by Target->ConsumedSamples, appending the watch-list-passing
+     *  ones to OutToFire for the caller to broadcast off-lock. */
+    void CollectPlayedSegments(FAudioBuffer* Target, TArray<FTTSSegmentTiming>& OutToFire) const;
+
+    /** Case-insensitive, punctuation-insensitive watch-list test. */
+    bool SegmentPasses(const FString& Word) const;
+
     // ── Consumer task lifecycle ────────────────────────────────────────
 
     /** Stop the consumer loop and BLOCK until the task has fully exited.

@@ -34,6 +34,12 @@ public:
 protected:
 	virtual FTTSSynthesisRequest BuildSynthesisRequest(const FString& Text, const FString& ID) override;
 
+	/** Streaming NDJSON decoder (base64 audio + character alignment). */
+	virtual TSharedPtr<FTTSStreamDecoder> CreateStreamDecoder() override;
+
+	/** Offline path: parse the one-shot /with-timestamps JSON envelope. */
+	virtual void ProcessResponse(const TArray<uint8>& RawResponse, FTTSData& OutResult) override;
+
 public:
 
 	// ── Configuration ──────────────────────────────────────────────────
