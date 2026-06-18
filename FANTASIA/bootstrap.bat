@@ -15,8 +15,9 @@ REM    Win64 build-time static libs -> ThirdParty/                 (~330 MB)
 REM    NVIDIA ACE (A2F runtime)     -> NVIDIA-UE57-Bundle/         (~656 MB)
 REM    NVIDIA "Mark" A2F character  -> NVIDIA-UE57-Bundle/         (~1.5 GB)
 REM    NVIDIA "James" A2F character -> NVIDIA-UE57-Bundle/         (~1.5 GB)
+REM    NVIDIA "Claire" A2F character-> NVIDIA-UE57-Bundle/         (~1.4 GB)
 REM
-REM  The NVIDIA ACE/Mark/James plugins (MIT + NVIDIA Community Model License) are
+REM  The NVIDIA ACE/Mark/James/Claire plugins (MIT + NVIDIA Community Model License) are
 REM  fetched into NVIDIA-UE57-Bundle/ and then, if this clone sits inside a UE
 REM  project's Plugins/ folder, MOVED automatically next to FANTASIA there.
 REM  (If no Plugins/ ancestor is found, they're left staged with instructions.)
@@ -33,8 +34,9 @@ REM    bootstrap.bat --no-deps       skip build-time libs (Blueprint-only users)
 REM    bootstrap.bat --no-ace        skip the NVIDIA ACE runtime
 REM    bootstrap.bat --no-mark       skip the "Mark" character
 REM    bootstrap.bat --no-james      skip the "James" character
-REM    bootstrap.bat --no-characters skip both Mark and James
-REM    bootstrap.bat --no-nvidia     skip ACE + Mark + James
+REM    bootstrap.bat --no-claire     skip the "Claire" character
+REM    bootstrap.bat --no-characters skip Mark, James and Claire
+REM    bootstrap.bat --no-nvidia     skip ACE + Mark + James + Claire
 REM    bootstrap.bat --minimal       Whisper model only (no GPU/deps/NVIDIA)
 REM    bootstrap.bat --enable-plugins  edit the project's .uproject to enable the
 REM                                    FANTASIA stack (writes a .uproject.bak first)
@@ -49,6 +51,7 @@ set DEPS_ASSET=fantasia-build-deps-win64.tar.gz
 set ACE_ASSET=nv-ace-reference-ue57-full.tar.gz
 set MARK_ASSET=nv-audio2face-mark-ue57.tar.gz
 set JAMES_ASSET=nv-audio2face-james-ue57.tar.gz
+set CLAIRE_ASSET=nv-audio2face-claire-ue57.tar.gz
 
 REM Default: install EVERYTHING. The --no-* flags below turn parts off.
 set FETCH_MODEL=1
@@ -57,6 +60,7 @@ set FETCH_DEPS=1
 set FETCH_ACE=1
 set FETCH_MARK=1
 set FETCH_JAMES=1
+set FETCH_CLAIRE=1
 set FORCE=0
 set ENABLE_PLUGINS=0
 set PLACED=0
@@ -78,13 +82,14 @@ if /I "%~1"=="--no-deps"       ( set "FETCH_DEPS=0" & shift & goto :parse_args )
 if /I "%~1"=="--no-ace"        ( set "FETCH_ACE=0" & shift & goto :parse_args )
 if /I "%~1"=="--no-mark"       ( set "FETCH_MARK=0" & shift & goto :parse_args )
 if /I "%~1"=="--no-james"      ( set "FETCH_JAMES=0" & shift & goto :parse_args )
-if /I "%~1"=="--no-characters" ( set "FETCH_MARK=0" & set "FETCH_JAMES=0" & shift & goto :parse_args )
-if /I "%~1"=="--no-nvidia"     ( set "FETCH_ACE=0" & set "FETCH_MARK=0" & set "FETCH_JAMES=0" & shift & goto :parse_args )
-if /I "%~1"=="--minimal"       ( set "FETCH_GPU=0" & set "FETCH_DEPS=0" & set "FETCH_ACE=0" & set "FETCH_MARK=0" & set "FETCH_JAMES=0" & shift & goto :parse_args )
+if /I "%~1"=="--no-claire"     ( set "FETCH_CLAIRE=0" & shift & goto :parse_args )
+if /I "%~1"=="--no-characters" ( set "FETCH_MARK=0" & set "FETCH_JAMES=0" & set "FETCH_CLAIRE=0" & shift & goto :parse_args )
+if /I "%~1"=="--no-nvidia"     ( set "FETCH_ACE=0" & set "FETCH_MARK=0" & set "FETCH_JAMES=0" & set "FETCH_CLAIRE=0" & shift & goto :parse_args )
+if /I "%~1"=="--minimal"       ( set "FETCH_GPU=0" & set "FETCH_DEPS=0" & set "FETCH_ACE=0" & set "FETCH_MARK=0" & set "FETCH_JAMES=0" & set "FETCH_CLAIRE=0" & shift & goto :parse_args )
 if /I "%~1"=="--enable-plugins" ( set "ENABLE_PLUGINS=1" & shift & goto :parse_args )
 if /I "%~1"=="--force"         ( set "FORCE=1" & shift & goto :parse_args )
 echo Unknown argument: %~1
-echo Usage: bootstrap.bat [--no-model^|--no-gpu^|--no-deps^|--no-ace^|--no-mark^|--no-james^|--no-characters^|--no-nvidia^|--minimal] [--enable-plugins] [--force]
+echo Usage: bootstrap.bat [--no-model^|--no-gpu^|--no-deps^|--no-ace^|--no-mark^|--no-james^|--no-claire^|--no-characters^|--no-nvidia^|--minimal] [--enable-plugins] [--force]
 exit /b 1
 :args_done
 
@@ -219,6 +224,7 @@ set ANY_NV=0
 if "%FETCH_ACE%"=="1"   set ANY_NV=1
 if "%FETCH_MARK%"=="1"  set ANY_NV=1
 if "%FETCH_JAMES%"=="1" set ANY_NV=1
+if "%FETCH_CLAIRE%"=="1" set ANY_NV=1
 if "%ANY_NV%"=="0" goto :done
 if not exist "%NV_DIR%" mkdir "%NV_DIR%"
 
@@ -282,6 +288,26 @@ del /F /Q "%NV_TGZ%" 2>nul
 echo NVIDIA "James" character staged.
 :after_james
 
+REM -- "Claire" character (Audio2Face-3D diffusion model) --
+if "%FETCH_CLAIRE%"=="1" goto :do_claire
+goto :after_claire
+:do_claire
+if "%FORCE%"=="0" if exist "%NV_DIR%\NvAudio2FaceClaire\NvAudio2FaceClaire.uplugin" (
+    echo NVIDIA "Claire" character already present ^(skipping^).
+    goto :after_claire
+)
+set NV_TGZ=%TEMP%\%CLAIRE_ASSET%
+echo.
+echo Downloading NVIDIA "Claire" A2F character %CLAIRE_ASSET% ^(~1.4 GB^) ...
+curl -L --fail --progress-bar -o "%NV_TGZ%" "%RELEASE_BASE%/%CLAIRE_ASSET%"
+if %errorlevel% neq 0 ( echo ERROR: failed to download %CLAIRE_ASSET%. & del /F /Q "%NV_TGZ%" 2>nul & exit /b 1 )
+echo Extracting into %NV_DIR% ...
+"%TAR%" -xf "%NV_TGZ%" -C "%NV_DIR%"
+if %errorlevel% neq 0 ( echo ERROR: failed to extract %CLAIRE_ASSET%. & exit /b 1 )
+del /F /Q "%NV_TGZ%" 2>nul
+echo NVIDIA "Claire" character staged.
+:after_claire
+
 REM ── Auto-place the NVIDIA plugins into the project's Plugins/ folder ──────
 REM Walk up from SCRIPT_DIR to the nearest ancestor named "Plugins" (UE plugins
 REM always live under one). If found, move the fetched NVIDIA plugins there as
@@ -294,7 +320,7 @@ if not defined PLUGINS_DIR goto :nv_instructions
 
 echo.
 echo Installing NVIDIA plugins into %PLUGINS_DIR% ...
-for %%G in (NV_ACE_Reference NvAudio2FaceMark NvAudio2FaceJames) do (
+for %%G in (NV_ACE_Reference NvAudio2FaceMark NvAudio2FaceJames NvAudio2FaceClaire) do (
     if exist "%NV_DIR%\%%G\" (
         if exist "%PLUGINS_DIR%\%%G\" (
             echo   %%G already in Plugins ^(leaving the existing copy in place^).
@@ -331,8 +357,8 @@ if "%ENABLE_PLUGINS%"=="1"     echo    The FANTASIA stack was enabled in your .u
 if not "%ENABLE_PLUGINS%"=="1" echo    Enable FANTASIA, FANTASIAACE, NV_ACE_Reference (+ characters) in the
 if not "%ENABLE_PLUGINS%"=="1" echo    editor's Plugins panel, or re-run with --enable-plugins.
 :instr_common
-echo    - "Mark" / "James" are ready-to-use A2F characters; or import your own
-echo      MetaHuman via MetaHuman Creator / Fab / Quixel Bridge.
+echo    - "Mark" / "James" / "Claire" are ready-to-use A2F characters; or import
+echo      your own MetaHuman via MetaHuman Creator / Fab / Quixel Bridge.
 echo    - (Optional) DLSS / Streamline performance: install from the Epic
 echo      Marketplace (NOT bundled; not required for lip-sync).
 echo    - Drive the face with UACERESTTTSComponent / UACEElevenLabsTTSComponent

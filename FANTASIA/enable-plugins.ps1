@@ -29,7 +29,7 @@ try {
     # immediately after ("user-mapped section is open").
     $json = [System.IO.File]::ReadAllText($path) | ConvertFrom-Json
 
-    $want = @('FANTASIA', 'FANTASIAACE', 'NV_ACE_Reference', 'NvAudio2FaceMark', 'NvAudio2FaceJames')
+    $want = @('FANTASIA', 'FANTASIAACE', 'NV_ACE_Reference', 'NvAudio2FaceMark', 'NvAudio2FaceJames', 'NvAudio2FaceClaire')
 
     $plugins = @()
     if (($json.PSObject.Properties.Name -contains 'Plugins') -and $json.Plugins) {

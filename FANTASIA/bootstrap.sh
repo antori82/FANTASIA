@@ -22,9 +22,9 @@ set -euo pipefail
 #    bootstrap.sh --no-deps        skip build-time libs (Blueprint-only users)
 #    bootstrap.sh --minimal        Whisper model only
 #    bootstrap.sh --force          re-download even if present
-#    ( --no-ace / --no-mark / --no-james / --no-characters / --no-nvidia are
-#      accepted for parity with bootstrap.bat but are no-ops here: those
-#      NVIDIA plugins are Windows-only. )
+#    ( --no-ace / --no-mark / --no-james / --no-claire / --no-characters /
+#      --no-nvidia are accepted for parity with bootstrap.bat but are no-ops
+#      here: those NVIDIA plugins are Windows-only. )
 # ─────────────────────────────────────────────────────────────────────────────
 
 RELEASE_TAG="runtime-v2.0"
@@ -43,17 +43,17 @@ while [ $# -gt 0 ]; do
         --no-gpu)       FETCH_GPU=0 ;;
         --no-deps)      FETCH_DEPS=0 ;;
         --minimal)      FETCH_GPU=0; FETCH_DEPS=0 ;;
-        --no-ace|--no-mark|--no-james|--no-characters|--no-nvidia)
-            : ;;  # NVIDIA ACE/Mark/James are Windows-only; no-op on Linux
+        --no-ace|--no-mark|--no-james|--no-claire|--no-characters|--no-nvidia)
+            : ;;  # NVIDIA ACE/Mark/James/Claire are Windows-only; no-op on Linux
         --force)        FORCE=1 ;;
         *) echo "Unknown argument: $1"; echo "Usage: bootstrap.sh [--no-model|--no-gpu|--no-deps|--minimal] [--force]"; exit 1 ;;
     esac
     shift
 done
 
-# The NVIDIA ACE / Mark / James MetaHuman plugins are Win64-only. Mention it
-# once so Linux users know where interactive-MetaHuman support lives.
-echo "NOTE: NVIDIA ACE / Mark / James (interactive-MetaHuman lip-sync) are Windows-only; run bootstrap.bat on Windows to fetch them."
+# The NVIDIA ACE / Mark / James / Claire MetaHuman plugins are Win64-only. Mention
+# it once so Linux users know where interactive-MetaHuman support lives.
+echo "NOTE: NVIDIA ACE / Mark / James / Claire (interactive-MetaHuman lip-sync) are Windows-only; run bootstrap.bat on Windows to fetch them."
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 RES_DIR="${SCRIPT_DIR}/Resources"
