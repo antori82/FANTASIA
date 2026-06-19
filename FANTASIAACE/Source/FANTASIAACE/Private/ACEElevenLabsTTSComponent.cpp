@@ -22,7 +22,9 @@ FTTSSynthesisRequest UACEElevenLabsTTSComponent::BuildSynthesisRequest(const FSt
 	Settings.SimilarityBoost = similarity_boost;
 	Settings.Style = style;
 	Settings.bUseSpeakerBoost = use_speaker_boost;
-	return FElevenLabsProtocol::BuildRequest(VoiceID, ModelID, Key, Settings, Text, ID, bStreaming);
+	Settings.Speed = speed;
+	const FString Pronounced = FElevenLabsProtocol::ApplyPronunciations(PronunciationMap, Text);
+	return FElevenLabsProtocol::BuildRequest(VoiceID, ModelID, Key, Settings, Pronounced, ID, bStreaming, language_code);
 }
 
 TSharedPtr<FTTSStreamDecoder> UACEElevenLabsTTSComponent::CreateStreamDecoder()

@@ -56,6 +56,11 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
 	FString Key;
 
+	/** ISO 639-1 language code to force (e.g. "it" for Italian). Empty lets the
+	 *  model auto-detect from the text. Supported by Flash / Turbo v2.5. */
+	UPROPERTY(EditAnywhere, Category = "Configuration", Config)
+	FString language_code;
+
 	// ── Voice Settings ─────────────────────────────────────────────────
 
 	/** Voice stability (0.0 = more variable, 1.0 = more stable). */
@@ -73,4 +78,18 @@ public:
 	/** Whether to apply the speaker boost filter. */
 	UPROPERTY(EditAnywhere, Category = "Voice Settings")
 	bool use_speaker_boost;
+
+	/** Playback speed: 0.7 (slower) .. 1.2 (faster); 1.0 = normal. */
+	UPROPERTY(EditAnywhere, Category = "Voice Settings", meta = (UIMin = "0.7", UIMax = "1.2"))
+	float speed = 1.0f;
+
+	// ── Pronunciation ──────────────────────────────────────────────────
+
+	/** Whole-word respelling rules applied to the text before synthesis: key =
+	 *  word as written, value = respelling that pronounces correctly (e.g.
+	 *  "epilessia" -> "epilessìa"). This is the Flash v2.5 alias mechanism --
+	 *  the model samples stress inconsistently on uncommon words, and a
+	 *  respelling pins it. Matching is whole-word, case-insensitive. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Pronunciation", Config)
+	TMap<FString, FString> PronunciationMap;
 };

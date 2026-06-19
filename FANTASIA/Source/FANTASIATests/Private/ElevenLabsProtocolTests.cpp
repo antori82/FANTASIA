@@ -59,6 +59,36 @@ bool FElevenLabsWordsFromChars::RunTest(const FString& Parameters)
 	return true;
 }
 
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FElevenLabsApplyPronunciations, "FANTASIA.ElevenLabs.ApplyPronunciations",
+	EAutomationTestFlags::EditorContext | EAutomationTestFlags::ProductFilter)
+bool FElevenLabsApplyPronunciations::RunTest(const FString& Parameters)
+{
+	TMap<FString, FString> Map;
+	Map.Add(TEXT("epilessia"), TEXT("epilessìa")); // epilessìa
+
+	// Empty map is a pass-through (no allocation, identical string).
+	TestEqual(TEXT("Empty map unchanged"),
+		FElevenLabsProtocol::ApplyPronunciations(TMap<FString, FString>(), TEXT("L'epilessia")),
+		FString(TEXT("L'epilessia")));
+
+	// Whole-word match mid-sentence, surrounding punctuation preserved.
+	TestEqual(TEXT("Mid-sentence match"),
+		FElevenLabsProtocol::ApplyPronunciations(Map, TEXT("Soffre di epilessia, dice.")),
+		FString(TEXT("Soffre di epilessìa, dice.")));
+
+	// Case-insensitive match; a leading capital is preserved on the replacement.
+	TestEqual(TEXT("Sentence-start capital preserved"),
+		FElevenLabsProtocol::ApplyPronunciations(Map, TEXT("Epilessia diagnosticata.")),
+		FString(TEXT("Epilessìa diagnosticata.")));
+
+	// A key that is only a substring of a longer word must NOT be replaced.
+	TestEqual(TEXT("No partial-word match"),
+		FElevenLabsProtocol::ApplyPronunciations(Map, TEXT("antiepilessiaco")),
+		FString(TEXT("antiepilessiaco")));
+
+	return true;
+}
+
 IMPLEMENT_SIMPLE_AUTOMATION_TEST(FElevenLabsParseOffline, "FANTASIA.ElevenLabs.ParseOffline",
 	EAutomationTestFlags::EditorContext | EAutomationTestFlags::ProductFilter)
 bool FElevenLabsParseOffline::RunTest(const FString& Parameters)

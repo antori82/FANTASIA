@@ -187,7 +187,8 @@ namespace
 
 FTTSSynthesisRequest FElevenLabsProtocol::BuildRequest(const FString& VoiceID, const FString& ModelID,
 	const FString& Key, const FElevenLabsVoiceSettings& Settings,
-	const FString& Text, const FString& ID, bool bStreaming)
+	const FString& Text, const FString& ID, bool bStreaming,
+	const FString& LanguageCode)
 {
 	FTTSSynthesisRequest Request;
 	Request.ID = ID;
@@ -207,14 +208,82 @@ FTTSSynthesisRequest FElevenLabsProtocol::BuildRequest(const FString& VoiceID, c
 	VoiceSettings->SetNumberField(TEXT("similarity_boost"), Settings.SimilarityBoost);
 	VoiceSettings->SetNumberField(TEXT("style"), Settings.Style);
 	VoiceSettings->SetBoolField(TEXT("use_speaker_boost"), Settings.bUseSpeakerBoost);
+	VoiceSettings->SetNumberField(TEXT("speed"), Settings.Speed);
 	Payload->SetStringField(TEXT("text"), Text);
 	Payload->SetStringField(TEXT("model_id"), ModelID);
+	// Force a language (e.g. "it") on models that support it (Flash/Turbo v2.5);
+	// empty leaves the model to auto-detect from the text (the prior behaviour).
+	if (!LanguageCode.IsEmpty())
+	{
+		Payload->SetStringField(TEXT("language_code"), LanguageCode);
+	}
 	Payload->SetObjectField(TEXT("voice_settings"), VoiceSettings);
 
 	FString Body;
 	FJsonSerializer::Serialize(Payload.ToSharedRef(), TJsonWriterFactory<>::Create(&Body));
 	Request.Body = Body;
 	return Request;
+}
+
+FString FElevenLabsProtocol::ApplyPronunciations(const TMap<FString, FString>& Pronunciations, const FString& Text)
+{
+	if (Pronunciations.Num() == 0 || Text.IsEmpty())
+	{
+		return Text;
+	}
+
+	// Lowercased keys so matching is case-insensitive regardless of how the rule
+	// was typed in the editor. Built once per synthesis (called off the hot path).
+	TMap<FString, FString> Lookup;
+	Lookup.Reserve(Pronunciations.Num());
+	for (const TPair<FString, FString>& Rule : Pronunciations)
+	{
+		if (!Rule.Key.IsEmpty())
+		{
+			Lookup.Add(Rule.Key.ToLower(), Rule.Value);
+		}
+	}
+
+	FString Out;
+	Out.Reserve(Text.Len());
+
+	const int32 N = Text.Len();
+	for (int32 i = 0; i < N; )
+	{
+		if (!FChar::IsAlnum(Text[i]))
+		{
+			// Punctuation / whitespace / accented glyphs pass through verbatim, so
+			// non-matched words always reassemble exactly as written.
+			Out.AppendChar(Text[i++]);
+			continue;
+		}
+
+		const int32 WordStart = i;
+		while (i < N && FChar::IsAlnum(Text[i]))
+		{
+			++i;
+		}
+		const FString Word = Text.Mid(WordStart, i - WordStart);
+
+		const FString* Replacement = Lookup.Find(Word.ToLower());
+		if (!Replacement)
+		{
+			Out += Word;
+		}
+		else if (FChar::IsUpper(Word[0]) && Replacement->Len() > 0)
+		{
+			// Preserve a leading capital (sentence-start match).
+			FString Cased = *Replacement;
+			Cased[0] = FChar::ToUpper(Cased[0]);
+			Out += Cased;
+		}
+		else
+		{
+			Out += *Replacement;
+		}
+	}
+
+	return Out;
 }
 
 TSharedPtr<FTTSStreamDecoder> FElevenLabsProtocol::MakeStreamDecoder()
