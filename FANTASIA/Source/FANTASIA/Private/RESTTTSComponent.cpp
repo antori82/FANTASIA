@@ -89,8 +89,6 @@ void URESTTTSComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
  */
 void URESTTTSComponent::HandleResult(FTTSData response, FString id, FAudioBuffer* Target)
 {
-	TArray<FTTSSegmentTiming> WordsForBroadcast;
-
 	if (!bStreaming)
 	{
 		// Offline path: a subclass ProcessResponse may decode a provider
@@ -124,8 +122,9 @@ void URESTTTSComponent::HandleResult(FTTSData response, FString id, FAudioBuffer
 				response.AudioData.Num(), SampleRate, 1);
 		}
 
-		// Push the full PCM into the per-call buffer and carry the timing in so
-		// a subclass consumer can fire "segment played" events as it drains.
+		// Push the full PCM into the per-call buffer for the consumer to play.
+		// Timing (response.Words/Characters from ProcessResponse) is captured via
+		// the stored FTTSData below.
 		if (Target)
 		{
 			FScopeLock BufferLock(&Target->Mutex);
@@ -139,10 +138,7 @@ void URESTTTSComponent::HandleResult(FTTSData response, FString id, FAudioBuffer
 					Target->Samples.Add(static_cast<float>(*reinterpret_cast<const int16*>(RawData + i * 2)) / 32768.0f);
 				}
 			}
-			Target->Words = response.Words;
-			Target->Characters = response.Characters;
 		}
-		WordsForBroadcast = response.Words;
 	}
 	else if (Target)
 	{
@@ -155,7 +151,6 @@ void URESTTTSComponent::HandleResult(FTTSData response, FString id, FAudioBuffer
 		response.AudioData = SamplesToPcm16(Target->Samples);
 		response.Words = Target->Words;
 		response.Characters = Target->Characters;
-		WordsForBroadcast = Target->Words;
 	}
 
 	{
@@ -173,10 +168,9 @@ void URESTTTSComponent::HandleResult(FTTSData response, FString id, FAudioBuffer
 		WakeConsumer();
 	}
 
-	AsyncTask(ENamedThreads::GameThread, [this, id, WordsForBroadcast]()
+	AsyncTask(ENamedThreads::GameThread, [this, id]()
 	{
 		SynthesisReady.Broadcast(id);
-		OnWordTimingReady.Broadcast(id, WordsForBroadcast);
 	});
 }
 

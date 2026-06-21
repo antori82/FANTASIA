@@ -133,7 +133,6 @@ void UACERESTTTSComponent::BeginPlay()
 
             // ── Top up outData from current slot (up to BATCH_SIZE) ────
             bool bSlotFullyConsumed = false;
-            TArray<FTTSSegmentTiming> SegmentsToFire;
             {
                 FScopeLock BufferLock(&Target->Mutex);
                 const int32 NeedMore = A2F_STREAMING_BATCH_SIZE - outData.Num();
@@ -144,9 +143,6 @@ void UACERESTTTSComponent::BeginPlay()
                     outData.Append(Target->Samples.GetData() + Target->ConsumedSamples, ToTake);
                     Target->ConsumedSamples += ToTake;
                 }
-                // Announce any words whose audible time the push cursor has reached.
-                CollectPlayedSegments(Target, SegmentsToFire);
-
                 // Memory order matters: HandleResult sets bSynthesisComplete
                 // AFTER its final append; acquire semantics here ensures we
                 // see those last samples.
@@ -155,40 +151,11 @@ void UACERESTTTSComponent::BeginPlay()
                 bSlotFullyConsumed = bComplete && bFullyDrained;
             }
 
-            if (SegmentsToFire.Num() > 0)
-            {
-                const FString SegCallerId = CurrentPlayback->CallerId;
-                AsyncTask(ENamedThreads::GameThread, [this, SegCallerId, SegmentsToFire]()
-                {
-                    for (const FTTSSegmentTiming& Seg : SegmentsToFire)
-                    {
-                        OnSegmentPlayed.Broadcast(SegCallerId, Seg);
-                    }
-                });
-            }
-
             // ── Retire slot if consumed (carry outData into next slot) ─
             if (bSlotFullyConsumed)
             {
                 const FString FinishedCallerId = CurrentPlayback->CallerId;
                 FAudioBuffer* FinishedBuffer = CurrentPlayback->Buffer;
-
-                // The whole buffer has been pushed, so every remaining word has
-                // played. Flush any not yet fired (their audible time can fall in
-                // the latency window past the audio end and otherwise be missed).
-                TArray<FTTSSegmentTiming> FinalSegments;
-                {
-                    FScopeLock BufferLock(&FinishedBuffer->Mutex);
-                    while (FinishedBuffer->FiredWordCursor < FinishedBuffer->Words.Num())
-                    {
-                        const FTTSSegmentTiming& Word = FinishedBuffer->Words[FinishedBuffer->FiredWordCursor];
-                        if (SegmentPasses(Word.Text))
-                        {
-                            FinalSegments.Add(Word);
-                        }
-                        ++FinishedBuffer->FiredWordCursor;
-                    }
-                }
 
                 {
                     FScopeLock Lock(&BuffersMutex);
@@ -210,12 +177,8 @@ void UACERESTTTSComponent::BeginPlay()
                 }
 
                 CurrentPlayback.Reset();
-                AsyncTask(ENamedThreads::GameThread, [this, FinishedCallerId, FinalSegments]()
+                AsyncTask(ENamedThreads::GameThread, [this, FinishedCallerId]()
                 {
-                    for (const FTTSSegmentTiming& Seg : FinalSegments)
-                    {
-                        OnSegmentPlayed.Broadcast(FinishedCallerId, Seg);
-                    }
                     PlaybackComplete.Broadcast(FinishedCallerId);
                 });
                 // Wake immediately so the next slot's samples flow
@@ -298,50 +261,4 @@ void UACERESTTTSComponent::EndTurn()
 void UACERESTTTSComponent::WakeConsumer()
 {
     ConsumerWakeEvent->Trigger();
-}
-
-void UACERESTTTSComponent::CollectPlayedSegments(FAudioBuffer* Target, TArray<FTTSSegmentTiming>& OutToFire) const
-{
-    // Buffer samples are always 16 kHz (matches the consumer's send rate).
-    constexpr float SampleRateHz = 16000.f;
-    const float LatencySamples = SegmentEventLatencySeconds * SampleRateHz;
-    const float PlayedSamples = static_cast<float>(Target->ConsumedSamples);
-
-    while (Target->FiredWordCursor < Target->Words.Num())
-    {
-        const FTTSSegmentTiming& Word = Target->Words[Target->FiredWordCursor];
-        if (Word.StartSeconds * SampleRateHz + LatencySamples > PlayedSamples)
-        {
-            break; // not audible yet; later words start even later
-        }
-        if (SegmentPasses(Word.Text))
-        {
-            OutToFire.Add(Word);
-        }
-        ++Target->FiredWordCursor;
-    }
-}
-
-bool UACERESTTTSComponent::SegmentPasses(const FString& Word) const
-{
-    if (SegmentWatchList.Num() == 0)
-    {
-        return true;
-    }
-
-    // Trim surrounding punctuation so "hello," matches a "hello" watch entry.
-    int32 Start = 0;
-    int32 End = Word.Len();
-    while (Start < End && !FChar::IsAlnum(Word[Start])) { ++Start; }
-    while (End > Start && !FChar::IsAlnum(Word[End - 1])) { --End; }
-    const FString Normalized = Word.Mid(Start, End - Start);
-
-    for (const FString& Watch : SegmentWatchList)
-    {
-        if (Normalized.Equals(Watch, ESearchCase::IgnoreCase) || Word.Equals(Watch, ESearchCase::IgnoreCase))
-        {
-            return true;
-        }
-    }
-    return false;
 }

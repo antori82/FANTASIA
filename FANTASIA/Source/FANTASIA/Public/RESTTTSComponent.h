@@ -62,17 +62,14 @@ struct FAudioBuffer
 	std::atomic<bool> bSynthesisComplete{false};    /**< Set once HTTP response is fully processed. */
 	FCriticalSection Mutex;                         /**< Protects Samples, ConsumedSamples, Words, Characters. */
 
-	/** Per-word timing for this utterance (provider alignment), in submission
-	 *  order. Populated by a provider stream decoder / ProcessResponse; read by
-	 *  a subclass consumer to fire "segment played" events. */
+	/** Per-word timing for this utterance (provider alignment), captured by a
+	 *  provider stream decoder and snapshotted into the stored FTTSData. Not
+	 *  yet consumed for events -- kept for when ACE delivers native segment
+	 *  animation events. */
 	TArray<FTTSSegmentTiming> Words;
 
 	/** Per-character timing for this utterance (provider alignment). */
 	TArray<FTTSSegmentTiming> Characters;
-
-	/** Index of the next word in Words that a consumer has not yet announced.
-	 *  Touched only by a subclass consumer. */
-	int32 FiredWordCursor = 0;
 };
 
 /** Submission-order entry: caller id (for delegate broadcasts) + raw
@@ -305,13 +302,6 @@ public:
 	UPROPERTY(BlueprintAssignable, Category = "TTS")
 	FPlaybackCompleteEvent PlaybackComplete;
 
-	/** Broadcast once per synthesis when per-word timing is available (after
-	 *  the response completes). Empty for providers that don't return
-	 *  alignment. The realtime "now speaking" signal is the FANTASIAACE
-	 *  subclass's OnSegmentPlayed. */
-	UPROPERTY(BlueprintAssignable, Category = "TTS")
-	FWordTimingReadyEvent OnWordTimingReady;
-
 	// ── HTTP Configuration ─────────────────────────────────────────────
 
 	/** Base URL for the TTS endpoint. May contain {text} placeholder for GET mode. */
@@ -375,19 +365,15 @@ public:
 	UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Raw Sound", Keywords = "TTS"), Category = "TTS")
 	TArray<uint8> TTSGetRawSound(FString id);
 
-	/**
-	 * @brief Retrieve the per-word timing for a completed synthesis.
-	 * @param id  Identifier of a completed synthesis request.
-	 * @return Words with start/end seconds, or empty if none / provider unsupported.
-	 */
-	UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Word Timings", Keywords = "TTS timing"), Category = "TTS")
+	// ── Captured timing (internal; not Blueprint-exposed) ──────────────
+	// Provider word/character timing is decoded and stored, but intentionally
+	// not surfaced to Blueprints: the realtime "segment played" signal is
+	// expected from ACE's native animation events. These C++ accessors keep
+	// the captured data reachable until that lands.
+
+	/** Per-word timing for a completed synthesis (empty if provider unsupported). */
 	TArray<FTTSSegmentTiming> GetWordTimings(FString id);
 
-	/**
-	 * @brief Retrieve the per-character timing for a completed synthesis.
-	 * @param id  Identifier of a completed synthesis request.
-	 * @return Characters with start/end seconds, or empty if none / provider unsupported.
-	 */
-	UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Character Timings", Keywords = "TTS timing"), Category = "TTS")
+	/** Per-character timing for a completed synthesis (empty if provider unsupported). */
 	TArray<FTTSSegmentTiming> GetCharacterTimings(FString id);
 };
