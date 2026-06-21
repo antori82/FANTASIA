@@ -15,8 +15,7 @@ void FFANTASIAModule::StartupModule()
 {
 	// Surface the installation-procedure pointer once at module startup so
 	// users hitting ACE / Whisper recompile issues see the wiki link in the
-	// log without needing to open the plugin descriptor. This hint will be
-	// removed once UE 5.7 makes the rebuild step unnecessary.
+	// log without needing to open the plugin descriptor.
 	UE_LOG(LogFANTASIA, Log,
 		TEXT("FANTASIA loaded. ACE and Whisper integrations may require a one-time C++ rebuild — ")
 		TEXT("see the installation guide at https://github.com/antori82/FANTASIA/wiki"));

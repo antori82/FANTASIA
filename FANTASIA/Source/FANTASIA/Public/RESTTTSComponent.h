@@ -4,11 +4,10 @@
  *        and a protected playback-buffer surface for ACE subclasses.
  *
  * This is the core, ACE-agnostic class. The NVIDIA Audio2Face integration
- * lives in the optional FANTASIAACE plugin's UACERESTTTSComponent subclass
- * (since the 2.0 split). The buffer scaffolding here (per-call FAudioBuffer
- * objects, submission-order PlaybackOrder queue) is shaped so the ACE
- * consumer task in the subclass can drain it without core having to know
- * anything about ACE.
+ * lives in the optional FANTASIAACE plugin's UACERESTTTSComponent subclass.
+ * The buffer scaffolding here (per-call FAudioBuffer objects, submission-
+ * order PlaybackOrder queue) is shaped so the ACE consumer task in the
+ * subclass can drain it without core having to know anything about ACE.
  */
 
 #pragma once
