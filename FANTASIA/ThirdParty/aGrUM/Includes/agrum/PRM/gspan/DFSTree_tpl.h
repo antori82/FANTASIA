@@ -1,22 +1,43 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
+#pragma once
 
 
 /**
@@ -89,15 +110,15 @@ namespace gum {
 
       template < typename GUM_SCALAR >
       void
-         DFSTree< GUM_SCALAR >::_initialiaze_root_(Pattern*                             p,
-                                                   Sequence< EdgeData< GUM_SCALAR >* >& edge_seq) {
+          DFSTree< GUM_SCALAR >::_initialiaze_root_(Pattern*                             p,
+                                                    Sequence< EdgeData< GUM_SCALAR >* >& edge_seq) {
         DFSTree< GUM_SCALAR >::PatternData* data = _data_[p];
         std::vector< NodeId >               degree_list;
 
         for (auto iter = edge_seq.begin(); iter != edge_seq.end(); ++iter) {
           const auto&                             edge = *iter;
           Sequence< PRMInstance< GUM_SCALAR >* >* seq
-             = new Sequence< PRMInstance< GUM_SCALAR >* >();
+              = new Sequence< PRMInstance< GUM_SCALAR >* >();
 
           // Creating the multiset of instances matching p
           bool u_first = (edge->l_u->id < edge->l_v->id);
@@ -138,8 +159,8 @@ namespace gum {
 
       template < typename GUM_SCALAR >
       bool DFSTree< GUM_SCALAR >::_is_new_seq_(
-         Sequence< PRMInstance< GUM_SCALAR >* >&                  seq,
-         NodeProperty< Sequence< PRMInstance< GUM_SCALAR >* >* >& iso_map) {
+          Sequence< PRMInstance< GUM_SCALAR >* >&                  seq,
+          NodeProperty< Sequence< PRMInstance< GUM_SCALAR >* >* >& iso_map) {
         for (const auto& elt: iso_map) {
           bool found = false;
 
@@ -264,7 +285,7 @@ namespace gum {
             } else {
               if (elt.second->exists(match.val().first) && elt.second->exists(match.val().second)) {
                 Sequence< PRMInstance< GUM_SCALAR >* >* new_seq
-                   = new Sequence< PRMInstance< GUM_SCALAR >* >(*elt.second);
+                    = new Sequence< PRMInstance< GUM_SCALAR >* >(*elt.second);
 
                 if (_is_new_seq_(*new_seq, data->iso_map)) {
                   id = data->iso_graph.addNode();
@@ -330,8 +351,8 @@ namespace gum {
 
       template < typename GUM_SCALAR >
       bool DFSTree< GUM_SCALAR >::_test_equality_(
-         HashTable< PRMClassElement< GUM_SCALAR >*, Size >& x,
-         HashTable< PRMClassElement< GUM_SCALAR >*, Size >& y) {
+          HashTable< PRMClassElement< GUM_SCALAR >*, Size >& x,
+          HashTable< PRMClassElement< GUM_SCALAR >*, Size >& y) {
         try {
           for (const auto& elt: x)
             if (y[elt.first] != elt.second) return false;
@@ -362,8 +383,7 @@ namespace gum {
       template < typename GUM_SCALAR >
       INLINE DFSTree< GUM_SCALAR >::DFSTree(const InterfaceGraph< GUM_SCALAR >&  graph,
                                             gspan::SearchStrategy< GUM_SCALAR >* strategy) :
-          _graph_(&graph),
-          _strategy_(strategy) {
+          _graph_(&graph), _strategy_(strategy) {
         GUM_CONSTRUCTOR(DFSTree);
 
         if (!_strategy_) _strategy_ = new FrequenceSearch< GUM_SCALAR >(2);
@@ -385,7 +405,7 @@ namespace gum {
       INLINE Pattern& DFSTree< GUM_SCALAR >::parent(const Pattern& p) {
         try {
           return *(_node_map_.second(
-             *(DiGraph::parents(_node_map_.first(const_cast< Pattern* >(&p))).begin())));
+              *(DiGraph::parents(_node_map_.first(const_cast< Pattern* >(&p))).begin())));
         } catch (NotFound const&) {
           if (_node_map_.existsSecond(const_cast< Pattern* >(&p))) {
             GUM_ERROR(NotFound, "the given pattern is a root node")
@@ -399,7 +419,7 @@ namespace gum {
       INLINE const Pattern& DFSTree< GUM_SCALAR >::parent(const Pattern& p) const {
         try {
           return *(_node_map_.second(
-             *(DiGraph::parents(_node_map_.first(const_cast< Pattern* >(&p))).begin())));
+              *(DiGraph::parents(_node_map_.first(const_cast< Pattern* >(&p))).begin())));
         } catch (NotFound const&) {
           if (_node_map_.existsSecond(const_cast< Pattern* >(&p))) {
             GUM_ERROR(NotFound, "the given pattern is a root node")
@@ -483,13 +503,13 @@ namespace gum {
 
       template < typename GUM_SCALAR >
       INLINE typename DFSTree< GUM_SCALAR >::PatternData&
-         DFSTree< GUM_SCALAR >::data(const Pattern& p) {
+          DFSTree< GUM_SCALAR >::data(const Pattern& p) {
         return *(_data_[const_cast< Pattern* >(&p)]);
       }
 
       template < typename GUM_SCALAR >
       INLINE const typename DFSTree< GUM_SCALAR >::PatternData&
-         DFSTree< GUM_SCALAR >::data(const Pattern& p) const {
+          DFSTree< GUM_SCALAR >::data(const Pattern& p) const {
         return *(_data_[const_cast< Pattern* >(&p)]);
       }
 
@@ -513,8 +533,7 @@ namespace gum {
 
       template < typename GUM_SCALAR >
       INLINE DFSTree< GUM_SCALAR >::NeighborDegreeSort::NeighborDegreeSort(
-         const NeighborDegreeSort& source) :
-          g(source.g) {
+          const NeighborDegreeSort& source) : g(source.g) {
         GUM_CONS_CPY(DFSTree< GUM_SCALAR >::NeighborDegreeSort);
       }
 
@@ -537,5 +556,5 @@ namespace gum {
       }
 
     } /* namespace gspan */
-  }   /* namespace prm */
+  } /* namespace prm */
 } /* namespace gum */

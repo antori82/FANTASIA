@@ -1,22 +1,42 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
 
 
 /**
@@ -31,15 +51,10 @@
 
 #include <vector>
 
-
-#include <agrum/tools/graphs/algorithms/triangulations/partialOrderedTriangulation.h>
-
+#include <agrum/base/graphs/algorithms/triangulations/partialOrderedTriangulation.h>
 #include <agrum/BN/inference/variableElimination.h>
-
-
-#include <agrum/PRM/inference/PRMInference.h>
-
 #include <agrum/PRM/classBayesNet.h>
+#include <agrum/PRM/inference/PRMInference.h>
 #include <agrum/PRM/instanceBayesNet.h>
 
 namespace gum {
@@ -77,6 +92,7 @@ namespace gum {
       virtual std::string name() const;
 
       /// @}
+
       protected:
       // ========================================================================
       /// @name Query methods.
@@ -93,16 +109,17 @@ namespace gum {
       virtual void evidenceRemoved_(const Chain& chain);
 
       /// See PRMInference<GUM_SCALAR>::posterior_().
-      virtual void posterior_(const Chain& chain, Potential< GUM_SCALAR >& m);
+      virtual void posterior_(const Chain& chain, Tensor< GUM_SCALAR >& m);
 
       /// See PRMInference<GUM_SCALAR>::joint_().
-      virtual void joint_(const std::vector< Chain >& queries, Potential< GUM_SCALAR >& j);
+      virtual void joint_(const std::vector< Chain >& queries, Tensor< GUM_SCALAR >& j);
 
       /// @}
+
       private:
       /// Code alias
-      using BucketSet         = Set< Potential< GUM_SCALAR >* >;
-      using BucketSetIterator = typename Set< Potential< GUM_SCALAR >* >::iterator_safe;
+      using BucketSet         = Set< Tensor< GUM_SCALAR >* >;
+      using BucketSetIterator = typename Set< Tensor< GUM_SCALAR >* >::iterator_safe;
       using ArraySetIterator  = typename Set< MultiDimArray< GUM_SCALAR >* >::iterator_safe;
 
       HashTable< const PRMClass< GUM_SCALAR >*, std::vector< NodeId >* > _elim_orders_;
@@ -111,8 +128,7 @@ namespace gum {
 
       Sequence< std::string >* _class_elim_order_;
 
-      HashTable< const PRMInstance< GUM_SCALAR >*, Set< const DiscreteVariable* >* >
-         _delayedVariables_;
+      HashTable< const PRMInstance< GUM_SCALAR >*, gum::VariableSet* > _delayedVariables_;
 
       /// Some variable must be delayed for more than one
       /// PRMInstance<GUM_SCALAR>,
@@ -156,8 +172,9 @@ namespace gum {
                                        BucketSet&                       pool,
                                        BucketSet&                       trash);
 
-      void
-         _insertLiftedNodes_(const PRMInstance< GUM_SCALAR >* i, BucketSet& pool, BucketSet& trash);
+      void _insertLiftedNodes_(const PRMInstance< GUM_SCALAR >* i,
+                               BucketSet&                       pool,
+                               BucketSet&                       trash);
 
       void _variableElimination_(const PRMInstance< GUM_SCALAR >* i,
                                  BucketSet&                       pool,
@@ -184,8 +201,8 @@ namespace gum {
 
       std::vector< NodeId >& _getElimOrder_(const PRMClass< GUM_SCALAR >& c);
 
-      Potential< GUM_SCALAR >* _getAggPotential_(const PRMInstance< GUM_SCALAR >*  i,
-                                                 const PRMAggregate< GUM_SCALAR >* agg);
+      Tensor< GUM_SCALAR >* _getAggTensor_(const PRMInstance< GUM_SCALAR >*  i,
+                                           const PRMAggregate< GUM_SCALAR >* agg);
 
       void        _initLiftedNodes_(const PRMClass< GUM_SCALAR >& c);
       std::string _trim_(const std::string& s);

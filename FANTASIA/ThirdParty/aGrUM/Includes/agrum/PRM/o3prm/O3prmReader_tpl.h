@@ -1,22 +1,43 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
+#pragma once
 
 
 /**
@@ -26,6 +47,8 @@
  * @author Christophe GONZALES(_at_AMU) and Pierre-Henri WUILLEMIN(_at_LIP6)
  * @author Lionel TORTI
  */
+#include <filesystem>
+
 #include <agrum/PRM/o3prm/O3prmReader.h>
 
 namespace gum {
@@ -166,7 +189,7 @@ namespace gum {
 
       template < typename GUM_SCALAR >
       INLINE O3prmReader< GUM_SCALAR >&
-         O3prmReader< GUM_SCALAR >::operator=(const O3prmReader& src) {
+             O3prmReader< GUM_SCALAR >::operator=(const O3prmReader& src) {
         if (this == &src) { return *this; }
         _prm_        = src._prm_;
         _o3_prm_     = std::unique_ptr< O3PRM >(new O3PRM(*(src._o3_prm_)));
@@ -211,9 +234,8 @@ namespace gum {
       void O3prmReader< GUM_SCALAR >::addClassPath(const std::string& class_path) {
         auto path = class_path;
         if (path[path.size() - 1] != '/') { path.append("/"); }
-        auto dir = Directory(path);
-
-        if (!dir.isValid()) {
+        std::filesystem::directory_entry dir(path);
+        if (!dir.exists()) {
           _errors_.addException("could not resolve class path", path);
         } else {
           _class_path_.push_back(std::move(path));
@@ -292,17 +314,17 @@ namespace gum {
       INLINE Size O3prmReader< GUM_SCALAR >::readFile(const std::string& file,
                                                       const std::string& module) {
         try {
-          auto lastSlashIndex = file.find_last_of('/');
+          auto const lastSlashIndex = file.find_last_of('/');
 
-          auto dir = Directory(file.substr(0, lastSlashIndex + 1));
-
-          if (!dir.isValid()) {
+          std::filesystem::directory_entry dir(file.substr(0, lastSlashIndex + 1));
+          if (!dir.exists()) {
             _errors_.addException("could not find file", file);
             return _errors_.count();
           }
 
-          auto basename    = file.substr(lastSlashIndex + 1);
-          auto absFilename = dir.absolutePath() + basename;
+          auto const basename = file.substr(lastSlashIndex + 1);
+          auto const absFilename
+              = std::filesystem::absolute(dir.path() / std::filesystem::path(basename)).string();
 
           std::ifstream input(absFilename);
           if (input.is_open()) {
@@ -420,7 +442,7 @@ namespace gum {
           auto type_factory = O3TypeFactory< GUM_SCALAR >(*_prm_, *_o3_prm_, solver, _errors_);
 
           auto interface_factory
-             = O3InterfaceFactory< GUM_SCALAR >(*_prm_, *_o3_prm_, solver, _errors_);
+              = O3InterfaceFactory< GUM_SCALAR >(*_prm_, *_o3_prm_, solver, _errors_);
           auto class_factory = O3ClassFactory< GUM_SCALAR >(*_prm_, *_o3_prm_, solver, _errors_);
 
           auto system_factory = O3SystemFactory< GUM_SCALAR >(*_prm_, *_o3_prm_, solver, _errors_);
@@ -444,5 +466,5 @@ namespace gum {
         }
       }
     }   // namespace o3prm
-  }     // namespace prm
+  }   // namespace prm
 }   // namespace gum

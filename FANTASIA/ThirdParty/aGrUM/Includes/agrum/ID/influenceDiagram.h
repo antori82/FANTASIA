@@ -1,22 +1,42 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
 
 
 /**
@@ -36,8 +56,8 @@
 
 #include <agrum/agrum.h>
 
-#include <agrum/tools/graphicalModels/DAGmodel.h>
-#include <agrum/tools/multidim/potential.h>
+#include <agrum/base/graphicalModels/DAGmodel.h>
+#include <agrum/base/multidim/tensor.h>
 
 namespace gum {
 
@@ -51,6 +71,7 @@ namespace gum {
   template < typename GUM_SCALAR >
   class InfluenceDiagram: public DAGmodel {
     // friend class InfluenceDiagramFactory<GUM_SCALAR>;
+
     public:
     /**
      * Create an Influence Diagram with a dot-like syntax which specifies:
@@ -79,7 +100,9 @@ namespace gum {
      * @return the resulting influence diagram
      */
     static InfluenceDiagram< GUM_SCALAR > fastPrototype(const std::string& dotlike,
-                                                        Size               domainSize = 2);
+                                                        Size               domainSize);
+    static InfluenceDiagram< GUM_SCALAR > fastPrototype(const std::string& dotlike,
+                                                        const std::string& domain = "[2]");
 
     // ===========================================================================
     /// @name Constructors / Destructors
@@ -107,6 +130,11 @@ namespace gum {
     InfluenceDiagram< GUM_SCALAR >& operator=(const InfluenceDiagram< GUM_SCALAR >& source);
 
     /// @}
+    bool operator==(const InfluenceDiagram< GUM_SCALAR >& other) const;
+
+    bool operator!=(const InfluenceDiagram< GUM_SCALAR >& other) const {
+      return !operator==(other);
+    }
 
     /// @return Returns a dot representation of this Influence Diagram.
     std::string toDot() const;
@@ -122,11 +150,12 @@ namespace gum {
     /// @{
 
     /**
-     * Returns the CPT of a potential variable.
+     * Returns the CPT of a tensor variable.
      * @throw NotFound If no variable's id matches varId.
      */
-    virtual const Potential< GUM_SCALAR >& cpt(NodeId varId) const;
-    virtual const Potential< GUM_SCALAR >& cpt(std::string name) const final {
+    virtual const Tensor< GUM_SCALAR >& cpt(NodeId varId) const;
+
+    virtual const Tensor< GUM_SCALAR >& cpt(std::string name) const final {
       return cpt(idFromName(name));
     };
 
@@ -134,8 +163,9 @@ namespace gum {
      * Returns the utility table of a utility node.
      * @throw NotFound If no variable's id matches varId.
      */
-    virtual const Potential< GUM_SCALAR >& utility(NodeId varId) const;
-    virtual const Potential< GUM_SCALAR >& utility(std::string name) const final {
+    virtual const Tensor< GUM_SCALAR >& utility(NodeId varId) const;
+
+    virtual const Tensor< GUM_SCALAR >& utility(std::string name) const final {
       return utility(idFromName(name));
     };
 
@@ -149,18 +179,23 @@ namespace gum {
      * Returns true if node is a utility one
      */
     bool isUtilityNode(NodeId varId) const;
+
     bool isUtilityNode(const std::string& name) const { return isUtilityNode(idFromName(name)); };
+
     /**
      * Returns true if node is a decision one
      */
     bool isDecisionNode(NodeId varId) const;
+
     bool isDecisionNode(const std::string& name) const { return isDecisionNode(idFromName(name)); };
 
     /**
      * Returns true if node is a chance one
      */
     bool isChanceNode(NodeId varId) const;
+
     bool isChanceNode(const std::string& name) const { return isChanceNode(idFromName(name)); };
+
     /**
      * Returns the number of utility nodes
      */
@@ -181,6 +216,7 @@ namespace gum {
      * @throw NotFound If no variable's id matches varId.
      */
     const DiscreteVariable& variable(NodeId id) const final;
+
     const DiscreteVariable& variable(const std::string& name) const {
       return variable(idFromName(name));
     };
@@ -203,7 +239,7 @@ namespace gum {
      * Add a chance variable, it's associate node and it's CPT. The id of the
      *new variable is automatically generated.
      *
-     * The implementation of the Potential is by default a MultiDimArray.
+     * The implementation of the Tensor is by default a MultiDimArray.
      *
      * @param variable The variable added by copy.
      * @param id The chosen id. If 0, the NodeGraphPart will choose.
@@ -218,7 +254,7 @@ namespace gum {
      * Add a chance variable, it's associate node and it's CPT. The id of the new
      * variable is automatically generated.
      *
-     * The implementation of the Potential is by default a MultiDimArray.
+     * The implementation of the Tensor is by default a MultiDimArray.
      *
      * @param variable The variable added by copy.
      * @param id The chosen id. If 0, the NodeGraphPart will choose.
@@ -265,7 +301,7 @@ namespace gum {
      * variable is automatically generated.
      *
      * @param variable The variable added by copy.
-     * @param aContent The content used for the variable potential.
+     * @param aContent The content used for the variable tensor.
      * @param id The chosen id. If 0, the NodeGraphPart will choose.
      * @warning give an id (not 0) should be reserved for rare and specific
      *situations !!!
@@ -371,6 +407,7 @@ namespace gum {
      * @param id The id of the variable to erase.
      */
     void erase(NodeId id);
+
     void erase(const std::string& name) { erase(idFromName(name)); };
 
     /**
@@ -387,6 +424,7 @@ namespace gum {
      * @throws NotFound Raised if no nodes matches id.
      */
     void changeVariableName(NodeId id, const std::string& new_name);
+
     void changeVariableName(const std::string& name, const std::string& new_name) {
       changeVariableName(idFromName(name), new_name);
     }
@@ -398,7 +436,7 @@ namespace gum {
     /// @{
 
     /**
-     * Add an arc in the ID, and update diagram's potential nodes cpt if
+     * Add an arc in the ID, and update diagram's tensor nodes cpt if
      *necessary.
      *
      * @param head and
@@ -407,12 +445,13 @@ namespace gum {
      * @throw InvalidEdge if tail is a utility node
      */
     void addArc(NodeId tail, NodeId head);
+
     void addArc(const std::string& tail, const std::string& head) {
       addArc(idFromName(tail), idFromName(head));
     }
 
     /**
-     * Removes an arc in the ID, and update diagram's potential nodes cpt if
+     * Removes an arc in the ID, and update diagram's tensor nodes cpt if
      *necessary.
      *
      * If (tail, head) doesn't exist, the nothing happens.
@@ -421,7 +460,7 @@ namespace gum {
     void eraseArc(const Arc& arc);
 
     /**
-     * Removes an arc in the ID, and update diagram's potential nodes cpt if
+     * Removes an arc in the ID, and update diagram's tensor nodes cpt if
      *necessary.
      *
      * If (tail, head) doesn't exist, the nothing happens.
@@ -429,6 +468,7 @@ namespace gum {
      * @param tail as NodeId
      */
     void eraseArc(NodeId tail, NodeId head);
+
     void eraseArc(const std::string& tail, const std::string& head) {
       eraseArc(idFromName(tail), idFromName(head));
     }
@@ -460,6 +500,7 @@ namespace gum {
      * Returns true if a path exists between two nodes
      */
     bool existsPathBetween(NodeId src, NodeId dest) const;
+
     bool existsPathBetween(const std::string& src, const std::string& dest) const {
       return existsPathBetween(idFromName(src), idFromName(dest));
     }
@@ -471,6 +512,21 @@ namespace gum {
     const List< NodeSet >& getPartialTemporalOrder(bool clear = true) const;
 
     /// @}
+
+    /**
+     * When inserting/removing arcs, node CPTs/utilities change their dimension with a
+     * cost in time.
+     * These functions delay the CPTs change to be done just once at the end of
+     * a* sequence of topology modification.
+     */
+    ///@{
+    /// begins a sequence of insertions/deletions of arcs without changing the
+    /// dimensions of the CPTs.
+    void beginTopologyTransformation();
+    /// terminates a sequence of insertions/deletions of arcs by adjusting all
+    /// CPTs/utilities dimensions.
+    void endTopologyTransformation();
+    ///@}
 
     protected:
     /// Returns the moral graph of this InfluenceDiagram.
@@ -500,10 +556,10 @@ namespace gum {
     /// Mapping between id and variable
     VariableNodeMap _variableMap_;
 
-    /// Mapping between potential variable's id and their CPT
-    NodeProperty< Potential< GUM_SCALAR >* > _potentialMap_;
+    /// Mapping between tensor variable's id and their CPT
+    NodeProperty< Tensor< GUM_SCALAR >* > _tensorMap_;
     /// Mapping between utility variable's id and their utility table
-    NodeProperty< Potential< GUM_SCALAR >* > _utilityMap_;
+    NodeProperty< Tensor< GUM_SCALAR >* > _utilityMap_;
 
     /// The temporal order
     mutable List< NodeSet > _temporalOrder_;

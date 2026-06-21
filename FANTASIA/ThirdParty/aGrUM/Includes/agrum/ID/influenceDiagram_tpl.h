@@ -1,22 +1,43 @@
-/**
- *
- *   Copyright (c) 2005-2023 by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
+#pragma once
 
 
 /**
@@ -27,37 +48,35 @@
  * GONZALES(_at_AMU)
  */
 
+#include <algorithm>
 #include <cstdio>
 #include <iostream>
-#include <algorithm>
 
-#include <agrum/tools/variables/allDiscreteVariables.h>
-
+#include <agrum/base/variables/allDiscreteVariables.h>
 #include <agrum/ID/influenceDiagram.h>
 
 namespace gum {
   template < typename GUM_SCALAR >
   NodeId build_node_for_ID(gum::InfluenceDiagram< GUM_SCALAR >& infdiag,
                            std::string                          node,
-                           gum::Size                            default_domain_size) {
-    bool      isUtil     = false;
-    bool      isDeci     = false;
-    bool      isChanc    = false;
-    gum::Size default_ds = default_domain_size;
-
+                           const std::string&                   domain) {
+    bool        isUtil  = false;
+    bool        isDeci  = false;
+    bool        isChanc = false;
+    std::string ds      = domain;
     switch (*(node.begin())) {
-      case '*':
+      case '*' :
         isDeci = true;
         node.erase(0, 1);
         break;
-      case '$':
-        isUtil     = true;
-        default_ds = 1;
+      case '$' :
+        isUtil = true;
+        ds     = "[1]";
         node.erase(0, 1);
         break;
-      default: isChanc = true;
+      default : isChanc = true;
     }
-    auto v = fastVariable< GUM_SCALAR >(node, default_ds);
+    auto v = fastVariable< GUM_SCALAR >(node, ds);
 
     NodeId res;
     try {
@@ -74,10 +93,16 @@ namespace gum {
     return res;
   }
 
+  template < typename GUM_SCALAR >
+  InfluenceDiagram< GUM_SCALAR >
+      InfluenceDiagram< GUM_SCALAR >::fastPrototype(const std::string& dotlike, Size domainSize) {
+    return fastPrototype(dotlike, "[" + std::to_string(domainSize) + "]");
+  }
 
   template < typename GUM_SCALAR >
   InfluenceDiagram< GUM_SCALAR >
-     InfluenceDiagram< GUM_SCALAR >::fastPrototype(const std::string& dotlike, Size domainSize) {
+      InfluenceDiagram< GUM_SCALAR >::fastPrototype(const std::string& dotlike,
+                                                    const std::string& domain) {
     gum::InfluenceDiagram< GUM_SCALAR > infdiag;
 
     for (const auto& chaine: split(remove_newline(dotlike), ";")) {
@@ -86,8 +111,7 @@ namespace gum {
       for (const auto& souschaine: split(chaine, "->")) {
         bool forward = true;
         for (auto& node: split(souschaine, "<-")) {
-          trim(node);
-          auto idVar = build_node_for_ID(infdiag, node, domainSize);
+          auto idVar = build_node_for_ID(infdiag, node, domain);
           if (notfirst) {
             if (forward) {
               infdiag.addArc(lastId, idVar);
@@ -112,6 +136,7 @@ namespace gum {
     infdiag.setProperty("name", "fastPrototype");
     return infdiag;
   }
+
   // ===========================================================================
   // Constructors / Destructors
   // ===========================================================================
@@ -147,7 +172,7 @@ namespace gum {
    */
   template < typename GUM_SCALAR >
   InfluenceDiagram< GUM_SCALAR >&
-     InfluenceDiagram< GUM_SCALAR >::operator=(const InfluenceDiagram< GUM_SCALAR >& source) {
+      InfluenceDiagram< GUM_SCALAR >::operator=(const InfluenceDiagram< GUM_SCALAR >& source) {
     if (this != &source) {
       clear();
       // Copying tables and structure
@@ -159,11 +184,11 @@ namespace gum {
 
   template < typename GUM_SCALAR >
   void InfluenceDiagram< GUM_SCALAR >::InfluenceDiagram::clear() {
-    // Removing previous potentials
+    // Removing previous tensors
     removeTables_();
     _variableMap_.clear();
     dag_.clear();
-    _potentialMap_.clear();
+    _tensorMap_.clear();
     _utilityMap_.clear();
   }
 
@@ -183,14 +208,14 @@ namespace gum {
    */
   template < typename GUM_SCALAR >
   void InfluenceDiagram< GUM_SCALAR >::copyStructureAndTables_(
-     const InfluenceDiagram< GUM_SCALAR >& IDsource) {
+      const InfluenceDiagram< GUM_SCALAR >& IDsource) {
     for (auto node: IDsource.nodes()) {
       if (IDsource.isChanceNode(node)) addChanceNode(IDsource.variable(node), node);
       else if (IDsource.isUtilityNode(node)) addUtilityNode(IDsource.variable(node), node);
       else   // decision node
         addDecisionNode(IDsource.variable(node), node);
     }
-    // we add arc in the same order of the potentials
+    // we add arc in the same order of the tensors
     for (auto node: IDsource.nodes()) {
       const auto& s = IDsource.variable(node).name();
       if (IDsource.isChanceNode(node)) {
@@ -200,13 +225,13 @@ namespace gum {
         for (Idx par = 1; par <= IDsource.parents(node).size(); par++)
           addArc(IDsource.utility(node).variable(par).name(), s);
       } else {   // decision node
-        // here the order does not depend on a Potential
+        // here the order does not depend on a Tensor
         for (NodeId par: IDsource.parents(node))
           addArc(par, node);
       }
     }
 
-    // Copying potentials
+    // Copying tensors
     for (auto node: IDsource.nodes()) {
       const auto& s = IDsource.variable(node).name();
       if (IDsource.isChanceNode(node)) {
@@ -296,16 +321,15 @@ namespace gum {
    * Returns the CPT of a chance variable.
    */
   template < typename GUM_SCALAR >
-  INLINE const Potential< GUM_SCALAR >& InfluenceDiagram< GUM_SCALAR >::cpt(NodeId varId) const {
-    return *(_potentialMap_[varId]);
+  INLINE const Tensor< GUM_SCALAR >& InfluenceDiagram< GUM_SCALAR >::cpt(NodeId varId) const {
+    return *(_tensorMap_[varId]);
   }
 
   /*
    * Returns the utility table of a utility node.
    */
   template < typename GUM_SCALAR >
-  INLINE const Potential< GUM_SCALAR >&
-               InfluenceDiagram< GUM_SCALAR >::utility(NodeId varId) const {
+  INLINE const Tensor< GUM_SCALAR >& InfluenceDiagram< GUM_SCALAR >::utility(NodeId varId) const {
     return *(_utilityMap_[varId]);
   }
 
@@ -334,7 +358,7 @@ namespace gum {
    */
   template < typename GUM_SCALAR >
   INLINE bool InfluenceDiagram< GUM_SCALAR >::isChanceNode(NodeId varId) const {
-    return _potentialMap_.exists(varId);
+    return _tensorMap_.exists(varId);
   }
 
   /*
@@ -350,7 +374,7 @@ namespace gum {
    */
   template < typename GUM_SCALAR >
   INLINE Size InfluenceDiagram< GUM_SCALAR >::chanceNodeSize() const {
-    return _potentialMap_.size();
+    return _tensorMap_.size();
   }
 
   /*
@@ -358,7 +382,7 @@ namespace gum {
    */
   template < typename GUM_SCALAR >
   INLINE Size InfluenceDiagram< GUM_SCALAR >::decisionNodeSize() const {
-    return (size() - _utilityMap_.size() - _potentialMap_.size());
+    return (size() - _utilityMap_.size() - _tensorMap_.size());
   }
 
   /*
@@ -395,7 +419,7 @@ namespace gum {
   // Getter by name
   template < typename GUM_SCALAR >
   INLINE const DiscreteVariable&
-     InfluenceDiagram< GUM_SCALAR >::variableFromName(const std::string& name) const {
+      InfluenceDiagram< GUM_SCALAR >::variableFromName(const std::string& name) const {
     return _variableMap_.variableFromName(name);
   }
 
@@ -463,14 +487,14 @@ namespace gum {
    */
   template < typename GUM_SCALAR >
   NodeId
-     InfluenceDiagram< GUM_SCALAR >::addChanceNode(const DiscreteVariable&               var,
-                                                   MultiDimImplementation< GUM_SCALAR >* aContent,
-                                                   NodeId DesiredId) {
+      InfluenceDiagram< GUM_SCALAR >::addChanceNode(const DiscreteVariable&               var,
+                                                    MultiDimImplementation< GUM_SCALAR >* aContent,
+                                                    NodeId DesiredId) {
     NodeId proposedId = addNode_(var, DesiredId);
 
-    auto varcpt = new Potential< GUM_SCALAR >(aContent);
+    auto varcpt = new Tensor< GUM_SCALAR >(aContent);
     (*varcpt) << variable(proposedId);
-    _potentialMap_.insert(proposedId, varcpt);
+    _tensorMap_.insert(proposedId, varcpt);
 
     return proposedId;
   }
@@ -482,9 +506,9 @@ namespace gum {
    */
   template < typename GUM_SCALAR >
   NodeId
-     InfluenceDiagram< GUM_SCALAR >::addUtilityNode(const DiscreteVariable&               var,
-                                                    MultiDimImplementation< GUM_SCALAR >* aContent,
-                                                    NodeId DesiredId) {
+      InfluenceDiagram< GUM_SCALAR >::addUtilityNode(const DiscreteVariable&               var,
+                                                     MultiDimImplementation< GUM_SCALAR >* aContent,
+                                                     NodeId DesiredId) {
     if (var.domainSize() != 1) {
       GUM_ERROR(InvalidArgument,
                 "Utility var have no state ( which implicates a "
@@ -493,7 +517,7 @@ namespace gum {
 
     NodeId proposedId = addNode_(var, DesiredId);
 
-    auto varut = new Potential< GUM_SCALAR >(aContent);
+    auto varut = new Tensor< GUM_SCALAR >(aContent);
 
     (*varut) << variable(proposedId);
 
@@ -532,12 +556,12 @@ namespace gum {
     if (_variableMap_.exists(varId)) {
       // Reduce the variable child's CPT or Utility Table if necessary
       for (const auto chi: dag_.children(varId))
-        if (isChanceNode(chi)) _potentialMap_[chi]->erase(variable(varId));
+        if (isChanceNode(chi)) _tensorMap_[chi]->erase(variable(varId));
         else if (isUtilityNode(chi)) _utilityMap_[chi]->erase(variable(varId));
 
       if (isChanceNode(varId)) {
-        delete _potentialMap_[varId];
-        _potentialMap_.erase(varId);
+        delete _tensorMap_[varId];
+        _tensorMap_.erase(varId);
       } else if (isUtilityNode(varId)) {
         delete _utilityMap_[varId];
         _utilityMap_.erase(varId);
@@ -580,7 +604,7 @@ namespace gum {
 
     if (isChanceNode(head))
       // Add parent in the child's CPT
-      (*(_potentialMap_[head])) << variable(tail);
+      (*(_tensorMap_[head])) << variable(tail);
     else if (isUtilityNode(head)) {
       // Add parent in the child's UT
       (*(_utilityMap_[head])) << variable(tail);
@@ -601,7 +625,7 @@ namespace gum {
 
       if (isChanceNode(head))
         // Removes parent in the child's CPT
-        (*(_potentialMap_[head])) >> variable(tail);
+        (*(_tensorMap_[head])) >> variable(tail);
       else if (isUtilityNode(head))
         // Removes parent in the child's UT
         (*(_utilityMap_[head])) >> variable(tail);
@@ -681,7 +705,7 @@ namespace gum {
     List< NodeId > nodeFIFO;
     // mark[node] contains 0 if not visited
     // mark[node] = predecessor if visited
-    NodeProperty< int > mark = dag_.nodesProperty(-1);
+    NodeProperty< int > mark = dag_.nodesPropertyFromVal(-1);
     NodeId              current;
 
     mark[src] = (int)src;
@@ -734,7 +758,7 @@ namespace gum {
    */
   template < typename GUM_SCALAR >
   Sequence< NodeId >
-     InfluenceDiagram< GUM_SCALAR >::getChildrenDecision_(NodeId parentDecision) const {
+      InfluenceDiagram< GUM_SCALAR >::getChildrenDecision_(NodeId parentDecision) const {
     Sequence< NodeId > childrenSeq;
 
     List< NodeId > nodeFIFO;
@@ -742,7 +766,7 @@ namespace gum {
 
     // mark[node] contains false if not visited
     // mark[node] contains true if visited
-    NodeProperty< bool > mark = dag_.nodesProperty(false);
+    NodeProperty< bool > mark = dag_.nodesPropertyFromVal(false);
 
     mark[parentDecision] = true;
 
@@ -853,9 +877,82 @@ namespace gum {
                                              unsigned int       default_nbrmod) {
     std::string node = fast_description;
     switch (*(node.begin())) {
-      case '*': node.erase(0, 1); return addDecisionNode(node, default_nbrmod);
-      case '$': node.erase(0, 1); return addUtilityNode(node);
-      default: return addChanceNode(fast_description, default_nbrmod);
+      case '*' : node.erase(0, 1); return addDecisionNode(node, default_nbrmod);
+      case '$' : node.erase(0, 1); return addUtilityNode(node);
+      default : return addChanceNode(fast_description, default_nbrmod);
     }
+  }
+
+  /// begin Multiple Change for all CPTs
+  template < typename GUM_SCALAR >
+  void InfluenceDiagram< GUM_SCALAR >::beginTopologyTransformation() {
+    for (const auto node: nodes())
+      if (isChanceNode(node)) _tensorMap_[node]->beginMultipleChanges();
+      else if (this->isUtilityNode(node)) _utilityMap_[node]->beginMultipleChanges();
+  }
+
+  /// end Multiple Change for all CPTs
+  template < typename GUM_SCALAR >
+  void InfluenceDiagram< GUM_SCALAR >::endTopologyTransformation() {
+    for (const auto node: nodes())
+      if (isChanceNode(node)) _tensorMap_[node]->endMultipleChanges();
+      else if (isUtilityNode(node)) _utilityMap_[node]->endMultipleChanges();
+  }
+
+  template < typename GUM_SCALAR >
+  bool InfluenceDiagram< GUM_SCALAR >::operator==(const InfluenceDiagram& from) const {
+    if (size() != from.size()) { return false; }
+
+    if (sizeArcs() != from.sizeArcs()) { return false; }
+
+    // alignment of variables between the 2 BNs
+    Bijection< const DiscreteVariable*, const DiscreteVariable* > alignment;
+
+    for (auto node: nodes()) {
+      try {
+        const auto& v1 = variable(node);
+        const auto& v2 = from.variableFromName(variable(node).name());
+        if (v1 != v2) { return false; }
+
+        if (isChanceNode(v1.name()) && !from.isChanceNode(v2.name())) { return false; }
+        if (isUtilityNode(v1.name()) && !from.isUtilityNode(v2.name())) { return false; }
+        if (isDecisionNode(v1.name()) && !from.isDecisionNode(v2.name())) { return false; }
+
+        alignment.insert(&variable(node), &from.variableFromName(variable(node).name()));
+      } catch (NotFound const&) {
+        // a name is not found in from
+        return false;
+      }
+    }
+
+    auto check_pot
+        = [&](const gum::Tensor< GUM_SCALAR >& p1, const gum::Tensor< GUM_SCALAR >& p2) -> bool {
+      if (p1.nbrDim() != p2.nbrDim()) { return false; }
+
+      if (p1.domainSize() != p2.domainSize()) { return false; }
+
+      Instantiation i(p1);
+      Instantiation j(p2);
+
+      for (i.setFirst(); !i.end(); i.inc()) {
+        for (Idx indice = 0; indice < p1.nbrDim(); ++indice) {
+          const DiscreteVariable* p = &(i.variable(indice));
+          j.chgVal(*(alignment.second(p)), i.val(*p));
+        }
+
+        if (std::pow(p1.get(i) - p2.get(j), (GUM_SCALAR)2) > (GUM_SCALAR)1e-6) { return false; }
+      }
+      return true;
+    };
+    for (auto node: nodes()) {
+      NodeId fromnode = from.idFromName(variable(node).name());
+      if (isChanceNode(node)) {
+        if (!check_pot(cpt(node), from.cpt(fromnode))) { return false; }
+      } else if (isUtilityNode(node)) {
+        if (!check_pot(utility(node), from.utility(fromnode))) { return false; }
+      }
+    }
+
+    return true;
   }
 }   // namespace gum

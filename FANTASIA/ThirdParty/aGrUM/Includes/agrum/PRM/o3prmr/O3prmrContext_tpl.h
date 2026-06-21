@@ -1,22 +1,43 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
+#pragma once
 
 
 /**
@@ -95,7 +116,7 @@ namespace gum {
 
       template < typename GUM_SCALAR >
       void
-         O3prmrContext< GUM_SCALAR >::addImport(int line, const std::string& import, bool ismain) {
+          O3prmrContext< GUM_SCALAR >::addImport(int line, const std::string& import, bool ismain) {
         m_imports.push_back(new ImportCommand(line, import, import));
 
         if (ismain) m_mainImport = m_imports.back();
@@ -216,27 +237,27 @@ namespace gum {
       template < typename GUM_SCALAR >
       void O3prmrSession< GUM_SCALAR >::addCommand(const O3prmrCommand* command) {
         switch (command->type()) {
-          case O3prmrCommand::RequestType::SetEngine:
+          case O3prmrCommand::RequestType::SetEngine :
             m_commands.push_back(new SetEngineCommand(*(SetEngineCommand*)command));
             break;
 
-          case O3prmrCommand::RequestType::SetGndEngine:
+          case O3prmrCommand::RequestType::SetGndEngine :
             m_commands.push_back(new SetGndEngineCommand(*(SetGndEngineCommand*)command));
             break;
 
-          case O3prmrCommand::RequestType::Observe:
+          case O3prmrCommand::RequestType::Observe :
             m_commands.push_back(
-               new ObserveCommand< GUM_SCALAR >(*(ObserveCommand< GUM_SCALAR >*)command));
+                new ObserveCommand< GUM_SCALAR >(*(ObserveCommand< GUM_SCALAR >*)command));
             break;
 
-          case O3prmrCommand::RequestType::Unobserve:
+          case O3prmrCommand::RequestType::Unobserve :
             m_commands.push_back(
-               new UnobserveCommand< GUM_SCALAR >(*(UnobserveCommand< GUM_SCALAR >*)command));
+                new UnobserveCommand< GUM_SCALAR >(*(UnobserveCommand< GUM_SCALAR >*)command));
             break;
 
-          case O3prmrCommand::RequestType::Query:
+          case O3prmrCommand::RequestType::Query :
             m_commands.push_back(
-               new QueryCommand< GUM_SCALAR >(*(QueryCommand< GUM_SCALAR >*)command));
+                new QueryCommand< GUM_SCALAR >(*(QueryCommand< GUM_SCALAR >*)command));
             break;
         }
       }
@@ -261,7 +282,7 @@ namespace gum {
 
       template < typename GUM_SCALAR >
       O3prmrSession< GUM_SCALAR >&
-         O3prmrSession< GUM_SCALAR >::operator+=(const O3prmrSession< GUM_SCALAR >& c) {
+          O3prmrSession< GUM_SCALAR >::operator+=(const O3prmrSession< GUM_SCALAR >& c) {
         for (std::vector< O3prmrCommand* >::const_iterator i = c.m_commands.begin();
              i < c.m_commands.end();
              i++)
@@ -273,5 +294,5 @@ namespace gum {
       /* ******************************************************************* */
 
     }   // namespace o3prmr
-  }     // namespace prm
+  }   // namespace prm
 }   // namespace gum

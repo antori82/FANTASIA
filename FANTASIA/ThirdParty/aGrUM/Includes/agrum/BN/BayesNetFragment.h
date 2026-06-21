@@ -1,22 +1,42 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
 
 
 /**
@@ -31,8 +51,7 @@
 
 #include <agrum/agrum.h>
 
-#include <agrum/tools/graphs/parts/listeners/diGraphListener.h>
-
+#include <agrum/base/graphs/parts/listeners/diGraphListener.h>
 #include <agrum/BN/BayesNet.h>
 
 namespace gum {
@@ -57,7 +76,7 @@ namespace gum {
    * fragment are *effectively installed (resp.  *when uninstalling a node,
    * etc.).
    *
-   * A BayesNetFragment can redefine potential for node. The main reason is to
+   * A BayesNetFragment can redefine tensor for node. The main reason is to
    * be able to install a node without installing all its parents (and its
    * ascendants). So local CPT to the node can be installed. However, it is not
    * done automatically.
@@ -69,13 +88,12 @@ namespace gum {
    */
   template < typename GUM_SCALAR >
   class BayesNetFragment: public IBayesNet< GUM_SCALAR >, public gum::DiGraphListener {
-    private:
     /// The referred BayesNet
     const IBayesNet< GUM_SCALAR >& _bn_;
 
     /// Mapping between the variable's id and their CPT specific to this
     /// Fragment.
-    NodeProperty< const Potential< GUM_SCALAR >* > _localCPTs_;
+    NodeProperty< const Tensor< GUM_SCALAR >* > _localCPTs_;
 
     public:
     /// @name Constructors / Destructors
@@ -123,8 +141,9 @@ namespace gum {
      *
      * @throw NotFound If no variable's id matches varId.
      */
-    const Potential< GUM_SCALAR >& cpt(NodeId varId) const final;
-    const Potential< GUM_SCALAR >& cpt(const std::string& name) const {
+    const Tensor< GUM_SCALAR >& cpt(NodeId varId) const final;
+
+    const Tensor< GUM_SCALAR >& cpt(const std::string& name) const {
       return cpt(idFromName(name));
     };
 
@@ -139,6 +158,7 @@ namespace gum {
      * @throw NotFound If no variable's id matches varId.
      */
     virtual const DiscreteVariable& variable(NodeId id) const final;
+
     virtual const DiscreteVariable& variable(const std::string& name) const final {
       return variable(idFromName(name));
     };
@@ -146,7 +166,7 @@ namespace gum {
     /**
      * Return id node from discrete var pointer.
      *
-     * @throw NotFound If no variable matches var.
+     * @throw NotFound If no variable match var.
      */
     virtual NodeId nodeId(const DiscreteVariable& var) const final;
 
@@ -179,6 +199,7 @@ namespace gum {
      * check if a certain NodeId exists in the fragment
      */
     bool isInstalledNode(NodeId id) const;
+
     bool isInstalledNode(const std::string& name) const {
       return isInstalledNode(idFromName(name));
     };
@@ -190,6 +211,7 @@ namespace gum {
      * @warning nothing happens if the node is already installed
      */
     void installNode(NodeId id);
+
     void installNode(const std::string& name) { installNode(_bn_.idFromName(name)); }
 
     /**
@@ -199,6 +221,7 @@ namespace gum {
      * @warning nothing happens if the node is already installed
      */
     void installAscendants(NodeId id);
+
     void installAscendants(const std::string& name) { installAscendants(_bn_.idFromName(name)); }
 
     /**
@@ -207,20 +230,22 @@ namespace gum {
      * @warning nothing happens if the node is not installed
      */
     void uninstallNode(NodeId id);
+
     void uninstallNode(const std::string& name) { uninstallNode(idFromName(name)); }
 
     /**
      * install a local marginal BY COPY for a node into the fragment.
      * This function will remove all the arcs from the parents to the node.
      * @param id the nodeId
-     * @param pot the potential
+     * @param pot the tensor
      * @throw NotFound if the id is not in the fragment
-     * @throw OperationNotAllowed if the potential is not compliant with the
+     * @throw OperationNotAllowed if the tensor is not compliant with the
      *variable
      *(or is not a marginal)
      **/
-    void installMarginal(NodeId id, const Potential< GUM_SCALAR >& pot);
-    void installMarginal(const std::string& name, const Potential< GUM_SCALAR >& pot) {
+    void installMarginal(NodeId id, const Tensor< GUM_SCALAR >& pot);
+
+    void installMarginal(const std::string& name, const Tensor< GUM_SCALAR >& pot) {
       installMarginal(_bn_.idFromName(name), pot);
     }
 
@@ -228,16 +253,17 @@ namespace gum {
      * install a local cpt BY COPYfor a node into the fragment.
      * This function will change the arcs from the parents to the node in order
      *to be
-     * consistent with the new local potential.
+     * consistent with the new local tensor.
      * @param id the nodeId
-     * @param pot the potential to be copied
+     * @param pot the tensor to be copied
      *
      * @throw NotFound if the id is not in the fragment
-     * @throw OperationNotAllowed if the potential is not compliant with the
+     * @throw OperationNotAllowed if the tensor is not compliant with the
      *variable or if  a variable in the CPT is not a parent in the referred bn.
      **/
-    void installCPT(NodeId id, const Potential< GUM_SCALAR >& pot);
-    void installCPT(const std::string& name, const Potential< GUM_SCALAR >& pot) {
+    void installCPT(NodeId id, const Tensor< GUM_SCALAR >& pot);
+
+    void installCPT(const std::string& name, const Tensor< GUM_SCALAR >& pot) {
       installCPT(_bn_.idFromName(name), pot);
     };
 
@@ -249,6 +275,7 @@ namespace gum {
      *not installed.
      */
     void uninstallCPT(NodeId id);
+
     void uninstallCPT(const std::string& name) { uninstallCPT(idFromName(name)); }
 
     /**
@@ -258,6 +285,7 @@ namespace gum {
      * @throw NotFound if the id is not in the fragment
      */
     bool checkConsistency(NodeId id) const;
+
     bool checkConsistency(const std::string& name) const {
       return checkConsistency(idFromName(name));
     }
@@ -291,7 +319,7 @@ namespace gum {
     // install a CPT BY COPY, create or delete arcs. Checks are made in public
     // methods In particular, it is assumed that all the variables in the pot are
     // in the fragment
-    void installCPT_(NodeId id, const Potential< GUM_SCALAR >& pot);
+    void installCPT_(NodeId id, const Tensor< GUM_SCALAR >& pot);
 
     /**
      * uninstall a local CPT. Does nothing if no local CPT for this nodeId

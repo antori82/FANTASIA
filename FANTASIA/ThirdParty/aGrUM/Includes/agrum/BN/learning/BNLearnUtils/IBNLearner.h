@@ -1,22 +1,42 @@
-/**
- *
- *   Copyright (c) 2005-2023 by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
 
 
 /**
@@ -24,7 +44,7 @@
  * @brief A class for generic framework of learning algorithms that can easily
  * be used.
  *
- * The pack currently contains K2, GreedyHillClimbing, miic, 3off2 and
+ * The pack currently contains K2, GreedyHillClimbing, miic and
  * LocalSearchWithTabuList
  *
  * @author Christophe GONZALES(_at_AMU) and Pierre-Henri WUILLEMIN(_at_LIP6)
@@ -32,74 +52,57 @@
 #ifndef GUM_LEARNING_GENERIC_BN_LEARNER_H
 #define GUM_LEARNING_GENERIC_BN_LEARNER_H
 
-#include <sstream>
 #include <memory>
+#include <sstream>
 
 #include <agrum/agrum.h>
 
-#include <agrum/tools/database/DBInitializerFromCSV.h>
-#include <agrum/tools/database/DBRowGenerator4CompleteRows.h>
-#include <agrum/tools/database/DBRowGeneratorEM.h>
-
+#include <agrum/base/database/DBInitializerFromCSV.h>
+#include <agrum/base/database/DBRowGenerator4CompleteRows.h>
+#include <agrum/base/database/DBRowGeneratorEM.h>
 #include <agrum/BN/algorithms/essentialGraph.h>
+#include <agrum/BN/learning/constraints/structuralConstraintDAG.h>
+#include <agrum/BN/learning/constraints/structuralConstraintForbiddenArcs.h>
+#include <agrum/BN/learning/constraints/structuralConstraintIndegree.h>
+#include <agrum/BN/learning/constraints/structuralConstraintMandatoryArcs.h>
+#include <agrum/BN/learning/constraints/structuralConstraintNoChildrenNodes.h>
+#include <agrum/BN/learning/constraints/structuralConstraintNoParentNodes.h>
+#include <agrum/BN/learning/constraints/structuralConstraintPossibleEdges.h>
+#include <agrum/BN/learning/constraints/structuralConstraintSliceOrder.h>
+#include <agrum/BN/learning/constraints/structuralConstraintTabuList.h>
+#include <agrum/BN/learning/K2.h>
+#include <agrum/BN/learning/localSearchWithTabuList.h>
+#include <agrum/BN/learning/paramUtils/DAG2BNLearner.h>
+#include <agrum/BN/learning/paramUtils/paramEstimatorML.h>
+#include <agrum/BN/learning/priors/DirichletPriorFromDatabase.h>
+#include <agrum/BN/learning/SimpleMiic.h>
+#include <agrum/BN/learning/structureUtils/graphChangesGenerator4DiGraph.h>
+#include <agrum/BN/learning/structureUtils/graphChangesGenerator4K2.h>
+#include <agrum/BN/learning/structureUtils/graphChangesSelector4DiGraph.h>
 
 #include <agrum/BN/learning/scores_and_tests/scoreAIC.h>
 #include <agrum/BN/learning/scores_and_tests/scoreBD.h>
 #include <agrum/BN/learning/scores_and_tests/scoreBDeu.h>
 #include <agrum/BN/learning/scores_and_tests/scoreK2.h>
 
-#include <agrum/BN/learning/priors/DirichletPriorFromDatabase.h>
-
-#include <agrum/BN/learning/constraints/structuralConstraintDAG.h>
-#include <agrum/BN/learning/constraints/structuralConstraintForbiddenArcs.h>
-#include <agrum/BN/learning/constraints/structuralConstraintPossibleEdges.h>
-#include <agrum/BN/learning/constraints/structuralConstraintIndegree.h>
-#include <agrum/BN/learning/constraints/structuralConstraintMandatoryArcs.h>
-#include <agrum/BN/learning/constraints/structuralConstraintSliceOrder.h>
-#include <agrum/BN/learning/constraints/structuralConstraintTabuList.h>
-
-#include <agrum/BN/learning/structureUtils/graphChangesGenerator4DiGraph.h>
-#include <agrum/BN/learning/structureUtils/graphChangesGenerator4K2.h>
-#include <agrum/BN/learning/structureUtils/graphChangesSelector4DiGraph.h>
-
-#include <agrum/BN/learning/paramUtils/DAG2BNLearner.h>
-#include <agrum/BN/learning/paramUtils/paramEstimatorML.h>
-
-
-#include <agrum/BN/learning/K2.h>
-#include <agrum/BN/learning/Miic.h>
-#include <agrum/BN/learning/localSearchWithTabuList.h>
-
-
 namespace gum::learning {
-
-
   class BNLearnerListener;
 
   /** @class IBNLearner
    * @brief A pack of learning algorithms that can easily be used
    *
    * The pack currently contains K2, GreedyHillClimbing and
-   * LocalSearchWithTabuList also 3off2/miic
+   * LocalSearchWithTabuList also miic
    * @ingroup learning_group
    */
-  class IBNLearner: public gum::IApproximationSchemeConfiguration, public ThreadNumberManager {
+  class IBNLearner: public IApproximationSchemeConfiguration, public ThreadNumberManager {
     public:
     /// an enumeration enabling to select easily the score we wish to use
-    enum class ScoreType {
-      AIC,
-      BD,
-      BDeu,
-      BIC,
-      K2,
-      LOG2LIKELIHOOD
-    };
+    enum class ScoreType { AIC, BD, BDeu, BIC, K2, LOG2LIKELIHOOD };
 
     /// an enumeration to select the type of parameter estimation we shall
     /// apply
-    enum class ParamEstimatorType {
-      ML
-    };
+    enum class ParamEstimatorType { ML };
 
     /// an enumeration to select the prior
     enum class BNLearnerPriorType {
@@ -111,14 +114,10 @@ namespace gum::learning {
     };
 
     /// an enumeration to select easily the learning algorithm to use
-    enum class AlgoType {
-      K2,
-      GREEDY_HILL_CLIMBING,
-      LOCAL_SEARCH_WITH_TABU_LIST,
-      MIIC,
-      THREE_OFF_TWO
-    };
+    enum class AlgoType { K2, GREEDY_HILL_CLIMBING, LOCAL_SEARCH_WITH_TABU_LIST, MIIC };
 
+    /// the default noise amount added to CPTs during EM's initialization (see method useEM())
+    static constexpr double default_EM_noise{0.1};
 
     /// a helper to easily read databases
     class Database {
@@ -359,7 +358,7 @@ namespace gum::learning {
     DAG learnDAG();
 
     /// learn a partial structure from a file (must have read the db before and
-    /// must have selected miic or 3off2)
+    /// must have selected miic)
     PDAG learnPDAG();
 
     /// sets an initial DAG structure
@@ -458,7 +457,7 @@ namespace gum::learning {
      * @return a std::pair<double,double>
      */
     std::pair< double, double >
-       chi2(const NodeId id1, const NodeId id2, const std::vector< NodeId >& knowing = {});
+        chi2(NodeId id1, NodeId id2, const std::vector< NodeId >& knowing = {});
     /**
      * Return the <statistic,pvalue> pair for the BNLearner
      * @param id1 first variable
@@ -478,7 +477,7 @@ namespace gum::learning {
      * @return a std::pair<double,double>
      */
     std::pair< double, double >
-       G2(const NodeId id1, const NodeId id2, const std::vector< NodeId >& knowing = {});
+        G2(NodeId id1, NodeId id2, const std::vector< NodeId >& knowing = {});
     /**
      * Return the <statistic,pvalue> pair for for G2 test in the database
      * @param id1 first variable
@@ -521,9 +520,7 @@ namespace gum::learning {
      * @param knowing an optional vector of conditioning NodeIds
      * @return a double
      */
-    double mutualInformation(const NodeId                 id1,
-                             const NodeId                 id2,
-                             const std::vector< NodeId >& knowing = {});
+    double mutualInformation(NodeId id1, NodeId id2, const std::vector< NodeId >& knowing = {});
 
     /**
      * Return the mutual information of var1 and var2 in the base, conditioned by knowing for
@@ -553,8 +550,8 @@ namespace gum::learning {
      * @param knowing an optional vector of conditioning NodeIds
      * @return a double
      */
-    double correctedMutualInformation(const NodeId                 id1,
-                                      const NodeId                 id2,
+    double correctedMutualInformation(NodeId                       id1,
+                                      NodeId                       id2,
                                       const std::vector< NodeId >& knowing = {});
 
     /**
@@ -583,7 +580,7 @@ namespace gum::learning {
      * by their NodeIds
      * @return a double corresponding to the value of the score
      */
-    double score(const NodeId vars, const std::vector< NodeId >& knowing = {});
+    double score(NodeId vars, const std::vector< NodeId >& knowing = {});
 
     /**
      * Return the value of the score currently in use by the BNLearner of a
@@ -621,11 +618,78 @@ namespace gum::learning {
      */
     Size nbRows() const;
 
-    /** use The EM algorithm to learn paramters
-     *
-     * if epsilon=0, EM is not used
+    /**
+     * use The EM algorithm to learn parameters
+     * @param epsilon sets the approximation stopping criterion: EM stops
+     * whenever the absolute value of the relative difference between two
+     * consecutive log-likelihoods drops below epsilon. Note that epsilon=0
+     * is considered as a directive to not use EM. However, if you wish to
+     * forbid the use of EM, prefer executing Method forbidEM() rather than
+     * useEM(0) as it is more unequivocal.
+     * @param noise When EM starts, it initializes all the CPTs of the Bayes
+     * net. EM adds a noise to these CPTs by mixing their values with some
+     * random noise. The formula used is, up to some normalizing constant:
+     * new_cpt = (1-noise) * cpt + noise * random_cpt(). Of course, noise must
+     * belong to interval [0,1].
+     * @warning if epsilon=0, EM is not used
+     * @throws OutOfBounds is raised if epsilon is strictly negative or if
+     * noise does not belong to interval [0,1].
      */
-    void useEM(const double epsilon);
+    void useEM(const double epsilon, const double noise = default_EM_noise);
+
+    /**
+     * @brief use The EM algorithm to learn parameters with the rate stopping criterion
+     * @param epsilon epsilon sets the approximation stopping criterion: EM stops
+     * whenever the absolute value of the relative difference between two
+     * consecutive log-likelihoods drops below epsilon. Note that, for using EM,
+     * epsilon should be strictly positive.
+     * @param noise When EM starts, it initializes all the CPTs of the Bayes
+     * net. EM adds a noise to these CPTs by mixing their values with some
+     * random noise. The formula used is, up to some normalizing constant:
+     * new_cpt = (1-noise) * cpt + noise * random_cpt(). Of course, noise must
+     * belong to interval [0,1].
+     * @throws OutOfBounds is raised if epsilon is not strictly positive or if
+     * noise does not belong to interval [0,1].
+     */
+    void useEMWithRateCriterion(const double epsilon, const double noise = default_EM_noise);
+
+    /**
+     * @brief use The EM algorithm to learn parameters with the diff stopping criterion
+     * @param epsilon epsilon sets the approximation stopping criterion: EM stops
+     * whenever the difference between two consecutive log-likelihoods drops below
+     * epsilon. Note that, for using EM, epsilon should be strictly positive.
+     * @param noise When EM starts, it initializes all the CPTs of the Bayes
+     * net. EM adds a noise to these CPTs by mixing their values with some
+     * random noise. The formula used is, up to some normalizing constant:
+     * new_cpt = (1-noise) * cpt + noise * random_cpt(). Of course, noise must
+     * belong to interval [0,1].
+     * @throws OutOfBounds is raised if epsilon is not strictly positive or if
+     * noise does not belong to interval [0,1].
+     */
+    void useEMWithDiffCriterion(const double epsilon, const double noise = default_EM_noise);
+
+    /// prevent using the EM algorithm for parameter learning
+    void forbidEM();
+
+    /// indicates whether we use EM for parameter learning
+    bool isUsingEM() const;
+
+    /**
+     * @brief returns the EM parameter learning approximation scheme if EM is enabled
+     * @return returns the EM parameter learning approximation scheme if EM is enabled,
+     * else if raises a NotFound exception. The scheme can then be subsequently used
+     * to fine-tune the EM algorithm, e.g., by setting its max time or max number of
+     * iterations.
+     * @throw NotFound is raised if EM() is called while the EM algorithm has not been
+     * enabled by useEM(), useEMWithDiffCriterion() or useEMWithRateCriterion().
+     */
+    EMApproximationScheme& EM();
+
+    /// returns the state of the last EM algorithm executed
+    ApproximationSchemeSTATE EMState() const;
+
+    /// returns the state of the EM algorithm
+    std::string EMStateMessage() const;
 
     /// returns true if the learner's database has missing values
     bool hasMissingValues() const;
@@ -658,7 +722,7 @@ namespace gum::learning {
     /// @}
 
     // ##########################################################################
-    /// @name a priorselection / parameterization
+    /// @name a prior selection / parameterization
     // ##########################################################################
     /// @{
 
@@ -706,30 +770,41 @@ namespace gum::learning {
     /// indicate that we wish to use K2
     void useK2(const std::vector< NodeId >& order);
 
-    /// indicate that we wish to use 3off2
-    void use3off2();
-
     /// indicate that we wish to use MIIC
     void useMIIC();
+
+    /// indicate if the selected algorithm is constraint-based
+    bool isConstraintBased() const {
+      switch (selectedAlgo_) {
+        case AlgoType::K2 :
+        case AlgoType::GREEDY_HILL_CLIMBING :
+        case AlgoType::LOCAL_SEARCH_WITH_TABU_LIST : return false;
+        case AlgoType::MIIC : return true;
+        default : throw OperationNotAllowed("Unknown algorithm");
+      }
+    }
+
+    /// indicate if the selected algorithm is score-based
+    bool isScoreBased() const { return !isConstraintBased(); }
 
     /// @}
 
     // ##########################################################################
-    /// @name 3off2/MIIC parameterization and specific results
+    /// @name MIIC parameterization and specific results
     // ##########################################################################
     /// @{
-    /// indicate that we wish to use the NML correction for 3off2 and MIIC
-    /// @throws OperationNotAllowed when 3off2 is not the selected algorithm
+    /// indicate that we wish to use the NML correction for and MIIC
+    /// @throws OperationNotAllowed when MIIC is not the selected algorithm
     void useNMLCorrection();
-    /// indicate that we wish to use the MDL correction for 3off2 and MIIC
-    /// @throws OperationNotAllowed when 3off2 is not the selected algorithm
+    /// indicate that we wish to use the MDL correction for  MIIC
+    /// @throws OperationNotAllowed when MIIC is not the selected algorithm
     void useMDLCorrection();
-    /// indicate that we wish to use the NoCorr correction for 3off2 and MIIC
-    /// @throws OperationNotAllowed when 3off2 is not the selected algorithm
+    /// indicate that we wish to use the NoCorr correction for MIIC
+    /// @throws OperationNotAllowed when MIIC is not the selected algorithm
     void useNoCorrection();
 
     /// get the list of arcs hiding latent variables
-    /// @throws OperationNotAllowed when 3off2 or MIIC is not the selected algorithm
+    /// @throws OperationNotAllowed when MIIC is not the selected algorithm
     std::vector< Arc > latentVariables() const;
 
     /// @}
@@ -760,35 +835,58 @@ namespace gum::learning {
     /// @name assign a new forbidden arc
     /// @{
     void addForbiddenArc(const Arc& arc);
-    void addForbiddenArc(const NodeId tail, const NodeId head);
+    void addForbiddenArc(NodeId tail, NodeId head);
     void addForbiddenArc(const std::string& tail, const std::string& head);
     /// @}
 
     /// @name remove a forbidden arc
     /// @{
     void eraseForbiddenArc(const Arc& arc);
-    void eraseForbiddenArc(const NodeId tail, const NodeId head);
+    void eraseForbiddenArc(NodeId tail, NodeId head);
     void eraseForbiddenArc(const std::string& tail, const std::string& head);
     ///@}
 
-    /// assign a set of forbidden arcs
+    /// assign a set of mandatory arcs
     void setMandatoryArcs(const ArcSet& set);
 
-    /// @name assign a new forbidden arc
+    /// @name assign a new mandatory arc
     ///@{
     void addMandatoryArc(const Arc& arc);
-    void addMandatoryArc(const NodeId tail, const NodeId head);
+    void addMandatoryArc(NodeId tail, NodeId head);
     void addMandatoryArc(const std::string& tail, const std::string& head);
     ///@}
 
-    /// @name remove a forbidden arc
+    /// @name remove a mandatory arc
     ///@{
     void eraseMandatoryArc(const Arc& arc);
-    void eraseMandatoryArc(const NodeId tail, const NodeId head);
+    void eraseMandatoryArc(NodeId tail, NodeId head);
     void eraseMandatoryArc(const std::string& tail, const std::string& head);
     /// @}
 
-    /// assign a set of forbidden edges
+    /// @name add a node with no parent
+    ///@{
+    void addNoParentNode(NodeId node);
+    void addNoParentNode(const std::string& node);
+    /// @}
+
+    /// @name remove a node with no parent
+    ///@{
+    void eraseNoParentNode(NodeId node);
+    void eraseNoParentNode(const std::string& node);
+
+    /// @name add a node with no children
+    ///@{
+    void addNoChildrenNode(NodeId node);
+    void addNoChildrenNode(const std::string& node);
+    /// @}
+
+    /// @name remove a node with no children
+    ///@{
+    void eraseNoChildrenNode(NodeId node);
+    void eraseNoChildrenNode(const std::string& node);
+    /// @}
+
+    /// assign a set of possible edges
     /// @warning Once at least one possible edge is defined, all other edges are
     /// not possible anymore
     /// @{
@@ -802,14 +900,14 @@ namespace gum::learning {
     //  are considered as impossible.
     /// @{
     void addPossibleEdge(const Edge& edge);
-    void addPossibleEdge(const NodeId tail, const NodeId head);
+    void addPossibleEdge(NodeId tail, NodeId head);
     void addPossibleEdge(const std::string& tail, const std::string& head);
     /// @}
 
     /// @name remove a possible edge
     /// @{
     void erasePossibleEdge(const Edge& edge);
-    void erasePossibleEdge(const NodeId tail, const NodeId head);
+    void erasePossibleEdge(NodeId tail, NodeId head);
     void erasePossibleEdge(const std::string& tail, const std::string& head);
     ///@}
 
@@ -845,10 +943,13 @@ namespace gum::learning {
     /// the type of the parameter estimator
     ParamEstimatorType paramEstimatorType_{ParamEstimatorType::ML};
 
-    /// epsilon for EM. if espilon=0.0 : no EM
-    double epsilonEM_{0.0};
+    /// a Boolean indicating whether we should use EM for parameter learning or not
+    bool useEM_{false};
 
-    /// the selected correction for 3off2 and miic
+    /// the noise factor (in (0,1)) used by EM for perturbing the CPT during init
+    double noiseEM_{0.1};
+
+    /// the selected correction for miic
     CorrectedMutualInformation* mutualInfo_{nullptr};
 
     /// the a priorselected for the score and parameters
@@ -880,21 +981,31 @@ namespace gum::learning {
     /// the constraint on mandatory arcs
     StructuralConstraintMandatoryArcs constraintMandatoryArcs_;
 
+    /// the constraint on no parent nodes
+    StructuralConstraintNoParentNodes constraintNoParentNodes_;
+
+    /// the constraint on no children nodes
+    StructuralConstraintNoChildrenNodes constraintNoChildrenNodes_;
+
+
     /// the selected learning algorithm
-    AlgoType selectedAlgo_{AlgoType::GREEDY_HILL_CLIMBING};
+    AlgoType selectedAlgo_{AlgoType::MIIC};
 
     /// the K2 algorithm
     K2 algoK2_;
 
-    /// the MIIC or 3off2 algorithm
-    Miic algoMiic3off2_;
+    /// the MIIC algorithm
+    SimpleMiic algoSimpleMiic_;
 
-    /// the penalty used in 3off2
-    typename CorrectedMutualInformation::KModeTypes kmode3Off2_{
-       CorrectedMutualInformation::KModeTypes::MDL};
+    /// the Constraint MIIC algorithm
+    Miic algoMiic_;
+
+    /// the penalty used in MIIC
+    typename CorrectedMutualInformation::KModeTypes kmodeMiic_{
+        CorrectedMutualInformation::KModeTypes::MDL};
 
     /// the parametric EM
-    DAG2BNLearner Dag2BN_;
+    DAG2BNLearner dag2BN_;
 
     /// the greedy hill climbing algorithm
     GreedyHillClimbing greedyHillClimbing_;
@@ -946,15 +1057,17 @@ namespace gum::learning {
     /// returns the DAG learnt
     DAG learnDag_();
 
-    /// prepares the initial graph for 3off2 or miic
-    MixedGraph prepareMiic3Off2_();
+    /// prepares the initial graph for Simple Miic
+    MixedGraph prepareSimpleMiic_();
+
+    /// prepares the initial graph for miic
+    MixedGraph prepareMiic_();
 
     /// returns the type (as a string) of a given prior
     PriorType getPriorType_() const;
 
-    /// create the Corrected Mutual Information instance for Miic/3off2
+    /// create the Corrected Mutual Information instance for Miic
     void createCorrectedMutualInformation_();
-
 
     public:
     // ##########################################################################
@@ -986,6 +1099,7 @@ namespace gum::learning {
 
       if (onStop.hasListener()) GUM_EMIT1(onStop, message);
     };
+
     /// @}
 
     /// Given that we approximate f(t), stopping criterion on |f(t+1)-f(t)|
@@ -996,7 +1110,6 @@ namespace gum::learning {
       algoK2_.approximationScheme().setEpsilon(eps);
       greedyHillClimbing_.setEpsilon(eps);
       localSearchWithTabuList_.setEpsilon(eps);
-      Dag2BN_.setEpsilon(eps);
     };
 
     /// Get the value of epsilon
@@ -1010,7 +1123,6 @@ namespace gum::learning {
       algoK2_.approximationScheme().disableEpsilon();
       greedyHillClimbing_.disableEpsilon();
       localSearchWithTabuList_.disableEpsilon();
-      Dag2BN_.disableEpsilon();
     };
 
     /// Enable stopping criterion on epsilon
@@ -1018,7 +1130,6 @@ namespace gum::learning {
       algoK2_.approximationScheme().enableEpsilon();
       greedyHillClimbing_.enableEpsilon();
       localSearchWithTabuList_.enableEpsilon();
-      Dag2BN_.enableEpsilon();
     };
 
     /// @return true if stopping criterion on epsilon is enabled, false
@@ -1027,6 +1138,7 @@ namespace gum::learning {
       if (currentAlgorithm_ != nullptr) return currentAlgorithm_->isEnabledEpsilon();
       else GUM_ERROR(FatalError, "No chosen algorithm for learning")
     }
+
     /// @}
 
     /// Given that we approximate f(t), stopping criterion on
@@ -1038,7 +1150,6 @@ namespace gum::learning {
       algoK2_.approximationScheme().setMinEpsilonRate(rate);
       greedyHillClimbing_.setMinEpsilonRate(rate);
       localSearchWithTabuList_.setMinEpsilonRate(rate);
-      Dag2BN_.setMinEpsilonRate(rate);
     };
 
     /// Get the value of the minimal epsilon rate
@@ -1052,21 +1163,22 @@ namespace gum::learning {
       algoK2_.approximationScheme().disableMinEpsilonRate();
       greedyHillClimbing_.disableMinEpsilonRate();
       localSearchWithTabuList_.disableMinEpsilonRate();
-      Dag2BN_.disableMinEpsilonRate();
     };
+
     /// Enable stopping criterion on epsilon rate
     void enableMinEpsilonRate() override {
       algoK2_.approximationScheme().enableMinEpsilonRate();
       greedyHillClimbing_.enableMinEpsilonRate();
       localSearchWithTabuList_.enableMinEpsilonRate();
-      Dag2BN_.enableMinEpsilonRate();
     };
+
     /// @return true if stopping criterion on epsilon rate is enabled, false
     /// otherwise
     bool isEnabledMinEpsilonRate() const override {
       if (currentAlgorithm_ != nullptr) return currentAlgorithm_->isEnabledMinEpsilonRate();
       else GUM_ERROR(FatalError, "No chosen algorithm for learning")
     }
+
     /// @}
 
     /// stopping criterion on number of iterations
@@ -1078,7 +1190,6 @@ namespace gum::learning {
       algoK2_.approximationScheme().setMaxIter(max);
       greedyHillClimbing_.setMaxIter(max);
       localSearchWithTabuList_.setMaxIter(max);
-      Dag2BN_.setMaxIter(max);
     };
 
     /// @return the criterion on number of iterations
@@ -1092,21 +1203,22 @@ namespace gum::learning {
       algoK2_.approximationScheme().disableMaxIter();
       greedyHillClimbing_.disableMaxIter();
       localSearchWithTabuList_.disableMaxIter();
-      Dag2BN_.disableMaxIter();
     };
+
     /// Enable stopping criterion on max iterations
     void enableMaxIter() override {
       algoK2_.approximationScheme().enableMaxIter();
       greedyHillClimbing_.enableMaxIter();
       localSearchWithTabuList_.enableMaxIter();
-      Dag2BN_.enableMaxIter();
     };
+
     /// @return true if stopping criterion on max iterations is enabled, false
     /// otherwise
     bool isEnabledMaxIter() const override {
       if (currentAlgorithm_ != nullptr) return currentAlgorithm_->isEnabledMaxIter();
       else GUM_ERROR(FatalError, "No chosen algorithm for learning")
     }
+
     /// @}
 
     /// stopping criterion on timeout
@@ -1119,7 +1231,6 @@ namespace gum::learning {
       algoK2_.approximationScheme().setMaxTime(timeout);
       greedyHillClimbing_.setMaxTime(timeout);
       localSearchWithTabuList_.setMaxTime(timeout);
-      Dag2BN_.setMaxTime(timeout);
     }
 
     /// returns the timeout (in seconds)
@@ -1139,20 +1250,21 @@ namespace gum::learning {
       algoK2_.approximationScheme().disableMaxTime();
       greedyHillClimbing_.disableMaxTime();
       localSearchWithTabuList_.disableMaxTime();
-      Dag2BN_.disableMaxTime();
     };
+
     void enableMaxTime() override {
       algoK2_.approximationScheme().enableMaxTime();
       greedyHillClimbing_.enableMaxTime();
       localSearchWithTabuList_.enableMaxTime();
-      Dag2BN_.enableMaxTime();
     };
+
     /// @return true if stopping criterion on timeout is enabled, false
     /// otherwise
     bool isEnabledMaxTime() const override {
       if (currentAlgorithm_ != nullptr) return currentAlgorithm_->isEnabledMaxTime();
       else GUM_ERROR(FatalError, "No chosen algorithm for learning")
     }
+
     /// @}
 
     /// how many samples between 2 stopping isEnableds
@@ -1162,13 +1274,13 @@ namespace gum::learning {
       algoK2_.approximationScheme().setPeriodSize(p);
       greedyHillClimbing_.setPeriodSize(p);
       localSearchWithTabuList_.setPeriodSize(p);
-      Dag2BN_.setPeriodSize(p);
     };
 
     Size periodSize() const override {
       if (currentAlgorithm_ != nullptr) return currentAlgorithm_->periodSize();
       else GUM_ERROR(FatalError, "No chosen algorithm for learning")
     }
+
     /// @}
 
     /// verbosity
@@ -1177,13 +1289,13 @@ namespace gum::learning {
       algoK2_.approximationScheme().setVerbosity(v);
       greedyHillClimbing_.setVerbosity(v);
       localSearchWithTabuList_.setVerbosity(v);
-      Dag2BN_.setVerbosity(v);
     };
 
     bool verbosity() const override {
       if (currentAlgorithm_ != nullptr) return currentAlgorithm_->verbosity();
       else GUM_ERROR(FatalError, "No chosen algorithm for learning")
     }
+
     /// @}
 
     /// history
@@ -1205,11 +1317,150 @@ namespace gum::learning {
       if (currentAlgorithm_ != nullptr) return currentAlgorithm_->history();
       else GUM_ERROR(FatalError, "No chosen algorithm for learning")
     }
+
+    /// @}
+
+
+    /// @name EM approximation scheme for parameter learning
+    /// @{
+
+    /**
+     * @brief sets the stopping criterion of EM as being the minimal difference between two
+     * consecutive log-likelihoods
+     * @param eps the log-likelihood difference below which EM stops its iterations
+     * @warning setting this stopping criterion disables the min rate criterion (if it was enabled)
+     * @throw OutOfBounds if eps <= 0
+     */
+    void EMsetEpsilon(double eps) { dag2BN_.setEpsilon(eps); }
+
+    /// Get the value of EM's min diff epsilon
+    /**
+     * @brief Get the value of EM's min diff epsilon
+     * @warning Note that this value is not taken into account unless the min diff criterion is
+     * enabled
+     */
+    double EMEpsilon() const { return dag2BN_.epsilon(); }
+
+    /// Disable the min log-likelihood diff stopping criterion for EM
+    void EMdisableEpsilon() { dag2BN_.disableEpsilon(); }
+
+    /**
+     * @brief Enable the log-likelihood min diff stopping criterion in EM
+     * @warning setting this stopping criterion disables the min rate criterion (if it was enabled)
+     */
+    void EMenableEpsilon() { dag2BN_.enableEpsilon(); }
+
+    /// return true if EM's stopping criterion is the log-likelihood min diff
+    bool EMisEnabledEpsilon() const { return dag2BN_.isEnabledEpsilon(); }
+
+    /**
+     * @brief sets the stopping criterion of EM as being the minimal log-likelihood's evolution rate
+     * @param rate the log-likelihood evolution rate below which EM stops its iterations
+     * @warning setting this stopping criterion disables the min diff criterion (if it was enabled)
+     * @throw OutOfBounds if rate<=0
+     */
+    void EMsetMinEpsilonRate(double rate) { dag2BN_.setMinEpsilonRate(rate); }
+
+    /**
+     * @brief Get the value of the minimal log-likelihood evolution rate of EM
+     * @warning Note that this value is not taken into account unless the min rate criterion is
+     * enabled
+     */
+    double EMMinEpsilonRate() const { return dag2BN_.minEpsilonRate(); }
+
+    /// Disable the log-likelihood evolution rate stopping criterion
+    void EMdisableMinEpsilonRate() { dag2BN_.disableMinEpsilonRate(); }
+
+    /**
+     * @brief Enable the log-likelihood evolution rate stopping criterion
+     * @warning setting this stopping criterion disables the min diff criterion (if it was enabled)
+     */
+    void EMenableMinEpsilonRate() { dag2BN_.enableMinEpsilonRate(); }
+
+    /// @return true if EM's stopping criterion is the log-likelihood evolution rate
+    bool EMisEnabledMinEpsilonRate() const { return dag2BN_.isEnabledMinEpsilonRate(); }
+
+    /**
+     * @brief add a max iteration stopping criterion
+     * @param max the max number of iterations that EM is allowed to perform
+     * @throw OutOfBounds if max<=1
+     */
+    void EMsetMaxIter(Size max) { dag2BN_.setMaxIter(max); }
+
+    /**
+     * @brief return the max number of iterations criterion
+     * @warning Note that this value is not taken into account unless the max iter criterion is
+     * enabled
+     */
+    Size EMMaxIter() const { return dag2BN_.maxIter(); }
+
+    /// Disable stopping criterion on max iterations
+    void EMdisableMaxIter() { dag2BN_.disableMaxIter(); }
+
+    /// Enable stopping criterion on max iterations
+    void EMenableMaxIter() { dag2BN_.enableMaxIter(); }
+
+    /// @return true if stopping criterion on max iterations is enabled, false
+    /// otherwise
+    bool EMisEnabledMaxIter() const { return dag2BN_.isEnabledMaxIter(); }
+
+    /**
+     * @brief add a stopping criterion on timeout
+     * @param timeout the timeout in milliseconds
+     * @throw OutOfBounds if timeout<=0.0
+     */
+    void EMsetMaxTime(double timeout) { dag2BN_.setMaxTime(timeout); }
+
+    /**
+     * @@brief returns EM's timeout (in milliseconds)
+     * @warning Note that this value is not taken into account unless the max time criterion is
+     * enabled
+     */
+    double EMMaxTime() const { return dag2BN_.maxTime(); }
+
+    /// get the current running time in second (double)
+    double EMCurrentTime() const { return dag2BN_.currentTime(); }
+
+    /// Disable EM's timeout stopping criterion
+    void EMdisableMaxTime() { dag2BN_.disableMaxTime(); }
+
+    void EMenableMaxTime() { dag2BN_.enableMaxTime(); };
+
+    /// @return true if stopping criterion on timeout is enabled, false otherwise
+    bool EMisEnabledMaxTime() const { return dag2BN_.isEnabledMaxTime(); }
+
+    /**
+     * @brief how many samples between 2 stoppings isEnabled
+     * @throw OutOfBounds if p<1
+     */
+    void EMsetPeriodSize(Size p) { dag2BN_.setPeriodSize(p); }
+
+    Size EMPeriodSize() const { return dag2BN_.periodSize(); }
+
+    /// sets or unsets EM's verbosity
+    void EMsetVerbosity(bool v) { dag2BN_.setVerbosity(v); }
+
+    /// returns the EM's verbosity status
+    bool EMVerbosity() const { return dag2BN_.verbosity(); }
+
+    /// get the current state of EM
+    ApproximationSchemeSTATE EMStateApproximationScheme() const {
+      return dag2BN_.stateApproximationScheme();
+    }
+
+    /// returns the number of iterations performed by the last EM execution
+    Size EMnbrIterations() const { return dag2BN_.nbrIterations(); }
+
+    /**
+     * @brief returns the history of the last EM execution
+     * @warning to activate the history recording, EM's verbosity must be set to true
+     */
+    const std::vector< double >& EMHistory() const { return dag2BN_.history(); }
+
     /// @}
   };
 
   /* namespace learning */
-
 }   // namespace gum::learning
 
 /// include the inlined functions if necessary

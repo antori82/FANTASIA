@@ -21,8 +21,8 @@ static std::vector<double> ToStdVector(const TArray<float>& Values)
 	return Result;
 }
 
-/** Convert an aGrUM Potential into a Blueprint-friendly TMap<FString, float>. */
-static TMap<FString, float> PotentialToMap(const gum::Potential<double>& Result)
+/** Convert an aGrUM Tensor into a Blueprint-friendly TMap<FString, float>. */
+static TMap<FString, float> TensorToMap(const gum::Tensor<double>& Result)
 {
 	TMap<FString, float> Out;
 	const auto& Var = Result.variable(0);
@@ -102,7 +102,7 @@ TMap<FString, float> UInfluenceDiag::getPosterior(const FString& variable)
 	const std::string nodeName(TCHAR_TO_UTF8(*variable));
 
 	try {
-		return PotentialToMap(inference->posterior(nodeName));
+		return TensorToMap(inference->posterior(nodeName));
 	}
 	catch ([[maybe_unused]] gum::NotFound& e) {
 		UE_LOG(LogTemp, Warning, TEXT("[Influence Diagram] %hs from %hs"), e.errorType().c_str(), e.errorContent().c_str());
@@ -123,7 +123,7 @@ TMap<FString, float> UInfluenceDiag::getPosteriorUtility(const FString& variable
 
 	if (id.isUtilityNode(nodeName)) {
 		try {
-			return PotentialToMap(inference->posteriorUtility(nodeName));
+			return TensorToMap(inference->posteriorUtility(nodeName));
 		}
 		catch ([[maybe_unused]] gum::NotFound& e)
 			UE_LOG(LogTemp, Warning, TEXT("[Influence Diagram] %hs from %hs"), e.errorType().c_str(), e.errorContent().c_str());
@@ -173,7 +173,7 @@ TMap<FString, FArrayFloat> UInfluenceDiag::optimalDecision(const FString& variab
 	TMap<FString, FArrayFloat> out;
 
 	try {
-		gum::Potential<double> result = inference->optimalDecision(TCHAR_TO_UTF8(*variable));
+		gum::Tensor<double> result = inference->optimalDecision(TCHAR_TO_UTF8(*variable));
 
 		auto table = result.content();
 		gum::Instantiation inst(*table);

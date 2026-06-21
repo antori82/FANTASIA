@@ -1,22 +1,43 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
+#pragma once
 
 
 /**
@@ -29,15 +50,17 @@
 // =======================================================
 #include <queue>
 // =======================================================
-#include <agrum/tools/core/math/math_utils.h>
-#include <agrum/tools/core/multiPriorityQueue.h>
-#include <agrum/tools/core/types.h>
-#include <agrum/tools/core/utils_random.h>
+#include <agrum/base/core/multiPriorityQueue.h>
+#include <agrum/base/core/types.h>
+
+#include <agrum/base/core/math/math_utils.h>
+#include <agrum/base/core/utils_random.h>
 // =======================================================
 #include <agrum/FMDP/learning/core/chiSquare.h>
 #include <agrum/FMDP/learning/datastructure/incrementalGraphLearner.h>
 // =======================================================
-#include <agrum/tools/variables/discreteVariable.h>
+#include <agrum/base/variables/discreteVariable.h>
+
 // =======================================================
 
 namespace gum {
@@ -60,11 +83,9 @@ namespace gum {
   // ############################################################################
   template < TESTNAME AttributeSelection, bool isScalar >
   IncrementalGraphLearner< AttributeSelection, isScalar >::IncrementalGraphLearner(
-     MultiDimFunctionGraph< double >* target,
-     Set< const DiscreteVariable* >   varList,
-     const DiscreteVariable*          value) :
-      target_(target),
-      setOfVars_(varList), value_(value) {
+      MultiDimFunctionGraph< double >* target,
+      gum::VariableSet                 varList,
+      const DiscreteVariable* value) : target_(target), setOfVars_(varList), value_(value) {
     GUM_CONSTRUCTOR(IncrementalGraphLearner);
 
     for (auto varIter = setOfVars_.cbeginSafe(); varIter != setOfVars_.cendSafe(); ++varIter)
@@ -72,12 +93,11 @@ namespace gum {
     var2Node_.insert(value_, new LinkedList< NodeId >());
 
     model_.addNode();
-    this->root_
-       = insertLeafNode_(new NodeDatabase< AttributeSelection, isScalar >(&setOfVars_, value_),
-                         value_,
-                         new Set< const Observation* >());
+    this->root_ = IncrementalGraphLearner< AttributeSelection, isScalar >::insertLeafNode_(
+        new NodeDatabase< AttributeSelection, isScalar >(&setOfVars_, value_),
+        value_,
+        new Set< const Observation* >());
   }
-
 
   // ############################################################################
   /// Default destructor
@@ -102,7 +122,6 @@ namespace gum {
     GUM_DESTRUCTOR(IncrementalGraphLearner);
   }
 
-
   // ============================================================================
   /// @name New Observation insertion methods
   // ============================================================================
@@ -115,7 +134,7 @@ namespace gum {
   // ############################################################################
   template < TESTNAME AttributeSelection, bool isScalar >
   void IncrementalGraphLearner< AttributeSelection, isScalar >::addObservation(
-     const Observation* newObs) {
+      const Observation* newObs) {
     _assumeValue_(newObs);
 
     // The we go across the tree
@@ -134,7 +153,6 @@ namespace gum {
     leafDatabase_[currentNodeId]->insert(newObs);
   }
 
-
   // ============================================================================
   /// @name New Observation insertion methods
   // ============================================================================
@@ -146,7 +164,7 @@ namespace gum {
   // ############################################################################
   template < TESTNAME AttributeSelection, bool isScalar >
   void IncrementalGraphLearner< AttributeSelection, isScalar >::updateVar(
-     const DiscreteVariable* var) {
+      const DiscreteVariable* var) {
     Link< NodeId >* nodIter = var2Node_[var]->list();
     Link< NodeId >* nni     = nullptr;
     while (nodIter) {
@@ -155,7 +173,6 @@ namespace gum {
       nodIter = nni;
     }
   }
-
 
   // ############################################################################
   /**
@@ -168,8 +185,8 @@ namespace gum {
   // ############################################################################
   template < TESTNAME AttributeSelection, bool isScalar >
   void IncrementalGraphLearner< AttributeSelection, isScalar >::updateNode_(
-     NodeId                          updatedNode,
-     Set< const DiscreteVariable* >& varsOfInterest) {
+      NodeId            updatedNode,
+      gum::VariableSet& varsOfInterest) {
     // If this node has no interesting variable, we turn it into a leaf
     if (varsOfInterest.empty()) {
       convertNode2Leaf_(updatedNode);
@@ -193,17 +210,16 @@ namespace gum {
     transpose_(updatedNode, *varIter);
   }
 
-
   // ############################################################################
   /// Turns the given node into a leaf if not already so
   // ############################################################################
   template < TESTNAME AttributeSelection, bool isScalar >
   void IncrementalGraphLearner< AttributeSelection, isScalar >::convertNode2Leaf_(
-     NodeId currentNodeId) {
+      NodeId currentNodeId) {
     if (nodeVarMap_[currentNodeId] != value_) {
       leafDatabase_.insert(currentNodeId, new Set< const Observation* >());
 
-      // Resolving potential sons issue
+      // Resolving tensor sons issue
       for (Idx modality = 0; modality < nodeVarMap_[currentNodeId]->domainSize(); ++modality) {
         NodeId sonId = nodeSonsMap_[currentNodeId][modality];
         convertNode2Leaf_(sonId);
@@ -219,15 +235,14 @@ namespace gum {
     }
   }
 
-
   // ############################################################################
   /// Installs given variable to the given node, ensuring that the variable
   /// is not present in its subtree
   // ############################################################################
   template < TESTNAME AttributeSelection, bool isScalar >
   void IncrementalGraphLearner< AttributeSelection, isScalar >::transpose_(
-     NodeId                  currentNodeId,
-     const DiscreteVariable* desiredVar) {
+      NodeId                  currentNodeId,
+      const DiscreteVariable* desiredVar) {
     // **************************************************************************************
     // Si le noeud courant contient déjà la variable qu'on souhaite lui amener
     // Il n'y a rien à faire
@@ -244,10 +259,10 @@ namespace gum {
       // First We must prepare these new leaves NodeDatabases and Sets<const
       // Observation*>
       NodeDatabase< AttributeSelection, isScalar >** dbMap
-         = static_cast< NodeDatabase< AttributeSelection, isScalar >** >(SOA_ALLOCATE(
-            sizeof(NodeDatabase< AttributeSelection, isScalar >*) * desiredVar->domainSize()));
+          = static_cast< NodeDatabase< AttributeSelection, isScalar >** >(SOA_ALLOCATE(
+              sizeof(NodeDatabase< AttributeSelection, isScalar >*) * desiredVar->domainSize()));
       Set< const Observation* >** obsetMap = static_cast< Set< const Observation* >** >(
-         SOA_ALLOCATE(sizeof(Set< const Observation* >*) * desiredVar->domainSize()));
+          SOA_ALLOCATE(sizeof(Set< const Observation* >*) * desiredVar->domainSize()));
       for (Idx modality = 0; modality < desiredVar->domainSize(); ++modality) {
         dbMap[modality]    = new NodeDatabase< AttributeSelection, isScalar >(&setOfVars_, value_);
         obsetMap[modality] = new Set< const Observation* >();
@@ -262,14 +277,14 @@ namespace gum {
 
       // Then we can install each new leaves (and put in place the sonsMap)
       NodeId* sonsMap
-         = static_cast< NodeId* >(SOA_ALLOCATE(sizeof(NodeId) * desiredVar->domainSize()));
+          = static_cast< NodeId* >(SOA_ALLOCATE(sizeof(NodeId) * desiredVar->domainSize()));
       for (Idx modality = 0; modality < desiredVar->domainSize(); ++modality)
         sonsMap[modality] = insertLeafNode_(dbMap[modality], value_, obsetMap[modality]);
 
       // Some necessary clean up
       SOA_DEALLOCATE(dbMap,
                      sizeof(NodeDatabase< AttributeSelection, isScalar >*)
-                        * desiredVar->domainSize());
+                         * desiredVar->domainSize());
       SOA_DEALLOCATE(obsetMap, sizeof(Set< const Observation* >*) * desiredVar->domainSize());
 
       // And finally we can turn the node into an internal node associated to
@@ -291,25 +306,25 @@ namespace gum {
     //        sonsNodeDatabase =
     //        nodeId2Database_[currentNodeId]->splitOnVar(desiredVar);
     NodeId* sonsMap
-       = static_cast< NodeId* >(SOA_ALLOCATE(sizeof(NodeId) * desiredVar->domainSize()));
+        = static_cast< NodeId* >(SOA_ALLOCATE(sizeof(NodeId) * desiredVar->domainSize()));
 
     // Then we create the new mapping
     for (Idx desiredVarModality = 0; desiredVarModality < desiredVar->domainSize();
          ++desiredVarModality) {
       NodeId* grandSonsMap = static_cast< NodeId* >(
-         SOA_ALLOCATE(sizeof(NodeId) * nodeVarMap_[currentNodeId]->domainSize()));
+          SOA_ALLOCATE(sizeof(NodeId) * nodeVarMap_[currentNodeId]->domainSize()));
       NodeDatabase< AttributeSelection, isScalar >* sonDB
-         = new NodeDatabase< AttributeSelection, isScalar >(&setOfVars_, value_);
+          = new NodeDatabase< AttributeSelection, isScalar >(&setOfVars_, value_);
       for (Idx currentVarModality = 0;
            currentVarModality < nodeVarMap_[currentNodeId]->domainSize();
            ++currentVarModality) {
         grandSonsMap[currentVarModality]
-           = nodeSonsMap_[nodeSonsMap_[currentNodeId][currentVarModality]][desiredVarModality];
+            = nodeSonsMap_[nodeSonsMap_[currentNodeId][currentVarModality]][desiredVarModality];
         sonDB->operator+=((*nodeId2Database_[grandSonsMap[currentVarModality]]));
       }
 
       sonsMap[desiredVarModality]
-         = insertInternalNode_(sonDB, nodeVarMap_[currentNodeId], grandSonsMap);
+          = insertInternalNode_(sonDB, nodeVarMap_[currentNodeId], grandSonsMap);
     }
 
     // Finally we clean the old remaining nodes
@@ -326,7 +341,6 @@ namespace gum {
     chgNodeBoundVar_(currentNodeId, desiredVar);
   }
 
-
   // ############################################################################
   /**
    * inserts a new node in internal graph
@@ -337,8 +351,8 @@ namespace gum {
   // ############################################################################
   template < TESTNAME AttributeSelection, bool isScalar >
   NodeId IncrementalGraphLearner< AttributeSelection, isScalar >::insertNode_(
-     NodeDatabase< AttributeSelection, isScalar >* nDB,
-     const DiscreteVariable*                       boundVar) {
+      NodeDatabase< AttributeSelection, isScalar >* nDB,
+      const DiscreteVariable*                       boundVar) {
     NodeId newNodeId = model_.addNode();
     nodeVarMap_.insert(newNodeId, boundVar);
     nodeId2Database_.insert(newNodeId, nDB);
@@ -348,7 +362,6 @@ namespace gum {
 
     return newNodeId;
   }
-
 
   // ############################################################################
   /**
@@ -361,14 +374,13 @@ namespace gum {
   // ############################################################################
   template < TESTNAME AttributeSelection, bool isScalar >
   NodeId IncrementalGraphLearner< AttributeSelection, isScalar >::insertInternalNode_(
-     NodeDatabase< AttributeSelection, isScalar >* nDB,
-     const DiscreteVariable*                       boundVar,
-     NodeId*                                       sonsMap) {
+      NodeDatabase< AttributeSelection, isScalar >* nDB,
+      const DiscreteVariable*                       boundVar,
+      NodeId*                                       sonsMap) {
     NodeId newNodeId = this->insertNode_(nDB, boundVar);
     nodeSonsMap_.insert(newNodeId, sonsMap);
     return newNodeId;
   }
-
 
   // ############################################################################
   /**
@@ -381,14 +393,13 @@ namespace gum {
   // ############################################################################
   template < TESTNAME AttributeSelection, bool isScalar >
   NodeId IncrementalGraphLearner< AttributeSelection, isScalar >::insertLeafNode_(
-     NodeDatabase< AttributeSelection, isScalar >* nDB,
-     const DiscreteVariable*                       boundVar,
-     Set< const Observation* >*                    obsSet) {
+      NodeDatabase< AttributeSelection, isScalar >* nDB,
+      const DiscreteVariable*                       boundVar,
+      Set< const Observation* >*                    obsSet) {
     NodeId newNodeId = this->insertNode_(nDB, boundVar);
     leafDatabase_.insert(newNodeId, obsSet);
     return newNodeId;
   }
-
 
   // ############################################################################
   /**
@@ -399,8 +410,8 @@ namespace gum {
   // ############################################################################
   template < TESTNAME AttributeSelection, bool isScalar >
   void IncrementalGraphLearner< AttributeSelection, isScalar >::chgNodeBoundVar_(
-     NodeId                  currentNodeId,
-     const DiscreteVariable* desiredVar) {
+      NodeId                  currentNodeId,
+      const DiscreteVariable* desiredVar) {
     if (nodeVarMap_[currentNodeId] == desiredVar) return;
 
     var2Node_[nodeVarMap_[currentNodeId]]->searchAndRemoveLink(currentNodeId);
@@ -418,7 +429,6 @@ namespace gum {
 
     needUpdate_ = true;
   }
-
 
   // ############################################################################
   /**

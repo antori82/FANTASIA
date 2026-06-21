@@ -1,22 +1,42 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
 
 
 /**
@@ -32,9 +52,9 @@
 
 #include <string>
 
-#include <agrum/MRF/inference/tools/MRFInference.h>
 #include <agrum/agrum.h>
 
+#include <agrum/MRF/inference/tools/MRFInference.h>
 
 namespace gum {
 
@@ -82,9 +102,9 @@ namespace gum {
      * @returns a const ref to the posterior probability of the node.
      * @param node the node for which we need a posterior probability
      *
-     * @warning for efficiency reasons, the potential is stored into the
+     * @warning for efficiency reasons, the tensor is stored into the
      * inference engine and is returned by reference. In order to ensure
-     * that the potential may still exist even if the Inference object is
+     * that the tensor may still exist even if the Inference object is
      * destroyed, the user has to copy it explicitly.
      *
      * @warning prepareInference and makeInference may be applied if needed by
@@ -92,7 +112,7 @@ namespace gum {
      *
      * @throw UndefinedElement if node is not in the set of targets
      */
-    virtual const Potential< GUM_SCALAR >& posterior(NodeId node);
+    virtual const Tensor< GUM_SCALAR >& posterior(NodeId node);
 
     /// Computes and returns the posterior of a node.
     /**
@@ -100,9 +120,9 @@ namespace gum {
      * @param nodeName the anme of the node for which we need a posterior
      * probability
      *
-     * @warning for efficiency reasons, the potential is stored into the
+     * @warning for efficiency reasons, the tensor is stored into the
      * inference engine and is returned by reference. In order to ensure
-     * that the potential may still exist even if the Inference object is
+     * that the tensor may still exist even if the Inference object is
      * destroyed, the user has to copy it explicitly.
      *
      * @warning prepareInference and makeInference may be applied if needed by
@@ -110,7 +130,7 @@ namespace gum {
      *
      * @throw UndefinedElement if node is not in the set of targets
      */
-    virtual const Potential< GUM_SCALAR >& posterior(const std::string& nodeName);
+    virtual const Tensor< GUM_SCALAR >& posterior(const std::string& nodeName);
 
     /// @}
 
@@ -183,30 +203,30 @@ namespace gum {
 
 
     /**
-     * Create a gum::Potential for P(target|evs) (for all instanciation of target
+     * Create a gum::Tensor for P(target|evs) (for all instanciation of target
      * and evs)
      *
-     * @warning If some evs are d-separated, they are not included in the Potential
+     * @warning If some evs are d-separated, they are not included in the Tensor
      *
      * @param mn the MarkovRandomField
      * @param target  the nodeId of the targetted variable
      * @param evs the vector of nodeId of the observed variables
-     * @return a Potential
+     * @return a Tensor
      */
-    Potential< GUM_SCALAR > evidenceImpact(NodeId target, const NodeSet& evs);
+    Tensor< GUM_SCALAR > evidenceImpact(NodeId target, const NodeSet& evs);
 
     /**
-     * Create a gum::Potential for P(target|evs) (for all instanciation of target
+     * Create a gum::Tensor for P(target|evs) (for all instanciation of target
      * and evs)
      *
-     * @warning If some evs are d-separated, they are not included in the Potential
+     * @warning If some evs are d-separated, they are not included in the Tensor
      *
      * @param target  the nodeId of the target variable
      * @param evs the nodeId of the observed variable
-     * @return a Potential
+     * @return a Tensor
      */
-    Potential< GUM_SCALAR > evidenceImpact(const std::string&                target,
-                                           const std::vector< std::string >& evs);
+    Tensor< GUM_SCALAR > evidenceImpact(const std::string&                target,
+                                        const std::vector< std::string >& evs);
 
     protected:
     /// fired after a new marginal target is inserted
@@ -228,7 +248,7 @@ namespace gum {
 
     /// asks derived classes for the posterior of a given variable
     /** @param id The variable's id. */
-    virtual const Potential< GUM_SCALAR >& posterior_(NodeId id) = 0;
+    virtual const Tensor< GUM_SCALAR >& posterior_(NodeId id) = 0;
 
     protected:
     void setTargetedMode_();
@@ -251,7 +271,6 @@ namespace gum {
 
 
 }   // namespace gum
-
 
 #include <agrum/MRF/inference/tools/marginalTargetedMRFInference_tpl.h>
 

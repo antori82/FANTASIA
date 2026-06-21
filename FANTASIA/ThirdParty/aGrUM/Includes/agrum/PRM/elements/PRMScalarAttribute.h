@@ -1,22 +1,42 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
 
 
 /**
@@ -30,8 +50,8 @@
 #define GUM_SCALAR_ATTRIBUTE_H
 
 #include <agrum/agrum.h>
-#include <agrum/PRM/elements/PRMAttribute.h>
 
+#include <agrum/PRM/elements/PRMAttribute.h>
 
 namespace gum {
   namespace prm {
@@ -45,7 +65,7 @@ namespace gum {
      *type
      *and
      * by a Conditional Probability Function (aka CPF but represented by a
-     * Potential).
+     * Tensor).
      *
      * An attribute in a PRM is the equivalent of a random variable in a
      *bayesian
@@ -57,7 +77,7 @@ namespace gum {
      * Built-in copies (copy constructor and copy operator) are illegal due to
      * various problems raised by redondant information.
      *
-     * @see PRM PRMFactory Class PRMClassElement PRMType Potential
+     * @see PRM PRMFactory Class PRMClassElement PRMType Tensor
      * @ingroup prm_group
      */
     template < typename GUM_SCALAR >
@@ -76,7 +96,7 @@ namespace gum {
        * implementation.
        * @param name The name of this PRMAttribute.
        * @param type The type of this PRMAttribute, it is copied.
-       * @param impl The MultiDimImplementation used by the internal Potential
+       * @param impl The MultiDimImplementation used by the internal Tensor
        * of this PRMAttribute.
        *             it will be deleted after the call of ~PRMAttribute.
        */
@@ -96,7 +116,7 @@ namespace gum {
 
       virtual PRMAttribute< GUM_SCALAR >* newFactory(const PRMClass< GUM_SCALAR >& c) const;
       virtual PRMAttribute< GUM_SCALAR >*
-         copy(Bijection< const DiscreteVariable*, const DiscreteVariable* > bij) const;
+          copy(Bijection< const DiscreteVariable*, const DiscreteVariable* > bij) const;
 
       virtual void copyCpf(const Bijection< const DiscreteVariable*, const DiscreteVariable* >& bif,
                            const PRMAttribute< GUM_SCALAR >& source);
@@ -111,7 +131,7 @@ namespace gum {
       virtual const PRMType& type() const;
 
       /// See gum::PRMClassElement::cpf().
-      virtual const Potential< GUM_SCALAR >& cpf() const;
+      virtual const Tensor< GUM_SCALAR >& cpf() const;
 
       /// See gum::PRMClassElement::addParent_().
       virtual void addParent(const PRMClassElement< GUM_SCALAR >& elt);
@@ -127,6 +147,7 @@ namespace gum {
       virtual void swap(const PRMType& old_type, const PRMType& new_type);
 
       /// @}
+
       protected:
       /// Copy constructor. Don't use it.
       PRMScalarAttribute(const PRMScalarAttribute& source);
@@ -146,8 +167,8 @@ namespace gum {
       /// The random variable type of this attribute
       PRMType* _type_;
 
-      /// A pointer on the Potential of this attribute
-      Potential< GUM_SCALAR >* _cpf_;
+      /// A pointer on the Tensor of this attribute
+      Tensor< GUM_SCALAR >* _cpf_;
 
       /// @}
     };

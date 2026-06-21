@@ -1,22 +1,43 @@
-/**
- *
- *   Copyright (c) 2005-2023 by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
+#pragma once
 
 
 /** @file
@@ -26,11 +47,11 @@
  * GONZALES(_at_AMU)
  *
  */
-#include <agrum/tools/core/utils_random.h>
 #include <agrum/ID/generator/influenceDiagramGenerator.h>
 
-namespace gum {
+#include <agrum/base/core/utils_random.h>
 
+namespace gum {
   // Default constructor.
   // Use the SimpleCPTGenerator for generating the IDs CPT.
   template < typename GUM_SCALAR >
@@ -46,7 +67,7 @@ namespace gum {
   // @param cptGenerator The policy used to generate CPT.
   template < typename GUM_SCALAR >
   InfluenceDiagramGenerator< GUM_SCALAR >::InfluenceDiagramGenerator(
-     ICPTGenerator< GUM_SCALAR >* cptGenerator) {
+      ICPTGenerator< GUM_SCALAR >* cptGenerator) {
     GUM_CONSTRUCTOR(InfluenceDiagramGenerator)
     _cptGenerator_ = cptGenerator;
     _utGenerator_  = new SimpleUTGenerator();
@@ -71,8 +92,8 @@ namespace gum {
   // @param utGenerator The policy used to generate UT.
   template < typename GUM_SCALAR >
   InfluenceDiagramGenerator< GUM_SCALAR >::InfluenceDiagramGenerator(
-     ICPTGenerator< GUM_SCALAR >* cptGenerator,
-     UTGenerator*                 utGenerator) {
+      ICPTGenerator< GUM_SCALAR >* cptGenerator,
+      UTGenerator*                 utGenerator) {
     GUM_CONSTRUCTOR(InfluenceDiagramGenerator)
     _cptGenerator_ = cptGenerator;
     _utGenerator_  = utGenerator;
@@ -95,11 +116,11 @@ namespace gum {
   // @return A IDs randomly generated.
   template < typename GUM_SCALAR >
   InfluenceDiagram< GUM_SCALAR >*
-     InfluenceDiagramGenerator< GUM_SCALAR >::generateID(Size       nbrNodes,
-                                                         GUM_SCALAR arcDensity,
-                                                         GUM_SCALAR chanceNodeDensity,
-                                                         GUM_SCALAR utilityNodeDensity,
-                                                         Size       max_modality) {
+      InfluenceDiagramGenerator< GUM_SCALAR >::generateID(Size       nbrNodes,
+                                                          GUM_SCALAR arcDensity,
+                                                          GUM_SCALAR chanceNodeDensity,
+                                                          GUM_SCALAR utilityNodeDensity,
+                                                          Size       max_modality) {
     auto influenceDiagram = new InfluenceDiagram< GUM_SCALAR >();
     // First we add nodes
     HashTable< Size, NodeId > map;
@@ -116,13 +137,15 @@ namespace gum {
       auto d = (GUM_SCALAR)randomProba();
 
       if (d < cnd)
-        map.insert(i,
-                   influenceDiagram->addChanceNode(LabelizedVariable(strBuff.str(), "", nb_mod)));
+        map.insert(
+            i,
+            influenceDiagram->addChanceNode(RangeVariable(strBuff.str(), "", 0, nb_mod - 1)));
       else if (d < (cnd + und))
-        map.insert(i, influenceDiagram->addUtilityNode(LabelizedVariable(strBuff.str(), "", 1)));
+        map.insert(i, influenceDiagram->addUtilityNode(RangeVariable(strBuff.str(), "", 0, 0)));
       else
-        map.insert(i,
-                   influenceDiagram->addDecisionNode(LabelizedVariable(strBuff.str(), "", nb_mod)));
+        map.insert(
+            i,
+            influenceDiagram->addDecisionNode(RangeVariable(strBuff.str(), "", 0, nb_mod - 1)));
 
       strBuff.str("");
     }
@@ -139,12 +162,12 @@ namespace gum {
     for (Size i = 0; i < nbrNodes; ++i)
       if (influenceDiagram->isChanceNode(map[i]))
         _cptGenerator_->generateCPT(
-           influenceDiagram->cpt(map[i]).pos(influenceDiagram->variable(map[i])),
-           influenceDiagram->cpt(map[i]));
+            influenceDiagram->cpt(map[i]).pos(influenceDiagram->variable(map[i])),
+            influenceDiagram->cpt(map[i]));
       else if (influenceDiagram->isUtilityNode(map[i]))
         _utGenerator_->generateUT(
-           influenceDiagram->utility(map[i]).pos(influenceDiagram->variable(map[i])),
-           influenceDiagram->utility(map[i]));
+            influenceDiagram->utility(map[i]).pos(influenceDiagram->variable(map[i])),
+            influenceDiagram->utility(map[i]));
 
     _checkTemporalOrder_(influenceDiagram);
 
@@ -153,7 +176,7 @@ namespace gum {
 
   template < typename GUM_SCALAR >
   void InfluenceDiagramGenerator< GUM_SCALAR >::_checkTemporalOrder_(
-     InfluenceDiagram< GUM_SCALAR >* infdiag) {
+      InfluenceDiagram< GUM_SCALAR >* infdiag) {
     if (!infdiag->decisionOrderExists()) {
       Sequence< NodeId > order = infdiag->topologicalOrder();
 
@@ -175,5 +198,4 @@ namespace gum {
         }
     }
   }
-
 } /* namespace gum */

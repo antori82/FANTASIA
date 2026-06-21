@@ -17,7 +17,13 @@ public class FANTASIA : ModuleRules
 
             string LibrariesPath = Path.Combine(ThirdPartyPath, "aGrUM", "Libraries");
 
-            PublicAdditionalLibraries.Add(Path.Combine(LibrariesPath, "aGrUM.x64.lib"));
+            // aGrUM 2.x ships per-module static libs instead of one monolithic lib.
+            // We vendor only the modules FANTASIA uses: ID -> BN -> BASE. Order matters
+            // for MSVC's single-pass linker (each lib must precede its dependency), so
+            // BASE (the leaf) is listed last.
+            PublicAdditionalLibraries.Add(Path.Combine(LibrariesPath, "agrumID.lib"));
+            PublicAdditionalLibraries.Add(Path.Combine(LibrariesPath, "agrumBN.lib"));
+            PublicAdditionalLibraries.Add(Path.Combine(LibrariesPath, "agrumBASE.lib"));
         }
 
         if (isLibrarySupported)

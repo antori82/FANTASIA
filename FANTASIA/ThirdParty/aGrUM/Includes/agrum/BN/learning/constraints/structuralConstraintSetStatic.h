@@ -1,22 +1,42 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
 
 
 /** @file
@@ -40,11 +60,12 @@
 #ifndef GUM_LEARNING_STRUCTURAL_CONSTRAINT_SET_STATIC_H
 #define GUM_LEARNING_STRUCTURAL_CONSTRAINT_SET_STATIC_H
 
-#include <type_traits>
-
 #include <agrum/agrum.h>
-#include <agrum/tools/graphs/diGraph.h>
+
+#include <agrum/base/graphs/diGraph.h>
 #include <agrum/BN/learning/structureUtils/graphChange.h>
+
+#include <type_traits>
 
 namespace gum {
 
@@ -86,8 +107,8 @@ namespace gum {
     template < typename CONSTRAINT, typename SET1, typename... SETS >
     struct _IsInConstraintSet_< CONSTRAINT, _ConstraintSet_< SET1, SETS... > > {
       constexpr static bool value
-         = std::is_same< CONSTRAINT, SET1 >::value
-        || _IsInConstraintSet_< CONSTRAINT, _ConstraintSet_< SETS... > >::value;
+          = std::is_same< CONSTRAINT, SET1 >::value
+         || _IsInConstraintSet_< CONSTRAINT, _ConstraintSet_< SETS... > >::value;
     };
 
     // ============================================================================
@@ -104,11 +125,11 @@ namespace gum {
     template < typename FIRST_CONSTRAINT, typename... OTHER_CONSTRAINTS >
     struct _ConstraintSet_: public _ConstraintSet_< OTHER_CONSTRAINTS... > {
       using minset = typename std::conditional<
-         _IsInConstraintSet_< FIRST_CONSTRAINT, _ConstraintSet_< OTHER_CONSTRAINTS... > >::value,
-         typename _ConstraintSet_< OTHER_CONSTRAINTS... >::minset,
-         typename _ConcatConstraintSet_<
-            FIRST_CONSTRAINT,
-            typename _ConstraintSet_< OTHER_CONSTRAINTS... >::minset >::type >::type;
+          _IsInConstraintSet_< FIRST_CONSTRAINT, _ConstraintSet_< OTHER_CONSTRAINTS... > >::value,
+          typename _ConstraintSet_< OTHER_CONSTRAINTS... >::minset,
+          typename _ConcatConstraintSet_<
+              FIRST_CONSTRAINT,
+              typename _ConstraintSet_< OTHER_CONSTRAINTS... >::minset >::type >::type;
       using set = _StructuralConstraintSetStatic_< FIRST_CONSTRAINT, OTHER_CONSTRAINTS... >;
     };
 
@@ -173,12 +194,12 @@ namespace gum {
       // determines the set of all constraints in the set (included inherited
       // ones)
       using allConstraints = typename _ConcatConstraintSet_<
-         typename std::conditional<
-            std::is_base_of< _StructuralRoot_, CONSTRAINT1 >::value,
-            typename _ConcatConstraintSet_< CONSTRAINT1,
-                                            typename CONSTRAINT1::allConstraints >::type,
-            _ConstraintSet_< CONSTRAINT1 > >::type,
-         typename next_constraints::allConstraints >::type;
+          typename std::conditional<
+              std::is_base_of< _StructuralRoot_, CONSTRAINT1 >::value,
+              typename _ConcatConstraintSet_< CONSTRAINT1,
+                                              typename CONSTRAINT1::allConstraints >::type,
+              _ConstraintSet_< CONSTRAINT1 > >::type,
+          typename next_constraints::allConstraints >::type;
 
       /** @brief determines the minimal set of constraints included in the set
        * (removing duplicates)
@@ -200,7 +221,7 @@ namespace gum {
 
       /// copy constructor
       _StructuralConstraintSetStatic_(
-         const _StructuralConstraintSetStatic_< CONSTRAINT1, OTHER_CONSTRAINTS... >&);
+          const _StructuralConstraintSetStatic_< CONSTRAINT1, OTHER_CONSTRAINTS... >&);
 
       /// destructor
       ~_StructuralConstraintSetStatic_();
@@ -214,7 +235,7 @@ namespace gum {
 
       /// copy operator
       _StructuralConstraintSetStatic_< CONSTRAINT1, OTHER_CONSTRAINTS... >&
-         operator=(const _StructuralConstraintSetStatic_< CONSTRAINT1, OTHER_CONSTRAINTS... >&);
+          operator=(const _StructuralConstraintSetStatic_< CONSTRAINT1, OTHER_CONSTRAINTS... >&);
 
       /// @}
 
@@ -279,9 +300,9 @@ namespace gum {
       // determines the set of all constraints in the set (included inherited
       // ones). Rhis produces an  _ConstraintSet_. This type is to be used internally.
       using allConstraints = typename std::conditional<
-         std::is_base_of< _StructuralRoot_, CONSTRAINT >::value,
-         typename _ConcatConstraintSet_< CONSTRAINT, typename CONSTRAINT::allConstraints >::type,
-         _ConstraintSet_< CONSTRAINT > >::type;
+          std::is_base_of< _StructuralRoot_, CONSTRAINT >::value,
+          typename _ConcatConstraintSet_< CONSTRAINT, typename CONSTRAINT::allConstraints >::type,
+          _ConstraintSet_< CONSTRAINT > >::type;
 
       /** @brief determines the minimal set of constraints included in the set
        * (removing duplicates)
@@ -316,7 +337,7 @@ namespace gum {
 
       /// copy operator
       _StructuralConstraintSetStatic_< CONSTRAINT >&
-         operator=(const _StructuralConstraintSetStatic_< CONSTRAINT >&);
+          operator=(const _StructuralConstraintSetStatic_< CONSTRAINT >&);
 
       /// @}
 
@@ -402,8 +423,8 @@ namespace gum {
                                                         OTHER_CONSTRAINTS... >::minConstraints {
       public:
       using constraints =
-         typename _StructuralConstraintSetStatic_< CONSTRAINT1,
-                                                   OTHER_CONSTRAINTS... >::minConstraints;
+          typename _StructuralConstraintSetStatic_< CONSTRAINT1,
+                                                    OTHER_CONSTRAINTS... >::minConstraints;
 
       // ##########################################################################
       /// @name Constructors / Destructors
@@ -415,7 +436,7 @@ namespace gum {
 
       /// copy constructor
       StructuralConstraintSetStatic(
-         const StructuralConstraintSetStatic< CONSTRAINT1, OTHER_CONSTRAINTS... >&);
+          const StructuralConstraintSetStatic< CONSTRAINT1, OTHER_CONSTRAINTS... >&);
 
       /// destructor
       ~StructuralConstraintSetStatic();
@@ -429,7 +450,7 @@ namespace gum {
 
       /// copy operator
       StructuralConstraintSetStatic< CONSTRAINT1, OTHER_CONSTRAINTS... >&
-         operator=(const StructuralConstraintSetStatic< CONSTRAINT1, OTHER_CONSTRAINTS... >&);
+          operator=(const StructuralConstraintSetStatic< CONSTRAINT1, OTHER_CONSTRAINTS... >&);
 
       /// @}
 
@@ -511,7 +532,7 @@ namespace gum {
 
       /// copy operator
       StructuralConstraintSetStatic< CONSTRAINT >&
-         operator=(const StructuralConstraintSetStatic< CONSTRAINT >&);
+          operator=(const StructuralConstraintSetStatic< CONSTRAINT >&);
 
       /// @}
 

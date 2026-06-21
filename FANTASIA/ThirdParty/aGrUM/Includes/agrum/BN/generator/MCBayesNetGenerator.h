@@ -1,22 +1,42 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
 
 
 /** @file
@@ -31,20 +51,13 @@
 
 #define NB_INIT_ITERATIONS 5000
 
-#include <agrum/agrum.h>
-
 #include <fstream>
 #include <iostream>
 #include <set>
+#include <sstream>
 #include <vector>
 
-#include <sstream>
-
-#ifdef HAVE_DIRENT_H
-#  include <dirent.h>
-#else
-#  include <agrum/tools/core/mvsc/dirent.h>
-#endif
+#include <agrum/agrum.h>
 
 #include <agrum/BN/generator/IBayesNetGenerator.h>
 #include <agrum/BN/generator/simpleCPTDisturber.h>
@@ -280,13 +293,14 @@ namespace gum {
     void setQ(Idx q);
 
     /// @}
+
     protected:
     Size iteration_;
     Idx  p_, q_;
     /*
        bool                                          disturbing_;
     BayesNet< GUM_SCALAR >                        bayesNettemp_;
-    HashTable< NodeId, Potential< GUM_SCALAR >* > hashMarginal_;*/
+    HashTable< NodeId, Tensor< GUM_SCALAR >* > hashMarginal_;*/
 
     /**
      * The function that verify if graph is a polytree.
@@ -317,61 +331,47 @@ namespace gum {
 
     /**
      * In the case that the graph is a polytree, the function will, according to
-     *the
-     *probability p and q, choose which change of state must occure( AorR or AR
-     *or
-     *jump) then will assert that the imposed constraint are respected and if
-     *not,
-     *will return to the previous topology.
+     * the probability p and q, choose which change of state must occur (AorR or AR or jump)
+     * then will assert that the imposed constraints are respected and if not, will return to
+     * the previous topology.
      **/
-
     void _PMMx_poly_();
+
     /**
-     * In the case that the graph is a multiconnected graph, the function will,
-     *according to the probability p and q, choose which change of state must
-     *occure(
-     *AorR or jump) then will assert that the imposed constraint are respected
-     *and if
-     *not, will return to the previous topology.
+     * In the case that the graph is a multiconnected graph, the function will, according to the
+     * probability p and q, choose which change of state must occur (AorR or jump) then will assert
+     * that the imposed constraint are respected and if not, will return to the previous topology.
      **/
     void _PMMx_multi_();
-    /**
-     * In the case that the graph is a polytree, the function will add a ramdom
-     *arc
-     *by the use of the function  _insertArc_ if the arc does not exist allready.
-     **/
 
+    /**
+     * In the case that the graph is a polytree, the function will add a random arc by the use of
+     * the function  _insertArc_ if the arc does not exist already.  **/
     void _jump_poly_();
 
     /**
-     * In the case that the graph is a multiconnect graph, the function will
-     *choose
-     *randomly two nodes and will remove the arc between them by the use of the
-     *function  _insertArc_ if the arc exists.
+     * In the case that the graph is a multiconnect graph, the function will choose randomly two
+     * nodes and will remove the arc between them by the use of the function  _insertArc_ if the
+     * arc exists.
      **/
-
     void _jump_multi_();
 
     /**
-     * The function will add or remove a random arc in the graph using the
-     *functions
-     * _insertArc_ and  _removeArc_.
+     * The function will add or remove a random arc in the graph using the functions _insertArc_
+     * and  _removeArc_.
      **/
-    void _AorR_();
+    void _Add_or_Remove_();
+
     /**
      * The function will remove and add a random arc changing the topology of the
      *graph but asserting its connectivity.
      **/
-    void _AR_();
+    void _Add_and_Remove_();
+
     /**
      * The boolean function that will assert the respect of the constraint.
      **/
     virtual bool _checkConditions_();
-
-    // NOT USED ? void  _createDAG_( Size BNSize, Size iniRoot );
-
-    // NOT USED ? std::vector<Idx>*  _createPartDAG_( Size BNSize, Size iniRoot
-    // );
 
     /**
      * The internal function used by the previous  _is_connected_. It asserts the
@@ -380,7 +380,6 @@ namespace gum {
      *nodes
      *listed in excluded.
      **/
-
     bool _is_connected_(const NodeId i, const NodeId j, NodeSet& excluded);
 
     /**

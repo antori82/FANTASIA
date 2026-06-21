@@ -1,22 +1,42 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
 
 
 /**
@@ -34,6 +54,7 @@
 // =========================================================================
 #include <agrum/FMDP/learning/core/templateStrategy.h>
 #include <agrum/FMDP/learning/datastructure/leaves/leafPair.h>
+
 // =========================================================================
 
 namespace gum {
@@ -47,7 +68,6 @@ namespace gum {
    */
 
   using pair_iterator = HashTableConstIteratorSafe< LeafPair*, std::vector< Size > >;
-
 
   template < bool isInitial = false >
   class FusionContext {
@@ -71,7 +91,8 @@ namespace gum {
     /// Allocators and Deallocators redefinition
     // ============================================================================
     void* operator new(size_t s) { return SmallObjectAllocator::instance().allocate(s); }
-    void  operator delete(void* p) {
+
+    void operator delete(void* p) {
       SmallObjectAllocator::instance().deallocate(p, sizeof(FusionContext));
     }
 
@@ -85,6 +106,7 @@ namespace gum {
     // ###################################################################
     ///
     // ###################################################################
+
     public:
     bool containsAssociatedLeaf(AbstractLeaf* l) {
       return _containsAssociatedLeaf_(l, Int2Type< isInitial >());
@@ -94,22 +116,25 @@ namespace gum {
     bool _containsAssociatedLeaf_(AbstractLeaf* l, Int2Type< false >) {
       return _leaf2Pair_.exists(l);
     }
+
     bool _containsAssociatedLeaf_(AbstractLeaf*, Int2Type< true >) { return false; }
 
     // ###################################################################
     ///
     // ###################################################################
+
     public:
     bool associateLeaf(AbstractLeaf* l) { return _associateLeaf_(l, Int2Type< isInitial >()); }
 
     private:
     bool _associateLeaf_(AbstractLeaf*, Int2Type< false >);
-    bool _associateLeaf_(AbstractLeaf*, Int2Type< true >) { return false; }
 
+    bool _associateLeaf_(AbstractLeaf*, Int2Type< true >) { return false; }
 
     // ###################################################################
     ///
     // ###################################################################
+
     public:
     bool updateAssociatedLeaf(AbstractLeaf* l) {
       return _updateAssociatedLeaf_(l, Int2Type< isInitial >());
@@ -117,6 +142,7 @@ namespace gum {
 
     private:
     bool _updateAssociatedLeaf_(AbstractLeaf*, Int2Type< false >);
+
     bool _updateAssociatedLeaf_(AbstractLeaf*, Int2Type< true >) { return false; }
 
     public:
@@ -126,19 +152,21 @@ namespace gum {
 
     private:
     bool _updateAllAssociatedLeaves_(Int2Type< false >);
-    bool _updateAllAssociatedLeaves_(Int2Type< true >) { return false; }
 
+    bool _updateAllAssociatedLeaves_(Int2Type< true >) { return false; }
 
     // ###################################################################
     ///
     /// @warning : won't delete Associated Pair created (because subsequent
     /// fusioncontexts might be using it)
     // ###################################################################
+
     public:
     bool deassociateLeaf(AbstractLeaf* l) { return _deassociateLeaf_(l, Int2Type< isInitial >()); }
 
     private:
     bool _deassociateLeaf_(AbstractLeaf*, Int2Type< false >);
+
     bool _deassociateLeaf_(AbstractLeaf*, Int2Type< true >) { return false; }
 
     /// @}
@@ -164,8 +192,8 @@ namespace gum {
     // ###################################################################
     bool removePair(LeafPair* p);
 
-
     pair_iterator beginPairs() { return _pairsHeap_.allValues().beginSafe(); }
+
     pair_iterator endPairs() { return _pairsHeap_.allValues().endSafe(); }
 
     /// @}
@@ -205,12 +233,15 @@ namespace gum {
     // ###################################################################
     ///
     // ###################################################################
+
     public:
     Set< LeafPair* > associatedPairs() { return _associatedPairs_(Int2Type< isInitial >()); }
 
     private:
     Set< LeafPair* > _associatedPairs_(Int2Type< false >);
+
     Set< LeafPair* > _associatedPairs_(Int2Type< true >) { return Set< LeafPair* >(); }
+
     /// @}
 
     public:

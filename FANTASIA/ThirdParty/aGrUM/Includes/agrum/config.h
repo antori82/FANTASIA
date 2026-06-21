@@ -1,5 +1,5 @@
 /***************************************************************************
-*   Copyright (c) 2005-2023 by Pierre-Henri WUILLEMIN(@LIP6) & Christophe GONZALES(@AMU)   *
+*   Copyright (c) 2005-2024 by Pierre-Henri WUILLEMIN(@LIP6) & Christophe GONZALES(@AMU)   *
 *   info_at_agrum_dot_org                                               *
 *                                                                         *
 *   This program is free software; you can redistribute it and/or modify  *
@@ -30,14 +30,14 @@
 #ifndef GUM_CONFIG_H
 #define GUM_CONFIG_H
 
-#define GUM_MAJOR_VERSION 0
-#define GUM_MINOR_VERSION 7
-#define GUM_PATCH_VERSION 1
+#define GUM_MAJOR_VERSION 2
+#define GUM_MINOR_VERSION 3
+#define GUM_PATCH_VERSION 2
 
 #define GUM_RANDOMSEED 0
 
-#define GUM_SRC_PATH C:/Users/RBG94/Desktop/aGrUM-1.7.1/src
-#define GUM_VERSION "1.7.1"
+#define GUM_SRC_PATH D:/agrum-upgrade/aGrUM/src
+#define GUM_VERSION "2.3.2"
 
 /* #undef GUM_TRACE_ON */
 

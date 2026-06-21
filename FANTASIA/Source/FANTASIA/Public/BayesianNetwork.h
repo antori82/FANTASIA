@@ -26,6 +26,18 @@
 #include <Runtime/Core/Public/Async/Async.h>
 #include <atomic>
 
+// aGrUM 2.x's IBayesNet declares a method named check(), which collides with
+// UE's global check() assertion macro (pulled in by CoreMinimal.h above) and
+// mangles the header parse. Suppress UE's assertion macros across the aGrUM
+// includes, then restore them immediately afterwards (the UE headers below
+// still need them).
+#pragma push_macro("check")
+#pragma push_macro("verify")
+#pragma push_macro("ensure")
+#undef check
+#undef verify
+#undef ensure
+
 #include "agrum/BN/BayesNet.h"
 #include "agrum/BN/io/BIF/BIFWriter.h"
 #include "agrum/BN/io/BIF/BIFReader.h"
@@ -33,6 +45,10 @@
 #include "agrum/BN/inference/ShaferShenoyInference.h"
 #include "agrum/BN/inference/variableElimination.h"
 #include <agrum/BN/algorithms/MarkovBlanket.h>
+
+#pragma pop_macro("ensure")
+#pragma pop_macro("verify")
+#pragma pop_macro("check")
 
 #include "MathUtilities.h"
 #include "BayesianNetwork.generated.h"

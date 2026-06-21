@@ -1,22 +1,43 @@
-/**
- *
- *   Copyright (c) 2005-2023 by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
+#pragma once
 
 
 /**
@@ -73,7 +94,7 @@ namespace gum {
       if (this->hasEvidence(query)) _insertEvidence_(query, pool);
 
       for (const auto attr: attr_set)
-        pool.insert(&(const_cast< Potential< GUM_SCALAR >& >(query->get(attr).cpf())));
+        pool.insert(&(const_cast< Tensor< GUM_SCALAR >& >(query->get(attr).cpf())));
 
       for (size_t idx = 0; idx < t.eliminationOrder().size(); ++idx) {
         if (t.eliminationOrder()[idx] != node) {
@@ -108,12 +129,12 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     void SVED< GUM_SCALAR >::_eliminateNodesDownward_(
-       const PRMInstance< GUM_SCALAR >*          from,
-       const PRMInstance< GUM_SCALAR >*          i,
-       BucketSet&                                pool,
-       BucketSet&                                trash,
-       List< const PRMInstance< GUM_SCALAR >* >& elim_list,
-       Set< const PRMInstance< GUM_SCALAR >* >&  ignore) {
+        const PRMInstance< GUM_SCALAR >*          from,
+        const PRMInstance< GUM_SCALAR >*          i,
+        BucketSet&                                pool,
+        BucketSet&                                trash,
+        List< const PRMInstance< GUM_SCALAR >* >& elim_list,
+        Set< const PRMInstance< GUM_SCALAR >* >&  ignore) {
       ignore.insert(i);
       // Extracting required attributes and slotchains
       Set< NodeId >& attr_set = _getAttrSet_(i);
@@ -138,7 +159,7 @@ namespace gum {
         _insertLiftedNodes_(i, pool, trash);
 
         for (const auto agg: i->type().aggregates())
-          if (_bb_.requisiteNodes(i).exists(agg->id())) pool.insert(_getAggPotential_(i, agg));
+          if (_bb_.requisiteNodes(i).exists(agg->id())) pool.insert(_getAggTensor_(i, agg));
 
         try {
           InstanceBayesNet< GUM_SCALAR >         bn(*i);
@@ -176,11 +197,11 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     void SVED< GUM_SCALAR >::_eliminateNodesUpward_(
-       const PRMInstance< GUM_SCALAR >*          i,
-       BucketSet&                                pool,
-       BucketSet&                                trash,
-       List< const PRMInstance< GUM_SCALAR >* >& elim_list,
-       Set< const PRMInstance< GUM_SCALAR >* >&  ignore) {
+        const PRMInstance< GUM_SCALAR >*          i,
+        BucketSet&                                pool,
+        BucketSet&                                trash,
+        List< const PRMInstance< GUM_SCALAR >* >& elim_list,
+        Set< const PRMInstance< GUM_SCALAR >* >&  ignore) {
       ignore.insert(i);
       // Extracting required attributes and slotchains
       Set< NodeId >& attr_set = _getAttrSet_(i);
@@ -204,7 +225,7 @@ namespace gum {
         _insertLiftedNodes_(i, pool, trash);
 
         for (const auto agg: i->type().aggregates())
-          if (_bb_.requisiteNodes(i).exists(agg->id())) pool.insert(_getAggPotential_(i, agg));
+          if (_bb_.requisiteNodes(i).exists(agg->id())) pool.insert(_getAggTensor_(i, agg));
 
         try {
           InstanceBayesNet< GUM_SCALAR >         bn(*i);
@@ -248,12 +269,12 @@ namespace gum {
       // Adding required evidences
       for (const auto& elt: this->evidence(i))
         if (_bb_.requisiteNodes(i).exists(elt.first))
-          pool.insert(const_cast< Potential< GUM_SCALAR >* >(elt.second));
+          pool.insert(const_cast< Tensor< GUM_SCALAR >* >(elt.second));
 
-      // Adding potentials and eliminating the remaining nodes
+      // Adding tensors and eliminating the remaining nodes
       for (const auto& a: *i)
         if (_bb_.requisiteNodes(i).exists(a.first))
-          pool.insert(&(const_cast< Potential< GUM_SCALAR >& >(a.second->cpf())));
+          pool.insert(&(const_cast< Tensor< GUM_SCALAR >& >(a.second->cpf())));
 
       InstanceBayesNet< GUM_SCALAR > bn(*i);
       const auto                     moralg = bn.moralGraph();
@@ -278,7 +299,7 @@ namespace gum {
       }
 
       for (const auto lifted_pot: *lifted_pool) {
-        Potential< GUM_SCALAR >* pot = copyPotential(i->bijection(), *lifted_pot);
+        Tensor< GUM_SCALAR >* pot = copyTensor(i->bijection(), *lifted_pot);
         pool.insert(pot);
         trash.insert(pot);
       }
@@ -293,7 +314,7 @@ namespace gum {
 
       for (const auto node: _bb_.requisiteNodes(i))
         if (PRMClassElement< GUM_SCALAR >::isAttribute(c.get(node)))
-          lifted_pool->insert(const_cast< Potential< GUM_SCALAR >* >(&(c.get(node).cpf())));
+          lifted_pool->insert(const_cast< Tensor< GUM_SCALAR >* >(&(c.get(node).cpf())));
 
       NodeSet inners, outers, ignore;
 
@@ -384,14 +405,14 @@ namespace gum {
     }
 
     template < typename GUM_SCALAR >
-    void SVED< GUM_SCALAR >::posterior_(const Chain& chain, Potential< GUM_SCALAR >& m) {
+    void SVED< GUM_SCALAR >::posterior_(const Chain& chain, Tensor< GUM_SCALAR >& m) {
       const PRMInstance< GUM_SCALAR >*  i   = chain.first;
       const PRMAttribute< GUM_SCALAR >* elt = chain.second;
       SVED< GUM_SCALAR >::BucketSet     pool, trash;
       _bb_.compute(i, elt->id());
       _eliminateNodes_(i, elt->id(), pool, trash);
 
-      std::vector< const Potential< GUM_SCALAR >* > result;
+      std::vector< const Tensor< GUM_SCALAR >* > result;
       for (auto pot: pool) {
         if (pot->contains(*(m.variablesSequence().atPos(0)))) result.push_back(pot);
       }
@@ -401,7 +422,7 @@ namespace gum {
         result.pop_back();
         const auto& p2 = *(result.back());
         result.pop_back();
-        auto mult = new Potential< GUM_SCALAR >(p1 * p2);
+        auto mult = new Tensor< GUM_SCALAR >(p1 * p2);
         result.push_back(mult);
         trash.insert(mult);
       }
@@ -434,8 +455,7 @@ namespace gum {
     }
 
     template < typename GUM_SCALAR >
-    void SVED< GUM_SCALAR >::joint_(const std::vector< Chain >& queries,
-                                    Potential< GUM_SCALAR >&    j) {
+    void SVED< GUM_SCALAR >::joint_(const std::vector< Chain >& queries, Tensor< GUM_SCALAR >& j) {
       GUM_ERROR(FatalError, "Not implemented.")
     }
 
@@ -446,18 +466,18 @@ namespace gum {
 
       for (const auto node: _bb_.requisiteNodes(i)) {
         switch (i->type().get(node).elt_type()) {
-          case PRMClassElement< GUM_SCALAR >::prm_aggregate:
-          case PRMClassElement< GUM_SCALAR >::prm_attribute: {
+          case PRMClassElement< GUM_SCALAR >::prm_aggregate :
+          case PRMClassElement< GUM_SCALAR >::prm_attribute : {
             attr_set->insert(node);
             break;
           }
 
-          case PRMClassElement< GUM_SCALAR >::prm_slotchain: {
+          case PRMClassElement< GUM_SCALAR >::prm_slotchain : {
             sc_set->insert(node);
             break;
           }
 
-          default: {
+          default : {
             GUM_ERROR(FatalError,
                       "There should not be elements other"
                       " than PRMAttribute<GUM_SCALAR> and SlotChain.");
@@ -472,17 +492,15 @@ namespace gum {
     template < typename GUM_SCALAR >
     INLINE SVED< GUM_SCALAR >::SVED(const PRM< GUM_SCALAR >&       prm,
                                     const PRMSystem< GUM_SCALAR >& model) :
-        PRMInference< GUM_SCALAR >(prm, model),
-        _class_elim_order_(0), _bb_(*this) {
+        PRMInference< GUM_SCALAR >(prm, model), _class_elim_order_(0), _bb_(*this) {
       GUM_CONSTRUCTOR(SVED);
     }
-
 
     template < typename GUM_SCALAR >
     INLINE void SVED< GUM_SCALAR >::_insertEvidence_(const PRMInstance< GUM_SCALAR >* i,
                                                      BucketSet&                       pool) {
       for (const auto& elt: this->evidence(i))
-        pool.insert(const_cast< Potential< GUM_SCALAR >* >(elt.second));
+        pool.insert(const_cast< Tensor< GUM_SCALAR >* >(elt.second));
     }
 
     template < typename GUM_SCALAR >
@@ -509,21 +527,21 @@ namespace gum {
     }
 
     template < typename GUM_SCALAR >
-    INLINE Potential< GUM_SCALAR >*
-           SVED< GUM_SCALAR >::_getAggPotential_(const PRMInstance< GUM_SCALAR >*  i,
-                                             const PRMAggregate< GUM_SCALAR >* agg) {
-      return &(const_cast< Potential< GUM_SCALAR >& >(i->get(agg->safeName()).cpf()));
+    INLINE Tensor< GUM_SCALAR >*
+           SVED< GUM_SCALAR >::_getAggTensor_(const PRMInstance< GUM_SCALAR >*  i,
+                                           const PRMAggregate< GUM_SCALAR >* agg) {
+      return &(const_cast< Tensor< GUM_SCALAR >& >(i->get(agg->safeName()).cpf()));
     }
 
     template < typename GUM_SCALAR >
     INLINE void
-       SVED< GUM_SCALAR >::evidenceAdded_(const typename SVED< GUM_SCALAR >::Chain& chain) {
+        SVED< GUM_SCALAR >::evidenceAdded_(const typename SVED< GUM_SCALAR >::Chain& chain) {
       // Do nothing
     }
 
     template < typename GUM_SCALAR >
     INLINE void
-       SVED< GUM_SCALAR >::evidenceRemoved_(const typename SVED< GUM_SCALAR >::Chain& chain) {
+        SVED< GUM_SCALAR >::evidenceRemoved_(const typename SVED< GUM_SCALAR >::Chain& chain) {
       // Do nothing
     }
 
@@ -549,12 +567,12 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     INLINE void
-       SVED< GUM_SCALAR >::_reduceElimList_(const PRMInstance< GUM_SCALAR >*          i,
-                                            List< const PRMInstance< GUM_SCALAR >* >& elim_list,
-                                            List< const PRMInstance< GUM_SCALAR >* >& reduced_list,
-                                            Set< const PRMInstance< GUM_SCALAR >* >&  ignore,
-                                            BucketSet&                                pool,
-                                            BucketSet&                                trash) {
+        SVED< GUM_SCALAR >::_reduceElimList_(const PRMInstance< GUM_SCALAR >*          i,
+                                             List< const PRMInstance< GUM_SCALAR >* >& elim_list,
+                                             List< const PRMInstance< GUM_SCALAR >* >& reduced_list,
+                                             Set< const PRMInstance< GUM_SCALAR >* >&  ignore,
+                                             BucketSet&                                pool,
+                                             BucketSet&                                trash) {
       while (!elim_list.empty()) {
         if (_checkElimOrder_(i, elim_list.front())) {
           if ((!ignore.exists(elim_list.front())) && (_bb_.exists(elim_list.front()))) {

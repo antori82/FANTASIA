@@ -1,22 +1,43 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
+#pragma once
 
 
 /**
@@ -38,8 +59,7 @@ namespace gum {
                                                           O3PRM&                      o3_prm,
                                                           O3NameSolver< GUM_SCALAR >& solver,
                                                           ErrorsContainer&            errors) :
-          _prm_(&prm),
-          _o3_prm_(&o3_prm), _solver_(&solver), _errors_(&errors) {
+          _prm_(&prm), _o3_prm_(&o3_prm), _solver_(&solver), _errors_(&errors) {
         GUM_CONSTRUCTOR(O3ClassFactory);
       }
 
@@ -68,7 +88,7 @@ namespace gum {
 
       template < typename GUM_SCALAR >
       INLINE O3ClassFactory< GUM_SCALAR >&
-         O3ClassFactory< GUM_SCALAR >::operator=(const O3ClassFactory< GUM_SCALAR >& src) {
+             O3ClassFactory< GUM_SCALAR >::operator=(const O3ClassFactory< GUM_SCALAR >& src) {
         if (this == &src) { return *this; }
         _prm_       = src._prm_;
         _o3_prm_    = src._o3_prm_;
@@ -84,7 +104,7 @@ namespace gum {
 
       template < typename GUM_SCALAR >
       INLINE O3ClassFactory< GUM_SCALAR >&
-         O3ClassFactory< GUM_SCALAR >::operator=(O3ClassFactory< GUM_SCALAR >&& src) {
+             O3ClassFactory< GUM_SCALAR >::operator=(O3ClassFactory< GUM_SCALAR >&& src) {
         if (this == &src) { return *this; }
         _prm_       = std::move(src._prm_);
         _o3_prm_    = std::move(src._o3_prm_);
@@ -277,8 +297,8 @@ namespace gum {
 
       template < typename GUM_SCALAR >
       INLINE bool O3ClassFactory< GUM_SCALAR >::_checkImplementation_(
-         O3Label&                                      o3_type,
-         const PRMClassElementContainer< GUM_SCALAR >& type) {
+          O3Label&                                      o3_type,
+          const PRMClassElementContainer< GUM_SCALAR >& type) {
         if (!_solver_->resolveSlotType(o3_type)) { return false; }
 
         if (_prm_->isInterface(o3_type.label())) {
@@ -308,17 +328,17 @@ namespace gum {
                                                                 O3Class&                  c) {
         for (auto& p: c.parameters()) {
           switch (p.type()) {
-            case O3Parameter::PRMType::INT: {
+            case O3Parameter::PRMType::INT : {
               factory.addParameter("int", p.name().label(), p.value().value());
               break;
             }
 
-            case O3Parameter::PRMType::FLOAT: {
+            case O3Parameter::PRMType::FLOAT : {
               factory.addParameter("real", p.name().label(), p.value().value());
               break;
             }
 
-            default: {
+            default : {
               GUM_ERROR(FatalError, "unknown O3Parameter type")
             }
           }
@@ -489,12 +509,12 @@ namespace gum {
 
             for (auto& a: c->attributes()) {
               to_complete.erase(
-                 _prm_->getClass(c->name().label()).get(a->name().label()).safeName());
+                  _prm_->getClass(c->name().label()).get(a->name().label()).safeName());
             }
 
             for (auto& a: c->aggregates()) {
               to_complete.erase(
-                 _prm_->getClass(c->name().label()).get(a.name().label()).safeName());
+                  _prm_->getClass(c->name().label()).get(a.name().label()).safeName());
             }
 
             for (auto a: to_complete) {
@@ -522,8 +542,8 @@ namespace gum {
 
       template < typename GUM_SCALAR >
       INLINE void
-         O3ClassFactory< GUM_SCALAR >::_completeAggregates_(PRMFactory< GUM_SCALAR >& factory,
-                                                            O3Class&                  c) {
+          O3ClassFactory< GUM_SCALAR >::_completeAggregates_(PRMFactory< GUM_SCALAR >& factory,
+                                                             O3Class&                  c) {
         // Attributes
         for (auto& agg: c.aggregates()) {
           if (_checkAggregateForCompletion_(c, agg)) {
@@ -553,8 +573,8 @@ namespace gum {
 
       template < typename GUM_SCALAR >
       INLINE void
-         O3ClassFactory< GUM_SCALAR >::_completeAttribute_(PRMFactory< GUM_SCALAR >& factory,
-                                                           O3Class&                  c) {
+          O3ClassFactory< GUM_SCALAR >::_completeAttribute_(PRMFactory< GUM_SCALAR >& factory,
+                                                            O3Class&                  c) {
         // Attributes
         for (auto& attr: c.attributes()) {
           if (_checkAttributeForCompletion_(c, *attr)) {
@@ -648,8 +668,8 @@ namespace gum {
 
       template < typename GUM_SCALAR >
       INLINE bool O3ClassFactory< GUM_SCALAR >::_checkRemoteParent_(
-         const PRMClassElementContainer< GUM_SCALAR >& c,
-         const O3Label&                                prnt) {
+          const PRMClassElementContainer< GUM_SCALAR >& c,
+          const O3Label&                                prnt) {
         if (_resolveSlotChain_(c, prnt) == nullptr) { return false; }
         return true;
       }
@@ -678,7 +698,7 @@ namespace gum {
             // c.get(prnt.label()).type()->labels();
             if (label.label() != "*"
                 && std::find(real_labels.begin(), real_labels.end(), label.label())
-                      == real_labels.end()) {
+                       == real_labels.end()) {
               O3PRM_CLASS_ILLEGAL_RULE_LABEL(rule, label, prnt, *_errors_);
               errors = true;
             }
@@ -691,8 +711,8 @@ namespace gum {
 
       template < typename GUM_SCALAR >
       INLINE void O3ClassFactory< GUM_SCALAR >::_addParamsToForms_(
-         const HashTable< std::string, const PRMParameter< GUM_SCALAR >* >& scope,
-         O3RuleCPT::O3Rule&                                                 rule) {
+          const HashTable< std::string, const PRMParameter< GUM_SCALAR >* >& scope,
+          O3RuleCPT::O3Rule&                                                 rule) {
         // Add parameters to formulas
         for (auto& f: rule.second) {
           f.formula().variables().clear();
@@ -702,12 +722,11 @@ namespace gum {
         }
       }
 
-
       template < typename GUM_SCALAR >
       INLINE bool
-         O3ClassFactory< GUM_SCALAR >::_checkRuleCPTSumsTo1_(const PRMClass< GUM_SCALAR >& c,
-                                                             const O3RuleCPT&              attr,
-                                                             const O3RuleCPT::O3Rule&      rule) {
+          O3ClassFactory< GUM_SCALAR >::_checkRuleCPTSumsTo1_(const PRMClass< GUM_SCALAR >& c,
+                                                              const O3RuleCPT&              attr,
+                                                              const O3RuleCPT::O3Rule&      rule) {
         bool errors = false;
         // Check that formulas are valid and sums to 1
         GUM_SCALAR sum = 0.0;
@@ -824,8 +843,8 @@ namespace gum {
 
       template < typename GUM_SCALAR >
       INLINE const PRMClassElement< GUM_SCALAR >* O3ClassFactory< GUM_SCALAR >::_resolveSlotChain_(
-         const PRMClassElementContainer< GUM_SCALAR >& c,
-         const O3Label&                                chain) {
+          const PRMClassElementContainer< GUM_SCALAR >& c,
+          const O3Label&                                chain) {
         auto                       s       = chain.label();
         auto                       current = &c;
         std::vector< std::string > v;
@@ -862,9 +881,9 @@ namespace gum {
 
       template < typename GUM_SCALAR >
       INLINE bool O3ClassFactory< GUM_SCALAR >::_checkSlotChainLink_(
-         const PRMClassElementContainer< GUM_SCALAR >& c,
-         const O3Label&                                chain,
-         const std::string&                            s) {
+          const PRMClassElementContainer< GUM_SCALAR >& c,
+          const O3Label&                                chain,
+          const std::string&                            s) {
         if (!c.exists(s)) {
           O3PRM_CLASS_LINK_NOT_FOUND(chain, s, *_errors_);
           return false;
@@ -963,25 +982,25 @@ namespace gum {
         bool ok = false;
 
         switch (gum::prm::PRMAggregate< GUM_SCALAR >::str2enum(agg.aggregateType().label())) {
-          case PRMAggregate< GUM_SCALAR >::AggregateType::MIN:
-          case PRMAggregate< GUM_SCALAR >::AggregateType::MAX:
-          case PRMAggregate< GUM_SCALAR >::AggregateType::AMPLITUDE:
-          case PRMAggregate< GUM_SCALAR >::AggregateType::MEDIAN:
-          case PRMAggregate< GUM_SCALAR >::AggregateType::OR:
-          case PRMAggregate< GUM_SCALAR >::AggregateType::SUM:
-          case PRMAggregate< GUM_SCALAR >::AggregateType::AND: {
+          case PRMAggregate< GUM_SCALAR >::AggregateType::MIN :
+          case PRMAggregate< GUM_SCALAR >::AggregateType::MAX :
+          case PRMAggregate< GUM_SCALAR >::AggregateType::AMPLITUDE :
+          case PRMAggregate< GUM_SCALAR >::AggregateType::MEDIAN :
+          case PRMAggregate< GUM_SCALAR >::AggregateType::OR :
+          case PRMAggregate< GUM_SCALAR >::AggregateType::SUM :
+          case PRMAggregate< GUM_SCALAR >::AggregateType::AND : {
             ok = _checkParametersNumber_(agg, 0);
             break;
           }
 
-          case PRMAggregate< GUM_SCALAR >::AggregateType::FORALL:
-          case PRMAggregate< GUM_SCALAR >::AggregateType::EXISTS:
-          case PRMAggregate< GUM_SCALAR >::AggregateType::COUNT: {
+          case PRMAggregate< GUM_SCALAR >::AggregateType::FORALL :
+          case PRMAggregate< GUM_SCALAR >::AggregateType::EXISTS :
+          case PRMAggregate< GUM_SCALAR >::AggregateType::COUNT : {
             ok = _checkParametersNumber_(agg, 1);
             break;
           }
 
-          default: {
+          default : {
             GUM_ERROR(FatalError, "unknown aggregate type")
           }
         }
@@ -990,14 +1009,14 @@ namespace gum {
 
         // Checking parameters type
         switch (gum::prm::PRMAggregate< GUM_SCALAR >::str2enum(agg.aggregateType().label())) {
-          case PRMAggregate< GUM_SCALAR >::AggregateType::FORALL:
-          case PRMAggregate< GUM_SCALAR >::AggregateType::EXISTS:
-          case PRMAggregate< GUM_SCALAR >::AggregateType::COUNT: {
+          case PRMAggregate< GUM_SCALAR >::AggregateType::FORALL :
+          case PRMAggregate< GUM_SCALAR >::AggregateType::EXISTS :
+          case PRMAggregate< GUM_SCALAR >::AggregateType::COUNT : {
             ok = _checkParameterValue_(agg, *t);
             break;
           }
 
-          default: { /* Nothing to do */
+          default : { /* Nothing to do */
           }
         }
 
@@ -1035,5 +1054,5 @@ namespace gum {
       }
 
     }   // namespace o3prm
-  }     // namespace prm
+  }   // namespace prm
 }   // namespace gum

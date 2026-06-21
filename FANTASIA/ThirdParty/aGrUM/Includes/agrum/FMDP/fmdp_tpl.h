@@ -1,22 +1,43 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
+#pragma once
 
 
 /**
@@ -99,7 +120,6 @@ namespace gum {
     GUM_DESTRUCTOR(FMDP);
   }
 
-
   /* **************************************************************************************************
    * **/
   /* ** **/
@@ -126,7 +146,6 @@ namespace gum {
     primeVar->setName(var->name() + "'");
     _main2primed_.insert(var, primeVar);
   }
-
 
   /* **************************************************************************************************
    * **/
@@ -164,7 +183,6 @@ namespace gum {
     _actionSeq_.insert(actionId);
   }
 
-
   /* **************************************************************************************************
    * **/
   /* ** **/
@@ -181,9 +199,9 @@ namespace gum {
   // ===========================================================================
   template < typename GUM_SCALAR >
   INLINE void FMDP< GUM_SCALAR >::addTransitionForAction(
-     Idx                                         actionId,
-     const DiscreteVariable*                     var,
-     const MultiDimImplementation< GUM_SCALAR >* transition) {
+      Idx                                         actionId,
+      const DiscreteVariable*                     var,
+      const MultiDimImplementation< GUM_SCALAR >* transition) {
     if (!_varSeq_.exists(var))
       GUM_ERROR(NotFound, " Variable " << var->name() << " has not been declared before.")
 
@@ -197,7 +215,6 @@ namespace gum {
 
     _actionTransitionTable_[actionId]->insert(var, transition);
   }
-
 
   // ===========================================================================
   // Returns transition associated to given in parameter variable and given
@@ -215,7 +232,6 @@ namespace gum {
       return (*_actionTransitionTable_[0]).exists(v) ? (*_actionTransitionTable_[0])[v] : nullptr;
   }
 
-
   /* **************************************************************************************************
    * **/
   /* ** **/
@@ -231,8 +247,8 @@ namespace gum {
   // ===========================================================================
   template < typename GUM_SCALAR >
   INLINE void
-     FMDP< GUM_SCALAR >::addCostForAction(Idx                                         actionId,
-                                          const MultiDimImplementation< GUM_SCALAR >* cost) {
+      FMDP< GUM_SCALAR >::addCostForAction(Idx                                         actionId,
+                                           const MultiDimImplementation< GUM_SCALAR >* cost) {
     if (!_actionCostTable_.exists(actionId))
       GUM_ERROR(NotFound, " Action " << actionName(actionId) << " has not been declared before.");
 
@@ -241,7 +257,6 @@ namespace gum {
 
     _actionCostTable_[actionId] = cost;
   }
-
 
   // ===========================================================================
   // Returns transition associated to given in parameter variable and given
@@ -255,7 +270,6 @@ namespace gum {
     if (_actionCostTable_[actionId]) return _actionCostTable_[actionId];
     return _actionCostTable_[0];
   }
-
 
   /* **************************************************************************************************
    * **/
@@ -271,8 +285,8 @@ namespace gum {
   // ===========================================================================
   template < typename GUM_SCALAR >
   INLINE void
-     FMDP< GUM_SCALAR >::addRewardForAction(Idx                                         actionId,
-                                            const MultiDimImplementation< GUM_SCALAR >* reward) {
+      FMDP< GUM_SCALAR >::addRewardForAction(Idx                                         actionId,
+                                             const MultiDimImplementation< GUM_SCALAR >* reward) {
     if (!_actionRewardTable_.exists(actionId))
       GUM_ERROR(NotFound, " Action " << actionName(actionId) << " has not been declared before.");
 
@@ -282,7 +296,6 @@ namespace gum {
 
     _actionRewardTable_[actionId] = reward;
   }
-
 
   // ===========================================================================
   // Returns transition associated to given in parameter variable and given
@@ -297,7 +310,6 @@ namespace gum {
     if (_actionRewardTable_[actionId]) return _actionRewardTable_[actionId];
     return _actionRewardTable_[0];
   }
-
 
   /* **************************************************************************************************
    * **/
@@ -331,7 +343,6 @@ namespace gum {
     GUM_ERROR(NotFound, " Action " << action << " has not been declared before.")
   }
 
-
   template < typename GUM_SCALAR >
   INLINE std::string FMDP< GUM_SCALAR >::toString() const {
     std::stringstream fmdpCore;
@@ -350,7 +361,6 @@ namespace gum {
     if (this->reward()) fmdpCore << RECAST(this->reward())->toDot() << std::endl;
     return fmdpCore.str();
   }
-
 
   template < typename GUM_SCALAR >
   INLINE Size FMDP< GUM_SCALAR >::size() const {

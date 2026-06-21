@@ -1,22 +1,42 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
 
 
 /**
@@ -30,7 +50,6 @@
 #define GUM_PRM_INFERENCE_H
 
 #include <string>
-
 
 #include <agrum/PRM/PRM.h>
 
@@ -50,17 +69,17 @@ namespace gum {
       public:
       /// Code alias.
       using Chain
-         = std::pair< const PRMInstance< GUM_SCALAR >*, const PRMAttribute< GUM_SCALAR >* >;
+          = std::pair< const PRMInstance< GUM_SCALAR >*, const PRMAttribute< GUM_SCALAR >* >;
 
       /// Code alias.
-      using EMap = NodeProperty< const Potential< GUM_SCALAR >* >;
+      using EMap = NodeProperty< const Tensor< GUM_SCALAR >* >;
 
       /// Code alias.
-      using EMapIterator = typename NodeProperty< const Potential< GUM_SCALAR >* >::iterator_safe;
+      using EMapIterator = typename NodeProperty< const Tensor< GUM_SCALAR >* >::iterator_safe;
 
       /// Code alias.
       using EMapConstIterator =
-         typename NodeProperty< const Potential< GUM_SCALAR >* >::const_iterator_safe;
+          typename NodeProperty< const Tensor< GUM_SCALAR >* >::const_iterator_safe;
 
       // ========================================================================
       /// @name Constructor & destructor.
@@ -106,7 +125,7 @@ namespace gum {
        *PRMAttribute<GUM_SCALAR>.
        * @throw OperationNotAllowed Raise if m is not empty.
        */
-      void posterior(const Chain& chain, Potential< GUM_SCALAR >& m);
+      void posterior(const Chain& chain, Tensor< GUM_SCALAR >& m);
 
       /**
        * Compute the joint probability of the formals attributes pointed by
@@ -119,7 +138,7 @@ namespace gum {
        *                 formal attribute.
        * @throw OperationNotAllowed Raise if m is not empty.
        */
-      void joint(const std::vector< Chain >& chains, Potential< GUM_SCALAR >& j);
+      void joint(const std::vector< Chain >& chains, Tensor< GUM_SCALAR >& j);
 
       /// @}
       // ========================================================================
@@ -157,11 +176,11 @@ namespace gum {
 
       /// Add an evidence to the given instance's elt.
       /// @param chain The variable being observed.
-      /// @param p The Potential added (by copy) as evidence.
+      /// @param p The Tensor added (by copy) as evidence.
       ///
       /// @throw NotFound Raised if elt does not belong to i.
       /// @throw OperationNotAllowed Raised if p is inconsistent with elt.
-      void addEvidence(const Chain& chain, const Potential< GUM_SCALAR >& p);
+      void addEvidence(const Chain& chain, const Tensor< GUM_SCALAR >& p);
 
       /// Remove evidence on the given instance's elt.
       /// @param chain The variable being observed.
@@ -174,6 +193,7 @@ namespace gum {
       void clearEvidence();
 
       /// @}
+
       protected:
       // ========================================================================
       /// @name Protected members.
@@ -192,14 +212,14 @@ namespace gum {
       /// @param chain
       /// @param m CPF filled with the posterior of elt. It is initialized
       ///          properly.
-      virtual void posterior_(const Chain& chain, Potential< GUM_SCALAR >& m) = 0;
+      virtual void posterior_(const Chain& chain, Tensor< GUM_SCALAR >& m) = 0;
 
       /// @brief Generic method to compute the posterior of given element.
       /// @param queries Set of pairs of PRMInstance<GUM_SCALAR> and
       /// PRMAttribute<GUM_SCALAR>.
       /// @param j CPF filled with the joint probability of queries. It is
       ///          initialized properly.
-      virtual void joint_(const std::vector< Chain >& queries, Potential< GUM_SCALAR >& j) = 0;
+      virtual void joint_(const std::vector< Chain >& queries, Tensor< GUM_SCALAR >& j) = 0;
 
       /// The PRM<GUM_SCALAR> on which inference is done.
       PRM< GUM_SCALAR > const* prm_;
@@ -217,10 +237,10 @@ namespace gum {
 
       /// Code alias.
       using EvidenceIterator =
-         typename HashTable< const PRMInstance< GUM_SCALAR >*, EMap* >::iterator_safe;
+          typename HashTable< const PRMInstance< GUM_SCALAR >*, EMap* >::iterator_safe;
       /// Code alias.
       using EvidenceConstIterator =
-         typename HashTable< const PRMInstance< GUM_SCALAR >*, EMap* >::const_iterator_safe;
+          typename HashTable< const PRMInstance< GUM_SCALAR >*, EMap* >::const_iterator_safe;
 
       /// Mapping of evidence over PRMInstance<GUM_SCALAR>'s nodes.
       HashTable< const PRMInstance< GUM_SCALAR >*, EMap* > _evidences_;

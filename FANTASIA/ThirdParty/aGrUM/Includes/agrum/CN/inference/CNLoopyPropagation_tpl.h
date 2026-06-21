@@ -1,22 +1,43 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
+#pragma once
 
 
 #include <agrum/CN/inference/CNLoopyPropagation.h>
@@ -34,7 +55,7 @@ namespace gum::credal {
       GUM_ERROR(NotFound,
                 "CNLoopyPropagation<GUM_SCALAR>::saveInference(std::"
                 "string & path) : could not open file : "
-                   + path_name)
+                    + path_name)
     }
 
 
@@ -47,7 +68,7 @@ namespace gum::credal {
         GUM_ERROR(NotFound,
                   "CNLoopyPropagation<GUM_SCALAR>::saveInference(std::"
                   "string & path) : could not open file : "
-                     + ext)
+                      + ext)
       }
 
       while (evi.good()) {
@@ -261,12 +282,12 @@ namespace gum::credal {
    */
   template < typename GUM_SCALAR >
   void CNLoopyPropagation< GUM_SCALAR >::compute_ext_(
-     std::vector< std::vector< GUM_SCALAR > >& combi_msg_p,
-     const NodeId&                             id,
-     GUM_SCALAR&                               msg_l_min,
-     GUM_SCALAR&                               msg_l_max,
-     std::vector< GUM_SCALAR >&                lx,
-     const Idx&                                pos) {
+      std::vector< std::vector< GUM_SCALAR > >& combi_msg_p,
+      const NodeId&                             id,
+      GUM_SCALAR&                               msg_l_min,
+      GUM_SCALAR&                               msg_l_max,
+      std::vector< GUM_SCALAR >&                lx,
+      const Idx&                                pos) {
     GUM_SCALAR num_min = 0.;
     GUM_SCALAR num_max = 0.;
     GUM_SCALAR den_min = 0.;
@@ -327,10 +348,10 @@ namespace gum::credal {
    */
   template < typename GUM_SCALAR >
   void CNLoopyPropagation< GUM_SCALAR >::compute_ext_(
-     std::vector< std::vector< GUM_SCALAR > >& combi_msg_p,
-     const NodeId&                             id,
-     GUM_SCALAR&                               msg_p_min,
-     GUM_SCALAR&                               msg_p_max) {
+      std::vector< std::vector< GUM_SCALAR > >& combi_msg_p,
+      const NodeId&                             id,
+      GUM_SCALAR&                               msg_p_min,
+      GUM_SCALAR&                               msg_p_max) {
     GUM_SCALAR min = 0.;
     GUM_SCALAR max = 0.;
 
@@ -376,10 +397,10 @@ namespace gum::credal {
    */
   template < typename GUM_SCALAR >
   void CNLoopyPropagation< GUM_SCALAR >::enum_combi_(
-     std::vector< std::vector< std::vector< GUM_SCALAR > > >& msgs_p,
-     const NodeId&                                            id,
-     GUM_SCALAR&                                              msg_p_min,
-     GUM_SCALAR&                                              msg_p_max) {
+      std::vector< std::vector< std::vector< GUM_SCALAR > > >& msgs_p,
+      const NodeId&                                            id,
+      GUM_SCALAR&                                              msg_p_min,
+      GUM_SCALAR&                                              msg_p_max) {
     auto taille = msgs_p.size();
 
     // source node
@@ -397,8 +418,8 @@ namespace gum::credal {
     // dispatch the messages among the threads and prepare the data
     // they will process
     Size nb_threads = ThreadExecutor::nbRunningThreadsExecutors() == 0
-                       ? this->getNumberOfThreads()
-                       : 1;   // no nested multithreading
+                        ? this->getNumberOfThreads()
+                        : 1;   // no nested multithreading
     nb_threads      = std::min(msgPerm * taille / this->threadMinimalNbOps_, nb_threads);
     if (nb_threads < 1) nb_threads = 1;
 
@@ -409,27 +430,27 @@ namespace gum::credal {
 
     // create the function to be executed by the threads
     auto threadedExec
-       = [this, &msg_pmin, &msg_pmax, msgs_p, taille, ranges, id](const std::size_t this_thread,
-                                                                  const std::size_t nb_threads) {
-           std::vector< std::vector< GUM_SCALAR > > combi_msg_p(taille);
+        = [this, &msg_pmin, &msg_pmax, msgs_p, taille, ranges, id](const std::size_t this_thread,
+                                                                   const std::size_t nb_threads) {
+            std::vector< std::vector< GUM_SCALAR > > combi_msg_p(taille);
 
-           const auto& [first, second] = ranges[this_thread];
-           for (Idx j = first; j < second; ++j) {
-             // get jth msg :
-             auto jvalue = j;
+            const auto& [first, second] = ranges[this_thread];
+            for (Idx j = first; j < second; ++j) {
+              // get jth msg :
+              auto jvalue = j;
 
-             for (Idx i = 0; i < taille; i++) {
-               if (msgs_p[i].size() == 2) {
-                 combi_msg_p[i] = (jvalue & 1) ? msgs_p[i][1] : msgs_p[i][0];
-                 jvalue /= 2;
-               } else {
-                 combi_msg_p[i] = msgs_p[i][0];
-               }
-             }
+              for (Idx i = 0; i < taille; i++) {
+                if (msgs_p[i].size() == 2) {
+                  combi_msg_p[i] = (jvalue & 1) ? msgs_p[i][1] : msgs_p[i][0];
+                  jvalue /= 2;
+                } else {
+                  combi_msg_p[i] = msgs_p[i][0];
+                }
+              }
 
-             compute_ext_(combi_msg_p, id, msg_pmin[this_thread], msg_pmax[this_thread]);
-           }
-         };
+              compute_ext_(combi_msg_p, id, msg_pmin[this_thread], msg_pmax[this_thread]);
+            }
+          };
 
     // launch the threads
     ThreadExecutor::execute(real_nb_threads, threadedExec);
@@ -440,19 +461,18 @@ namespace gum::credal {
     }
   }
 
-
   /**
    * comme precedemment mais pour message parent, vraisemblance prise en
    * compte
    */
   template < typename GUM_SCALAR >
   void CNLoopyPropagation< GUM_SCALAR >::enum_combi_(
-     std::vector< std::vector< std::vector< GUM_SCALAR > > >& msgs_p,
-     const NodeId&                                            id,
-     GUM_SCALAR&                                              real_msg_l_min,
-     GUM_SCALAR&                                              real_msg_l_max,
-     std::vector< GUM_SCALAR >&                               lx,
-     const Idx&                                               pos) {
+      std::vector< std::vector< std::vector< GUM_SCALAR > > >& msgs_p,
+      const NodeId&                                            id,
+      GUM_SCALAR&                                              real_msg_l_min,
+      GUM_SCALAR&                                              real_msg_l_max,
+      std::vector< GUM_SCALAR >&                               lx,
+      const Idx&                                               pos) {
     GUM_SCALAR msg_l_min = real_msg_l_min;
     GUM_SCALAR msg_l_max = real_msg_l_max;
 
@@ -480,8 +500,8 @@ namespace gum::credal {
     // dispatch the messages among the threads and prepare the data
     // they will process
     Size nb_threads = ThreadExecutor::nbRunningThreadsExecutors() == 0
-                       ? this->getNumberOfThreads()
-                       : 1;   // no nested multithreading
+                        ? this->getNumberOfThreads()
+                        : 1;   // no nested multithreading
     nb_threads      = std::min(msgPerm * taille / this->threadMinimalNbOps_, nb_threads);
     if (nb_threads < 1) nb_threads = 1;
 
@@ -492,8 +512,8 @@ namespace gum::credal {
 
     // create the function to be executed by the threads
     auto threadedExec = [this, &msg_lmin, &msg_lmax, msgs_p, taille, ranges, id, &lx, pos](
-                           const std::size_t this_thread,
-                           const std::size_t nb_threads) {
+                            const std::size_t this_thread,
+                            const std::size_t nb_threads) {
       std::vector< std::vector< GUM_SCALAR > > combi_msg_p(taille);
 
       const auto& [first, second] = ranges[this_thread];
@@ -529,7 +549,6 @@ namespace gum::credal {
     real_msg_l_max = msg_l_max;
   }
 
-
   template < typename GUM_SCALAR >
   void CNLoopyPropagation< GUM_SCALAR >::makeInference() {
     if (InferenceUpToDate_) { return; }
@@ -539,11 +558,11 @@ namespace gum::credal {
     _infE_::initApproximationScheme();
 
     switch (_inferenceType_) {
-      case InferenceType::nodeToNeighbours: makeInferenceNodeToNeighbours_(); break;
+      case InferenceType::nodeToNeighbours : makeInferenceNodeToNeighbours_(); break;
 
-      case InferenceType::ordered: makeInferenceByOrderedArcs_(); break;
+      case InferenceType::ordered : makeInferenceByOrderedArcs_(); break;
 
-      case InferenceType::randomOrder: makeInferenceByRandomOrder_(); break;
+      case InferenceType::randomOrder : makeInferenceByRandomOrder_(); break;
     }
 
     //_updateMarginals();
@@ -639,7 +658,7 @@ namespace gum::credal {
 
       /**
        * messages and so parents need to be read in order of appearance
-       * use potentials instead of dag
+       * use tensors instead of dag
        */
       const auto parents = &_bnet_->cpt(node).variablesSequence();
 
@@ -1450,32 +1469,32 @@ namespace gum::credal {
   }
 
   template < typename GUM_SCALAR >
-  CNLoopyPropagation< GUM_SCALAR >::CNLoopyPropagation(const CredalNet< GUM_SCALAR >& cnet) :
-      InferenceEngine< GUM_SCALAR >::InferenceEngine(cnet) {
-    if (!cnet.isSeparatelySpecified()) {
+  CNLoopyPropagation< GUM_SCALAR >::CNLoopyPropagation(const CredalNet< GUM_SCALAR >& credalNet) :
+      InferenceEngine< GUM_SCALAR >::InferenceEngine(credalNet) {
+    if (!credalNet.isSeparatelySpecified()) {
       GUM_ERROR(OperationNotAllowed,
                 "CNLoopyPropagation is only available "
                 "with separately specified nets");
     }
 
     // test for binary cn
-    for (auto node: cnet.current_bn().nodes())
-      if (cnet.current_bn().variable(node).domainSize() != 2) {
+    for (auto node: credalNet.current_bn().nodes())
+      if (credalNet.current_bn().variable(node).domainSize() != 2) {
         GUM_ERROR(OperationNotAllowed,
                   "CNLoopyPropagation is only available "
                   "with binary credal networks")
       }
 
     // test if compute CPTMinMax has been called
-    if (!cnet.hasComputedBinaryCPTMinMax()) {
+    if (!credalNet.hasComputedBinaryCPTMinMax()) {
       GUM_ERROR(OperationNotAllowed,
                 "CNLoopyPropagation only works when "
                 "\"computeBinaryCPTMinMax()\" has been called for "
                 "this credal net")
     }
 
-    _cn_   = &cnet;
-    _bnet_ = &cnet.current_bn();
+    _cn_   = &credalNet;
+    _bnet_ = &credalNet.current_bn();
 
     _inferenceType_    = InferenceType::nodeToNeighbours;
     InferenceUpToDate_ = false;
@@ -1503,7 +1522,7 @@ namespace gum::credal {
 
   template < typename GUM_SCALAR >
   typename CNLoopyPropagation< GUM_SCALAR >::InferenceType
-     CNLoopyPropagation< GUM_SCALAR >::inferenceType() {
+      CNLoopyPropagation< GUM_SCALAR >::inferenceType() {
     return _inferenceType_;
   }
 }   // namespace gum::credal

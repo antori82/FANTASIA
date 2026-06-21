@@ -1,22 +1,42 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
 
 
 /**
@@ -30,23 +50,17 @@
 #ifndef __LRSWrapper_WRAPPER__H__
 #define __LRSWrapper_WRAPPER__H__
 
-#include <agrum/agrum.h>
-
-
-#ifdef HAVE_UNISTD_H
-#  include <unistd.h>
-#else
-#  include <agrum/tools/core/mvsc/unistd.h>
-#endif
-
 #include <chrono>
 #include <cstdio>
 #include <fcntl.h>
 #include <fstream>
-#include <unordered_set>
 #include <vector>
 
-#include <agrum/tools/core/math/rational.h>
+#include <agrum/agrum.h>
+
+#include <agrum/base/core/math/rational.h>
+
+#include <unordered_set>
 
 // we force MP (not long or GMP)
 #undef LONG
@@ -55,7 +69,7 @@
 #define MP
 // lrs stuff
 extern "C" {
-#include <agrum/tools/external/lrslib/lrslib.h>
+#include <agrum/base/external/lrslib/lrslib.h>
 }
 /* *** from lrs, we need to know BASE to read multiple precision integers *** */
 #ifdef B32
@@ -103,7 +117,6 @@ namespace gum {
      */
     template < typename GUM_SCALAR >
     class LRSWrapper {
-      private:
       /** @brief Shortcut for dynamic matrix using vectors. */
       using matrix = typename std::vector< std::vector< GUM_SCALAR > >;
 
@@ -156,11 +169,11 @@ namespace gum {
       /** @brief To print an enum field name instead of it's value. Used with
        * GUM_ERROR. */
       const char* _setUpStateNames_[5] = {
-         enumStringify(_states_::none),
-         enumStringify(_states_::nHup),
-         enumStringify(_states_::nVup),
-         enumStringify(_states_::nH2Vready),
-         enumStringify(_states_::nV2Hready),
+          enumStringify(_states_::none),
+          enumStringify(_states_::nHup),
+          enumStringify(_states_::nVup),
+          enumStringify(_states_::nH2Vready),
+          enumStringify(_states_::nV2Hready),
       };
 
       /**
@@ -200,17 +213,6 @@ namespace gum {
       bool _hull_;
 
       bool _polytope_;
-
-      /// @}
-
-      /// @name cout redirection
-      /// @{
-
-      /** @brief The function that redirects standard cout to /dev/null. */
-      void _coutOff_() const;
-
-      /** @brief The function that restores standard cout. */
-      void _coutOn_() const;
 
       /// @}
 

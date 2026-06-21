@@ -1,36 +1,57 @@
-/**
- *
- *   Copyright (c) 2005-2023 by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
+#pragma once
 
 
 /** @file
  * @brief A pack of learning algorithms that can easily be used
  *
- * The pack currently contains K2, GreedyHillClimbing, 3off2 and
+ * The pack currently contains K2, GreedyHillClimbing, MIIC and
  *LocalSearchWithTabuList
  *
  * @author Christophe GONZALES(_at_AMU) and Pierre-Henri WUILLEMIN(_at_LIP6)
  */
 
 // to help IDE parser
+#include <agrum/base/graphs/undiGraph.h>
 #include <agrum/BN/learning/BNLearnUtils/IBNLearner.h>
-#include <agrum/tools/graphs/undiGraph.h>
 
 namespace gum::learning {
 
@@ -66,7 +87,6 @@ namespace gum::learning {
     }
   }
 
-
   // returns the variable name corresponding to a given node id
   INLINE const std::string& IBNLearner::Database::nameFromId(NodeId id) const {
     try {
@@ -77,46 +97,37 @@ namespace gum::learning {
     }
   }
 
-
   /// returns the internal database table
   INLINE const DatabaseTable& IBNLearner::Database::databaseTable() const { return _database_; }
-
 
   /// returns the set of missing symbols taken into account
   INLINE const std::vector< std::string >& IBNLearner::Database::missingSymbols() const {
     return _database_.missingSymbols();
   }
 
-
   /// returns the mapping between node ids and their columns in the database
   INLINE const Bijection< NodeId, std::size_t >& IBNLearner::Database::nodeId2Columns() const {
     return _nodeId2cols_;
   }
 
-
   /// returns the number of records in the database
   INLINE std::size_t IBNLearner::Database::nbRows() const { return _database_.nbRows(); }
 
-
   /// returns the number of records in the database
   INLINE std::size_t IBNLearner::Database::size() const { return _database_.size(); }
-
 
   /// sets the weight of the ith record
   INLINE void IBNLearner::Database::setWeight(const std::size_t i, const double weight) {
     _database_.setWeight(i, weight);
   }
 
-
   /// returns the weight of the ith record
   INLINE double IBNLearner::Database::weight(const std::size_t i) const {
     return _database_.weight(i);
   }
 
-
   /// returns the weight of the whole database
   INLINE double IBNLearner::Database::weight() const { return _database_.weight(); }
-
 
   // ===========================================================================
 
@@ -194,36 +205,27 @@ namespace gum::learning {
     constraintIndegree_.setMaxIndegree(max_indegree);
   }
 
-  // indicate that we wish to use 3off2
-  INLINE void IBNLearner::use3off2() {
-    selectedAlgo_ = AlgoType::THREE_OFF_TWO;
-    algoMiic3off2_.set3of2Behaviour();
-  }
+  // indicate that we wish to use MIIC with constraints
+  INLINE void IBNLearner::useMIIC() { selectedAlgo_ = AlgoType::MIIC; }
 
-  // indicate that we wish to use 3off2
-  INLINE void IBNLearner::useMIIC() {
-    selectedAlgo_ = AlgoType::MIIC;
-    algoMiic3off2_.setMiicBehaviour();
-  }
-
-  /// indicate that we wish to use the NML correction for 3off2
+  /// indicate that we wish to use the NML correction for MIIC
   INLINE void IBNLearner::useNMLCorrection() {
-    kmode3Off2_ = CorrectedMutualInformation::KModeTypes::NML;
+    kmodeMiic_ = CorrectedMutualInformation::KModeTypes::NML;
   }
 
-  /// indicate that we wish to use the MDL correction for 3off2
+  /// indicate that we wish to use the MDL correction for MIIC
   INLINE void IBNLearner::useMDLCorrection() {
-    kmode3Off2_ = CorrectedMutualInformation::KModeTypes::MDL;
+    kmodeMiic_ = CorrectedMutualInformation::KModeTypes::MDL;
   }
 
-  /// indicate that we wish to use the NoCorr correction for 3off2
+  /// indicate that we wish to use the NoCorr correction for MIIC
   INLINE void IBNLearner::useNoCorrection() {
-    kmode3Off2_ = CorrectedMutualInformation::KModeTypes::NoCorr;
+    kmodeMiic_ = CorrectedMutualInformation::KModeTypes::NoCorr;
   }
 
   /// get the list of arcs hiding latent variables
   INLINE std::vector< Arc > IBNLearner::latentVariables() const {
-    return algoMiic3off2_.latentVariables();
+    return algoMiic_.latentVariables();
   }
 
   // indicate that we wish to use a K2 algorithm
@@ -251,9 +253,64 @@ namespace gum::learning {
     localSearchWithTabuList_.setMaxNbDecreasingChanges(nb_decrease);
   }
 
-  /// use The EM algorithm to learn paramters
-  INLINE void IBNLearner::useEM(const double epsilon) { epsilonEM_ = epsilon; }
+  /// use The EM algorithm to learn parameters
+  INLINE void IBNLearner::useEM(const double epsilon, const double noise) {
+    if (epsilon < 0.0)
+      GUM_ERROR(OutOfBounds, "EM's min log-likelihood evolution rate must be non-negative");
+    if ((noise < 0.0) || (noise > 1.0))
+      GUM_ERROR(OutOfBounds, "EM's noise must belong to interval [0,1]");
+    if (epsilon > 0) {
+      useEM_ = true;
+      dag2BN_.setMinEpsilonRate(epsilon);
+      dag2BN_.setNoise(noise);
+      noiseEM_ = noise;
+    } else {
+      useEM_ = false;   // epsilon == 0
+    }
+  }
 
+  /// use The EM algorithm to learn parameters with the rate stopping criterion
+  INLINE void IBNLearner::useEMWithRateCriterion(const double epsilon, const double noise) {
+    if (epsilon <= 0.0)
+      GUM_ERROR(OutOfBounds, "EM's min log-likelihood evolution rate must be positive");
+    useEM(epsilon, noise);
+  }
+
+  /// use The EM algorithm to learn parameters with the diff stoppîng criterion
+  INLINE void IBNLearner::useEMWithDiffCriterion(const double epsilon, const double noise) {
+    if (epsilon <= 0.0)
+      GUM_ERROR(OutOfBounds, "EM's min log-likelihood differences must be positive");
+    if ((noise < 0.0) || (noise > 1.0))
+      GUM_ERROR(OutOfBounds, "EM's noise must belong to interval [0,1]");
+    useEM_ = true;
+    dag2BN_.setEpsilon(epsilon);
+    dag2BN_.setNoise(noise);
+    noiseEM_ = noise;
+  }
+
+  /// forbid to use EM
+  INLINE void IBNLearner::forbidEM() { useEM_ = false; }
+
+  /// indicates whether we use EM for parameter learning
+  INLINE bool IBNLearner::isUsingEM() const { return useEM_; }
+
+  /// returns the EM parameter learning approximation scheme
+  INLINE EMApproximationScheme& IBNLearner::EM() {
+    if (useEM_) return dag2BN_;
+    else GUM_ERROR(NotFound, "EM is currently forbidden. Please enable it with useEM()")
+  }
+
+  /// returns the state of the last EM algorithm executed
+  INLINE IApproximationSchemeConfiguration::ApproximationSchemeSTATE IBNLearner::EMState() const {
+    if (useEM_) return dag2BN_.stateApproximationScheme();
+    else return IApproximationSchemeConfiguration::ApproximationSchemeSTATE::Undefined;
+  }
+
+  /// returns the state of the EM algorithm
+  INLINE std::string IBNLearner::EMStateMessage() const {
+    if (useEM_) return dag2BN_.messageApproximationScheme();
+    else return "EM is currently forbidden. Please enable it with useEM()";
+  }
 
   INLINE bool IBNLearner::hasMissingValues() const {
     return scoreDatabase_.databaseTable().hasMissingValues();
@@ -263,6 +320,7 @@ namespace gum::learning {
   INLINE void IBNLearner::setPossibleEdges(const EdgeSet& set) {
     constraintPossibleEdges_.setEdges(set);
   }
+
   // assign a set of forbidden edges from an UndiGraph
   INLINE void IBNLearner::setPossibleSkeleton(const gum::UndiGraph& g) {
     setPossibleEdges(g.edges());
@@ -344,6 +402,36 @@ namespace gum::learning {
     constraintMandatoryArcs_.eraseArc(arc);
   }
 
+  INLINE void IBNLearner::addNoParentNode(NodeId node) { constraintNoParentNodes_.addNode(node); }
+
+  INLINE void IBNLearner::addNoParentNode(const std::string& name) {
+    addNoParentNode(idFromName(name));
+  }
+
+  INLINE void IBNLearner::eraseNoParentNode(NodeId node) {
+    constraintNoParentNodes_.eraseNode(node);
+  }
+
+  INLINE void IBNLearner::eraseNoParentNode(const std::string& name) {
+    eraseNoParentNode(idFromName(name));
+  }
+
+  INLINE void IBNLearner::addNoChildrenNode(NodeId node) {
+    constraintNoChildrenNodes_.addNode(node);
+  }
+
+  INLINE void IBNLearner::addNoChildrenNode(const std::string& name) {
+    addNoChildrenNode(idFromName(name));
+  }
+
+  INLINE void IBNLearner::eraseNoChildrenNode(NodeId node) {
+    constraintNoChildrenNodes_.eraseNode(node);
+  }
+
+  INLINE void IBNLearner::eraseNoChildrenNode(const std::string& name) {
+    eraseNoChildrenNode(idFromName(name));
+  }
+
   // assign a new forbidden arc
   INLINE void IBNLearner::addMandatoryArc(const std::string& tail, const std::string& head) {
     addMandatoryArc(Arc(idFromName(tail), idFromName(head)));
@@ -355,12 +443,12 @@ namespace gum::learning {
   }
 
   // assign a new forbidden arc
-  INLINE void IBNLearner::addMandatoryArc(const NodeId tail, const NodeId head) {
+  INLINE void IBNLearner::addMandatoryArc(NodeId tail, NodeId head) {
     addMandatoryArc(Arc(tail, head));
   }
 
   // remove a forbidden arc
-  INLINE void IBNLearner::eraseMandatoryArc(const NodeId tail, const NodeId head) {
+  INLINE void IBNLearner::eraseMandatoryArc(NodeId tail, NodeId head) {
     eraseMandatoryArc(Arc(tail, head));
   }
 
@@ -416,7 +504,6 @@ namespace gum::learning {
     checkScorePriorCompatibility();
   }
 
-
   // use the prior BDeu
   INLINE void IBNLearner::useBDeuPrior(double weight) {
     if (weight < 0) { GUM_ERROR(OutOfBounds, "the weight of the prior must be positive") }
@@ -427,17 +514,16 @@ namespace gum::learning {
     checkScorePriorCompatibility();
   }
 
-
   // returns the type (as a string) of a given prior
   INLINE PriorType IBNLearner::getPriorType_() const {
     switch (priorType_) {
       using enum gum::learning::IBNLearner::BNLearnerPriorType;
-      case NO_prior: return PriorType::NoPriorType;
-      case SMOOTHING: return PriorType::SmoothingPriorType;
-      case DIRICHLET_FROM_DATABASE:
-      case DIRICHLET_FROM_BAYESNET: return PriorType::DirichletPriorType;
-      case BDEU: return PriorType::BDeuPriorType;
-      default:
+      case NO_prior : return PriorType::NoPriorType;
+      case SMOOTHING : return PriorType::SmoothingPriorType;
+      case DIRICHLET_FROM_DATABASE :
+      case DIRICHLET_FROM_BAYESNET : return PriorType::DirichletPriorType;
+      case BDEU : return PriorType::BDeuPriorType;
+      default :
         GUM_ERROR(OperationNotAllowed,
                   "IBNLearner getPriorType does "
                   "not support yet this prior")
@@ -456,6 +542,7 @@ namespace gum::learning {
 
   // returns the modalities  of a variable in the database
   INLINE Size IBNLearner::domainSize(NodeId var) const { return scoreDatabase_.domainSizes()[var]; }
+
   // returns the modalities  of a variables in the database
   INLINE Size IBNLearner::domainSize(const std::string& var) const {
     return scoreDatabase_.domainSizes()[idFromName(var)];

@@ -1,22 +1,43 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
+#pragma once
 
 
 /**
@@ -38,16 +59,14 @@ namespace gum {
                                                             O3PRM&                      o3_prm,
                                                             O3NameSolver< GUM_SCALAR >& solver,
                                                             ErrorsContainer&            errors) :
-          _prm_(&prm),
-          _o3_prm_(&o3_prm), _solver_(&solver), _errors_(&errors) {
+          _prm_(&prm), _o3_prm_(&o3_prm), _solver_(&solver), _errors_(&errors) {
         GUM_CONSTRUCTOR(O3SystemFactory);
       }
 
       template < typename GUM_SCALAR >
       INLINE
-         O3SystemFactory< GUM_SCALAR >::O3SystemFactory(const O3SystemFactory< GUM_SCALAR >& src) :
-          _prm_(src._prm_),
-          _o3_prm_(src._o3_prm_), _solver_(src._solver_), _errors_(src._errors_),
+          O3SystemFactory< GUM_SCALAR >::O3SystemFactory(const O3SystemFactory< GUM_SCALAR >& src) :
+          _prm_(src._prm_), _o3_prm_(src._o3_prm_), _solver_(src._solver_), _errors_(src._errors_),
           _nameMap_(src._nameMap_) {
         GUM_CONS_CPY(O3SystemFactory);
       }
@@ -67,7 +86,7 @@ namespace gum {
 
       template < typename GUM_SCALAR >
       INLINE O3SystemFactory< GUM_SCALAR >&
-         O3SystemFactory< GUM_SCALAR >::operator=(const O3SystemFactory< GUM_SCALAR >& src) {
+             O3SystemFactory< GUM_SCALAR >::operator=(const O3SystemFactory< GUM_SCALAR >& src) {
         if (this == &src) { return *this; }
         _prm_    = src._prm_;
         _o3_prm_ = src._o3_prm_;
@@ -78,7 +97,7 @@ namespace gum {
 
       template < typename GUM_SCALAR >
       INLINE O3SystemFactory< GUM_SCALAR >&
-         O3SystemFactory< GUM_SCALAR >::operator=(O3SystemFactory< GUM_SCALAR >&& src) {
+             O3SystemFactory< GUM_SCALAR >::operator=(O3SystemFactory< GUM_SCALAR >&& src) {
         if (this == &src) { return *this; }
         _prm_    = std::move(src._prm_);
         _o3_prm_ = std::move(src._o3_prm_);
@@ -213,8 +232,8 @@ namespace gum {
 
       template < typename GUM_SCALAR >
       INLINE bool
-         O3SystemFactory< GUM_SCALAR >::_checkParameters_(const PRMClass< GUM_SCALAR >& type,
-                                                          const O3Instance&             inst) {
+          O3SystemFactory< GUM_SCALAR >::_checkParameters_(const PRMClass< GUM_SCALAR >& type,
+                                                           const O3Instance&             inst) {
         for (const auto& param: inst.parameters()) {
           if (!type.exists(param.name().label())) {
             O3PRM_SYSTEM_PARAMETER_NOT_FOUND(param, *_errors_);
@@ -227,10 +246,10 @@ namespace gum {
           }
 
           const auto& type_param
-             = static_cast< const PRMParameter< GUM_SCALAR >& >(type.get(param.name().label()));
+              = static_cast< const PRMParameter< GUM_SCALAR >& >(type.get(param.name().label()));
 
           switch (type_param.valueType()) {
-            case PRMParameter< GUM_SCALAR >::ParameterType::INT: {
+            case PRMParameter< GUM_SCALAR >::ParameterType::INT : {
               if (!param.isInteger()) {
                 O3PRM_SYSTEM_PARAMETER_NOT_INT(param, *_errors_);
                 return false;
@@ -238,7 +257,7 @@ namespace gum {
               break;
             }
 
-            case PRMParameter< GUM_SCALAR >::ParameterType::REAL: {
+            case PRMParameter< GUM_SCALAR >::ParameterType::REAL : {
               if (param.isInteger()) {
                 O3PRM_SYSTEM_PARAMETER_NOT_FLOAT(param, *_errors_);
                 return false;
@@ -246,7 +265,7 @@ namespace gum {
               break;
             }
 
-            default: {
+            default : {
               GUM_ERROR(FatalError, "unknown parameter type")
             }
           }
@@ -278,7 +297,7 @@ namespace gum {
           }
 
           const auto& real_ref
-             = static_cast< const PRMReferenceSlot< GUM_SCALAR >& >(type.get(ref));
+              = static_cast< const PRMReferenceSlot< GUM_SCALAR >& >(type.get(ref));
 
           if (!_nameMap_.exists(ass.rightInstance().label())) {
             O3PRM_SYSTEM_INSTANCE_NOT_FOUND(ass.rightInstance(), *_errors_);
@@ -323,7 +342,7 @@ namespace gum {
           }
 
           const auto& real_ref
-             = static_cast< const PRMReferenceSlot< GUM_SCALAR >& >(type.get(ref));
+              = static_cast< const PRMReferenceSlot< GUM_SCALAR >& >(type.get(ref));
 
           if (!real_ref.isArray()) {
             O3PRM_SYSTEM_NOT_AN_ARRAY(inc.leftReference(), *_errors_);
@@ -334,5 +353,5 @@ namespace gum {
         return true;
       }
     }   // namespace o3prm
-  }     // namespace prm
+  }   // namespace prm
 }   // namespace gum

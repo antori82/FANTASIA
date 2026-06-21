@@ -1,22 +1,42 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
 
 
 /** @file
@@ -27,11 +47,12 @@
 #ifndef GUM_LEARNING_PARAM_ESTIMATOR_H
 #define GUM_LEARNING_PARAM_ESTIMATOR_H
 
-#include <type_traits>
-
 #include <agrum/agrum.h>
+
+#include <agrum/base/stattests/recordCounter.h>
 #include <agrum/BN/learning/priors/prior.h>
-#include <agrum/tools/stattests/recordCounter.h>
+
+#include <type_traits>
 
 namespace gum {
 
@@ -169,6 +190,10 @@ namespace gum {
       /// returns the CPT's parameters corresponding to a given target node
       std::vector< double > parameters(const NodeId target_node);
 
+      /// returns the parameters of a CPT as well as its log-likelihood
+      std::pair< std::vector< double >, double >
+          parametersAndLogLikelihood(const NodeId target_node);
+
       /// returns the CPT's parameters corresponding to a given nodeset
       /** The vector contains the parameters of an n-dimensional CPT. The
        * distribution of the dimensions of the CPT within the vector is as
@@ -177,16 +202,46 @@ namespace gum {
        * order in which they were specified). */
       virtual std::vector< double > parameters(const NodeId                 target_node,
                                                const std::vector< NodeId >& conditioning_nodes)
-         = 0;
+          = 0;
 
-      /// sets the CPT's parameters corresponding to a given Potential
-      /** The potential is assumed to be a conditional probability, the first
+      /**
+       * @brief returns the parameters of a CPT as well as its log-likelihood
+       *
+       * The vector contains the parameters of an n-dimensional CPT. The
+       * distribution of the dimensions of the CPT within the vector is as
+       * follows:
+       * first, there is the target node, then the conditioning nodes (in the
+       * order in which they were specified).
+       * @param target_node the node on the left side of the CPT's conditioning bar
+       * @param conditioning_nodes  thes nodes on the right side of the conditioning bar
+       * @return a pair containing i) the vector of parameters and ii) the log-likelihood
+       */
+      virtual std::pair< std::vector< double >, double >
+          parametersAndLogLikelihood(const NodeId                 target_node,
+                                     const std::vector< NodeId >& conditioning_nodes)
+          = 0;
+
+      /**
+       * @brief sets a CPT's parameters and, possibly, return its log-likelihhod
+       *
+       * The tensor (CPT) is assumed to be a conditional probability, the first
        * variable of its variablesSequence() being the target variable, the
-       * other ones being on the right side of the conditioning bar. */
+       * other ones being on the right side of the conditioning bar.
+       * @param target_node the node on the left side of the CPT's conditioning bar
+       * @param conditioning_nodes the set of nodes on the right side of the
+       * conditioning bar
+       * @param pot the tensor (CPT) that is filled
+       * @param compute_log_likelihood a Boolean indicating whether we wish to
+       * compute the log-likelihood or not. Computing it is needed by the EM
+       * algorithm
+       * @return a double which corresponds to the log-likelihood (w.r.t. the CPT)
+       * if compute_log_likelihood=true, else the method returns 0
+       */
       template < typename GUM_SCALAR >
-      void setParameters(const NodeId                 target_node,
-                         const std::vector< NodeId >& conditioning_nodes,
-                         Potential< GUM_SCALAR >&     pot);
+      double setParameters(const NodeId                 target_node,
+                           const std::vector< NodeId >& conditioning_nodes,
+                           Tensor< GUM_SCALAR >&        pot,
+                           const bool                   compute_log_likelihood = false);
 
       /// returns the mapping from ids to column positions in the database
       /** @warning An empty nodeId2Columns bijection means that the mapping is
@@ -235,25 +290,29 @@ namespace gum {
       template < typename GUM_SCALAR >
       void _checkParameters_(const NodeId                 target_node,
                              const std::vector< NodeId >& conditioning_nodes,
-                             Potential< GUM_SCALAR >&     pot);
+                             Tensor< GUM_SCALAR >&        pot);
 
-      // sets the CPT's parameters corresponding to a given Potential
-      // when the potential belongs to a BayesNet<GUM_SCALAR> when
+      // sets the CPT's parameters corresponding to a given Tensor
+      // when the tensor belongs to a BayesNet<GUM_SCALAR> when
       // GUM_SCALAR is different from a double
       template < typename GUM_SCALAR >
-      typename std::enable_if< !std::is_same< GUM_SCALAR, double >::value, void >::type
-         _setParameters_(const NodeId                 target_node,
-                         const std::vector< NodeId >& conditioning_nodes,
-                         Potential< GUM_SCALAR >&     pot);
+      typename std::enable_if< !std::is_same< GUM_SCALAR, double >::value, double >::type
+          _setParameters_(const NodeId                 target_node,
+                          const std::vector< NodeId >& conditioning_nodes,
+                          Tensor< GUM_SCALAR >&        pot,
+                          const bool                   compute_log_likelihood);
 
-      // sets the CPT's parameters corresponding to a given Potential
-      // when the potential belongs to a BayesNet<GUM_SCALAR> when
+      // sets the CPT's parameters corresponding to a given Tensor
+      // when the tensor belongs to a BayesNet<GUM_SCALAR> when
       // GUM_SCALAR is equal to double (the code is optimized for doubles)
       template < typename GUM_SCALAR >
-      typename std::enable_if< std::is_same< GUM_SCALAR, double >::value, void >::type
-         _setParameters_(const NodeId                 target_node,
-                         const std::vector< NodeId >& conditioning_nodes,
-                         Potential< GUM_SCALAR >&     pot);
+      typename std::enable_if< std::is_same< GUM_SCALAR, double >::value, double >::type
+          _setParameters_(const NodeId                 target_node,
+                          const std::vector< NodeId >& conditioning_nodes,
+                          Tensor< GUM_SCALAR >&        pot,
+                          const bool                   compute_log_likelihood);
+
+      friend class DAG2BNLearner;
 
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
     };

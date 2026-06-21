@@ -1,22 +1,43 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
+#pragma once
 
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -24,7 +45,6 @@
 #  include <agrum/ID/io/BIFXML/BIFXMLIDWriter.h>
 
 namespace gum {
-
   /*
    * Default constructor.
    */
@@ -109,27 +129,7 @@ namespace gum {
     str << "<?xml version=\"1.0\" ?>" << std::endl;
 
     // Document type definition of BIF 0.3
-    /*str << "<!-- DTD for the XMLBIF 0.3 format -->" << std::endl;
-    str << "<!DOCTYPE BIF [" << std::endl;
-    str << "\t<!ELEMENT BIF ( NETWORK )*>" << std::endl;
-    str << "\t\t<!ATTLIST BIF VERSION CDATA #REQUIRED>" << std::endl;
-    str << "\t<!ELEMENT NETWORK ( NAME, ( PROPERTY | VARIABLE | DEFINITION )*
-    )>" <<
-    std::endl;
-    str << "\t<!ELEMENT NAME (#PCDATA)>" << std::endl;
-    str << "\t<!ELEMENT VARIABLE ( NAME, ( OUTCOME |  PROPERTY )* ) >" <<
-    std::endl;
-    str << "\t\t<!ATTLIST VARIABLE TYPE (nature|decision|utility) \"nature\">"
-    <<
-    std::endl;
-    str << "\t<!ELEMENT OUTCOME (#PCDATA)>" << std::endl;
-    str << "\t<!ELEMENT DEFINITION ( FOR | GIVEN | TABLE | PROPERTY )* >" <<
-    std::endl;
-    str << "\t<!ELEMENT FOR (#PCDATA)>" << std::endl;
-    str << "\t<!ELEMENT GIVEN (#PCDATA)>" << std::endl;
-    str << "\t<!ELEMENT TABLE (#PCDATA)>" << std::endl;
-    str << "\t<!ELEMENT PROPERTY (#PCDATA)>" << std::endl;
-    str << "]>" << std::endl;*/
+    /* https://www.cs.cmu.edu/afs/cs/user/fgcozman/www/Research/InterchangeFormat/ */
 
     // BIF version Tag
     str << std::endl << "<BIF VERSION=\"0.3\">" << std::endl;
@@ -148,6 +148,9 @@ namespace gum {
                                                                   int                     varType) {
     //<VARIABLE TYPE="nature|decision|utility">
     //<NAME>name</NAME>
+    //<PROPERTY>description = ...</PROPERTY>
+    //<PROPERTY>fast = A[4,5]</PROPERTY>PROPERTY>
+    // <!- OUTCOMES are not used but are kept for compatibility->
     //<OUTCOME>outcome1</OUTCOME>
     //<OUTCOME>outcome2</OUTCOME>
     //<PROPERTY>property</PROPERTY>
@@ -159,23 +162,26 @@ namespace gum {
     str << "<VARIABLE TYPE=\"";
 
     switch (varType) {
-      case 1: str << "decision"; break;
+      case 1 : str << "decision"; break;
 
-      case 2: str << "nature"; break;
+      case 2 : str << "nature"; break;
 
-      case 3: str << "utility"; break;
+      case 3 : str << "utility"; break;
 
-      default: break;
+      default : break;
     }
 
     str << "\">" << std::endl;
 
     // Name and description
     str << "\t<NAME>" << var.name() << "</NAME>" << std::endl;
-    str << "\t<PROPERTY>" << var.description() << "</PROPERTY>" << std::endl;
+    str << "\t<PROPERTY>description = " << var.description() << "</PROPERTY>" << std::endl;
+    str << "\t<PROPERTY>fast = " << var.toFast() << "</PROPERTY>" << std::endl;
 
     // Outcomes
-
+    str << "<!-- OUTCOME are not used in pyAgrum BIFXML (see fast property) but are kept for "
+           "compatibility-->"
+        << std::endl;
     for (Idx i = 0; i < var.domainSize(); i++)
       str << "\t<OUTCOME>" << var.label(i) << "</OUTCOME>" << std::endl;
 
@@ -190,8 +196,8 @@ namespace gum {
    */
   template < typename GUM_SCALAR >
   INLINE std::string BIFXMLIDWriter< GUM_SCALAR >::_variableDefinition_(
-     const NodeId&                         varNodeId,
-     const InfluenceDiagram< GUM_SCALAR >& infdiag) {
+      const NodeId&                         varNodeId,
+      const InfluenceDiagram< GUM_SCALAR >& infdiag) {
     //<DEFINITION>
     //<FOR>var</FOR>
     //<GIVEN>conditional var</GIVEN>
@@ -204,18 +210,35 @@ namespace gum {
       str << "<DEFINITION>" << std::endl;
 
       // Variable
-      str << "\t<FOR>" << infdiag.variable(varNodeId).name() << "</FOR>" << std::endl;
+      str << "\t<FOR>" << infdiag.variable(varNodeId).name() << "</FOR>";
 
-      // Conditional Parents
-      List< std::string > parentList;
+      str << "<!--" << infdiag.variable(varNodeId).name() << " | ";
+      for (const auto n: infdiag.parents(varNodeId))
+        str << infdiag.variable(n).name() << ",";
+      str << "-->\n";
 
-      for (const auto par: infdiag.parents(varNodeId))
-        parentList.pushBack(infdiag.variable(par).name());
+      // Conditional Parents for decision node
+      if (infdiag.isDecisionNode(varNodeId)) {
+        // finding the parents in the graph
+        List< std::string > parentList;
 
-      for (List< std::string >::iterator parentListIte = parentList.rbegin();
-           parentListIte != parentList.rend();
-           --parentListIte)
-        str << "\t<GIVEN>" << (*parentListIte) << "</GIVEN>" << std::endl;
+        for (const auto par: infdiag.parents(varNodeId))
+          parentList.pushBack(infdiag.variable(par).name());
+
+        for (auto parentListIte = parentList.rbegin(); parentListIte != parentList.rend();
+             --parentListIte)
+          str << "\t<GIVEN>" << (*parentListIte) << "</GIVEN>" << std::endl;
+      } else if (infdiag.isChanceNode(varNodeId))   // finding the parents in the cpt
+        for (Idx i = infdiag.cpt(varNodeId).nbrDim(); i > 1;
+             i--)                                   // the first dimension is not a parent
+          str << "\t<GIVEN>" << infdiag.cpt(varNodeId).variable(i - 1).name() << "</GIVEN>"
+              << std::endl;
+      else if (infdiag.isUtilityNode(varNodeId))    // finding the parents in the utility
+        for (Idx i = infdiag.utility(varNodeId).nbrDim(); i > 1;
+             i--)                                   // the first dimension is not a parent
+          str << "\t<GIVEN>" << infdiag.utility(varNodeId).variable(i - 1).name() << "</GIVEN>"
+              << std::endl;
+
 
       if (infdiag.isChanceNode(varNodeId)) {
         Instantiation inst(infdiag.cpt(varNodeId));
@@ -255,7 +278,6 @@ namespace gum {
 
     return str.str();
   }
-
 } /* namespace gum */
 
 #endif   // DOXYGEN_SHOULD_SKIP_THIS

@@ -1,22 +1,42 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
 
 
 /**
@@ -31,9 +51,9 @@
 #define GUM_BAYES_NET_JOINT_TARGETED_INFERENCE_H
 
 
-#include <agrum/BN/inference/tools/marginalTargetedInference.h>
 #include <agrum/agrum.h>
 
+#include <agrum/BN/inference/tools/marginalTargetedInference.h>
 
 namespace gum {
 
@@ -82,25 +102,25 @@ namespace gum {
      * nodes.
      * @param nodes the set of nodes whose posterior joint probability is wanted
      *
-     * @warning for efficiency reasons, the potential is stored into the
+     * @warning for efficiency reasons, the tensor is stored into the
      * inference engine and is returned by reference. In order to ensure
-     * that the potential may still exist even if the Inference object is
+     * that the tensor may still exist even if the Inference object is
      * destroyed, the user has to copy it explicitly.
      *
      * @warning prepareInference and makeInference may be applied if needed.
      *
      * @throw UndefinedElement if nodes is not in the targets
      */
-    virtual const Potential< GUM_SCALAR >& jointPosterior(const NodeSet& nodes) final;
+    virtual const Tensor< GUM_SCALAR >& jointPosterior(const NodeSet& nodes) final;
 
     /// Computes and returns the posterior of a node.
     /**
      * @returns a const ref to the posterior probability of the node.
      * @param node the node for which we need a posterior probability
      *
-     * @warning for efficiency reasons, the potential is stored into the
+     * @warning for efficiency reasons, the tensor is stored into the
      * inference engine and is returned by reference. In order to ensure
-     * that the potential may still exist even if the Inference object is
+     * that the tensor may still exist even if the Inference object is
      * destroyed, the user has to copy it explicitly.
      *
      * @warning prepareInference and makeInference may be applied if needed by
@@ -108,16 +128,16 @@ namespace gum {
      *
      * @throw UndefinedElement if node is not in the set of targets
      */
-    virtual const Potential< GUM_SCALAR >& posterior(NodeId node) final;
+    virtual const Tensor< GUM_SCALAR >& posterior(NodeId node) final;
 
     /// Computes and returns the posterior of a node.
     /**
      * @returns a const ref to the posterior probability of the node.
      * @param node the node for which we need a posterior probability
      *
-     * @warning for efficiency reasons, the potential is stored into the
+     * @warning for efficiency reasons, the tensor is stored into the
      * inference engine and is returned by reference. In order to ensure
-     * that the potential may still exist even if the Inference object is
+     * that the tensor may still exist even if the Inference object is
      * destroyed, the user has to copy it explicitly.
      *
      * @warning prepareInference and makeInference may be applied if needed by
@@ -125,7 +145,7 @@ namespace gum {
      *
      * @throw UndefinedElement if node is not in the set of targets
      */
-    virtual const Potential< GUM_SCALAR >& posterior(const std::string& nodeName) final;
+    virtual const Tensor< GUM_SCALAR >& posterior(const std::string& nodeName) final;
     /// @}
 
 
@@ -172,31 +192,31 @@ namespace gum {
     /// @}
 
     /**
-     * Create a gum::Potential for P(joint targets|evs) (for all instanciation of
+     * Create a gum::Tensor for P(joint targets|evs) (for all instanciation of
      * targets
      * and evs)
      *
-     * @warning If some evs are d-separated, they are not included in the Potential
+     * @warning If some evs are d-separated, they are not included in the Tensor
      *
      * @param targets  the NodeSet of the targeted variables
      * @param evs the NodeSet of observed variables
-     * @return a Potential
+     * @return a Tensor
      */
-    Potential< GUM_SCALAR > evidenceJointImpact(const NodeSet& targets, const NodeSet& evs);
+    Tensor< GUM_SCALAR > evidenceJointImpact(const NodeSet& targets, const NodeSet& evs);
 
     /**
-     * Create a gum::Potential for P(joint targets|evs) (for all instanciation of
+     * Create a gum::Tensor for P(joint targets|evs) (for all instanciation of
      * targets
      * and evs)
      *
-     * @warning If some evs are d-separated, they are not included in the Potential
+     * @warning If some evs are d-separated, they are not included in the Tensor
      *
      * @param targets  the vector of std::string of the targeted variables
      * @param evs the vector of std::string of observed variables
-     * @return a Potential
+     * @return a Tensor
      */
-    Potential< GUM_SCALAR > evidenceJointImpact(const std::vector< std::string >& targets,
-                                                const std::vector< std::string >& evs);
+    Tensor< GUM_SCALAR > evidenceJointImpact(const std::vector< std::string >& targets,
+                                             const std::vector< std::string >& evs);
 
     // ############################################################################
     /// @name Information Theory related functions
@@ -275,7 +295,7 @@ namespace gum {
     /// asks derived classes for the joint posterior of a declared target set
     /** @param set The set of ids of the variables whose joint posterior is
      * looked for. */
-    virtual const Potential< GUM_SCALAR >& jointPosterior_(const NodeSet& set) = 0;
+    virtual const Tensor< GUM_SCALAR >& jointPosterior_(const NodeSet& set) = 0;
 
     /** @brief asks derived classes for the joint posterior of a set of
      * variables not declared as a joint target
@@ -284,18 +304,18 @@ namespace gum {
      * posterior is looked for.
      * @param declared_target the joint target declared by the user that
      * contains set */
-    virtual const Potential< GUM_SCALAR >& jointPosterior_(const NodeSet& wanted_target,
-                                                           const NodeSet& declared_target)
-       = 0;
+    virtual const Tensor< GUM_SCALAR >& jointPosterior_(const NodeSet& wanted_target,
+                                                        const NodeSet& declared_target)
+        = 0;
 
     /** @brief returns a fresh unnormalized joint posterior of
      * a given set of variables
      * @param set The set of ids of the variables whose joint posterior is
      * looked for. */
-    virtual Potential< GUM_SCALAR >* unnormalizedJointPosterior_(const NodeSet& set) = 0;
+    virtual Tensor< GUM_SCALAR >* unnormalizedJointPosterior_(const NodeSet& set) = 0;
 
-    /// returns a fresh potential equal to P(argument,evidence)
-    virtual Potential< GUM_SCALAR >* unnormalizedJointPosterior_(NodeId id) = 0;
+    /// returns a fresh tensor equal to P(argument,evidence)
+    virtual Tensor< GUM_SCALAR >* unnormalizedJointPosterior_(NodeId id) = 0;
 
 
     private:
@@ -305,7 +325,6 @@ namespace gum {
 
 
 }   // namespace gum
-
 
 #include <agrum/BN/inference/tools/jointTargetedInference_tpl.h>
 

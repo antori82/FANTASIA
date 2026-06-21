@@ -1,22 +1,43 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
+#pragma once
 
 
 /**
@@ -26,9 +47,8 @@
  * @author Lionel TORTI and Pierre-Henri WUILLEMIN(_at_LIP6)
  */
 
+#include <agrum/base/multidim/implementations/multiDimSparse.h>
 #include <agrum/PRM/elements/PRMInstance.h>
-
-#include <agrum/tools/multidim/implementations/multiDimSparse.h>
 
 namespace gum {
   namespace prm {
@@ -160,7 +180,7 @@ namespace gum {
       }
 
       switch (elt->elt_type()) {
-        case PRMClassElement< GUM_SCALAR >::prm_refslot: {
+        case PRMClassElement< GUM_SCALAR >::prm_refslot : {
           PRMReferenceSlot< GUM_SCALAR >* ref = static_cast< PRMReferenceSlot< GUM_SCALAR >* >(elt);
 
           // Checking if instance's type is legal
@@ -180,9 +200,9 @@ namespace gum {
           break;
         }
 
-        case PRMClassElement< GUM_SCALAR >::prm_slotchain: {
+        case PRMClassElement< GUM_SCALAR >::prm_slotchain : {
           PRMSlotChain< GUM_SCALAR >& sc
-             = static_cast< PRMSlotChain< GUM_SCALAR >& >(type().get(id));
+              = static_cast< PRMSlotChain< GUM_SCALAR >& >(type().get(id));
 
           // Checking if instance's type is legal
           if (!instance.type().isSubTypeOf(sc.end())) {
@@ -202,7 +222,7 @@ namespace gum {
           break;
         }
 
-        default: {
+        default : {
           if (!type().isOutputNode(*elt)) {
             GUM_ERROR(WrongClassElement, "given ClassElement<GUM_SCALAR> is not an output node")
           }
@@ -236,7 +256,7 @@ namespace gum {
     INLINE void PRMInstance< GUM_SCALAR >::_copyAttribute_(PRMAttribute< GUM_SCALAR >* source) {
       auto attr = new PRMScalarAttribute< GUM_SCALAR >(source->name(), source->type());
       GUM_ASSERT(&(attr->type().variable()) != &(source->type().variable()));
-      // The potential is copied when instantiate() is called
+      // The tensor is copied when instantiate() is called
       attr->cpf().fill((GUM_SCALAR)0);
       attr->setId(source->id());
       _bijection_.insert(&(source->type().variable()), &(attr->type().variable()));
@@ -252,7 +272,7 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     INLINE PRMInstance< GUM_SCALAR >& /**/
-       PRMInstance< GUM_SCALAR >::operator=(const PRMClass< GUM_SCALAR >& from) {
+           PRMInstance< GUM_SCALAR >::operator=(const PRMClass< GUM_SCALAR >& from) {
       GUM_ERROR(FatalError, "do not copy Instance")
     }
 
@@ -353,7 +373,7 @@ namespace gum {
       } catch (NotFound const&) {
         GUM_ERROR(NotFound,
                   "no ReferenceSlot<GUM_SCALAR> or SlotChain<GUM_SCALAR> "
-                            "matches the given NodeId");
+                           "matches the given NodeId");
       }
     }
 
@@ -365,7 +385,7 @@ namespace gum {
       } catch (NotFound const&) {
         GUM_ERROR(NotFound,
                   "no ReferenceSlot<GUM_SCALAR> or SlotChain<GUM_SCALAR> "
-                            "matches the given NodeId");
+                           "matches the given NodeId");
       }
     }
 
@@ -381,19 +401,19 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     INLINE typename PRMInstance< GUM_SCALAR >::const_iterator
-       PRMInstance< GUM_SCALAR >::begin() const {
+        PRMInstance< GUM_SCALAR >::begin() const {
       return _nodeIdMap_.begin();
     }
 
     template < typename GUM_SCALAR >
     INLINE const typename PRMInstance< GUM_SCALAR >::const_iterator&
-       PRMInstance< GUM_SCALAR >::end() const {
+        PRMInstance< GUM_SCALAR >::end() const {
       return _nodeIdMap_.end();
     }
 
     template < typename GUM_SCALAR >
     INLINE typename PRMInstance< GUM_SCALAR >::RefIterator
-       PRMInstance< GUM_SCALAR >::begin(NodeId id) {
+        PRMInstance< GUM_SCALAR >::begin(NodeId id) {
       try {
         return PRMInstance< GUM_SCALAR >::RefIterator(*(_referenceMap_[id]));
       } catch (NotFound const&) { GUM_ERROR(NotFound, "no referred instances from this NodeId") }
@@ -401,17 +421,15 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     INLINE typename PRMInstance< GUM_SCALAR >::RefConstIterator
-       PRMInstance< GUM_SCALAR >::begin(NodeId id) const {
+        PRMInstance< GUM_SCALAR >::begin(NodeId id) const {
       try {
         return PRMInstance< GUM_SCALAR >::RefConstIterator(*(_referenceMap_[id]));
       } catch (NotFound const&) { GUM_ERROR(NotFound, "no referred instances from this NodeId") }
     }
 
     template < typename GUM_SCALAR >
-    INLINE
-       PRMInstance< GUM_SCALAR >::RefIterator::RefIterator(Set< PRMInstance< GUM_SCALAR >* >& set) :
-        _set_(set),
-        _iter_(set.begin()) {
+    INLINE PRMInstance< GUM_SCALAR >::RefIterator::RefIterator(
+        Set< PRMInstance< GUM_SCALAR >* >& set) : _set_(set), _iter_(set.begin()) {
       GUM_CONSTRUCTOR(PRMInstance< GUM_SCALAR >::RefIterator);
     }
 
@@ -428,14 +446,14 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     INLINE typename PRMInstance< GUM_SCALAR >::RefIterator&
-       PRMInstance< GUM_SCALAR >::RefIterator::operator=(const RefIterator& from) {
+        PRMInstance< GUM_SCALAR >::RefIterator::operator=(const RefIterator& from) {
       _iter_ = from._iter_;
       return *this;
     }
 
     template < typename GUM_SCALAR >
     INLINE typename PRMInstance< GUM_SCALAR >::RefIterator&
-       PRMInstance< GUM_SCALAR >::RefIterator::operator++() {
+        PRMInstance< GUM_SCALAR >::RefIterator::operator++() {
       ++_iter_;
       return *this;
     }
@@ -467,17 +485,13 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     INLINE PRMInstance< GUM_SCALAR >::RefConstIterator::RefConstIterator(
-       const Set< PRMInstance< GUM_SCALAR >* >& set) :
-        _set_(set),
-        _iter_(set.begin()) {
+        const Set< PRMInstance< GUM_SCALAR >* >& set) : _set_(set), _iter_(set.begin()) {
       GUM_CONSTRUCTOR(PRMInstance< GUM_SCALAR >::RefConstIterator);
     }
 
     template < typename GUM_SCALAR >
-    INLINE
-       PRMInstance< GUM_SCALAR >::RefConstIterator::RefConstIterator(const RefConstIterator& from) :
-        _set_(from._set_),
-        _iter_(from._iter_) {
+    INLINE PRMInstance< GUM_SCALAR >::RefConstIterator::RefConstIterator(
+        const RefConstIterator& from) : _set_(from._set_), _iter_(from._iter_) {
       GUM_CONS_CPY(PRMInstance< GUM_SCALAR >::RefConstIterator);
     }
 
@@ -488,14 +502,14 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     INLINE typename PRMInstance< GUM_SCALAR >::RefConstIterator&
-       PRMInstance< GUM_SCALAR >::RefConstIterator::operator=(const RefConstIterator& from) {
+        PRMInstance< GUM_SCALAR >::RefConstIterator::operator=(const RefConstIterator& from) {
       _iter_ = from._iter_;
       return *this;
     }
 
     template < typename GUM_SCALAR >
     INLINE typename PRMInstance< GUM_SCALAR >::RefConstIterator&
-       PRMInstance< GUM_SCALAR >::RefConstIterator::operator++() {
+        PRMInstance< GUM_SCALAR >::RefConstIterator::operator++() {
       ++_iter_;
       return *this;
     }
@@ -506,50 +520,50 @@ namespace gum {
     }
 
     template < typename GUM_SCALAR >
-    INLINE bool
-       PRMInstance< GUM_SCALAR >::RefConstIterator::operator!=(const RefConstIterator& from) const {
+    INLINE bool PRMInstance< GUM_SCALAR >::RefConstIterator::operator!=(
+        const RefConstIterator& from) const {
       return _iter_ != from._iter_;
     }
 
     template < typename GUM_SCALAR >
-    INLINE bool
-       PRMInstance< GUM_SCALAR >::RefConstIterator::operator==(const RefConstIterator& from) const {
+    INLINE bool PRMInstance< GUM_SCALAR >::RefConstIterator::operator==(
+        const RefConstIterator& from) const {
       return _iter_ == from._iter_;
     }
 
     template < typename GUM_SCALAR >
     INLINE const PRMInstance< GUM_SCALAR >&
-       PRMInstance< GUM_SCALAR >::RefConstIterator::operator*() const {
+                 PRMInstance< GUM_SCALAR >::RefConstIterator::operator*() const {
       return **_iter_;
     }
 
     template < typename GUM_SCALAR >
     INLINE const PRMInstance< GUM_SCALAR >*
-       PRMInstance< GUM_SCALAR >::RefConstIterator::operator->() const {
+                 PRMInstance< GUM_SCALAR >::RefConstIterator::operator->() const {
       return *_iter_;
     }
 
     template < typename GUM_SCALAR >
     INLINE typename PRMInstance< GUM_SCALAR >::InvRefIterator
-       PRMInstance< GUM_SCALAR >::beginInvRef() {
+        PRMInstance< GUM_SCALAR >::beginInvRef() {
       return _referingAttr_.begin();
     }
 
     template < typename GUM_SCALAR >
     INLINE const typename PRMInstance< GUM_SCALAR >::InvRefIterator&
-       PRMInstance< GUM_SCALAR >::endInvRef() {
+        PRMInstance< GUM_SCALAR >::endInvRef() {
       return _referingAttr_.end();
     }
 
     template < typename GUM_SCALAR >
     INLINE typename PRMInstance< GUM_SCALAR >::InvRefConstIterator
-       PRMInstance< GUM_SCALAR >::beginInvRef() const {
+        PRMInstance< GUM_SCALAR >::beginInvRef() const {
       return _referingAttr_.begin();
     }
 
     template < typename GUM_SCALAR >
     INLINE const typename PRMInstance< GUM_SCALAR >::InvRefConstIterator&
-       PRMInstance< GUM_SCALAR >::endInvRef() const {
+        PRMInstance< GUM_SCALAR >::endInvRef() const {
       return _referingAttr_.end();
     }
 
@@ -573,7 +587,7 @@ namespace gum {
     template < typename GUM_SCALAR >
     INLINE void PRMInstance< GUM_SCALAR >::_copyAttributeCPF_(PRMAttribute< GUM_SCALAR >* attr) {
       const auto& type_attr
-         = static_cast< const PRMAttribute< GUM_SCALAR >& >(type().get(attr->safeName()));
+          = static_cast< const PRMAttribute< GUM_SCALAR >& >(type().get(attr->safeName()));
       attr->copyCpf(bijection(), type_attr);
       GUM_ASSERT(attr->cpf().contains(attr->type().variable()));
     }

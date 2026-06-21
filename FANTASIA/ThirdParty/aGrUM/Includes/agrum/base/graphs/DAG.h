@@ -1,0 +1,236 @@
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
+
+
+/** @file
+ * @brief Base classes for directed acyclic graphs
+ *
+ * @author Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
+ */
+#ifndef GUM_DAG_H
+#define GUM_DAG_H
+
+#include <agrum/base/graphs/diGraph.h>
+#include <agrum/base/graphs/undiGraph.h>
+
+namespace gum {
+
+  /* ====================================================================== */
+  /* ===      BASE CLASS FOR MANIPULATING DIRECTED GRAPHS WITHOUT CYCLE     */
+  /* ====================================================================== */
+  /** @class DAG
+   * @brief Base class for dag
+   *
+   * \ingroup graph_group
+   *
+   *
+   * This is the base class for Directed Acyclic Graph : addArc may throw a
+   * DirectedCycle if any (directed) cycle is created by this arc.
+   *
+   * @par exemple de code
+   * @code
+   * // creating empty graphs
+   * gum::DAG g1,g2;
+   *
+   * // adding nodes and arcs to g1
+   * gum::NodeId i1=g1.addNode();
+   * gum::NodeId i2=g1.addNode();
+   * gum::NodeId i3=g1.addNode();
+   * g1.addArc( i1,i2 );
+   * g1.addArc( i1,i3 );
+   * g1.addArc( i2,i3 );
+   *
+   * //throw an InvalidNode
+   * // g1.addArc( i1+i2+i3,i1 );
+   *
+   * // throw an InvalidDirectedCycle
+   * // g1.addArc( i3,i1 );
+   *
+   * // copying graphs
+   * gum::DAG g3 = g1;
+   * g2 = g1;
+   * gum::DAG g4=g1;
+   *
+   * // check if a graph has no node
+   * if ( g1.empty() ) cerr << "graph g1 is empty" << endl;
+   *
+   * // remove all the nodes (as well as their adjacent arcs)
+   * g1.clear();
+   *
+   * // remove some arc
+   * g4.eraseArc( Arc ( i1,i3 ) );
+   *
+   * // remove node
+   * g2.eraseNode( i2 );
+   *
+   * // parse a graph
+   * for ( const auto node : g3.nodes() ) // type of node = gum::NodeId
+   *   cerr << node << endl;
+   *
+   * for ( const auto& arc= g3.arcs()) // type of arc : gum::Arc&
+   *   cerr << iter << endl;
+   *
+   * for ( const auto node :g3.parents( gum::NodeId(3) ))
+   *   cerr << "  -  "<<*iter;
+   *
+   * cerr<<endl;
+   *
+   * // remove all the arcs that are parent of a given node
+   * g3.eraseParents( gum::NodeId(2) );
+   *
+   * @endcode
+   */
+  /* ====================================================================== */
+  class DAG: public DiGraph {
+    public:
+    // ############################################################################
+    /// @name Constructors / Destructors
+    // ############################################################################
+    /// @{
+
+    /// default constructor
+    /**
+     * @param nodes_size the size of the hash table used to store all the nodes
+     * @param nodes_resize_policy the resizing policy of this hash table
+     * @param arcs_size the size of the hash table used to store all the arcs
+     * @param arcs_resize_policy the resizing policy of this hash table
+     */
+    explicit DAG(Size nodes_size          = HashTableConst::default_size,
+                 bool nodes_resize_policy = true,
+                 Size arcs_size           = HashTableConst::default_size,
+                 bool arcs_resize_policy  = true);
+
+    /// copy constructor
+    /** @param g the DAG to copy */
+    DAG(const DAG& g);
+
+    /// destructor
+    virtual ~DAG();
+
+    /// @}
+
+    // ############################################################################
+    /// @name Operators
+    // ############################################################################
+    /// @{
+
+    /// copy operator
+    /** @param g the DAG to copy */
+    DAG& operator=(const DAG& g);
+
+    /// @}
+
+    // ############################################################################
+    /// @name Accessors/Modifiers
+    // ############################################################################
+    /// @{
+
+    /// insert a new arc into the directed graph
+    /**
+     * @param tail the id of the tail of the new inserted arc
+     * @param head the id of the head of the new inserted arc
+     * @warning if the arc already exists, nothing is done. In particular, no
+     * exception is raised.
+     * @throw InvalidNode if head or tail does not belong to the graph nodes
+     * @throw InvalidDirectedCycle if any (directed) cycle is created by this
+     * arc.
+     * @warning Unfortunately, this means that addArc is not in constant
+     * time anymore.
+     */
+    void addArc(NodeId tail, NodeId head) final;
+    /// @}
+
+
+    /** build a UndiGraph by moralizing the dag
+     *
+     * @return the moralized graph
+     */
+    UndiGraph moralGraph() const;
+
+    /** build a UndiGraph by moralizing the Ancestral Graph of a set of Nodes
+     *
+     * @param nodes the set of nodeId
+     * @return the moralized ancestral graph
+     */
+    UndiGraph moralizedAncestralGraph(const NodeSet& nodes) const;
+
+    /** check if node X and node Y are independent given nodes Z (in the sense of
+     * d-separation)*/
+    bool dSeparation(NodeId X, NodeId Y, const NodeSet& Z) const;
+
+    /** check if nodes X and nodes  Y are independent given Z (in the sense of
+     * d-separation)*/
+    bool dSeparation(const NodeSet& X, const NodeSet& Y, const NodeSet& Z) const;
+
+    /***
+     * @return the minimal subset of soids that conditions the target
+     *
+     * i.e. P(target| soids)=P(target|@return)
+     */
+    NodeSet minimalCondSet(NodeId target, const NodeSet& soids) const;
+
+
+    /***
+     * @return the minimal subset of soids that conditions the targets
+     *
+     * i.e. P(targets| soids)=P(targets|@return)
+     */
+    NodeSet minimalCondSet(const NodeSet& targets, const NodeSet& soids) const;
+
+    private:
+    void _minimalCondSetVisitUp_(NodeId         node,
+                                 const NodeSet& soids,
+                                 NodeSet&       minimal,
+                                 NodeSet&       alreadyVisitedUp,
+                                 NodeSet&       alreadyVisitedDn) const;
+    void _minimalCondSetVisitDn_(NodeId         node,
+                                 const NodeSet& soids,
+                                 NodeSet&       minimal,
+                                 NodeSet&       alreadyVisitedUp,
+                                 NodeSet&       alreadyVisitedDn) const;
+  };
+
+} /* namespace gum */
+
+#ifndef GUM_NO_INLINE
+#  include <agrum/base/graphs/DAG_inl.h>
+#endif   // GU%_NO_INLINE
+
+#endif   /* GUM_DAG_H */

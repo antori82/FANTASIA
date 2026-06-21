@@ -1,22 +1,42 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) et Christophe GONZALES(_at_AMU)
- * (_at_AMU) info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
 
 
 /**
@@ -33,10 +53,8 @@
 
 #include <agrum/agrum.h>
 
-
-#include <agrum/MRF/IMarkovRandomField.h>
-
 #include <agrum/BN/BayesNet.h>
+#include <agrum/MRF/IMarkovRandomField.h>
 
 namespace gum {
 
@@ -92,7 +110,9 @@ namespace gum {
      * @return the resulting Bayesian network
      */
     static MarkovRandomField< GUM_SCALAR > fastPrototype(const std::string& dotlike,
-                                                         Size               domainSize = 2);
+                                                         Size               domainSize);
+    static MarkovRandomField< GUM_SCALAR > fastPrototype(const std::string& dotlike,
+                                                         const std::string& domain = "[2]");
 
     /**
      * build a Markov random field from a Bayesian network
@@ -155,10 +175,10 @@ namespace gum {
      * @return The variable's CPT.
      * @throw NotFound If no variable's id matches varId.
      */
-    virtual const Potential< GUM_SCALAR >& factor(const NodeSet& varIds) const final;
+    virtual const Tensor< GUM_SCALAR >& factor(const NodeSet& varIds) const final;
 
-    virtual const Potential< GUM_SCALAR >&
-       factor(const std::vector< std::string >& varnames) const final;
+    virtual const Tensor< GUM_SCALAR >&
+        factor(const std::vector< std::string >& varnames) const final;
 
     /**
      * Returns a factor that contains this variable
@@ -186,7 +206,7 @@ namespace gum {
      * Add a gum::DiscreteVariable, it's associated gum::NodeId
      *opera
      * The variable is added by copy to the gum::MarkovRandomField.
-     * The variable's gum::Potential implementation will be a
+     * The variable's gum::Tensor implementation will be a
      * gum::MultiDimArray.
      *
      * @param var The variable added by copy.
@@ -220,10 +240,10 @@ namespace gum {
      * @brief Add a variable to the gum::MarkovRandomField.
      *
      * Add a gum::DiscreteVariable, it's associated gum::NodeId and it's
-     * gum::Potential.
+     * gum::Tensor.
      *
      * The variable is added by copy to the gum::MarkovRandomField.
-     * The variable's gum::Potential implementation will be a
+     * The variable's gum::Tensor implementation will be a
      * gum::MultiDimArray.
      *
      * @param var The variable added by copy.
@@ -375,7 +395,7 @@ namespace gum {
      *
      * @return a const ref to the factor in the Markov random field
      */
-    const Potential< GUM_SCALAR >& addFactor(const std::vector< std::string >& varnames);
+    const Tensor< GUM_SCALAR >& addFactor(const std::vector< std::string >& varnames);
 
     /**
      * @brief Add a factor (a clique) to the gum::MarkovRandomField.
@@ -384,21 +404,21 @@ namespace gum {
      *
      * @return a const ref to the factor in the Markov random field
      *
-     * @warning in order to be deterministic, the Potential contains all the vars
+     * @warning in order to be deterministic, the Tensor contains all the vars
      * of the clique sorted by id.
      */
-    const Potential< GUM_SCALAR >& addFactor(const NodeSet& vars);
+    const Tensor< GUM_SCALAR >& addFactor(const NodeSet& vars);
 
     /**
      * @brief Add a factor (a clique) to the gum::MarkovRandomField using the order sequence as an
      * order for the factor.
      *
      * @param aContent The gum::MultiDimImplementation to use for this
-     *                 variable's gum::Potential implementation (will be copied).
+     *                 variable's gum::Tensor implementation (will be copied).
      *
      * @return a const ref to the factor in the Markov random field
      */
-    const Potential< GUM_SCALAR >& addFactor(const Potential< GUM_SCALAR >& factor);
+    const Tensor< GUM_SCALAR >& addFactor(const Tensor< GUM_SCALAR >& factor);
 
     /**
      * Removes a factor in the MRF, and update head's CTP.
@@ -427,10 +447,10 @@ namespace gum {
     private:
     bool _topologyTransformationInProgress_;
 
-    /// clear all potentials
+    /// clear all tensors
     void _clearFactors_();
 
-    /// copy of potentials from a MRF to another, using names of vars as ref.
+    /// copy of tensors from a MRF to another, using names of vars as ref.
     void _copyFactors_(const MarkovRandomField< GUM_SCALAR >& source);
 
     /// rebuild the graph after strucural changes in the factors
@@ -441,7 +461,7 @@ namespace gum {
     /// the factors
     FactorTable< GUM_SCALAR > _factors_;
 
-    Potential< GUM_SCALAR >& _addFactor_(const std::vector< NodeId >& ordered_nodes);
+    Tensor< GUM_SCALAR >& _addFactor_(const std::vector< NodeId >& ordered_nodes);
 
     void _eraseFactor_(const NodeSet& vars);
 

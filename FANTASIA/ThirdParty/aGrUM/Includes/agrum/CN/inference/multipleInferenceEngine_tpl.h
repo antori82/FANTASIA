@@ -1,22 +1,43 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
+#pragma once
 
 
 #include <agrum/CN/inference/inferenceEngine.h>
@@ -27,7 +48,7 @@ namespace gum {
 
     template < typename GUM_SCALAR, class BNInferenceEngine >
     MultipleInferenceEngine< GUM_SCALAR, BNInferenceEngine >::MultipleInferenceEngine(
-       const CredalNet< GUM_SCALAR >& credalNet) :
+        const CredalNet< GUM_SCALAR >& credalNet) :
         InferenceEngine< GUM_SCALAR >::InferenceEngine(credalNet) {
       GUM_CONSTRUCTOR(MultipleInferenceEngine);
     }
@@ -39,9 +60,9 @@ namespace gum {
 
     template < typename GUM_SCALAR, class BNInferenceEngine >
     inline void MultipleInferenceEngine< GUM_SCALAR, BNInferenceEngine >::initThreadsData_(
-       const Size& num_threads,
-       const bool  _storeVertices_,
-       const bool  _storeBNOpt_) {
+        const Size& num_threads,
+        const bool  _storeVertices_,
+        const bool  _storeBNOpt_) {
       workingSet_.clear();
       workingSet_.resize(num_threads, nullptr);
       workingSetE_.clear();
@@ -92,10 +113,10 @@ namespace gum {
 
     template < typename GUM_SCALAR, class BNInferenceEngine >
     inline bool MultipleInferenceEngine< GUM_SCALAR, BNInferenceEngine >::updateThread_(
-       Size                             tId,
-       const NodeId&                    id,
-       const std::vector< GUM_SCALAR >& vertex,
-       const bool&                      elimRedund) {
+        Size                             tId,
+        const NodeId&                    id,
+        const std::vector< GUM_SCALAR >& vertex,
+        const bool&                      elimRedund) {
       // save E(X) if we don't save vertices
       if (!_infE_::storeVertices_ && !l_modal_[tId].empty()) {
         std::string var_name = workingSet_[tId]->variable(id).name();
@@ -194,10 +215,10 @@ namespace gum {
 
     template < typename GUM_SCALAR, class BNInferenceEngine >
     inline void MultipleInferenceEngine< GUM_SCALAR, BNInferenceEngine >::_updateThreadCredalSets_(
-       Size                             tId,
-       const NodeId&                    id,
-       const std::vector< GUM_SCALAR >& vertex,
-       const bool&                      elimRedund) {
+        Size                             tId,
+        const NodeId&                    id,
+        const std::vector< GUM_SCALAR >& vertex,
+        const bool&                      elimRedund) {
       auto& nodeCredalSet = l_marginalSets_[tId][id];
       Size  dsize         = Size(vertex.size());
 
@@ -228,24 +249,24 @@ namespace gum {
       // check that the point and all previously added ones are not inside the
       // actual
       // polytope
-      auto itEnd
-         = std::remove_if(nodeCredalSet.begin(),
-                          nodeCredalSet.end(),
-                          [&](const std::vector< GUM_SCALAR >& v) -> bool {
-                            for (auto jt       = v.cbegin(),
-                                      jtEnd    = v.cend(),
-                                      minIt    = l_marginalMin_[tId][id].cbegin(),
-                                      minItEnd = l_marginalMin_[tId][id].cend(),
-                                      maxIt    = l_marginalMax_[tId][id].cbegin(),
-                                      maxItEnd = l_marginalMax_[tId][id].cend();
-                                 jt != jtEnd && minIt != minItEnd && maxIt != maxItEnd;
-                                 ++jt, ++minIt, ++maxIt) {
-                              if ((std::fabs(*jt - *minIt) < 1e-6 || std::fabs(*jt - *maxIt) < 1e-6)
-                                  && std::fabs(*minIt - *maxIt) > 1e-6)
-                                return false;
-                            }
-                            return true;
-                          });
+      auto itEnd = std::remove_if(
+          nodeCredalSet.begin(),
+          nodeCredalSet.end(),
+          [&](const std::vector< GUM_SCALAR >& v) -> bool {
+            for (auto jt       = v.cbegin(),
+                      jtEnd    = v.cend(),
+                      minIt    = l_marginalMin_[tId][id].cbegin(),
+                      minItEnd = l_marginalMin_[tId][id].cend(),
+                      maxIt    = l_marginalMax_[tId][id].cbegin(),
+                      maxItEnd = l_marginalMax_[tId][id].cend();
+                 jt != jtEnd && minIt != minItEnd && maxIt != maxItEnd;
+                 ++jt, ++minIt, ++maxIt) {
+              if ((std::fabs(*jt - *minIt) < 1e-6 || std::fabs(*jt - *maxIt) < 1e-6)
+                  && std::fabs(*minIt - *maxIt) > 1e-6)
+                return false;
+            }
+            return true;
+          });
 
       nodeCredalSet.erase(itEnd, nodeCredalSet.end());
 
@@ -268,13 +289,12 @@ namespace gum {
       l_marginalSets_[tId][id] = lrsWrapper.getOutput();
     }
 
-
     template < typename GUM_SCALAR, class BNInferenceEngine >
     inline void MultipleInferenceEngine< GUM_SCALAR, BNInferenceEngine >::updateMarginals_() {
       // compute the max number of threads to use (avoid nested threads)
       const Size nb_threads = ThreadExecutor::nbRunningThreadsExecutors() == 0
-                               ? this->threadRanges_.size() - 1
-                               : 1;   // no nested multithreading
+                                ? this->threadRanges_.size() - 1
+                                : 1;   // no nested multithreading
 
       // create the function to be executed by the threads
       auto threadedExec = [this](const std::size_t                           this_thread,
@@ -308,11 +328,11 @@ namespace gum {
 
       // launch the threads
       ThreadExecutor::execute(
-         nb_threads,
-         threadedExec,
-         (nb_threads == 1)
-            ? std::vector< std::pair< NodeId, Idx > >{{0, 0}, {this->marginalMin_.size(), 0}}
-            : this->threadRanges_);
+          nb_threads,
+          threadedExec,
+          (nb_threads == 1)
+              ? std::vector< std::pair< NodeId, Idx > >{{0, 0}, {this->marginalMin_.size(), 0}}
+              : this->threadRanges_);
     }
 
     /*
@@ -346,11 +366,11 @@ namespace gum {
 
     template < typename GUM_SCALAR, class BNInferenceEngine >
     inline const GUM_SCALAR
-       MultipleInferenceEngine< GUM_SCALAR, BNInferenceEngine >::computeEpsilon_() {
+        MultipleInferenceEngine< GUM_SCALAR, BNInferenceEngine >::computeEpsilon_() {
       // compute the number of threads (avoid nested threads)
       const Size nb_threads = ThreadExecutor::nbRunningThreadsExecutors() == 0
-                               ? this->threadRanges_.size() - 1
-                               : 1;   // no nested multithreading
+                                ? this->threadRanges_.size() - 1
+                                : 1;   // no nested multithreading
 
       std::vector< GUM_SCALAR > tEps(nb_threads, 0);
 
@@ -392,11 +412,11 @@ namespace gum {
 
       // launch the threads
       ThreadExecutor::execute(
-         nb_threads,
-         threadedExec,
-         (nb_threads == 1)
-            ? std::vector< std::pair< NodeId, Idx > >{{0, 0}, {this->marginalMin_.size(), 0}}
-            : this->threadRanges_);
+          nb_threads,
+          threadedExec,
+          (nb_threads == 1)
+              ? std::vector< std::pair< NodeId, Idx > >{{0, 0}, {this->marginalMin_.size(), 0}}
+              : this->threadRanges_);
 
       // aggregate all the results
       GUM_SCALAR eps = tEps[0];
@@ -472,9 +492,9 @@ namespace gum {
               if (l_marginalMax_[tId][i][j] > this->oldMarginalMax_[i][j])
                 this->oldMarginalMax_[i][j] = l_marginalMax_[tId][i][j];
             }   // end of : all threads
-          }     // end of : all modalities
-        }       // end of : all variables
-      }         // end of : parallel region
+          }   // end of : all modalities
+        }   // end of : all variables
+      }   // end of : parallel region
     }
 
     template < typename GUM_SCALAR, class BNInferenceEngine >
@@ -484,8 +504,8 @@ namespace gum {
 
       // compute the max number of threads to use (avoid nested threads)
       const Size nb_threads = ThreadExecutor::nbRunningThreadsExecutors() == 0
-                               ? ThreadNumberManager::getNumberOfThreads()
-                               : 1;   // no nested multithreading
+                                ? ThreadNumberManager::getNumberOfThreads()
+                                : 1;   // no nested multithreading
 
       // create the function to be executed by the threads
       Size tsize        = Size(l_marginalMin_.size());
@@ -506,8 +526,8 @@ namespace gum {
               // should be enough
               _infE_::updateCredalSets_(i, vtx, (vtx.size() > 2) ? true : false);
             }   // end of : nodeThreadCredalSet
-          }     // end of : all threads
-        }       // end of : all variables
+          }   // end of : all threads
+        }   // end of : all variables
       };
 
       const Size working_size = workingSet_.size();
@@ -559,8 +579,8 @@ namespace gum {
 
       // compute the max number of threads to use (avoid nested threads)
       const Size nb_threads = ThreadExecutor::nbRunningThreadsExecutors() == 0
-                               ? ThreadNumberManager::getNumberOfThreads()
-                               : 1;   // no nested multithreading
+                                ? ThreadNumberManager::getNumberOfThreads()
+                                : 1;   // no nested multithreading
 
       // we can compute expectations from vertices of the final credal set
       if (_infE_::storeVertices_) {
@@ -597,7 +617,7 @@ namespace gum {
             const auto nsize           = workingSet_[work_index]->size();
             const auto real_nb_threads = std::min(nb_threads, nsize);
             const auto ranges
-               = gum::dispatchRangeToThreads(0, nsize, (unsigned int)(real_nb_threads));
+                = gum::dispatchRangeToThreads(0, nsize, (unsigned int)(real_nb_threads));
             ThreadExecutor::execute(real_nb_threads, threadedExec, work_index, ranges);
           }
         }
@@ -626,7 +646,7 @@ namespace gum {
             if (l_expectationMin_[tId][i] < this->expectationMin_[i])
               this->expectationMin_[i] = l_expectationMin_[tId][i];
           }   // end of : each thread
-        }     // end of : each variable
+        }   // end of : each variable
       };
 
       const Size working_size = workingSet_.size();
@@ -635,7 +655,7 @@ namespace gum {
           const auto nsize           = Size(workingSet_[work_index]->size());
           const auto real_nb_threads = std::min(nb_threads, nsize);
           const auto ranges
-             = gum::dispatchRangeToThreads(0, nsize, (unsigned int)(real_nb_threads));
+              = gum::dispatchRangeToThreads(0, nsize, (unsigned int)(real_nb_threads));
           ThreadExecutor::execute(real_nb_threads, threadedExec, work_index, ranges);
         }
       }
@@ -754,8 +774,8 @@ namespace gum {
               }
             }
           }   // end of : all threads
-        }     // end of : all modalities
-      }       // end of : all variables
+        }   // end of : all modalities
+      }   // end of : all variables
     }
 
     template < typename GUM_SCALAR, class BNInferenceEngine >

@@ -1,22 +1,43 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
+#pragma once
 
 
 #include <agrum/CN/tools/varMod2BNsMap.h>
@@ -90,13 +111,13 @@ namespace gum {
       if (isBetter) {
         // get all nets of this key (maybe entry does not exists)
         std::list< Size >& old_nets
-           = myVarHashs_.getWithDefault(key, std::list< Size >());   //[ key ];
+            = myVarHashs_.getWithDefault(key, std::list< Size >());   //[ key ];
 
         // for each one
         for (std::list< Size >::iterator it = old_nets.begin(); it != old_nets.end(); ++it) {
           // get all keys associated to this net
           std::list< varKey >& netKeys
-             = myHashVars_.getWithDefault(*it, std::list< varKey >());   //[ *it ];
+              = myHashVars_.getWithDefault(*it, std::list< varKey >());   //[ *it ];
 
           // if we are the sole user, delete the net entry
           if (netKeys.size() == 1) {
@@ -122,8 +143,8 @@ namespace gum {
         old_nets.push_back(currentHash_);
         // insert out key in the hash key list
         myHashVars_
-           .getWithDefault(currentHash_, std::list< varKey >()) /*[currentHash_]*/
-           .push_back(key);
+            .getWithDefault(currentHash_, std::list< varKey >()) /*[currentHash_]*/
+            .push_back(key);
         return true;
 
       }   // end of isBetter
@@ -157,7 +178,7 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     void VarMod2BNsMap< GUM_SCALAR >::setCurrentSample(
-       const std::vector< std::vector< std::vector< bool > > >& sample) {
+        const std::vector< std::vector< std::vector< bool > > >& sample) {
       currentSample_.clear();
 
       for (Size i = 0; i < sample.size(); i++)
@@ -178,13 +199,13 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     const std::vector< std::vector< std::vector< bool > > >&
-       VarMod2BNsMap< GUM_SCALAR >::getSampleDef() {
+        VarMod2BNsMap< GUM_SCALAR >::getSampleDef() {
       return sampleDef_;
     }
 
     template < typename GUM_SCALAR >
     const std::vector< std::vector< bool >* >
-       VarMod2BNsMap< GUM_SCALAR >::getBNOptsFromKey(const std::vector< Size >& key) {
+        VarMod2BNsMap< GUM_SCALAR >::getBNOptsFromKey(const std::vector< Size >& key) {
       // return something even if key does not exist
       if (!myVarHashs_.exists(key)) return std::vector< std::vector< bool >* >();
 
@@ -204,7 +225,7 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     std::vector< std::vector< std::vector< std::vector< bool > > > >
-       VarMod2BNsMap< GUM_SCALAR >::getFullBNOptsFromKey(const std::vector< Size >& key) {
+        VarMod2BNsMap< GUM_SCALAR >::getFullBNOptsFromKey(const std::vector< Size >& key) {
       if (cnet == nullptr)
         GUM_ERROR(OperationNotAllowed,
                   "No CredalNet associated to me ! Can't get FullBNOptsFromKey : " << key);

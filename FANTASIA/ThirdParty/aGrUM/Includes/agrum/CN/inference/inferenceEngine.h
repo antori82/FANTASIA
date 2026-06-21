@@ -1,22 +1,42 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
 
 
 #ifndef __INFERENCE_ENGINE__H__
@@ -29,11 +49,10 @@
  */
 #include <map>
 
+#include <agrum/base/core/approximations/approximationScheme.h>
+#include <agrum/base/core/threads/threadData.h>
+#include <agrum/base/core/threads/threadNumberManager.h>
 #include <agrum/CN/tools/varMod2BNsMap.h>
-#include <agrum/tools/core/approximations/approximationScheme.h>
-
-#include <agrum/tools/core/threadData.h>
-#include <agrum/tools/core/threadNumberManager.h>
 
 namespace gum {
   namespace credal {
@@ -51,7 +70,6 @@ namespace gum {
      */
     template < typename GUM_SCALAR >
     class InferenceEngine: public ApproximationScheme, public ThreadNumberManager {
-      private:
       using credalSet = NodeProperty< std::vector< std::vector< GUM_SCALAR > > >;
       using margi     = NodeProperty< std::vector< GUM_SCALAR > >;
       using expe      = NodeProperty< GUM_SCALAR >;
@@ -215,7 +233,7 @@ namespace gum {
        *update this node lower and upper expectations.
        *
        * @param id The id of the node to be updated
-       * @param vertex A (potential) vertex of the node credal set
+       * @param vertex A (tensor) vertex of the node credal set
        */
       inline void updateExpectations_(const NodeId& id, const std::vector< GUM_SCALAR >& vertex);
 
@@ -227,7 +245,7 @@ namespace gum {
        *(i.e. not at an extreme value for any modality)
        *
        * @param id The id of the node to be updated
-       * @param vertex A (potential) vertex of the node credal set
+       * @param vertex A (tensor) vertex of the node credal set
        * @param elimRedund remove redundant vertex (inside a facet)
        */
       inline void updateCredalSets_(const NodeId&                    id,
@@ -335,6 +353,74 @@ namespace gum {
       bool storeBNOpt() const;
       /// @}
 
+      /// adds a new hard evidence on node id
+      /**
+       * @throw UndefinedElement if id does not belong to the Bayesian network
+       * @throw InvalidArgument if val is not a value for id
+       * @throw InvalidArgument if id already has an evidence
+       */
+      virtual void addEvidence(NodeId id, const Idx val) final;
+
+      /// adds a new hard evidence on node named nodeName
+      /**
+       * @throw UndefinedElement if nodeName does not belong to the Bayesian network
+       * @throw InvalidArgument if val is not a value for id
+       * @throw InvalidArgument if nodeName already has an evidence
+       */
+      virtual void addEvidence(const std::string& nodeName, const Idx val) final;
+
+      /// adds a new hard evidence on node id
+      /**
+       * @throw UndefinedElement if id does not belong to the Bayesian network
+       * @throw InvalidArgument if val is not a value for id
+       * @throw InvalidArgument if id already has an evidence
+       */
+      virtual void addEvidence(NodeId id, const std::string& label) final;
+
+      /// adds a new hard evidence on node named nodeName
+      /**
+       * @throw UndefinedElement if nodeName does not belong to the Bayesian network
+       * @throw InvalidArgument if val is not a value for id
+       * @throw InvalidArgument if nodeName already has an evidence
+       */
+      virtual void addEvidence(const std::string& nodeName, const std::string& label) final;
+
+      /// adds a new evidence on node id (might be soft or hard)
+      /**
+       * @throw UndefinedElement if id does not belong to the Bayesian network
+       * @throw InvalidArgument if id already has an evidence
+       * @throw FatalError if vals=[0,0,...,0]
+       * @throw InvalidArgument if the size of vals is different from the domain
+       *        size of node id
+       */
+      virtual void addEvidence(NodeId id, const std::vector< GUM_SCALAR >& vals) final;
+
+      /// adds a new evidence on node named nodeName (might be soft or hard)
+      /**
+       * @throw UndefinedElement if id does not belong to the Bayesian network
+       * @throw InvalidArgument if nodeName already has an evidence
+       * @throw FatalError if vals=[0,0,...,0]
+       * @throw InvalidArgument if the size of vals is different from the domain
+       *        size of node nodeName
+       */
+      virtual void addEvidence(const std::string&               nodeName,
+                               const std::vector< GUM_SCALAR >& vals) final;
+
+      /// adds a new evidence on node id (might be soft or hard)
+      /**
+       * @throw UndefinedElement if the tensor is defined over several nodes
+       * @throw UndefinedElement if the node on which the tensor is defined
+       * does not belong to the Bayesian network
+       * @throw InvalidArgument if the node of the tensor already has an
+       * evidence
+       * @throw FatalError if pot=[0,0,...,0]
+       */
+      virtual void addEvidence(const Tensor< GUM_SCALAR >& pot) final;
+
+
+      /// removes all the evidence entered into the network
+      virtual void eraseAllEvidence();
+
       /// @name Pre-inference initialization methods
       /// @{
       /**
@@ -383,42 +469,34 @@ namespace gum {
 
       /// @name Post-inference methods
       /// @{
-      /**
-       * Erase all inference related data to perform another one. You need to
-       * insert
-       * evidence again if needed but modalities are kept. You can insert new
-       * ones by
-       * using the appropriate method which will delete the old ones.
-       */
-      virtual void eraseAllEvidence();
 
       /**
        * Get the lower marginals of a given node id.
        * @param id The node id which lower marginals we want.
        * @return A constant reference to this node lower marginals.
        */
-      Potential< GUM_SCALAR > marginalMin(const NodeId id) const;
+      Tensor< GUM_SCALAR > marginalMin(const NodeId id) const;
 
       /**
        * Get the upper marginals of a given node id.
        * @param id The node id which upper marginals we want.
        * @return A constant reference to this node upper marginals.
        */
-      Potential< GUM_SCALAR > marginalMax(const NodeId id) const;
+      Tensor< GUM_SCALAR > marginalMax(const NodeId id) const;
 
       /**
        * Get the lower marginals of a given variable name.
        * @param varName The variable name which lower marginals we want.
        * @return A constant reference to this variable lower marginals.
        */
-      Potential< GUM_SCALAR > marginalMin(const std::string& varName) const;
+      Tensor< GUM_SCALAR > marginalMin(const std::string& varName) const;
 
       /**
        * Get the upper marginals of a given variable name.
        * @param varName The variable name which upper marginals we want.
        * @return A constant reference to this variable upper marginals.
        */
-      Potential< GUM_SCALAR > marginalMax(const std::string& varName) const;
+      Tensor< GUM_SCALAR > marginalMax(const std::string& varName) const;
 
       /**
        * Get the lower expectation of a given node id.

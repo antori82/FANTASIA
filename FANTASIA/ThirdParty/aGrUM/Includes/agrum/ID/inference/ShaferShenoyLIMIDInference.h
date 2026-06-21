@@ -1,22 +1,42 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
 
 
 /**
@@ -35,17 +55,13 @@
 
 #include <agrum/agrum.h>
 
-#include <agrum/tools/core/exceptions.h>
-
-#include <agrum/tools/graphs/algorithms/triangulations/partialOrderedTriangulation.h>
-
-#include <agrum/tools/multidim/implementations/multiDimBucket.h>
-#include <agrum/tools/multidim/implementations/multiDimSparse.h>
-#include <agrum/ID/inference/tools/decisionPotential.h>
-
+#include <agrum/base/core/exceptions.h>
+#include <agrum/base/graphs/algorithms/triangulations/defaultTriangulation.h>
+#include <agrum/base/graphs/algorithms/triangulations/partialOrderedTriangulation.h>
+#include <agrum/base/multidim/implementations/multiDimBucket.h>
+#include <agrum/base/multidim/implementations/multiDimSparse.h>
+#include <agrum/ID/inference/tools/decisionTensor.h>
 #include <agrum/ID/inference/tools/influenceDiagramInference.h>
-#include <agrum/tools/graphs/algorithms/triangulations/defaultTriangulation.h>
-
 
 namespace gum {
 
@@ -61,9 +77,9 @@ namespace gum {
    */
   template < typename GUM_SCALAR >
   class ShaferShenoyLIMIDInference: public InfluenceDiagramInference< GUM_SCALAR > {
-    using PhiNodeProperty = NodeProperty< DecisionPotential< GUM_SCALAR > >;
-    using PsiArcProperty  = ArcProperty< DecisionPotential< GUM_SCALAR > >;
-    using SetOfVars       = Set< const DiscreteVariable* >;
+    using PhiNodeProperty = NodeProperty< DecisionTensor< GUM_SCALAR > >;
+    using PsiArcProperty  = ArcProperty< DecisionTensor< GUM_SCALAR > >;
+    using SetOfVars       = gum::VariableSet;
 
 
     public:
@@ -92,6 +108,7 @@ namespace gum {
     void addNoForgettingAssumption(const std::vector< NodeId >& ids);
     void addNoForgettingAssumption(const std::vector< std::string >& names);
     bool hasNoForgettingAssumption() const;
+
     ///@}
 
     DAG reducedGraph() const { return reduced_; };
@@ -103,8 +120,9 @@ namespace gum {
     bool isSolvable() const;
 
 
-    gum::Potential< GUM_SCALAR > optimalDecision(NodeId decisionId) final;
-    gum::Potential< GUM_SCALAR > optimalDecision(const std::string& decisionName) final {
+    gum::Tensor< GUM_SCALAR > optimalDecision(NodeId decisionId) final;
+
+    gum::Tensor< GUM_SCALAR > optimalDecision(const std::string& decisionName) final {
       return optimalDecision(this->influenceDiagram().idFromName(decisionName));
     };
 
@@ -114,8 +132,9 @@ namespace gum {
      * @param node
      * @return the posterior probability
      */
-    virtual const Potential< GUM_SCALAR >& posterior(NodeId node) final;
-    const Potential< GUM_SCALAR >&         posterior(const std::string& name) final {
+    virtual const Tensor< GUM_SCALAR >& posterior(NodeId node) final;
+
+    const Tensor< GUM_SCALAR >& posterior(const std::string& name) final {
       return posterior(this->influenceDiagram().idFromName(name));
     };
 
@@ -125,8 +144,9 @@ namespace gum {
      * @param node
      * @return the posterior utility of a node
      */
-    virtual const Potential< GUM_SCALAR >& posteriorUtility(NodeId node) final;
-    virtual const Potential< GUM_SCALAR >& posteriorUtility(const std::string& name) final {
+    virtual const Tensor< GUM_SCALAR >& posteriorUtility(NodeId node) final;
+
+    virtual const Tensor< GUM_SCALAR >& posteriorUtility(const std::string& name) final {
       return posteriorUtility(this->influenceDiagram().idFromName(name));
     };
 
@@ -137,7 +157,8 @@ namespace gum {
      * @return the pair (mean,variance) for a node
      */
     virtual std::pair< GUM_SCALAR, GUM_SCALAR > meanVar(NodeId node) final;
-    std::pair< GUM_SCALAR, GUM_SCALAR >         meanVar(const std::string& name) final {
+
+    std::pair< GUM_SCALAR, GUM_SCALAR > meanVar(const std::string& name) final {
       return meanVar(this->influenceDiagram().idFromName(name));
     };
 
@@ -156,19 +177,19 @@ namespace gum {
     void onEvidenceChanged_(NodeId id, bool hasChangedSoftHard) override;
     void onModelChanged_(const GraphicalModel* model) override;
     void updateOutdatedStructure_() override;
-    void updateOutdatedPotentials_() override;
+    void updateOutdatedTensors_() override;
     void makeInference_() override;
 
     /// Returns the set of non-requisite for node d
     NodeSet nonRequisiteNodes_(NodeId d) const;
 
-    DAG                                             reduced_;
-    CliqueGraph                                     reducedJunctionTree_;
-    NodeProperty< NodeId >                          node_to_clique_;
-    EdgeProperty< SetOfVars >                       varsSeparator_;
-    NodeProperty< Potential< GUM_SCALAR > >         strategies_;
-    NodeProperty< DecisionPotential< GUM_SCALAR > > posteriors_;
-    NodeProperty< DecisionPotential< GUM_SCALAR > > unconditionalDecisions_;
+    DAG                                          reduced_;
+    CliqueGraph                                  reducedJunctionTree_;
+    NodeProperty< NodeId >                       node_to_clique_;
+    EdgeProperty< SetOfVars >                    varsSeparator_;
+    NodeProperty< Tensor< GUM_SCALAR > >         strategies_;
+    NodeProperty< DecisionTensor< GUM_SCALAR > > posteriors_;
+    NodeProperty< DecisionTensor< GUM_SCALAR > > unconditionalDecisions_;
 
     void                   createReduced_();
     std::vector< NodeSet > reversePartialOrder_;
@@ -200,14 +221,14 @@ namespace gum {
                                    NodeId           toClique);
     void distributingMessage_(PhiNodeProperty& phi, PsiArcProperty& psi, NodeId rootClique);
     void computingPosteriors_(const PhiNodeProperty& phi, const PsiArcProperty& psi);
-    DecisionPotential< double > integrating_(const PhiNodeProperty& phi,
-                                             const PsiArcProperty&  psi,
-                                             NodeId                 clique,
-                                             NodeId                 except) const;
-    DecisionPotential< double >
+    DecisionTensor< double > integrating_(const PhiNodeProperty& phi,
+                                          const PsiArcProperty&  psi,
+                                          NodeId                 clique,
+                                          NodeId                 except) const;
+    DecisionTensor< double >
          integrating_(const PhiNodeProperty& phi, const PsiArcProperty& psi, NodeId clique) const;
-    void binarizingMax_(const Potential< GUM_SCALAR >& decision,
-                        const Potential< GUM_SCALAR >& proba) const;
+    void binarizingMax_(const Tensor< GUM_SCALAR >& decision,
+                        const Tensor< GUM_SCALAR >& proba) const;
   };
 } /* namespace gum */
 

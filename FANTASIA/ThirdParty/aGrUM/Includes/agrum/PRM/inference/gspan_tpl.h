@@ -1,22 +1,43 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
+#pragma once
 
 
 /**
@@ -59,16 +80,16 @@ namespace gum {
         try {
           if (_graph_->nodes(iter.second()).size() >= 2) {
             _cost_.insert(
-               iter.second(),
-               _cost_func_(iter.second()->tree_width, _graph_->nodes(iter.second()).size()));
+                iter.second(),
+                _cost_func_(iter.second()->tree_width, _graph_->nodes(iter.second()).size()));
             _nodes_.push_back(const_cast< gspan::LabelData* >(iter.second()));
           }
         } catch (NotFound const&) {
           // It's a label over edges
           if (_isEdgeEligible_(*(_graph_->edges(iter.second()).begin()))) {
             _cost_.insert(
-               iter.second(),
-               _cost_func_(iter.second()->tree_width, _graph_->edges(iter.second()).size()));
+                iter.second(),
+                _cost_func_(iter.second()->tree_width, _graph_->edges(iter.second()).size()));
             _edges_.push_back(iter.second());
           }
         }
@@ -136,7 +157,7 @@ namespace gum {
 
           for (size_t i = 0; i < r_path.size(); ++i)
             count_vector.push_back(
-               new HashTable< std::string, gspan::EdgeGrowth< GUM_SCALAR >* >());
+                new HashTable< std::string, gspan::EdgeGrowth< GUM_SCALAR >* >());
 
           // For each subgraph represented by p, we look for a valid edge growth
           // for
@@ -248,7 +269,7 @@ namespace gum {
         // We start by the best Pattern and add it's maximal independent set to
         //  _chosen_
         GSpan< GUM_SCALAR >::MatchedInstances* matches
-           = new GSpan< GUM_SCALAR >::MatchedInstances();
+            = new GSpan< GUM_SCALAR >::MatchedInstances();
         Sequence< PRMInstance< GUM_SCALAR >* >* match = nullptr;
 
         for (const auto node: tree().max_indep_set(*(_patterns_.front()))) {
@@ -344,8 +365,8 @@ namespace gum {
     INLINE GSpan< GUM_SCALAR >::GSpan(const PRM< GUM_SCALAR >&             prm,
                                       const PRMSystem< GUM_SCALAR >&       sys,
                                       gspan::SearchStrategy< GUM_SCALAR >* strategy) :
-        _graph_(new gspan::InterfaceGraph< GUM_SCALAR >(sys)),
-        _tree_(*_graph_, strategy), _depth_stop_(INT_MAX) {
+        _graph_(new gspan::InterfaceGraph< GUM_SCALAR >(sys)), _tree_(*_graph_, strategy),
+        _depth_stop_(INT_MAX) {
       GUM_CONSTRUCTOR(GSpan);
     }
 
@@ -396,13 +417,13 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     INLINE typename GSpan< GUM_SCALAR >::MatchedInstances&
-       GSpan< GUM_SCALAR >::matches(const gspan::Pattern& p) {
+        GSpan< GUM_SCALAR >::matches(const gspan::Pattern& p) {
       return *(_matched_instances_[const_cast< gspan::Pattern* >(&p)]);
     }
 
     template < typename GUM_SCALAR >
     INLINE const typename GSpan< GUM_SCALAR >::MatchedInstances&
-       GSpan< GUM_SCALAR >::matches(const gspan::Pattern& p) const {
+        GSpan< GUM_SCALAR >::matches(const gspan::Pattern& p) const {
       return *(_matched_instances_[const_cast< gspan::Pattern* >(&p)]);
     }
 

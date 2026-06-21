@@ -1,6 +1,6 @@
 /***************************************************************************
  *  aGrUM modified frames and atg files for cocoR
- *   Copyright (c) 2005 by Christophe GONZALES(@AMU) and Pierre-Henri WUILLEMIN(@LIP6)  *
+ *   Copyright (c) 2005-2024 by Pierre-Henri WUILLEMIN(@LIP6) and Christophe GONZALES(@AMU)
  *   info_at_agrum_dot_org
 ***************************************************************************/
 /*----------------------------------------------------------------------
@@ -42,8 +42,8 @@ Coco/R itself) does not fall under the GNU General Public License.
 #include <wchar.h>
 #include <locale.h>
 
-#include <agrum/tools/core/signal/signaler1.h>
-#include <agrum/tools/core/errorsContainer.h>
+#include <agrum/base/core/signal/signaler1.h>
+#include <agrum/base/core/errorsContainer.h>
 
 namespace gum {
 namespace UAIBN {
@@ -273,5 +273,4 @@ class Scanner {
 
 
 #endif // !defined(COCO_SCANNER_H__)
-
 

@@ -1,22 +1,43 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) et Christophe GONZALES(_at_AMU)
- * (_at_AMU) info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
+#pragma once
 
 
 /**
@@ -26,39 +47,35 @@
  * @author Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
  */
 
+#include <algorithm>
 #include <limits>
 #include <set>
-#include <algorithm>
 
+#include <agrum/base/multidim/aggregators/amplitude.h>
+#include <agrum/base/multidim/aggregators/and.h>
+#include <agrum/base/multidim/aggregators/count.h>
+#include <agrum/base/multidim/aggregators/exists.h>
+#include <agrum/base/multidim/aggregators/forall.h>
+#include <agrum/base/multidim/aggregators/max.h>
+#include <agrum/base/multidim/aggregators/median.h>
+#include <agrum/base/multidim/aggregators/min.h>
+#include <agrum/base/multidim/aggregators/or.h>
+#include <agrum/base/multidim/ICIModels/multiDimLogit.h>
+#include <agrum/base/multidim/ICIModels/multiDimNoisyAND.h>
+#include <agrum/base/multidim/ICIModels/multiDimNoisyORCompound.h>
+#include <agrum/base/multidim/ICIModels/multiDimNoisyORNet.h>
+#include <agrum/base/variables/allDiscreteVariables.h>
+#include <agrum/BN/generator/simpleCPTGenerator.h>
 #include <agrum/MRF/MarkovRandomField.h>
 
-#include <agrum/tools/variables/allDiscreteVariables.h>
-
-#include <agrum/tools/multidim/aggregators/amplitude.h>
-#include <agrum/tools/multidim/aggregators/and.h>
-#include <agrum/tools/multidim/aggregators/count.h>
-#include <agrum/tools/multidim/aggregators/exists.h>
-#include <agrum/tools/multidim/aggregators/forall.h>
-#include <agrum/tools/multidim/aggregators/max.h>
-#include <agrum/tools/multidim/aggregators/median.h>
-#include <agrum/tools/multidim/aggregators/min.h>
-#include <agrum/tools/multidim/aggregators/or.h>
-
-#include <agrum/tools/multidim/ICIModels/multiDimNoisyAND.h>
-#include <agrum/tools/multidim/ICIModels/multiDimNoisyORCompound.h>
-#include <agrum/tools/multidim/ICIModels/multiDimNoisyORNet.h>
-
-#include <agrum/tools/multidim/ICIModels/multiDimLogit.h>
-
-#include <agrum/BN/generator/simpleCPTGenerator.h>
-#include <agrum/tools/core/utils_string.h>
+#include <agrum/base/core/utils_string.h>
 
 namespace gum {
   template < typename GUM_SCALAR >
   NodeId build_node_for_MN(MarkovRandomField< GUM_SCALAR >& mn,
-                           std::string                      node,
-                           Size                             default_domain_size) {
-    auto v = fastVariable< GUM_SCALAR >(node, default_domain_size);
+                           const std::string&               node,
+                           const std::string&               default_domain) {
+    auto v = fastVariable< GUM_SCALAR >(node, default_domain);
 
     NodeId res;
     try {
@@ -69,15 +86,21 @@ namespace gum {
 
   template < typename GUM_SCALAR >
   MarkovRandomField< GUM_SCALAR >
-     MarkovRandomField< GUM_SCALAR >::fastPrototype(const std::string& dotlike, Size domainSize) {
+      MarkovRandomField< GUM_SCALAR >::fastPrototype(const std::string& dotlike, Size domainSize) {
+    return fastPrototype(dotlike, "[" + std::to_string(domainSize) + "]");
+  }
+
+  template < typename GUM_SCALAR >
+  MarkovRandomField< GUM_SCALAR >
+      MarkovRandomField< GUM_SCALAR >::fastPrototype(const std::string& dotlike,
+                                                     const std::string& domain) {
     MarkovRandomField< GUM_SCALAR > mn;
 
 
     for (const auto& clikchain: split(remove_newline(dotlike), ";")) {
       NodeSet cliq;
       for (auto& node: split(clikchain, "--")) {
-        trim(node);
-        auto idVar = build_node_for_MN(mn, node, domainSize);
+        auto idVar = build_node_for_MN(mn, node, domain);
         cliq.insert(idVar);
       }
       mn.addFactor(cliq);
@@ -89,7 +112,7 @@ namespace gum {
 
   template < typename GUM_SCALAR >
   MarkovRandomField< GUM_SCALAR >
-     MarkovRandomField< GUM_SCALAR >::fromBN(const BayesNet< GUM_SCALAR >& bn) {
+      MarkovRandomField< GUM_SCALAR >::fromBN(const BayesNet< GUM_SCALAR >& bn) {
     MarkovRandomField< GUM_SCALAR > mn;
     for (NodeId nod: bn.nodes()) {
       mn.add(bn.variable(nod), nod);
@@ -117,16 +140,16 @@ namespace gum {
 
   template < typename GUM_SCALAR >
   MarkovRandomField< GUM_SCALAR >::MarkovRandomField(
-     const MarkovRandomField< GUM_SCALAR >& source) :
-      IMarkovRandomField< GUM_SCALAR >(source),
-      _topologyTransformationInProgress_(false), _varMap_(source._varMap_) {
+      const MarkovRandomField< GUM_SCALAR >& source) :
+      IMarkovRandomField< GUM_SCALAR >(source), _topologyTransformationInProgress_(false),
+      _varMap_(source._varMap_) {
     GUM_CONS_CPY(MarkovRandomField);
     _copyFactors_(source);
   }
 
   template < typename GUM_SCALAR >
   MarkovRandomField< GUM_SCALAR >&
-     MarkovRandomField< GUM_SCALAR >::operator=(const MarkovRandomField< GUM_SCALAR >& source) {
+      MarkovRandomField< GUM_SCALAR >::operator=(const MarkovRandomField< GUM_SCALAR >& source) {
     if (this != &source) {
       IMarkovRandomField< GUM_SCALAR >::operator=(source);
       _varMap_                           = source._varMap_;
@@ -158,11 +181,11 @@ namespace gum {
   INLINE void MarkovRandomField< GUM_SCALAR >::changeVariableLabel(NodeId             id,
                                                                    const std::string& old_label,
                                                                    const std::string& new_label) {
-    if (variable(id).varType() != VarType::Labelized) {
+    if (variable(id).varType() != VarType::LABELIZED) {
       GUM_ERROR(NotFound, "Variable " << id << " is not a LabelizedVariable.")
     }
     LabelizedVariable* var
-       = dynamic_cast< LabelizedVariable* >(const_cast< DiscreteVariable* >(&variable(id)));
+        = dynamic_cast< LabelizedVariable* >(const_cast< DiscreteVariable* >(&variable(id)));
 
     var->changeLabel(var->posLabel(old_label), new_label);
   }
@@ -173,8 +196,7 @@ namespace gum {
   }
 
   template < typename GUM_SCALAR >
-  const Potential< GUM_SCALAR >&
-     MarkovRandomField< GUM_SCALAR >::factor(const NodeSet& varIds) const {
+  const Tensor< GUM_SCALAR >& MarkovRandomField< GUM_SCALAR >::factor(const NodeSet& varIds) const {
     return *_factors_[varIds];
   }
 
@@ -198,8 +220,8 @@ namespace gum {
   }
 
   template < typename GUM_SCALAR >
-  const Potential< GUM_SCALAR >&
-     MarkovRandomField< GUM_SCALAR >::factor(const std::vector< std::string >& varnames) const {
+  const Tensor< GUM_SCALAR >&
+      MarkovRandomField< GUM_SCALAR >::factor(const std::vector< std::string >& varnames) const {
     return factor(this->nodeset(varnames));
   }
 
@@ -230,7 +252,6 @@ namespace gum {
     }
   }
 
-
   template < typename GUM_SCALAR >
   INLINE NodeId MarkovRandomField< GUM_SCALAR >::add(const DiscreteVariable& var) {
     return add(var, graph().nextNodeId());
@@ -250,7 +271,7 @@ namespace gum {
 
   template < typename GUM_SCALAR >
   INLINE const DiscreteVariable&
-     MarkovRandomField< GUM_SCALAR >::variableFromName(const std::string& name) const {
+      MarkovRandomField< GUM_SCALAR >::variableFromName(const std::string& name) const {
     return _varMap_.variableFromName(name);
   }
 
@@ -301,17 +322,15 @@ namespace gum {
     _rebuildGraph_();
   }
 
-
   template < typename GUM_SCALAR >
   INLINE std::ostream& operator<<(std::ostream& output, const MarkovRandomField< GUM_SCALAR >& mn) {
     output << mn.toString();
     return output;
   }
 
-
   template < typename GUM_SCALAR >
-  Potential< GUM_SCALAR >&
-     MarkovRandomField< GUM_SCALAR >::_addFactor_(const std::vector< NodeId >& ordered_nodes) {
+  Tensor< GUM_SCALAR >&
+      MarkovRandomField< GUM_SCALAR >::_addFactor_(const std::vector< NodeId >& ordered_nodes) {
     NodeSet vars;
     for (auto node: ordered_nodes)
       vars.insert(node);
@@ -322,7 +341,7 @@ namespace gum {
       GUM_ERROR(InvalidArgument, "A factor for (" << this->names(vars) << ") already exists.")
     }
 
-    Potential< GUM_SCALAR >* factor = new Potential< GUM_SCALAR >();
+    Tensor< GUM_SCALAR >* factor = new Tensor< GUM_SCALAR >();
 
     for (auto node: ordered_nodes) {
       factor->add(variable(node));
@@ -335,9 +354,9 @@ namespace gum {
   }
 
   template < typename GUM_SCALAR >
-  INLINE const Potential< GUM_SCALAR >&
+  INLINE const Tensor< GUM_SCALAR >&
                MarkovRandomField< GUM_SCALAR >::addFactor(const NodeSet& vars) {
-    // in order to be deterministic, the Potential contains all the vars sorted by id.
+    // in order to be deterministic, the Tensor contains all the vars sorted by id.
     std::vector< NodeId > sorted_nodes;
     for (auto node: vars) {
       sorted_nodes.push_back(node);
@@ -347,10 +366,9 @@ namespace gum {
     return _addFactor_(sorted_nodes);
   }
 
-
   template < typename GUM_SCALAR >
-  INLINE const Potential< GUM_SCALAR >&
-     MarkovRandomField< GUM_SCALAR >::addFactor(const std::vector< std::string >& varnames) {
+  INLINE const Tensor< GUM_SCALAR >&
+      MarkovRandomField< GUM_SCALAR >::addFactor(const std::vector< std::string >& varnames) {
     std::vector< NodeId > sorted_nodes;
     for (const auto& v: varnames) {
       sorted_nodes.push_back(idFromName(v));
@@ -360,8 +378,8 @@ namespace gum {
   }
 
   template < typename GUM_SCALAR >
-  INLINE const Potential< GUM_SCALAR >&
-               MarkovRandomField< GUM_SCALAR >::addFactor(const Potential< GUM_SCALAR >& factor) {
+  INLINE const Tensor< GUM_SCALAR >&
+               MarkovRandomField< GUM_SCALAR >::addFactor(const Tensor< GUM_SCALAR >& factor) {
     std::vector< NodeId > sorted_nodes;
     for (Idx i = 0; i < factor.nbrDim(); i++) {
       sorted_nodes.push_back(idFromName(factor.variable(i).name()));
@@ -396,7 +414,7 @@ namespace gum {
 
   template < typename GUM_SCALAR >
   INLINE void
-     MarkovRandomField< GUM_SCALAR >::eraseFactor(const std::vector< std::string >& varnames) {
+      MarkovRandomField< GUM_SCALAR >::eraseFactor(const std::vector< std::string >& varnames) {
     auto vars = this->nodeset(varnames);
     if (_factors_.exists(vars)) {
       _eraseFactor_(vars);
@@ -422,8 +440,8 @@ namespace gum {
   }
 
   template < typename GUM_SCALAR >
-  void
-     MarkovRandomField< GUM_SCALAR >::_copyFactors_(const MarkovRandomField< GUM_SCALAR >& source) {
+  void MarkovRandomField< GUM_SCALAR >::_copyFactors_(
+      const MarkovRandomField< GUM_SCALAR >& source) {
     _clearFactors_();
     for (const auto& pf: source.factors()) {
       addFactor(*pf.second);

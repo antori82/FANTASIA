@@ -1,22 +1,43 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
+#pragma once
 
 
 /**
@@ -25,9 +46,9 @@
  *
  * @author Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
  */
+#include <agrum/base/multidim/tensor.h>
 #include <agrum/BN/BayesNet.h>
 #include <agrum/BN/BayesNetFragment.h>
-#include <agrum/tools/multidim/potential.h>
 
 namespace gum {
   template < typename GUM_SCALAR >
@@ -50,18 +71,21 @@ namespace gum {
   INLINE void BayesNetFragment< GUM_SCALAR >::whenNodeAdded(const void* src, NodeId id) {
     // nothing to do
   }
+
   template < typename GUM_SCALAR >
   INLINE void BayesNetFragment< GUM_SCALAR >::whenNodeDeleted(const void* src, NodeId id) {
     uninstallNode(id);
   }
+
   template < typename GUM_SCALAR >
   INLINE void
-     BayesNetFragment< GUM_SCALAR >::whenArcAdded(const void* src, NodeId from, NodeId to) {
+      BayesNetFragment< GUM_SCALAR >::whenArcAdded(const void* src, NodeId from, NodeId to) {
     // nothing to do
   }
+
   template < typename GUM_SCALAR >
   INLINE void
-     BayesNetFragment< GUM_SCALAR >::whenArcDeleted(const void* src, NodeId from, NodeId to) {
+      BayesNetFragment< GUM_SCALAR >::whenArcDeleted(const void* src, NodeId from, NodeId to) {
     if (dag().existsArc(from, to)) uninstallArc_(from, to);
   }
 
@@ -69,7 +93,7 @@ namespace gum {
   // IBayesNet interface : BayesNetFragment here is a decorator for the bn
 
   template < typename GUM_SCALAR >
-  INLINE const Potential< GUM_SCALAR >& BayesNetFragment< GUM_SCALAR >::cpt(NodeId id) const {
+  INLINE const Tensor< GUM_SCALAR >& BayesNetFragment< GUM_SCALAR >::cpt(NodeId id) const {
     if (!isInstalledNode(id)) GUM_ERROR(NotFound, "NodeId " << id << " is not installed")
 
     if (_localCPTs_.exists(id)) return *_localCPTs_[id];
@@ -108,7 +132,7 @@ namespace gum {
 
   template < typename GUM_SCALAR >
   INLINE const DiscreteVariable&
-     BayesNetFragment< GUM_SCALAR >::variableFromName(const std::string& name) const {
+      BayesNetFragment< GUM_SCALAR >::variableFromName(const std::string& name) const {
     NodeId id = idFromName(name);
 
     if (!isInstalledNode(id)) GUM_ERROR(NotFound, "variable " << name << " is not installed")
@@ -170,7 +194,7 @@ namespace gum {
   }
 
   template < typename GUM_SCALAR >
-  void BayesNetFragment< GUM_SCALAR >::installCPT_(NodeId id, const Potential< GUM_SCALAR >& pot) {
+  void BayesNetFragment< GUM_SCALAR >::installCPT_(NodeId id, const Tensor< GUM_SCALAR >& pot) {
     // topology
     const auto& parents = this->parents(id);
     for (auto node_it = parents.beginSafe(); node_it != parents.endSafe();
@@ -186,18 +210,17 @@ namespace gum {
     // local cpt
     if (_localCPTs_.exists(id)) uninstallCPT_(id);
 
-    _localCPTs_.insert(id, new gum::Potential< GUM_SCALAR >(pot));
+    _localCPTs_.insert(id, new gum::Tensor< GUM_SCALAR >(pot));
   }
 
   template < typename GUM_SCALAR >
-  void BayesNetFragment< GUM_SCALAR >::installCPT(NodeId id, const Potential< GUM_SCALAR >& pot) {
+  void BayesNetFragment< GUM_SCALAR >::installCPT(NodeId id, const Tensor< GUM_SCALAR >& pot) {
     if (!dag().existsNode(id))
       GUM_ERROR(NotFound, "Node " << id << " is not installed in the fragment")
 
     if (&(pot.variable(0)) != &(variable(id))) {
       GUM_ERROR(OperationNotAllowed,
-                "The potential is not a marginal for  _bn_.variable <" << variable(id).name()
-                                                                       << ">")
+                "The tensor is not a marginal for  _bn_.variable <" << variable(id).name() << ">")
     }
 
     const NodeSet& parents = _bn_.parents(id);
@@ -223,8 +246,8 @@ namespace gum {
     if (_localCPTs_.exists(id)) {
       uninstallCPT_(id);
 
-      // re-create arcs from referred potential
-      const Potential< GUM_SCALAR >& pot = cpt(id);
+      // re-create arcs from referred tensor
+      const Tensor< GUM_SCALAR >& pot = cpt(id);
 
       for (Idx i = 1; i < pot.nbrDim(); i++) {
         NodeId parent = _bn_.idFromName(pot.variable(i).name());
@@ -235,20 +258,19 @@ namespace gum {
   }
 
   template < typename GUM_SCALAR >
-  void BayesNetFragment< GUM_SCALAR >::installMarginal(NodeId                         id,
-                                                       const Potential< GUM_SCALAR >& pot) {
+  void BayesNetFragment< GUM_SCALAR >::installMarginal(NodeId id, const Tensor< GUM_SCALAR >& pot) {
     if (!isInstalledNode(id)) {
       GUM_ERROR(NotFound, "The node " << id << " is not part of this fragment")
     }
 
     if (pot.nbrDim() > 1) {
-      GUM_ERROR(OperationNotAllowed, "The potential is not a marginal :" << pot)
+      GUM_ERROR(OperationNotAllowed, "The tensor is not a marginal :" << pot)
     }
 
     if (&(pot.variable(0)) != &(_bn_.variable(id))) {
       GUM_ERROR(OperationNotAllowed,
-                "The potential is not a marginal for  _bn_.variable <" << _bn_.variable(id).name()
-                                                                       << ">")
+                "The tensor is not a marginal for  _bn_.variable <" << _bn_.variable(id).name()
+                                                                    << ">")
     }
 
     installCPT_(id, pot);

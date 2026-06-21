@@ -1,22 +1,43 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
+#pragma once
 
 
 /**
@@ -24,8 +45,9 @@
  * @brief Implementation of the non pure virtual methods of class
  * JointTargetedMRFInference.
  */
+#include <agrum/base/graphicalModels/algorithms/informationTheory.h>
+#include <agrum/base/variables/rangeVariable.h>
 #include <agrum/MRF/inference/tools/jointTargetedMRFInference.h>
-#include <agrum/tools/variables/rangeVariable.h>
 
 namespace gum {
 
@@ -33,20 +55,17 @@ namespace gum {
   // Default Constructor
   template < typename GUM_SCALAR >
   JointTargetedMRFInference< GUM_SCALAR >::JointTargetedMRFInference(
-     const IMarkovRandomField< GUM_SCALAR >* mn) :
-      MarginalTargetedMRFInference< GUM_SCALAR >(mn) {
+      const IMarkovRandomField< GUM_SCALAR >* mn) : MarginalTargetedMRFInference< GUM_SCALAR >(mn) {
     // assign a MRF if this has not been done before (due to virtual inheritance)
     if (this->hasNoModel_()) { MRFInference< GUM_SCALAR >::_setMRFDuringConstruction_(mn); }
     GUM_CONSTRUCTOR(JointTargetedMRFInference);
   }
-
 
   // Destructor
   template < typename GUM_SCALAR >
   JointTargetedMRFInference< GUM_SCALAR >::~JointTargetedMRFInference() {
     GUM_DESTRUCTOR(JointTargetedMRFInference);
   }
-
 
   // assigns a new MRF to the inference engine
   template < typename GUM_SCALAR >
@@ -55,7 +74,6 @@ namespace gum {
     onAllJointTargetsErased_();
     _joint_targets_.clear();
   }
-
 
   // ##############################################################################
   // Targets
@@ -79,13 +97,11 @@ namespace gum {
     return _joint_targets_.contains(vars);
   }
 
-
   // Clear all previously defined single targets
   template < typename GUM_SCALAR >
   INLINE void JointTargetedMRFInference< GUM_SCALAR >::eraseAllMarginalTargets() {
     MarginalTargetedMRFInference< GUM_SCALAR >::eraseAllTargets();
   }
-
 
   // Clear all previously defined targets (single targets and sets of targets)
   template < typename GUM_SCALAR >
@@ -98,14 +114,12 @@ namespace gum {
     }
   }
 
-
   // Clear all previously defined targets (single and joint targets)
   template < typename GUM_SCALAR >
   INLINE void JointTargetedMRFInference< GUM_SCALAR >::eraseAllTargets() {
     eraseAllMarginalTargets();
     eraseAllJointTargets();
   }
-
 
   // Add a set of nodes as a new target
   template < typename GUM_SCALAR >
@@ -129,13 +143,13 @@ namespace gum {
 
     // check if joint_target is a subset of an already existing target
     for (const auto& target: _joint_targets_) {
-      if (target.isProperSupersetOf(joint_target)) return;
+      if (target.isStrictSupersetOf(joint_target)) return;
     }
 
     // check if joint_target is not a superset of an already existing target
     // in this case, we need to remove old existing target
     for (auto iter = _joint_targets_.beginSafe(); iter != _joint_targets_.endSafe(); ++iter) {
-      if (iter->isProperSubsetOf(joint_target)) eraseJointTarget(*iter);
+      if (iter->isStrictSubsetOf(joint_target)) eraseJointTarget(*iter);
     }
 
     this->setTargetedMode_();   // does nothing if already in targeted mode
@@ -143,7 +157,6 @@ namespace gum {
     onJointTargetAdded_(joint_target);
     this->setState_(MRFInference< GUM_SCALAR >::StateOfInference::OutdatedStructure);
   }
-
 
   // removes an existing set target
   template < typename GUM_SCALAR >
@@ -172,7 +185,6 @@ namespace gum {
     }
   }
 
-
   /// returns the list of target sets
   template < typename GUM_SCALAR >
   INLINE const Set< NodeSet >&
@@ -186,15 +198,14 @@ namespace gum {
     return _joint_targets_.size();
   }
 
-
   // ##############################################################################
   // Inference
   // ##############################################################################
 
   // Compute the posterior of a nodeset.
   template < typename GUM_SCALAR >
-  const Potential< GUM_SCALAR >&
-     JointTargetedMRFInference< GUM_SCALAR >::jointPosterior(const NodeSet& nodes) {
+  const Tensor< GUM_SCALAR >&
+      JointTargetedMRFInference< GUM_SCALAR >::jointPosterior(const NodeSet& nodes) {
     NodeSet real_nodes;
     for (const auto& node: nodes) {
       if (!this->hasHardEvidence(node)) { real_nodes.insert(node); }
@@ -217,105 +228,31 @@ namespace gum {
     if (!this->isInferenceDone()) { this->makeInference(); }
 
     if (found_exact_target) return jointPosterior_(real_nodes);
-    else return jointPosterior_(real_nodes, super_target);
+    else { return jointPosterior_(real_nodes, super_target); }
   }
-
 
   // Compute the posterior of a node
   template < typename GUM_SCALAR >
-  const Potential< GUM_SCALAR >& JointTargetedMRFInference< GUM_SCALAR >::posterior(NodeId node) {
+  const Tensor< GUM_SCALAR >& JointTargetedMRFInference< GUM_SCALAR >::posterior(NodeId node) {
     if (this->isTarget(node)) return MarginalTargetedMRFInference< GUM_SCALAR >::posterior(node);
     else return jointPosterior(NodeSet{node});
   }
 
   // Compute the posterior of a node
   template < typename GUM_SCALAR >
-  const Potential< GUM_SCALAR >&
-     JointTargetedMRFInference< GUM_SCALAR >::posterior(const std::string& nodeName) {
+  const Tensor< GUM_SCALAR >&
+      JointTargetedMRFInference< GUM_SCALAR >::posterior(const std::string& nodeName) {
     return posterior(this->MRF().idFromName(nodeName));
   }
 
   // ##############################################################################
   // Entropy
   // ##############################################################################
-  template < typename GUM_SCALAR >
-  GUM_SCALAR JointTargetedMRFInference< GUM_SCALAR >::I(const std::string& Xname,
-                                                        const std::string& Yname) {
-    return I(this->MRF().idFromName(Xname), this->MRF().idFromName(Yname));
-  }
 
   template < typename GUM_SCALAR >
-  GUM_SCALAR JointTargetedMRFInference< GUM_SCALAR >::VI(const std::string& Xname,
-                                                         const std::string& Yname) {
-    return VI(this->MRF().idFromName(Xname), this->MRF().idFromName(Yname));
-  }
-
-
-  /* Mutual information between X and Y
-   * @see http://en.wikipedia.org/wiki/Mutual_information
-   *
-   * @warning Due to limitation of @joint, may not be able to compute this value
-   * @throw OperationNotAllowed in these cases
-   */
-  template < typename GUM_SCALAR >
-  GUM_SCALAR JointTargetedMRFInference< GUM_SCALAR >::I(NodeId X, NodeId Y) {
-    Potential< GUM_SCALAR > pX, pY, *pXY = nullptr;
-    if (X == Y) { GUM_ERROR(OperationNotAllowed, "Mutual Information I(X,Y) with X==Y") }
-
-    try {
-      // here use unnormalized joint posterior rather than just posterior
-      // to avoid saving the posterior in the cache of the inference engines
-      // like LazyPropagation or Shafer-Shenoy.
-      pXY = this->unnormalizedJointPosterior_({X, Y});
-      pXY->normalize();
-      pX = pXY->margSumOut({&(this->MRF().variable(Y))});
-      pY = pXY->margSumOut({&(this->MRF().variable(X))});
-    } catch (...) {
-      if (pXY != nullptr) { delete pXY; }
-      throw;
-    }
-
-    Instantiation i(*pXY);
-    auto          res = (GUM_SCALAR)0;
-
-    for (i.setFirst(); !i.end(); ++i) {
-      GUM_SCALAR vXY = (*pXY)[i];
-      GUM_SCALAR vX  = pX[i];
-      GUM_SCALAR vY  = pY[i];
-
-      if (vXY > (GUM_SCALAR)0) {
-        if (vX == (GUM_SCALAR)0 || vY == (GUM_SCALAR)0) {
-          GUM_ERROR(OperationNotAllowed,
-                    "Mutual Information (X,Y) with P(X)=0 or P(Y)=0 "
-                    "and P(X,Y)>0");
-        }
-
-        res += vXY * (std::log2(vXY) - std::log2(vX) - std::log2(vY));
-      }
-    }
-
-    delete pXY;
-
-    return res;
-  }
-
-
-  /** Variation of information between X and Y
-   * @see http://en.wikipedia.org/wiki/Variation_of_information
-   *
-   * @warning Due to limitation of @joint, may not be able to compute this value
-   * @throw OperationNotAllowed in these cases
-   */
-  template < typename GUM_SCALAR >
-  INLINE GUM_SCALAR JointTargetedMRFInference< GUM_SCALAR >::VI(NodeId X, NodeId Y) {
-    return this->H(X) + this->H(Y) - 2 * I(X, Y);
-  }
-
-
-  template < typename GUM_SCALAR >
-  Potential< GUM_SCALAR >
-     JointTargetedMRFInference< GUM_SCALAR >::evidenceJointImpact(const NodeSet& targets,
-                                                                  const NodeSet& evs) {
+  Tensor< GUM_SCALAR >
+      JointTargetedMRFInference< GUM_SCALAR >::evidenceJointImpact(const NodeSet& targets,
+                                                                   const NodeSet& evs) {
     if (!(evs * targets).empty()) {
       GUM_ERROR(InvalidArgument,
                 "Targets (" << targets << ") can not intersect evs (" << evs << ").");
@@ -325,8 +262,8 @@ namespace gum {
     this->eraseAllTargets();
     this->eraseAllEvidence();
 
-    Instantiation           iTarget;
-    Potential< GUM_SCALAR > res;
+    Instantiation        iTarget;
+    Tensor< GUM_SCALAR > res;
     for (const auto& target: targets) {
       res.add(this->MRF().variable(target));
       iTarget.add(this->MRF().variable(target));
@@ -355,17 +292,16 @@ namespace gum {
   }
 
   template < typename GUM_SCALAR >
-  Potential< GUM_SCALAR > JointTargetedMRFInference< GUM_SCALAR >::evidenceJointImpact(
-     const std::vector< std::string >& targets,
-     const std::vector< std::string >& evs) {
+  Tensor< GUM_SCALAR > JointTargetedMRFInference< GUM_SCALAR >::evidenceJointImpact(
+      const std::vector< std::string >& targets,
+      const std::vector< std::string >& evs) {
     const auto& mn = this->MRF();
     return evidenceJointImpact(mn.nodeset(targets), mn.nodeset(evs));
   }
 
-
   template < typename GUM_SCALAR >
   GUM_SCALAR
-     JointTargetedMRFInference< GUM_SCALAR >::jointMutualInformation(const NodeSet& targets) {
+      JointTargetedMRFInference< GUM_SCALAR >::jointMutualInformation(const NodeSet& targets) {
     const auto& mn  = this->MRF();
     const Size  siz = targets.size();
     if (siz <= 1) {
@@ -388,7 +324,7 @@ namespace gum {
       variables.add(var);
     }
 
-    Set< const DiscreteVariable* > sov;
+    gum::VariableSet sov;
 
     const GUM_SCALAR start = (siz % 2 == 0) ? GUM_SCALAR(-1.0) : GUM_SCALAR(1.0);
     GUM_SCALAR       sign;
@@ -404,7 +340,7 @@ namespace gum {
           sov.insert(&variables.variable(i));
         }
       }
-      res += sign * po.margSumIn(sov).entropy();
+      res += sign * po.sumIn(sov).entropy();
     }
 
     for (Idx i = 0; i < caracteristic.nbrDim(); i++) {
@@ -416,7 +352,7 @@ namespace gum {
 
   template < typename GUM_SCALAR >
   GUM_SCALAR JointTargetedMRFInference< GUM_SCALAR >::jointMutualInformation(
-     const std::vector< std::string >& targets) {
+      const std::vector< std::string >& targets) {
     return jointMutualInformation(this->MRF().nodeset(targets));
   }
 
@@ -430,10 +366,11 @@ namespace gum {
   template < typename GUM_SCALAR >
   NodeSet JointTargetedMRFInference< GUM_SCALAR >::superForJointComputable_(const NodeSet& vars) {
     for (const auto& target: _joint_targets_)
-      if (vars.isProperSubsetOf(target)) return target;
+      if (vars.isSubsetOrEqual(target)) return target;
 
-    for (const auto& factor: this->MRF().factors())
-      if (vars.isProperSubsetOf(factor.first)) return factor.first;
+    for (const auto& factor: this->MRF().factors()) {
+      if (vars.isSubsetOrEqual(factor.first)) return factor.first;
+    }
 
     return NodeSet();
   }

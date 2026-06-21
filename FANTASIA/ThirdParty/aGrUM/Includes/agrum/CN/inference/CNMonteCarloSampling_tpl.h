@@ -1,31 +1,53 @@
-/**
- *
- *   Copyright (c) 2005-2023 by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
+#pragma once
 
+
+#include <agrum/base/core/exceptions.h>
 #include <agrum/CN/inference/CNMonteCarloSampling.h>
-#include <agrum/tools/core/exceptions.h>
 
 namespace gum::credal {
 
   template < typename GUM_SCALAR, class BNInferenceEngine >
   CNMonteCarloSampling< GUM_SCALAR, BNInferenceEngine >::CNMonteCarloSampling(
-     const CredalNet< GUM_SCALAR >& credalNet) :
+      const CredalNet< GUM_SCALAR >& credalNet) :
       MultipleInferenceEngine< GUM_SCALAR, BNInferenceEngine >::MultipleInferenceEngine(credalNet) {
     _infEs_::repetitiveInd_ = false;
     _infEs_::storeVertices_ = false;
@@ -66,21 +88,21 @@ namespace gum::credal {
     if (this->continueApproximationScheme(eps)) {
       // compute the number of threads to use
       const Size nb_threads = ThreadExecutor::nbRunningThreadsExecutors() == 0
-                               ? this->getNumberOfThreads()
-                               : 1;   // no nested multithreading
+                                ? this->getNumberOfThreads()
+                                : 1;   // no nested multithreading
 
       // dispatch {0,...,psize} among the threads
       const auto ranges = gum::dispatchRangeToThreads(0, psize, (unsigned int)(nb_threads));
 
       // create the function to be executed by the threads
       auto threadedExec
-         = [this, ranges](const std::size_t this_thread, const std::size_t nb_threads) {
-             const auto& this_range = ranges[this_thread];
-             for (Idx j = this_range.first; j < this_range.second; ++j) {
-               _threadInference_(this_thread);
-               _threadUpdate_(this_thread);
-             }
-           };
+          = [this, ranges](const std::size_t this_thread, const std::size_t nb_threads) {
+              const auto& this_range = ranges[this_thread];
+              for (Idx j = this_range.first; j < this_range.second; ++j) {
+                _threadInference_(this_thread);
+                _threadUpdate_(this_thread);
+              }
+            };
 
       do {
         eps = 0;
@@ -90,7 +112,7 @@ namespace gum::credal {
 
         this->updateApproximationScheme(int(psize));
 
-        this->updateMarginals_();   // fusion threads + update margi
+        this->updateMarginals_();        // fusion threads + update margi
 
         eps = this->computeEpsilon_();   // also updates oldMargi
 
@@ -114,12 +136,12 @@ namespace gum::credal {
       const DAG& tDag = this->workingSet_[tId]->dag();
 
       for (auto node: tDag) {
-        const Potential< GUM_SCALAR >& potential(this->l_inferenceEngine_[tId]->posterior(node));
-        Instantiation                  ins(potential);
-        std::vector< GUM_SCALAR >      vertex;
+        const Tensor< GUM_SCALAR >& tensor(this->l_inferenceEngine_[tId]->posterior(node));
+        Instantiation               ins(tensor);
+        std::vector< GUM_SCALAR >   vertex;
 
         for (ins.setFirst(); !ins.end(); ++ins) {
-          vertex.push_back(potential[ins]);
+          vertex.push_back(tensor[ins]);
         }
 
         // true for redundancy elimination of node it credal set but since global
@@ -150,7 +172,6 @@ namespace gum::credal {
     this->initApproximationScheme();
   }
 
-
   template < typename GUM_SCALAR, class BNInferenceEngine >
   void CNMonteCarloSampling< GUM_SCALAR, BNInferenceEngine >::_mcThreadDataCopy_() {
     auto num_threads = this->getNumberOfThreads();
@@ -176,12 +197,12 @@ namespace gum::credal {
 
       if (_infEs_::storeVertices_) { this->l_marginalSets_[this_thread] = this->marginalSets_; }
 
-      this->workingSetE_[this_thread] = new List< const Potential< GUM_SCALAR >* >();
+      this->workingSetE_[this_thread] = new List< const Tensor< GUM_SCALAR >* >();
 
       // #TODO: the next instruction works only for lazy propagation.
       //        => find a way to remove the second argument
       auto inference_engine = new BNInferenceEngine(this->workingSet_[this_thread],
-                                                    RelevantPotentialsFinderType::FIND_ALL);
+                                                    RelevantTensorsFinderType::FIND_ALL);
       inference_engine->setNumberOfThreads(1);
 
       this->l_inferenceEngine_[this_thread] = inference_engine;
@@ -196,9 +217,9 @@ namespace gum::credal {
   }
 
   template < typename GUM_SCALAR, class BNInferenceEngine >
-  inline void
-     CNMonteCarloSampling< GUM_SCALAR, BNInferenceEngine >::_binaryRep_(std::vector< bool >& toFill,
-                                                                        const Idx value) const {
+  inline void CNMonteCarloSampling< GUM_SCALAR, BNInferenceEngine >::_binaryRep_(
+      std::vector< bool >& toFill,
+      const Idx            value) const {
     Idx  n      = value;
     auto tfsize = toFill.size();
 
@@ -211,7 +232,7 @@ namespace gum::credal {
 
   template < typename GUM_SCALAR, class BNInferenceEngine >
   inline void
-     CNMonteCarloSampling< GUM_SCALAR, BNInferenceEngine >::_verticesSampling_(Size this_thread) {
+      CNMonteCarloSampling< GUM_SCALAR, BNInferenceEngine >::_verticesSampling_(Size this_thread) {
     IBayesNet< GUM_SCALAR >* working_bn       = this->workingSet_[this_thread];
     auto&                    random_generator = this->generators_[this_thread];
     const auto               cpt              = &this->credalNet_->credalNet_currentCpt();
@@ -227,10 +248,10 @@ namespace gum::credal {
       const auto& t1 = _infEs_::l_clusters_[this_thread][1];
 
       for (const auto& elt: t0) {
-        auto                     dSize = working_bn->variable(elt.first).domainSize();
-        Potential< GUM_SCALAR >* potential(
-           const_cast< Potential< GUM_SCALAR >* >(&working_bn->cpt(elt.first)));
-        std::vector< GUM_SCALAR > var_cpt(potential->domainSize());
+        auto                  dSize = working_bn->variable(elt.first).domainSize();
+        Tensor< GUM_SCALAR >* tensor(
+            const_cast< Tensor< GUM_SCALAR >* >(&working_bn->cpt(elt.first)));
+        std::vector< GUM_SCALAR > var_cpt(tensor->domainSize());
 
         Size pconfs = Size((*cpt)[elt.first].size());
 
@@ -244,24 +265,24 @@ namespace gum::credal {
           }
         }   // end of : pconf
 
-        potential->fillWith(var_cpt);
+        tensor->fillWith(var_cpt);
 
         Size t0esize = Size(elt.second.size());
 
         for (Size pos = 0; pos < t0esize; pos++) {
           if (_infEs_::storeBNOpt_) { sample[elt.second[pos]] = sample[elt.first]; }
 
-          Potential< GUM_SCALAR >* potential2(
-             const_cast< Potential< GUM_SCALAR >* >(&working_bn->cpt(elt.second[pos])));
-          potential2->fillWith(var_cpt);
+          Tensor< GUM_SCALAR >* tensor2(
+              const_cast< Tensor< GUM_SCALAR >* >(&working_bn->cpt(elt.second[pos])));
+          tensor2->fillWith(var_cpt);
         }
       }
 
       for (const auto& elt: t1) {
-        auto                     dSize = working_bn->variable(elt.first).domainSize();
-        Potential< GUM_SCALAR >* potential(
-           const_cast< Potential< GUM_SCALAR >* >(&working_bn->cpt(elt.first)));
-        std::vector< GUM_SCALAR > var_cpt(potential->domainSize());
+        auto                  dSize = working_bn->variable(elt.first).domainSize();
+        Tensor< GUM_SCALAR >* tensor(
+            const_cast< Tensor< GUM_SCALAR >* >(&working_bn->cpt(elt.first)));
+        std::vector< GUM_SCALAR > var_cpt(tensor->domainSize());
 
         for (Size pconf = 0; pconf < (*cpt)[elt.first].size(); pconf++) {
           Idx choosen_vertex = randomValue(random_generator, (*cpt)[elt.first][pconf].size());
@@ -273,26 +294,25 @@ namespace gum::credal {
           }
         }   // end of : pconf
 
-        potential->fillWith(var_cpt);
+        tensor->fillWith(var_cpt);
 
         auto t1esize = elt.second.size();
 
         for (decltype(t1esize) pos = 0; pos < t1esize; pos++) {
           if (_infEs_::storeBNOpt_) { sample[elt.second[pos]] = sample[elt.first]; }
 
-          Potential< GUM_SCALAR >* potential2(
-             const_cast< Potential< GUM_SCALAR >* >(&working_bn->cpt(elt.second[pos])));
-          potential2->fillWith(var_cpt);
+          Tensor< GUM_SCALAR >* tensor2(
+              const_cast< Tensor< GUM_SCALAR >* >(&working_bn->cpt(elt.second[pos])));
+          tensor2->fillWith(var_cpt);
         }
       }
 
       if (_infEs_::storeBNOpt_) { this->l_optimalNet_[this_thread]->setCurrentSample(sample); }
     } else {
       for (auto node: working_bn->nodes()) {
-        auto                     dSize = working_bn->variable(node).domainSize();
-        Potential< GUM_SCALAR >* potential(
-           const_cast< Potential< GUM_SCALAR >* >(&working_bn->cpt(node)));
-        std::vector< GUM_SCALAR > var_cpt(potential->domainSize());
+        auto                  dSize = working_bn->variable(node).domainSize();
+        Tensor< GUM_SCALAR >* tensor(const_cast< Tensor< GUM_SCALAR >* >(&working_bn->cpt(node)));
+        std::vector< GUM_SCALAR > var_cpt(tensor->domainSize());
 
         auto pConfs = (*cpt)[node].size();
 
@@ -307,7 +327,7 @@ namespace gum::credal {
           }
         }   // end of : pconf
 
-        potential->fillWith(var_cpt);
+        tensor->fillWith(var_cpt);
       }
 
       if (_infEs_::storeBNOpt_) { this->l_optimalNet_[this_thread]->setCurrentSample(sample); }
@@ -316,14 +336,14 @@ namespace gum::credal {
 
   template < typename GUM_SCALAR, class BNInferenceEngine >
   inline void
-     CNMonteCarloSampling< GUM_SCALAR, BNInferenceEngine >::_insertEvidence_(Size this_thread) {
+      CNMonteCarloSampling< GUM_SCALAR, BNInferenceEngine >::_insertEvidence_(Size this_thread) {
     if (this->evidence_.size() == 0) { return; }
 
     BNInferenceEngine* inference_engine = this->l_inferenceEngine_[this_thread];
 
     IBayesNet< GUM_SCALAR >* working_bn = this->workingSet_[this_thread];
 
-    List< const Potential< GUM_SCALAR >* >* evi_list = this->workingSetE_[this_thread];
+    List< const Tensor< GUM_SCALAR >* >* evi_list = this->workingSetE_[this_thread];
 
     if (evi_list->size() > 0) {
       for (const auto pot: *evi_list)
@@ -332,7 +352,7 @@ namespace gum::credal {
     }
 
     for (const auto& elt: this->evidence_) {
-      auto p = new Potential< GUM_SCALAR >;
+      auto p = new Tensor< GUM_SCALAR >;
       (*p) << working_bn->variable(elt.first);
 
       try {

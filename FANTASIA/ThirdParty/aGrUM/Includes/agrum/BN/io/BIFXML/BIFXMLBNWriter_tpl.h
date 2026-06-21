@@ -1,21 +1,43 @@
-/**
- *   Copyright (c) 2005-2023 by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
+#pragma once
 
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -23,7 +45,6 @@
 #  include <agrum/BN/io/BIFXML/BIFXMLBNWriter.h>
 
 namespace gum {
-
   /*
    * Default constructor.
    */
@@ -144,6 +165,9 @@ namespace gum {
   INLINE std::string BIFXMLBNWriter< GUM_SCALAR >::_variableBloc_(const DiscreteVariable& var) {
     //<VARIABLE TYPE="nature|decision|utility">
     //<NAME>name</NAME>
+    //<PROPERTY>description = ...</PROPERTY>
+    //<PROPERTY>fast = A[4,5]</PROPERTY>
+    // <!--OUTCOMES are not used but are kept for compatibility-->
     //<OUTCOME>outcome1</OUTCOME>
     //<OUTCOME>outcome2</OUTCOME>
     //<PROPERTY>property</PROPERTY>
@@ -156,9 +180,13 @@ namespace gum {
 
     // Name and description
     str << "\t<NAME>" << var.name() << "</NAME>" << std::endl;
-    str << "\t<PROPERTY>" << var.description() << "</PROPERTY>" << std::endl;
+    str << "\t<PROPERTY>description = " << var.description() << "</PROPERTY>" << std::endl;
+    str << "\t<PROPERTY>fast = " << var.toFast() << "</PROPERTY>" << std::endl;
 
     // Outcomes
+    str << "<!--OUTCOME are not used in pyAgrum BIFXML (see fast property) but are kept for "
+           "compatibility-->"
+        << std::endl;
     for (Idx i = 0; i < var.domainSize(); i++)
       str << "\t<OUTCOME>" << var.label(i) << "</OUTCOME>" << std::endl;
 
@@ -174,7 +202,7 @@ namespace gum {
   template < typename GUM_SCALAR >
   INLINE std::string
          BIFXMLBNWriter< GUM_SCALAR >::_variableDefinition_(const NodeId&                  varNodeId,
-                                                        const IBayesNet< GUM_SCALAR >& bn) {
+                                                         const IBayesNet< GUM_SCALAR >& bn) {
     //<DEFINITION>
     //<FOR>var</FOR>
     //<GIVEN>conditional var</GIVEN>
@@ -192,7 +220,7 @@ namespace gum {
     // For historical reason, the code is not the same betwen bIXML for BN and
     // for ID
     // ...
-    const Potential< GUM_SCALAR >& cpt = bn.cpt(varNodeId);
+    const Tensor< GUM_SCALAR >& cpt = bn.cpt(varNodeId);
 
     // Conditional Parents
     for (Idx i = 1; i < cpt.nbrDim(); i++)
@@ -210,7 +238,7 @@ namespace gum {
       if (inst.val(0) == 0) str << std::endl << "\t\t";
       else str << " ";
 
-      str << cpt[inst];   //"<!-- "<<inst<<" -->"<<std::endl;
+      str << cpt[inst];
     }
 
     str << std::endl << "\t</TABLE>" << std::endl;
@@ -233,7 +261,6 @@ namespace gum {
 
     return str.str();
   }
-
 } /* namespace gum */
 
 #endif   // DOXYGEN_SHOULD_SKIP_THIS

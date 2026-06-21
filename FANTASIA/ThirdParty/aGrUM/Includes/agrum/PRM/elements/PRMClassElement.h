@@ -1,22 +1,42 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
 
 
 /**
@@ -32,7 +52,6 @@
 #include <sstream>
 
 #include <agrum/agrum.h>
-
 
 #include <agrum/PRM/utils_prm.h>
 
@@ -97,17 +116,17 @@ namespace gum {
 
       static std::string enum2str(ClassElementType type) {
         switch (type) {
-          case prm_attribute: return "prm_attribute";
+          case prm_attribute : return "prm_attribute";
 
-          case prm_aggregate: return "prm_aggregate";
+          case prm_aggregate : return "prm_aggregate";
 
-          case prm_refslot: return "prm_refslot";
+          case prm_refslot : return "prm_refslot";
 
-          case prm_slotchain: return "prm_slotchain";
+          case prm_slotchain : return "prm_slotchain";
 
-          case prm_parameter: return "prm_parameter";
+          case prm_parameter : return "prm_parameter";
 
-          default: return "unknown";
+          default : return "unknown";
         }
       }
 
@@ -179,7 +198,7 @@ namespace gum {
       /**
        * Return a reference over the gum::PRMType of this class element.
        * @throw OperationNotAllowed Raised if this class element doesn't have
-       *                            any gum::Potential (like a
+       *                            any gum::Tensor (like a
        * gum::PRMReferenceSlot).
        */
       virtual PRMType& type() = 0;
@@ -188,7 +207,7 @@ namespace gum {
        * Return a constant reference over the gum::PRMType of this class
        * element.
        * @throw OperationNotAllowed Raised if this class element doesn't have
-       *                            any gum::Potential (like a
+       *                            any gum::Tensor (like a
        * gum::PRMReferenceSlot).
        */
       virtual const PRMType& type() const = 0;
@@ -232,23 +251,24 @@ namespace gum {
       virtual std::string cast(const PRMType& t) const;
 
       // /**
-      //  * Return a reference over the gum::Potential of this class element.
+      //  * Return a reference over the gum::Tensor of this class element.
       //  * @throw OperationNotAllowed Raised if this class element doesn't have
-      //  *                            any gum::Potential (like a
+      //  *                            any gum::Tensor (like a
       //  gum::PRMReferenceSlot).
       //  */
-      // virtual Potential<GUM_SCALAR>& cpf() = 0;
+      // virtual Tensor<GUM_SCALAR>& cpf() = 0;
 
       /**
-       * Return a constant reference over the gum::Potential of this class
+       * Return a constant reference over the gum::Tensor of this class
        * element.
        * @throw OperationNotAllowed Raised if the class element doesn't have
-       *                            any gum::Potential (like a
+       *                            any gum::Tensor (like a
        * gum::PRMReferenceSlot).
        */
-      virtual const Potential< GUM_SCALAR >& cpf() const = 0;
+      virtual const Tensor< GUM_SCALAR >& cpf() const = 0;
 
       /// @}
+
       protected:
       /// The safe name of this PRMClassElement.
       std::string safeName_;

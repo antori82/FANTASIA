@@ -1,22 +1,43 @@
-/**
- *
- *   Copyright (c) 2005-2023 by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
+#pragma once
 
 
 /**
@@ -38,7 +59,6 @@ constexpr auto LBP_DEFAULT_VERBOSITY        = false;
 
 // to ease parsing for IDE
 #  include <agrum/BN/inference/loopyBeliefPropagation.h>
-
 
 namespace gum {
 
@@ -64,12 +84,11 @@ namespace gum {
     GUM_DESTRUCTOR(LoopyBeliefPropagation)
   }
 
-
   template < typename GUM_SCALAR >
   void LoopyBeliefPropagation< GUM_SCALAR >::_init_messages_() {
     _messages_.clear();
     for (const auto& tail: this->BN().nodes()) {
-      Potential< GUM_SCALAR > p;
+      Tensor< GUM_SCALAR > p;
       p.add(this->BN().variable(tail));
       p.fill(static_cast< GUM_SCALAR >(1));
 
@@ -85,37 +104,35 @@ namespace gum {
     _init_messages_();
   }
 
-
   template < typename GUM_SCALAR >
-  Potential< GUM_SCALAR > LoopyBeliefPropagation< GUM_SCALAR >::_computeProdPi_(NodeId X) {
+  Tensor< GUM_SCALAR > LoopyBeliefPropagation< GUM_SCALAR >::_computeProdPi_(NodeId X) {
     const auto& varX = this->BN().variable(X);
 
     auto piX = this->BN().cpt(X);
     for (const auto& U: this->BN().parents(X)) {
       piX *= _messages_[Arc(U, X)];
     }
-    piX = piX.margSumIn({&varX});
+    piX = piX.sumIn({&varX});
 
     return piX;
   }
 
   template < typename GUM_SCALAR >
-  Potential< GUM_SCALAR > LoopyBeliefPropagation< GUM_SCALAR >::_computeProdPi_(NodeId X,
-                                                                                NodeId except) {
+  Tensor< GUM_SCALAR > LoopyBeliefPropagation< GUM_SCALAR >::_computeProdPi_(NodeId X,
+                                                                             NodeId except) {
     const auto& varX      = this->BN().variable(X);
     const auto& varExcept = this->BN().variable(except);
     auto        piXexcept = this->BN().cpt(X);
     for (const auto& U: this->BN().parents(X)) {
       if (U != except) { piXexcept *= _messages_[Arc(U, X)]; }
     }
-    piXexcept = piXexcept.margSumIn({&varX, &varExcept});
+    piXexcept = piXexcept.sumIn({&varX, &varExcept});
     return piXexcept;
   }
 
-
   template < typename GUM_SCALAR >
-  Potential< GUM_SCALAR > LoopyBeliefPropagation< GUM_SCALAR >::_computeProdLambda_(NodeId X) {
-    Potential< GUM_SCALAR > lamX;
+  Tensor< GUM_SCALAR > LoopyBeliefPropagation< GUM_SCALAR >::_computeProdLambda_(NodeId X) {
+    Tensor< GUM_SCALAR > lamX;
     if (this->hasEvidence(X)) {
       lamX = *(this->evidence()[X]);
     } else {
@@ -130,9 +147,9 @@ namespace gum {
   }
 
   template < typename GUM_SCALAR >
-  Potential< GUM_SCALAR > LoopyBeliefPropagation< GUM_SCALAR >::_computeProdLambda_(NodeId X,
-                                                                                    NodeId except) {
-    Potential< GUM_SCALAR > lamXexcept;
+  Tensor< GUM_SCALAR > LoopyBeliefPropagation< GUM_SCALAR >::_computeProdLambda_(NodeId X,
+                                                                                 NodeId except) {
+    Tensor< GUM_SCALAR > lamXexcept;
     if (this->hasEvidence(X)) {   //
       lamXexcept = *this->evidence()[X];
     } else {
@@ -146,7 +163,6 @@ namespace gum {
     return lamXexcept;
   }
 
-
   template < typename GUM_SCALAR >
   GUM_SCALAR LoopyBeliefPropagation< GUM_SCALAR >::_updateNodeMessage_(NodeId X) {
     auto piX  = _computeProdPi_(X);
@@ -157,7 +173,7 @@ namespace gum {
 
     // update lambda_par (for arc U->x)
     for (const auto& U: this->BN().parents(X)) {
-      auto newLambda = (_computeProdPi_(X, U) * lamX).margSumIn({&this->BN().variable(U)});
+      auto newLambda = (_computeProdPi_(X, U) * lamX).sumIn({&this->BN().variable(U)});
       newLambda.normalize();
       auto ekl = static_cast< GUM_SCALAR >(0);
       try {
@@ -204,7 +220,6 @@ namespace gum {
     }
   }
 
-
   /// Returns the probability of the variables.
   template < typename GUM_SCALAR >
   void LoopyBeliefPropagation< GUM_SCALAR >::makeInference_() {
@@ -228,11 +243,9 @@ namespace gum {
     } while (this->continueApproximationScheme(error));
   }
 
-
   /// Returns the probability of the variable.
   template < typename GUM_SCALAR >
-  INLINE const Potential< GUM_SCALAR >&
-               LoopyBeliefPropagation< GUM_SCALAR >::posterior_(NodeId id) {
+  INLINE const Tensor< GUM_SCALAR >& LoopyBeliefPropagation< GUM_SCALAR >::posterior_(NodeId id) {
     auto p = _computeProdPi_(id) * _computeProdLambda_(id);
     p.normalize();
     _posteriors_.set(id, p);

@@ -1,22 +1,43 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
+#pragma once
 
 
 /**
@@ -30,7 +51,6 @@
 #include <queue>
 
 #include <agrum/PRM/elements/PRMClass.h>
-
 #include <agrum/PRM/elements/PRMInterface.h>
 
 namespace gum {
@@ -46,8 +66,7 @@ namespace gum {
     PRMClass< GUM_SCALAR >::PRMClass(const std::string&      name,
                                      PRMClass< GUM_SCALAR >& super,
                                      bool                    delayInheritance) :
-        PRMClassElementContainer< GUM_SCALAR >(name),
-        _superClass_(&super), _implements_(nullptr),
+        PRMClassElementContainer< GUM_SCALAR >(name), _superClass_(&super), _implements_(nullptr),
         _bijection_(new Bijection< const DiscreteVariable*, const DiscreteVariable* >()) {
       GUM_CONSTRUCTOR(PRMClass);
       if (!delayInheritance) {
@@ -60,9 +79,8 @@ namespace gum {
     PRMClass< GUM_SCALAR >::PRMClass(const std::string&                        name,
                                      const Set< PRMInterface< GUM_SCALAR >* >& set,
                                      bool                                      delayInheritance) :
-        PRMClassElementContainer< GUM_SCALAR >(name),
-        _superClass_(nullptr), _implements_(new Set< PRMInterface< GUM_SCALAR >* >(set)),
-        _bijection_(nullptr) {
+        PRMClassElementContainer< GUM_SCALAR >(name), _superClass_(nullptr),
+        _implements_(new Set< PRMInterface< GUM_SCALAR >* >(set)), _bijection_(nullptr) {
       GUM_CONSTRUCTOR(PRMClass);
 
       if (!delayInheritance) { _implementInterfaces_(false); }
@@ -73,8 +91,7 @@ namespace gum {
                                      PRMClass< GUM_SCALAR >&                   super,
                                      const Set< PRMInterface< GUM_SCALAR >* >& set,
                                      bool                                      delayInheritance) :
-        PRMClassElementContainer< GUM_SCALAR >(name),
-        _superClass_(&super), _implements_(nullptr),
+        PRMClassElementContainer< GUM_SCALAR >(name), _superClass_(&super), _implements_(nullptr),
         _bijection_(new Bijection< const DiscreteVariable*, const DiscreteVariable* >()) {
       GUM_CONSTRUCTOR(PRMClass);
       if (!delayInheritance) {
@@ -85,7 +102,7 @@ namespace gum {
       // Adding other implementation
       if (_implements_ == nullptr) {   // super has not created  _implements_
         _implements_ = new Set< PRMInterface< GUM_SCALAR >* >(set);
-      } else {   // we just add the new implementations
+      } else {                         // we just add the new implementations
         for (const auto elt: set) {
           _implements_->insert(elt);
         }
@@ -148,9 +165,9 @@ namespace gum {
         // Copying reference slots
         for (const auto c_refslot: _superClass_->_referenceSlots_) {
           auto ref = new PRMReferenceSlot< GUM_SCALAR >(
-             c_refslot->name(),
-             const_cast< PRMClassElementContainer< GUM_SCALAR >& >(c_refslot->slotType()),
-             c_refslot->isArray());
+              c_refslot->name(),
+              const_cast< PRMClassElementContainer< GUM_SCALAR >& >(c_refslot->slotType()),
+              c_refslot->isArray());
 
           ref->setId(c_refslot->id());
           // Not reserved by an interface
@@ -192,7 +209,7 @@ namespace gum {
       if (_superClass_) {
         for (const auto c_attr: _superClass_->_attributes_) {
           // using multiDimSparse to prevent unecessary memory allocation for
-          // large arrays (the potentials are copied latter)
+          // large arrays (the tensors are copied latter)
           auto attr = c_attr->newFactory(*this);
 
           _bijection_->insert(&(c_attr->type().variable()), &(attr->type().variable()));
@@ -332,7 +349,7 @@ namespace gum {
         // Copying attributes
         for (const auto c_attr: c._attributes_) {
           // using multiDimSparse to prevent unecessary memory allocation for
-          // large arrays (the potentials are copied latter)
+          // large arrays (the tensors are copied latter)
           auto attr = c_attr->newFactory(*this);
 
           bij.insert(&(c_attr->type().variable()), &(attr->type().variable()));
@@ -374,9 +391,9 @@ namespace gum {
         // Copying reference slots
         for (const auto c_refslot: c._referenceSlots_) {
           PRMReferenceSlot< GUM_SCALAR >* ref = new PRMReferenceSlot< GUM_SCALAR >(
-             c_refslot->name(),
-             const_cast< PRMClassElementContainer< GUM_SCALAR >& >(c_refslot->slotType()),
-             c_refslot->isArray());
+              c_refslot->name(),
+              const_cast< PRMClassElementContainer< GUM_SCALAR >& >(c_refslot->slotType()),
+              c_refslot->isArray());
 
           ref->setId(c_refslot->id());
           _nodeIdMap_.insert(ref->id(), ref);
@@ -398,7 +415,7 @@ namespace gum {
           chain.setAtPos(0, _nameMap_[c_slotchain->chain().front()->name()]);
 
           PRMSlotChain< GUM_SCALAR >* sc
-             = new PRMSlotChain< GUM_SCALAR >(c_slotchain->name(), chain);
+              = new PRMSlotChain< GUM_SCALAR >(c_slotchain->name(), chain);
           bij.insert(&(c_slotchain->type().variable()), &(sc->type().variable()));
           sc->setId(c_slotchain->id());
           _nodeIdMap_.insert(sc->id(), sc);
@@ -426,9 +443,9 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     bool PRMClass< GUM_SCALAR >::isSubTypeOf(
-       const PRMClassElementContainer< GUM_SCALAR >& cec) const {
+        const PRMClassElementContainer< GUM_SCALAR >& cec) const {
       switch (cec.obj_type()) {
-        case PRMObject::prm_type::CLASS: {
+        case PRMObject::prm_type::CLASS : {
           const PRMClass< GUM_SCALAR >* current = this;
 
           while (current != 0) {
@@ -440,10 +457,10 @@ namespace gum {
           return false;
         }
 
-        case PRMObject::prm_type::PRM_INTERFACE: {
+        case PRMObject::prm_type::PRM_INTERFACE : {
           if (_implements_ != nullptr) {
             const PRMInterface< GUM_SCALAR >& i
-               = static_cast< const PRMInterface< GUM_SCALAR >& >(cec);
+                = static_cast< const PRMInterface< GUM_SCALAR >& >(cec);
 
             if (_implements_->exists(const_cast< PRMInterface< GUM_SCALAR >* >(&i))) return true;
 
@@ -454,7 +471,7 @@ namespace gum {
           return false;
         }
 
-        default: {
+        default : {
           GUM_ERROR(FatalError, "unknown ClassElementContainer<GUM_SCALAR>")
         }
       }
@@ -611,7 +628,7 @@ namespace gum {
       }
 
       switch (elt->elt_type()) {
-        case PRMClassElement< GUM_SCALAR >::prm_attribute: {
+        case PRMClassElement< GUM_SCALAR >::prm_attribute : {
           _attributes_.insert(static_cast< PRMAttribute< GUM_SCALAR >* >(elt));
           _addCastDescendants_(static_cast< PRMAttribute< GUM_SCALAR >* >(elt));
 
@@ -623,7 +640,7 @@ namespace gum {
           break;
         }
 
-        case PRMClassElement< GUM_SCALAR >::prm_aggregate: {
+        case PRMClassElement< GUM_SCALAR >::prm_aggregate : {
           _aggregates_.insert(static_cast< PRMAggregate< GUM_SCALAR >* >(elt));
           _addCastDescendants_(static_cast< PRMAttribute< GUM_SCALAR >* >(elt));
 
@@ -635,7 +652,7 @@ namespace gum {
           break;
         }
 
-        case PRMClassElement< GUM_SCALAR >::prm_refslot: {
+        case PRMClassElement< GUM_SCALAR >::prm_refslot : {
           auto ref = static_cast< PRMReferenceSlot< GUM_SCALAR >* >(elt);
           _referenceSlots_.insert(ref);
 
@@ -644,17 +661,17 @@ namespace gum {
           break;
         }
 
-        case PRMClassElement< GUM_SCALAR >::prm_slotchain: {
+        case PRMClassElement< GUM_SCALAR >::prm_slotchain : {
           _slotChains_.insert(static_cast< PRMSlotChain< GUM_SCALAR >* >(elt));
           break;
         }
 
-        case PRMClassElement< GUM_SCALAR >::prm_parameter: {
+        case PRMClassElement< GUM_SCALAR >::prm_parameter : {
           _parameters_.insert(static_cast< PRMParameter< GUM_SCALAR >* >(elt));
           break;
         }
 
-        default: {
+        default : {
           GUM_ERROR(FatalError, "unknown ClassElement<GUM_SCALAR> type")
         }
       }
@@ -719,7 +736,7 @@ namespace gum {
       }
 
       switch (overloader->elt_type()) {
-        case PRMClassElement< GUM_SCALAR >::prm_attribute: {
+        case PRMClassElement< GUM_SCALAR >::prm_attribute : {
           auto overloader_attr = static_cast< PRMAttribute< GUM_SCALAR >* >(overloader);
           auto overloaded_attr = static_cast< PRMAttribute< GUM_SCALAR >* >(overloaded);
           _overloadAttribute_(overloader_attr, overloaded_attr);
@@ -727,13 +744,13 @@ namespace gum {
           break;
         }
 
-        case PRMClassElement< GUM_SCALAR >::prm_aggregate: {
+        case PRMClassElement< GUM_SCALAR >::prm_aggregate : {
           _overloadAggregate_(static_cast< PRMAggregate< GUM_SCALAR >* >(overloader), overloaded);
           _addIOInterfaceFlags_(overloader);
           break;
         }
 
-        case PRMClassElement< GUM_SCALAR >::prm_refslot: {
+        case PRMClassElement< GUM_SCALAR >::prm_refslot : {
           //  _checkOverloadLegality_ guaranties that overloaded is a
           // PRMReferenceSlot<GUM_SCALAR>
           auto overloader_ref = static_cast< PRMReferenceSlot< GUM_SCALAR >* >(overloader);
@@ -742,18 +759,18 @@ namespace gum {
           break;
         }
 
-        case PRMClassElement< GUM_SCALAR >::prm_slotchain: {
+        case PRMClassElement< GUM_SCALAR >::prm_slotchain : {
           GUM_ERROR(OperationNotAllowed, "SlotChain<GUM_SCALAR> can not be overloaded")
           break;
         }
 
-        case PRMClassElement< GUM_SCALAR >::prm_parameter: {
+        case PRMClassElement< GUM_SCALAR >::prm_parameter : {
           auto overloaded_param = static_cast< PRMParameter< GUM_SCALAR >* >(overloaded);
           auto overloader_param = static_cast< PRMParameter< GUM_SCALAR >* >(overloader);
           _overloadParameter_(overloader_param, overloaded_param);
           break;
         }
-        default: {
+        default : {
           GUM_ERROR(OperationNotAllowed, "unknown ClassElement<GUM_SCALAR> type")
         }
       }
@@ -827,8 +844,8 @@ namespace gum {
           if (seq.back()->type() != slotchain->lastElt().type()) {
             seq.erase(seq.back());
             seq.insert(&(static_cast< PRMReferenceSlot< GUM_SCALAR >* >(seq.back())
-                            ->slotType()
-                            .get(slotchain->lastElt().safeName())));
+                             ->slotType()
+                             .get(slotchain->lastElt().safeName())));
             std::string sc_name;
             std::string dot = ".";
 
@@ -921,7 +938,7 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     void PRMClass< GUM_SCALAR >::findAllSubtypes_(
-       Set< PRMClassElementContainer< GUM_SCALAR >* >& set) {
+        Set< PRMClassElementContainer< GUM_SCALAR >* >& set) {
       for (auto ext: _extensions_) {
         set.insert(ext);
         ext->findAllSubtypes_(set);
@@ -1115,54 +1132,54 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     INLINE const PRMClassElement< GUM_SCALAR >&
-       PRMClass< GUM_SCALAR >::operator[](NodeId id) const {
+                 PRMClass< GUM_SCALAR >::operator[](NodeId id) const {
       return get(id);
     }
 
     template < typename GUM_SCALAR >
     INLINE PRMClassElement< GUM_SCALAR >&
-       PRMClass< GUM_SCALAR >::operator[](const std::string& name) {
+           PRMClass< GUM_SCALAR >::operator[](const std::string& name) {
       return get(name);
     }
 
     template < typename GUM_SCALAR >
     INLINE const PRMClassElement< GUM_SCALAR >&
-       PRMClass< GUM_SCALAR >::operator[](const std::string& name) const {
+                 PRMClass< GUM_SCALAR >::operator[](const std::string& name) const {
       return get(name);
     }
 
     template < typename GUM_SCALAR >
     INLINE void
-       PRMClass< GUM_SCALAR >::_overloadAggregate_(PRMAggregate< GUM_SCALAR >*    overloader,
-                                                   PRMClassElement< GUM_SCALAR >* overloaded) {
+        PRMClass< GUM_SCALAR >::_overloadAggregate_(PRMAggregate< GUM_SCALAR >*    overloader,
+                                                    PRMClassElement< GUM_SCALAR >* overloaded) {
       _nameMap_.insert(overloader->safeName(), overloader);
       _aggregates_.insert(overloader);
     }
 
     template < typename GUM_SCALAR >
     INLINE bool PRMClass< GUM_SCALAR >::_checkOverloadLegality_(
-       const PRMClassElement< GUM_SCALAR >* overloaded,
-       const PRMClassElement< GUM_SCALAR >* overloader) {
+        const PRMClassElement< GUM_SCALAR >* overloaded,
+        const PRMClassElement< GUM_SCALAR >* overloader) {
       if (overloaded->elt_type() != overloader->elt_type()) { return false; }
 
       switch (overloaded->elt_type()) {
-        case PRMClassElement< GUM_SCALAR >::prm_attribute: {
+        case PRMClassElement< GUM_SCALAR >::prm_attribute : {
           if (!overloader->type().isSubTypeOf(overloaded->type())) { return false; }
           break;
         }
 
-        case PRMClassElement< GUM_SCALAR >::prm_refslot: {
+        case PRMClassElement< GUM_SCALAR >::prm_refslot : {
           const auto& new_slot_type
-             = static_cast< const PRMReferenceSlot< GUM_SCALAR >* >(overloader)->slotType();
+              = static_cast< const PRMReferenceSlot< GUM_SCALAR >* >(overloader)->slotType();
           const auto& old_slot_type
-             = static_cast< const PRMReferenceSlot< GUM_SCALAR >* >(overloaded)->slotType();
+              = static_cast< const PRMReferenceSlot< GUM_SCALAR >* >(overloaded)->slotType();
 
           if (!new_slot_type.isSubTypeOf(old_slot_type)) { return false; }
 
           break;
         }
 
-        case PRMClassElement< GUM_SCALAR >::prm_parameter: {
+        case PRMClassElement< GUM_SCALAR >::prm_parameter : {
           auto overloaded_param = static_cast< const PRMParameter< GUM_SCALAR >* >(overloaded);
           auto overloader_param = static_cast< const PRMParameter< GUM_SCALAR >* >(overloader);
 
@@ -1170,7 +1187,7 @@ namespace gum {
           break;
         }
 
-        default: {
+        default : {
           return false;
         }
       }
@@ -1200,7 +1217,7 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     INLINE bool
-       PRMClass< GUM_SCALAR >::isOutputNode(const PRMClassElement< GUM_SCALAR >& elt) const {
+        PRMClass< GUM_SCALAR >::isOutputNode(const PRMClassElement< GUM_SCALAR >& elt) const {
       try {
         if (!this->getIOFlag_(elt).second) {
           if (_implements_) {
