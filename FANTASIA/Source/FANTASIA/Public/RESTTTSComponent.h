@@ -100,7 +100,7 @@ struct FPlaybackOrderEntry
  * reproduces the raw-PCM streaming behaviour; provider subclasses (e.g.
  * ElevenLabs with timestamps) return a decoder that parses a JSON envelope.
  */
-struct FTTSStreamDecoder
+struct FANTASIA_API FTTSStreamDecoder
 {
 	virtual ~FTTSStreamDecoder() = default;
 
@@ -115,7 +115,7 @@ struct FTTSStreamDecoder
 /** Default decoder: interprets the byte stream as little-endian 16-bit mono
  *  PCM, carrying a trailing odd byte between Feed calls. Reproduces the
  *  pre-timing streaming behaviour for generic REST providers. */
-struct FPcm16StreamDecoder final : public FTTSStreamDecoder
+struct FANTASIA_API FPcm16StreamDecoder final : public FTTSStreamDecoder
 {
 	virtual void Feed(TArrayView<const uint8> NewBytes, FAudioBuffer* Target) override;
 
