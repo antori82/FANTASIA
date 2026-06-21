@@ -3,7 +3,7 @@
 	"Version": 3,
 	"VersionName": "2.0",
 	"FriendlyName": "FANTASIA",
-	"Description": "Framework for Advanced Natural Tools and Applications with Social Interactive Agents. NVIDIA Audio2Face lip-sync now ships in the optional FANTASIAACE plugin; install it alongside FANTASIA to enable lip-sync. See the Wiki for installation.",
+	"Description": "Framework for Advanced Natural Tools and Applications with Social Interactive Agents. NVIDIA Audio2Face lip-sync ships in the optional FANTASIAACE companion plugin; install it alongside FANTASIA to enable lip-sync. See the Wiki for installation.",
 	"Category": "Other",
 	"CreatedBy": "Antonio Origlia",
 	"CreatedByURL": "",

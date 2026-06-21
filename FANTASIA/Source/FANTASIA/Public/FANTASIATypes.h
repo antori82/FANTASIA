@@ -614,10 +614,3 @@ public:
 	UPROPERTY(BlueprintReadOnly)
 	FString value;
 };
-
-// ── Audio2Face mirror structs (removed in 2.0) ──────────────────────────────
-// Pre-2.0 FANTASIA carried FFantasiaAudio2FaceEmotion / *Override mirror
-// structs so URESTTTSComponent could expose ACE emotion parameters without a
-// hard build-time ACE dependency. The 2.0 split moved Audio2Face entirely
-// into the optional FANTASIAACE plugin, which depends on NV_ACE_Reference
-// directly and uses ACE's real FAudio2FaceEmotion type without mirroring.

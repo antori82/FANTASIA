@@ -90,7 +90,7 @@ FANTASIA bundles a set of independent components. Use only what you need.
 
 | Integration | Purpose |
 | --- | --- |
-| **NVIDIA ACE** *(optional companion plugin)* | Audio-driven facial lip-sync and emotion. Ships since v2.0 as the separate **FANTASIAACE** plugin, which adds `UACERESTTTSComponent` and requires NVIDIA's [NV_ACE_Reference](https://developer.nvidia.com/ace). Core FANTASIA produces the audio; FANTASIAACE animates a face from it. See [Installation](#installation). |
+| **NVIDIA ACE** *(optional companion plugin)* | Audio-driven facial lip-sync and emotion. Ships as the separate **FANTASIAACE** companion plugin, which adds `UACERESTTTSComponent` and requires NVIDIA's [NV_ACE_Reference](https://developer.nvidia.com/ace). Core FANTASIA produces the audio; FANTASIAACE animates a face from it. See [Installation](#installation). |
 
 ## Quick Start
 
@@ -130,7 +130,7 @@ FANTASIA is distributed prebuilt — for most users, no compilation is required.
 
 ### NVIDIA Audio2Face lip-sync (bundled)
 
-Since version 2.0, Audio2Face lives in the companion plugin `FANTASIAACE`, which drives a MetaHuman's face via NVIDIA's `NV_ACE_Reference`. The bootstrap fetches a complete, UE 5.7-recompiled NVIDIA stack — `NV_ACE_Reference` (A2F runtime + models) plus the ready-to-use `Mark`, `James` and `Claire` sample characters — and, because you run it from inside your `Plugins/` folder, places them next to FANTASIA automatically (a standalone clone instead leaves them staged in `FANTASIA/NVIDIA-UE57-Bundle/` for you to move). Enable FANTASIA + FANTASIAACE + NV_ACE_Reference (+ a character) — or pass `--enable-plugins` to do that for you — and use `UACERESTTTSComponent` / `UACEElevenLabsTTSComponent` to animate the face from synthesized speech.
+Audio2Face lives in the companion plugin `FANTASIAACE`, which drives a MetaHuman's face via NVIDIA's `NV_ACE_Reference`. The bootstrap fetches a complete, UE 5.7-recompiled NVIDIA stack — `NV_ACE_Reference` (A2F runtime + models) plus the ready-to-use `Mark`, `James` and `Claire` sample characters — and, because you run it from inside your `Plugins/` folder, places them next to FANTASIA automatically (a standalone clone instead leaves them staged in `FANTASIA/NVIDIA-UE57-Bundle/` for you to move). Enable FANTASIA + FANTASIAACE + NV_ACE_Reference (+ a character) — or pass `--enable-plugins` to do that for you — and use `UACERESTTTSComponent` / `UACEElevenLabsTTSComponent` to animate the face from synthesized speech.
 
 - **You don't need lip-sync:** run `bootstrap.bat --no-nvidia` and copy only `FANTASIA`. The core plugin works out of the box on any system.
 - **DLSS / Streamline:** not bundled — NVIDIA's RTX SDK license forbids standalone redistribution, and they aren't required for lip-sync. Install them from the Epic Marketplace if you want the rendering-performance boost.
@@ -149,7 +149,7 @@ If you skipped the GPU stack (`--no-gpu`) or your GPU is not sm_89 (RTX 40-serie
 1. Install the NVIDIA CUDA Toolkit (12.x or 13.x).
 2. Run `FANTASIA/build_whisper_cuda.bat --shared` (Windows) or `FANTASIA/build_whisper_cuda.sh --shared` (Linux). The script builds whisper.cpp as a shared library with CUDA enabled and stages `fantasia_whisper_cuda.dll` (plus its `ggml*.dll` and `cudart64_*.dll` / `cublas64_*.dll` dependencies) into `FANTASIA/Binaries/Win64/` (or `Binaries/Linux/`).
 
-You can also pass `--static` to the build script to fall back to the legacy static-link flow that compiles CUDA into `UnrealEditor-FANTASIA.dll` directly. That requires a full plugin rebuild after running the script and is no longer the default.
+Passing `--static` instead compiles CUDA directly into `UnrealEditor-FANTASIA.dll`; that path requires a full plugin rebuild and is rarely needed (the shared-library default avoids it).
 
 > **See the [Wiki](https://github.com/antori82/FANTASIA/wiki) for the current installation procedure.**
 

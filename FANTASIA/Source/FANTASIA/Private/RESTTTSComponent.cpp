@@ -2,8 +2,8 @@
  * @file RESTTTSComponent.cpp
  * @brief Implementation of URESTTTSComponent -- generic REST-based TTS.
  *
- * No NVIDIA ACE / Audio2Face code here since the 2.0 split; that
- * lives in the FANTASIAACE plugin's UACERESTTTSComponent subclass.
+ * No NVIDIA ACE / Audio2Face code here — that lives in the
+ * FANTASIAACE plugin's UACERESTTTSComponent subclass.
  */
 
 #include "RESTTTSComponent.h"
@@ -84,8 +84,8 @@ void URESTTTSComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
  * into the per-call buffer in non-streaming mode, mark synthesis
  * complete, and wake any subclass-installed consumer.
  *
- * The buffer pointer was captured directly in the HTTP closure, so we
- * write to the right buffer even when many calls share the same caller id.
+ * The buffer pointer is captured directly in the HTTP closure, so writes
+ * go to the right buffer even when many calls share the same caller id.
  */
 void URESTTTSComponent::HandleResult(FTTSData response, FString id, FAudioBuffer* Target)
 {
@@ -258,12 +258,11 @@ void URESTTTSComponent::IssueHttpRequest(FTTSSynthesisRequest Request, FAudioBuf
 	const FString RequestText = Request.OriginalText;
 	const bool bIsStreaming = Request.bStreaming;
 
-	// Per-request streaming counters, shared between the progress and
-	// completion lambdas. Used to live as member variables, but that was
-	// a parallelism bug: a second TTSSynthesize starting would reset the
-	// first request's counters, dropping or duplicating its trailing
-	// bytes. Heap-shared via TSharedRef so both closures see the same
-	// state with no contention from other in-flight requests.
+	// Per-request streaming counters, heap-shared via TSharedRef between
+	// the progress and completion lambdas so each request gets its own
+	// pair of counters. Sharing through member variables would let a
+	// second TTSSynthesize call reset the first request's counters and
+	// drop or duplicate its trailing bytes.
 	TSharedRef<int64> StreamingNumPtr = MakeShared<int64>(0);
 	TSharedRef<int64> PreviousBytesPtr = MakeShared<int64>(0);
 

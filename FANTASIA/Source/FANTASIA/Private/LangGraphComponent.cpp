@@ -251,10 +251,9 @@ void ULangGraphComponent::ProcessUpdatesEvent(const FString& Payload)
 	// NOTE: do NOT feed Content into AppendAndFlushSentences here. The
 	// `updates` event for an assistant node carries the FULL synthesized
 	// message, which `messages-tuple` already streamed token-by-token into
-	// the sentence buffer. Re-appending the whole message duplicates every
-	// sentence -- the duplicated text gets merged into one giant TTS call
-	// that re-speaks the entire turn (observed: 65 s of audio in a single
-	// "sentence" buffer when the turn was ~30 s of real content).
+	// the sentence buffer. Re-appending the whole message would duplicate
+	// every sentence and produce one oversized TTS call that re-speaks the
+	// entire turn.
 }
 
 void ULangGraphComponent::ProcessMessagesEvent(const FString& Payload)
