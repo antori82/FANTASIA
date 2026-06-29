@@ -9,9 +9,6 @@
   <p align="center"><i>Framework for Advanced Natural Tools and Applications with Social Interactive Agents</i></p>
 
   <p align="center">
-    A batteries-included Unreal Engine plugin for building Embodied Conversational Agents — speech, language, reasoning and graph data, all reachable from Blueprints.
-    <br />
-    <br />
     <a href="https://github.com/antori82/FANTASIA/wiki"><strong>Documentation Wiki »</strong></a>
     ·
     <a href="https://codeberg.org/antori/FANTASIA-LangGraphDemo">LangGraph Demo Project</a>
