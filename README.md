@@ -2,7 +2,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/antori82/FANTASIA">
-    <img src="images/Logo.jpg" alt="FANTASIA Logo" width="200" height="150">
+    <img src="images/banner_readme_1920x500.png" alt="FANTASIA">
   </a>
 
   <h3 align="center">FANTASIA</h3>
