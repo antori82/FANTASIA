@@ -87,9 +87,22 @@ if [ -f "${MODE_STAMP}" ]; then
     fi
 fi
 
+# ─── CUDA architectures (CRITICAL for a redistributable .so) ──────────────
+# ggml defaults GGML_NATIVE=ON, which compiles ONLY the build host's GPU
+# architecture (e.g. an sm_89 build box yields an 89-real cubin and NO PTX).
+# That library then ABORTS at the first kernel launch on any other arch
+# (e.g. a Blackwell sm_120) with cudaErrorNoKernelImageForDevice ->
+# GGML_ABORT -> crash. Build for a broad set of real cubins plus a virtual
+# (PTX) entry so the driver can JIT for newer GPUs. Override via
+# FANTASIA_CUDA_ARCHS if your toolkit predates an arch (CUDA < 12.8 has no 120).
+CUDA_ARCHS="${FANTASIA_CUDA_ARCHS:-75-real;80-real;86-real;89-real;90-real;120-real;120-virtual}"
+echo "CUDA architectures: ${CUDA_ARCHS}"
+
 cmake -B "${BUILD_DIR}" -S "${WHISPER_DIR}" \
     -DGGML_CUDA=ON \
     -DGGML_CUDA_FA=ON \
+    -DGGML_NATIVE=OFF \
+    -DCMAKE_CUDA_ARCHITECTURES="${CUDA_ARCHS}" \
     ${CMAKE_SHARED_FLAG} \
     -DWHISPER_BUILD_EXAMPLES=OFF \
     -DWHISPER_BUILD_TESTS=OFF \
