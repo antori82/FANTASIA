@@ -280,6 +280,15 @@ private:
 
 	// ── Audio capture internals ──────────────────────────────────────────
 
+	/**
+	 * Monotonic session counter. Incremented on every StartCapture.
+	 * Each in-flight TranscribeBuffer captures the value at submission time;
+	 * HandleTranscriptionResult ignores results whose session no longer matches.
+	 * Prevents stale background transcriptions from corrupting a fresh session.
+	 */
+	uint32 CaptureSessionId = 0;
+	uint32 InFlightTranscriptionSessionId = 0;
+
 	/** Platform audio capture handle (UE 5.6 AudioCaptureCore) */
 	TUniquePtr<Audio::FAudioCapture> AudioCapture;
 

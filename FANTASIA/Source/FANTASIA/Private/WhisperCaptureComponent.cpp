@@ -525,9 +525,15 @@ bool UWhisperCaptureComponent::StartCapture()
 {
 	if (bIsCapturing)
 	{
-		UE_LOG(LogWhisperASR, Warning, TEXT("StartCapture: already capturing."));
-		return true;
+		UE_LOG(LogWhisperASR, Warning,
+			TEXT("StartCapture: already capturing — call StopCapture/CancelCapture first."));
+		return false;
 	}
+
+	// New session — any background transcription from a prior session whose
+	// result arrives after this point will be ignored by HandleTranscriptionResult.
+	++CaptureSessionId;
+	InFlightTranscriptionSessionId = 0;
 
 	// Reset state
 	{
@@ -603,6 +609,10 @@ void UWhisperCaptureComponent::StopCapture()
 		return;
 	}
 
+	// Invalidate any in-flight transcription; its result (if it arrives later)
+	// will be discarded by HandleTranscriptionResult's session-id check.
+	++CaptureSessionId;
+
 	// Stop the audio stream first so no more callbacks arrive
 	if (AudioCapture && AudioCapture->IsStreamOpen() && AudioCapture->IsCapturing())
 	{
@@ -656,6 +666,10 @@ void UWhisperCaptureComponent::StopCapture()
 
 void UWhisperCaptureComponent::CancelCapture()
 {
+	// Invalidate any in-flight transcription so a stale result can't fire
+	// callbacks after capture is cancelled.
+	++CaptureSessionId;
+
 	if (AudioCapture && AudioCapture->IsStreamOpen() && AudioCapture->IsCapturing())
 	{
 		AudioCapture->StopStream();
@@ -771,9 +785,10 @@ void UWhisperCaptureComponent::CancelCapture()
 	}
 
 	bTranscriptionInFlight = true;
+	InFlightTranscriptionSessionId = CaptureSessionId;
 
-	UE_LOG(LogWhisperASR, Log, TEXT("Submitting %.2fs of audio for transcription."),
-		static_cast<float>(BufferCopy.Num()) / WHISPER_SAMPLE_RATE);
+	UE_LOG(LogWhisperASR, Log, TEXT("Submitting %.2fs of audio for transcription (session %u)."),
+		static_cast<float>(BufferCopy.Num()) / WHISPER_SAMPLE_RATE, CaptureSessionId);
 
 	Whisper->TranscribeAudioData(BufferCopy, TranscriptionConfig);
 }
@@ -1180,7 +1195,20 @@ float UWhisperCaptureComponent::ComputeRMS(const float* Samples, int32 Count)
 
 void UWhisperCaptureComponent::HandleTranscriptionResult(const FWhisperResult& Result)
 {
+	// Drop stale results: a previous session's transcription that finished
+	// after a new StartCapture would corrupt the new session's state
+	// (clearing AudioBuffer, broadcasting wrong text, etc.).
+	const uint32 ResultSession = InFlightTranscriptionSessionId;
+	InFlightTranscriptionSessionId = 0;
 	bTranscriptionInFlight = false;
+
+	if (ResultSession != CaptureSessionId)
+	{
+		UE_LOG(LogWhisperASR, Warning,
+			TEXT("Discarding stale transcription result (submitted session %u, current %u)."),
+			ResultSession, CaptureSessionId);
+		return;
+	}
 
 	if (!Result.bSuccess)
 	{
