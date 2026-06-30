@@ -86,9 +86,27 @@ if "%NEED_CLEAN%"=="1" (
     rmdir /S /Q "%BUILD_DIR%"
 )
 
+REM ─── CUDA architectures (CRITICAL for a redistributable DLL) ──────────
+REM ggml defaults GGML_NATIVE=ON, which makes CMake compile ONLY the build
+REM machine's GPU architecture (e.g. a 4060 build host yields 89-real cubin
+REM and NO PTX). That DLL then ABORTS at the first kernel launch on any other
+REM architecture (e.g. a Blackwell 50-series, sm_120) with
+REM cudaErrorNoKernelImageForDevice -> GGML_ABORT -> crash.
+REM
+REM Build instead for a broad set of real cubins (Turing..Blackwell) plus a
+REM virtual (PTX) entry so the driver can JIT for anything newer. Override
+REM with the FANTASIA_CUDA_ARCHS env var if your toolkit predates an arch
+REM (e.g. CUDA < 12.8 does not know 120 -- drop it).
+if not defined FANTASIA_CUDA_ARCHS (
+    set "FANTASIA_CUDA_ARCHS=75-real;80-real;86-real;89-real;90-real;120-real;120-virtual"
+)
+echo CUDA architectures: %FANTASIA_CUDA_ARCHS%
+
 cmake -B "%BUILD_DIR%" -S "%WHISPER_DIR%" ^
     -DGGML_CUDA=ON ^
     -DGGML_CUDA_FA=ON ^
+    -DGGML_NATIVE=OFF ^
+    -DCMAKE_CUDA_ARCHITECTURES="%FANTASIA_CUDA_ARCHS%" ^
     %CMAKE_SHARED_FLAG% ^
     -DWHISPER_BUILD_EXAMPLES=OFF ^
     -DWHISPER_BUILD_TESTS=OFF ^
@@ -96,6 +114,9 @@ cmake -B "%BUILD_DIR%" -S "%WHISPER_DIR%" ^
 
 if %errorlevel% neq 0 (
     echo ERROR: CMake configure failed.
+    echo If the error mentions an unknown CUDA architecture, your CUDA toolkit
+    echo is older than one listed -- set FANTASIA_CUDA_ARCHS to a supported set,
+    echo e.g.  set FANTASIA_CUDA_ARCHS=75-real;80-real;86-real;89-real;89-virtual
     exit /b 1
 )
 
