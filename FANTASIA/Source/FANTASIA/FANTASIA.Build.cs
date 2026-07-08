@@ -200,6 +200,7 @@ public class FANTASIA : ModuleRules
         // ── Check for prebuilt CUDA libraries (from build_whisper_cuda.bat/.sh) ──
         string BuildLibDir = Path.Combine(WhisperRoot, "build");
         bool bHasPrebuiltCuda = false;
+        bool bPrebuiltLibsPresent = false;
         string WhisperLib = "", GgmlLib = "", GgmlBaseLib = "", GgmlCpuLib = "", GgmlCudaLib = "";
 
         if (Target.Platform == UnrealTargetPlatform.Win64)
@@ -210,7 +211,7 @@ public class FANTASIA : ModuleRules
             GgmlBaseLib = Path.Combine(BuildLibDir, "ggml", "src", "Release", "ggml-base.lib");
             GgmlCpuLib  = Path.Combine(BuildLibDir, "ggml", "src", "Release", "ggml-cpu.lib");
             GgmlCudaLib = Path.Combine(BuildLibDir, "ggml", "src", "ggml-cuda", "Release", "ggml-cuda.lib");
-            bHasPrebuiltCuda = File.Exists(WhisperLib) && File.Exists(GgmlCudaLib);
+            bPrebuiltLibsPresent = File.Exists(WhisperLib) && File.Exists(GgmlCudaLib);
         }
         else if (Target.Platform == UnrealTargetPlatform.Linux)
         {
@@ -220,7 +221,26 @@ public class FANTASIA : ModuleRules
             GgmlBaseLib = Path.Combine(BuildLibDir, "ggml", "src", "libggml-base.a");
             GgmlCpuLib  = Path.Combine(BuildLibDir, "ggml", "src", "libggml-cpu.a");
             GgmlCudaLib = Path.Combine(BuildLibDir, "ggml", "src", "ggml-cuda", "libggml-cuda.a");
-            bHasPrebuiltCuda = File.Exists(WhisperLib) && File.Exists(GgmlCudaLib);
+            bPrebuiltLibsPresent = File.Exists(WhisperLib) && File.Exists(GgmlCudaLib);
+        }
+
+        // Linking the prebuilt whisper/ggml-cuda libs bakes CUDA into the plugin DLL
+        // (and, for a SHARED whisper build, gives it a hard whisper.dll import). That
+        // must NEVER happen by accident: a stray whisper.lib left in build/ after
+        // `build_whisper_cuda.bat --shared` would otherwise silently flip the shipped,
+        // CPU-only DLL into a CUDA/whisper.dll-dependent one (regression fixed 2026-07).
+        // So require an EXPLICIT opt-in env var; by default we always take the
+        // CPU-static staged-source path, regardless of what sits in build/.
+        bool bOptInPrebuiltCuda =
+            Environment.GetEnvironmentVariable("FANTASIA_WHISPER_PREBUILT_CUDA") == "1";
+        bHasPrebuiltCuda = bOptInPrebuiltCuda && bPrebuiltLibsPresent;
+
+        if (bPrebuiltLibsPresent && !bOptInPrebuiltCuda)
+        {
+            System.Console.WriteLine("[FANTASIA-Whisper] Prebuilt whisper/ggml-cuda libs found under " +
+                BuildLibDir + " but FANTASIA_WHISPER_PREBUILT_CUDA!=1 -> ignoring them and building CPU " +
+                "whisper from staged source. Set FANTASIA_WHISPER_PREBUILT_CUDA=1 to link the prebuilt " +
+                "CUDA libs (local/dev build only -- NOT for the redistributed DLL).");
         }
 
         if (bHasPrebuiltCuda)
