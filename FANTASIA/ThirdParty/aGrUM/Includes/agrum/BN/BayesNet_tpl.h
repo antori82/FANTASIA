@@ -1,22 +1,43 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
+#pragma once
 
 
 /**
@@ -26,39 +47,37 @@
  * @author Pierre-Henri WUILLEMIN(_at_LIP6) and Lionel TORTI
  */
 
+#include <algorithm>
 #include <limits>
 #include <set>
-#include <algorithm>
 
+#include <agrum/base/core/debug.h>
+#include <agrum/base/multidim/aggregators/amplitude.h>
+#include <agrum/base/multidim/aggregators/and.h>
+#include <agrum/base/multidim/aggregators/count.h>
+#include <agrum/base/multidim/aggregators/exists.h>
+#include <agrum/base/multidim/aggregators/forall.h>
+#include <agrum/base/multidim/aggregators/max.h>
+#include <agrum/base/multidim/aggregators/median.h>
+#include <agrum/base/multidim/aggregators/min.h>
+#include <agrum/base/multidim/aggregators/or.h>
+#include <agrum/base/multidim/aggregators/sum.h>
+#include <agrum/base/multidim/ICIModels/multiDimLogit.h>
+#include <agrum/base/multidim/ICIModels/multiDimNoisyAND.h>
+#include <agrum/base/multidim/ICIModels/multiDimNoisyORCompound.h>
+#include <agrum/base/multidim/ICIModels/multiDimNoisyORNet.h>
+#include <agrum/base/variables/allDiscreteVariables.h>
 #include <agrum/BN/BayesNet.h>
-
-#include <agrum/tools/variables/allDiscreteVariables.h>
-
-#include <agrum/tools/multidim/aggregators/amplitude.h>
-#include <agrum/tools/multidim/aggregators/and.h>
-#include <agrum/tools/multidim/aggregators/count.h>
-#include <agrum/tools/multidim/aggregators/exists.h>
-#include <agrum/tools/multidim/aggregators/forall.h>
-#include <agrum/tools/multidim/aggregators/max.h>
-#include <agrum/tools/multidim/aggregators/median.h>
-#include <agrum/tools/multidim/aggregators/min.h>
-#include <agrum/tools/multidim/aggregators/or.h>
-#include <agrum/tools/multidim/aggregators/sum.h>
-
-#include <agrum/tools/multidim/ICIModels/multiDimNoisyAND.h>
-#include <agrum/tools/multidim/ICIModels/multiDimNoisyORCompound.h>
-#include <agrum/tools/multidim/ICIModels/multiDimNoisyORNet.h>
-
-#include <agrum/tools/multidim/ICIModels/multiDimLogit.h>
-
 #include <agrum/BN/generator/simpleCPTGenerator.h>
-#include <agrum/tools/core/utils_string.h>
+
+#include <agrum/base/core/utils_string.h>
 
 namespace gum {
   template < typename GUM_SCALAR >
-  NodeId
-     build_node(gum::BayesNet< GUM_SCALAR >& bn, std::string node, gum::Size default_domain_size) {
-    auto v = fastVariable< GUM_SCALAR >(node, default_domain_size);
+  NodeId build_node(gum::BayesNet< GUM_SCALAR >& bn,
+                    const std::string&           node,
+                    const std::string&           default_domain) {
+    auto v = fastVariable< GUM_SCALAR >(node, default_domain);
 
     NodeId res;
     try {
@@ -70,6 +89,12 @@ namespace gum {
   template < typename GUM_SCALAR >
   BayesNet< GUM_SCALAR > BayesNet< GUM_SCALAR >::fastPrototype(const std::string& dotlike,
                                                                Size               domainSize) {
+    return fastPrototype(dotlike, "[" + std::to_string(domainSize) + "]");
+  }
+
+  template < typename GUM_SCALAR >
+  BayesNet< GUM_SCALAR > BayesNet< GUM_SCALAR >::fastPrototype(const std::string& dotlike,
+                                                               const std::string& domain) {
     gum::BayesNet< GUM_SCALAR > bn;
 
     for (const auto& chaine: split(remove_newline(dotlike), ";")) {
@@ -78,8 +103,7 @@ namespace gum {
       for (const auto& souschaine: split(chaine, "->")) {
         bool forward = true;
         for (auto& node: split(souschaine, "<-")) {
-          trim(node);
-          auto idVar = build_node(bn, node, domainSize);
+          auto idVar = build_node(bn, node, domain);
           if (notfirst) {
             if (forward) {
               bn.addArc(lastId, idVar);
@@ -115,7 +139,7 @@ namespace gum {
       IBayesNet< GUM_SCALAR >(source), _varMap_(source._varMap_) {
     GUM_CONS_CPY(BayesNet)
 
-    _copyPotentials_(source);
+    _copyTensors_(source);
   }
 
   template < typename GUM_SCALAR >
@@ -124,8 +148,8 @@ namespace gum {
       IBayesNet< GUM_SCALAR >::operator=(source);
       _varMap_ = source._varMap_;
 
-      _clearPotentials_();
-      _copyPotentials_(source);
+      _clearTensors_();
+      _copyTensors_(source);
     }
 
     return *this;
@@ -153,15 +177,14 @@ namespace gum {
   INLINE void BayesNet< GUM_SCALAR >::changeVariableLabel(NodeId             id,
                                                           const std::string& old_label,
                                                           const std::string& new_label) {
-    if (variable(id).varType() != VarType::Labelized)
+    if (variable(id).varType() != VarType::LABELIZED)
       GUM_ERROR(NotFound, "Variable " << id << " is not a LabelizedVariable.")
 
     LabelizedVariable const* var
-       = dynamic_cast< LabelizedVariable* >(const_cast< DiscreteVariable* >(&variable(id)));
+        = dynamic_cast< LabelizedVariable* >(const_cast< DiscreteVariable* >(&variable(id)));
 
     var->changeLabel(var->posLabel(old_label), new_label);
   }
-
 
   template < typename GUM_SCALAR >
   INLINE NodeId BayesNet< GUM_SCALAR >::nodeId(const DiscreteVariable& var) const {
@@ -201,7 +224,6 @@ namespace gum {
 
     try {
       return add(var, ptr, id);
-
     } catch (Exception const&) {
       delete ptr;
       throw;
@@ -215,7 +237,7 @@ namespace gum {
     _varMap_.insert(id, var);
     this->dag_.addNodeWithId(id);
 
-    auto cpt = new Potential< GUM_SCALAR >(aContent);
+    auto cpt = new Tensor< GUM_SCALAR >(aContent);
     (*cpt) << variable(id);
     _probaMap_.insert(id, cpt);
     return id;
@@ -228,12 +250,12 @@ namespace gum {
 
   template < typename GUM_SCALAR >
   INLINE const DiscreteVariable&
-     BayesNet< GUM_SCALAR >::variableFromName(const std::string& name) const {
+      BayesNet< GUM_SCALAR >::variableFromName(const std::string& name) const {
     return _varMap_.variableFromName(name);
   }
 
   template < typename GUM_SCALAR >
-  INLINE const Potential< GUM_SCALAR >& BayesNet< GUM_SCALAR >::cpt(NodeId varId) const {
+  INLINE const Tensor< GUM_SCALAR >& BayesNet< GUM_SCALAR >::cpt(NodeId varId) const {
     return *(_probaMap_[varId]);
   }
 
@@ -331,7 +353,7 @@ namespace gum {
     // with the same notations as Shachter (1986), "evaluating influence
     // diagrams", p.878, we shall first compute the product of probabilities:
     // pi_j^old (x_j | x_c^old(j) ) * pi_i^old (x_i | x_c^old(i) )
-    Potential< GUM_SCALAR > prod{cpt(tail) * cpt(head)};
+    Tensor< GUM_SCALAR > prod{cpt(tail) * cpt(head)};
 
     // modify the topology of the graph: add to tail all the parents of head
     // and add to head all the parents of tail
@@ -360,23 +382,22 @@ namespace gum {
     endTopologyTransformation();
 
     // update the conditional distributions of head and tail
-    Set< const DiscreteVariable* > del_vars;
+    gum::VariableSet del_vars;
     del_vars << &(variable(tail));
-    Potential< GUM_SCALAR > new_cpt_head = prod.margSumOut(del_vars).putFirst(&variable(head));
+    Tensor< GUM_SCALAR > new_cpt_head = prod.sumOut(del_vars).putFirst(&variable(head));
 
-    auto& cpt_head = const_cast< Potential< GUM_SCALAR >& >(cpt(head));
+    auto& cpt_head = const_cast< Tensor< GUM_SCALAR >& >(cpt(head));
     cpt_head       = std::move(new_cpt_head);
 
-    Potential< GUM_SCALAR > new_cpt_tail{(prod / cpt_head).putFirst(&variable(tail))};
-    auto&                   cpt_tail = const_cast< Potential< GUM_SCALAR >& >(cpt(tail));
-    cpt_tail                         = std::move(new_cpt_tail);
+    Tensor< GUM_SCALAR > new_cpt_tail{(prod / cpt_head).putFirst(&variable(tail))};
+    auto&                cpt_tail = const_cast< Tensor< GUM_SCALAR >& >(cpt(tail));
+    cpt_tail                      = std::move(new_cpt_tail);
   }
 
   template < typename GUM_SCALAR >
   INLINE void BayesNet< GUM_SCALAR >::reverseArc(NodeId tail, NodeId head) {
     reverseArc(Arc(tail, head));
   }
-
 
   //==============================================
   // Aggregators
@@ -542,10 +563,10 @@ namespace gum {
       _probaMap_[node]->endMultipleChanges();
   }
 
-  /// clear all potentials
+  /// clear all tensors
   template < typename GUM_SCALAR >
-  void BayesNet< GUM_SCALAR >::_clearPotentials_() {
-    // Removing previous potentials
+  void BayesNet< GUM_SCALAR >::_clearTensors_() {
+    // Removing previous tensors
     for (const auto& elt: _probaMap_) {
       delete elt.second;
     }
@@ -553,14 +574,14 @@ namespace gum {
     _probaMap_.clear();
   }
 
-  /// copy of potentials from a BN to another, using names of vars as ref.
+  /// copy of tensors from a BN to another, using names of vars as ref.
   template < typename GUM_SCALAR >
-  void BayesNet< GUM_SCALAR >::_copyPotentials_(const BayesNet< GUM_SCALAR >& source) {
-    // Copying potentials
+  void BayesNet< GUM_SCALAR >::_copyTensors_(const BayesNet< GUM_SCALAR >& source) {
+    // Copying tensors
 
     for (const auto& src: source._probaMap_) {
       // First we build the node's CPT
-      auto copy_array = new Potential< GUM_SCALAR >();
+      auto copy_array = new Tensor< GUM_SCALAR >();
       copy_array->beginMultipleChanges();
       for (gum::Idx i = 0; i < src.second->nbrDim(); i++) {
         (*copy_array) << variableFromName(src.second->variable(i).name());
@@ -587,35 +608,95 @@ namespace gum {
   }
 
   template < typename GUM_SCALAR >
-  void BayesNet< GUM_SCALAR >::changePotential(NodeId id, Potential< GUM_SCALAR >* newPot) {
+  void BayesNet< GUM_SCALAR >::changeTensor(NodeId id, Tensor< GUM_SCALAR >* newPot) {
     if (cpt(id).nbrDim() != newPot->nbrDim()) {
       GUM_ERROR(OperationNotAllowed,
-                "cannot exchange potentials with different "
+                "cannot exchange tensors with different "
                 "dimensions for variable with id "
-                   << id)
+                    << id)
     }
 
     for (Idx i = 0; i < cpt(id).nbrDim(); i++) {
       if (&cpt(id).variable(i) != &(newPot->variable(i))) {
         GUM_ERROR(OperationNotAllowed,
-                  "cannot exchange potentials because, for variable with id "
-                     << id << ", dimension " << i << " differs. ")
+                  "cannot exchange tensors because, for variable with id " << id << ", dimension "
+                                                                           << i << " differs. ")
       }
     }
 
-    _unsafeChangePotential_(id, newPot);
+    _unsafeChangeTensor_(id, newPot);
   }
 
   template < typename GUM_SCALAR >
-  void BayesNet< GUM_SCALAR >::_unsafeChangePotential_(NodeId id, Potential< GUM_SCALAR >* newPot) {
+  void BayesNet< GUM_SCALAR >::_unsafeChangeTensor_(NodeId id, Tensor< GUM_SCALAR >* newPot) {
     delete _probaMap_[id];
     _probaMap_[id] = newPot;
   }
 
   template < typename GUM_SCALAR >
-  void BayesNet< GUM_SCALAR >::changePotential(const std::string&       name,
-                                               Potential< GUM_SCALAR >* newPot) {
-    changePotential(idFromName(name), newPot);
+  void BayesNet< GUM_SCALAR >::changeTensor(const std::string& name, Tensor< GUM_SCALAR >* newPot) {
+    changeTensor(idFromName(name), newPot);
   }
 
+  template < typename GUM_SCALAR >
+  BayesNet< GUM_SCALAR >
+      BayesNet< GUM_SCALAR >::contextualize(const gum::Instantiation& observations,
+                                            const gum::Instantiation& interventions) const {
+    Instantiation all;
+    for (gum::Idx i = 0; i < observations.nbrDim(); i++) {
+      if (interventions.contains(observations.variable(i))) {
+        GUM_ERROR(ArgumentError,
+                  "Cannot have both an observation and an intervention on the same variable")
+      }
+      all.add(observations.variable(i));
+    }
+    for (gum::Idx i = 0; i < observations.nbrDim(); i++) {
+      all.add(interventions.variable(i));
+    }
+    all.setVals(observations);
+    all.setVals(interventions);
+
+    NodeSet cpt_changed;
+
+    gum::BayesNet< GUM_SCALAR > bn(*this);
+
+    bn.beginTopologyTransformation();
+    for (gum::Idx i = 0; i < observations.nbrDim(); i++) {
+      const std::string& nam = observations.variable(i).name();
+      const gum::NodeId  nod = this->idFromName(nam);
+      for (gum::NodeId child: this->children(nod)) {
+        bn.eraseArc(bn.idFromName(nam), bn.idFromName(this->variable(child).name()));
+      }
+    }
+    for (gum::Idx i = 0; i < interventions.nbrDim(); i++) {
+      const std::string& nam = interventions.variable(i).name();
+      const gum::NodeId  nod = this->idFromName(nam);
+      for (gum::NodeId child: this->children(nod)) {
+        bn.eraseArc(bn.idFromName(nam), bn.idFromName(this->variable(child).name()));
+      }
+      for (gum::NodeId par: this->parents(nod)) {
+        const auto v1 = bn.idFromName(this->variable(par).name());
+        const auto v2 = bn.idFromName(nam);
+        if (bn.existsArc(v1, v2)) bn.eraseArc(v1, v2);
+      }
+      cpt_changed.insert(bn.idFromName(nam));
+      bn.cpt(bn.idFromName(nam))
+          .fillWith(Tensor< GUM_SCALAR >::deterministicTensor(bn.variable(bn.idFromName(nam)),
+                                                              interventions.val(i)));
+    }
+    bn.endTopologyTransformation();
+
+    for (gum::Idx i = 0; i < all.nbrDim(); i++) {
+      const gum::NodeId nod = this->idFromName(all.variable(i).name());
+      for (gum::NodeId child: this->children(nod)) {
+        if (!cpt_changed.contains(child)) {
+          cpt_changed.insert(child);
+          bn.cpt(bn.idFromName(this->variable(child).name()))
+              .fillWith(this->cpt(child).extract(all));
+        }
+      }
+    }
+
+    return bn;
+  }
 } /* namespace gum */

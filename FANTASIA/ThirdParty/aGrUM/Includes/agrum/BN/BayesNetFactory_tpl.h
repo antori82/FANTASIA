@@ -1,22 +1,43 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
+#pragma once
 
 
 /**
@@ -55,9 +76,8 @@ namespace gum {
   // The copy will have an exact copy of the constructed BayesNet in source.
   template < typename GUM_SCALAR >
   INLINE
-     BayesNetFactory< GUM_SCALAR >::BayesNetFactory(const BayesNetFactory< GUM_SCALAR >& source) :
-      _parents_(nullptr),
-      _impl_(nullptr), _bn_(nullptr) {
+      BayesNetFactory< GUM_SCALAR >::BayesNetFactory(const BayesNetFactory< GUM_SCALAR >& source) :
+      _parents_(nullptr), _impl_(nullptr), _bn_(nullptr) {
     GUM_CONS_CPY(BayesNetFactory);
 
     if (source.state() != factory_state::NONE) {
@@ -117,7 +137,7 @@ namespace gum {
   // @throw NotFound Raised if no variable matches the name.
   template < typename GUM_SCALAR >
   INLINE const DiscreteVariable&
-     BayesNetFactory< GUM_SCALAR >::variable(const std::string& name) const {
+      BayesNetFactory< GUM_SCALAR >::variable(const std::string& name) const {
     try {
       return _bn_->variable(variableId(name));
     } catch (NotFound const&) { GUM_ERROR(NotFound, name) }
@@ -207,15 +227,15 @@ namespace gum {
       _illegalStateError_("variableType");
     } else {
       switch (type) {
-        case VarType::Discretized: _stringBag_[2] = "D"; break;
-        case VarType::Range: _stringBag_[2] = "R"; break;
-        case VarType::Integer: _stringBag_[2] = "I"; break;
-        case VarType::Labelized: _stringBag_[2] = "L"; break;
-        case VarType::Continuous:
+        case VarType::DISCRETIZED : _stringBag_[2] = "D"; break;
+        case VarType::RANGE : _stringBag_[2] = "R"; break;
+        case VarType::INTEGER : _stringBag_[2] = "I"; break;
+        case VarType::LABELIZED : _stringBag_[2] = "L"; break;
+        case VarType::CONTINUOUS :
           GUM_ERROR(OperationNotAllowed,
                     "Continuous variable (" + _stringBag_[0]
-                       + ") are not supported in Bayesian networks.")
-        default: GUM_ERROR(OperationNotAllowed, "Unknown type for (" + _stringBag_[0] + ")")
+                        + ") are not supported in Bayesian networks.")
+        default : GUM_ERROR(OperationNotAllowed, "Unknown type for (" + _stringBag_[0] + ")")
       }
     }
   }
@@ -251,7 +271,7 @@ namespace gum {
   template < typename GUM_SCALAR >
   INLINE void BayesNetFactory< GUM_SCALAR >::addMax(const long& max) {
     if (state() != factory_state::VARIABLE) {
-      _illegalStateError_("addMin");
+      _illegalStateError_("addMax");
     } else {
       _stringBag_.push_back(std::to_string(max));
     }
@@ -269,9 +289,9 @@ namespace gum {
     }
   }
 
-  // @brief Defines the implementation to use for Potential.
+  // @brief Defines the implementation to use for Tensor.
   // @warning The implementation must be empty.
-  // @warning The pointer is always delegated to Potential! No copy of it
+  // @warning The pointer is always delegated to Tensor! No copy of it
   //          is made.
   // @todo When copy of a MultiDimImplementation is available use a copy
   //       behaviour for this method.
@@ -281,7 +301,7 @@ namespace gum {
   //                            current variable.
   template < typename GUM_SCALAR >
   INLINE void
-     BayesNetFactory< GUM_SCALAR >::setVariableCPTImplementation(MultiDimAdressable* adressable) {
+      BayesNetFactory< GUM_SCALAR >::setVariableCPTImplementation(MultiDimAdressable* adressable) {
     auto impl = dynamic_cast< MultiDimImplementation< GUM_SCALAR >* >(adressable);
 
     if (state() != factory_state::VARIABLE) {
@@ -309,7 +329,7 @@ namespace gum {
 
       // if the current variable is a LabelizedVariable
       if (_stringBag_[2] == "L") {
-        auto l = new LabelizedVariable(_stringBag_[0], (_bar_flag_) ? _stringBag_[1] : "", 0);
+        const auto l = new LabelizedVariable(_stringBag_[0], (_bar_flag_) ? _stringBag_[1] : "", 0);
 
         for (size_t i = 3; i < _stringBag_.size(); ++i) {
           l->addLabel(_stringBag_[i]);
@@ -324,14 +344,14 @@ namespace gum {
           domain.push_back(std::stoi(_stringBag_[i]));
         }
 
-        IntegerVariable* v
-           = new IntegerVariable(_stringBag_[0], _bar_flag_ ? _stringBag_[1] : "", domain);
+        const auto v
+            = new IntegerVariable(_stringBag_[0], _bar_flag_ ? _stringBag_[1] : "", domain);
         var = v;
       } else if (_stringBag_[2] == "R") {
-        RangeVariable* r = new RangeVariable(_stringBag_[0],
-                                             _bar_flag_ ? _stringBag_[1] : "",
-                                             std::stol(_stringBag_[3]),
-                                             std::stol(_stringBag_[4]));
+        const auto r = new RangeVariable(_stringBag_[0],
+                                         _bar_flag_ ? _stringBag_[1] : "",
+                                         std::stol(_stringBag_[3]),
+                                         std::stol(_stringBag_[4]));
 
         var = r;
         // if the current variable is a DiscretizedVariable
@@ -344,6 +364,10 @@ namespace gum {
         }
 
         var = d;
+      }
+
+      if (var == nullptr) {
+        GUM_ERROR(OperationNotAllowed, "Unknown variable type for variable " + _stringBag_[0])
       }
 
       if (_impl_ != 0) {
@@ -443,7 +467,7 @@ namespace gum {
   // @param var The concerned variable's name.
   template < typename GUM_SCALAR >
   INLINE void
-     BayesNetFactory< GUM_SCALAR >::startRawProbabilityDeclaration(const std::string& var) {
+      BayesNetFactory< GUM_SCALAR >::startRawProbabilityDeclaration(const std::string& var) {
     if (state() != factory_state::NONE) {
       _illegalStateError_("startRawProbabilityDeclaration");
     } else {
@@ -465,9 +489,9 @@ namespace gum {
   // [1, 1, ..., 1, 0], [1, 1, ..., 1, 1].
   // @param rawTable The raw table.
   template < typename GUM_SCALAR >
-  INLINE void
-     BayesNetFactory< GUM_SCALAR >::rawConditionalTable(const std::vector< std::string >& variables,
-                                                        const std::vector< float >& rawTable) {
+  INLINE void BayesNetFactory< GUM_SCALAR >::rawConditionalTable(
+      const std::vector< std::string >& variables,
+      const std::vector< float >&       rawTable) {
     if (state() != factory_state::RAW_CPT) {
       _illegalStateError_("rawConditionalTable");
     } else {
@@ -477,12 +501,13 @@ namespace gum {
 
   template < typename GUM_SCALAR >
   INLINE void BayesNetFactory< GUM_SCALAR >::_fillProbaWithValuesTable_(
-     const std::vector< std::string >& variables,
-     const std::vector< float >&       rawTable) {
-    const Potential< GUM_SCALAR >& table = _bn_->cpt(_varNameMap_[_stringBag_[0]]);
-    Instantiation                  cptInst(table);
+      const std::vector< std::string >& variables,
+      const std::vector< float >&       rawTable) {
+    const Tensor< GUM_SCALAR >& table = _bn_->cpt(_varNameMap_[_stringBag_[0]]);
+    Instantiation               cptInst(table);
 
     List< const DiscreteVariable* > varList;
+    table.fillWith(GUM_SCALAR(0.0));
 
     for (size_t i = 0; i < variables.size(); ++i) {
       varList.pushBack(&(_bn_->variable(_varNameMap_[variables[i]])));
@@ -497,26 +522,19 @@ namespace gum {
       modCounter.push_back(Idx(0));
     }
 
-    Idx j = 0;
-
-    do {
+    for (Idx j = 0; j < rawTable.size(); j++) {
       for (NodeId i = 0; i < nbrVar; i++) {
         cptInst.chgVal(*(varList[i]), modCounter[i]);
       }
 
-      if (j < rawTable.size()) {
-        table.set(cptInst, (GUM_SCALAR)rawTable[j]);
-      } else {
-        table.set(cptInst, (GUM_SCALAR)0);
-      }
-
-      j++;
-    } while (_increment_(modCounter, varList));
+      table.set(cptInst, static_cast< GUM_SCALAR >(rawTable[j]));
+      if (!_increment_(modCounter, varList)) { break; }   // too many values (just not read)
+    }
   }
 
   template < typename GUM_SCALAR >
   INLINE void
-     BayesNetFactory< GUM_SCALAR >::rawConditionalTable(const std::vector< float >& rawTable) {
+      BayesNetFactory< GUM_SCALAR >::rawConditionalTable(const std::vector< float >& rawTable) {
     if (state() != factory_state::RAW_CPT) {
       _illegalStateError_("rawConditionalTable");
     } else {
@@ -526,8 +544,8 @@ namespace gum {
 
   template < typename GUM_SCALAR >
   INLINE void BayesNetFactory< GUM_SCALAR >::_fillProbaWithValuesTable_(
-     const std::vector< float >& rawTable) {
-    const Potential< GUM_SCALAR >& table = _bn_->cpt(_varNameMap_[_stringBag_[0]]);
+      const std::vector< float >& rawTable) {
+    const Tensor< GUM_SCALAR >& table = _bn_->cpt(_varNameMap_[_stringBag_[0]]);
 
     Instantiation cptInst(table);
 
@@ -538,7 +556,9 @@ namespace gum {
 
     for (cptInst.setFirstVar(first); !cptInst.end(); cptInst.incVar(first)) {
       for (cptInst.setFirstNotVar(first); !cptInst.end(); cptInst.incNotVar(first))
-        table.set(cptInst, (j < rawTable.size()) ? (GUM_SCALAR)rawTable[j++] : (GUM_SCALAR)0);
+        table.set(cptInst,
+                  (j < rawTable.size()) ? static_cast< GUM_SCALAR >(rawTable[j++])
+                                        : static_cast< GUM_SCALAR >(0));
 
       cptInst.unsetEnd();
     }
@@ -546,8 +566,8 @@ namespace gum {
 
   template < typename GUM_SCALAR >
   INLINE bool
-     BayesNetFactory< GUM_SCALAR >::_increment_(std::vector< gum::Idx >&         modCounter,
-                                                List< const DiscreteVariable* >& varList) const {
+      BayesNetFactory< GUM_SCALAR >::_increment_(std::vector< gum::Idx >&         modCounter,
+                                                 List< const DiscreteVariable* >& varList) const {
     bool last = true;
 
     for (NodeId j = 0; j < modCounter.size(); j++) {
@@ -592,7 +612,7 @@ namespace gum {
   // Tells the factory that we're starting a factorized declaration.
   template < typename GUM_SCALAR >
   INLINE void
-     BayesNetFactory< GUM_SCALAR >::startFactorizedProbabilityDeclaration(const std::string& var) {
+      BayesNetFactory< GUM_SCALAR >::startFactorizedProbabilityDeclaration(const std::string& var) {
     if (state() != factory_state::NONE) {
       _illegalStateError_("startFactorizedProbabilityDeclaration");
     } else {
@@ -669,8 +689,8 @@ namespace gum {
   // modalities of the current variable, we don't use the supplementary values and
   // we fill by 0 the missing values.
   template < typename GUM_SCALAR >
-  INLINE void
-     BayesNetFactory< GUM_SCALAR >::setVariableValuesUnchecked(const std::vector< float >& values) {
+  INLINE void BayesNetFactory< GUM_SCALAR >::setVariableValuesUnchecked(
+      const std::vector< float >& values) {
     if (state() != factory_state::FACT_ENTRY) {
       _illegalStateError_("setVariableValues");
     } else {
@@ -692,9 +712,9 @@ namespace gum {
         // Filling the variable's table.
         for (inst.setFirstIn(inst_default); !inst.end(); inst.incIn(inst_default)) {
           (_bn_->cpt(varId))
-             .set(inst,
-                  inst.val(var) < values.size() ? (GUM_SCALAR)values[inst.val(var)]
-                                                : (GUM_SCALAR)0);
+              .set(inst,
+                   inst.val(var) < values.size() ? static_cast< GUM_SCALAR >(values[inst.val(var)])
+                                                 : static_cast< GUM_SCALAR >(0));
         }
       } else {
         Instantiation inst(_bn_->cpt(_varNameMap_[var.name()]));
@@ -706,9 +726,10 @@ namespace gum {
 
           for (inst.setFirstOut(var_inst); !inst.end(); inst.incOut(var_inst)) {
             (_bn_->cpt(varId))
-               .set(inst,
-                    inst.val(var) < values.size() ? (GUM_SCALAR)values[inst.val(var)]
-                                                  : (GUM_SCALAR)0);
+                .set(inst,
+                     inst.val(var) < values.size()
+                         ? static_cast< GUM_SCALAR >(values[inst.val(var)])
+                         : static_cast< GUM_SCALAR >(0));
           }
         }
       }
@@ -792,7 +813,7 @@ namespace gum {
   INLINE void BayesNetFactory< GUM_SCALAR >::setVariableCPT(const std::string&  varName,
                                                             MultiDimAdressable* table,
                                                             bool                redefineParents) {
-    auto pot = dynamic_cast< Potential< GUM_SCALAR >* >(table);
+    auto pot = dynamic_cast< Tensor< GUM_SCALAR >* >(table);
 
     if (state() != factory_state::NONE) {
       _illegalStateError_("setVariableCPT");
@@ -813,7 +834,7 @@ namespace gum {
         }
 
         // CPT are created when a variable is added.
-        _bn_->_unsafeChangePotential_(varId, pot);
+        _bn_->_unsafeChangeTensor_(varId, pot);
       }
     }
   }
@@ -826,42 +847,42 @@ namespace gum {
     msg += ") in state ";
 
     switch (state()) {
-      case factory_state::NONE: {
+      case factory_state::NONE : {
         msg += "NONE";
         break;
       }
 
-      case factory_state::NETWORK: {
+      case factory_state::NETWORK : {
         msg += "NETWORK";
         break;
       }
 
-      case factory_state::VARIABLE: {
+      case factory_state::VARIABLE : {
         msg += "VARIABLE";
         break;
       }
 
-      case factory_state::PARENTS: {
+      case factory_state::PARENTS : {
         msg += "PARENTS";
         break;
       }
 
-      case factory_state::RAW_CPT: {
+      case factory_state::RAW_CPT : {
         msg += "RAW_CPT";
         break;
       }
 
-      case factory_state::FACT_CPT: {
+      case factory_state::FACT_CPT : {
         msg += "FACT_CPT";
         break;
       }
 
-      case factory_state::FACT_ENTRY: {
+      case factory_state::FACT_ENTRY : {
         msg += "FACT_ENTRY";
         break;
       }
 
-      default: {
+      default : {
         msg += "Unknown state";
       }
     }
@@ -902,8 +923,8 @@ namespace gum {
   // Sub method of setVariableCPT() which redefine the BayesNet's DAG with
   // respect to table.
   template < typename GUM_SCALAR >
-  INLINE void BayesNetFactory< GUM_SCALAR >::_setCPTAndParents_(const DiscreteVariable&  var,
-                                                                Potential< GUM_SCALAR >* table) {
+  INLINE void BayesNetFactory< GUM_SCALAR >::_setCPTAndParents_(const DiscreteVariable& var,
+                                                                Tensor< GUM_SCALAR >*   table) {
     NodeId varId = _varNameMap_[var.name()];
     _bn_->dag_.eraseParents(varId);
 
@@ -915,7 +936,7 @@ namespace gum {
     }
 
     // CPT are created when a variable is added.
-    _bn_->_unsafeChangePotential_(varId, table);
+    _bn_->_unsafeChangeTensor_(varId, table);
   }
 
   // Reset the different parts used to constructed the BayesNet.

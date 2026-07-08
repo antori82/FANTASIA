@@ -1,22 +1,43 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
+#pragma once
 
 
 /**
@@ -55,9 +76,9 @@ namespace gum {
         typename PRMInference< GUM_SCALAR >::Chain chain = std::make_pair(i, &(i->get(n)));
 
         if (_inf_->hasEvidence(chain)) {
-          const Potential< GUM_SCALAR >* e = _inf_->evidence(i)[n];
-          Instantiation                  inst(e);
-          Size                           count = 0;
+          const Tensor< GUM_SCALAR >* e = _inf_->evidence(i)[n];
+          Instantiation               inst(e);
+          Size                        count = 0;
 
           for (inst.setFirst(); !inst.end(); inst.inc()) {
             if ((e->get(inst) == (GUM_SCALAR)1.0)) ++count;
@@ -95,7 +116,7 @@ namespace gum {
 
       // Sending message to parents
       switch (i->type().get(n).elt_type()) {
-        case PRMClassElement< GUM_SCALAR >::prm_slotchain: {
+        case PRMClassElement< GUM_SCALAR >::prm_slotchain : {
           if (!_getMark_(marks, i, n).first) {
             _getMark_(marks, i, n).first = true;
 
@@ -113,8 +134,8 @@ namespace gum {
           break;
         }
 
-        case PRMClassElement< GUM_SCALAR >::prm_aggregate:
-        case PRMClassElement< GUM_SCALAR >::prm_attribute: {
+        case PRMClassElement< GUM_SCALAR >::prm_aggregate :
+        case PRMClassElement< GUM_SCALAR >::prm_attribute : {
           if (!_getMark_(marks, i, n).first) {
             _getMark_(marks, i, n).first = true;
 
@@ -144,7 +165,7 @@ namespace gum {
           break;
         }
 
-        default: {
+        default : {
           // We shouldn't reach any other PRMClassElement<GUM_DATA> than
           // PRMAttribute
           // or
@@ -229,8 +250,8 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     std::string
-       StructuredBayesBall< GUM_SCALAR >::_buildHashKey_(const PRMInstance< GUM_SCALAR >* i,
-                                                         Set< NodeId >& req_nodes) {
+        StructuredBayesBall< GUM_SCALAR >::_buildHashKey_(const PRMInstance< GUM_SCALAR >* i,
+                                                          Set< NodeId >& req_nodes) {
       std::stringstream sBuff;
       sBuff << i->type().name();
 
@@ -242,22 +263,20 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     INLINE StructuredBayesBall< GUM_SCALAR >::StructuredBayesBall(
-       const PRMInference< GUM_SCALAR >& inference) :
-        _inf_(&inference) {
+        const PRMInference< GUM_SCALAR >& inference) : _inf_(&inference) {
       GUM_CONSTRUCTOR(StructuredBayesBall);
     }
 
     template < typename GUM_SCALAR >
     INLINE StructuredBayesBall< GUM_SCALAR >::StructuredBayesBall(
-       const StructuredBayesBall< GUM_SCALAR >& source) :
-        _inf_(0) {
+        const StructuredBayesBall< GUM_SCALAR >& source) : _inf_(0) {
       GUM_CONS_CPY(StructuredBayesBall);
       GUM_ERROR(FatalError, "Not allowed.")
     }
 
     template < typename GUM_SCALAR >
     INLINE StructuredBayesBall< GUM_SCALAR >& StructuredBayesBall< GUM_SCALAR >::operator=(
-       const StructuredBayesBall< GUM_SCALAR >& source) {
+        const StructuredBayesBall< GUM_SCALAR >& source) {
       GUM_ERROR(FatalError, "Not allowed.")
     }
 
@@ -274,14 +293,14 @@ namespace gum {
     }
 
     template < typename GUM_SCALAR >
-    INLINE const Set< NodeId >&
-       StructuredBayesBall< GUM_SCALAR >::requisiteNodes(const PRMInstance< GUM_SCALAR >* i) const {
+    INLINE const Set< NodeId >& StructuredBayesBall< GUM_SCALAR >::requisiteNodes(
+        const PRMInstance< GUM_SCALAR >* i) const {
       return *(_keyMap_[i].second);
     }
 
     template < typename GUM_SCALAR >
-    INLINE const Set< NodeId >&
-       StructuredBayesBall< GUM_SCALAR >::requisiteNodes(const PRMInstance< GUM_SCALAR >& i) const {
+    INLINE const Set< NodeId >& StructuredBayesBall< GUM_SCALAR >::requisiteNodes(
+        const PRMInstance< GUM_SCALAR >& i) const {
       return *(_keyMap_[&i].second);
     }
 
@@ -297,13 +316,13 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     INLINE bool
-       StructuredBayesBall< GUM_SCALAR >::exists(const PRMInstance< GUM_SCALAR >* i) const {
+        StructuredBayesBall< GUM_SCALAR >::exists(const PRMInstance< GUM_SCALAR >* i) const {
       return _keyMap_.exists(i);
     }
 
     template < typename GUM_SCALAR >
     INLINE bool
-       StructuredBayesBall< GUM_SCALAR >::exists(const PRMInstance< GUM_SCALAR >& i) const {
+        StructuredBayesBall< GUM_SCALAR >::exists(const PRMInstance< GUM_SCALAR >& i) const {
       return _keyMap_.exists(&i);
     }
 
@@ -321,15 +340,15 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     INLINE const PRMSlotChain< GUM_SCALAR >&
-       StructuredBayesBall< GUM_SCALAR >::_getSC_(const PRMInstance< GUM_SCALAR >* i, NodeId n) {
+        StructuredBayesBall< GUM_SCALAR >::_getSC_(const PRMInstance< GUM_SCALAR >* i, NodeId n) {
       return static_cast< const PRMSlotChain< GUM_SCALAR >& >(i->type().get(n));
     }
 
     template < typename GUM_SCALAR >
     INLINE std::pair< bool, bool >&
            StructuredBayesBall< GUM_SCALAR >::_getMark_(InstanceMap&                     marks,
-                                                    const PRMInstance< GUM_SCALAR >* i,
-                                                    NodeId                           n) {
+                                                     const PRMInstance< GUM_SCALAR >* i,
+                                                     NodeId                           n) {
       return (*(marks[i]))[n];
     }
 

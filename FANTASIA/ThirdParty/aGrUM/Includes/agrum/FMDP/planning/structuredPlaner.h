@@ -1,22 +1,42 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
 
 
 /**
@@ -35,9 +55,10 @@
 // =========================================================================
 // =========================================================================
 // =========================================================================
-#include <agrum/FMDP/SDyna/Strategies/IPlanningStrategy.h>
 #include <agrum/FMDP/planning/mddOperatorStrategy.h>
 #include <agrum/FMDP/planning/treeOperatorStrategy.h>
+#include <agrum/FMDP/SDyna/Strategies/IPlanningStrategy.h>
+
 // =========================================================================
 
 namespace gum {
@@ -63,6 +84,7 @@ namespace gum {
     /// @name
     // ###################################################################
     /// @{
+
     public:
     // ==========================================================================
     ///
@@ -94,6 +116,7 @@ namespace gum {
     /// @name Constructor & destructor.
     // ###################################################################
     /// @{
+
     protected:
     // ==========================================================================
     /// Default constructor
@@ -106,6 +129,7 @@ namespace gum {
     // ==========================================================================
     /// Default destructor
     // ==========================================================================
+
     public:
     virtual ~StructuredPlaner();
 
@@ -136,7 +160,7 @@ namespace gum {
     // ==========================================================================
     /// Returns the best policy obtained so far
     // ==========================================================================
-    INLINE const MultiDimFunctionGraph< ActionSet, SetTerminalNodePolicy >* optimalPolicy() {
+    INLINE MultiDimFunctionGraph< ActionSet, SetTerminalNodePolicy >* optimalPolicy() {
       return optimalPolicy_;
     }
 
@@ -208,28 +232,28 @@ namespace gum {
     /// Performs the P(s'|s,a).V^{t-1}(s') part of the value itération
     // ==========================================================================
     virtual MultiDimFunctionGraph< GUM_SCALAR >*
-       evalQaction_(const MultiDimFunctionGraph< GUM_SCALAR >*, Idx);
+        evalQaction_(const MultiDimFunctionGraph< GUM_SCALAR >*, Idx);
 
     // ==========================================================================
     /// Performs max_a Q(s,a)
     /// @warning Performs also the deallocation of the QActions
     // ==========================================================================
     virtual MultiDimFunctionGraph< GUM_SCALAR >*
-       maximiseQactions_(std::vector< MultiDimFunctionGraph< GUM_SCALAR >* >&);
+        maximiseQactions_(std::vector< MultiDimFunctionGraph< GUM_SCALAR >* >&);
 
     // ==========================================================================
     /// Performs min_i F_i
     /// @warning Performs also the deallocation of the F_i
     // ==========================================================================
     virtual MultiDimFunctionGraph< GUM_SCALAR >*
-       minimiseFunctions_(std::vector< MultiDimFunctionGraph< GUM_SCALAR >* >&);
+        minimiseFunctions_(std::vector< MultiDimFunctionGraph< GUM_SCALAR >* >&);
 
     // ==========================================================================
     /// Perform the R(s) + gamma . function
     /// @warning function is deleted, new one is returned
     // ==========================================================================
     virtual MultiDimFunctionGraph< GUM_SCALAR >*
-       addReward_(MultiDimFunctionGraph< GUM_SCALAR >* function, Idx actionId = 0);
+        addReward_(MultiDimFunctionGraph< GUM_SCALAR >* function, Idx actionId = 0);
 
     /// @}
 
@@ -258,18 +282,18 @@ namespace gum {
      */
     // ==========================================================================
     MultiDimFunctionGraph< ArgMaxSet< GUM_SCALAR, Idx >, SetTerminalNodePolicy >*
-       makeArgMax_(const MultiDimFunctionGraph< GUM_SCALAR >* Qaction, Idx actionId);
+        makeArgMax_(const MultiDimFunctionGraph< GUM_SCALAR >* Qaction, Idx actionId);
 
     private:
     // ==========================================================================
     /// Recursion part for the createArgMaxCopy
     // ==========================================================================
     NodeId _recurArgMaxCopy_(
-       NodeId,
-       Idx,
-       const MultiDimFunctionGraph< GUM_SCALAR >*,
-       MultiDimFunctionGraph< ArgMaxSet< GUM_SCALAR, Idx >, SetTerminalNodePolicy >*,
-       HashTable< NodeId, NodeId >&);
+        NodeId,
+        Idx,
+        const MultiDimFunctionGraph< GUM_SCALAR >*,
+        MultiDimFunctionGraph< ArgMaxSet< GUM_SCALAR, Idx >, SetTerminalNodePolicy >*,
+        HashTable< NodeId, NodeId >&);
 
     protected:
     // ==========================================================================
@@ -277,8 +301,8 @@ namespace gum {
     /// @warning Performs also the deallocation of the QActions
     // ==========================================================================
     virtual MultiDimFunctionGraph< ArgMaxSet< GUM_SCALAR, Idx >, SetTerminalNodePolicy >*
-       argmaximiseQactions_(std::vector< MultiDimFunctionGraph< ArgMaxSet< GUM_SCALAR, Idx >,
-                                                                SetTerminalNodePolicy >* >&);
+        argmaximiseQactions_(std::vector< MultiDimFunctionGraph< ArgMaxSet< GUM_SCALAR, Idx >,
+                                                                 SetTerminalNodePolicy >* >&);
 
     // ==========================================================================
     /// From V(s)* = argmax_a Q*(s,a), this function extract pi*(s)
@@ -287,17 +311,17 @@ namespace gum {
     /// @warning deallocate the argmax optimal value function
     // ==========================================================================
     void extractOptimalPolicy_(
-       const MultiDimFunctionGraph< ArgMaxSet< GUM_SCALAR, Idx >, SetTerminalNodePolicy >*
-          optimalValueFunction);
+        const MultiDimFunctionGraph< ArgMaxSet< GUM_SCALAR, Idx >, SetTerminalNodePolicy >*
+            optimalValueFunction);
 
     private:
     // ==========================================================================
     /// Recursion part for the createArgMaxCopy
     // ==========================================================================
     NodeId _recurExtractOptPol_(
-       NodeId,
-       const MultiDimFunctionGraph< ArgMaxSet< GUM_SCALAR, Idx >, SetTerminalNodePolicy >*,
-       HashTable< NodeId, NodeId >&);
+        NodeId,
+        const MultiDimFunctionGraph< ArgMaxSet< GUM_SCALAR, Idx >, SetTerminalNodePolicy >*,
+        HashTable< NodeId, NodeId >&);
 
     // ==========================================================================
     /// Extract from an ArgMaxSet the associated ActionSet
@@ -333,7 +357,7 @@ namespace gum {
     // ==========================================================================
     /// A Set to eleminate primed variables
     // ==========================================================================
-    Set< const DiscreteVariable* > elVarSeq_;
+    gum::VariableSet elVarSeq_;
 
     // ==========================================================================
     /// Discount Factor used for infinite horizon planning
@@ -359,7 +383,6 @@ namespace gum {
   };
 
 } /* namespace gum */
-
 
 #include <agrum/FMDP/planning/structuredPlaner_tpl.h>
 

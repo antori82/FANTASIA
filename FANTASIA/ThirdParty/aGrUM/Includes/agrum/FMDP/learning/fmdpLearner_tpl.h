@@ -1,22 +1,43 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
+#pragma once
 
 
 /**
@@ -28,6 +49,7 @@
 
 // =========================================================================
 #include <agrum/FMDP/learning/fmdpLearner.h>
+
 // =========================================================================
 
 namespace gum {
@@ -43,13 +65,11 @@ namespace gum {
              TESTNAME    RewardAttributeSelection,
              LEARNERNAME LearnerSelection >
   FMDPLearner< VariableAttributeSelection, RewardAttributeSelection, LearnerSelection >::
-     FMDPLearner(double lT, bool actionReward, double sT) :
-      _actionReward_(actionReward),
-      _learningThreshold_(lT), _similarityThreshold_(sT) {
+      FMDPLearner(double lT, bool actionReward, double sT) :
+      _actionReward_(actionReward), _learningThreshold_(lT), _similarityThreshold_(sT) {
     GUM_CONSTRUCTOR(FMDPLearner);
     _rewardLearner_ = nullptr;
   }
-
 
   // ###################################################################
   // Default destructor
@@ -58,7 +78,7 @@ namespace gum {
              TESTNAME    RewardAttributeSelection,
              LEARNERNAME LearnerSelection >
   FMDPLearner< VariableAttributeSelection, RewardAttributeSelection, LearnerSelection >::
-     ~FMDPLearner() {
+      ~FMDPLearner() {
     for (auto actionIter = _actionLearners_.beginSafe(); actionIter != _actionLearners_.endSafe();
          ++actionIter) {
       for (auto learnerIter = actionIter.val()->beginSafe();
@@ -75,7 +95,6 @@ namespace gum {
     GUM_DESTRUCTOR(FMDPLearner);
   }
 
-
   // ==========================================================================
   //
   // ==========================================================================
@@ -87,13 +106,13 @@ namespace gum {
              TESTNAME    RewardAttributeSelection,
              LEARNERNAME LearnerSelection >
   void FMDPLearner< VariableAttributeSelection, RewardAttributeSelection, LearnerSelection >::
-     initialize(FMDP< double >* fmdp) {
+      initialize(FMDP< double >* fmdp) {
     _fmdp_ = fmdp;
 
     _modaMax_ = 0;
     _rmax_    = 0.0;
 
-    Set< const DiscreteVariable* > mainVariables;
+    gum::VariableSet mainVariables;
     for (auto varIter = _fmdp_->beginVariables(); varIter != _fmdp_->endVariables(); ++varIter) {
       mainVariables.insert(*varIter);
       _modaMax_ = _modaMax_ < (*varIter)->domainSize() ? (*varIter)->domainSize() : _modaMax_;
@@ -111,8 +130,8 @@ namespace gum {
                                + " - VARIABLE : " + (*varIter)->name());
         _fmdp_->addTransitionForAction(*actionIter, *varIter, varTrans);
         _actionLearners_[*actionIter]->insert(
-           (*varIter),
-           _instantiateVarLearner_(varTrans, mainVariables, _fmdp_->main2prime(*varIter)));
+            (*varIter),
+            _instantiateVarLearner_(varTrans, mainVariables, _fmdp_->main2prime(*varIter)));
       }
 
       if (_actionReward_) {
@@ -139,7 +158,7 @@ namespace gum {
              TESTNAME    RewardAttributeSelection,
              LEARNERNAME LearnerSelection >
   bool FMDPLearner< VariableAttributeSelection, RewardAttributeSelection, LearnerSelection >::
-     addObservation(Idx actionId, const Observation* newObs) {
+      addObservation(Idx actionId, const Observation* newObs) {
     for (SequenceIteratorSafe< const DiscreteVariable* > varIter = _fmdp_->beginVariables();
          varIter != _fmdp_->endVariables();
          ++varIter) {
@@ -166,8 +185,8 @@ namespace gum {
   template < TESTNAME    VariableAttributeSelection,
              TESTNAME    RewardAttributeSelection,
              LEARNERNAME LearnerSelection >
-  Size
-     FMDPLearner< VariableAttributeSelection, RewardAttributeSelection, LearnerSelection >::size() {
+  Size FMDPLearner< VariableAttributeSelection, RewardAttributeSelection, LearnerSelection >::
+      size() {
     Size s = 0;
     for (SequenceIteratorSafe< Idx > actionIter = _fmdp_->beginActions();
          actionIter != _fmdp_->endActions();
@@ -184,7 +203,6 @@ namespace gum {
     return s;
   }
 
-
   // ###################################################################
   //
   // ###################################################################
@@ -192,7 +210,7 @@ namespace gum {
              TESTNAME    RewardAttributeSelection,
              LEARNERNAME LearnerSelection >
   void FMDPLearner< VariableAttributeSelection, RewardAttributeSelection, LearnerSelection >::
-     updateFMDP() {
+      updateFMDP() {
     for (SequenceIteratorSafe< Idx > actionIter = _fmdp_->beginActions();
          actionIter != _fmdp_->endActions();
          ++actionIter) {

@@ -1,27 +1,47 @@
-/**
- *
- *   Copyright (c) 2005-2023 by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
 
 
 /**
  * @file
- * @brief Class representing Bayesian networks
+ * @brief Class representing the minimal interface for Bayesian network with no numerical data.
  *
  * @author Pierre-Henri WUILLEMIN(_at_LIP6) and Lionel TORTI
  *
@@ -33,28 +53,23 @@
 
 #include <agrum/agrum.h>
 
-
-#include <agrum/tools/graphicalModels/DAGmodel.h>
-#include <agrum/tools/multidim/potential.h>
+#include <agrum/base/graphicalModels/DAGmodel.h>
+#include <agrum/base/multidim/tensor.h>
 
 namespace gum {
-
   template < typename GUM_SCALAR >
   class BayesNetFactory;
 
   /**
    * @class IBayesNet
    * @headerfile IBayesNet.h <agrum/BN/IBayesNet.h>
-   * @brief Class representing the minimal interface for Bayesian network.
+   * @brief Class representing the minimal interface for Bayesian network with no numerical data.
    * @ingroup bn_group
    *
    * This class is used as a base class for different versions of Bayesian
-   *Networks.
-   *No data (except the dag
-   * herited from DAGmodel are included in this class. Many algorithms
-   *(inference for
-   *instance) may use this
-   * class when a simple BN is needed.
+   * Networks. No data (except the dag herited from DAGmodel are included in this class.
+   *
+   * Many algorithms inference for instance) may use this class when a generic BN is needed.
    */
   template < typename GUM_SCALAR >
   class IBayesNet: public DAGmodel {
@@ -96,7 +111,7 @@ namespace gum {
      *
      * @throw NotFound If no variable's id matches varId.
      */
-    virtual const Potential< GUM_SCALAR >& cpt(NodeId varId) const = 0;
+    virtual const Tensor< GUM_SCALAR >& cpt(NodeId varId) const = 0;
 
     /**
      * Returns a constant reference to the VariableNodeMap of thisBN
@@ -157,7 +172,7 @@ namespace gum {
      *
      * @return a list of comments on the consistency of the Bayes Net
      */
-    std::vector< std::string > consistencyCheck() const;
+    std::vector< std::string > check() const;
 
     /**
      * This operator compares 2 BNs !
@@ -218,32 +233,37 @@ namespace gum {
     /// @return Returns a string representation of this IBayesNet.
     std::string toString() const;
 
-    /***
-     * @return the minimal subset of soids that conditions the target
-     *
-     * i.e. P(target| soids)=P(target|@return)
+    /**
+     * @return a Tensor for a (numerical) discrete variable representing an evidence with a float
+     * as observed value
      */
-    NodeSet minimalCondSet(NodeId target, const NodeSet& soids) const;
+    Tensor< GUM_SCALAR > evEq(const std::string& name, double value) const;
 
-
-    /***
-     * @return the minimal subset of soids that conditions the targets
-     *
-     * i.e. P(targets| soids)=P(targets|@return)
+    /**
+     * @return a Tensor for a (numerical) discrete variable representing an evidence with a
+     * interval of float as observed value
      */
-    NodeSet minimalCondSet(const NodeSet& targets, const NodeSet& soids) const;
+    Tensor< GUM_SCALAR > evIn(const std::string& name, double val1, double val2) const;
 
-    private:
-    void _minimalCondSetVisitUp_(NodeId         node,
-                                 const NodeSet& soids,
-                                 NodeSet&       minimal,
-                                 NodeSet&       alreadyVisitedUp,
-                                 NodeSet&       alreadyVisitedDn) const;
-    void _minimalCondSetVisitDn_(NodeId         node,
-                                 const NodeSet& soids,
-                                 NodeSet&       minimal,
-                                 NodeSet&       alreadyVisitedUp,
-                                 NodeSet&       alreadyVisitedDn) const;
+    /**
+     * @return a Tensor for a (numerical) discrete variable representing an evidence with an
+     * observed value less than the parameter
+     */
+    Tensor< GUM_SCALAR > evLt(const std::string& name, double value) const;
+
+
+    /**
+     * @return a Tensor for a (numerical) discrete variable representing an evidence with an
+     * observed value greater than the parameter
+     */
+    Tensor< GUM_SCALAR > evGt(const std::string& name, double value) const;
+
+
+    /**
+     * @brief compute the (approximated) footprint in memory of the model (the footprints of CPTs)
+     * @return the size in bytes
+     */
+    Size memoryFootprint() const;
   };
 
 
@@ -255,7 +275,6 @@ namespace gum {
   /// Prints map's DAG in output using the Graphviz-dot format.
   template < typename GUM_SCALAR >
   std::ostream& operator<<(std::ostream& output, const IBayesNet< GUM_SCALAR >& bn);
-
 } /* namespace gum */
 
 #include <agrum/BN/IBayesNet_tpl.h>

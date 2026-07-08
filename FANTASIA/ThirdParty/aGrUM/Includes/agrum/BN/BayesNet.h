@@ -1,22 +1,42 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
 
 
 /**
@@ -33,11 +53,9 @@
 
 #include <agrum/agrum.h>
 
-
 #include <agrum/BN/IBayesNet.h>
 
 namespace gum {
-
   template < typename GUM_SCALAR >
   class BayesNetFactory;
 
@@ -98,7 +116,9 @@ namespace gum {
      * @param domainSize the default domain size for variables
      * @return the resulting Bayesian network
      */
-    static BayesNet< GUM_SCALAR > fastPrototype(const std::string& dotlike, Size domainSize = 2);
+    static BayesNet< GUM_SCALAR > fastPrototype(const std::string& dotlike, Size domainSize);
+    static BayesNet< GUM_SCALAR > fastPrototype(const std::string& dotlike,
+                                                const std::string& domainSize = "[2]");
 
     // ===========================================================================
     /// @name Constructors and Destructor
@@ -154,12 +174,12 @@ namespace gum {
      * @return The variable's CPT.
      * @throw NotFound If no variable's id matches varId.
      */
-    const Potential< GUM_SCALAR >& cpt(NodeId varId) const final;
+    const Tensor< GUM_SCALAR >& cpt(NodeId varId) const final;
 
     /**
      * @brief Returns the CPT of a variable.
      */
-    const Potential< GUM_SCALAR >& cpt(const std::string& name) const {
+    const Tensor< GUM_SCALAR >& cpt(const std::string& name) const {
       return cpt(idFromName(name));
     };
 
@@ -174,10 +194,10 @@ namespace gum {
      * @brief Add a variable to the gum::BayesNet.
      *
      * Add a gum::DiscreteVariable, it's associated gum::NodeId and it's
-     * gum::Potential.
+     * gum::Tensor.
      *
      * The variable is added by copy to the gum::BayesNet.
-     * The variable's gum::Potential implementation will be a
+     * The variable's gum::Tensor implementation will be a
      * gum::MultiDimArray.
      *
      * @param var The variable added by copy.
@@ -211,13 +231,13 @@ namespace gum {
      * @brief Add a variable to the gum::BayesNet.
      *
      * Add a gum::DiscreteVariable, it's associated gum::NodeId and it's
-     * gum::Potential.
+     * gum::Tensor.
      *
      * The variable is added by copy to the gum::BayesNet.
      *
      * @param var The variable added by copy.
      * @param aContent The gum::MultiDimImplementation to use for this
-     *                 variable's gum::Potential implementation.
+     *                 variable's gum::Tensor implementation.
      * @return Returns the variable's id in the gum::BayesNet.
      * @throws DuplicateLabel Raised if variable.name() is already used in this
      *                        gum::BayesNet.
@@ -228,10 +248,10 @@ namespace gum {
      * @brief Add a variable to the gum::BayesNet.
      *
      * Add a gum::DiscreteVariable, it's associated gum::NodeId and it's
-     * gum::Potential.
+     * gum::Tensor.
      *
      * The variable is added by copy to the gum::BayesNet.
-     * The variable's gum::Potential implementation will be a
+     * The variable's gum::Tensor implementation will be a
      * gum::MultiDimArray.
      *
      * @param var The variable added by copy.
@@ -247,11 +267,11 @@ namespace gum {
      * @brief Add a variable to the gum::BayesNet.
      *
      * Add a gum::DiscreteVariable, it's associated gum::NodeId and it's
-     * gum::Potential.
+     * gum::Tensor.
      *
      * @param var The variable added by copy.
      * @param aContent The gum::MultiDimImplementation to use for this
-     *                 variable's gum::Potential implementation.
+     *                 variable's gum::Tensor implementation.
      * @param id The variable's forced gum::NodeId in the gum::BayesNet.
      * @return Returns the variable's id in the gum::BayesNet.
      * @throws DuplicateElement Raised id is already used.
@@ -259,7 +279,7 @@ namespace gum {
      *                        gum::BayesNet.
      */
     NodeId
-       add(const DiscreteVariable& var, MultiDimImplementation< GUM_SCALAR >* aContent, NodeId id);
+        add(const DiscreteVariable& var, MultiDimImplementation< GUM_SCALAR >* aContent, NodeId id);
 
     /**
      * @brief clear the whole Bayes net     *
@@ -270,7 +290,7 @@ namespace gum {
      * @brief Remove a variable from the gum::BayesNet.
      *
      * Removes the corresponding variable from the gum::BayesNet and from
-     * all of it's children gum::Potential.
+     * all of it's children gum::Tensor.
      *
      * If no variable matches the given id, then nothing is done.
      *
@@ -287,7 +307,7 @@ namespace gum {
      * @brief Remove a variable from the gum::BayesNet.
      *
      * Removes the corresponding variable from the gum::BayesNet and from
-     * all of it's children gum::Potential.
+     * all of it's children gum::Tensor.
      *
      * If no variable matches the given variable, then nothing is done.
      *
@@ -461,9 +481,11 @@ namespace gum {
      * would induce a directed cycle. */
     /// @{
     void reverseArc(NodeId tail, NodeId head);
+
     void reverseArc(const std::string& tail, const std::string& head) {
       reverseArc(idFromName(tail), idFromName(head));
     }
+
     void reverseArc(const Arc& arc);
     /// @}
 
@@ -618,13 +640,14 @@ namespace gum {
      * @param head and
      * @param tail as std::string
      * @param causalWeight see gum::MultiDimICIModel
-     * @param NotFound if no node with sun names is found
+     * @throw NotFound if no node with sun names is found
      * @throw InvalidArc If arc.tail and/or arc.head are not in the BN.
      * @throw InvalidArc If variable in arc.head is not a NoisyOR variable.
      */
     void addWeightedArc(const std::string& tail, const std::string& head, GUM_SCALAR causalWeight) {
       addWeightedArc(idFromName(tail), idFromName(head), causalWeight);
     };
+
     /// @}
 
     /// randomly generates CPTs for a given structure
@@ -632,33 +655,48 @@ namespace gum {
 
     /// randomly generate CPT for a given node in a given structure
     void generateCPT(NodeId node) const;
+
     void generateCPT(const std::string& name) const { generateCPT(idFromName(name)); };
 
     /// change the CPT associated to nodeId to newPot
     /// delete the old CPT associated to nodeId.
     /// @throw NotAllowed if newPot has not the same signature as
     ///  _probaMap_[NodeId]
-    void changePotential(NodeId id, Potential< GUM_SCALAR >* newPot);
-    void changePotential(const std::string& name, Potential< GUM_SCALAR >* newPot);
+    void changeTensor(NodeId id, Tensor< GUM_SCALAR >* newPot);
+    void changeTensor(const std::string& name, Tensor< GUM_SCALAR >* newPot);
+
+    /** create a contextual BN from this and a set of hard observations and hard interventions.
+     *
+     * @param observations the hard observations
+     * @param interventions the hard interventions
+     * @return a new BN with the same structure as this, but with the CPTs
+     *         modified to reflect the observations and interventions
+     * @warning The original BN is not modified. The returned BN is not a copy of the original BN,
+     * but a new BN with copied variables and modified structure and CPTs.
+     *
+     * @throw ArgumentError if the observations and interventions are not mutually exclusive
+     */
+    BayesNet< GUM_SCALAR > contextualize(const gum::Instantiation& observations,
+                                         const gum::Instantiation& interventions) const;
 
     private:
-    /// clear all potentials
-    void _clearPotentials_();
+    /// clear all tensors
+    void _clearTensors_();
 
-    /// copy of potentials from a BN to another, using names of vars as ref.
-    void _copyPotentials_(const BayesNet< GUM_SCALAR >& source);
+    /// copy of tensors from a BN to another, using names of vars as ref.
+    void _copyTensors_(const BayesNet< GUM_SCALAR >& source);
 
     /// the map between variable and id
     VariableNodeMap _varMap_;
 
     /// Mapping between the variable's id and their CPT.
-    NodeProperty< Potential< GUM_SCALAR >* > _probaMap_;
+    NodeProperty< Tensor< GUM_SCALAR >* > _probaMap_;
 
     /// change the CPT associated to nodeId to newPot
     /// delete the old CPT associated to nodeId.
     /// @warning no verification of dimensions are performer
-    /// @see changePotential
-    void _unsafeChangePotential_(NodeId id, Potential< GUM_SCALAR >* newPot);
+    /// @see changeTensor
+    void _unsafeChangeTensor_(NodeId id, Tensor< GUM_SCALAR >* newPot);
 
     public:
     using IBayesNet< GUM_SCALAR >::dag;
@@ -675,7 +713,6 @@ namespace gum {
 #ifndef GUM_NO_EXTERN_TEMPLATE_CLASS
   extern template class BayesNet< double >;
 #endif
-
 } /* namespace gum */
 
 #include <agrum/BN/BayesNet_tpl.h>

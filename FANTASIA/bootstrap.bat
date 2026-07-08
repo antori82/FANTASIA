@@ -188,7 +188,7 @@ if "%FETCH_DEPS%"=="1" goto :do_deps
 goto :after_deps
 
 :do_deps
-set DEPS_MARKER=%TP_DIR%\aGrUM\Libraries\agrum.x64.lib
+set DEPS_MARKER=%TP_DIR%\aGrUM\Libraries\agrumBASE.lib
 if "%FORCE%"=="0" if exist "%DEPS_MARKER%" (
     echo Build-time static libs already present under %TP_DIR% ^(skipping^).
     goto :after_deps

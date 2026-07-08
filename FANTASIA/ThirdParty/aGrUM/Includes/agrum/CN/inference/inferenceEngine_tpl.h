@@ -1,22 +1,43 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
+#pragma once
 
 
 /** @file
@@ -26,8 +47,9 @@
 
 #include <algorithm>
 
-#include <agrum/CN/inference/inferenceEngine.h>
 #include <agrum/agrum.h>
+
+#include <agrum/CN/inference/inferenceEngine.h>
 
 namespace gum {
   namespace credal {
@@ -120,6 +142,7 @@ namespace gum {
     bool InferenceEngine< GUM_SCALAR >::repetitiveInd() const {
       return repetitiveInd_;
     }
+
     /*
         template< typename GUM_SCALAR >
         int InferenceEngine< GUM_SCALAR >::iterStop () const {
@@ -150,7 +173,7 @@ namespace gum {
                   "void InferenceEngine< GUM_SCALAR "
                   ">::insertModals(const std::string & path) : "
                   "could not open input file : "
-                     << path);
+                      << path);
       }
 
       if (!modal_.empty()) modal_.clear();
@@ -190,7 +213,7 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     void InferenceEngine< GUM_SCALAR >::insertModals(
-       const std::map< std::string, std::vector< GUM_SCALAR > >& modals) {
+        const std::map< std::string, std::vector< GUM_SCALAR > >& modals) {
       if (!modal_.empty()) modal_.clear();
 
       for (auto it = modals.cbegin(), theEnd = modals.cend(); it != theEnd; ++it) {
@@ -226,7 +249,7 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     void InferenceEngine< GUM_SCALAR >::insertEvidence(
-       const std::map< std::string, std::vector< GUM_SCALAR > >& eviMap) {
+        const std::map< std::string, std::vector< GUM_SCALAR > >& eviMap) {
       if (!evidence_.empty()) evidence_.clear();
 
       for (auto it = eviMap.cbegin(), theEnd = eviMap.cend(); it != theEnd; ++it) {
@@ -252,7 +275,7 @@ namespace gum {
     // an error and app crash)
     template < typename GUM_SCALAR >
     void InferenceEngine< GUM_SCALAR >::insertEvidence(
-       const NodeProperty< std::vector< GUM_SCALAR > >& evidence) {
+        const NodeProperty< std::vector< GUM_SCALAR > >& evidence) {
       if (!evidence_.empty()) evidence_.clear();
 
       // use cbegin() to get const_iterator when available in aGrUM hashtables
@@ -281,7 +304,7 @@ namespace gum {
                   "void InferenceEngine< GUM_SCALAR "
                   ">::insertEvidence(const std::string & path) : could not "
                   "open input file : "
-                     << path);
+                      << path);
       }
 
       if (!evidence_.empty()) evidence_.clear();
@@ -339,7 +362,7 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     void InferenceEngine< GUM_SCALAR >::insertQuery(
-       const NodeProperty< std::vector< bool > >& query) {
+        const NodeProperty< std::vector< bool > >& query) {
       if (!query_.empty()) query_.clear();
 
       for (const auto& elt: query) {
@@ -362,7 +385,7 @@ namespace gum {
         GUM_ERROR(IOError,
                   "void InferenceEngine< GUM_SCALAR >::insertQuery(const "
                   "std::string & path) : could not open input file : "
-                     << path);
+                      << path);
       }
 
       if (!query_.empty()) query_.clear();
@@ -429,21 +452,21 @@ namespace gum {
     }
 
     template < typename GUM_SCALAR >
-    INLINE Potential< GUM_SCALAR >
+    INLINE Tensor< GUM_SCALAR >
            InferenceEngine< GUM_SCALAR >::marginalMin(const std::string& varName) const {
       return marginalMin(credalNet_->current_bn().idFromName(varName));
     }
 
     template < typename GUM_SCALAR >
-    INLINE Potential< GUM_SCALAR >
+    INLINE Tensor< GUM_SCALAR >
            InferenceEngine< GUM_SCALAR >::marginalMax(const std::string& varName) const {
       return marginalMax(credalNet_->current_bn().idFromName(varName));
     }
 
     template < typename GUM_SCALAR >
-    gum::Potential< GUM_SCALAR > InferenceEngine< GUM_SCALAR >::marginalMin(const NodeId id) const {
+    gum::Tensor< GUM_SCALAR > InferenceEngine< GUM_SCALAR >::marginalMin(const NodeId id) const {
       try {
-        Potential< GUM_SCALAR > res;
+        Tensor< GUM_SCALAR > res;
         res.add(credalNet_->current_bn().variable(id));
         res.fillWith(marginalMin_[id]);
         return res;
@@ -451,9 +474,9 @@ namespace gum {
     }
 
     template < typename GUM_SCALAR >
-    gum::Potential< GUM_SCALAR > InferenceEngine< GUM_SCALAR >::marginalMax(const NodeId id) const {
+    gum::Tensor< GUM_SCALAR > InferenceEngine< GUM_SCALAR >::marginalMax(const NodeId id) const {
       try {
-        Potential< GUM_SCALAR > res;
+        Tensor< GUM_SCALAR > res;
         res.add(credalNet_->current_bn().variable(id));
         res.fillWith(marginalMax_[id]);
         return res;
@@ -462,7 +485,7 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     const GUM_SCALAR&
-       InferenceEngine< GUM_SCALAR >::expectationMin(const std::string& varName) const {
+        InferenceEngine< GUM_SCALAR >::expectationMin(const std::string& varName) const {
       try {
         return expectationMin_[credalNet_->current_bn().idFromName(varName)];
       } catch (NotFound& err) { throw(err); }
@@ -470,7 +493,7 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     const GUM_SCALAR&
-       InferenceEngine< GUM_SCALAR >::expectationMax(const std::string& varName) const {
+        InferenceEngine< GUM_SCALAR >::expectationMax(const std::string& varName) const {
       try {
         return expectationMax_[credalNet_->current_bn().idFromName(varName)];
       } catch (NotFound& err) { throw(err); }
@@ -492,7 +515,7 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     const std::vector< GUM_SCALAR >&
-       InferenceEngine< GUM_SCALAR >::dynamicExpMin(const std::string& varName) const {
+        InferenceEngine< GUM_SCALAR >::dynamicExpMin(const std::string& varName) const {
       std::string errTxt = "const std::vector< GUM_SCALAR > & InferenceEngine< "
                            "GUM_SCALAR >::dynamicExpMin ( const std::string & "
                            "varName ) const : ";
@@ -508,7 +531,7 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     const std::vector< GUM_SCALAR >&
-       InferenceEngine< GUM_SCALAR >::dynamicExpMax(const std::string& varName) const {
+        InferenceEngine< GUM_SCALAR >::dynamicExpMax(const std::string& varName) const {
       std::string errTxt = "const std::vector< GUM_SCALAR > & InferenceEngine< "
                            "GUM_SCALAR >::dynamicExpMax ( const std::string & "
                            "varName ) const : ";
@@ -524,7 +547,7 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     const std::vector< std::vector< GUM_SCALAR > >&
-       InferenceEngine< GUM_SCALAR >::vertices(const NodeId id) const {
+        InferenceEngine< GUM_SCALAR >::vertices(const NodeId id) const {
       return marginalSets_[id];
     }
 
@@ -536,8 +559,7 @@ namespace gum {
         GUM_ERROR(IOError,
                   "void InferenceEngine< GUM_SCALAR >::saveMarginals(const "
                   "std::string & path) const : could not open output file "
-                  ": "
-                     << path);
+                  ": " << path);
       }
 
       for (const auto& elt: marginalMin_) {
@@ -568,7 +590,7 @@ namespace gum {
                   "void InferenceEngine< GUM_SCALAR "
                   ">::saveExpectations(const std::string & path) : could "
                   "not open output file : "
-                     << path);
+                      << path);
       }
 
       for (const auto& elt: dynamicExpMin_) {
@@ -630,7 +652,7 @@ namespace gum {
         GUM_ERROR(IOError,
                   "void InferenceEngine< GUM_SCALAR >::saveVertices(const "
                   "std::string & path) : could not open outpul file : "
-                     << path);
+                      << path);
       }
 
       for (const auto& elt: marginalSets_) {
@@ -748,11 +770,11 @@ namespace gum {
         if (!modal_.exists(var_name)) continue;
 
         expectationsMin.getWithDefault(var_name, innerMap())
-           .getWithDefault(atoi(time_step.c_str()), 0)
-           = elt.second;   // we iterate with min iterators
+            .getWithDefault(atoi(time_step.c_str()), 0)
+            = elt.second;   // we iterate with min iterators
         expectationsMax.getWithDefault(var_name, innerMap())
-           .getWithDefault(atoi(time_step.c_str()), 0)
-           = expectationMax_[elt.first];
+            .getWithDefault(atoi(time_step.c_str()), 0)
+            = expectationMax_[elt.first];
       }
 
       for (const auto& elt: expectationsMin) {
@@ -816,11 +838,10 @@ namespace gum {
             var_0_name             = var_0_name.substr(0, delim);
 
             if (var_name.compare(var_0_name) == 0) {
-              const Potential< GUM_SCALAR >* potential(&credalNet_->current_bn().cpt(node));
-              const Potential< GUM_SCALAR >* potential2(&credalNet_->current_bn().cpt(elt.first));
+              const Tensor< GUM_SCALAR >* tensor(&credalNet_->current_bn().cpt(node));
+              const Tensor< GUM_SCALAR >* tensor2(&credalNet_->current_bn().cpt(elt.first));
 
-              if (potential->domainSize() == potential2->domainSize())
-                t0_[elt.first].push_back(node);
+              if (tensor->domainSize() == tensor2->domainSize()) t0_[elt.first].push_back(node);
               else t1_.insert(node, std::vector< NodeId >());
 
               found = true;
@@ -855,10 +876,10 @@ namespace gum {
             var_0_name             = var_0_name.substr(0, delim);
 
             if (var_name.compare(var_0_name) == 0) {
-              const Potential< GUM_SCALAR >* potential(&credalNet_->current_bn().cpt(node));
-              const Potential< GUM_SCALAR >* potential2(&credalNet_->current_bn().cpt(elt.first));
+              const Tensor< GUM_SCALAR >* tensor(&credalNet_->current_bn().cpt(node));
+              const Tensor< GUM_SCALAR >* tensor2(&credalNet_->current_bn().cpt(elt.first));
 
-              if (potential->domainSize() == potential2->domainSize()) {
+              if (tensor->domainSize() == tensor2->domainSize()) {
                 t0_[elt.first].push_back(node);
                 found = true;
                 break;
@@ -873,10 +894,10 @@ namespace gum {
               var_0_name             = var_0_name.substr(0, delim);
 
               if (var_name.compare(var_0_name) == 0) {
-                const Potential< GUM_SCALAR >* potential(&credalNet_->current_bn().cpt(node));
-                const Potential< GUM_SCALAR >* potential2(&credalNet_->current_bn().cpt(elt.first));
+                const Tensor< GUM_SCALAR >* tensor(&credalNet_->current_bn().cpt(node));
+                const Tensor< GUM_SCALAR >* tensor2(&credalNet_->current_bn().cpt(elt.first));
 
-                if (potential->domainSize() == potential2->domainSize()) {
+                if (tensor->domainSize() == tensor2->domainSize()) {
                   t1_[elt.first].push_back(node);
                   break;
                 }
@@ -888,9 +909,9 @@ namespace gum {
     }
 
     template < typename GUM_SCALAR >
-    void
-       InferenceEngine< GUM_SCALAR >::updateExpectations_(const NodeId&                    id,
-                                                          const std::vector< GUM_SCALAR >& vertex) {
+    void InferenceEngine< GUM_SCALAR >::updateExpectations_(
+        const NodeId&                    id,
+        const std::vector< GUM_SCALAR >& vertex) {
       std::string var_name = credalNet_->current_bn().variable(id).name();
       auto        delim    = var_name.find_first_of("_");
 
@@ -942,24 +963,24 @@ namespace gum {
       // check that the point and all previously added ones are not inside the
       // actual
       // polytope
-      auto itEnd
-         = std::remove_if(nodeCredalSet.begin(),
-                          nodeCredalSet.end(),
-                          [&](const std::vector< GUM_SCALAR >& v) -> bool {
-                            for (auto jt       = v.cbegin(),
-                                      jtEnd    = v.cend(),
-                                      minIt    = marginalMin_[id].cbegin(),
-                                      minItEnd = marginalMin_[id].cend(),
-                                      maxIt    = marginalMax_[id].cbegin(),
-                                      maxItEnd = marginalMax_[id].cend();
-                                 jt != jtEnd && minIt != minItEnd && maxIt != maxItEnd;
-                                 ++jt, ++minIt, ++maxIt) {
-                              if ((std::fabs(*jt - *minIt) < 1e-6 || std::fabs(*jt - *maxIt) < 1e-6)
-                                  && std::fabs(*minIt - *maxIt) > 1e-6)
-                                return false;
-                            }
-                            return true;
-                          });
+      auto itEnd = std::remove_if(
+          nodeCredalSet.begin(),
+          nodeCredalSet.end(),
+          [&](const std::vector< GUM_SCALAR >& v) -> bool {
+            for (auto jt       = v.cbegin(),
+                      jtEnd    = v.cend(),
+                      minIt    = marginalMin_[id].cbegin(),
+                      minItEnd = marginalMin_[id].cend(),
+                      maxIt    = marginalMax_[id].cbegin(),
+                      maxItEnd = marginalMax_[id].cend();
+                 jt != jtEnd && minIt != minItEnd && maxIt != maxItEnd;
+                 ++jt, ++minIt, ++maxIt) {
+              if ((std::fabs(*jt - *minIt) < 1e-6 || std::fabs(*jt - *maxIt) < 1e-6)
+                  && std::fabs(*minIt - *maxIt) > 1e-6)
+                return false;
+            }
+            return true;
+          });
 
       nodeCredalSet.erase(itEnd, nodeCredalSet.end());
 
@@ -983,13 +1004,13 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     const NodeProperty< std::vector< NodeId > >&
-       InferenceEngine< GUM_SCALAR >::getT0Cluster() const {
+        InferenceEngine< GUM_SCALAR >::getT0Cluster() const {
       return t0_;
     }
 
     template < typename GUM_SCALAR >
     const NodeProperty< std::vector< NodeId > >&
-       InferenceEngine< GUM_SCALAR >::getT1Cluster() const {
+        InferenceEngine< GUM_SCALAR >::getT1Cluster() const {
       return t1_;
     }
 
@@ -997,8 +1018,8 @@ namespace gum {
     inline const GUM_SCALAR InferenceEngine< GUM_SCALAR >::computeEpsilon_() {
       // compute the number of threads and prepare for the result
       const Size                nb_threads = ThreadExecutor::nbRunningThreadsExecutors() == 0
-                                              ? this->threadRanges_.size() - 1
-                                              : 1;   // no nested multithreading
+                                               ? this->threadRanges_.size() - 1
+                                               : 1;   // no nested multithreading
       std::vector< GUM_SCALAR > tEps(nb_threads, std::numeric_limits< GUM_SCALAR >::max());
 
       // create the function to be executed by the threads
@@ -1050,11 +1071,11 @@ namespace gum {
 
       // launch the threads
       ThreadExecutor::execute(
-         nb_threads,
-         threadedEps,
-         (nb_threads == 1)
-            ? std::vector< std::pair< NodeId, Idx > >{{0, 0}, {this->marginalMin_.size(), 0}}
-            : this->threadRanges_);
+          nb_threads,
+          threadedEps,
+          (nb_threads == 1)
+              ? std::vector< std::pair< NodeId, Idx > >{{0, 0}, {this->marginalMin_.size(), 0}}
+              : this->threadRanges_);
 
       // aggregate all the results
       GUM_SCALAR eps = tEps[0];
@@ -1168,5 +1189,58 @@ namespace gum {
       }
     }
 
+    template < typename GUM_SCALAR >
+    void InferenceEngine< GUM_SCALAR >::addEvidence(NodeId                           id,
+                                                    const std::vector< GUM_SCALAR >& vals) {
+      evidence_.insert(id, vals);
+      // forces the computation of the begin iterator to avoid subsequent data races
+      // @TODO make HashTableConstIterator constructors thread safe
+      evidence_.begin();
+    }
+
+    /// adds a new hard evidence on node id
+    template < typename GUM_SCALAR >
+    void InferenceEngine< GUM_SCALAR >::addEvidence(NodeId id, const Idx val) {
+      std::vector< GUM_SCALAR > vals(this->credalNet_->current_bn().variable(id).domainSize(), 0);
+      vals[val] = 1;
+      addEvidence(id, vals);
+    }
+
+    /// adds a new hard evidence on node named nodeName
+    template < typename GUM_SCALAR >
+    void InferenceEngine< GUM_SCALAR >::addEvidence(const std::string& nodeName, const Idx val) {
+      addEvidence(this->credalNet_->current_bn().idFromName(nodeName), val);
+    }
+
+    /// adds a new hard evidence on node id
+    template < typename GUM_SCALAR >
+    void InferenceEngine< GUM_SCALAR >::addEvidence(NodeId id, const std::string& label) {
+      addEvidence(id, this->credalNet_->current_bn().variable(id)[label]);
+    }
+
+    /// adds a new hard evidence on node named nodeName
+    template < typename GUM_SCALAR >
+    void InferenceEngine< GUM_SCALAR >::addEvidence(const std::string& nodeName,
+                                                    const std::string& label) {
+      const NodeId id = this->credalNet_->current_bn().idFromName(nodeName);
+      addEvidence(id, this->credalNet_->current_bn().variable(id)[label]);
+    }
+
+    template < typename GUM_SCALAR >
+    void InferenceEngine< GUM_SCALAR >::addEvidence(const std::string&               nodeName,
+                                                    const std::vector< GUM_SCALAR >& vals) {
+      addEvidence(this->credalNet_->current_bn().idFromName(nodeName), vals);
+    }
+
+    template < typename GUM_SCALAR >
+    void InferenceEngine< GUM_SCALAR >::addEvidence(const Tensor< GUM_SCALAR >& pot) {
+      const auto id = this->credalNet_->current_bn().idFromName(pot.variable(0).name());
+      std::vector< GUM_SCALAR > vals(this->credalNet_->current_bn().variable(id).domainSize(), 0);
+      Instantiation             I(pot);
+      for (I.setFirst(); !I.end(); I.inc()) {
+        vals[I.val(0)] = pot[I];
+      }
+      addEvidence(id, vals);
+    }
   }   // namespace credal
 }   // namespace gum

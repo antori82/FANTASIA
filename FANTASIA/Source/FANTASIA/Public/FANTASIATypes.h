@@ -418,6 +418,42 @@ struct FTTSTimedStruct
 };
 
 /**
+ * A timed text segment (a word or a single character) extracted from a TTS
+ * provider's alignment data. One struct serves both granularities; a future
+ * syllable layer reuses it unchanged.
+ *
+ * Captured internally only -- NOT exposed to Blueprints. The realtime
+ * "segment played" signal is expected to come from ACE's own animation
+ * events once NVIDIA ships them; until then this timing is decoded and
+ * stored but not surfaced.
+ */
+USTRUCT()
+struct FTTSSegmentTiming
+{
+	GENERATED_USTRUCT_BODY()
+
+	/** The word (or character) text. */
+	UPROPERTY()
+	FString Text;
+
+	/** Start time in seconds, relative to the start of the utterance. */
+	UPROPERTY()
+	float StartSeconds = 0.f;
+
+	/** End time in seconds, relative to the start of the utterance. */
+	UPROPERTY()
+	float EndSeconds = 0.f;
+
+	/** Index of the first source character this segment spans. */
+	UPROPERTY()
+	int32 CharStart = 0;
+
+	/** Index one past the last source character this segment spans. */
+	UPROPERTY()
+	int32 CharEnd = 0;
+};
+
+/**
  * Complete TTS synthesis result containing raw audio and metadata.
  *
  * Produced internally by TTS threads and forwarded to the owning component.
@@ -438,6 +474,12 @@ struct FTTSData
 
 	/** Animation notify timeline. */
 	TArray<FTTSTimedStruct> notifies;
+
+	/** Per-word timing extracted from provider alignment (empty if unsupported). */
+	TArray<FTTSSegmentTiming> Words;
+
+	/** Per-character timing extracted from provider alignment (empty if unsupported). */
+	TArray<FTTSSegmentTiming> Characters;
 };
 
 /** Fired when a full TTS synthesis is complete; @p id identifies the request. */

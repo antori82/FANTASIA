@@ -1,22 +1,42 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
 
 
 /** @file
@@ -67,10 +87,11 @@
 #ifndef GUM_BN_DATABASE_GENERATOR
 #define GUM_BN_DATABASE_GENERATOR
 
-#include <agrum/BN/BayesNet.h>
-#include <agrum/tools/core/progressNotification.h>
-#include <agrum/tools/database/databaseTable.h>
 #include <fstream>
+
+#include <agrum/base/core/progressNotification.h>
+#include <agrum/base/database/databaseTable.h>
+#include <agrum/BN/BayesNet.h>
 
 namespace gum {
 
@@ -78,6 +99,8 @@ namespace gum {
     template < typename GUM_SCALAR >
     class BNDatabaseGenerator: public ProgressNotifier {
       public:
+      enum class DiscretizedLabelMode : char { INTERVAL, MEDIAN, RANDOM };
+
       // #######################################################################
       /// @name Constructors / Destructors
       // #######################################################################
@@ -105,11 +128,35 @@ namespace gum {
       Generate and stock the part of the database compatible with the evidence, returns
       log2likelihood using ProgressNotifier as notification.
 
-      @warning nbSamples is not the size of the filtered database but the number of generated
-      samples. It may happen that the evidence is very rare (or even impossible). In that cas the
-      generated database may have only a few samples (even it may be empty).
+
+      @warning nbSamples is not the number of generated samples but the size of the filtered
+      database. It may happen that the evidence is very rare (or even impossible). In that case, the
+      rejection sampling process may be very slow (or even infinite). In that case, the timeout is
+      mandatory.
+
+      @parameter nbSamples: the size of the filtered database.
+      @parameter evs: the evidence.
+      @parameter timeout: the maximum time in seconds to wait for the generation of the samples. If
+      the timeout is reached, the function returns the log2likelihood of the generated samples. if
+      timeout=0, no timeout are watched and the function may run indefinitely.
       */
-      double drawSamples(Size nbSamples, const gum::Instantiation& evs);
+      double drawSamples(Size nbSamples, const gum::Instantiation& evs, int timeout = 300);
+
+      /** set the behaviour of sampling for discretized variable to uniformly draw double value
+       *
+       * @warning: each call to toCSV or toDatabase that use labels will then generate different
+       * values
+       *
+       * @warning: this is the default behaviour
+       */
+      void setDiscretizedLabelModeRandom();
+
+      /// set the behaviour of sampling for discretized variable to deterministic select double
+      /// median of intervalls
+      void setDiscretizedLabelModeMedian();
+
+      /// set the behaviour of sampling for discretized variable to select the label : "[min,max["
+      void setDiscretizedLabelModeInterval();
 
       /// generates csv representing the generated database
       void toCSV(const std::string& csvFileURL,
@@ -160,9 +207,11 @@ namespace gum {
 
       /// return const ref to the Bayes Net
       const BayesNet< GUM_SCALAR >& bn(void) { return _bn_; };
+
       /// @}
 
       private:
+      DiscretizedLabelMode _discretizedLabelMode_;
       /// Bayesian network
       const BayesNet< GUM_SCALAR >& _bn_;
 
@@ -183,6 +232,10 @@ namespace gum {
 
       /// log2Likelihood of generated samples
       double _log2likelihood_ = 0;
+
+      /// return the final string for a label (taking into account the behavior for
+      /// DiscretizedVariable) from a row
+      std::string _label_(const std::vector< Idx >& row, const DiscreteVariable& v, Idx i) const;
 
       /// returns varOrder from a csv file
       std::vector< Idx > _varOrderFromCSV_(const std::string& csvFileURL,

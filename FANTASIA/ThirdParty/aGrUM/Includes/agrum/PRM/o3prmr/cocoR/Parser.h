@@ -1,6 +1,6 @@
 /***************************************************************************
  *  aGrUM modified frames and atg files for cocoR
- *   Copyright (c) 2005 by Christophe GONZALES(@AMU) and Pierre-Henri WUILLEMIN(@LIP6)  *
+ *   Copyright (c) 2005-2024 by Pierre-Henri WUILLEMIN(@LIP6) and Christophe GONZALES(@AMU)
  *   info_at_agrum_dot_org
 ***************************************************************************/
 /*----------------------------------------------------------------------
@@ -42,13 +42,6 @@ Coco/R itself) does not fall under the GNU General Public License.
 
 
 #include <agrum/PRM/o3prmr/O3prmrContext.h>
-
-
-#ifdef HAVE_DIRENT_H
-#include <dirent.h>
-#else
-#include <agrum/tools/core/mvsc/dirent.h>
-#endif
 
 #include <iostream>
 #include <string>

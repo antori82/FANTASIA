@@ -24,10 +24,25 @@
 #include <Runtime/Core/Public/Async/Async.h>
 #include <atomic>
 
+// aGrUM 2.x's IBayesNet (pulled in transitively by the ID inference headers)
+// declares a method named check(), which collides with UE's global check()
+// assertion macro. Suppress UE's assertion macros across the aGrUM includes,
+// then restore them immediately afterwards (the UE headers below still need them).
+#pragma push_macro("check")
+#pragma push_macro("verify")
+#pragma push_macro("ensure")
+#undef check
+#undef verify
+#undef ensure
+
 #include "agrum/ID/influenceDiagram.h"
 #include "agrum/ID/inference/tools/influenceDiagramInference.h"
 #include "agrum/ID/inference/ShaferShenoyLIMIDInference.h"
 #include "agrum/ID/io/BIFXML/BIFXMLIDWriter.h"
+
+#pragma pop_macro("ensure")
+#pragma pop_macro("verify")
+#pragma pop_macro("check")
 
 #include "MathUtilities.h"
 #include "CoreMinimal.h"

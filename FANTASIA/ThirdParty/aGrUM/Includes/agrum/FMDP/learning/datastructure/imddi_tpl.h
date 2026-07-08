@@ -1,22 +1,43 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
+#pragma once
 
 
 /**
@@ -27,14 +48,16 @@
  * GONZALES(_at_AMU)
  */
 // =======================================================
-#include <agrum/tools/core/math/math_utils.h>
-#include <agrum/tools/core/priorityQueue.h>
-#include <agrum/tools/core/types.h>
+#include <agrum/base/core/priorityQueue.h>
+#include <agrum/base/core/types.h>
+
+#include <agrum/base/core/math/math_utils.h>
 // =======================================================
 #include <agrum/FMDP/learning/core/chiSquare.h>
 #include <agrum/FMDP/learning/datastructure/imddi.h>
 // =======================================================
-#include <agrum/tools/variables/labelizedVariable.h>
+#include <agrum/base/variables/labelizedVariable.h>
+
 // =======================================================
 
 
@@ -49,10 +72,10 @@ namespace gum {
   // ============================================================================
   template < TESTNAME AttributeSelection, bool isScalar >
   IMDDI< AttributeSelection, isScalar >::IMDDI(MultiDimFunctionGraph< double >* target,
-                                               double attributeSelectionThreshold,
-                                               double pairSelectionThreshold,
-                                               Set< const DiscreteVariable* > attributeListe,
-                                               const DiscreteVariable*        learnedValue) :
+                                               double                  attributeSelectionThreshold,
+                                               double                  pairSelectionThreshold,
+                                               gum::VariableSet        attributeListe,
+                                               const DiscreteVariable* learnedValue) :
       IncrementalGraphLearner< AttributeSelection, isScalar >(target, attributeListe, learnedValue),
       _lg_(&(this->model_), pairSelectionThreshold), _nbTotalObservation_(0),
       _attributeSelectionThreshold_(attributeSelectionThreshold) {
@@ -65,13 +88,13 @@ namespace gum {
   // ============================================================================
   template < TESTNAME AttributeSelection, bool isScalar >
   IMDDI< AttributeSelection, isScalar >::IMDDI(MultiDimFunctionGraph< double >* target,
-                                               double attributeSelectionThreshold,
-                                               double pairSelectionThreshold,
-                                               Set< const DiscreteVariable* > attributeListe) :
+                                               double           attributeSelectionThreshold,
+                                               double           pairSelectionThreshold,
+                                               gum::VariableSet attributeListe) :
       IncrementalGraphLearner< AttributeSelection, isScalar >(
-         target,
-         attributeListe,
-         new LabelizedVariable("Reward", "", 2)),
+          target,
+          attributeListe,
+          new LabelizedVariable("Reward", "", 2)),
       _lg_(&(this->model_), pairSelectionThreshold), _nbTotalObservation_(0),
       _attributeSelectionThreshold_(attributeSelectionThreshold) {
     GUM_CONSTRUCTOR(IMDDI);
@@ -90,7 +113,6 @@ namespace gum {
       delete leafIter.val();
   }
 
-
   // ############################################################################
   // Incrementals methods
   // ############################################################################
@@ -105,11 +127,10 @@ namespace gum {
   void IMDDI< AttributeSelection, isScalar >::updateNodeWithObservation_(const Observation* newObs,
                                                                          NodeId currentNodeId) {
     IncrementalGraphLearner< AttributeSelection, isScalar >::updateNodeWithObservation_(
-       newObs,
-       currentNodeId);
+        newObs,
+        currentNodeId);
     if (this->nodeVarMap_[currentNodeId] == this->value_) _lg_.updateLeaf(_leafMap_[currentNodeId]);
   }
-
 
   // ============================================================================
   // Updates the tree after a new observation has been added
@@ -150,7 +171,6 @@ namespace gum {
     if (_lg_.needsUpdate()) _lg_.update();
   }
 
-
   // ############################################################################
   // Updating methods
   // ############################################################################
@@ -169,8 +189,8 @@ namespace gum {
                                                             NodeId                  nody,
                                                             VariableSelector&       vs) {
     if (!this->nodeId2Database_[nody]->isTestRelevant(var)) return;
-    double weight
-       = (double)this->nodeId2Database_[nody]->nbObservation() / (double)this->_nbTotalObservation_;
+    double weight = (double)this->nodeId2Database_[nody]->nbObservation()
+                  / (double)this->_nbTotalObservation_;
     vs.updateScore(var,
                    weight * this->nodeId2Database_[nody]->testValue(var),
                    weight * this->nodeId2Database_[nody]->testOtherCriterion(var));
@@ -181,13 +201,12 @@ namespace gum {
                                                               NodeId                  nody,
                                                               VariableSelector&       vs) {
     if (!this->nodeId2Database_[nody]->isTestRelevant(var)) return;
-    double weight
-       = (double)this->nodeId2Database_[nody]->nbObservation() / (double)this->_nbTotalObservation_;
+    double weight = (double)this->nodeId2Database_[nody]->nbObservation()
+                  / (double)this->_nbTotalObservation_;
     vs.downdateScore(var,
                      weight * this->nodeId2Database_[nody]->testValue(var),
                      weight * this->nodeId2Database_[nody]->testOtherCriterion(var));
   }
-
 
   // ============================================================================
   // For each node in the given set, this methods checks whether or not
@@ -205,7 +224,7 @@ namespace gum {
          ++nodeIter) {
       if (this->nodeId2Database_[*nodeIter]->isTestRelevant(selectedVar)
           && this->nodeId2Database_[*nodeIter]->testValue(selectedVar)
-                > _attributeSelectionThreshold_) {
+                 > _attributeSelectionThreshold_) {
         this->transpose_(*nodeIter, selectedVar);
 
         // Then we subtract the from the score given to each variables the
@@ -230,25 +249,23 @@ namespace gum {
     }
   }
 
-
   // ============================================================================
   // Insert a new node with given associated database, var and maybe sons
   // ============================================================================
   template < TESTNAME AttributeSelection, bool isScalar >
   NodeId IMDDI< AttributeSelection, isScalar >::insertLeafNode_(
-     NodeDatabase< AttributeSelection, isScalar >* nDB,
-     const DiscreteVariable*                       boundVar,
-     Set< const Observation* >*                    obsSet) {
+      NodeDatabase< AttributeSelection, isScalar >* nDB,
+      const DiscreteVariable*                       boundVar,
+      Set< const Observation* >*                    obsSet) {
     NodeId currentNodeId
-       = IncrementalGraphLearner< AttributeSelection, isScalar >::insertLeafNode_(nDB,
-                                                                                  boundVar,
-                                                                                  obsSet);
+        = IncrementalGraphLearner< AttributeSelection, isScalar >::insertLeafNode_(nDB,
+                                                                                   boundVar,
+                                                                                   obsSet);
 
     _addLeaf_(currentNodeId);
 
     return currentNodeId;
   }
-
 
   // ============================================================================
   // Changes var associated to a node
@@ -264,7 +281,6 @@ namespace gum {
     if (desiredVar == this->value_) _addLeaf_(currentNodeId);
   }
 
-
   // ============================================================================
   // Remove node from graph
   // ============================================================================
@@ -274,20 +290,18 @@ namespace gum {
     IncrementalGraphLearner< AttributeSelection, isScalar >::removeNode_(currentNodeId);
   }
 
-
   // ============================================================================
   // Add leaf to aggregator
   // ============================================================================
   template < TESTNAME AttributeSelection, bool isScalar >
   void IMDDI< AttributeSelection, isScalar >::_addLeaf_(NodeId currentNodeId) {
     _leafMap_.insert(
-       currentNodeId,
-       new ConcreteLeaf< AttributeSelection, isScalar >(currentNodeId,
-                                                        this->nodeId2Database_[currentNodeId],
-                                                        &(this->valueAssumed_)));
+        currentNodeId,
+        new ConcreteLeaf< AttributeSelection, isScalar >(currentNodeId,
+                                                         this->nodeId2Database_[currentNodeId],
+                                                         &(this->valueAssumed_)));
     _lg_.addLeaf(_leafMap_[currentNodeId]);
   }
-
 
   // ============================================================================
   // Remove leaf from aggregator
@@ -298,7 +312,6 @@ namespace gum {
     delete _leafMap_[currentNodeId];
     _leafMap_.erase(currentNodeId);
   }
-
 
   // ============================================================================
   // Computes the Reduced and Ordered Function Graph  associated to this ordered
@@ -311,7 +324,6 @@ namespace gum {
     this->needUpdate_ = false;
     //      }
   }
-
 
   // ============================================================================
   // Performs the leaves merging
@@ -355,7 +367,7 @@ namespace gum {
       for (Link< NodeId >* curNodeIter = this->var2Node_[*varIter]->list(); curNodeIter;
            curNodeIter                 = curNodeIter->nextLink()) {
         NodeId* sonsMap
-           = static_cast< NodeId* >(SOA_ALLOCATE(sizeof(NodeId) * (*varIter)->domainSize()));
+            = static_cast< NodeId* >(SOA_ALLOCATE(sizeof(NodeId) * (*varIter)->domainSize()));
         for (Idx modality = 0; modality < (*varIter)->domainSize(); ++modality)
           sonsMap[modality] = toTarget[this->nodeSonsMap_[curNodeIter->element()][modality]];
         toTarget.insert(curNodeIter->element(),
@@ -368,7 +380,6 @@ namespace gum {
     this->target_->manager()->setRootNode(toTarget[this->root_]);
     this->target_->manager()->clean();
   }
-
 
   // ============================================================================
   // Performs the leaves merging
@@ -384,7 +395,6 @@ namespace gum {
     return this->target_->manager()->addTerminalNode(value);
   }
 
-
   // ============================================================================
   // Performs the leaves merging
   // ============================================================================
@@ -392,7 +402,7 @@ namespace gum {
   NodeId IMDDI< AttributeSelection, isScalar >::_insertLeafInFunctionGraph_(AbstractLeaf* leaf,
                                                                             Int2Type< false >) {
     NodeId* sonsMap
-       = static_cast< NodeId* >(SOA_ALLOCATE(sizeof(NodeId) * this->value_->domainSize()));
+        = static_cast< NodeId* >(SOA_ALLOCATE(sizeof(NodeId) * this->value_->domainSize()));
     for (Idx modality = 0; modality < this->value_->domainSize(); ++modality) {
       double newVal = 0.0;
       if (leaf->total()) newVal = (double)leaf->effectif(modality) / (double)leaf->total();

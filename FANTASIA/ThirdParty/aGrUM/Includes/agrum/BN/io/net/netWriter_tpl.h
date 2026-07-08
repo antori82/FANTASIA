@@ -1,25 +1,48 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
+#pragma once
 
-
+#pragma once
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
+
+#  include <fstream>
 
 // to ease parsing in IDE
 #  include <agrum/BN/io/net/netWriter.h>
@@ -86,7 +109,7 @@ namespace gum {
 
   // Returns a bloc defining a variable's CPT in the BN format.
   template < typename GUM_SCALAR >
-  INLINE std::string NetWriter< GUM_SCALAR >::_variableCPT_(const Potential< GUM_SCALAR >& cpt) {
+  INLINE std::string NetWriter< GUM_SCALAR >::_variableCPT_(const Tensor< GUM_SCALAR >& cpt) {
     std::stringstream str;
     std::string       tab = "   ";   // poor tabulation
 
@@ -95,7 +118,8 @@ namespace gum {
       str << "potential (" << cpt.variable(0).name() << ") {" << std::endl << tab << "data = ( ";
 
       for (inst.setFirst(); !inst.end(); ++inst) {
-        str << " " << cpt[inst];
+        str << std::format(" {}", cpt[inst]);
+        ;
       }
 
       str << ");";
@@ -106,7 +130,7 @@ namespace gum {
       for (Idx i = 1; i < varsSeq.size(); i++)
         conds.add(*varsSeq[varsSeq.size() - i]);
 
-      str << "potential ( " << (varsSeq[(Idx)0])->name() << " | ";
+      str << "potential ( " << (varsSeq[static_cast< Idx >(0)])->name() << " | ";
       for (Idx i = 1; i < varsSeq.size(); i++)
         str << varsSeq[i]->name() << "   ";
       str << ") {" << std::endl << tab << "data = \n";
@@ -122,7 +146,7 @@ namespace gum {
 
         inst.setVals(conds);
         for (inst.setFirstVar(*varsSeq[0]); !inst.end(); inst.incVar(*varsSeq[0]))
-          str << tab << cpt[inst];
+          str << std::format(" {}{}", tab, cpt[inst]);
 
         comment = tab + "% ";
         for (Idx i = 0; i < conds.nbrDim(); i++) {

@@ -1,22 +1,43 @@
-/**
- *
- *   Copyright (c) 2005-2023 by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
+#pragma once
 
 
 /**
@@ -27,9 +48,9 @@
  * @author Paul ALAM & Pierre-Henri WUILLEMIN(_at_LIP6)
  */
 
-#include <agrum/BN/BayesNetFragment.h>
 #include <agrum/BN/algorithms/barrenNodesFinder.h>
 #include <agrum/BN/algorithms/dSeparationAlgorithm.h>
+#include <agrum/BN/BayesNetFragment.h>
 #include <agrum/BN/inference/tools/samplingInference.h>
 
 
@@ -39,7 +60,6 @@
 #define DEFAULT_TIMEOUT          6000
 #define DEFAULT_EPSILON          1e-2
 #define DEFAULT_MIN_EPSILON_RATE 1e-5
-
 
 namespace gum {
 
@@ -54,7 +74,6 @@ namespace gum {
     this->setMaxTime(DEFAULT_TIMEOUT);
     GUM_CONSTRUCTOR(SamplingInference);
   }
-
 
   template < typename GUM_SCALAR >
   SamplingInference< GUM_SCALAR >::~SamplingInference() {
@@ -72,6 +91,7 @@ namespace gum {
     if (_samplingBN_ == nullptr) return this->BN();
     else return *_samplingBN_;
   }
+
   template < typename GUM_SCALAR >
   void SamplingInference< GUM_SCALAR >::setEstimatorFromBN_() {
     _estimator_.setFromBN(&samplingBN(), this->hardEvidenceNodes());
@@ -80,26 +100,25 @@ namespace gum {
 
   template < typename GUM_SCALAR >
   void SamplingInference< GUM_SCALAR >::setEstimatorFromLBP_(
-     LoopyBeliefPropagation< GUM_SCALAR >* lbp,
-     GUM_SCALAR                            virtualLBPSize) {
+      LoopyBeliefPropagation< GUM_SCALAR >* lbp,
+      GUM_SCALAR                            virtualLBPSize) {
     _estimator_.setFromLBP(lbp, this->hardEvidenceNodes(), virtualLBPSize);
     this->isSetEstimator = true;
   }
 
-
   template < typename GUM_SCALAR >
-  const Potential< GUM_SCALAR >& SamplingInference< GUM_SCALAR >::currentPosterior(NodeId id) {
+  const Tensor< GUM_SCALAR >& SamplingInference< GUM_SCALAR >::currentPosterior(NodeId id) {
     return _estimator_.posterior(this->BN().variable(id));
   }
 
   template < typename GUM_SCALAR >
-  const Potential< GUM_SCALAR >&
-     SamplingInference< GUM_SCALAR >::currentPosterior(const std::string& name) {
+  const Tensor< GUM_SCALAR >&
+      SamplingInference< GUM_SCALAR >::currentPosterior(const std::string& name) {
     return currentPosterior(this->BN().idFromName(name));
   }
 
   template < typename GUM_SCALAR >
-  const Potential< GUM_SCALAR >& SamplingInference< GUM_SCALAR >::posterior_(NodeId id) {
+  const Tensor< GUM_SCALAR >& SamplingInference< GUM_SCALAR >::posterior_(NodeId id) {
     return _estimator_.posterior(this->BN().variable(id));
   }
 
@@ -124,7 +143,7 @@ namespace gum {
     dsep.requisiteNodes(this->BN().dag(),
                         this->BN().nodes().asNodeSet(),   // no target for approximateInference
                         this->hardEvidenceNodes(),
-                        this->softEvidenceNodes(),   // should be empty
+                        this->softEvidenceNodes(),        // should be empty
                         requisite);
     requisite += this->hardEvidenceNodes();
 
@@ -145,7 +164,6 @@ namespace gum {
     this->isContextualized = true;
     this->onContextualize_(_samplingBN_);
   }
-
 
   template < typename GUM_SCALAR >
   void SamplingInference< GUM_SCALAR >::makeInference_() {
@@ -173,7 +191,6 @@ namespace gum {
     this->isSetEstimator = false;
   }
 
-
   template < typename GUM_SCALAR >
   void SamplingInference< GUM_SCALAR >::addVarSample_(NodeId nod, Instantiation* I) {
     gum::Instantiation Itop = gum::Instantiation(*I);
@@ -184,7 +201,6 @@ namespace gum {
 
   template < typename GUM_SCALAR >
   void SamplingInference< GUM_SCALAR >::onContextualize_(BayesNetFragment< GUM_SCALAR >* bn) {}
-
 
   template < typename GUM_SCALAR >
   void SamplingInference< GUM_SCALAR >::onEvidenceAdded_(const NodeId id, bool isHardEvidence) {
@@ -214,7 +230,7 @@ namespace gum {
   void SamplingInference< GUM_SCALAR >::updateOutdatedStructure_() {}
 
   template < typename GUM_SCALAR >
-  void SamplingInference< GUM_SCALAR >::updateOutdatedPotentials_() {}
+  void SamplingInference< GUM_SCALAR >::updateOutdatedTensors_() {}
 
   template < typename GUM_SCALAR >
   void SamplingInference< GUM_SCALAR >::onMarginalTargetAdded_(const NodeId id) {}

@@ -1,23 +1,43 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
-
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
+#pragma once
 
 /**
  * @file
@@ -33,8 +53,7 @@ namespace gum {
     PRMParameter< GUM_SCALAR >::PRMParameter(const std::string& name,
                                              ParameterType      type,
                                              GUM_SCALAR         value) :
-        PRMClassElement< GUM_SCALAR >(name),
-        _type_(type), _value_(value) {
+        PRMClassElement< GUM_SCALAR >(name), _type_(type), _value_(value) {
       GUM_CONSTRUCTOR(PRMParameter);
       this->safeName_ = name;
     }
@@ -48,7 +67,7 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     PRMParameter< GUM_SCALAR >&
-       PRMParameter< GUM_SCALAR >::operator=(const PRMParameter< GUM_SCALAR >& from) {
+        PRMParameter< GUM_SCALAR >::operator=(const PRMParameter< GUM_SCALAR >& from) {
       GUM_ERROR(OperationNotAllowed, "cannot copy Paramter<GUM_SCALAR")
     }
 
@@ -59,7 +78,7 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     typename PRMClassElement< GUM_SCALAR >::ClassElementType
-       PRMParameter< GUM_SCALAR >::elt_type() const {
+        PRMParameter< GUM_SCALAR >::elt_type() const {
       return PRMClassElement< GUM_SCALAR >::ClassElementType::prm_parameter;
     }
 
@@ -75,7 +94,7 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     typename PRMParameter< GUM_SCALAR >::ParameterType
-       PRMParameter< GUM_SCALAR >::valueType() const {
+        PRMParameter< GUM_SCALAR >::valueType() const {
       return _type_;
     }
 
@@ -90,12 +109,12 @@ namespace gum {
     }
 
     template < typename GUM_SCALAR >
-    Potential< GUM_SCALAR >& PRMParameter< GUM_SCALAR >::cpf() {
+    Tensor< GUM_SCALAR >& PRMParameter< GUM_SCALAR >::cpf() {
       GUM_ERROR(OperationNotAllowed, "Parameters do not have a cpf")
     }
 
     template < typename GUM_SCALAR >
-    const Potential< GUM_SCALAR >& PRMParameter< GUM_SCALAR >::cpf() const {
+    const Tensor< GUM_SCALAR >& PRMParameter< GUM_SCALAR >::cpf() const {
       GUM_ERROR(OperationNotAllowed, "Parameters do not have a cpf")
     }
 

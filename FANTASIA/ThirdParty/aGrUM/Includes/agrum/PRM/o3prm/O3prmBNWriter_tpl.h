@@ -1,22 +1,43 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
+#pragma once
 
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -74,7 +95,7 @@ namespace gum {
   template < typename GUM_SCALAR >
   INLINE std::string
          O3prmBNWriter< GUM_SCALAR >::_extractAttribute_(const IBayesNet< GUM_SCALAR >& bn,
-                                                     NodeId                         node) {
+                                                      NodeId                         node) {
     std::stringstream str;
     str << O3PRM_INDENT;
     str << _extractType_(bn, node) << " ";
@@ -86,7 +107,8 @@ namespace gum {
 
   template < typename GUM_SCALAR >
   INLINE std::string
-     O3prmBNWriter< GUM_SCALAR >::_extractParents_(const IBayesNet< GUM_SCALAR >& bn, NodeId node) {
+         O3prmBNWriter< GUM_SCALAR >::_extractParents_(const IBayesNet< GUM_SCALAR >& bn,
+                                                    NodeId                         node) {
     std::stringstream str;
     auto              var = &(bn.variable(node));
     for (auto parent: bn.cpt(node).variablesSequence()) {
@@ -104,7 +126,7 @@ namespace gum {
 
     str << "[";
     if (inst.nbrDim() == 1) {
-      // 1D potential
+      // 1D tensor
       for (inst.setFirst(); !inst.end(); inst.inc()) {
         if (!first) {
           str << ", ";
@@ -114,7 +136,7 @@ namespace gum {
         str << bn.cpt(node)[inst];
       }
     } else {
-      // (>1)D potential (with parents)
+      // (>1)D tensor (with parents)
       Instantiation jnst;
       for (auto var = inst.variablesSequence().rbegin(); var != inst.variablesSequence().rend();
            --var) {
@@ -146,24 +168,14 @@ namespace gum {
   INLINE std::string O3prmBNWriter< GUM_SCALAR >::_extractType_(const IBayesNet< GUM_SCALAR >& bn,
                                                                 NodeId node) {
     switch (bn.variable(node).varType()) {
-      case gum::VarType::Discretized: {
-        auto double_var
-           = dynamic_cast< const DiscretizedVariable< double >* >(&(bn.variable(node)));
-        if (double_var != nullptr) {
-          return _extractDiscretizedType_< DiscretizedVariable< double > >(double_var);
-        } else {
-          auto float_var
-             = dynamic_cast< const DiscretizedVariable< float >* >(&(bn.variable(node)));
-          if (float_var != nullptr) {
-            return _extractDiscretizedType_< DiscretizedVariable< float > >(float_var);
-          }
-        }
-        GUM_ERROR(InvalidArgument, "DiscretizedVariable ticks are neither doubles or floats")
+      case gum::VarType::DISCRETIZED : {
+        auto double_var = static_cast< const DiscretizedVariable< double >* >(&(bn.variable(node)));
+        return _extractDiscretizedType_< DiscretizedVariable< double > >(double_var);
       }
-      case gum::VarType::Range: {
+      case gum::VarType::RANGE : {
         return _extractRangeType_(bn, node);
       }
-      default: {
+      default : {
         return _extractLabelizedType_(bn, node);
       }
     }
@@ -172,7 +184,7 @@ namespace gum {
   template < typename GUM_SCALAR >
   INLINE std::string
          O3prmBNWriter< GUM_SCALAR >::_extractRangeType_(const IBayesNet< GUM_SCALAR >& bn,
-                                                     NodeId                         node) {
+                                                      NodeId                         node) {
     const auto&       var = static_cast< const RangeVariable& >(bn.variable(node));
     std::stringstream str;
     str << "int (" << var.minVal() << ", " << var.maxVal() << ")";
@@ -182,7 +194,7 @@ namespace gum {
   template < typename GUM_SCALAR >
   INLINE std::string
          O3prmBNWriter< GUM_SCALAR >::_extractLabelizedType_(const IBayesNet< GUM_SCALAR >& bn,
-                                                         NodeId                         node) {
+                                                          NodeId                         node) {
     std::stringstream str;
     str << "labels(";
     for (auto l: bn.variable(node).labels()) {

@@ -1,22 +1,42 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
 
 
 /**
@@ -34,10 +54,12 @@
 #include <agrum/agrum.h>
 // =========================================================================
 // =========================================================================
-#include <agrum/FMDP/decision/E_GreedyDecider.h>
 #include <agrum/FMDP/decision/randomDecider.h>
 #include <agrum/FMDP/decision/statisticalLazyDecider.h>
 #include <agrum/FMDP/planning/adaptiveRMaxPlaner.h>
+
+#include <agrum/FMDP/decision/E_GreedyDecider.h>
+
 // =========================================================================
 
 namespace gum {
@@ -57,6 +79,7 @@ namespace gum {
     /// @name
     // ###################################################################
     /// @
+
     public:
     // ==========================================================================
     ///
@@ -68,10 +91,10 @@ namespace gum {
                                 Idx    nbValueIterationStep        = 10) {
       bool               actionReward = false;
       ILearningStrategy* ls
-         = new FMDPLearner< CHI2TEST, CHI2TEST, ITILEARNER >(attributeSelectionThreshold,
-                                                             actionReward);
+          = new FMDPLearner< CHI2TEST, CHI2TEST, ITILEARNER >(attributeSelectionThreshold,
+                                                              actionReward);
       IPlanningStrategy< double >* ps
-         = StructuredPlaner< double >::sviInstance(discountFactor, epsilon);
+          = StructuredPlaner< double >::sviInstance(discountFactor, epsilon);
       IDecisionStrategy* ds = new E_GreedyDecider();
       return new SDYNA(ls, ps, ds, observationPhaseLenght, nbValueIterationStep, actionReward);
     }
@@ -87,11 +110,11 @@ namespace gum {
                                   Idx    nbValueIterationStep        = 10) {
       bool               actionReward = false;
       ILearningStrategy* ls
-         = new FMDPLearner< GTEST, GTEST, IMDDILEARNER >(attributeSelectionThreshold,
-                                                         actionReward,
-                                                         similarityThreshold);
+          = new FMDPLearner< GTEST, GTEST, IMDDILEARNER >(attributeSelectionThreshold,
+                                                          actionReward,
+                                                          similarityThreshold);
       IPlanningStrategy< double >* ps
-         = StructuredPlaner< double >::spumddInstance(discountFactor, epsilon, false);
+          = StructuredPlaner< double >::spumddInstance(discountFactor, epsilon, false);
       IDecisionStrategy* ds = new E_GreedyDecider();
       return new SDYNA(ls,
                        ps,
@@ -113,11 +136,11 @@ namespace gum {
                                   Idx    nbValueIterationStep        = 10) {
       bool               actionReward = true;
       ILearningStrategy* ls
-         = new FMDPLearner< GTEST, GTEST, IMDDILEARNER >(attributeSelectionThreshold,
-                                                         actionReward,
-                                                         similarityThreshold);
+          = new FMDPLearner< GTEST, GTEST, IMDDILEARNER >(attributeSelectionThreshold,
+                                                          actionReward,
+                                                          similarityThreshold);
       AdaptiveRMaxPlaner* rm
-         = AdaptiveRMaxPlaner::ReducedAndOrderedInstance(ls, discountFactor, epsilon);
+          = AdaptiveRMaxPlaner::ReducedAndOrderedInstance(ls, discountFactor, epsilon);
       IPlanningStrategy< double >* ps = rm;
       IDecisionStrategy*           ds = rm;
       return new SDYNA(ls, ps, ds, observationPhaseLenght, nbValueIterationStep, actionReward);
@@ -133,7 +156,7 @@ namespace gum {
                                    Idx    nbValueIterationStep        = 10) {
       bool               actionReward = true;
       ILearningStrategy* ls
-         = new FMDPLearner< GTEST, GTEST, ITILEARNER >(attributeSelectionThreshold, actionReward);
+          = new FMDPLearner< GTEST, GTEST, ITILEARNER >(attributeSelectionThreshold, actionReward);
       AdaptiveRMaxPlaner* rm = AdaptiveRMaxPlaner::TreeInstance(ls, discountFactor, epsilon);
       IPlanningStrategy< double >* ps = rm;
       IDecisionStrategy*           ds = rm;
@@ -151,11 +174,11 @@ namespace gum {
                                     Idx    nbValueIterationStep        = 10) {
       bool               actionReward = true;
       ILearningStrategy* ls
-         = new FMDPLearner< GTEST, GTEST, IMDDILEARNER >(attributeSelectionThreshold,
-                                                         actionReward,
-                                                         similarityThreshold);
+          = new FMDPLearner< GTEST, GTEST, IMDDILEARNER >(attributeSelectionThreshold,
+                                                          actionReward,
+                                                          similarityThreshold);
       IPlanningStrategy< double >* ps
-         = StructuredPlaner< double >::spumddInstance(discountFactor, epsilon);
+          = StructuredPlaner< double >::spumddInstance(discountFactor, epsilon);
       IDecisionStrategy* ds = new RandomDecider();
       return new SDYNA(ls, ps, ds, observationPhaseLenght, nbValueIterationStep, actionReward);
     }
@@ -170,14 +193,13 @@ namespace gum {
                                      Idx    nbValueIterationStep        = 10) {
       bool               actionReward = true;
       ILearningStrategy* ls
-         = new FMDPLearner< CHI2TEST, CHI2TEST, ITILEARNER >(attributeSelectionThreshold,
-                                                             actionReward);
+          = new FMDPLearner< CHI2TEST, CHI2TEST, ITILEARNER >(attributeSelectionThreshold,
+                                                              actionReward);
       IPlanningStrategy< double >* ps
-         = StructuredPlaner< double >::sviInstance(discountFactor, epsilon);
+          = StructuredPlaner< double >::sviInstance(discountFactor, epsilon);
       IDecisionStrategy* ds = new RandomDecider();
       return new SDYNA(ls, ps, ds, observationPhaseLenght, nbValueIterationStep, actionReward);
     }
-
 
     /// @}
 
@@ -193,6 +215,7 @@ namespace gum {
      * @return an instance of SDyna architecture
      */
     // ==========================================================================
+
     private:
     SDYNA(ILearningStrategy*           learner,
           IPlanningStrategy< double >* planer,
@@ -205,6 +228,7 @@ namespace gum {
     // ==========================================================================
     /// Destructor
     // ==========================================================================
+
     public:
     ~SDYNA();
 
@@ -215,6 +239,7 @@ namespace gum {
     /// @name Problem specification methods
     // ###################################################################
     /// @{
+
     public:
     // ==========================================================================
     /**
@@ -247,6 +272,7 @@ namespace gum {
     /// @name Initialization
     // ###################################################################
     /// @{
+
     public:
     // ==========================================================================
     /**
@@ -271,6 +297,7 @@ namespace gum {
     /// @name Incremental methods
     // ###################################################################
     /// @{
+
     public:
     // ==========================================================================
     /**
@@ -351,13 +378,13 @@ namespace gum {
 
     std::string optimalPolicy2String() { return _planer_->optimalPolicy2String(); }
 
-
     // ###################################################################
     /// @name Size methods
     /// @brief just to get the size of the different data structure for
     /// performance evaluation purposes only
     // ###################################################################
     /// @{
+
     public:
     // ==========================================================================
     /**

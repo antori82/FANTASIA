@@ -1,22 +1,42 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
 
 
 /**
@@ -32,32 +52,29 @@
 #include <utility>
 
 #include <agrum/agrum.h>
+
+#include <agrum/base/graphicalModels/inference/scheduler/scheduledInference.h>
+#include <agrum/base/graphs/algorithms/triangulations/defaultTriangulation.h>
 #include <agrum/BN/algorithms/barrenNodesFinder.h>
 #include <agrum/BN/inference/tools/jointTargetedInference.h>
-#include <agrum/BN/inference/tools/relevantPotentialsFinderType.h>
-#include <agrum/tools/graphs/algorithms/triangulations/defaultTriangulation.h>
-
-#include <agrum/tools/graphicalModels/inference/scheduler/scheduledInference.h>
-
+#include <agrum/BN/inference/tools/relevantTensorsFinderType.h>
 
 namespace gum {
 
 
   // the function used to combine two tables
   template < typename GUM_SCALAR >
-  INLINE static Potential< GUM_SCALAR > VENewmultiPotential(const Potential< GUM_SCALAR >& t1,
-                                                            const Potential< GUM_SCALAR >& t2) {
+  INLINE static Tensor< GUM_SCALAR > VENewmultiTensor(const Tensor< GUM_SCALAR >& t1,
+                                                      const Tensor< GUM_SCALAR >& t2) {
     return t1 * t2;
   }
 
   // the function used to combine two tables
   template < typename GUM_SCALAR >
-  INLINE static Potential< GUM_SCALAR >
-     VENewprojPotential(const Potential< GUM_SCALAR >&        t1,
-                        const Set< const DiscreteVariable* >& del_vars) {
-    return t1.margSumOut(del_vars);
+  INLINE static Tensor< GUM_SCALAR > VENewprojTensor(const Tensor< GUM_SCALAR >& t1,
+                                                     const gum::VariableSet&     del_vars) {
+    return t1.sumOut(del_vars);
   }
-
 
   /**
    * @class VariableElimination VariableElimination.h
@@ -78,8 +95,8 @@ namespace gum {
 
     /// default constructor
     explicit VariableElimination(const IBayesNet< GUM_SCALAR >* BN,
-                                 RelevantPotentialsFinderType
-                                 = RelevantPotentialsFinderType::DSEP_BAYESBALL_POTENTIALS,
+                                 RelevantTensorsFinderType
+                                 = RelevantTensorsFinderType::DSEP_BAYESBALL_TENSORS,
                                  FindBarrenNodesType = FindBarrenNodesType::FIND_BARREN_NODES);
 
     /// avoid copy constructors
@@ -102,16 +119,16 @@ namespace gum {
     /// use a new triangulation algorithm
     void setTriangulation(const Triangulation& new_triangulation);
 
-    /// sets how we determine the relevant potentials to combine
+    /// sets how we determine the relevant tensors to combine
     /** When a clique sends a message to a separator, it first determines the
-     * set of the potentials it contains and the potentials contained in the
-     * messages it received. If RelevantPotentialsFinderType = FIND_ALL,
-     * all these potentials are combined and projected to produce the message
+     * set of the tensors it contains and the tensors contained in the
+     * messages it received. If RelevantTensorsFinderType = FIND_ALL,
+     * all these tensors are combined and projected to produce the message
      * sent to the separator.
-     * If RelevantPotentialsFinderType = DSEP_BAYESBALL_NODES, then only the
-     * set of potentials d-connected to the variables of the separator are kept
+     * If RelevantTensorsFinderType = DSEP_BAYESBALL_NODES, then only the
+     * set of tensors d-connected to the variables of the separator are kept
      * for combination and projection. */
-    void setRelevantPotentialsFinderType(RelevantPotentialsFinderType type);
+    void setRelevantTensorsFinderType(RelevantTensorsFinderType type);
 
     /// sets how we determine barren nodes
     /** Barren nodes are unnecessary for probability inference, so they can
@@ -178,7 +195,7 @@ namespace gum {
     void onAllTargetsErased_() final;
 
     /// fired when the state of the inference engine is changed
-    void onStateChanged_() final{};
+    void onStateChanged_() final {};
 
     /// prepares inference when the latter is in OutdatedStructure state
     /** Note that the values of evidence are not necessarily
@@ -186,11 +203,11 @@ namespace gum {
      * makeInference_. */
     void updateOutdatedStructure_() final;
 
-    /// prepares inference when the latter is in OutdatedPotentials state
+    /// prepares inference when the latter is in OutdatedTensors state
     /** Note that the values of evidence are not necessarily
-     * known and can be changed between updateOutdatedPotentials_ and
+     * known and can be changed between updateOutdatedTensors_ and
      * makeInference_. */
-    void updateOutdatedPotentials_() final;
+    void updateOutdatedTensors_() final;
 
     /// called when the inference has to be performed effectively
     /** Once the inference is done, fillPosterior_ can be called. */
@@ -199,12 +216,12 @@ namespace gum {
 
     /// returns the posterior of a given variable
     /** @param id The variable's id. */
-    const Potential< GUM_SCALAR >& posterior_(NodeId id) final;
+    const Tensor< GUM_SCALAR >& posterior_(NodeId id) final;
 
     /// returns the posterior of a declared target set
     /** @param set The set of ids of the variables whose joint posterior is
      * looked for. */
-    const Potential< GUM_SCALAR >& jointPosterior_(const NodeSet& set) final;
+    const Tensor< GUM_SCALAR >& jointPosterior_(const NodeSet& set) final;
 
     /** @brief asks derived classes for the joint posterior of a set of
      * variables not declared as a joint target
@@ -213,43 +230,41 @@ namespace gum {
      * posterior is looked for.
      * @param declared_target the joint target declared by the user that contains
      * set */
-    const Potential< GUM_SCALAR >& jointPosterior_(const NodeSet& wanted_target,
-                                                   const NodeSet& declared_target) final;
+    const Tensor< GUM_SCALAR >& jointPosterior_(const NodeSet& wanted_target,
+                                                const NodeSet& declared_target) final;
 
-    /// returns a fresh potential equal to P(argument,evidence)
-    Potential< GUM_SCALAR >* unnormalizedJointPosterior_(NodeId id) final;
+    /// returns a fresh tensor equal to P(argument,evidence)
+    Tensor< GUM_SCALAR >* unnormalizedJointPosterior_(NodeId id) final;
 
-    /// returns a fresh potential equal to P(argument,evidence)
-    Potential< GUM_SCALAR >* unnormalizedJointPosterior_(const NodeSet& set) final;
+    /// returns a fresh tensor equal to P(argument,evidence)
+    Tensor< GUM_SCALAR >* unnormalizedJointPosterior_(const NodeSet& set) final;
 
 
     private:
-    using _PotentialSet_        = Set< const Potential< GUM_SCALAR >* >;
+    using _TensorSet_           = Set< const Tensor< GUM_SCALAR >* >;
     using _ScheduleMultiDimSet_ = Set< const IScheduleMultiDim* >;
 
 
-    /// the type of relevant potential finding algorithm to be used
-    RelevantPotentialsFinderType _find_relevant_potential_type_{
-       RelevantPotentialsFinderType::DSEP_BAYESBALL_POTENTIALS};
+    /// the type of relevant tensor finding algorithm to be used
+    RelevantTensorsFinderType _find_relevant_tensor_type_{
+        RelevantTensorsFinderType::DSEP_BAYESBALL_TENSORS};
 
-    /** @brief update a set of potentials: the remaining are those to be
+    /** @brief update a set of tensors: the remaining are those to be
      * combined to produce a message on a separator */
-    void (VariableElimination< GUM_SCALAR >::*_findRelevantPotentials_)(
-       Set< const IScheduleMultiDim* >& pot_list,
-       Set< const DiscreteVariable* >&  kept_vars);
+    void (VariableElimination< GUM_SCALAR >::*_findRelevantTensors_)(
+        Set< const IScheduleMultiDim* >& pot_list,
+        gum::VariableSet&                kept_vars);
 
     /// the type of barren nodes computation we wish
     FindBarrenNodesType _barren_nodes_type_{FindBarrenNodesType::FIND_BARREN_NODES};
 
     /// the operator for performing the projections
-    Potential< GUM_SCALAR > (*_projection_op_)(const Potential< GUM_SCALAR >&,
-                                               const Set< const DiscreteVariable* >&){
-       VENewprojPotential};
+    Tensor< GUM_SCALAR > (*_projection_op_)(const Tensor< GUM_SCALAR >&,
+                                            const gum::VariableSet&){VENewprojTensor};
 
     /// the operator for performing the combinations
-    Potential< GUM_SCALAR > (*_combination_op_)(const Potential< GUM_SCALAR >&,
-                                                const Potential< GUM_SCALAR >&){
-       VENewmultiPotential};
+    Tensor< GUM_SCALAR > (*_combination_op_)(const Tensor< GUM_SCALAR >&,
+                                             const Tensor< GUM_SCALAR >&){VENewmultiTensor};
 
     /// the triangulation class creating the junction tree used for inference
     Triangulation* _triangulation_;
@@ -276,7 +291,7 @@ namespace gum {
 
     /// the posterior computed during the last inference
     /** the posterior is owned by VariableElimination. */
-    Potential< GUM_SCALAR >* _target_posterior_{nullptr};
+    Tensor< GUM_SCALAR >* _target_posterior_{nullptr};
 
     /// minimal number of operations to perform in the JT to use schedules
     static constexpr double _schedule_threshold_{1000000.0};
@@ -289,65 +304,62 @@ namespace gum {
     void _createNewJT_(const NodeSet& targets);
 
     /// sets the operator for performing the projections
-    void _setProjectionFunction_(Potential< GUM_SCALAR > (
-       *proj)(const Potential< GUM_SCALAR >&, const Set< const DiscreteVariable* >&));
+    void _setProjectionFunction_(Tensor< GUM_SCALAR > (*proj)(const Tensor< GUM_SCALAR >&,
+                                                              const gum::VariableSet&));
 
     /// sets the operator for performing the combinations
-    void _setCombinationFunction_(Potential< GUM_SCALAR > (*comb)(const Potential< GUM_SCALAR >&,
-                                                                  const Potential< GUM_SCALAR >&));
+    void _setCombinationFunction_(Tensor< GUM_SCALAR > (*comb)(const Tensor< GUM_SCALAR >&,
+                                                               const Tensor< GUM_SCALAR >&));
 
-    /** @brief update a set of potentials: the remaining are those to be
+    /** @brief update a set of tensors: the remaining are those to be
      * combined to produce a message on a separator */
-    void _findRelevantPotentialsWithdSeparation_(_ScheduleMultiDimSet_&          pot_list,
-                                                 Set< const DiscreteVariable* >& kept_vars);
+    void _findRelevantTensorsWithdSeparation_(_ScheduleMultiDimSet_& pot_list,
+                                              gum::VariableSet&      kept_vars);
 
-    /** @brief update a set of potentials: the remaining are those to be
+    /** @brief update a set of tensors: the remaining are those to be
      * combined to produce a message on a separator */
-    void _findRelevantPotentialsWithdSeparation2_(_ScheduleMultiDimSet_&          pot_list,
-                                                  Set< const DiscreteVariable* >& kept_vars);
+    void _findRelevantTensorsWithdSeparation2_(_ScheduleMultiDimSet_& pot_list,
+                                               gum::VariableSet&      kept_vars);
 
-    /** @brief update a set of potentials: the remaining are those to be
+    /** @brief update a set of tensors: the remaining are those to be
      * combined to produce a message on a separator */
-    void _findRelevantPotentialsWithdSeparation3_(_ScheduleMultiDimSet_&          pot_list,
-                                                  Set< const DiscreteVariable* >& kept_vars);
+    void _findRelevantTensorsWithdSeparation3_(_ScheduleMultiDimSet_& pot_list,
+                                               gum::VariableSet&      kept_vars);
 
-    /** @brief update a set of potentials: the remaining are those to be
+    /** @brief update a set of tensors: the remaining are those to be
      * combined
      * to produce a message on a separator */
-    void _findRelevantPotentialsGetAll_(_ScheduleMultiDimSet_&          pot_list,
-                                        Set< const DiscreteVariable* >& kept_vars);
+    void _findRelevantTensorsGetAll_(_ScheduleMultiDimSet_& pot_list, gum::VariableSet& kept_vars);
 
-    /** @brief update a set of potentials: the remaining are those to be
+    /** @brief update a set of tensors: the remaining are those to be
      * combined to produce a message on a separator */
-    void _findRelevantPotentialsXX_(_ScheduleMultiDimSet_&          pot_list,
-                                    Set< const DiscreteVariable* >& kept_vars);
+    void _findRelevantTensorsXX_(_ScheduleMultiDimSet_& pot_list, gum::VariableSet& kept_vars);
 
-    /// remove barren variables using schedules and return the newly created projected potentials
-    _ScheduleMultiDimSet_ _removeBarrenVariables_(Schedule&                       schedule,
-                                                  _ScheduleMultiDimSet_&          pot_list,
-                                                  Set< const DiscreteVariable* >& del_vars);
+    /// remove barren variables using schedules and return the newly created projected tensors
+    _ScheduleMultiDimSet_ _removeBarrenVariables_(Schedule&              schedule,
+                                                  _ScheduleMultiDimSet_& pot_list,
+                                                  gum::VariableSet&      del_vars);
 
-    /// remove barren variables without schedules and return the newly created projected potentials
-    _PotentialSet_ _removeBarrenVariables_(_PotentialSet_&                 pot_list,
-                                           Set< const DiscreteVariable* >& del_vars);
+    /// remove barren variables without schedules and return the newly created projected tensors
+    _TensorSet_ _removeBarrenVariables_(_TensorSet_& pot_list, gum::VariableSet& del_vars);
 
     /// perform the collect phase using schedules
     _ScheduleMultiDimSet_ _collectMessage_(Schedule& schedule, NodeId id, NodeId from);
 
     /// perform the collect phase directly without schedules
-    std::pair< _PotentialSet_, _PotentialSet_ > _collectMessage_(NodeId id, NodeId from);
+    std::pair< _TensorSet_, _TensorSet_ > _collectMessage_(NodeId id, NodeId from);
 
     /// returns the CPT + evidence of a node projected w.r.t. hard evidence
-    std::pair< _PotentialSet_, _PotentialSet_ > _NodePotentials_(NodeId node);
+    std::pair< _TensorSet_, _TensorSet_ > _NodeTensors_(NodeId node);
 
     /// returns the CPT + evidence of a node projected w.r.t. hard evidence
-    _ScheduleMultiDimSet_ _NodePotentials_(Schedule& schedule, NodeId node);
+    _ScheduleMultiDimSet_ _NodeTensors_(Schedule& schedule, NodeId node);
 
     /// creates the message sent by clique from_id to clique to_id without using schedules
-    std::pair< _PotentialSet_, _PotentialSet_ >
-       _produceMessage_(NodeId                                        from_id,
-                        NodeId                                        to_id,
-                        std::pair< _PotentialSet_, _PotentialSet_ >&& incoming_messages);
+    std::pair< _TensorSet_, _TensorSet_ >
+        _produceMessage_(NodeId                                  from_id,
+                         NodeId                                  to_id,
+                         std::pair< _TensorSet_, _TensorSet_ >&& incoming_messages);
 
     /// creates the message sent by clique from_id to clique to_id using schedules
     _ScheduleMultiDimSet_ _produceMessage_(Schedule&               schedule,
@@ -355,39 +367,39 @@ namespace gum {
                                            NodeId                  to_id,
                                            _ScheduleMultiDimSet_&& incoming_messages);
 
-    /** @brief removes variables del_vars from a list of potentials and
+    /** @brief removes variables del_vars from a list of tensors and
      * returns the resulting list directly without schedules */
-    _PotentialSet_ _marginalizeOut_(_PotentialSet_                  pot_list,
-                                    Set< const DiscreteVariable* >& del_vars,
-                                    Set< const DiscreteVariable* >& kept_vars);
+    _TensorSet_ _marginalizeOut_(_TensorSet_       pot_list,
+                                 gum::VariableSet& del_vars,
+                                 gum::VariableSet& kept_vars);
 
-    /** @brief removes variables del_vars from a list of potentials and
+    /** @brief removes variables del_vars from a list of tensors and
      * returns the resulting list using schedules */
-    _ScheduleMultiDimSet_ _marginalizeOut_(Schedule&                       schedule,
-                                           _ScheduleMultiDimSet_           pot_list,
-                                           Set< const DiscreteVariable* >& del_vars,
-                                           Set< const DiscreteVariable* >& kept_vars);
+    _ScheduleMultiDimSet_ _marginalizeOut_(Schedule&             schedule,
+                                           _ScheduleMultiDimSet_ pot_list,
+                                           gum::VariableSet&     del_vars,
+                                           gum::VariableSet&     kept_vars);
 
-    /// returns a fresh potential equal to P(1st arg,evidence) without using schedules
+    /// returns a fresh tensor equal to P(1st arg,evidence) without using schedules
     /** This function is used by unnormalizedJointPosterior_ */
-    Potential< GUM_SCALAR >* _unnormalizedJointPosterior_(NodeId id);
+    Tensor< GUM_SCALAR >* _unnormalizedJointPosterior_(NodeId id);
 
-    /// returns a fresh potential equal to P(1st arg,evidence) without using schedules
+    /// returns a fresh tensor equal to P(1st arg,evidence) without using schedules
     /** This function is used by unnormalizedJointPosterior_ */
-    Potential< GUM_SCALAR >* _unnormalizedJointPosterior_(Schedule& schedule, NodeId id);
+    Tensor< GUM_SCALAR >* _unnormalizedJointPosterior_(Schedule& schedule, NodeId id);
 
-    /// returns a fresh potential equal to P(1st arg,evidence) without using schedules
+    /// returns a fresh tensor equal to P(1st arg,evidence) without using schedules
     /** This function is used by unnormalizedJointPosterior_ */
-    Potential< GUM_SCALAR >* _unnormalizedJointPosterior_(const NodeSet& set,
-                                                          const NodeSet& targets,
-                                                          const NodeSet& hard_evidence_nodes);
+    Tensor< GUM_SCALAR >* _unnormalizedJointPosterior_(const NodeSet& set,
+                                                       const NodeSet& targets,
+                                                       const NodeSet& hard_evidence_nodes);
 
-    /// returns a fresh potential equal to P(1st arg,evidence) without using schedules
+    /// returns a fresh tensor equal to P(1st arg,evidence) without using schedules
     /** This function is used by unnormalizedJointPosterior_ */
-    Potential< GUM_SCALAR >* _unnormalizedJointPosterior_(Schedule&      schedule,
-                                                          const NodeSet& set,
-                                                          const NodeSet& targets,
-                                                          const NodeSet& hard_evidence_nodes);
+    Tensor< GUM_SCALAR >* _unnormalizedJointPosterior_(Schedule&      schedule,
+                                                       const NodeSet& set,
+                                                       const NodeSet& targets,
+                                                       const NodeSet& hard_evidence_nodes);
   };
 
 

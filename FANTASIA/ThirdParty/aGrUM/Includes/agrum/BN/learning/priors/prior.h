@@ -1,22 +1,42 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
 
 
 /** @file
@@ -31,8 +51,9 @@
 #include <vector>
 
 #include <agrum/agrum.h>
-#include <agrum/tools/database/databaseTable.h>
-#include <agrum/tools/stattests/idCondSet.h>
+
+#include <agrum/base/database/databaseTable.h>
+#include <agrum/base/stattests/idCondSet.h>
 
 namespace gum {
 
@@ -46,14 +67,13 @@ namespace gum {
 
     constexpr const char* priorTypeToString(PriorType e) noexcept {
       switch (e) {
-        case PriorType::NoPriorType: return "No prior";
-        case PriorType::DirichletPriorType: return "Dirichlet prior";
-        case PriorType::SmoothingPriorType: return "TriSmoothing prior";
-        case PriorType::BDeuPriorType: return "BDeu prior";
+        case PriorType::NoPriorType : return "No prior";
+        case PriorType::DirichletPriorType : return "Dirichlet prior";
+        case PriorType::SmoothingPriorType : return "TriSmoothing prior";
+        case PriorType::BDeuPriorType : return "BDeu prior";
       }
       return "Error in prior";
     }
-
 
     /** @class Prior
      * @brief the base class for all a priori
@@ -104,7 +124,7 @@ namespace gum {
       /// returns the type of the prior
       virtual PriorType getType() const = 0;
 
-      /// indicates whether the prior is potentially informative
+      /// indicates whether the prior is tensorly informative
       /** Basically, only the NoPrior is uninformative. However, it may happen
        * that, under some circumstances, an prior, which is usually not equal
        * to the NoPrior, becomes equal to it (e.g., when the weight is equal
@@ -128,7 +148,7 @@ namespace gum {
        * @warning the method assumes that the size of the vector is exactly
        * the domain size of the joint RHS variables of the idset. */
       virtual void addConditioningPseudoCount(const IdCondSet& idset, std::vector< double >& counts)
-         = 0;
+          = 0;
 
       /// @}
 

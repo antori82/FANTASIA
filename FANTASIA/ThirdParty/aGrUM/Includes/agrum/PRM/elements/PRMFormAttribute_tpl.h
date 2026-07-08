@@ -1,22 +1,43 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
+#pragma once
 
 
 /**
@@ -27,8 +48,7 @@
  */
 #include <iostream>
 
-#include <agrum/tools/core/math/formula.h>
-
+#include <agrum/base/core/math/formula.h>
 #include <agrum/PRM/elements/PRMScalarAttribute.h>
 #include <agrum/PRM/elements/PRMType.h>
 
@@ -43,8 +63,8 @@ namespace gum {
                                                      const std::string&                     name,
                                                      const PRMType&                         type,
                                                      MultiDimImplementation< std::string >* impl) :
-        PRMAttribute< GUM_SCALAR >(name),
-        _type_(new PRMType(type)), _cpf_(0), _formulas_(impl), _class_(&c) {
+        PRMAttribute< GUM_SCALAR >(name), _type_(new PRMType(type)), _cpf_(0), _formulas_(impl),
+        _class_(&c) {
       GUM_CONSTRUCTOR(PRMFormAttribute);
       _formulas_->add(_type_->variable());
       this->safeName_ = PRMObject::LEFT_CAST() + _type_->name() + PRMObject::RIGHT_CAST() + name;
@@ -60,15 +80,15 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     PRMAttribute< GUM_SCALAR >*
-       PRMFormAttribute< GUM_SCALAR >::newFactory(const PRMClass< GUM_SCALAR >& c) const {
+        PRMFormAttribute< GUM_SCALAR >::newFactory(const PRMClass< GUM_SCALAR >& c) const {
       auto impl
-         = static_cast< MultiDimImplementation< std::string >* >(this->_formulas_->newFactory());
+          = static_cast< MultiDimImplementation< std::string >* >(this->_formulas_->newFactory());
       return new PRMFormAttribute< GUM_SCALAR >(c, this->name(), this->type(), impl);
     }
 
     template < typename GUM_SCALAR >
     PRMAttribute< GUM_SCALAR >* PRMFormAttribute< GUM_SCALAR >::copy(
-       Bijection< const DiscreteVariable*, const DiscreteVariable* > bij) const {
+        Bijection< const DiscreteVariable*, const DiscreteVariable* > bij) const {
       auto copy = new PRMFormAttribute< GUM_SCALAR >(*_class_, this->name(), this->type());
       for (auto var: _formulas_->variablesSequence()) {
         if (var != &(_type_->variable())) { copy->_formulas_->add(*var); }
@@ -85,8 +105,8 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     void PRMFormAttribute< GUM_SCALAR >::copyCpf(
-       const Bijection< const DiscreteVariable*, const DiscreteVariable* >& bij,
-       const PRMAttribute< GUM_SCALAR >&                                    source) {
+        const Bijection< const DiscreteVariable*, const DiscreteVariable* >& bij,
+        const PRMAttribute< GUM_SCALAR >&                                    source) {
       delete _formulas_;
       _formulas_ = new MultiDimArray< std::string >();
 
@@ -129,7 +149,7 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     typename PRMClassElement< GUM_SCALAR >::ClassElementType
-       PRMFormAttribute< GUM_SCALAR >::elt_type() const {
+        PRMFormAttribute< GUM_SCALAR >::elt_type() const {
       return this->prm_attribute;
     }
 
@@ -144,7 +164,7 @@ namespace gum {
     }
 
     template < typename GUM_SCALAR >
-    const Potential< GUM_SCALAR >& PRMFormAttribute< GUM_SCALAR >::cpf() const {
+    const Tensor< GUM_SCALAR >& PRMFormAttribute< GUM_SCALAR >::cpf() const {
       if (_cpf_ == 0) { _fillCpf_(); }
       return *_cpf_;
     }
@@ -247,7 +267,7 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     PRMFormAttribute< GUM_SCALAR >&
-       PRMFormAttribute< GUM_SCALAR >::operator=(const PRMFormAttribute< GUM_SCALAR >& source) {
+        PRMFormAttribute< GUM_SCALAR >::operator=(const PRMFormAttribute< GUM_SCALAR >& source) {
       GUM_ERROR(OperationNotAllowed, "Cannot copy FormAttribute")
     }
 
@@ -256,7 +276,7 @@ namespace gum {
       try {
         if (_cpf_) { delete _cpf_; }
 
-        _cpf_ = new Potential< GUM_SCALAR >();
+        _cpf_ = new Tensor< GUM_SCALAR >();
 
         for (auto var: _formulas_->variablesSequence()) {
           _cpf_->add(*var);

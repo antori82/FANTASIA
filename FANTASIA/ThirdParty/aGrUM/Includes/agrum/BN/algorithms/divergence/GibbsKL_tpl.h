@@ -1,22 +1,43 @@
-/**
- *
- *   Copyright (c) 2005-2023 by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
+#pragma once
 
 
 /**
@@ -26,12 +47,13 @@
  * @author Paul ALAM & Pierre-Henri WUILLEMIN(_at_LIP6)
  */
 
-#include <agrum/tools/core/math/math_utils.h>
-#include <agrum/BN/IBayesNet.h>
+#include <agrum/base/core/approximations/approximationScheme.h>
+#include <agrum/base/core/hashTable.h>
 #include <agrum/BN/algorithms/divergence/GibbsBNdistance.h>
+#include <agrum/BN/IBayesNet.h>
 #include <agrum/BN/inference/tools/gibbsOperator.h>
-#include <agrum/tools/core/approximations/approximationScheme.h>
-#include <agrum/tools/core/hashTable.h>
+
+#include <agrum/base/core/math/math_utils.h>
 
 #define GIBBSKL_DEFAULT_MAXITER          10000000
 #define GIBBSKL_DEFAULT_EPSILON          1e-10
@@ -50,12 +72,11 @@ namespace gum {
   template < typename GUM_SCALAR >
   GibbsBNdistance< GUM_SCALAR >::GibbsBNdistance(const IBayesNet< GUM_SCALAR >& P,
                                                  const IBayesNet< GUM_SCALAR >& Q) :
-      BNdistance< GUM_SCALAR >(P, Q),
-      ApproximationScheme(), GibbsOperator< GUM_SCALAR >(
-                                P,
-                                nullptr,
-                                1 + (P.size() * GIBBSKL_POURCENT_DRAWN_SAMPLE / 100),
-                                GIBBSKL_DRAWN_AT_RANDOM) {
+      BNdistance< GUM_SCALAR >(P, Q), ApproximationScheme(),
+      GibbsOperator< GUM_SCALAR >(P,
+                                  nullptr,
+                                  1 + (P.size() * GIBBSKL_POURCENT_DRAWN_SAMPLE / 100),
+                                  GIBBSKL_DRAWN_AT_RANDOM) {
     GUM_CONSTRUCTOR(GibbsBNdistance);
 
     setEpsilon(GIBBSKL_DEFAULT_EPSILON);
@@ -94,9 +115,8 @@ namespace gum {
 
   template < typename GUM_SCALAR >
   void GibbsBNdistance< GUM_SCALAR >::computeKL_() {
-    auto Iq = q_.completeInstantiation();
-
-    gum::Instantiation I = this->monteCarloSample();
+    auto               Iq = q_.completeInstantiation();
+    gum::Instantiation I  = this->monteCarloSample();
     initApproximationScheme();
 
     // map between particle() variables and q_ variables (using name of vars)
@@ -107,6 +127,7 @@ namespace gum {
     }
 
     // BURN IN
+    this->updateSamplingNodes_();
     for (Idx i = 0; i < burnIn(); i++)
       I = this->nextSample(I);
 

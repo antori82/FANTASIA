@@ -1,22 +1,43 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
+#pragma once
 
 
 /**
@@ -32,8 +53,7 @@ namespace gum {
   // Default Constructor
   template < typename GUM_SCALAR >
   MarginalTargetedMRFInference< GUM_SCALAR >::MarginalTargetedMRFInference(
-     const IMarkovRandomField< GUM_SCALAR >* mn) :
-      MRFInference< GUM_SCALAR >(mn) {
+      const IMarkovRandomField< GUM_SCALAR >* mn) : MRFInference< GUM_SCALAR >(mn) {
     // assign a MRF if this has not been done before (due to virtual inheritance)
     if (this->hasNoModel_()) { MRFInference< GUM_SCALAR >::_setMRFDuringConstruction_(mn); }
 
@@ -46,13 +66,11 @@ namespace gum {
     GUM_CONSTRUCTOR(MarginalTargetedMRFInference);
   }
 
-
   // Destructor
   template < typename GUM_SCALAR >
   MarginalTargetedMRFInference< GUM_SCALAR >::~MarginalTargetedMRFInference() {
     GUM_DESTRUCTOR(MarginalTargetedMRFInference);
   }
-
 
   // fired when a new MRF is assigned to the inference engine
   template < typename GUM_SCALAR >
@@ -60,7 +78,6 @@ namespace gum {
     _targeted_mode_ = true;
     _setAllMarginalTargets_();
   }
-
 
   // ##############################################################################
   // Targets
@@ -84,10 +101,9 @@ namespace gum {
   // Add a single target to the list of targets
   template < typename GUM_SCALAR >
   INLINE bool
-     MarginalTargetedMRFInference< GUM_SCALAR >::isTarget(const std::string& nodeName) const {
+      MarginalTargetedMRFInference< GUM_SCALAR >::isTarget(const std::string& nodeName) const {
     return isTarget(this->MRF().idFromName(nodeName));
   }
-
 
   // Clear all previously defined targets (single targets and sets of targets)
   template < typename GUM_SCALAR >
@@ -99,7 +115,6 @@ namespace gum {
 
     this->setState_(MRFInference< GUM_SCALAR >::StateOfInference::OutdatedStructure);
   }
-
 
   // Add a single target to the list of targets
   template < typename GUM_SCALAR >
@@ -123,7 +138,6 @@ namespace gum {
     }
   }
 
-
   // Add all nodes as targets
   template < typename GUM_SCALAR >
   void MarginalTargetedMRFInference< GUM_SCALAR >::addAllTargets() {
@@ -144,7 +158,6 @@ namespace gum {
     }
   }
 
-
   // Add a single target to the list of targets
   template < typename GUM_SCALAR >
   void MarginalTargetedMRFInference< GUM_SCALAR >::addTarget(const std::string& nodeName) {
@@ -156,7 +169,6 @@ namespace gum {
 
     addTarget(this->MRF().idFromName(nodeName));
   }
-
 
   // removes an existing target
   template < typename GUM_SCALAR >
@@ -181,7 +193,6 @@ namespace gum {
     }
   }
 
-
   // Add a single target to the list of targets
   template < typename GUM_SCALAR >
   void MarginalTargetedMRFInference< GUM_SCALAR >::eraseTarget(const std::string& nodeName) {
@@ -193,7 +204,6 @@ namespace gum {
 
     eraseTarget(this->MRF().idFromName(nodeName));
   }
-
 
   // returns the list of single targets
   template < typename GUM_SCALAR >
@@ -207,7 +217,6 @@ namespace gum {
     return _targets_.size();
   }
 
-
   /// sets all the nodes of the Markov net as targets
   template < typename GUM_SCALAR >
   void MarginalTargetedMRFInference< GUM_SCALAR >::_setAllMarginalTargets_() {
@@ -218,15 +227,13 @@ namespace gum {
     }
   }
 
-
   // ##############################################################################
   // Inference
   // ##############################################################################
 
   // Compute the posterior of a node.
   template < typename GUM_SCALAR >
-  const Potential< GUM_SCALAR >&
-     MarginalTargetedMRFInference< GUM_SCALAR >::posterior(NodeId node) {
+  const Tensor< GUM_SCALAR >& MarginalTargetedMRFInference< GUM_SCALAR >::posterior(NodeId node) {
     if (this->hardEvidenceNodes().contains(node)) { return *(this->evidence()[node]); }
 
     if (!isTarget(node)) {
@@ -241,8 +248,8 @@ namespace gum {
 
   // Compute the posterior of a node.
   template < typename GUM_SCALAR >
-  const Potential< GUM_SCALAR >&
-     MarginalTargetedMRFInference< GUM_SCALAR >::posterior(const std::string& nodeName) {
+  const Tensor< GUM_SCALAR >&
+      MarginalTargetedMRFInference< GUM_SCALAR >::posterior(const std::string& nodeName) {
     return posterior(this->MRF().idFromName(nodeName));
   }
 
@@ -262,10 +269,10 @@ namespace gum {
     return H(this->MRF().idFromName(nodeName));
   }
 
-
   template < typename GUM_SCALAR >
-  Potential< GUM_SCALAR >
-     MarginalTargetedMRFInference< GUM_SCALAR >::evidenceImpact(NodeId target, const NodeSet& evs) {
+  Tensor< GUM_SCALAR >
+      MarginalTargetedMRFInference< GUM_SCALAR >::evidenceImpact(NodeId         target,
+                                                                 const NodeSet& evs) {
     const auto& vtarget = this->MRF().variable(target);
 
     if (evs.contains(target)) {
@@ -275,7 +282,7 @@ namespace gum {
     }
     auto condset = this->MRF().minimalCondSet(target, evs);
 
-    Potential< GUM_SCALAR > res;
+    Tensor< GUM_SCALAR > res;
     this->eraseAllTargets();
     this->eraseAllEvidence();
     res.add(this->MRF().variable(target));
@@ -301,20 +308,19 @@ namespace gum {
     return res;
   }
 
-
   template < typename GUM_SCALAR >
-  Potential< GUM_SCALAR > MarginalTargetedMRFInference< GUM_SCALAR >::evidenceImpact(
-     const std::string&                target,
-     const std::vector< std::string >& evs) {
+  Tensor< GUM_SCALAR > MarginalTargetedMRFInference< GUM_SCALAR >::evidenceImpact(
+      const std::string&                target,
+      const std::vector< std::string >& evs) {
     const auto& mn = this->MRF();
     return evidenceImpact(mn.idFromName(target), mn.nodeset(evs));
   }
-
 
   template < typename GUM_SCALAR >
   INLINE bool MarginalTargetedMRFInference< GUM_SCALAR >::isTargetedMode_() const {
     return _targeted_mode_;
   }
+
   template < typename GUM_SCALAR >
   INLINE void MarginalTargetedMRFInference< GUM_SCALAR >::setTargetedMode_() {
     if (!_targeted_mode_) {

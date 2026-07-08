@@ -1,23 +1,43 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
-
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
+#pragma once
 
 /**
  * @file
@@ -46,7 +66,7 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     std::string
-       ClusteredLayerGenerator< GUM_SCALAR >::_generateType_(PRMFactory< GUM_SCALAR >& factory) {
+        ClusteredLayerGenerator< GUM_SCALAR >::_generateType_(PRMFactory< GUM_SCALAR >& factory) {
       std::string name = this->name_gen_.nextName(PRMObject::prm_type::TYPE);
       factory.startDiscreteType(name);
 
@@ -62,9 +82,9 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     void ClusteredLayerGenerator< GUM_SCALAR >::_generateInterfaces_(
-       PRMFactory< GUM_SCALAR >&                                              f,
-       const std::string&                                                     type,
-       std::vector< typename ClusteredLayerGenerator< GUM_SCALAR >::MyData >& l) {
+        PRMFactory< GUM_SCALAR >&                                              f,
+        const std::string&                                                     type,
+        std::vector< typename ClusteredLayerGenerator< GUM_SCALAR >::MyData >& l) {
       for (Size lvl = 0; lvl < _layers_.size(); ++lvl) {
         l.push_back(ClusteredLayerGenerator< GUM_SCALAR >::MyData());
         l[lvl].i = this->name_gen_.nextName(PRMObject::prm_type::PRM_INTERFACE);
@@ -91,9 +111,9 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     void ClusteredLayerGenerator< GUM_SCALAR >::_generateClasses_(
-       PRMFactory< GUM_SCALAR >&                                              f,
-       const std::string&                                                     type,
-       std::vector< typename ClusteredLayerGenerator< GUM_SCALAR >::MyData >& l) {
+        PRMFactory< GUM_SCALAR >&                                              f,
+        const std::string&                                                     type,
+        std::vector< typename ClusteredLayerGenerator< GUM_SCALAR >::MyData >& l) {
       // double ratio = getClusterRatio() + RAND_MAX;
       Set< std::string > i;
 
@@ -113,11 +133,11 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     void ClusteredLayerGenerator< GUM_SCALAR >::_generateCluster_(
-       PRMFactory< GUM_SCALAR >&                                              f,
-       const std::string&                                                     type,
-       std::vector< typename ClusteredLayerGenerator< GUM_SCALAR >::MyData >& l,
-       Size                                                                   lvl,
-       Set< std::string >&                                                    i) {
+        PRMFactory< GUM_SCALAR >&                                              f,
+        const std::string&                                                     type,
+        std::vector< typename ClusteredLayerGenerator< GUM_SCALAR >::MyData >& l,
+        Size                                                                   lvl,
+        Set< std::string >&                                                    i) {
       Size                        size = 0;
       GUM_SCALAR                  sum  = 0.0;
       std::string                 first, second, third;
@@ -126,7 +146,7 @@ namespace gum {
       switch (randomValue(2)) {
         // Shape A->B
         // v == [first, second, second.ref -> first]
-        case 0: {
+        case 0 : {
           v = new std::vector< std::string >();
           _generateClass_(f, type, l, lvl, i);
           first = l[lvl].c.back();
@@ -183,7 +203,7 @@ namespace gum {
 
         // Shape A -> B -> C
         // v == [first, second, second.ref -> first, third, third.ref -> second]
-        case 1: {
+        case 1 : {
           v = new std::vector< std::string >();
           _generateClass_(f, type, l, lvl, i);
           {
@@ -291,7 +311,7 @@ namespace gum {
           break;
         }
 
-        default: {
+        default : {
           GUM_ERROR(OperationNotAllowed, "unexpected value")
         }
       }
@@ -301,11 +321,11 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     void ClusteredLayerGenerator< GUM_SCALAR >::_generateClass_(
-       PRMFactory< GUM_SCALAR >&                                              f,
-       const std::string&                                                     type,
-       std::vector< typename ClusteredLayerGenerator< GUM_SCALAR >::MyData >& l,
-       Size                                                                   lvl,
-       Set< std::string >&                                                    i) {
+        PRMFactory< GUM_SCALAR >&                                              f,
+        const std::string&                                                     type,
+        std::vector< typename ClusteredLayerGenerator< GUM_SCALAR >::MyData >& l,
+        Size                                                                   lvl,
+        Set< std::string >&                                                    i) {
       Size       size = 0;
       GUM_SCALAR sum  = 0.0;
       l[lvl].c.push_back(this->name_gen_.nextName(PRMObject::prm_type::CLASS));
@@ -360,10 +380,10 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     void ClusteredLayerGenerator< GUM_SCALAR >::_generateClassDag_(
-       Size                                                                   lvl,
-       DAG&                                                                   dag,
-       Bijection< std::string, NodeId >&                                      names,
-       std::vector< typename ClusteredLayerGenerator< GUM_SCALAR >::MyData >& l) {
+        Size                                                                   lvl,
+        DAG&                                                                   dag,
+        Bijection< std::string, NodeId >&                                      names,
+        std::vector< typename ClusteredLayerGenerator< GUM_SCALAR >::MyData >& l) {
       float                 density = _layers_[lvl].inner_density;
       std::vector< NodeId > nodes;
       NodeId                id = 0;
@@ -410,8 +430,8 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     void ClusteredLayerGenerator< GUM_SCALAR >::_generateSystem_(
-       PRMFactory< GUM_SCALAR >&                                              factory,
-       std::vector< typename ClusteredLayerGenerator< GUM_SCALAR >::MyData >& l) {
+        PRMFactory< GUM_SCALAR >&                                              factory,
+        std::vector< typename ClusteredLayerGenerator< GUM_SCALAR >::MyData >& l) {
       factory.startSystem(this->name_gen_.nextName(PRMObject::prm_type::SYSTEM));
       std::vector< std::vector< std::string > > o(_layers_.size());
       std::string                               name, c, first, second, third;
@@ -428,7 +448,7 @@ namespace gum {
             v = _cluster_map_[c];
 
             switch (v->size()) {
-              case 3: {
+              case 3 : {
                 first = this->name_gen_.nextName(PRMObject::prm_type::INSTANCE);
                 factory.addInstance(c, first);
                 second = this->name_gen_.nextName(PRMObject::prm_type::INSTANCE);
@@ -439,7 +459,7 @@ namespace gum {
                 break;
               }
 
-              case 5: {
+              case 5 : {
                 first = this->name_gen_.nextName(PRMObject::prm_type::INSTANCE);
                 factory.addInstance(c, first);
                 second = this->name_gen_.nextName(PRMObject::prm_type::INSTANCE);
@@ -454,7 +474,7 @@ namespace gum {
                 break;
               }
 
-              default: {
+              default : {
                 GUM_ERROR(OperationNotAllowed, "unexpected vector size")
               }
             }
@@ -506,9 +526,9 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     INLINE ClusteredLayerGenerator< GUM_SCALAR >::ClusteredLayerGenerator(
-       const ClusteredLayerGenerator< GUM_SCALAR >& source) :
-        _layers_(source._layers_),
-        _domain_size_(source._domain_size_), _max_parents_(source._max_parents_) {
+        const ClusteredLayerGenerator< GUM_SCALAR >& source) :
+        _layers_(source._layers_), _domain_size_(source._domain_size_),
+        _max_parents_(source._max_parents_) {
       GUM_CONS_CPY(ClusteredLayerGenerator);
     }
 
@@ -519,7 +539,7 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     INLINE ClusteredLayerGenerator< GUM_SCALAR >& ClusteredLayerGenerator< GUM_SCALAR >::operator=(
-       const ClusteredLayerGenerator< GUM_SCALAR >& source) {
+        const ClusteredLayerGenerator< GUM_SCALAR >& source) {
       _layers_      = source._layers_;
       _domain_size_ = source._domain_size_;
       _max_parents_ = source._max_parents_;
@@ -548,7 +568,7 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     INLINE void ClusteredLayerGenerator< GUM_SCALAR >::setLayers(
-       const std::vector< typename LayerGenerator< GUM_SCALAR >::LayerData >& v) {
+        const std::vector< typename LayerGenerator< GUM_SCALAR >::LayerData >& v) {
       _layers_ = v;
     }
 

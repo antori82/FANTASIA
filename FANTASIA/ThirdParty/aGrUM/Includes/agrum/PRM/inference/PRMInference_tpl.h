@@ -1,22 +1,43 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
+#pragma once
 
 
 /**
@@ -52,7 +73,7 @@ namespace gum {
         _evidences_.insert(elt.first, new PRMInference< GUM_SCALAR >::EMap());
 
         for (const auto& elt2: *elt.second) {
-          Potential< GUM_SCALAR >* e = new Potential< GUM_SCALAR >();
+          Tensor< GUM_SCALAR >* e = new Tensor< GUM_SCALAR >();
           e->add(*(elt2.second->variablesSequence().front()));
           Instantiation i(*e);
 
@@ -66,7 +87,7 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     PRMInference< GUM_SCALAR >&
-       PRMInference< GUM_SCALAR >::operator=(const PRMInference< GUM_SCALAR >& source) {
+        PRMInference< GUM_SCALAR >::operator=(const PRMInference< GUM_SCALAR >& source) {
       clearEvidence();
       prm_ = source.prm_;
       sys_ = source.sys_;
@@ -75,7 +96,7 @@ namespace gum {
         _evidences_.insert(elt.first, new PRMInference< GUM_SCALAR >::EMap());
 
         for (const auto& elt2: *elt.second) {
-          Potential< GUM_SCALAR >* e = new Potential< GUM_SCALAR >();
+          Tensor< GUM_SCALAR >* e = new Tensor< GUM_SCALAR >();
           e->add(*(elt2.second->variablesSequence().front()));
           Instantiation i(*e);
 
@@ -92,7 +113,7 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     typename PRMInference< GUM_SCALAR >::EMap&
-       PRMInference< GUM_SCALAR >::_EMap_(const PRMInstance< GUM_SCALAR >* i) {
+        PRMInference< GUM_SCALAR >::_EMap_(const PRMInstance< GUM_SCALAR >* i) {
       if (_evidences_.exists(i)) {
         return *(_evidences_[i]);
       } else {
@@ -102,13 +123,13 @@ namespace gum {
     }
 
     template < typename GUM_SCALAR >
-    void PRMInference< GUM_SCALAR >::addEvidence(const Chain&                   chain,
-                                                 const Potential< GUM_SCALAR >& p) {
+    void PRMInference< GUM_SCALAR >::addEvidence(const Chain&                chain,
+                                                 const Tensor< GUM_SCALAR >& p) {
       if (chain.first->exists(chain.second->id())) {
         if ((p.nbrDim() != 1) || (!p.contains(chain.second->type().variable())))
           GUM_ERROR(OperationNotAllowed, "illegal evidence for the given PRMAttribute.")
 
-        Potential< GUM_SCALAR >* e = new Potential< GUM_SCALAR >();
+        Tensor< GUM_SCALAR >* e = new Tensor< GUM_SCALAR >();
         e->add(chain.second->type().variable());
         Instantiation i(*e);
 
@@ -135,8 +156,7 @@ namespace gum {
     template < typename GUM_SCALAR >
     INLINE PRMInference< GUM_SCALAR >::PRMInference(const PRM< GUM_SCALAR >&       prm,
                                                     const PRMSystem< GUM_SCALAR >& system) :
-        prm_(&prm),
-        sys_(&system) {
+        prm_(&prm), sys_(&system) {
       GUM_CONSTRUCTOR(PRMInference);
     }
 
@@ -148,7 +168,7 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     INLINE typename PRMInference< GUM_SCALAR >::EMap&
-       PRMInference< GUM_SCALAR >::evidence(const PRMInstance< GUM_SCALAR >& i) {
+        PRMInference< GUM_SCALAR >::evidence(const PRMInstance< GUM_SCALAR >& i) {
       try {
         return *(_evidences_[&i]);
       } catch (NotFound const&) { GUM_ERROR(NotFound, "this instance has no evidence.") }
@@ -156,7 +176,7 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     INLINE const typename PRMInference< GUM_SCALAR >::EMap&
-       PRMInference< GUM_SCALAR >::evidence(const PRMInstance< GUM_SCALAR >& i) const {
+        PRMInference< GUM_SCALAR >::evidence(const PRMInstance< GUM_SCALAR >& i) const {
       try {
         return *(_evidences_[&i]);
       } catch (NotFound const&) { GUM_ERROR(NotFound, "this instance has no evidence.") }
@@ -164,7 +184,7 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     INLINE typename PRMInference< GUM_SCALAR >::EMap&
-       PRMInference< GUM_SCALAR >::evidence(const PRMInstance< GUM_SCALAR >* i) {
+        PRMInference< GUM_SCALAR >::evidence(const PRMInstance< GUM_SCALAR >* i) {
       try {
         return *(_evidences_[i]);
       } catch (NotFound const&) { GUM_ERROR(NotFound, "this instance has no evidence.") }
@@ -172,7 +192,7 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     INLINE const typename PRMInference< GUM_SCALAR >::EMap&
-       PRMInference< GUM_SCALAR >::evidence(const PRMInstance< GUM_SCALAR >* i) const {
+        PRMInference< GUM_SCALAR >::evidence(const PRMInstance< GUM_SCALAR >* i) const {
       try {
         return *(_evidences_[i]);
       } catch (NotFound const&) { GUM_ERROR(NotFound, "this instance has no evidence.") }
@@ -213,21 +233,21 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     INLINE void PRMInference< GUM_SCALAR >::posterior(
-       const typename PRMInference< GUM_SCALAR >::Chain& chain,
-       Potential< GUM_SCALAR >&                          m) {
-      if (m.nbrDim() > 0) { GUM_ERROR(OperationNotAllowed, "the given Potential is not empty.") }
+        const typename PRMInference< GUM_SCALAR >::Chain& chain,
+        Tensor< GUM_SCALAR >&                             m) {
+      if (m.nbrDim() > 0) { GUM_ERROR(OperationNotAllowed, "the given Tensor is not empty.") }
 
       if (hasEvidence(chain)) {
         m.add(chain.second->type().variable());
-        const Potential< GUM_SCALAR >& e = *(evidence(chain.first)[chain.second->id()]);
-        Instantiation                  i(m), j(e);
+        const Tensor< GUM_SCALAR >& e = *(evidence(chain.first)[chain.second->id()]);
+        Instantiation               i(m), j(e);
 
         for (i.setFirst(), j.setFirst(); !i.end(); i.inc(), j.inc())
           m.set(i, e.get(j));
       } else {
         if (chain.second != &(chain.first->get(chain.second->safeName()))) {
           typename PRMInference< GUM_SCALAR >::Chain good_chain
-             = std::make_pair(chain.first, &(chain.first->get(chain.second->safeName())));
+              = std::make_pair(chain.first, &(chain.first->get(chain.second->safeName())));
           m.add(good_chain.second->type().variable());
           posterior_(good_chain, m);
         } else {
@@ -239,9 +259,9 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     INLINE void PRMInference< GUM_SCALAR >::joint(
-       const std::vector< typename PRMInference< GUM_SCALAR >::Chain >& chains,
-       Potential< GUM_SCALAR >&                                         j) {
-      if (j.nbrDim() > 0) { GUM_ERROR(OperationNotAllowed, "the given Potential is not empty.") }
+        const std::vector< typename PRMInference< GUM_SCALAR >::Chain >& chains,
+        Tensor< GUM_SCALAR >&                                            j) {
+      if (j.nbrDim() > 0) { GUM_ERROR(OperationNotAllowed, "the given Tensor is not empty.") }
 
       for (auto chain = chains.begin(); chain != chains.end(); ++chain) {
         j.add(chain->second->type().variable());

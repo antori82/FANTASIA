@@ -1,11 +1,13 @@
 /**
  * @file FANTASIATypesTests.cpp
  * @brief Tests for FANTASIA data types: FChatTurn, FSVMParameters, FWhisperConfig,
- *        FWhisperResult defaults, and Neo4j result cell class hierarchy.
+ *        FWhisperResult, FTTSSegmentTiming, FTTSData, FElevenLabsVoiceSettings
+ *        defaults, and Neo4j result cell class hierarchy.
  */
 
 #include "Misc/AutomationTest.h"
 #include "FANTASIATypes.h"
+#include "ElevenLabsProtocol.h"
 #include "WhisperTypes.h"
 #include "LibSVM.h"
 
@@ -62,6 +64,43 @@ bool FWhisperResultDefaults::RunTest(const FString& Parameters)
 	TestTrue(TEXT("FullText empty"), Result.FullText.IsEmpty());
 	TestEqual(TEXT("No segments"), Result.Segments.Num(), 0);
 	TestTrue(TEXT("ProcessingTime"), FMath::IsNearlyEqual(Result.ProcessingTimeSeconds, 0.0f, 0.001f));
+	return true;
+}
+
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FTTSSegmentTimingDefaults, "FANTASIA.Types.FTTSSegmentTiming.Defaults",
+	EAutomationTestFlags::EditorContext | EAutomationTestFlags::ProductFilter)
+bool FTTSSegmentTimingDefaults::RunTest(const FString& Parameters)
+{
+	FTTSSegmentTiming Seg;
+	TestTrue(TEXT("Text empty"), Seg.Text.IsEmpty());
+	TestTrue(TEXT("StartSeconds"), FMath::IsNearlyEqual(Seg.StartSeconds, 0.f, 0.001f));
+	TestTrue(TEXT("EndSeconds"), FMath::IsNearlyEqual(Seg.EndSeconds, 0.f, 0.001f));
+	TestEqual(TEXT("CharStart"), Seg.CharStart, 0);
+	TestEqual(TEXT("CharEnd"), Seg.CharEnd, 0);
+	return true;
+}
+
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FTTSDataDefaults, "FANTASIA.Types.FTTSData.Defaults",
+	EAutomationTestFlags::EditorContext | EAutomationTestFlags::ProductFilter)
+bool FTTSDataDefaults::RunTest(const FString& Parameters)
+{
+	FTTSData Data;
+	TestEqual(TEXT("AudioData empty"), Data.AudioData.Num(), 0);
+	TestEqual(TEXT("Words empty"), Data.Words.Num(), 0);
+	TestEqual(TEXT("Characters empty"), Data.Characters.Num(), 0);
+	return true;
+}
+
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FElevenLabsVoiceSettingsDefaults, "FANTASIA.Types.FElevenLabsVoiceSettings.Defaults",
+	EAutomationTestFlags::EditorContext | EAutomationTestFlags::ProductFilter)
+bool FElevenLabsVoiceSettingsDefaults::RunTest(const FString& Parameters)
+{
+	FElevenLabsVoiceSettings Settings;
+	TestTrue(TEXT("Stability"), FMath::IsNearlyEqual(Settings.Stability, 0.f, 0.001f));
+	TestTrue(TEXT("SimilarityBoost"), FMath::IsNearlyEqual(Settings.SimilarityBoost, 0.f, 0.001f));
+	TestTrue(TEXT("Style"), FMath::IsNearlyEqual(Settings.Style, 0.f, 0.001f));
+	TestFalse(TEXT("bUseSpeakerBoost"), Settings.bUseSpeakerBoost);
+	TestTrue(TEXT("Speed default 1.0"), FMath::IsNearlyEqual(Settings.Speed, 1.f, 0.001f));
 	return true;
 }
 

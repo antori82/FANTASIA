@@ -64,6 +64,11 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TTS")
     FAudio2FaceEmotion EmotionParameters;
 
+    // NOTE: provider word/character timing is captured internally (see the core
+    // URESTTTSComponent), but no "segment played" event is fired or exposed.
+    // The realtime signal is expected from ACE's native animation events once
+    // NVIDIA ships them; this avoids shipping an approximate push-cursor version.
+
 protected:
     virtual void BeginPlay() override;
     virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;

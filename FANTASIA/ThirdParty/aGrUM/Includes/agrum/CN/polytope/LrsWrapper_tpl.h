@@ -1,28 +1,50 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
+#pragma once
 
 
 #include <string.h>
 
-#include <agrum/CN/polytope/LrsWrapper.h>
 #include <agrum/agrum.h>
+
+#include <agrum/CN/polytope/LrsWrapper.h>
 
 namespace gum {
   namespace credal {
@@ -167,7 +189,7 @@ namespace gum {
         GUM_ERROR(OperationNotAllowed,
                   "LRSWrapper< GUM_SCALAR >::nextHInput : only for H-representation "
                   "as input. Previous state was : "
-                     << _setUpStateNames_[static_cast< int >(_state_)]);
+                      << _setUpStateNames_[static_cast< int >(_state_)]);
       } else {
         _input_.clear();
         _state_ = _states_::none;
@@ -184,13 +206,13 @@ namespace gum {
         GUM_ERROR(OperationNotAllowed,
                   "LRSWrapper< GUM_SCALAR >::fillH : setUpH or nextInput has not "
                   "been called or H-representation is complete, current state is : "
-                     << _setUpStateNames_[static_cast< int >(_state_)]);
+                      << _setUpStateNames_[static_cast< int >(_state_)]);
 
       if (modal >= _card_)
         GUM_ERROR(OutOfBounds,
                   "LRSWrapper< GUM_SCALAR >::fillH : modality is "
                   "greater or equal than cardinality : "
-                     << modal << " >= " << _card_);
+                      << modal << " >= " << _card_);
 
       _input_[modal * 2][0]         = -min;
       _input_[modal * 2][modal + 1] = 1;
@@ -207,18 +229,18 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     void LRSWrapper< GUM_SCALAR >::fillMatrix(
-       const std::vector< std::vector< GUM_SCALAR > >& matrix) {
+        const std::vector< std::vector< GUM_SCALAR > >& matrix) {
       if (_state_ != _states_::Hup)
         GUM_ERROR(OperationNotAllowed,
                   "LRSWrapper< GUM_SCALAR >::fillH : setUpH or nextInput has not "
                   "been called or H-representation is complete, current state is : "
-                     << _setUpStateNames_[static_cast< int >(_state_)]);
+                      << _setUpStateNames_[static_cast< int >(_state_)]);
 
       if (matrix[0].size() - 1 != _card_)
         GUM_ERROR(OutOfBounds,
                   "LRSWrapper< GUM_SCALAR >::fillMatrix : size is "
                   "different than cardinality : "
-                     << (matrix[0].size() - 1) << " != " << _card_);
+                      << (matrix[0].size() - 1) << " != " << _card_);
 
       _input_ = matrix;
 
@@ -235,7 +257,7 @@ namespace gum {
         GUM_ERROR(OperationNotAllowed,
                   "LRSWrapper< GUM_SCALAR >::fillV : setUpV or nextInput has not "
                   "been called or V-representation is complete, current state is : "
-                     << _setUpStateNames_[static_cast< int >(_state_)]);
+                      << _setUpStateNames_[static_cast< int >(_state_)]);
 
       if (_insertedVertices_.size() == _vertices_)
         GUM_ERROR(OutOfBounds,
@@ -278,7 +300,7 @@ namespace gum {
         GUM_ERROR(OperationNotAllowed,
                   "LRSWrapper< GUM_SCALAR >::H2V : fillH has not been called with "
                   "all modalities, current state is still : "
-                     << _setUpStateNames_[static_cast< int >(_state_)]);
+                      << _setUpStateNames_[static_cast< int >(_state_)]);
 
       // check that we have a credal set and not a precise point probability,
       // i.e.
@@ -294,8 +316,6 @@ namespace gum {
       }
 
       // not precise point probability, initialize lrs
-
-      //  _coutOff_();
 
       _initLrs_();
 
@@ -317,11 +337,8 @@ namespace gum {
             if (_dat_->hull
                 || ((((_lrsOutput_[0])[0] == 2 || (_lrsOutput_[0])[0] == -2)
                      && (_lrsOutput_[0])[1] == 0)
-                       ? 1L
-                       : 0L)) {
-              //  _coutOn_();
-              /*for ( decltype(Q->n) i = 0; i < Q->n; i++ )
-                pmp ("", output[i]);*/
+                        ? 1L
+                        : 0L)) {
               GUM_ERROR(FatalError,
                         "LRSWrapper< GUM_SCALAR >::H2V : asked for "
                         "Q-hull computation or not reading a vertex !");
@@ -344,8 +361,6 @@ namespace gum {
       }
 
       _freeLrs_();
-
-      //  _coutOn_();
     }
 
     template < typename GUM_SCALAR >
@@ -355,7 +370,7 @@ namespace gum {
                   "LRSWrapper< GUM_SCALAR >::V2H : fillV has "
                   "not been called with all vertices, current "
                   "state is still : "
-                     << _setUpStateNames_[_state_]);
+                      << _setUpStateNames_[_state_]);
     }
 
     template < typename GUM_SCALAR >
@@ -366,9 +381,7 @@ namespace gum {
                   "volume is only for V-representation or "
                   "fillV has not been called with all "
                   "vertices, current state is still : "
-                     << _setUpStateNames_[_state_]);
-
-      //  _coutOff_();
+                      << _setUpStateNames_[_state_]);
 
       _getVolume_ = true;
 
@@ -406,8 +419,6 @@ namespace gum {
       _volume_ = num * 1.0 / den;
 
       _freeLrs_();
-
-      //  _coutOn_();
     }
 
     template < typename GUM_SCALAR >
@@ -417,9 +428,7 @@ namespace gum {
                   "LRSWrapper< GUM_SCALAR >::elimRedundVrep : only for "
                   "V-representation or fillV has not been called with all vertices, "
                   "current state is still : "
-                     << _setUpStateNames_[static_cast< int >(_state_)]);
-
-      //  _coutOff_();
+                      << _setUpStateNames_[static_cast< int >(_state_)]);
 
       _initLrs_();
 
@@ -481,8 +490,6 @@ namespace gum {
       _vertices_ = (unsigned int)_output_.size();
 
       _freeLrs_();
-
-      //  _coutOn_();
     }
 
     template < typename GUM_SCALAR >
@@ -585,16 +592,13 @@ namespace gum {
         GUM_ERROR(OperationNotAllowed,
                   "LRSWrapper< GUM_SCALAR >:: _initLrs_ : not ready, current state "
                   "is still : "
-                     << _setUpStateNames_[static_cast< int >(_state_)]);
-
-      // __coutOff();
+                      << _setUpStateNames_[static_cast< int >(_state_)]);
 
       std::string         name = "\n*LrsWrapper:";
       std::vector< char > chars(name.c_str(), name.c_str() + name.size() + 1u);
       // use &chars[0] as a char*
 
       if (!lrs_init(&chars[0])) {
-        //  _coutOn_();
         GUM_ERROR(FatalError, "LRSWrapper< GUM_SCALAR >:: _initLrs_ : failed lrs_init")
       }
 
@@ -604,7 +608,6 @@ namespace gum {
       _dat_ = lrs_alloc_dat(&chars[0]);
 
       if (_dat_ == nullptr) {
-        //  _coutOn_();
         GUM_ERROR(FatalError, "LRSWrapper< GUM_SCALAR >:: _initLrs_ : failed lrs_alloc_dat")
       }
 
@@ -620,7 +623,6 @@ namespace gum {
       _dic_ = lrs_alloc_dic(_dat_);
 
       if (_dic_ == nullptr) {
-        //  _coutOn_();
         GUM_ERROR(FatalError, "LRSWrapper< GUM_SCALAR >:: _initLrs_ : failed lrs_alloc_dic")
       }
 
@@ -628,7 +630,6 @@ namespace gum {
 
       /* Pivot to a starting dictionary */
       if (!lrs_getfirstbasis(&_dic_, _dat_, &_Lin_, 0L)) {
-        //  _coutOn_();
         GUM_ERROR(FatalError, "LRSWrapper< GUM_SCALAR >:: _initLrs_ : failed lrs_getfirstbasis");
       }
 
@@ -643,29 +644,12 @@ namespace gum {
         startcol++; /* col zero not treated as redundant   */
 
         if (!_dat_->restart) {
-          //  _coutOn_();
-
           for (decltype(_dat_->nredundcol) col = startcol; col < _dat_->nredundcol; col++)
             lrs_printoutput(_dat_, _Lin_[col]);
 
           GUM_ERROR(FatalError, "LRSWrapper< GUM_SCALAR >:: _initLrs_ : redundant columns !")
         }
       }
-      /*
-  if (  _dat_->nredundcol > 0 ) {
-     _coutOn_();
-
-            for ( decltype(  _dat_->nredundcol ) col = 0, end =
-   _dat_->nredundcol;
-          col < end;
-          col++ )
-      lrs_printoutput(  _dat_,  _Lin_[col] );
-
-    GUM_ERROR(
-        FatalError,
-        "LRSWrapper< GUM_SCALAR >:: _initLrs_ : redundant columns !" );
-  }
-  */
     }
 
     template < typename GUM_SCALAR >
@@ -681,7 +665,7 @@ namespace gum {
         free(_dat_->jsave);
       }
 
-      auto savem = _dic_->m; /* need this to clear  _dat_*/
+      auto savem = _dic_->m;      /* need this to clear  _dat_*/
 
       lrs_free_dic(_dic_, _dat_); /* deallocate lrs_dic */
 
@@ -692,34 +676,6 @@ namespace gum {
       std::vector< char > chars(name.c_str(), name.c_str() + name.size() + 1u);
 
       lrs_close(&chars[0]);
-
-      //  _coutOn_();
     }
-
-    template < typename GUM_SCALAR >
-    void LRSWrapper< GUM_SCALAR >::_coutOff_() const {
-      fflush(stdout);
-#ifdef _MSC_VER
-      freopen("NUL", "w", stdout);
-#else    // _MSC_VER
-      _oldCout_ = dup(1);
-
-      int new_cout = open("/dev/null", O_WRONLY);
-      dup2(new_cout, 1);
-      close(new_cout);
-#endif   // _MSC_VER
-    }
-
-    template < typename GUM_SCALAR >
-    void LRSWrapper< GUM_SCALAR >::_coutOn_() const {
-      fflush(stdout);
-#ifdef _MSC_VER
-      freopen("CON", "w", stdout);
-#else    // _MSC_VER
-      dup2(_oldCout_, 1);
-      close(_oldCout_);
-#endif   // _MSC_VER
-    }
-
   }   // namespace credal
 }   // namespace gum

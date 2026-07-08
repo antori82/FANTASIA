@@ -1,22 +1,43 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
+#pragma once
 
 
 /**
@@ -27,14 +48,16 @@
  * GONZALES(_at_AMU)
  */
 // =======================================================
-#include <agrum/tools/core/math/math_utils.h>
-#include <agrum/tools/core/priorityQueue.h>
-#include <agrum/tools/core/types.h>
+#include <agrum/base/core/priorityQueue.h>
+#include <agrum/base/core/types.h>
+
+#include <agrum/base/core/math/math_utils.h>
 // =======================================================
 #include <agrum/FMDP/learning/core/chiSquare.h>
 #include <agrum/FMDP/learning/datastructure/iti.h>
 // =======================================================
-#include <agrum/tools/variables/labelizedVariable.h>
+#include <agrum/base/variables/labelizedVariable.h>
+
 // =======================================================
 
 
@@ -59,9 +82,9 @@ namespace gum {
   // ###################################################################
   template < TESTNAME AttributeSelection, bool isScalar >
   ITI< AttributeSelection, isScalar >::ITI(MultiDimFunctionGraph< double >* target,
-                                           double attributeSelectionThreshold,
-                                           Set< const DiscreteVariable* > attributeListe,
-                                           const DiscreteVariable*        learnedValue) :
+                                           double                  attributeSelectionThreshold,
+                                           gum::VariableSet        attributeListe,
+                                           const DiscreteVariable* learnedValue) :
       IncrementalGraphLearner< AttributeSelection, isScalar >(target, attributeListe, learnedValue),
       _nbTotalObservation_(0), _attributeSelectionThreshold_(attributeSelectionThreshold) {
     GUM_CONSTRUCTOR(ITI);
@@ -82,17 +105,16 @@ namespace gum {
   // ###################################################################
   template < TESTNAME AttributeSelection, bool isScalar >
   ITI< AttributeSelection, isScalar >::ITI(MultiDimFunctionGraph< double >* target,
-                                           double attributeSelectionThreshold,
-                                           Set< const DiscreteVariable* > attributeListe) :
+                                           double           attributeSelectionThreshold,
+                                           gum::VariableSet attributeListe) :
       IncrementalGraphLearner< AttributeSelection, isScalar >(
-         target,
-         attributeListe,
-         new LabelizedVariable("Reward", "", 2)),
+          target,
+          attributeListe,
+          new LabelizedVariable("Reward", "", 2)),
       _nbTotalObservation_(0), _attributeSelectionThreshold_(attributeSelectionThreshold) {
     GUM_CONSTRUCTOR(ITI);
     _staleTable_.insert(this->root_, false);
   }
-
 
   // ==========================================================================
   /// @name New Observation insertion methods
@@ -122,11 +144,10 @@ namespace gum {
   void ITI< AttributeSelection, isScalar >::updateNodeWithObservation_(const Observation* newObs,
                                                                        NodeId currentNodeId) {
     IncrementalGraphLearner< AttributeSelection, isScalar >::updateNodeWithObservation_(
-       newObs,
-       currentNodeId);
+        newObs,
+        currentNodeId);
     _staleTable_[currentNodeId] = true;
   }
-
 
   // ============================================================================
   /// @name Graph Structure update methods
@@ -139,8 +160,8 @@ namespace gum {
   void ITI< AttributeSelection, isScalar >::updateGraph() {
     std::vector< NodeId > filo;
     filo.push_back(this->root_);
-    HashTable< NodeId, Set< const DiscreteVariable* >* > potentialVars;
-    potentialVars.insert(this->root_, new Set< const DiscreteVariable* >(this->setOfVars_));
+    HashTable< NodeId, gum::VariableSet* > tensorVars;
+    tensorVars.insert(this->root_, new gum::VariableSet(this->setOfVars_));
 
 
     while (!filo.empty()) {
@@ -148,11 +169,11 @@ namespace gum {
       filo.pop_back();
 
       // First we look for the best var to install on the node
-      double                         bestValue = _attributeSelectionThreshold_;
-      Set< const DiscreteVariable* > bestVars;
+      double           bestValue = _attributeSelectionThreshold_;
+      gum::VariableSet bestVars;
 
-      for (auto varIter = potentialVars[currentNodeId]->cbeginSafe();
-           varIter != potentialVars[currentNodeId]->cendSafe();
+      for (auto varIter = tensorVars[currentNodeId]->cbeginSafe();
+           varIter != tensorVars[currentNodeId]->cendSafe();
            ++varIter)
         if (this->nodeId2Database_[currentNodeId]->isTestRelevant(*varIter)) {
           double varValue = this->nodeId2Database_[currentNodeId]->testValue(*varIter);
@@ -171,25 +192,22 @@ namespace gum {
       // The we move on the children if needed
       if (this->nodeVarMap_[currentNodeId] != this->value_) {
         for (Idx moda = 0; moda < this->nodeVarMap_[currentNodeId]->domainSize(); moda++) {
-          Set< const DiscreteVariable* >* itsPotentialVars
-             = new Set< const DiscreteVariable* >(*potentialVars[currentNodeId]);
-          itsPotentialVars->erase(this->nodeVarMap_[currentNodeId]);
+          gum::VariableSet* itsTensorVars = new gum::VariableSet(*tensorVars[currentNodeId]);
+          itsTensorVars->erase(this->nodeVarMap_[currentNodeId]);
           NodeId sonId = this->nodeSonsMap_[currentNodeId][moda];
           if (_staleTable_[sonId]) {
             filo.push_back(sonId);
-            potentialVars.insert(sonId, itsPotentialVars);
+            tensorVars.insert(sonId, itsTensorVars);
           }
         }
       }
     }
 
-    for (HashTableIteratorSafe< NodeId, Set< const DiscreteVariable* >* > nodeIter
-         = potentialVars.beginSafe();
-         nodeIter != potentialVars.endSafe();
+    for (HashTableIteratorSafe< NodeId, gum::VariableSet* > nodeIter = tensorVars.beginSafe();
+         nodeIter != tensorVars.endSafe();
          ++nodeIter)
       delete nodeIter.val();
   }
-
 
   // ############################################################################
   /**
@@ -201,13 +219,12 @@ namespace gum {
   // ############################################################################
   template < TESTNAME AttributeSelection, bool isScalar >
   NodeId ITI< AttributeSelection, isScalar >::insertNode_(
-     NodeDatabase< AttributeSelection, isScalar >* nDB,
-     const DiscreteVariable*                       boundVar) {
+      NodeDatabase< AttributeSelection, isScalar >* nDB,
+      const DiscreteVariable*                       boundVar) {
     NodeId n = IncrementalGraphLearner< AttributeSelection, isScalar >::insertNode_(nDB, boundVar);
     _staleTable_.insert(n, true);
     return n;
   }
-
 
   // ############################################################################
   /**
@@ -226,7 +243,6 @@ namespace gum {
     }
   }
 
-
   // ############################################################################
   /**
    * Removes a node from the internal graph
@@ -238,7 +254,6 @@ namespace gum {
     IncrementalGraphLearner< AttributeSelection, isScalar >::removeNode_(currentNodeId);
     _staleTable_.erase(currentNodeId);
   }
-
 
   // ============================================================================
   /// @name Function Graph Updating methods
@@ -252,7 +267,6 @@ namespace gum {
     this->target_->clear();
     this->target_->manager()->setRootNode(this->_insertNodeInFunctionGraph_(this->root_));
   }
-
 
   // ############################################################################
   /**
@@ -281,7 +295,6 @@ namespace gum {
     return nody;
   }
 
-
   // ############################################################################
   /**
    * Insert a terminal node in the target.
@@ -301,7 +314,7 @@ namespace gum {
     if (tot == Size(0)) return this->target_->manager()->addTerminalNode(0.0);
 
     NodeId* sonsMap
-       = static_cast< NodeId* >(SOA_ALLOCATE(sizeof(NodeId) * this->value_->domainSize()));
+        = static_cast< NodeId* >(SOA_ALLOCATE(sizeof(NodeId) * this->value_->domainSize()));
     for (Idx modality = 0; modality < this->value_->domainSize(); ++modality) {
       double newVal = 0.0;
       newVal = (double)this->nodeId2Database_[currentNodeId]->effectif(modality) / (double)tot;
@@ -310,7 +323,6 @@ namespace gum {
     NodeId nody = this->target_->manager()->addInternalNode(this->value_, sonsMap);
     return nody;
   }
-
 
   // ############################################################################
   /**

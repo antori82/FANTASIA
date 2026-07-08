@@ -1,6 +1,6 @@
 /***************************************************************************
  *  aGrUM modified frames and atg files for cocoR
- *   Copyright (c) 2005 by Christophe GONZALES(@AMU) and Pierre-Henri WUILLEMIN(@LIP6)  *
+ *   Copyright (c) 2005-2024 by Pierre-Henri WUILLEMIN(@LIP6) and Christophe GONZALES(@AMU)
  *   info_at_agrum_dot_org
 ***************************************************************************/
 /*----------------------------------------------------------------------
@@ -38,7 +38,7 @@ Coco/R itself) does not fall under the GNU General Public License.
 #include <string>
 #include <vector>
 #include <utility>
-#include <agrum/tools/core/debug.h>
+#include <agrum/base/core/debug.h>
 #include <agrum/PRM/o3prm/O3prm.h>
 
 #include <iostream>
@@ -320,8 +320,8 @@ O3InterfaceElementList& elts);
 	void TYPE_DECLARATION();
 	void DEPRECATED_INT_DECLARATION();
 	void DEPRECATED_REAL_DECLARATION();
-	void DISCRETE_TYPE_DECLARATION(bool& deprecated, LabelMap& labels);
-	void EXTENDED_TYPE_DECLARATION(bool& deprecated, O3Label& super, LabelMap& labels);
+	void DISCRETE_TYPE_DECLARATION(bool& o3prm_deprecated, LabelMap& labels);
+	void EXTENDED_TYPE_DECLARATION(bool& o3prm_deprecated, O3Label& super, LabelMap& labels);
 	void DEPRECATED_DISCRETE_TYPE_DECLERATION(LabelMap& labels);
 	void MAP(LabelMap& labels );
 	void DEPRECATED_EXTENDED_TYPE_DECLARATION(LabelMap& labels);
@@ -355,5 +355,4 @@ O3InterfaceElementList& elts);
 
 
 #endif // !defined(COCO_PARSER_H__)
-
 

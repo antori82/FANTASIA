@@ -1,22 +1,42 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
 
 
 /**
@@ -32,7 +52,8 @@
 #include <vector>
 
 #include <agrum/agrum.h>
-#include <agrum/tools/core/math/formula.h>
+
+#include <agrum/base/core/math/formula.h>
 
 #ifndef GUM_PRM_O3PRM_PRM_H
 #  define GUM_PRM_O3PRM_PRM_H
@@ -224,8 +245,8 @@ namespace gum {
         LabelMap&       labels();
         const LabelMap& labels() const;
 
-        bool&       deprecated();
-        const bool& deprecated() const;
+        bool&       o3prm_deprecated();
+        const bool& o3prm_deprecated() const;
 
         private:
         O3Position _pos_;
@@ -264,8 +285,8 @@ namespace gum {
         O3Integer&       end();
         const O3Integer& end() const;
 
-        bool&       deprecated();
-        const bool& deprecated() const;
+        bool&       o3prm_deprecated();
+        const bool& o3prm_deprecated() const;
 
         private:
         O3Position _pos_;
@@ -301,8 +322,8 @@ namespace gum {
         std::vector< O3Float >&       values();
         const std::vector< O3Float >& values() const;
 
-        bool&       deprecated();
-        const bool& deprecated() const;
+        bool&       o3prm_deprecated();
+        const bool& o3prm_deprecated() const;
 
         private:
         O3Position             _pos_;
@@ -391,11 +412,7 @@ namespace gum {
        */
       class O3Parameter {
         public:
-        enum class PRMType {
-          NONE,
-          INT,
-          FLOAT
-        };
+        enum class PRMType { NONE, INT, FLOAT };
 
         O3Parameter();
         O3Parameter(const O3Position& pos, const O3Label& name, const O3Integer& value);
@@ -516,6 +533,10 @@ namespace gum {
         O3RawCPT(O3RawCPT&& src);
         ~O3RawCPT();
 
+        private:   // best attempt to get rid of overloaded virtual warnings
+        using O3Attribute::operator=;
+
+        public:
         virtual O3RawCPT& operator=(const O3RawCPT& src);
         virtual O3RawCPT& operator=(O3RawCPT&& src);
 
@@ -551,6 +572,10 @@ namespace gum {
         O3RuleCPT(O3RuleCPT&& src);
         ~O3RuleCPT();
 
+        private:   // best attempt to get rid of overloaded virtual warnings
+        using O3Attribute::operator=;
+
+        public:
         virtual O3RuleCPT& operator=(const O3RuleCPT& src);
         virtual O3RuleCPT& operator=(O3RuleCPT&& src);
 
@@ -935,7 +960,7 @@ namespace gum {
       };
 
     }   // namespace o3prm
-  }     // namespace prm
+  }   // namespace prm
 }   // namespace gum
 
 #endif   // GUM_PRM_O3PRM_PRM_H

@@ -1,22 +1,43 @@
-/**
- *
- *   Copyright (c) 2005-2023 by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
+#pragma once
 
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -31,16 +52,16 @@ namespace gum {
   // Default constructor.
   template < typename GUM_SCALAR, template < class > class IApproximationPolicy >
   INLINE
-     ContextualDependenciesCNFWriter< GUM_SCALAR,
-                                      IApproximationPolicy >::ContextualDependenciesCNFWriter() {
+      ContextualDependenciesCNFWriter< GUM_SCALAR,
+                                       IApproximationPolicy >::ContextualDependenciesCNFWriter() {
     GUM_CONSTRUCTOR(ContextualDependenciesCNFWriter)
   }
 
   // Default destructor.
   template < typename GUM_SCALAR, template < class > class IApproximationPolicy >
   INLINE
-     ContextualDependenciesCNFWriter< GUM_SCALAR,
-                                      IApproximationPolicy >::~ContextualDependenciesCNFWriter() {
+      ContextualDependenciesCNFWriter< GUM_SCALAR,
+                                       IApproximationPolicy >::~ContextualDependenciesCNFWriter() {
     GUM_DESTRUCTOR(ContextualDependenciesCNFWriter)
   }
 
@@ -52,8 +73,8 @@ namespace gum {
   // @throws Raised if an I/O error occurs.
   template < typename GUM_SCALAR, template < class > class IApproximationPolicy >
   INLINE void ContextualDependenciesCNFWriter< GUM_SCALAR, IApproximationPolicy >::_doWrite(
-     std::ostream&                  output,
-     const IBayesNet< GUM_SCALAR >& bn) {
+      std::ostream&                  output,
+      const IBayesNet< GUM_SCALAR >& bn) {
     Instantiation Order;
 
     for (auto node: bn.topologicalOrder())
@@ -72,9 +93,9 @@ namespace gum {
     gum::HashTable< std::string, Idx > vartable;
     gum::HashTable< std::string, Idx > protable;
     gum::HashTable<
-       const gum::DiscreteVariable*,
-       gum::HashTable< std::string, gum::Sequence< gum::Sequence< gum::Instantiation* >* >* >* >
-       cptparamval;
+        const gum::DiscreteVariable*,
+        gum::HashTable< std::string, gum::Sequence< gum::Sequence< gum::Instantiation* >* >* >* >
+        cptparamval;
 
     for (auto node: bn.nodes()) {
       std::stringstream       str0;
@@ -92,14 +113,14 @@ namespace gum {
       clause++;
       numvar++;
       clausstr2 << str0.str();
-      const Potential< GUM_SCALAR >& cpt = bn.cpt(node);
-      Instantiation                  inst(cpt);
+      const Tensor< GUM_SCALAR >& cpt = bn.cpt(node);
+      Instantiation               inst(cpt);
       inst.forgetMaster();
       inst.reorder(Order);
       cptparamval.insert(
-         var,
-         new gum::HashTable< std::string,
-                             gum::Sequence< gum::Sequence< gum::Instantiation* >* >* >());
+          var,
+          new gum::HashTable< std::string,
+                              gum::Sequence< gum::Sequence< gum::Instantiation* >* >* >());
 
       for (inst.setFirst(); !inst.end(); ++inst) {
         if (this->fromExact(cpt[inst]) != 1) {
@@ -109,7 +130,7 @@ namespace gum {
 
           if (!(cptparamval[var])->exists(valp)) {
             (cptparamval[var])
-               ->insert(valp, new gum::Sequence< gum::Sequence< gum::Instantiation* >* >());
+                ->insert(valp, new gum::Sequence< gum::Sequence< gum::Instantiation* >* >());
 
             (*(cptparamval[var]))[valp]->insert(new gum::Sequence< gum::Instantiation* >);
 
@@ -144,7 +165,7 @@ namespace gum {
                           gum::HashTable< const gum::DiscreteVariable*,
                                           std::pair< gum::Set< Idx >*,
                                                      gum::Set< Idx >* >* >* >
-             orderStruct;   // set sizeof Hashtable
+              orderStruct;   // set sizeof Hashtable
 
           for (const auto* seqv: *pv) {
             if (seqv->nbrDim() > 1) {
@@ -157,23 +178,23 @@ namespace gum {
 
                 if (!orderStruct.exists(instpro.toString())) {
                   orderStruct.insert(
-                     instpro.toString(),
-                     new gum::HashTable< const gum::DiscreteVariable*,
-                                         std::pair< gum::Set< Idx >*, gum::Set< Idx >* >* >());
+                      instpro.toString(),
+                      new gum::HashTable< const gum::DiscreteVariable*,
+                                          std::pair< gum::Set< Idx >*, gum::Set< Idx >* >* >());
                 }
 
                 if (!orderStruct[instpro.toString()]->exists(var)) {
                   orderStruct[instpro.toString()]->insert(
-                     var,
-                     new std::pair< gum::Set< Idx >*, gum::Set< Idx >* >(
-                        new gum::Set< Idx >,
-                        new gum::Set< Idx >(
-                           seqv->variable(iInst).domainSize())));   // set sizeof Hashtable
+                      var,
+                      new std::pair< gum::Set< Idx >*, gum::Set< Idx >* >(
+                          new gum::Set< Idx >,
+                          new gum::Set< Idx >(
+                              seqv->variable(iInst).domainSize())));   // set sizeof Hashtable
                 }
 
                 gum::HashTable< const gum::DiscreteVariable*,
                                 std::pair< gum::Set< Idx >*, gum::Set< Idx >* >* >* orderStruct2
-                   = orderStruct[instpro.toString()];
+                    = orderStruct[instpro.toString()];
                 (*orderStruct2)[var]->first->insert(linecount);
                 (*orderStruct2)[var]->second->insert(seqv->val(iInst));
               }
@@ -195,7 +216,7 @@ namespace gum {
                 if (!added) {
                   added = true;
                   newSeq->insert(
-                     new gum::Instantiation(*((*pv)[(*(second2->first->begin()))]), false));
+                      new gum::Instantiation(*((*pv)[(*(second2->first->begin()))]), false));
                   newSeq->back()->erase(*first2);
                 }
 
@@ -220,7 +241,7 @@ namespace gum {
               delete orderStruct.begin().val()->begin().val()->first;
               delete orderStruct.begin().val()->begin().val()->second;
               (orderStruct.begin().val())
-                 ->erase((orderStruct.begin().val())->beginSafe());   // safe iterator needed here
+                  ->erase((orderStruct.begin().val())->beginSafe());   // safe iterator needed here
             }
 
             delete orderStruct.begin().val();
@@ -281,8 +302,8 @@ namespace gum {
   // @throws Raised if an I/O error occurs.
   template < typename GUM_SCALAR, template < class > class IApproximationPolicy >
   INLINE void ContextualDependenciesCNFWriter< GUM_SCALAR, IApproximationPolicy >::_doWrite(
-     const std::string&             filePath,
-     const IBayesNet< GUM_SCALAR >& bn) {
+      const std::string&             filePath,
+      const IBayesNet< GUM_SCALAR >& bn) {
     std::ofstream output(filePath.c_str(), std::ios_base::trunc);
     std::ofstream outputvar((filePath + ".var").c_str(), std::ios_base::trunc);
 
@@ -300,9 +321,9 @@ namespace gum {
     gum::HashTable< std::string, Idx > vartable;
     gum::HashTable< std::string, Idx > protable;
     gum::HashTable<
-       const gum::DiscreteVariable*,
-       gum::HashTable< std::string, gum::Sequence< gum::Sequence< gum::Instantiation* >* >* >* >
-       cptparamval;
+        const gum::DiscreteVariable*,
+        gum::HashTable< std::string, gum::Sequence< gum::Sequence< gum::Instantiation* >* >* >* >
+        cptparamval;
 
     Instantiation Order;
 
@@ -325,14 +346,14 @@ namespace gum {
       clause++;
       numvar++;
       clausstr2 << str0.str();
-      const Potential< GUM_SCALAR >& cpt = bn.cpt(node);
-      Instantiation                  inst(cpt);
+      const Tensor< GUM_SCALAR >& cpt = bn.cpt(node);
+      Instantiation               inst(cpt);
       inst.forgetMaster();
       inst.reorder(Order);
       cptparamval.insert(
-         var,
-         new gum::HashTable< std::string,
-                             gum::Sequence< gum::Sequence< gum::Instantiation* >* >* >());
+          var,
+          new gum::HashTable< std::string,
+                              gum::Sequence< gum::Sequence< gum::Instantiation* >* >* >());
 
       for (inst.setFirst(); !inst.end(); ++inst) {
         if (this->fromExact(cpt[inst]) != 1) {
@@ -342,9 +363,10 @@ namespace gum {
 
           if (!(cptparamval[var])->exists(valp)) {
             (cptparamval[var])
-               ->insert(valp,
-                        new gum::Sequence< gum::Sequence< gum::Instantiation* >* >());   // remember
-                                                                                         // to
+                ->insert(
+                    valp,
+                    new gum::Sequence< gum::Sequence< gum::Instantiation* >* >());   // remember
+                                                                                     // to
             // verify
             // protocole for
             // param = to 1
@@ -382,7 +404,7 @@ namespace gum {
                           gum::HashTable< const gum::DiscreteVariable*,
                                           std::pair< gum::Set< Idx >*,
                                                      gum::Set< Idx >* >* >* >
-             orderStruct;   // set sizeof Hashtable
+              orderStruct;   // set sizeof Hashtable
 
           gum::Set< gum::Idx >                               elimination;
           gum::HashTable< std::string, gum::Instantiation* > newSeqpre;
@@ -398,26 +420,26 @@ namespace gum {
                 if (!orderStruct.exists(instpro->toString())
                     && !newSeqpre.exists(instpro->toString())) {
                   orderStruct.insert(
-                     instpro->toString(),
-                     new gum::HashTable< const gum::DiscreteVariable*,
-                                         std::pair< gum::Set< Idx >*, gum::Set< Idx >* >* >());
+                      instpro->toString(),
+                      new gum::HashTable< const gum::DiscreteVariable*,
+                                          std::pair< gum::Set< Idx >*, gum::Set< Idx >* >* >());
                 }
 
                 if (orderStruct.exists(instpro->toString())
                     && !orderStruct[instpro->toString()]->exists(var)) {
                   orderStruct[instpro->toString()]->insert(
-                     var,
-                     new std::pair< gum::Set< Idx >*, gum::Set< Idx >* >(
-                        new gum::Set< Idx >,
-                        new gum::Set< Idx >(
-                           seqv->variable(iInst).domainSize())));   // set sizeof Hashtable
+                      var,
+                      new std::pair< gum::Set< Idx >*, gum::Set< Idx >* >(
+                          new gum::Set< Idx >,
+                          new gum::Set< Idx >(
+                              seqv->variable(iInst).domainSize())));   // set sizeof Hashtable
                 }
 
                 if (orderStruct.exists(instpro->toString())
                     && !newSeqpre.exists(instpro->toString())) {
                   gum::HashTable< const gum::DiscreteVariable*,
                                   std::pair< gum::Set< Idx >*, gum::Set< Idx >* >* >* orderStruct2
-                     = orderStruct[instpro->toString()];
+                      = orderStruct[instpro->toString()];
                   (*orderStruct2)[var]->first->insert(linecount);
                   (*orderStruct2)[var]->second->insert(seqv->val(iInst));
 
@@ -480,7 +502,7 @@ namespace gum {
 
         while (!(itpvall.val())->empty()) {
           gum::Sequence< gum::Sequence< gum::Instantiation* >* >::iterator_safe itpv
-             = (itpvall.val())->begin();
+              = (itpvall.val())->begin();
 
           while (!(*itpv)->empty()) {
             gum::Sequence< gum::Instantiation* >::iterator_safe itseqv = (*itpv)->begin();

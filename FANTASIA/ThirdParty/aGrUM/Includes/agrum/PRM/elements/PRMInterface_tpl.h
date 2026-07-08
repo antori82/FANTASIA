@@ -1,22 +1,43 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
+#pragma once
 
 
 /**
@@ -25,9 +46,8 @@
  *
  * @author Lionel TORTI and Pierre-Henri WUILLEMIN(_at_LIP6)
  */
-#include <agrum/PRM/elements/PRMInterface.h>
-
 #include <agrum/PRM/elements/PRMClass.h>
+#include <agrum/PRM/elements/PRMInterface.h>
 
 namespace gum {
   namespace prm {
@@ -42,8 +62,7 @@ namespace gum {
     PRMInterface< GUM_SCALAR >::PRMInterface(const std::string&          name,
                                              PRMInterface< GUM_SCALAR >& super,
                                              bool                        delayInheritance) :
-        PRMClassElementContainer< GUM_SCALAR >(name),
-        _superInterface_(&super) {
+        PRMClassElementContainer< GUM_SCALAR >(name), _superInterface_(&super) {
       GUM_CONSTRUCTOR(PRMInterface);
       if (!delayInheritance) { _inheritInterface_(super); }
     }
@@ -90,9 +109,9 @@ namespace gum {
       // Copying reference slots
       for (const auto i_ref: i._referenceSlots_) {
         auto ref = new PRMReferenceSlot< GUM_SCALAR >(
-           i_ref->name(),
-           const_cast< PRMClassElementContainer< GUM_SCALAR >& >(i_ref->slotType()),
-           i_ref->isArray());
+            i_ref->name(),
+            const_cast< PRMClassElementContainer< GUM_SCALAR >& >(i_ref->slotType()),
+            i_ref->isArray());
 
         ref->setId(i_ref->id());
         _nodeIdMap_.insert(ref->id(), ref);
@@ -161,25 +180,25 @@ namespace gum {
         GUM_ERROR(OperationNotAllowed, "illegal overload")
 
       switch (overloader->elt_type()) {
-        case PRMClassElement< GUM_SCALAR >::prm_attribute: {
+        case PRMClassElement< GUM_SCALAR >::prm_attribute : {
           auto attr_overloader = static_cast< PRMAttribute< GUM_SCALAR >* >(overloader);
           auto attr_overloaded = static_cast< PRMAttribute< GUM_SCALAR >* >(overloaded);
           _overloadAttribute_(attr_overloader, attr_overloaded);
           break;
         }
 
-        case PRMClassElement< GUM_SCALAR >::prm_refslot: {
+        case PRMClassElement< GUM_SCALAR >::prm_refslot : {
           auto ref_overloader = static_cast< PRMReferenceSlot< GUM_SCALAR >* >(overloader);
           auto ref_overloaded = static_cast< PRMReferenceSlot< GUM_SCALAR >* >(overloaded);
           _overloadReferenceSlot_(ref_overloader, ref_overloaded);
           break;
         }
 
-        case PRMClassElement< GUM_SCALAR >::prm_aggregate:
-        case PRMClassElement< GUM_SCALAR >::prm_slotchain:
+        case PRMClassElement< GUM_SCALAR >::prm_aggregate :
+        case PRMClassElement< GUM_SCALAR >::prm_slotchain :
           GUM_ERROR(OperationNotAllowed,
                     "Element " << overloader->name() << " can not be overloaded")
-        default:
+        default :
           GUM_ERROR(FatalError, "Unknown ClassElement<GUM_SCALAR> type for " << overloader->name())
       }
 
@@ -214,8 +233,8 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     void PRMInterface< GUM_SCALAR >::_overloadReferenceSlot_(
-       PRMReferenceSlot< GUM_SCALAR >* overloader,
-       PRMReferenceSlot< GUM_SCALAR >* overloaded) {
+        PRMReferenceSlot< GUM_SCALAR >* overloader,
+        PRMReferenceSlot< GUM_SCALAR >* overloaded) {
       // Adding overloading reference
       overloader->setId(overloaded->id());
       _nodeIdMap_[overloader->id()] = overloader;
@@ -252,8 +271,8 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     bool PRMInterface< GUM_SCALAR >::_checkOverloadLegality_(
-       const PRMClassElement< GUM_SCALAR >* overloaded,
-       const PRMClassElement< GUM_SCALAR >* overloader) {
+        const PRMClassElement< GUM_SCALAR >* overloaded,
+        const PRMClassElement< GUM_SCALAR >* overloader) {
       if (overloaded->elt_type() != overloader->elt_type()) { return false; }
 
       if (overloaded->elt_type() == PRMClassElement< GUM_SCALAR >::prm_attribute) {
@@ -270,13 +289,13 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     bool PRMInterface< GUM_SCALAR >::isSubTypeOf(
-       const PRMClassElementContainer< GUM_SCALAR >& cec) const {
+        const PRMClassElementContainer< GUM_SCALAR >& cec) const {
       switch (cec.obj_type()) {
-        case PRMClassElement< GUM_SCALAR >::prm_type::CLASS: {
+        case PRMClassElement< GUM_SCALAR >::prm_type::CLASS : {
           return false;
         }
 
-        case PRMClassElement< GUM_SCALAR >::prm_type::PRM_INTERFACE: {
+        case PRMClassElement< GUM_SCALAR >::prm_type::PRM_INTERFACE : {
           const PRMInterface* current = this;
 
           while (current != 0) {
@@ -288,7 +307,7 @@ namespace gum {
           return false;
         }
 
-        default: {
+        default : {
           GUM_ERROR(FatalError, "unknown ClassElementContainer<GUM_SCALAR>")
         }
       }
@@ -310,25 +329,25 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     INLINE typename PRMInterface< GUM_SCALAR >::ClassEltIterator
-       PRMInterface< GUM_SCALAR >::begin() {
+        PRMInterface< GUM_SCALAR >::begin() {
       return _nodeIdMap_.begin();
     }
 
     template < typename GUM_SCALAR >
     INLINE const typename PRMInterface< GUM_SCALAR >::ClassEltIterator&
-       PRMInterface< GUM_SCALAR >::end() {
+        PRMInterface< GUM_SCALAR >::end() {
       return _nodeIdMap_.end();
     }
 
     template < typename GUM_SCALAR >
     INLINE typename PRMInterface< GUM_SCALAR >::const_ClassEltIterator
-       PRMInterface< GUM_SCALAR >::begin() const {
+        PRMInterface< GUM_SCALAR >::begin() const {
       return _nodeIdMap_.begin();
     }
 
     template < typename GUM_SCALAR >
     INLINE const typename PRMInterface< GUM_SCALAR >::const_ClassEltIterator&
-       PRMInterface< GUM_SCALAR >::end() const {
+        PRMInterface< GUM_SCALAR >::end() const {
       return _nodeIdMap_.end();
     }
 
@@ -367,19 +386,19 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     INLINE const PRMClassElement< GUM_SCALAR >&
-       PRMInterface< GUM_SCALAR >::operator[](NodeId id) const {
+                 PRMInterface< GUM_SCALAR >::operator[](NodeId id) const {
       return get(id);
     }
 
     template < typename GUM_SCALAR >
     INLINE PRMClassElement< GUM_SCALAR >&
-       PRMInterface< GUM_SCALAR >::operator[](const std::string& name) {
+           PRMInterface< GUM_SCALAR >::operator[](const std::string& name) {
       return get(name);
     }
 
     template < typename GUM_SCALAR >
     INLINE const PRMClassElement< GUM_SCALAR >&
-       PRMInterface< GUM_SCALAR >::operator[](const std::string& name) const {
+                 PRMInterface< GUM_SCALAR >::operator[](const std::string& name) const {
       return get(name);
     }
 
@@ -460,7 +479,7 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     void PRMInterface< GUM_SCALAR >::findAllSubtypes_(
-       Set< PRMClassElementContainer< GUM_SCALAR >* >& set) {
+        Set< PRMClassElementContainer< GUM_SCALAR >* >& set) {
       for (const auto impl: _implementations_) {
         set.insert(impl);
         impl->findAllSubtypes_(set);
@@ -474,7 +493,7 @@ namespace gum {
 
     template < typename GUM_SCALAR >
     INLINE bool
-       PRMInterface< GUM_SCALAR >::isOutputNode(const PRMClassElement< GUM_SCALAR >& elt) const {
+        PRMInterface< GUM_SCALAR >::isOutputNode(const PRMClassElement< GUM_SCALAR >& elt) const {
       try {
         if (!this->getIOFlag_(elt).second) {
           for (auto i: _implementations_) {

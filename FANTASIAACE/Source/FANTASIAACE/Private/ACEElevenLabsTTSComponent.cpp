@@ -1,10 +1,13 @@
 /**
  * @file ACEElevenLabsTTSComponent.cpp
  * @brief Implementation of UACEElevenLabsTTSComponent -- ElevenLabs TTS with A2F.
+ *
+ * Request building and with-timestamps alignment decoding are shared with the
+ * core ElevenLabs component via FElevenLabsProtocol (lives in core FANTASIA).
  */
 
 #include "ACEElevenLabsTTSComponent.h"
-#include "Runtime/Json/Public/Json.h"
+#include "ElevenLabsProtocol.h"
 
 UACEElevenLabsTTSComponent::UACEElevenLabsTTSComponent()
 {
@@ -14,31 +17,22 @@ UACEElevenLabsTTSComponent::UACEElevenLabsTTSComponent()
 
 FTTSSynthesisRequest UACEElevenLabsTTSComponent::BuildSynthesisRequest(const FString& Text, const FString& ID)
 {
-	FTTSSynthesisRequest Request;
-	Request.ID = ID;
-	Request.OriginalText = Text;
-	Request.bStreaming = true;
+	FElevenLabsVoiceSettings Settings;
+	Settings.Stability = stability;
+	Settings.SimilarityBoost = similarity_boost;
+	Settings.Style = style;
+	Settings.bUseSpeakerBoost = use_speaker_boost;
+	Settings.Speed = speed;
+	const FString Pronounced = FElevenLabsProtocol::ApplyPronunciations(PronunciationMap, Text);
+	return FElevenLabsProtocol::BuildRequest(VoiceID, ModelID, Key, Settings, Pronounced, ID, bStreaming, language_code);
+}
 
-	Request.URL = FString::Printf(TEXT("https://api.elevenlabs.io/v1/text-to-speech/%s/stream?output_format=pcm_16000"), *VoiceID);
+TSharedPtr<FTTSStreamDecoder> UACEElevenLabsTTSComponent::CreateStreamDecoder()
+{
+	return FElevenLabsProtocol::MakeStreamDecoder();
+}
 
-	Request.Headers.Add(TEXT("Content-Type"), TEXT("application/json"));
-	Request.Headers.Add(TEXT("xi-api-key"), Key);
-
-	TSharedPtr<FJsonObject> PayloadObject = MakeShareable(new FJsonObject());
-	TSharedPtr<FJsonObject> Settings = MakeShareable(new FJsonObject());
-
-	Settings->SetNumberField("stability", stability);
-	Settings->SetNumberField("similarity_boost", similarity_boost);
-	Settings->SetNumberField("style", style);
-	Settings->SetNumberField("use_speaker_boost", use_speaker_boost ? 1.0 : 0.0);
-
-	PayloadObject->SetStringField("text", Text);
-	PayloadObject->SetStringField("model_id", ModelID);
-	PayloadObject->SetObjectField("voice_settings", Settings);
-
-	FString Payload;
-	FJsonSerializer::Serialize(PayloadObject.ToSharedRef(), TJsonWriterFactory<>::Create(&Payload));
-	Request.Body = Payload;
-
-	return Request;
+void UACEElevenLabsTTSComponent::ProcessResponse(const TArray<uint8>& RawResponse, FTTSData& OutResult)
+{
+	FElevenLabsProtocol::ParseOffline(RawResponse, OutResult);
 }

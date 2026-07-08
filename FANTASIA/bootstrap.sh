@@ -119,7 +119,7 @@ fi
 
 # ── Fetch build-time static libs ─────────────────────────────────────────
 if [ "${FETCH_DEPS}" = "1" ]; then
-    DEPS_MARKER="${TP_DIR}/aGrUM/Libraries/agrum.x64.lib"
+    DEPS_MARKER="${TP_DIR}/aGrUM/Libraries/agrumBASE.lib"
     SKIP_DEPS=0
     if [ "${FORCE}" = "0" ] && [ -f "${DEPS_MARKER}" ]; then
         echo "Build-time static libs already present under ${TP_DIR} (skipping)."

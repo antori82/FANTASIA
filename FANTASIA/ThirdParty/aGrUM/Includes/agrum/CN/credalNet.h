@@ -1,22 +1,42 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
 
 
 #ifndef __CREDAL_NET__H__
@@ -28,15 +48,10 @@
  * @author Matthieu HOURBRACQ and Pierre-Henri WUILLEMIN(_at_LIP6) and Christophe GONZALES(_at_AMU)
  */
 
-#include <agrum/agrum.h>
-
 #include <iostream>
 #include <vector>
 
-#ifdef HAVE_UNISTD_H
-#  include <unistd.h>
-#else
-#endif
+#include <agrum/agrum.h>
 
 // #include <sys/wait.h>
 #include <algorithm>
@@ -46,20 +61,17 @@
 #include <set>
 #include <sstream>
 #include <string>
-#include <sys/stat.h>
-
 #include <utility>   /// c++11 stuff, like declval ( decltype from prototype without a default constructor )
 
+#include <agrum/base/core/exceptions.h>
+#include <agrum/base/core/math/pow.h>   // custom pow functions with integers, faster implementation
+#include <agrum/base/core/threads/threadExecutor.h>
+#include <agrum/base/core/threads/threads.h>
 #include <agrum/BN/io/BIF/BIFReader.h>
 #include <agrum/BN/io/BIF/BIFWriter.h>
-#include <agrum/tools/core/exceptions.h>
-
-#include <agrum/tools/core/math/pow.h>   // custom pow functions with integers, faster implementation
-
 #include <agrum/CN/polytope/LrsWrapper.h>
 
-#include <agrum/tools/core/threads.h>
-#include <agrum/tools/core/threadExecutor.h>
+#include <sys/stat.h>
 
 // 64 bits for windows (long is 32 bits)
 #ifdef _MSC_VER
@@ -85,12 +97,7 @@ namespace gum {
     class CredalNet {
       public:
       /** @brief NodeType to speed-up computations in some algorithms */
-      enum class NodeType : char {
-        Precise,
-        Credal,
-        Vacuous,
-        Indic
-      };
+      enum class NodeType : char { Precise, Credal, Vacuous, Indic };
 
       /// @name Constructors / Destructors
       /// @{
@@ -98,7 +105,7 @@ namespace gum {
       /**
        * Constructor used to create a CredalNet step by step, i.e. node by node,
        * arc
-       * by arc, manually filling potentials.
+       * by arc, manually filling tensors.
        */
       CredalNet();
 
@@ -196,8 +203,9 @@ namespace gum {
        *credal net
        *!
        */
-      void
-         setCPT(const NodeId& id, Size& entry, const std::vector< std::vector< GUM_SCALAR > >& cpt);
+      void setCPT(const NodeId&                                   id,
+                  Size&                                           entry,
+                  const std::vector< std::vector< GUM_SCALAR > >& cpt);
 
       /**
        * @brief %Set the vertices of one credal set of a given node ( any
@@ -328,7 +336,9 @@ namespace gum {
        *respectively \c TRUE or \c FALSE - we keep zeroes as zeroes. Default is \c
        *FALSE, i.e. zeroes are not kept.
        */
-      void bnToCredal(const GUM_SCALAR beta, const bool oneNet, const bool keepZeroes = false);
+      void bnToCredal(GUM_SCALAR beta, bool oneNet, bool keepZeroes);
+      void bnToCredal(GUM_SCALAR beta, bool oneNet);
+
 
       /**
        * @deprecated Use intervalToCredal ( lrsWrapper with no input / output
@@ -453,14 +463,14 @@ namespace gum {
        * CPTs.
        */
       const NodeProperty< std::vector< std::vector< std::vector< GUM_SCALAR > > > >&
-         credalNet_currentCpt() const;
+          credalNet_currentCpt() const;
 
       /**
        * @return Returns a constant reference to the ( up-to-date ) CredalNet
        * CPTs.
        */
       const NodeProperty< std::vector< std::vector< std::vector< GUM_SCALAR > > > >&
-         credalNet_srcCpt() const;
+          credalNet_srcCpt() const;
 
       /**
        * @param id The constant reference to the choosen NodeId
@@ -535,6 +545,7 @@ namespace gum {
       /// @}
 
       protected:
+
       private:
       /** @brief 1e6 by default, used by  _fracC_ as precision. */
       GUM_SCALAR _precisionC_;   // = 1e6;
@@ -592,7 +603,7 @@ namespace gum {
 
       /** @brief This CredalNet up-to-date CPTs. */
       NodeProperty< std::vector< std::vector< std::vector< GUM_SCALAR > > > >*
-         _credalNet_current_cpt_;   // =  nullptr;
+          _credalNet_current_cpt_;   // =  nullptr;
 
       /** @deprecated @brief Corresponding bits of each variable. */
       NodeProperty< std::vector< NodeId > > _var_bits_;
@@ -631,7 +642,7 @@ namespace gum {
        * @return Returns the cardinality of the Decision Node.
        */
       int _find_dNode_card_(
-         const std::vector< std::vector< std::vector< GUM_SCALAR > > >& var_cpt) const;
+          const std::vector< std::vector< std::vector< GUM_SCALAR > > >& var_cpt) const;
 
       /**
        * Computes the vertices of each credal set according to their interval

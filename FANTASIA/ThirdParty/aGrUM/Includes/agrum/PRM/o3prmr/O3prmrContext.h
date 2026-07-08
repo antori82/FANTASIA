@@ -1,22 +1,42 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
 
 
 /**
@@ -33,7 +53,6 @@
 #include <string>
 #include <vector>
 
-
 #include <agrum/PRM/inference/PRMInference.h>
 
 namespace gum {
@@ -48,16 +67,12 @@ namespace gum {
       class O3prmrCommand {
         public:
         int line;
-        enum class RequestType : char {
-          Observe,
-          Unobserve,
-          Query,
-          SetEngine,
-          SetGndEngine
-        };
+        enum class RequestType : char { Observe, Unobserve, Query, SetEngine, SetGndEngine };
 
         explicit O3prmrCommand(int line) : line(line) {}
+
         O3prmrCommand(const O3prmrCommand& c) : line(c.line) {}
+
         virtual ~O3prmrCommand() {}
 
         virtual RequestType type() const     = 0;
@@ -69,6 +84,7 @@ namespace gum {
         public:
         ImportCommand(int line, const std::string& value, const std::string& alias) :
             line(line), value(value), alias(alias) {}
+
         ImportCommand(const ImportCommand& c) : line(c.line), value(c.value), alias(c.alias) {}
 
         int         line;
@@ -84,11 +100,13 @@ namespace gum {
       class SetEngineCommand: public O3prmrCommand {
         public:
         SetEngineCommand(int line, const std::string& value) : O3prmrCommand(line), value(value) {}
+
         SetEngineCommand(const SetEngineCommand& c) : O3prmrCommand(c), value(c.value) {}
 
         std::string value;
 
         RequestType type() const { return RequestType::SetEngine; }
+
         std::string toString() const { return "engine " + value + ";"; }
       };
 
@@ -97,11 +115,13 @@ namespace gum {
         public:
         SetGndEngineCommand(int line, const std::string& value) :
             O3prmrCommand(line), value(value) {}
+
         SetGndEngineCommand(const SetGndEngineCommand& c) : O3prmrCommand(c), value(c.value) {}
 
         std::string value;
 
         RequestType type() const { return RequestType::SetGndEngine; }
+
         std::string toString() const { return "grd_engine " + value + ";"; }
       };
 
@@ -111,6 +131,7 @@ namespace gum {
         public:
         ObserveCommand(int line, const std::string& leftValue, const std::string& rightValue) :
             O3prmrCommand(line), leftValue(leftValue), rightValue(rightValue), system(0) {}
+
         ObserveCommand(const ObserveCommand& c) :
             O3prmrCommand(c), leftValue(c.leftValue), rightValue(c.rightValue), system(c.system),
             chain(c.chain) {}
@@ -119,9 +140,10 @@ namespace gum {
         std::string                                rightValue;
         const PRMSystem< GUM_SCALAR >*             system;
         typename PRMInference< GUM_SCALAR >::Chain chain;
-        Potential< GUM_SCALAR >                    potentiel;
+        Tensor< GUM_SCALAR >                       potentiel;
 
         RequestType type() const { return RequestType::Observe; }
+
         std::string toString() const { return leftValue + " = " + rightValue + ";"; }
       };
 
@@ -135,10 +157,12 @@ namespace gum {
 
         UnobserveCommand(int line, const std::string& value) :
             O3prmrCommand(line), value(value), system(0) {}
+
         UnobserveCommand(const UnobserveCommand& c) :
             O3prmrCommand(c), value(c.value), system(c.system), chain(c.chain) {}
 
         RequestType type() const { return RequestType::Unobserve; }
+
         std::string toString() const { return "unobserve " + value + ";"; }
       };
 
@@ -154,6 +178,7 @@ namespace gum {
         typename PRMInference< GUM_SCALAR >::Chain chain;
 
         RequestType type() const { return RequestType::Query; }
+
         std::string toString() const { return "? " + value + ";"; }
       };
 
@@ -219,6 +244,7 @@ namespace gum {
         std::vector< ImportCommand* > imports() const;
         void addImport(int line, const std::string& import, const std::string& alias);
         void addImport(int line, const std::string& import, bool ismain);
+
         void addImport(const ImportCommand& i) {
           m_imports.push_back(new ImportCommand(i.line, i.value, i.alias));
 
@@ -291,7 +317,7 @@ namespace gum {
 
 
     }   // namespace o3prmr
-  }     // namespace prm
+  }   // namespace prm
 }   // namespace gum
 
 #include <agrum/PRM/o3prmr/O3prmrContext_tpl.h>

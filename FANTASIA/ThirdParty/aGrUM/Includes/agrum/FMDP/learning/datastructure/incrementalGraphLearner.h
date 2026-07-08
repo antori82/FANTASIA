@@ -1,22 +1,42 @@
-/**
- *
- *   Copyright (c) 2005-2023  by Pierre-Henri WUILLEMIN(_at_LIP6) & Christophe GONZALES(_at_AMU)
- *   info_at_agrum_dot_org
- *
- *  This library is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Lesser General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public License
- *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+/****************************************************************************
+ *   This file is part of the aGrUM/pyAgrum library.                        *
+ *                                                                          *
+ *   Copyright (c) 2005-2025 by                                             *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *                                                                          *
+ *   The aGrUM/pyAgrum library is free software; you can redistribute it    *
+ *   and/or modify it under the terms of either :                           *
+ *                                                                          *
+ *    - the GNU Lesser General Public License as published by               *
+ *      the Free Software Foundation, either version 3 of the License,      *
+ *      or (at your option) any later version,                              *
+ *    - the MIT license (MIT),                                              *
+ *    - or both in dual license, as here.                                   *
+ *                                                                          *
+ *   (see https://agrum.gitlab.io/articles/dual-licenses-lgplv3mit.html)    *
+ *                                                                          *
+ *   This aGrUM/pyAgrum library is distributed in the hope that it will be  *
+ *   useful, but WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,          *
+ *   INCLUDING BUT NOT LIMITED TO THE WARRANTIES MERCHANTABILITY or FITNESS *
+ *   FOR A PARTICULAR PURPOSE  AND NONINFRINGEMENT. IN NO EVENT SHALL THE   *
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,        *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                        *
+ *                                                                          *
+ *   See LICENCES for more details.                                         *
+ *                                                                          *
+ *   SPDX-FileCopyrightText: Copyright 2005-2025                            *
+ *       - Pierre-Henri WUILLEMIN(_at_LIP6)                                 *
+ *       - Christophe GONZALES(_at_AMU)                                     *
+ *   SPDX-License-Identifier: LGPL-3.0-or-later OR MIT                      *
+ *                                                                          *
+ *   Contact  : info_at_agrum_dot_org                                       *
+ *   homepage : http://agrum.gitlab.io                                      *
+ *   gitlab   : https://gitlab.com/agrumery/agrum                           *
+ *                                                                          *
+ ****************************************************************************/
 
 
 /**
@@ -35,6 +55,7 @@
 // =========================================================================
 #include <agrum/FMDP/learning/datastructure/IVisitableGraphLearner.h>
 #include <agrum/FMDP/learning/datastructure/nodeDatabase.h>
+
 // =========================================================================
 // =========================================================================
 
@@ -81,7 +102,7 @@ namespace gum {
      */
     // ==========================================================================
     IncrementalGraphLearner(MultiDimFunctionGraph< double >* target,
-                            Set< const DiscreteVariable* >   attributesSet,
+                            gum::VariableSet                 attributesSet,
                             const DiscreteVariable*          learnVariable);
 
     // ==========================================================================
@@ -114,6 +135,7 @@ namespace gum {
     /// @name New Observation insertion methods
     // ###################################################################
     /// @{
+
     public:
     // ==========================================================================
     /**
@@ -129,13 +151,14 @@ namespace gum {
      */
     // ==========================================================================
     void _assumeValue_(const Observation* obs) { _assumeValue_(obs, Int2Type< isScalar >()); }
+
     void _assumeValue_(const Observation* obs, Int2Type< true >) {
       if (!valueAssumed_.exists(obs->reward())) valueAssumed_ << obs->reward();
     }
+
     void _assumeValue_(const Observation* obs, Int2Type< false >) {
       if (!valueAssumed_.exists(obs->modality(value_))) valueAssumed_ << obs->modality(value_);
     }
-
 
     // ==========================================================================
     /**
@@ -145,9 +168,11 @@ namespace gum {
     Idx _branchObs_(const Observation* obs, const DiscreteVariable* var) {
       return _branchObs_(obs, var, Int2Type< isScalar >());
     }
+
     Idx _branchObs_(const Observation* obs, const DiscreteVariable* var, Int2Type< true >) {
       return obs->rModality(var);
     }
+
     Idx _branchObs_(const Observation* obs, const DiscreteVariable* var, Int2Type< false >) {
       return obs->modality(var);
     }
@@ -197,7 +222,7 @@ namespace gum {
      * @param bestVars : the set of interessting vars to be installed here
      */
     // ==========================================================================
-    void updateNode_(NodeId nody, Set< const DiscreteVariable* >& bestVars);
+    void updateNode_(NodeId nody, gum::VariableSet& bestVars);
 
     // ==========================================================================
     /// Turns the given node into a leaf if not already so
@@ -271,6 +296,7 @@ namespace gum {
     /// @name Function Graph Updating methods
     // ###################################################################
     /// @{
+
     public:
     // ==========================================================================
     /// Updates target to currently learned graph structure
@@ -286,11 +312,11 @@ namespace gum {
     // ==========================================================================
     Size size() { return nodeVarMap_.size(); }
 
-
     // ###################################################################
     /// @name Visit Methods
     // ###################################################################
     /// @{
+
     public:
     // ==========================================================================
     ///
@@ -326,6 +352,7 @@ namespace gum {
            ++varIter)
         ret->add(**varIter);
     }
+
     /// @}
 
     protected:
@@ -381,7 +408,7 @@ namespace gum {
     /// The final diagram we're building
     MultiDimFunctionGraph< double >* target_;
 
-    Set< const DiscreteVariable* > setOfVars_;
+    gum::VariableSet setOfVars_;
 
     const DiscreteVariable* value_;
     Sequence< ValueType >   valueAssumed_;
