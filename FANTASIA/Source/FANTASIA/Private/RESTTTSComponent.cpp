@@ -274,6 +274,16 @@ void URESTTTSComponent::IssueHttpRequest(FTTSSynthesisRequest Request, FAudioBuf
 		{
 			if (BytesReceived > 0 && *PreviousBytesPtr < BytesReceived && Req->GetResponse().IsValid())
 			{
+				// Never feed an error response body (e.g. an ElevenLabs auth /
+				// quota / validation error, which arrives as a JSON message) into
+				// the audio decoder. The completion handler logs it. A 200 stream
+				// has its code set by the time the first body bytes arrive, so
+				// this doesn't drop valid chunks.
+				if (Req->GetResponse()->GetResponseCode() >= 300)
+				{
+					return;
+				}
+
 				const TArray<uint8>& Content = Req->GetResponse()->GetContent();
 				const int64 len = Content.Num();
 
@@ -299,7 +309,10 @@ void URESTTTSComponent::IssueHttpRequest(FTTSSynthesisRequest Request, FAudioBuf
 		[this, RequestID, RequestText, bIsStreaming, Target, Decoder, StreamingNumPtr]
 		(FHttpRequestPtr Req, FHttpResponsePtr Response, bool bWasSuccessful)
 	{
-		if (bWasSuccessful && Response.IsValid())
+		const int32 ResponseCode = Response.IsValid() ? Response->GetResponseCode() : 0;
+		const bool bHttpOk = bWasSuccessful && Response.IsValid() && ResponseCode >= 200 && ResponseCode < 300;
+
+		if (bHttpOk)
 		{
 			const TArray<uint8>& Content = Response->GetContent();
 
@@ -321,7 +334,26 @@ void URESTTTSComponent::IssueHttpRequest(FTTSSynthesisRequest Request, FAudioBuf
 		}
 		else
 		{
-			UE_LOG(LogTemp, Error, TEXT("Connection to the TTS endpoint failed."));
+			// Network failure or non-2xx (e.g. ElevenLabs auth / quota / validation
+			// error). Log the status + body so it's visible -- an error JSON must
+			// NOT be decoded as audio -- and finalize the buffer so a subclass
+			// consumer retires it (fires PlaybackComplete / closes the A2F turn)
+			// instead of waiting forever for samples that will never arrive.
+			if (!bWasSuccessful || !Response.IsValid())
+			{
+				UE_LOG(LogTemp, Error, TEXT("TTS request '%s' failed: connection to the endpoint failed."), *RequestID);
+			}
+			else
+			{
+				UE_LOG(LogTemp, Error, TEXT("TTS request '%s' failed (HTTP %d): %s"),
+					*RequestID, ResponseCode, *Response->GetContentAsString());
+			}
+
+			if (Target)
+			{
+				Target->bSynthesisComplete.store(true, std::memory_order_release);
+				WakeConsumer();
+			}
 		}
 	});
 
