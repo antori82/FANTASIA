@@ -159,12 +159,11 @@ if [ "${MODE}" = "shared" ]; then
         echo "WARNING: CUDA shared libs not found; end users will need CUDA installed."
     fi
 
-    # Defang Build.cs's static-CUDA detection. LoadWhisperPrebuiltCuda in
-    # FANTASIA.Build.cs looks for libwhisper.a + libggml-cuda.a at fixed paths
-    # and -- if both exist -- links them statically into UnrealEditor-FANTASIA.so.
-    # SHARED mode produces .so files instead of .a, so the check usually fails
-    # here, but if any *.a stragglers exist from a prior STATIC build that
-    # wasn't fully wiped, remove them defensively.
+    # Belt-and-suspenders cleanup. Since 2026-07 Build.cs only links the prebuilt
+    # CUDA libs when FANTASIA_WHISPER_PREBUILT_CUDA=1, so a leftover libwhisper.a /
+    # libggml-cuda.a no longer silently flips the shipped binary into a
+    # CUDA-dependent one. We still remove any *.a stragglers from a prior STATIC
+    # build so Build.cs stays cleanly on LoadWhisperFromStagedSource (CPU built-in).
     rm -f "${BUILD_DIR}/src/libwhisper.a" "${BUILD_DIR}/ggml/src/ggml-cuda/libggml-cuda.a" || true
 
     echo
@@ -204,6 +203,7 @@ else
     echo "─────────────────────────────────────────────────"
     ls -lh "${DLL_DIR}"/*.so* 2>/dev/null || echo "  (none)"
     echo
-    echo " Now rebuild the UE project — Build.cs will detect and link these libs"
-    echo " statically into UnrealEditor-FANTASIA.dll."
+    echo " Now set FANTASIA_WHISPER_PREBUILT_CUDA=1 and rebuild the UE project —"
+    echo " Build.cs will then link these libs statically into the plugin binary."
+    echo " (Local/dev build only — a CUDA-baked core binary is NOT the redistributable one.)"
 fi

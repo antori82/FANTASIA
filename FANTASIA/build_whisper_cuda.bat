@@ -188,14 +188,13 @@ for %%d in ("%CUDA_BIN%\cudart64_*.dll" "%CUDA_BIN%\cublas64_*.dll" "%CUDA_BIN%\
     echo   %%~nxd
 )
 
-REM Defang Build.cs's static-CUDA detection. LoadWhisperPrebuiltCuda in
-REM FANTASIA.Build.cs looks for whisper.lib + ggml-cuda.lib at fixed paths
-REM and -- if both exist -- links them statically into UnrealEditor-FANTASIA.dll.
-REM SHARED mode produces those .libs too (as DLL import libs), which would
-REM trigger the static path on the next plugin rebuild and produce a hybrid
-REM where the core DLL imports whisper.dll directly. Delete them so Build.cs
-REM falls cleanly to LoadWhisperFromStagedSource (CPU built-in) and the
-REM runtime dispatcher remains in charge of GPU.
+REM Belt-and-suspenders cleanup. SHARED mode also produces whisper.lib +
+REM ggml-cuda.lib (as DLL import libs). Since 2026-07 Build.cs only links the
+REM prebuilt CUDA libs when FANTASIA_WHISPER_PREBUILT_CUDA=1, so a leftover lib
+REM no longer silently flips the shipped DLL into a whisper.dll-importing hybrid.
+REM We still delete them here so no stale import libs linger and Build.cs stays
+REM cleanly on LoadWhisperFromStagedSource (CPU built-in) with the runtime
+REM dispatcher in charge of GPU.
 if exist "%BUILD_DIR%\src\Release\whisper.lib" del /F /Q "%BUILD_DIR%\src\Release\whisper.lib"
 if exist "%BUILD_DIR%\ggml\src\ggml-cuda\Release\ggml-cuda.lib" del /F /Q "%BUILD_DIR%\ggml\src\ggml-cuda\Release\ggml-cuda.lib"
 
@@ -212,7 +211,9 @@ goto :EOF
 
 :STAGE_STATIC
 REM Legacy static-build flow: leave the libs in build/ for Build.cs's
-REM LoadWhisperPrebuiltCuda to find at next plugin compile.
+REM LoadWhisperPrebuiltCuda. NOTE (since 2026-07): Build.cs also requires the
+REM env var FANTASIA_WHISPER_PREBUILT_CUDA=1 to actually link them, so a stray
+REM lib can't silently bake CUDA into the shipped DLL -- set it before compiling.
 REM Also stage CUDA runtime DLLs into build\bin so Build.cs's
 REM RuntimeDependencies copy step has them.
 set DLL_DIR=%BUILD_DIR%\bin
@@ -235,6 +236,7 @@ echo  CUDA DLLs (for distribution):
 echo ─────────────────────────────────────────────────
 for %%f in ("%DLL_DIR%\*.dll") do echo   %%f
 echo.
-echo  Now rebuild the UE project -- Build.cs will detect and link these libs
-echo  statically into UnrealEditor-FANTASIA.dll.
+echo  Now set FANTASIA_WHISPER_PREBUILT_CUDA=1 and rebuild the UE project --
+echo  Build.cs will then link these libs statically into UnrealEditor-FANTASIA.dll.
+echo  (Local/dev build only -- a CUDA-baked core DLL is NOT the redistributable one.)
 goto :EOF
