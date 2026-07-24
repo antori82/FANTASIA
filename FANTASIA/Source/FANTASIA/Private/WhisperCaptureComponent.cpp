@@ -36,6 +36,7 @@
 // Copyright (c) 2024 WhisperASR Plugin. All Rights Reserved.
 
 #include "WhisperCaptureComponent.h"
+#include "GameFramework/Actor.h"
 #include "WhisperSubsystem.h"
 #include "Engine/GameInstance.h"
 #include "AudioCaptureCore.h"

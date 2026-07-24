@@ -11,13 +11,24 @@
 #pragma warning (disable : 4834)
 
 #include "FANTASIATypes.h"
+#include "HAL/Runnable.h"
 #include "Containers/Queue.h"
 #include <atomic>
 #include "Windows/AllowWindowsPlatformTypes.h"
 #include "Windows/AllowWindowsPlatformAtomics.h"
 #pragma push_macro("verify")
 #undef verify
+#if defined(_MSC_VER)
+#pragma warning(push)
+// SWI-Prolog's C++2 binding (SWI-cpp2.h) trips MSVC warnings that UE promotes to
+// errors under 5.8: 4670/4673 (PlException base access / throw type slicing),
+// 4800 (implicit int->bool). Suppress them for this third-party include only.
+#pragma warning(disable: 4670 4673 4800)
+#endif
 #include <SWI-cpp2.h>
+#if defined(_MSC_VER)
+#pragma warning(pop)
+#endif
 #pragma pop_macro("verify")
 #include "Windows/HideWindowsPlatformAtomics.h"
 #include "Windows/HideWindowsPlatformTypes.h"

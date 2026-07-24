@@ -52,15 +52,15 @@ struct FSWIPrologResponse {
 	GENERATED_BODY()
 
 	/** Functor name of the query that produced this response. */
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadOnly, Category = "FANTASIA")
 	FString queryName;
 
 	/** Arity (number of arguments) of the query. */
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadOnly, Category = "FANTASIA")
 	uint8 arity;
 
 	/** Ordered list of solution bindings returned by the Prolog engine. */
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadOnly, Category = "FANTASIA")
 	TArray<USWIPrologSolution*> results;
 };
 
@@ -92,15 +92,15 @@ public:
 	USWIPrologRuleBody() {};
 
 	/** Left-hand operand (may be another rule body or a term). */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowedClasses = "/Script/FANTASIA.SWIPrologRuleBody,/Script/FANTASIA.SWIPrologTerm"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowedClasses = "/Script/FANTASIA.SWIPrologRuleBody,/Script/FANTASIA.SWIPrologTerm"), Category = "FANTASIA")
 	USWIPrologObject* firstRule;
 
 	/** Right-hand operand (may be another rule body or a term). */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowedClasses = "/Script/FANTASIA.SWIPrologRuleBody,/Script/FANTASIA.SWIPrologTerm"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowedClasses = "/Script/FANTASIA.SWIPrologRuleBody,/Script/FANTASIA.SWIPrologTerm"), Category = "FANTASIA")
 	USWIPrologObject* secondRule;
 
 	/** Operator that joins the two operands. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FANTASIA")
 	SWIPrologOperation prologOperator;
 };
 
@@ -119,11 +119,11 @@ public:
 	USWIPrologRule() {};
 
 	/** Head (conclusion) of the rule — must be a compound term or atom. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FANTASIA")
 	USWIPrologTerm* head;
 
 	/** Body (conditions) of the rule — a term or a compound rule body. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowedClasses = "/Script/FANTASIA.SWIPrologRuleBody,/Script/FANTASIA.SWIPrologTerm"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowedClasses = "/Script/FANTASIA.SWIPrologRuleBody,/Script/FANTASIA.SWIPrologTerm"), Category = "FANTASIA")
 	USWIPrologObject* body;
 };
 
@@ -155,7 +155,7 @@ public:
 	USWIPrologAtom() {};
 
 	/** Textual value of the atom. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FANTASIA")
 	FString atomValue = "";
 
 };
@@ -171,7 +171,7 @@ public:
 	USWIPrologVariable() {};
 
 	/** Name of the variable (e.g. @c "X", @c "Result"). */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FANTASIA")
 	FString varName = "";
 
 };
@@ -187,7 +187,7 @@ public:
 	USWIPrologInteger() {};
 
 	/** Integer value of this term. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FANTASIA")
 	int32 intValue = 0;
 
 };
@@ -203,7 +203,7 @@ public:
 	USWIPrologFloat() {};
 
 	/** Floating-point value of this term. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FANTASIA")
 	float floatValue = 0;
 
 };
@@ -222,11 +222,11 @@ public:
 	USWIPrologCompound() {};
 
 	/** Functor name of the compound (e.g. @c "parent"). */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FANTASIA")
 	FString compoundName;
 
 	/** Ordered list of argument terms. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FANTASIA")
 	TArray<USWIPrologTerm*> arguments;
 
 };
@@ -242,7 +242,7 @@ public:
 	USWIPrologList() {};
 
 	/** Elements of the list, in order. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FANTASIA")
 	TArray<USWIPrologTerm*> elements;
 
 };
@@ -263,11 +263,11 @@ public:
 	USWIPrologHeadToTail() {};
 
 	/** Leading elements extracted from the front of the list. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FANTASIA")
 	TArray<USWIPrologTerm*> headElements;
 
 	/** Remainder of the list after the head elements. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowedClasses = "/Script/FANTASIA.SWIPrologTerm,/Script/FANTASIA.SWIPrologList,/Script/FANTASIA.SWIPrologHeadToTail"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowedClasses = "/Script/FANTASIA.SWIPrologTerm,/Script/FANTASIA.SWIPrologList,/Script/FANTASIA.SWIPrologHeadToTail"), Category = "FANTASIA")
 	USWIPrologTerm* tail;
 
 };
@@ -301,11 +301,11 @@ public:
 	USWIPrologSolution() {};
 
 	/** String representations of the bound values, one per query variable. */
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadOnly, Category = "FANTASIA")
 	TArray<FString> resultSet;
 
 	/** Whether the Prolog engine verified (proved) this solution. */
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadOnly, Category = "FANTASIA")
 	bool verified;
 };
 
@@ -327,11 +327,11 @@ struct FChatTurn
 	GENERATED_USTRUCT_BODY()
 
 	/** Role of the speaker for this turn. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FANTASIA")
 	GPTRoleType role = GPTRoleType::USER;
 
 	/** Textual content of the message. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FANTASIA")
 	FString content = TEXT("");
 };
 
@@ -409,11 +409,11 @@ struct FTTSTimedStruct
 	GENERATED_USTRUCT_BODY()
 
 	/** Timestamp in milliseconds relative to the start of the audio clip. */
-	UPROPERTY(BlueprintReadWrite)
+	UPROPERTY(BlueprintReadWrite, Category = "FANTASIA")
 	int time = 0;
 
 	/** Payload string (viseme ID, notify name, etc.). */
-	UPROPERTY(BlueprintReadWrite)
+	UPROPERTY(BlueprintReadWrite, Category = "FANTASIA")
 	FString data;
 };
 
@@ -512,15 +512,15 @@ struct FNeo4jResponse {
 	GENERATED_BODY()
 
 	/** Transaction identifier (empty for auto-commit queries). */
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadOnly, Category = "FANTASIA")
 	FString transactionID;
 
 	/** Column names returned by the query. */
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadOnly, Category = "FANTASIA")
 	TArray<FString> headers;
 
 	/** Ordered result rows, each containing one cell per header. */
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadOnly, Category = "FANTASIA")
 	TArray<UNeo4jResultRow*> rows;
 };
 
@@ -536,7 +536,7 @@ public:
 	UNeo4jResultRow() {};
 
 	/** Map from column header to the corresponding result cell. */
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadOnly, Category = "FANTASIA")
 	TMap<FString, UNeo4jResultCell*> cells;
 };
 
@@ -566,15 +566,15 @@ public:
 	UNeo4jResultCellNode() {}
 
 	/** Label(s) assigned to the node (e.g. "Person", "Actor"). */
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadOnly, Category = "FANTASIA")
 	TArray<FString> labels;
 
 	/** Internal Neo4j node identity. */
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadOnly, Category = "FANTASIA")
 	int id;
 
 	/** Key-value property map of the node (all values serialized to strings). */
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadOnly, Category = "FANTASIA")
 	TMap<FString,FString> properties;
 };
 
@@ -588,15 +588,15 @@ public:
 	UNeo4jResultCellRelationship() {}
 
 	/** Relationship type label (e.g. "KNOWS"). */
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadOnly, Category = "FANTASIA")
 	FString label;
 
 	/** Internal Neo4j relationship identity. */
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadOnly, Category = "FANTASIA")
 	int id;
 
 	/** Key-value property map of the relationship. */
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadOnly, Category = "FANTASIA")
 	TMap<FString, FString> properties;
 };
 
@@ -610,6 +610,6 @@ public:
 	UNeo4jResultCellSimple() {}
 
 	/** String representation of the scalar value. */
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadOnly, Category = "FANTASIA")
 	FString value;
 };

@@ -8,6 +8,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "HAL/ThreadSafeBool.h"
 #include "Subsystems/GameInstanceSubsystem.h"
 #include "WhisperTypes.h"
 #include "WhisperSubsystem.generated.h"

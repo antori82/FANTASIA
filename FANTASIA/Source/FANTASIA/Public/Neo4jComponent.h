@@ -135,11 +135,11 @@ public:
 	// ── Events ───────────────────────────────────────────────────────────
 
 	/** Broadcast when a query result (or transaction acknowledgement) is received. */
-	UPROPERTY(BlueprintAssignable, BlueprintCallable)
+	UPROPERTY(BlueprintAssignable, BlueprintCallable, Category = "Neo4j")
 	FIncomingNeo4jResponseEvent IncomingResponse;
 
 	/** Raw text of the most recent server response (debugging aid). */
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadOnly, Category = "Neo4j")
 	FString response;
 
 	// ── Public API ───────────────────────────────────────────────────────

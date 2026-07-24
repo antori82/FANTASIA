@@ -25,15 +25,15 @@ struct FCLFSample {
 	GENERATED_BODY()
 
 	/** Unique identifier for this sample (for tracking in results). */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SVM")
 	FString sampleID;
 
 	/** Class label for supervised learning (ignored during prediction). */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SVM")
 	double CLFclass;
 
 	/** Feature vector. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SVM")
 	TArray<double> features;
 };
 
@@ -44,11 +44,11 @@ struct FCLFResult {
 	GENERATED_BODY()
 
 	/** Identifier of the predicted sample (matches FCLFSample::sampleID). */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SVM")
 	FString sampleID;
 
 	/** Per-class probability estimates (requires probability model). */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SVM")
 	TArray<double> probabilities;
 };
 
@@ -78,47 +78,47 @@ struct FSVMParameters {
 	GENERATED_BODY()
 
 	/** SVM formulation type. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SVM")
 	LibSVMTypes SVMType = LibSVMTypes::C_SVC;
 
 	/** Kernel function. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SVM")
 	LibSVMKernels KernelType = LibSVMKernels::RBF;
 
 	/** Regularization parameter (C-SVC, epsilon-SVR, nu-SVR). */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SVM")
 	double C = 1;
 
 	/** Kernel coefficient for RBF, polynomial, and sigmoid kernels. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SVM")
 	double gamma = 0.1;
 
 	/** Degree of the polynomial kernel. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SVM")
 	double degree = 3;
 
 	/** Independent term in polynomial / sigmoid kernels. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SVM")
 	double coef0 = 0;
 
 	/** Nu parameter for nu-SVC, one-class SVM, and nu-SVR. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SVM")
 	double nu = 0.5;
 
 	/** Epsilon in the loss function of epsilon-SVR. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SVM")
 	double svrEpsilon = 0.1;
 
 	/** Kernel cache size in MB. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SVM")
 	double cachesize = 100;
 
 	/** Stopping tolerance for the optimization. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SVM")
 	double epsilon = 0.001;
 
 	/** Whether to use the shrinking heuristic. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SVM")
 	bool shrinking = true;
 };
 
@@ -151,11 +151,11 @@ public:
 	virtual void BeginDestroy() override;
 
 	/** Training samples used by train(). */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SVM")
 	TArray<FCLFSample> trainingSet;
 
 	/** Hyper-parameter configuration for the SVM. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SVM")
 	struct FSVMParameters SVMParameters;
 
 	/**

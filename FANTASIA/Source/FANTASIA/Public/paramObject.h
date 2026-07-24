@@ -18,7 +18,7 @@ struct FparamValues
 	GENERATED_BODY()
 
 	/** The parameter values. */
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadOnly, Category = "FANTASIA")
 	TArray<FString> values;
 
 };

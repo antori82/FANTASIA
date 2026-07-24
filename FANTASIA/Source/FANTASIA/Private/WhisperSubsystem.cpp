@@ -6,6 +6,7 @@
 // Copyright (c) 2024 WhisperASR Plugin. All Rights Reserved.
 
 #include "WhisperSubsystem.h"
+#include "Misc/FileHelper.h"
 
 DEFINE_LOG_CATEGORY(LogWhisperASR);
 #include "Async/Async.h"

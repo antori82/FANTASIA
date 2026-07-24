@@ -4,6 +4,7 @@
  */
 
 #include "FANTASIATestActor.h"
+#include "Engine/GameInstance.h"
 
 #include "OpenAICompatibleComponent.h"
 #include "Neo4jComponent.h"

@@ -68,7 +68,7 @@ struct FMapContainer
 	GENERATED_USTRUCT_BODY()
 
 	/** The underlying map. */
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadOnly, Category = "Bayesian Network")
 	TMap<FString, float> Map;
 };
 
@@ -81,11 +81,11 @@ struct FBayesianArcStruct
 	GENERATED_USTRUCT_BODY()
 
 	/** Name of the parent (tail) node. */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Bayesian Network")
 	FString Tail;
 
 	/** Name of the child (head) node. */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Bayesian Network")
 	FString Head;
 };
 
@@ -98,19 +98,19 @@ struct FBayesianNodeStruct
 	GENERATED_USTRUCT_BODY()
 
 	/** Node identifier. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Bayesian Network")
 	FString name;
 
 	/** Domain labels for this node's variable. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Bayesian Network")
 	TArray<FString> variables;
 
 	/** Flattened CPT values. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Bayesian Network")
 	TArray<double> values;
 
 	/** Names of parent nodes. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Bayesian Network")
 	TArray<FString> parents;
 };
 
@@ -161,26 +161,26 @@ private:
 public:
 
 	/** Broadcast to Blueprints when asynchronous inference finishes. */
-	UPROPERTY(BlueprintAssignable, BlueprintCallable)
+	UPROPERTY(BlueprintAssignable, BlueprintCallable, Category = "Bayesian Network")
 	FBNInferenceAvailableEvent InferenceReady;
 
 	/** Native C++ multicast delegate for inference completion (non-dynamic). */
 	FSimpleMulticastDelegate OnInferenceReady;
 
 	/** Serialized node snapshots, populated by setBN() for editor inspection. */
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Bayesian Network")
 	TArray<FBayesianNodeStruct> serializedNodes;
 
 	/** Ordered list of node names present in the network. */
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadOnly, Category = "Bayesian Network")
 	TArray<FString> nodeNames;
 
 	/** Map from node name to its human-readable description. */
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadOnly, Category = "Bayesian Network")
 	TMap<FString, FString> nodeDescriptions;
 
 	/** List of arc keys in "parent_child" format. */
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadOnly, Category = "Bayesian Network")
 	TArray<FString> arcs;
 
 	// ── Network Construction ─────────────────────────────────────────────
@@ -197,7 +197,7 @@ public:
 	void Init();
 
 	/** The inference algorithm to use. Changing this requires a subsequent call to Init(). */
-	UPROPERTY(BlueprintReadWrite)
+	UPROPERTY(BlueprintReadWrite, Category = "Bayesian Network")
 	InferenceAlgs InferenceAlgorithm = InferenceAlgs::ShaferShenoy;
 
 	/**

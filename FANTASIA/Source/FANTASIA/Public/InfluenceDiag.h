@@ -63,11 +63,11 @@ struct FInfluenceDiagArcStruct
 	GENERATED_USTRUCT_BODY()
 
 	/** Name of the parent (tail) node. */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Influence Diagram")
 	FString Tail;
 
 	/** Name of the child (head) node. */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Influence Diagram")
 	FString Head;
 };
 
@@ -80,23 +80,23 @@ struct FInfluenceDiagNodeStruct
 	GENERATED_USTRUCT_BODY()
 
 	/** Node identifier. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Influence Diagram")
 	FString name;
 
 	/** Domain labels for this node's variable. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Influence Diagram")
 	TArray<FString> variables;
 
 	/** Flattened CPT or utility table values. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Influence Diagram")
 	TArray<double> values;
 
 	/** Names of parent nodes. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Influence Diagram")
 	TArray<FString> parents;
 
 	/** Whether this node is a chance, decision, or utility node. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Influence Diagram")
 	InfluenceNodeType nodeType = InfluenceNodeType::CHANCE;
 };
 
@@ -110,7 +110,7 @@ struct FArrayFloat
 
 public:
 	/** The float values. */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Influence Diagram")
 	TArray<float> arrayFloat;
 
 };
@@ -157,26 +157,26 @@ private:
 
 public:
 	/** Broadcast to Blueprints when asynchronous inference finishes. */
-	UPROPERTY(BlueprintAssignable, BlueprintCallable)
+	UPROPERTY(BlueprintAssignable, BlueprintCallable, Category = "Influence Diagram")
 	FIDInferenceAvailableEvent InferenceReady;
 
 	/** Native C++ multicast delegate for inference completion (non-dynamic). */
 	FSimpleMulticastDelegate OnInferenceReady;
 
 	/** Serialized node snapshots for editor inspection. */
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Influence Diagram")
 	TArray<FInfluenceDiagNodeStruct> serializedNodes;
 
 	/** Ordered list of node names present in the diagram. */
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadOnly, Category = "Influence Diagram")
 	TArray<FString> nodeNames;
 
 	/** Map from node name to its human-readable description. */
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadOnly, Category = "Influence Diagram")
 	TMap<FString, FString> nodeDescriptions;
 
 	/** List of arc keys in "parent_child" format. */
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadOnly, Category = "Influence Diagram")
 	TArray<FString> arcs;
 
 	// ── Initialization ───────────────────────────────────────────────────
