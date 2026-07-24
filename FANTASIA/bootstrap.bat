@@ -4,7 +4,7 @@ setlocal EnableDelayedExpansion
 REM ─────────────────────────────────────────────────────────────────────────────
 REM  FANTASIA artifact fetcher (Windows)
 REM
-REM  Downloads, from the runtime-v2.0 GitHub Release, everything needed to run a
+REM  Downloads, from the runtime-v3.0 GitHub Release, everything needed to run a
 REM  typical FANTASIA interactive MetaHuman with as little manual setup as
 REM  possible. By DEFAULT it installs EVERYTHING; use --no-* flags to opt out.
 REM
@@ -43,15 +43,15 @@ REM                                    FANTASIA stack (writes a .uproject.bak fi
 REM    bootstrap.bat --force         re-download even if present
 REM ─────────────────────────────────────────────────────────────────────────────
 
-set RELEASE_TAG=runtime-v2.0
+set RELEASE_TAG=runtime-v3.0
 set RELEASE_BASE=https://github.com/antori82/FANTASIA/releases/download/%RELEASE_TAG%
 set MODEL_ASSET=whisper-large-v3-turbo-q5_0.bin
 set GPU_ASSET=fantasia-gpu-cuda13-win64.tar.gz
 set DEPS_ASSET=fantasia-build-deps-win64.tar.gz
-set ACE_ASSET=nv-ace-reference-ue57-full.tar.gz
-set MARK_ASSET=nv-audio2face-mark-ue57.tar.gz
-set JAMES_ASSET=nv-audio2face-james-ue57.tar.gz
-set CLAIRE_ASSET=nv-audio2face-claire-ue57.tar.gz
+set ACE_ASSET=nv-ace-reference-ue58-full.tar.gz
+set MARK_ASSET=nv-audio2face-mark-ue58.tar.gz
+set JAMES_ASSET=nv-audio2face-james-ue58.tar.gz
+set CLAIRE_ASSET=nv-audio2face-claire-ue58.tar.gz
 
 REM Default: install EVERYTHING. The --no-* flags below turn parts off.
 set FETCH_MODEL=1

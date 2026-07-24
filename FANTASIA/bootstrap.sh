@@ -27,7 +27,7 @@ set -euo pipefail
 #      here: those NVIDIA plugins are Windows-only. )
 # ─────────────────────────────────────────────────────────────────────────────
 
-RELEASE_TAG="runtime-v2.0"
+RELEASE_TAG="runtime-v3.0"
 RELEASE_BASE="https://github.com/antori82/FANTASIA/releases/download/${RELEASE_TAG}"
 MODEL_ASSET="whisper-large-v3-turbo-q5_0.bin"
 GPU_ASSET="fantasia-gpu-cuda13-linux.tar.gz"
